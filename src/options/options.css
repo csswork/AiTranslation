@@ -38,9 +38,9 @@ body {
 
 .head { display: flex; gap: 14px; align-items: center; margin-bottom: 26px; }
 .mark {
-  width: 42px; height: 42px; border-radius: 12px; flex: none;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+  width: 42px; height: 42px; flex: none;
+  /* 用 drop-shadow 而不是 box-shadow：投影跟随图标的圆角轮廓，而不是方形盒子 */
+  filter: drop-shadow(0 6px 14px rgba(99, 102, 241, 0.35));
 }
 h1 { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -0.2px; }
 .sub { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
