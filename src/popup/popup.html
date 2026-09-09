@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>AI 划词翻译</title>
+    <style>
+      :root {
+        --bg: #fff; --text: #0f172a; --muted: rgba(15, 23, 42, 0.55);
+        --faint: rgba(15, 23, 42, 0.38); --line: rgba(15, 23, 42, 0.1);
+        --accent: #4f46e5; --accent-soft: rgba(79, 70, 229, 0.08);
+        --ok: #15803d; --warn: #b45309;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #191b21; --text: #e9eaee; --muted: rgba(233, 234, 238, 0.6);
+          --faint: rgba(233, 234, 238, 0.4); --line: rgba(255, 255, 255, 0.1);
+          --accent: #818cf8; --accent-soft: rgba(129, 140, 248, 0.14);
+          --ok: #4ade80; --warn: #fbbf24;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        width: 268px; margin: 0; padding: 14px;
+        background: var(--bg); color: var(--text);
+        font: 13px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      .head { display: flex; align-items: center; gap: 9px; }
+      .mark {
+        width: 26px; height: 26px; border-radius: 8px; flex: none;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+      }
+      .name { font-size: 13.5px; font-weight: 620; }
+      .steps {
+        margin: 12px 0 0; padding: 10px 12px;
+        background: var(--accent-soft); border-radius: 10px;
+        font-size: 12px; color: var(--muted);
+      }
+      .steps b { color: var(--text); font-weight: 560; }
+      .row {
+        display: flex; align-items: center; gap: 8px;
+        margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+      }
+      .row:first-of-type { border-top: 0; }
+      .row .label { font-size: 12px; color: var(--muted); flex: 1 1 auto; }
+      select {
+        font: inherit; font-size: 12px; color: inherit; cursor: pointer;
+        padding: 4px 7px; border-radius: 7px;
+        border: 1px solid var(--line); background: transparent;
+      }
+      .state { font-size: 11.5px; }
+      .state.ok { color: var(--ok); }
+      .state.warn { color: var(--warn); }
+      button.btn {
+        width: 100%; margin-top: 14px; font: inherit; font-size: 12.5px; font-weight: 530;
+        padding: 8px; border-radius: 9px; cursor: pointer;
+        color: #fff; background: var(--accent); border: 0;
+      }
+      button.btn:hover { filter: brightness(1.06); }
+      .hint { margin: 9px 0 0; font-size: 11px; color: var(--faint); text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <div class="mark"></div>
+      <div class="name">AI 划词翻译</div>
+    </div>
+
+    <p class="steps">
+      选中一段<b>非中文</b>文字 → <b>右键</b> → 点「翻译成<span id="targetName">中文</span>」
+    </p>
+
+    <div class="row">
+      <span class="label">翻译平台</span>
+      <select id="provider"></select>
+    </div>
+    <div class="row">
+      <span class="label">当前模型</span>
+      <span class="state" id="model">—</span>
+    </div>
+    <div class="row">
+      <span class="label">API Key</span>
+      <span class="state" id="keyState">—</span>
+    </div>
+
+    <button id="open" class="btn" type="button">打开设置</button>
+    <p class="hint">选中的文字如果本身是中文，菜单不会出现</p>
+
+    <script src="../lib/settings.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

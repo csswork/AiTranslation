@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# 打包产物
+*.zip
+*.crx
+*.pem

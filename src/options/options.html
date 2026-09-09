@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 划词翻译 · 设置</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="head">
+        <div class="mark"></div>
+        <div>
+          <h1>AI 划词翻译</h1>
+          <p class="sub">选中非中文文字 → 右键「翻译成中文」→ 屏幕中央弹窗显示译文</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2>翻译平台</h2>
+        <p class="desc">选一个作为默认平台，弹窗里也能随时切换。</p>
+        <div class="providers" id="providerCards"></div>
+      </section>
+
+      <section class="card" id="providerConfig">
+        <h2>接口配置</h2>
+        <p class="desc">
+          API Key 只保存在本机浏览器（<code>chrome.storage.local</code>），不会同步、不会上传到任何第三方。
+        </p>
+        <div class="fields">
+          <label class="field">
+            <span class="label">API Key</span>
+            <span class="key-row">
+              <input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-..." />
+              <button id="toggleKey" class="btn ghost small" type="button">显示</button>
+            </span>
+            <span class="help">在 <a id="keyLink" href="#" target="_blank" rel="noreferrer">平台控制台</a> 创建。</span>
+          </label>
+
+          <label class="field">
+            <span class="label">模型</span>
+            <input id="model" list="modelList" autocomplete="off" spellcheck="false" />
+            <datalist id="modelList"></datalist>
+            <span class="help" id="modelHelp"></span>
+          </label>
+
+          <details class="advanced">
+            <summary>高级：自定义接口地址</summary>
+            <label class="field">
+              <span class="label">Base URL</span>
+              <input id="baseUrl" type="url" autocomplete="off" spellcheck="false" />
+              <span class="help" id="baseUrlHelp"></span>
+            </label>
+          </details>
+        </div>
+        <div class="actions">
+          <button id="test" class="btn" type="button">测试连接</button>
+          <span id="testResult" class="test-result"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>翻译行为</h2>
+        <div class="fields">
+          <label class="field">
+            <span class="label">目标语言</span>
+            <select id="target"></select>
+            <span class="help">右键菜单会显示为「翻译成<span id="targetPreview">中文</span>」。</span>
+          </label>
+          <label class="switch">
+            <input id="stream" type="checkbox" />
+            <span>
+              <b>流式输出</b>
+              <i>译文逐字显示，等待感更低。</i>
+            </span>
+          </label>
+          <label class="switch">
+            <input id="showOriginal" type="checkbox" />
+            <span>
+              <b>弹窗内保留原文</b>
+              <i>在译文下方折叠显示选中的原文，方便对照。</i>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span id="status" class="status" role="status" aria-live="polite"></span>
+        <span class="tip">修改会自动保存</span>
+      </footer>
+    </main>
+
+    <script src="../lib/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
