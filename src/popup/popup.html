@@ -55,6 +55,10 @@
         color: #fff; background: var(--accent); border: 0;
       }
       button.btn:hover { filter: brightness(1.06); }
+      button.btn.ghost {
+        color: var(--accent); background: transparent; border: 1px solid var(--line);
+      }
+      button.btn.ghost:hover { background: var(--accent-soft); filter: none; }
       .hint { margin: 9px 0 0; font-size: 11px; color: var(--faint); text-align: center; }
     </style>
   </head>
@@ -81,6 +85,7 @@
       <span class="state" id="keyState">—</span>
     </div>
 
+    <button id="panel" class="btn ghost" type="button">打开翻译面板</button>
     <button id="open" class="btn" type="button">打开设置</button>
     <p class="hint">选中的文字如果本身是中文，菜单不会出现</p>
 

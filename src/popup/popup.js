@@ -4,6 +4,7 @@
     provider: document.getElementById('provider'),
     model: document.getElementById('model'),
     keyState: document.getElementById('keyState'),
+    panel: document.getElementById('panel'),
     targetName: document.getElementById('targetName'),
     open: document.getElementById('open'),
   };
@@ -31,6 +32,11 @@
   el.provider.addEventListener('change', async () => {
     settings = await S.patchSettings({ provider: el.provider.value });
     render();
+  });
+
+  el.panel.addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('src/translate/translate.html') });
+    window.close();
   });
 
   el.open.addEventListener('click', () => {

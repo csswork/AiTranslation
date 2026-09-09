@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>翻译面板 · AI 划词翻译</title>
+    <link rel="stylesheet" href="translate.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="head">
+        <img class="mark" src="../../icons/icon128.png" alt="" />
+        <div class="titles">
+          <h1>翻译面板</h1>
+          <p class="sub">输入中文默认译成英文，输入其他语言默认译成中文；目标语言也可以自己选。</p>
+        </div>
+        <button id="settings" class="btn ghost small" type="button">设置</button>
+      </header>
+
+      <div class="bar">
+        <label class="pick">
+          <span class="pick-label">目标语言</span>
+          <select id="target"></select>
+        </label>
+        <label class="pick">
+          <span class="pick-label">平台</span>
+          <select id="provider"></select>
+        </label>
+        <span class="detect" id="detect"></span>
+        <button id="run" class="btn" type="button">翻译<kbd id="shortcut"></kbd></button>
+      </div>
+
+      <div class="panes">
+        <section class="pane">
+          <div class="pane-head">
+            <span class="pane-title">原文</span>
+            <span class="note" id="count"></span>
+            <button id="clear" class="btn ghost small" type="button">清空</button>
+          </div>
+          <textarea id="input" spellcheck="false" autofocus
+            placeholder="粘贴或输入要翻译的文字…"></textarea>
+        </section>
+
+        <section class="pane">
+          <div class="pane-head">
+            <span class="pane-title">译文</span>
+            <span class="note" id="meta"></span>
+            <button id="copy" class="btn ghost small" type="button" disabled>复制</button>
+          </div>
+          <div class="out-body">
+            <div class="error" id="error" hidden><p id="errorText"></p></div>
+            <div class="out" id="out" aria-live="polite"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="../lib/lang.js"></script>
+    <script src="../lib/settings.js"></script>
+    <script src="../lib/providers.js"></script>
+    <script src="translate.js"></script>
+  </body>
+</html>
