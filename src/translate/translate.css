@@ -27,6 +27,8 @@
 }
 
 * { box-sizing: border-box; }
+/* .error 自带 display，会压过 UA 的 [hidden]{display:none}，必须显式兜住 */
+[hidden] { display: none !important; }
 body {
   margin: 0;
   background: var(--bg);

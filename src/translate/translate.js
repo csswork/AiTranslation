@@ -53,11 +53,28 @@
     settings: $('settings'),
   };
 
+  /** 输入停止多久后自动翻译。给得比较宽，避免边打字边烧 token。 */
+  const AUTO_DELAY = 1000;
+
   const isMac = /Mac|iPhone|iPad/i.test(navigator.userAgent);
   let settings = S.normalize(null);
   let choice = AUTO;
   let controller = null;
   let translation = '';
+  let autoTimer = 0;
+  /** 上一次真正发出去的原文，用来避免自动翻译重复请求同一段内容。 */
+  let lastSent = '';
+
+  /** 输入停顿到 AUTO_DELAY 且内容确实变过，才自动翻译。 */
+  function scheduleAuto() {
+    clearTimeout(autoTimer);
+    if (!el.input.value.trim()) return;
+    autoTimer = setTimeout(() => {
+      const text = el.input.value;
+      if (!text.trim() || text === lastSent) return;
+      run();
+    }, AUTO_DELAY);
+  }
 
   /* ------------------------------------------------------------ 目标语言 */
 
@@ -135,6 +152,8 @@
     const raw = el.input.value;
     if (!raw.trim()) return;
 
+    clearTimeout(autoTimer);
+    lastSent = raw;
     controller?.abort(); // 上一轮还在流就先停掉
     controller = new AbortController();
     const { signal } = controller;
@@ -198,7 +217,10 @@
 
   /* ---------------------------------------------------------------- 事件 */
 
-  el.input.addEventListener('input', renderStatus);
+  el.input.addEventListener('input', () => {
+    renderStatus();
+    scheduleAuto();
+  });
   el.input.addEventListener('keydown', (event) => {
     const combo = isMac ? event.metaKey : event.ctrlKey;
     if (combo && event.key === 'Enter') {
@@ -209,6 +231,7 @@
 
   el.run.addEventListener('click', () => {
     if (controller) {
+      clearTimeout(autoTimer);
       controller.abort();
       controller = null;
       setBusy(false);
@@ -219,6 +242,8 @@
   });
 
   el.clear.addEventListener('click', () => {
+    clearTimeout(autoTimer);
+    lastSent = '';
     controller?.abort();
     controller = null;
     el.input.value = '';

@@ -33,6 +33,8 @@
 }
 
 * { box-sizing: border-box; }
+/* .error 自带 display，会压过 UA 的 [hidden]{display:none}，必须显式兜住 */
+[hidden] { display: none !important; }
 body {
   margin: 0;
   background: var(--bg);
@@ -186,7 +188,7 @@ kbd {
             <button id="clear" class="btn ghost small" type="button">清空</button>
           </div>
           <textarea id="input" spellcheck="false" autofocus
-            placeholder="粘贴或输入要翻译的文字…"></textarea>
+            placeholder="粘贴或输入要翻译的文字…&#10;停止输入约 1 秒后会自动翻译"></textarea>
         </section>
 
         <section class="pane">
@@ -213,10 +215,10 @@ window.chrome = {
   runtime: { openOptionsPage: () => {}, getURL: (p) => p },
   tabs: { create: () => {} },
 };
-// 假的流式接口，便于看到译文区的真实排版
+window.__calls = 0;
 window.fetch = async (url, init) => {
-  const body = JSON.parse(init.body);
-  window.__lastBody = body;
+  window.__calls++;
+  window.__lastBody = JSON.parse(init.body);
   const parts = ['The Rosetta Stone ', 'is a stele of granodiorite ',
                  'inscribed with three versions of a decree ',
                  'issued in Memphis, Egypt, in 196 BC.'];
@@ -777,11 +779,28 @@ window.fetch = async (url, init) => {
     settings: $('settings'),
   };
 
+  /** 输入停止多久后自动翻译。给得比较宽，避免边打字边烧 token。 */
+  const AUTO_DELAY = 1000;
+
   const isMac = /Mac|iPhone|iPad/i.test(navigator.userAgent);
   let settings = S.normalize(null);
   let choice = AUTO;
   let controller = null;
   let translation = '';
+  let autoTimer = 0;
+  /** 上一次真正发出去的原文，用来避免自动翻译重复请求同一段内容。 */
+  let lastSent = '';
+
+  /** 输入停顿到 AUTO_DELAY 且内容确实变过，才自动翻译。 */
+  function scheduleAuto() {
+    clearTimeout(autoTimer);
+    if (!el.input.value.trim()) return;
+    autoTimer = setTimeout(() => {
+      const text = el.input.value;
+      if (!text.trim() || text === lastSent) return;
+      run();
+    }, AUTO_DELAY);
+  }
 
   /* ------------------------------------------------------------ 目标语言 */
 
@@ -859,6 +878,8 @@ window.fetch = async (url, init) => {
     const raw = el.input.value;
     if (!raw.trim()) return;
 
+    clearTimeout(autoTimer);
+    lastSent = raw;
     controller?.abort(); // 上一轮还在流就先停掉
     controller = new AbortController();
     const { signal } = controller;
@@ -922,7 +943,10 @@ window.fetch = async (url, init) => {
 
   /* ---------------------------------------------------------------- 事件 */
 
-  el.input.addEventListener('input', renderStatus);
+  el.input.addEventListener('input', () => {
+    renderStatus();
+    scheduleAuto();
+  });
   el.input.addEventListener('keydown', (event) => {
     const combo = isMac ? event.metaKey : event.ctrlKey;
     if (combo && event.key === 'Enter') {
@@ -933,6 +957,7 @@ window.fetch = async (url, init) => {
 
   el.run.addEventListener('click', () => {
     if (controller) {
+      clearTimeout(autoTimer);
       controller.abort();
       controller = null;
       setBusy(false);
@@ -943,6 +968,8 @@ window.fetch = async (url, init) => {
   });
 
   el.clear.addEventListener('click', () => {
+    clearTimeout(autoTimer);
+    lastSent = '';
     controller?.abort();
     controller = null;
     el.input.value = '';
