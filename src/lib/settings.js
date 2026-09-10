@@ -49,6 +49,8 @@
     target: 'zh-Hans',
     stream: true,
     showOriginal: true,
+    floating: true, // 划词后在选区旁显示浮动按钮
+    shortcut: true, // 快捷键翻译选中文字
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -63,6 +65,8 @@
       target: TARGETS[input.target] ? input.target : DEFAULTS.target,
       stream: input.stream !== false,
       showOriginal: input.showOriginal !== false,
+      floating: input.floating !== false,
+      shortcut: input.shortcut !== false,
     };
     for (const id of PROVIDER_ORDER) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

@@ -89,11 +89,11 @@
   const STYLE = `
   /* .skeleton / .error 自带 display，会压过 UA 的 [hidden]{display:none}，必须显式兜住 */
   [hidden] { display: none !important; }
+  /* 不加遮罩颜色，只用来接住弹窗外部的点击以关闭 */
   .backdrop {
     position: absolute; inset: 0;
-    background: rgba(15, 23, 42, 0.28);
+    background: transparent;
     pointer-events: auto;
-    animation: fade 0.14s ease-out;
   }
   .panel {
     position: absolute; left: 50%; top: 50%;
@@ -116,13 +116,12 @@
     animation: pop 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.1);
   }
   .panel.dragging { animation: none; transition: none; }
-  @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
   @keyframes pop {
     from { opacity: 0; transform: translate(-50%, calc(-50% + 8px)) scale(0.985) }
     to   { opacity: 1 }
   }
   @media (prefers-reduced-motion: reduce) {
-    .backdrop, .panel { animation: none }
+    .panel { animation: none }
   }
 
   .bar {
@@ -589,6 +588,187 @@
       sendResponse({ ok: true, top: IS_TOP });
       return false;
     }
+    // 快捷键触发时，后台缓存可能已随 service worker 重启清空，就来问页面
+    if (message?.type === 'get-selection') {
+      sendResponse({ text: currentSelection().trim() });
+      return false;
+    }
     return false;
   });
+
+  /* --------------------------------------------- 划词浮动按钮（可在设置里关闭） */
+
+  /**
+   * 完全独立的一块：自己的 shadow 宿主、自己的事件监听、自己读设置。
+   * 刻意不复用上面弹窗的任何代码，也不改动选区上报，
+   * 这样即使这里出问题，右键菜单那条链路也不受影响。
+   * DOM 全部用 createElement 构建，不走 innerHTML。
+   */
+  (() => {
+    const CHIP_STYLE = `
+      .chip {
+        all: unset;
+        box-sizing: border-box;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+                     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        color: #fff;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
+        transition: transform 0.12s ease;
+      }
+      .chip:hover { transform: scale(1.08); }
+      @media (prefers-reduced-motion: reduce) {
+        .chip { transition: none; }
+      }`;
+
+    let host = null;
+    let chip = null;
+    let pending = '';
+    let enabled = true;
+
+    function readSetting() {
+      try {
+        const promise = chrome.storage.local.get('settings');
+        if (!promise || typeof promise.then !== 'function') return;
+        promise
+          .then((stored) => {
+            enabled = stored?.settings?.floating !== false;
+            if (!enabled) hide();
+          })
+          .catch(() => {});
+      } catch {
+        /* 扩展上下文失效，忽略 */
+      }
+    }
+
+    function build() {
+      host = document.createElement('div');
+      host.style.cssText =
+        'all: initial; position: fixed !important; z-index: 2147483646 !important;' +
+        'display: none !important; pointer-events: auto !important;';
+
+      const root = host.attachShadow({ mode: 'closed' });
+      const style = document.createElement('style');
+      style.textContent = CHIP_STYLE;
+
+      chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip';
+      chip.title = '翻译成中文';
+      chip.textContent = '译';
+
+      root.appendChild(style);
+      root.appendChild(chip);
+
+      // 按下时别让浏览器清掉选区
+      chip.addEventListener('mousedown', (event) => event.preventDefault());
+      chip.addEventListener('click', () => {
+        const text = pending;
+        hide();
+        if (text) send({ type: 'retranslate', text });
+      });
+
+      (document.body || document.documentElement).appendChild(host);
+    }
+
+    function hide() {
+      pending = '';
+      if (host) host.style.setProperty('display', 'none', 'important');
+    }
+
+    function show(text, rect) {
+      if (!host) build();
+      if (!host.isConnected) (document.body || document.documentElement).appendChild(host);
+      pending = text;
+      const size = 28;
+      const gap = 6;
+      // 视口尺寸偶尔取不到（尺寸为 0 的 iframe、布局未就绪等），
+      // 这时不要夹取，否则按钮会被甩到左上角而不是贴着选区。
+      const vw = window.innerWidth || document.documentElement?.clientWidth || 0;
+      const vh = window.innerHeight || document.documentElement?.clientHeight || 0;
+      let x = rect.right + gap;
+      let y = rect.bottom + gap;
+      if (vw > size + gap * 2) x = Math.min(x, vw - size - gap);
+      if (vh > size + gap * 2) y = Math.min(y, vh - size - gap);
+      host.style.left = `${Math.round(Math.max(gap, x))}px`;
+      host.style.top = `${Math.round(Math.max(gap, y))}px`;
+      host.style.setProperty('display', 'block', 'important');
+    }
+
+    function selectionRect() {
+      try {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed || selection.rangeCount === 0) return null;
+        const rect = selection.getRangeAt(0).getBoundingClientRect();
+        if (!rect || (!rect.width && !rect.height)) return null;
+        return rect;
+      } catch {
+        return null;
+      }
+    }
+
+    function maybeShow() {
+      if (!enabled) return;
+      // 弹窗开着时收起按钮，别叠在弹窗上
+      try {
+        if (panel && panel.isOpen()) {
+          hide();
+          return;
+        }
+      } catch {
+        /* 忽略 */
+      }
+      const rect = selectionRect();
+      if (!rect) {
+        hide();
+        return;
+      }
+      const text = currentSelection().trim();
+      if (!text || !Lang.shouldOffer(text)) {
+        hide();
+        return;
+      }
+      show(text, rect);
+    }
+
+    const fromChip = (event) => Boolean(host) && event.target === host;
+
+    document.addEventListener(
+      'mouseup',
+      (event) => {
+        if (fromChip(event)) return;
+        setTimeout(maybeShow, 10); // 等选区稳定下来
+      },
+      true
+    );
+    document.addEventListener(
+      'mousedown',
+      (event) => {
+        if (fromChip(event)) return;
+        hide();
+      },
+      true
+    );
+    document.addEventListener('keydown', hide, true);
+    window.addEventListener('scroll', hide, true);
+    window.addEventListener('resize', hide);
+
+    try {
+      chrome.storage.onChanged.addListener((changes, area) => {
+        if (area === 'local' && changes.settings) readSetting();
+      });
+    } catch {
+      /* 忽略 */
+    }
+    readSetting();
+  })();
 })();

@@ -4,20 +4,41 @@
   "version": "1.0.0",
   "description": "选中非中文文字后右键「翻译成中文」，用 ChatGPT / DeepSeek 翻译并在屏幕中央弹窗显示。",
   "minimum_chrome_version": "116",
-  "permissions": ["contextMenus", "storage", "scripting", "activeTab"],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
   "host_permissions": [
     "https://api.openai.com/*",
     "https://api.deepseek.com/*"
   ],
-  "optional_host_permissions": ["https://*/*"],
+  "optional_host_permissions": [
+    "https://*/*"
+  ],
   "background": {
     "service_worker": "src/background.js",
     "type": "module"
   },
+  "commands": {
+    "translate-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+T",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "翻译选中的文字"
+    }
+  },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/lib/lang.js", "src/content/content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/lib/lang.js",
+        "src/content/content.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true,
       "match_about_blank": true

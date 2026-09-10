@@ -19,15 +19,38 @@ async function menuTitle() {
   return `翻译成${AITrSettings.targetMenu(settings)}`;
 }
 
-async function createMenu() {
-  await chrome.contextMenus.removeAll();
-  chrome.contextMenus.create({
-    id: MENU_ID,
-    title: await menuTitle(),
-    contexts: ['selection'],
-    // 默认可见：万一选区上报没跑起来，菜单也不至于消失
-    visible: true,
+/**
+ * 菜单重建要串起来做。onInstalled / onStartup / update 失败后的重建，
+ * 这几个入口可能并发触发；各自 removeAll 完再各自 create，
+ * 第二个就会失败于 "Cannot create item with duplicate id"。
+ */
+let menuTask = Promise.resolve();
+
+function createMenu() {
+  menuTask = menuTask.catch(() => {}).then(async () => {
+    // 标题先算好：removeAll 与 create 之间不能再有 await，
+    // 否则又给别的调用留出插进来的空隙
+    const title = await menuTitle();
+    await chrome.contextMenus.removeAll();
+    await new Promise((resolve) => {
+      chrome.contextMenus.create(
+        {
+          id: MENU_ID,
+          title,
+          contexts: ['selection'],
+          // 默认可见：万一选区上报没跑起来，菜单也不至于消失
+          visible: true,
+        },
+        () => {
+          // 必须读一次 lastError，否则会以 "Unchecked runtime.lastError" 冒到控制台
+          const error = chrome.runtime.lastError;
+          if (error) console.warn('[AI 划词翻译] 创建右键菜单失败：', error.message);
+          resolve();
+        }
+      );
+    });
   });
+  return menuTask;
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -42,8 +65,13 @@ async function updateMenuVisibility(text) {
   try {
     await chrome.contextMenus.update(MENU_ID, { visible });
   } catch {
-    // service worker 重启后菜单可能已经不在了，重建一次
+    // service worker 重启后菜单可能已经不在了，重建一次再补上显隐状态
     await createMenu();
+    try {
+      await chrome.contextMenus.update(MENU_ID, { visible });
+    } catch {
+      /* 忽略：菜单确实建不起来时，日志已在 createMenu 里打过 */
+    }
   }
 }
 
@@ -235,3 +263,78 @@ chrome.tabs.onRemoved.addListener((tabId) => {
     if (key.startsWith(`${tabId}:`)) selections.delete(key);
   }
 });
+
+/* ------------------------------------------------------------ 快捷键翻译 */
+
+/** 取某个标签页最近一次上报的选中文字；缓存空了就直接问页面。 */
+async function selectionForTab(tabId) {
+  let best = null;
+  for (const [key, value] of selections) {
+    if (!key.startsWith(`${tabId}:`)) continue;
+    if (!best || value.at > best.at) best = value;
+  }
+  if (best?.text) return best.text;
+  // service worker 重启过，缓存就空了
+  try {
+    const reply = await chrome.tabs.sendMessage(tabId, { type: 'get-selection' }, { frameId: 0 });
+    return reply?.text || '';
+  } catch {
+    return '';
+  }
+}
+
+/** 快捷键没生效时，这里是唯一的线索来源，所以每个提前退出都要说明原因。 */
+const shortcutLog = (reason) => console.info(`[AI 划词翻译] 快捷键未触发翻译：${reason}`);
+
+async function onShortcut(command, tab) {
+  if (command !== 'translate-selection') return;
+
+  const settings = await AITrSettings.loadSettings();
+  if (!settings.shortcut) {
+    shortcutLog('设置里已关闭「快捷键翻译」');
+    return;
+  }
+
+  // onCommand 会直接带上触发时的标签页，优先用它。
+  // 不要用 tabs.query({ currentWindow: true })：service worker 没有所属窗口，
+  // 那个筛选条件在这里不可靠，会查不到任何标签页。
+  let tabId = tab?.id;
+  if (tabId == null) {
+    const [active] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    tabId = active?.id;
+  }
+  if (tabId == null) {
+    shortcutLog('拿不到当前标签页');
+    return;
+  }
+
+  // 先确保页面脚本在位，否则问不到选区（刚重载扩展、或标签页是旧的）
+  if (!(await ensureContentScript(tabId))) {
+    shortcutLog('这个页面不允许注入脚本（例如 chrome:// 开头的页面）');
+    return;
+  }
+
+  const text = await selectionForTab(tabId);
+  if (!text) {
+    shortcutLog('当前没有选中任何文字');
+    return;
+  }
+  // 与右键菜单同一套规则
+  if (!AITrLang.shouldOffer(text)) {
+    shortcutLog('选中的内容本身是中文，或没有可翻译的文字');
+    return;
+  }
+
+  await startTranslation({ tabId, text });
+}
+
+// 加一层保护：万一代码已更新而 Chrome 仍在用缓存的旧 manifest，
+// chrome.commands 会是 undefined。直接在顶层访问会抛错并让整个
+// service worker 加载失败，连右键菜单一起挂掉。
+if (chrome.commands?.onCommand) {
+  chrome.commands.onCommand.addListener((command, tab) => {
+    onShortcut(command, tab).catch((err) => shortcutLog(String(err?.message || err)));
+  });
+} else {
+  console.warn('[AI 划词翻译] chrome.commands 不可用，快捷键功能已跳过；请重新加载扩展。');
+}

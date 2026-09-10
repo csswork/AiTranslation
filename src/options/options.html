@@ -81,6 +81,27 @@
               <i>在译文下方折叠显示选中的原文，方便对照。</i>
             </span>
           </label>
+          <label class="switch">
+            <input id="floating" type="checkbox" />
+            <span>
+              <b>划词浮动按钮</b>
+              <i>选中非中文文字后，在选区旁浮出一个小按钮，点它即可翻译，比右键更快。</i>
+            </span>
+          </label>
+          <label class="switch">
+            <input id="shortcut" type="checkbox" />
+            <span>
+              <b>快捷键翻译</b>
+              <i>选中文字后按快捷键，直接翻译并弹出译文，不用走右键菜单。</i>
+            </span>
+          </label>
+          <!-- 按钮放在 label 外面：label 里嵌按钮会让点击语义变得含糊 -->
+          <div class="shortcut-row">
+            <span class="shortcut-label">当前快捷键</span>
+            <kbd id="shortcutKey">读取中…</kbd>
+            <button id="editShortcut" class="btn ghost small" type="button">修改</button>
+          </div>
+          <p class="shortcut-hint" id="shortcutHint" hidden></p>
         </div>
       </section>
 

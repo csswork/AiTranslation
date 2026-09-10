@@ -17,6 +17,11 @@
     targetPreview: $('targetPreview'),
     stream: $('stream'),
     showOriginal: $('showOriginal'),
+    floating: $('floating'),
+    shortcut: $('shortcut'),
+    shortcutKey: $('shortcutKey'),
+    shortcutHint: $('shortcutHint'),
+    editShortcut: $('editShortcut'),
     status: $('status'),
   };
 
@@ -108,6 +113,39 @@
     el.targetPreview.textContent = S.targetMenu(settings);
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
+    el.floating.checked = settings.floating;
+    el.shortcut.checked = settings.shortcut;
+  }
+
+  /**
+   * 显示 Chrome 里实际分配到的快捷键。
+   * suggested_key 只在「安装时」生效：给已装好的扩展新增命令、或建议键与别的
+   * 扩展冲突时，都会是未分配状态，只能由用户到 Chrome 的快捷键页面自己设。
+   */
+  async function renderShortcutKey() {
+    // 芯片里只放键位，解释放到下面一行，否则窄屏下芯片会被撑成两行
+    const show = (key, hint) => {
+      el.shortcutKey.textContent = key;
+      el.shortcutKey.className = hint ? 'warn' : '';
+      el.shortcutHint.hidden = !hint;
+      if (hint) el.shortcutHint.textContent = hint;
+    };
+    try {
+      const commands = await chrome.commands.getAll();
+      const found = commands.find((item) => item.name === 'translate-selection');
+      if (!found) {
+        show('未注册', '命令没有注册成功，到 chrome://extensions 重新加载一次扩展。');
+        return;
+      }
+      show(
+        found.shortcut || '未分配',
+        found.shortcut
+          ? ''
+          : '建议快捷键只在扩展「安装时」生效，所以这里需要手动设置一次：点右边「修改」，在打开的页面里找到「翻译选中的文字」那一行，按下你想用的组合键。'
+      );
+    } catch {
+      show('读取失败', '无法读取快捷键信息。');
+    }
   }
 
   /** 把 Base URL 换成 chrome.permissions 认的 origin 形式；不合法则返回 null。 */
@@ -166,6 +204,18 @@
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
+  el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
+  el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
+
+  // 快捷键本身只能在 Chrome 自己的页面里改
+  el.editShortcut.addEventListener('click', () => {
+    chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+  });
+
+  // 设置完切回这个标签页时，自动刷新显示，省得手动刷新
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) renderShortcutKey();
+  });
 
   el.test.addEventListener('click', async () => {
     // 授权请求必须紧贴点击手势：任何 await 都可能让手势失效，所以放在最前面。
@@ -215,5 +265,6 @@
     renderCards();
     renderProviderConfig();
     renderBehavior();
+    renderShortcutKey();
   })();
 })();
