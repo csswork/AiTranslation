@@ -10,7 +10,8 @@
   /** 匹配数量超过这个值就认为太宽泛，需要再加限定。 */
   const MAX_MATCHES = 40;
   const MAX_CLASSES = 3;
-  const MAX_ANCESTORS = 3;
+  /** 固定几级父元素。只靠元素自身太粗，页面别处同类名的元素会被误挂按钮。 */
+  const PARENT_LEVELS = 2;
 
   /**
    * 构建工具生成的类名下次访问就变了，不能拿来记规则。
@@ -66,15 +67,18 @@
     return list;
   }
 
-  /** 从近到远的祖先限定词。 */
-  function ancestorChain(el) {
+  /**
+   * 最近的若干级父元素，各取其最具体的选择器。返回顺序是「远 → 近」。
+   * 用子代组合器 `>` 串起来，能把匹配牢牢钉在这条 DOM 路径上。
+   */
+  function parentChain(el, levels) {
     const chain = [];
-    let node = el.parentElement;
     const doc = el.ownerDocument;
-    while (node && node !== doc.documentElement && chain.length < MAX_ANCESTORS) {
+    let node = el.parentElement;
+    while (node && node !== doc.body && node !== doc.documentElement && chain.length < levels) {
       const [best] = ownCandidates(node);
-      // 只有带 id / 属性 / 类名的祖先才有限定价值，光一个标签名没意义
-      if (best && !/^[a-z]+$/.test(best)) chain.push(best);
+      if (!best) break;
+      chain.unshift(best);
       node = node.parentElement;
     }
     return chain;
@@ -139,22 +143,23 @@
     if (!doc) return null;
 
     const owns = ownCandidates(el);
-    const chain = ancestorChain(el);
+    const parents = parentChain(el, PARENT_LEVELS);
 
-    // 候选顺序：先试元素自身（更宽、更容易复用到同类元素），
-    // 太宽泛时再逐级加上祖先限定。
+    // 由紧到松：两级父元素 → 一级父元素 → 只看自身。
+    // 先试最紧的，够用就不再放宽，避免把别处的同类元素也匹配进来。
+    const prefixes = [];
+    for (let take = parents.length; take >= 1; take -= 1) {
+      prefixes.push(`${parents.slice(parents.length - take).join(' > ')} > `);
+    }
+    prefixes.push('');
+
     const candidates = [];
-    for (const own of owns) {
-      // 光一个标签名（如 span）当规则太弱，先试带祖先限定的版本，
-      // 实在不行再退回裸标签名。
-      const bare = /^[a-z]+$/.test(own);
-      if (!bare) candidates.push(own);
-      let prefix = '';
-      for (const ancestor of chain) {
-        prefix = prefix ? `${ancestor} ${prefix}` : ancestor;
-        candidates.push(`${prefix} ${own}`);
+    for (const prefix of prefixes) {
+      for (const own of owns) {
+        // 裸标签名单独作规则太弱，只在带父元素限定时才用
+        if (!prefix && /^[a-z]+$/.test(own)) continue;
+        candidates.push(prefix + own);
       }
-      if (bare) candidates.push(own);
     }
 
     const viable = [];
