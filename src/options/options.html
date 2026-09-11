@@ -105,12 +105,25 @@
         </div>
       </section>
 
+      <section class="card">
+        <h2>元素翻译规则</h2>
+        <p class="desc">
+          在网页上右键某个区域，选「为这个区域添加翻译按钮」，即可记住该网站的这个区域；
+          下次访问时会自动带上翻译按钮。
+        </p>
+        <div class="actions">
+          <button id="manage" class="btn ghost" type="button">管理规则</button>
+          <span class="test-result" id="ruleCount"></span>
+        </div>
+      </section>
+
       <footer class="foot">
         <span id="status" class="status" role="status" aria-live="polite"></span>
         <span class="tip">修改会自动保存</span>
       </footer>
     </main>
 
+    <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="options.js"></script>
   </body>

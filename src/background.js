@@ -6,8 +6,16 @@ import './lib/settings.js';
 import './lib/providers.js';
 
 const MENU_ID = 'ai-translate-selection';
+const ELEMENT_MENU_ID = 'ai-translate-element';
 const PORT_NAME = 'ai-translate-panel';
-const CONTENT_FILES = ['src/lib/lang.js', 'src/content/content.js'];
+// 必须与 manifest 的 content_scripts 保持一致
+const CONTENT_FILES = [
+  'src/lib/lang.js',
+  'src/lib/rules.js',
+  'src/lib/selector.js',
+  'src/content/content.js',
+  'src/content/elements.js',
+];
 
 /** `${tabId}:${frameId}` -> 该框架最近一次上报的选中文字（保留换行）。 */
 const selections = new Map();
@@ -32,23 +40,37 @@ function createMenu() {
     // 否则又给别的调用留出插进来的空隙
     const title = await menuTitle();
     await chrome.contextMenus.removeAll();
-    await new Promise((resolve) => {
-      chrome.contextMenus.create(
-        {
-          id: MENU_ID,
-          title,
-          contexts: ['selection'],
-          // 默认可见：万一选区上报没跑起来，菜单也不至于消失
-          visible: true,
-        },
-        () => {
+    const created = [];
+    const create = (props) =>
+      new Promise((resolve) => {
+        chrome.contextMenus.create(props, () => {
           // 必须读一次 lastError，否则会以 "Unchecked runtime.lastError" 冒到控制台
           const error = chrome.runtime.lastError;
-          if (error) console.warn('[AI 划词翻译] 创建右键菜单失败：', error.message);
+          if (error) console.warn('[AI 划词翻译] 创建右键菜单失败：', props.id, error.message);
+          else created.push(props.id);
           resolve();
-        }
-      );
+        });
+      });
+
+    await create({
+      id: MENU_ID,
+      title,
+      contexts: ['selection'],
+      // 默认可见：万一选区上报没跑起来，菜单也不至于消失
+      visible: true,
     });
+    // 始终可见，不做任何判断。
+    // 与划词项的互斥交给 Chrome：contexts 里 'selection' 与 'page' 天然互斥
+    // ——有选中文字时只出划词项，没有时只出这一项。
+    // 这样任何时刻都只有一项可见（不会被折叠成二级子菜单），
+    // 而且不依赖内容脚本上报，没有时序问题。
+    await create({
+      id: ELEMENT_MENU_ID,
+      title: '为这个区域添加翻译按钮',
+      contexts: ['page', 'link', 'image', 'video', 'audio'],
+      visible: true,
+    });
+    console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
   });
   return menuTask;
 }
@@ -58,6 +80,11 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') chrome.runtime.openOptionsPage();
 });
 chrome.runtime.onStartup.addListener(createMenu);
+
+// 光靠上面两个事件不够：重新加载已解压的扩展时它们未必触发，
+// 而右键菜单是持久化的——旧菜单会留着，于是新增的菜单项永远建不出来。
+// createMenu 是 removeAll + create 且已串行化，每次 service worker 启动跑一次是安全的。
+createMenu();
 
 /** 选中的是中文（或没有可翻译的字母）时把菜单藏起来。 */
 async function updateMenuVisibility(text) {
@@ -196,6 +223,16 @@ async function startTranslation({ tabId, text, providerId }) {
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  if (info.menuItemId === ELEMENT_MENU_ID && tab?.id) {
+    if (!(await ensureContentScript(tab.id))) return;
+    try {
+      const reply = await chrome.tabs.sendMessage(tab.id, { type: 'add-element-rule' }, { frameId: 0 });
+      if (!reply?.ok) console.warn('[AI 划词翻译] 添加元素规则失败：', reply?.error);
+    } catch (err) {
+      console.warn('[AI 划词翻译] 添加元素规则失败：', err?.message);
+    }
+    return;
+  }
   if (info.menuItemId !== MENU_ID || !tab?.id) return;
   const frameId = info.frameId ?? 0;
   const cached = selections.get(`${tab.id}:${frameId}`)?.text;
@@ -222,6 +259,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     updateMenuVisibility(message.text);
     return false;
+  }
+
+  // 内容脚本不能直接请求接口（会受页面 CORS 限制），统一由这里代发
+  if (type === 'translate-batch') {
+    (async () => {
+      try {
+        const settings = await AITrSettings.loadSettings();
+        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings });
+        sendResponse({ ok: true, texts });
+      } catch (err) {
+        sendResponse({ ok: false, error: String(err?.message || err) });
+      }
+    })();
+    return true; // 异步回复
   }
 
   if (type === 'retranslate') {

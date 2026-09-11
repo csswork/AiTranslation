@@ -23,6 +23,8 @@
     shortcutHint: $('shortcutHint'),
     editShortcut: $('editShortcut'),
     status: $('status'),
+    manage: $('manage'),
+    ruleCount: $('ruleCount'),
   };
 
   let settings = S.normalize(null);
@@ -207,6 +209,22 @@
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
 
+  el.manage.addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('src/manage/manage.html') });
+  });
+
+  /** 顺手显示已记录多少条元素规则。 */
+  async function renderRuleCount() {
+    try {
+      const all = await globalThis.AITrRules.loadRules();
+      const hosts = Object.keys(all);
+      const total = hosts.reduce((sum, host) => sum + all[host].length, 0);
+      el.ruleCount.textContent = total ? `已记录 ${hosts.length} 个网站、${total} 条规则` : '还没有规则';
+    } catch {
+      el.ruleCount.textContent = '';
+    }
+  }
+
   // 快捷键本身只能在 Chrome 自己的页面里改
   el.editShortcut.addEventListener('click', () => {
     chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
@@ -266,5 +284,6 @@
     renderProviderConfig();
     renderBehavior();
     renderShortcutKey();
+    renderRuleCount();
   })();
 })();
