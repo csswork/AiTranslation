@@ -23,21 +23,71 @@
     /^[a-z]+[-_](?=[a-z0-9]*\d)(?=[a-z0-9]*[a-z])[a-z0-9]{5,}$/i,
     // CSS-in-JS 的固定前缀 + 长后缀：sc-bdVaJa（这种后缀不含数字，上一条抓不到）
     /^(css|sc|jsx|emotion|styled|svelte)-[a-z0-9]{5,}$/i,
-    // CSS Modules：Button__root___2xYz
-    /__[0-9a-z]{4,}$/i,
-    /--[0-9a-z]{5,}$/i,
-    // 自动生成的 id：ember1234
-    /^[a-z-]*[a-z]\d{3,}$/i,
+    // CSS Modules 的哈希后缀用三下划线：Button__root___2xYz。
+    // 只认三下划线，别误杀 BEM 的 card__title。
+    /___[0-9a-z]+$/i,
+    // 注意不要加 /--[0-9a-z]+$/ 这类规则：会把 BEM 的 nav--active 误判成随机；
+    // 真正带哈希的（foo--1a2b3c）由下面的 looksRandom 逐段检查兜住。
+    // 自动生成的 id：ember1234。用 4 位以上数字，
+    // 3 位会误杀 sha256、top100 这类正常命名。
+    /^[a-z-]*[a-z]\d{4,}$/i,
     // 前缀 + 纯数字序号：radix-3421、item-1024
-    /^[a-z]+[-_]\d{3,}$/i,
+    /^[a-z]+[-_]\d{4,}$/i,
     /\d{5,}/,
   ];
+
+  /**
+   * 单个片段（按 - _ 切开后）是否像随机 token。
+   * 上面那些整串规则抓不到夹在中间的随机段，例如
+   * post-title-t3_1wd8i8m 里的 1wd8i8m。
+   */
+  function looksRandom(segment) {
+    if (!segment || segment.length < 5) return false;
+    // 字母数字混排，且数字后面还跟着字母（1wd8i8m）。
+    // 只在结尾带序号的不算（sha256、col2、gpt4）。
+    if (/[a-z]/i.test(segment) && /\d/.test(segment) && /\d[a-z]/i.test(segment)) return true;
+    // 大小写反复跳变（bdVaJa）；正常的 camelCase 只会跳一两次
+    if (segment.length >= 6) {
+      const transitions = (segment.match(/[a-z][A-Z]|[A-Z][a-z]/g) || []).length;
+      if (transitions >= 3) return true;
+    }
+    return false;
+  }
 
   const isStable = (name) =>
     typeof name === 'string' &&
     name.length > 1 &&
     name.length <= 40 &&
-    !UNSTABLE.some((re) => re.test(name));
+    !UNSTABLE.some((re) => re.test(name)) &&
+    !name.split(/[-_]/).some(looksRandom);
+
+  /**
+   * 从含随机段的 id 里切出稳定前缀：
+   * post-title-t3_1wd8i8m → post-title-t3_
+   * 这样可以用 [id^="..."] 前缀匹配，比退回裸标签名精确得多。
+   */
+  function stablePrefix(value) {
+    if (typeof value !== 'string' || !value) return null;
+    const parts = value.split(/([-_])/); // 保留分隔符
+    let prefix = '';
+    let hitRandom = false;
+    for (const part of parts) {
+      if (/^[-_]$/.test(part)) {
+        prefix += part;
+        continue;
+      }
+      if (looksRandom(part)) {
+        hitRandom = true;
+        break;
+      }
+      prefix += part;
+    }
+    if (!hitRandom) return null; // 整串都稳定，用不着前缀匹配
+    // 前缀本身要有意义：够长、含字母
+    const core = prefix.replace(/[-_]+$/, '');
+    if (core.length < 4 || !/[a-z]/i.test(core)) return null;
+    return prefix;
+  }
 
   const esc = (value) =>
     globalThis.CSS && typeof CSS.escape === 'function'
@@ -50,7 +100,13 @@
     const list = [];
 
     const id = el.getAttribute('id');
-    if (isStable(id)) list.push(`#${esc(id)}`);
+    if (isStable(id)) {
+      list.push(`#${esc(id)}`);
+    } else {
+      // id 含随机段（如 Reddit 的 post-title-t3_1wd8i8m），退而求其次用前缀匹配
+      const prefix = stablePrefix(id);
+      if (prefix) list.push(`${tag}[id^="${prefix.replace(/"/g, '\\"')}"]`);
+    }
 
     // 部分站点用 data-testid 之类的稳定属性，比类名更可靠
     for (const attr of ['data-testid', 'data-test', 'data-qa', 'itemprop', 'role']) {
@@ -207,5 +263,5 @@
     return text ? `${label} · ${text}${text.length >= 40 ? '…' : ''}` : label;
   }
 
-  globalThis.AITrSelector = { build, describe, isStable, MAX_MATCHES };
+  globalThis.AITrSelector = { build, describe, isStable, looksRandom, stablePrefix, MAX_MATCHES };
 })();
