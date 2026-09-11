@@ -66,35 +66,104 @@
 
   /* ----------------------------------------------------------- 按钮 UI */
 
+  /**
+   * 低调优先：默认半透明的中性色，悬停才显现。
+   * 明暗两套由元素背后的实际背景色决定——站点是白底还是黑底，
+   * 比系统的 prefers-color-scheme 更贴近它真正的长相。
+   */
+  /**
+   * 低调优先，但颜色一律用不透明的 rgb。
+   * 教训：rgba 的 alpha 会和 opacity 相乘（0.05 × 0.38 ≈ 0.019），叠起来等于隐形。
+   * 现在只由 opacity 单独控制淡入淡出，颜色本身是实的，效果可预期。
+   */
   const BUTTON_STYLE = `
     .btn {
       all: unset;
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      height: 22px;
-      padding: 0 8px;
-      border-radius: 6px;
+      justify-content: center;
+      min-width: 22px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 5px;
       cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
                    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 500;
       line-height: 1;
       white-space: nowrap;
-      color: #fff;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
-      opacity: 0.92;
+      opacity: 0.6;
+      transition: opacity 0.12s ease;
+      /* 浅色底（默认） */
+      color: rgb(90, 100, 118);
+      background: rgb(238, 240, 244);
+      border: 1px solid rgb(219, 223, 230);
     }
     .btn:hover { opacity: 1; }
-    .btn[data-state="busy"] { cursor: progress; }
-    .btn[data-state="done"] {
-      background: rgba(15, 23, 42, 0.62);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+
+    /* 深色底 */
+    .btn[data-theme="dark"] {
+      color: rgb(168, 177, 190);
+      background: rgb(42, 47, 56);
+      border-color: rgb(62, 69, 80);
     }
-    .btn[data-state="error"] { background: #b42318; }`;
+
+    /* 进行中：显眼一点，让人知道在跑 */
+    .btn[data-state="busy"] { cursor: progress; opacity: 1; }
+    /* 已翻译：更淡，别干扰阅读 */
+    .btn[data-state="done"] { opacity: 0.45; }
+    .btn[data-state="error"] {
+      opacity: 1;
+      color: rgb(180, 35, 24);
+      background: rgb(253, 235, 233);
+      border-color: rgb(240, 200, 196);
+    }
+    .btn[data-theme="dark"][data-state="error"] {
+      color: rgb(252, 165, 165);
+      background: rgb(60, 32, 32);
+      border-color: rgb(90, 48, 48);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn { transition: none; }
+    }`;
+
+  /* ------------------------------------------------------- 明暗判定 */
+
+  /** 解析 getComputedStyle 给出的 rgb()/rgba() 颜色。 */
+  function parseColor(value) {
+    const match = /^rgba?\(([^)]+)\)$/.exec(String(value).trim());
+    if (!match) return null;
+    const parts = match[1].split(/[\s,/]+/).filter(Boolean).map(Number);
+    if (parts.length < 3 || parts.slice(0, 3).some(Number.isNaN)) return null;
+    const alpha = parts.length > 3 && Number.isFinite(parts[3]) ? parts[3] : 1;
+    return { r: parts[0], g: parts[1], b: parts[2], a: alpha };
+  }
+
+  /**
+   * 从元素往上找第一层不透明的背景色，据此判断深浅。
+   * 站点可能系统是深色但自己是白底，所以不看 prefers-color-scheme。
+   */
+  function detectTheme(element) {
+    let node = element;
+    let depth = 0;
+    while (node && node.nodeType === 1 && depth < 12) {
+      let color = null;
+      try {
+        color = parseColor(getComputedStyle(node).backgroundColor);
+      } catch {
+        color = null;
+      }
+      if (color && color.a > 0.5) {
+        const brightness = (color.r * 299 + color.g * 587 + color.b * 114) / 1000;
+        return brightness < 140 ? 'dark' : 'light';
+      }
+      node = node.parentElement;
+      depth += 1;
+    }
+    return 'light'; // 一路透明到顶，浏览器默认是白底
+  }
 
   /** element -> { host, button, state, originals } */
   const attached = new WeakMap();
@@ -154,6 +223,7 @@
     button.title = '把这个区域的文字翻译成中文';
     button.textContent = '译';
     button.dataset.state = 'idle';
+    button.dataset.theme = detectTheme(element);
     root.appendChild(style);
     root.appendChild(button);
 
@@ -368,6 +438,39 @@
     applyRules();
   }
 
+  /* 站点在运行时切换明暗（通常是改 <html>/<body> 的 class）时，按钮要跟着换 */
+  let themeTimer = 0;
+  function refreshThemes() {
+    for (const element of [...trackedElements]) {
+      const entry = attached.get(element);
+      if (entry && element.isConnected) entry.button.dataset.theme = detectTheme(element);
+    }
+  }
+
+  function watchTheme() {
+    const schedule = () => {
+      clearTimeout(themeTimer);
+      themeTimer = setTimeout(refreshThemes, 200);
+    };
+    try {
+      const observer = new MutationObserver(schedule);
+      const filter = ['class', 'style', 'data-theme', 'data-color-mode', 'theme', 'dark'];
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: filter });
+      if (document.body) {
+        observer.observe(document.body, { attributes: true, attributeFilter: filter });
+      }
+    } catch {
+      /* 忽略 */
+    }
+    try {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', schedule);
+    } catch {
+      /* 忽略 */
+    }
+  }
+
   /* 页面高度变化（图片加载完、内容展开）会让已挂按钮错位 */
   function watchLayout() {
     try {
@@ -435,4 +538,5 @@
   reloadRules();
   watchDom();
   watchLayout();
+  watchTheme();
 })();

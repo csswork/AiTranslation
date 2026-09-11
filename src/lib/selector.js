@@ -107,6 +107,21 @@
     }
   }
 
+  /** 同一个父节点下有多少兄弟也匹配这个选择器。 */
+  function siblingMatches(el, selector) {
+    const parent = el.parentElement;
+    if (!parent) return 1;
+    let count = 0;
+    for (const child of parent.children) {
+      try {
+        if (child.matches(selector)) count += 1;
+      } catch {
+        return 1;
+      }
+    }
+    return count;
+  }
+
   function matchesSelf(el, selector) {
     try {
       return el.matches(selector);
@@ -142,12 +157,21 @@
       if (bare) candidates.push(own);
     }
 
+    const viable = [];
     for (const selector of candidates) {
       if (!matchesSelf(el, selector)) continue;
       const count = countMatches(doc, selector);
-      if (count >= 1 && count <= MAX_MATCHES) {
-        return { selector, label: describe(el), matches: count };
-      }
+      if (count >= 1 && count <= MAX_MATCHES) viable.push({ selector, count });
+    }
+
+    if (viable.length) {
+      // 信息流、评论列表这类重复结构里，每一条往往有各自不同的 id
+      // （#post-abc）。挑中那种 id 的话，AJAX 后续加载的条目就永远匹配不上。
+      // 所以优先选「能匹配到同级多个兄弟」的选择器——那才代表重复结构。
+      // 注意只看同级：满页不相干的元素共用一个类名不算。
+      const repeated = viable.find((item) => siblingMatches(el, item.selector) > 1);
+      const picked = repeated || viable[0];
+      return { selector: picked.selector, label: describe(el), matches: picked.count };
     }
 
     const fallback = structuralPath(el);
