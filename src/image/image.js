@@ -198,6 +198,10 @@
 
     el.blocks.replaceChildren(
       ...list.map((item, index) => {
+        // 无需翻译的不进列表。数量仍在结果栏计数里，
+        // 完整内容在「模型原始回复」里，排查时不会丢信息。
+        // 注意 index 取自原数组，这样和覆盖层的联动高亮仍对得上。
+        if (item.skipped || item.sameAsSource) return null;
         const row = document.createElement('div');
         row.className = 'block';
         row.dataset.index = String(index);
@@ -211,22 +215,16 @@
           dst.textContent = item.translation;
           row.appendChild(dst);
         }
-        if (item.skipped || item.sameAsSource) {
-          row.classList.add('skipped');
+        if (!item.box) {
           const note = document.createElement('div');
           note.className = 'block-note';
-          note.textContent = item.skipped ? '纯数字或符号，无需翻译' : '译文与原文相同，未覆盖';
-          row.appendChild(note);
-        } else if (!item.box) {
-          const note = document.createElement('div');
-          note.className = 'block-note warn';
           note.textContent = '模型没给这一段的坐标';
           row.appendChild(note);
         }
         row.addEventListener('mouseenter', () => highlight(index, true));
         row.addEventListener('mouseleave', () => highlight(index, false));
         return row;
-      })
+      }).filter(Boolean)
     );
     el.copy.disabled = !list.some((b) => b.translation);
     requestAnimationFrame(fitAll);
@@ -308,7 +306,7 @@
       el.rawWrap.hidden = false;
       const withBox = result.blocks.filter((b) => b.box).length;
       el.meta.textContent =
-        `${result.blocks.length} 段，${withBox} 段带坐标 · 坐标制式 ${result.scale.x}×${result.scale.y}`;
+        `识别 ${result.blocks.length} 段，${withBox} 段带坐标 · 坐标制式 ${result.scale.x}×${result.scale.y}`;
 
       if (!result.blocks.length) {
         renderBlocks([]);
@@ -349,8 +347,11 @@
       if (signal.aborted) return;
 
       const done = new Map(translatable.map((b, i) => [b, translations[i] || '']));
-      renderBlocks(tagSkipped(result.blocks, done));
-      const tail = skipped ? `，跳过 ${skipped} 段` : '';
+      const tagged = tagSkipped(result.blocks, done);
+      renderBlocks(tagged);
+      // 列表里不显示被跳过的条目，所以在状态里把数量说清楚
+      const hidden = tagged.filter((b) => b.skipped || b.sameAsSource).length;
+      const tail = hidden ? `，隐藏 ${hidden} 段无需翻译的` : '';
       setStatus(`完成${tail} · 用时 ${((Date.now() - started) / 1000).toFixed(1)}s`);
     } catch (err) {
       if (signal.aborted || err?.name === 'AbortError') return;
