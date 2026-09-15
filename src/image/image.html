@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>图片翻译 · AI 划词翻译</title>
+    <link rel="stylesheet" href="image.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="head">
+        <img class="mark" src="../../icons/icon128.png" alt="" />
+        <div class="titles">
+          <h1>图片翻译</h1>
+          <p class="sub">
+            识别图片里的文字并翻译成中文，译文按识别到的位置盖在原图上。
+            <b>目前是验证阶段</b>，重点看方框位置准不准。
+          </p>
+        </div>
+        <button id="settings" class="btn ghost small" type="button">设置</button>
+      </header>
+
+      <div class="bar">
+        <label class="pick">
+          <span class="pick-label">平台</span>
+          <select id="provider"></select>
+        </label>
+        <label class="pick">
+          <span class="pick-label">模型</span>
+          <input id="model" list="visionModels" spellcheck="false" />
+          <datalist id="visionModels"></datalist>
+        </label>
+        <label class="pick">
+          <span class="pick-label">显示</span>
+          <select id="mode">
+            <option value="both">原文框 + 译文</option>
+            <option value="translation">只看译文</option>
+            <option value="box">只看方框</option>
+            <option value="none">只看原图</option>
+          </select>
+        </label>
+        <span class="status" id="status"></span>
+        <button id="run" class="btn" type="button" disabled>识别并翻译</button>
+      </div>
+
+      <div class="panes">
+        <section class="pane">
+          <div class="pane-head">
+            <span class="pane-title">图片</span>
+            <span class="note" id="imageNote"></span>
+            <button id="clear" class="btn ghost small" type="button" hidden>清空</button>
+          </div>
+
+          <div class="stage" id="stage">
+            <div class="drop" id="drop">
+              <p class="drop-title">把图片拖进来</p>
+              <p class="drop-body">也可以直接 <b>Ctrl / ⌘ + V</b> 粘贴，或点这里选择文件</p>
+              <input id="file" type="file" accept="image/*" hidden />
+              <div class="url-row">
+                <input id="url" type="url" spellcheck="false" placeholder="或粘贴图片网址，回车加载" />
+              </div>
+            </div>
+            <div class="canvas" id="canvas" hidden>
+              <img id="preview" alt="" />
+              <div class="overlay" id="overlay"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="pane">
+          <div class="pane-head">
+            <span class="pane-title">识别结果</span>
+            <span class="note" id="meta"></span>
+            <button id="copy" class="btn ghost small" type="button" disabled>复制译文</button>
+          </div>
+          <div class="out-body">
+            <div class="error" id="error" hidden><p id="errorText"></p></div>
+            <div class="blocks" id="blocks"></div>
+            <details class="raw" id="rawWrap" hidden>
+              <summary>模型原始回复</summary>
+              <pre id="raw"></pre>
+            </details>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="../lib/lang.js"></script>
+    <script src="../lib/settings.js"></script>
+    <script src="../lib/providers.js"></script>
+    <script src="image.js"></script>
+  </body>
+</html>

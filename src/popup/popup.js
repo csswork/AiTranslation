@@ -5,6 +5,7 @@
     model: document.getElementById('model'),
     keyState: document.getElementById('keyState'),
     panel: document.getElementById('panel'),
+    image: document.getElementById('image'),
     targetName: document.getElementById('targetName'),
     open: document.getElementById('open'),
   };
@@ -36,6 +37,11 @@
 
   el.panel.addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('src/translate/translate.html') });
+    window.close();
+  });
+
+  el.image.addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('src/image/image.html') });
     window.close();
   });
 

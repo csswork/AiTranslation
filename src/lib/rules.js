@@ -84,6 +84,31 @@
     return { rules: await saveRules(all), rule, added: true };
   }
 
+  /**
+   * 修改某条规则的选择器。
+   * 必须先查重：normalize() 会把重复选择器静默丢掉，撞车的话用户会莫名少一条规则。
+   * @returns {{ok: boolean, error?: string, rules: object}}
+   */
+  async function updateRule(host, id, selector) {
+    const key = hostKey(host);
+    const clean = str(selector);
+    const all = await loadRules();
+    if (!clean) return { ok: false, error: '选择器不能为空', rules: all };
+
+    const list = all[key];
+    const target = list && list.find((item) => item.id === id);
+    if (!target) return { ok: false, error: '规则不存在', rules: all };
+    if (target.selector === clean) return { ok: true, rules: all };
+    if (list.some((item) => item.id !== id && item.selector === clean)) {
+      return { ok: false, error: '这个网站下已经有相同的选择器', rules: all };
+    }
+
+    all[key] = list.map((item) =>
+      item.id === id ? { ...item, selector: clean, label: clean } : item
+    );
+    return { ok: true, rules: await saveRules(all) };
+  }
+
   async function removeRule(host, id) {
     const key = hostKey(host);
     const all = await loadRules();
@@ -113,6 +138,7 @@
     hostKey,
     rulesFor,
     addRule,
+    updateRule,
     removeRule,
     removeHost,
     clearAll,

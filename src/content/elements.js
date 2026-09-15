@@ -168,16 +168,41 @@
   /** element -> { host, button, state, originals } */
   const attached = new WeakMap();
   let layer = null;
+  /** 滚动期间整层隐藏的状态，与 layer 同生命周期，所以声明在一起。 */
+  let hiddenByScroll = false;
 
   function ensureLayer() {
     if (layer && layer.isConnected) return layer;
+    hiddenByScroll = false; // 新建的层是显示状态
     layer = document.createElement('div');
+    // 用 fixed：按钮按视口坐标摆放，页面滚动、内层容器滚动、
+    // 元素本身是 sticky/fixed —— 三种情况都能跟住。
     layer.style.cssText =
-      'all: initial; position: absolute !important; top: 0 !important; left: 0 !important;' +
+      'all: initial; position: fixed !important; top: 0 !important; left: 0 !important;' +
       'width: 0 !important; height: 0 !important; pointer-events: none !important;' +
       'z-index: 2147483645 !important;';
     (document.body || document.documentElement).appendChild(layer);
     return layer;
+  }
+
+  /** 只写不读，供批量重排复用。 */
+  function applyPosition(entry, rect) {
+    const host = entry.host;
+    if (!rect.width && !rect.height) {
+      host.style.display = 'none';
+      return;
+    }
+    const vw = window.innerWidth || document.documentElement.clientWidth || 0;
+    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    // 滚出视口（也包括被内层滚动容器裁掉）时收起来，
+    // 否则按钮会飘在不相干的内容上面
+    if (vw && vh && (rect.bottom < 0 || rect.top > vh || rect.right < 0 || rect.left > vw)) {
+      host.style.display = 'none';
+      return;
+    }
+    host.style.display = 'block';
+    host.style.top = `${Math.round(rect.top + 2)}px`;
+    host.style.left = `${Math.round(rect.right - 8)}px`;
   }
 
   function position(entry) {
@@ -188,17 +213,7 @@
     }
     // 页面整块重建时宿主可能被一起移走，重新挂回去
     if (!entry.host.isConnected) ensureLayer().appendChild(entry.host);
-    const rect = entry.element.getBoundingClientRect();
-    if (!rect.width && !rect.height) {
-      entry.host.style.display = 'none';
-      return;
-    }
-    entry.host.style.display = 'block';
-    // 用文档坐标，这样按钮会跟着页面一起滚，不必监听 scroll
-    const top = rect.top + window.scrollY;
-    const left = rect.right + window.scrollX;
-    entry.host.style.top = `${Math.round(Math.max(0, top + 2))}px`;
-    entry.host.style.left = `${Math.round(Math.max(0, left - 8))}px`;
+    applyPosition(entry, entry.element.getBoundingClientRect());
   }
 
   function setState(entry, state, text) {
@@ -212,7 +227,7 @@
 
     const host = document.createElement('div');
     host.style.cssText =
-      'all: initial; position: absolute !important; pointer-events: auto !important;' +
+      'all: initial; position: fixed !important; pointer-events: auto !important;' +
       'transform: translateX(-100%) !important;';
     const root = host.attachShadow({ mode: 'closed' });
     const style = document.createElement('style');
@@ -255,6 +270,38 @@
     repositionTimer = setTimeout(() => repositionAll(), delay);
   }
   window.addEventListener('resize', () => scheduleReposition());
+
+  /**
+   * 滚动期间把整层藏起来，停下来再摆好显示。
+   * 逐帧跟随一来观感上会有拖影，二来每帧都要读几十个 rect，代价不小。
+   * 藏起来只需对 layer 写一次 display，滚动全程零 getBoundingClientRect。
+   */
+  const SCROLL_SETTLE = 150;
+  let scrollTimer = 0;
+
+  function setLayerHidden(hidden) {
+    if (!layer || hiddenByScroll === hidden) return;
+    hiddenByScroll = hidden;
+    // 用 display 而不是 visibility：宿主的 cssText 里有 all: initial，
+    // 会把 visibility 重置成 visible，父层的 hidden 盖不住它。
+    layer.style.setProperty('display', hidden ? 'none' : 'block', 'important');
+  }
+
+  // scroll 事件不冒泡，但在 window 上用捕获能收到内层滚动容器的事件
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!layer) return;
+      setLayerHidden(true);
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        // 顺序不能反：先摆好位置再显示，否则会闪一下旧位置
+        repositionAll();
+        setLayerHidden(false);
+      }, SCROLL_SETTLE);
+    },
+    { capture: true, passive: true }
+  );
 
   /** WeakMap 不能遍历，另外留一份普通集合用于重新定位。 */
   const trackedElements = new Set();
@@ -397,11 +444,24 @@
 
   /** AJAX 插入的内容会把已有元素挤动，已挂的按钮要跟着重新定位。 */
   function repositionAll() {
+    // 先集中读 rect、再集中写样式。读写交错会反复触发强制布局，
+    // 滚动时几十个按钮一起算会明显掉帧。
+    const pending = [];
     for (const element of [...trackedElements]) {
       const entry = attached.get(element);
-      if (entry) position(entry);
-      else trackedElements.delete(element);
+      if (!entry) {
+        trackedElements.delete(element);
+        continue;
+      }
+      if (!element.isConnected) {
+        entry.host.remove();
+        trackedElements.delete(element);
+        continue;
+      }
+      if (!entry.host.isConnected) ensureLayer().appendChild(entry.host);
+      pending.push([entry, element.getBoundingClientRect()]);
     }
+    for (const [entry, rect] of pending) applyPosition(entry, rect);
   }
 
   function applyRules() {
