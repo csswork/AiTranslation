@@ -164,9 +164,10 @@
     .mask {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px; text-align: center;
       background: rgba(15, 23, 42, 0.55);
       color: #fff; border-radius: inherit;
-      font: 500 13px/1 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font: 500 13px/1.45 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
     .spin {
       width: 15px; height: 15px; flex: none;
@@ -436,7 +437,7 @@
   function showFailure(message) {
     if (!mask) return;
     mask.label.textContent = message;
-    setTimeout(hideMask, 2600);
+    setTimeout(hideMask, 4500); // 提示可能较长，留够阅读时间
   }
 
   /* ---------------------------------------------------------- 主流程 */
@@ -466,7 +467,14 @@
           imageSize: grabbed.parts[i].size,
         });
         if (!reply?.ok) {
-          showFailure(reply?.error || '识别失败');
+          // 读不到像素只能把网址交给接口去取，这时若站点有防盗链就会失败。
+          // 后台代取需要 <all_urls> 权限，代价太大；复制图片再粘贴到
+          // 翻译面板可以绕开，所以把这条出路直接告诉用户。
+          showFailure(
+            grabbed.byUrl
+              ? '这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板'
+              : reply?.error || '识别失败'
+          );
           return;
         }
         perTile.push(reply.blocks);
