@@ -381,7 +381,12 @@
       }
     }
     if (max <= 1.000001) return { x: 1, y: 1 }; // 0-1 比例
-    if (max > 1000 && imageSize?.width && imageSize?.height) {
+
+    // 判像素还是 0-1000，看观测到的最大值更接近哪个参照。
+    // 不能简单用「> 1000 就算像素」：模型吐一个 1001 这样的毛刺，
+    // 整张图就会被按图宽换算，位置直接减半。
+    const maxSide = Math.max(imageSize?.width || 0, imageSize?.height || 0);
+    if (maxSide > 1000 && Math.abs(max - maxSide) < Math.abs(max - 1000)) {
       return { x: imageSize.width, y: imageSize.height }; // 像素
     }
     return { x: 1000, y: 1000 }; // 提示词里约定的 0-1000
@@ -443,6 +448,8 @@
     const blocks = parsed
       .map((item) => ({
         text: typeof item?.text === 'string' ? item.text : String(item?.text ?? ''),
+        // 保留原始坐标：制式判错时可以在本地换一种换算重画，不必重新请求
+        rawBox: Array.isArray(item?.box) ? item.box.slice(0, 4) : null,
         box: normalizeBox(item?.box, scale),
       }))
       .filter((item) => item.text.trim());

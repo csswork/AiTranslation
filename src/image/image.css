@@ -130,6 +130,11 @@ button:focus-visible, select:focus-visible, input:focus-visible {
   background: rgba(17, 20, 26, 0.78);
   border-radius: 2px;
 }
+/* 图上的文字区域常常很窄，给个下限，否则译文只能露出一角。
+   只在显示译文的模式下放大——「只看方框」要如实反映识别到的范围，
+   放大了就没法判断坐标准不准了。 */
+.mode-both .box, .mode-translation .box { min-width: 22px; min-height: 17px; }
+
 /* 「只看方框」时 fill 是隐藏的，得单独给一条细线，否则什么都看不见 */
 .mode-box .box { outline: 1px solid rgba(99, 102, 241, 0.7); outline-offset: -1px; }
 .mode-box .box .fill { display: none; }
@@ -150,7 +155,11 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 .block:hover, .block.active { border-color: var(--accent); background: var(--accent-soft); }
 .block-src { font-size: 12px; color: var(--muted); overflow-wrap: break-word; }
 .block-dst { margin-top: 3px; font-size: 13.5px; overflow-wrap: break-word; }
-.block-no-box { margin-top: 4px; font-size: 11px; color: var(--err); }
+.block-note { margin-top: 4px; font-size: 11px; color: var(--faint); }
+.block-note.warn { color: var(--err); }
+/* 无需翻译的条目压低存在感，但保留在列表里便于核对识别结果 */
+.block.skipped { opacity: 0.55; }
+.block.skipped:hover { opacity: 1; }
 
 .error {
   display: flex; flex-direction: column; align-items: flex-start; gap: 10px;

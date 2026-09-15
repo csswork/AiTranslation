@@ -9,6 +9,7 @@
 (() => {
   const S = globalThis.AITrSettings;
   const P = globalThis.AITrProviders;
+  const L = globalThis.AITrLang;
 
   /** 各平台支持视觉的模型。识图必须用这些，普通文本模型会报错。 */
   const VISION_MODELS = {
@@ -22,7 +23,7 @@
   const $ = (id) => document.getElementById(id);
   const el = {
     provider: $('provider'), model: $('model'), models: $('visionModels'),
-    mode: $('mode'), status: $('status'), run: $('run'),
+    mode: $('mode'), scale: $('scale'), status: $('status'), run: $('run'),
     stage: $('stage'), drop: $('drop'), file: $('file'), url: $('url'),
     canvas: $('canvas'), preview: $('preview'), overlay: $('overlay'),
     imageNote: $('imageNote'), clear: $('clear'),
@@ -37,6 +38,8 @@
   /** 当前图片：displaySrc 用于显示，sendSrc 用于送检，size 是送检时的尺寸 */
   let image = null;
   let blocks = [];
+  /** 最近一次识别的原始结果，切换坐标制式时在本地重算，不用重新请求。 */
+  let lastResult = null;
 
   const setStatus = (text, busy) => {
     el.status.textContent = text || '';
@@ -141,6 +144,7 @@
   function reset() {
     image = null;
     blocks = [];
+    lastResult = null;
     controller?.abort();
     controller = null;
     el.preview.removeAttribute('src');
@@ -167,7 +171,11 @@
 
     el.overlay.replaceChildren(
       ...list.map((item, index) => {
-        if (!item.box) return document.createComment('no box');
+        // 不盖在图上的三种情况：没有坐标、纯数字符号无需翻译、
+        // 以及译文和原文一模一样（盖上去等于什么也没做，只是挡住原图）
+        if (!item.box || item.skipped || item.sameAsSource) {
+          return document.createComment('skip');
+        }
         const node = document.createElement('div');
         node.className = 'box';
         node.dataset.index = String(index);
@@ -179,6 +187,8 @@
         const fill = document.createElement('div');
         fill.className = 'fill';
         fill.textContent = item.translation || item.text;
+        // 小框放不下时会裁切，鼠标悬停能看到完整内容
+        node.title = item.translation || item.text;
         node.appendChild(fill);
         node.addEventListener('mouseenter', () => highlight(index, true));
         node.addEventListener('mouseleave', () => highlight(index, false));
@@ -201,11 +211,17 @@
           dst.textContent = item.translation;
           row.appendChild(dst);
         }
-        if (!item.box) {
-          const warn = document.createElement('div');
-          warn.className = 'block-no-box';
-          warn.textContent = '模型没给这一段的坐标';
-          row.appendChild(warn);
+        if (item.skipped || item.sameAsSource) {
+          row.classList.add('skipped');
+          const note = document.createElement('div');
+          note.className = 'block-note';
+          note.textContent = item.skipped ? '纯数字或符号，无需翻译' : '译文与原文相同，未覆盖';
+          row.appendChild(note);
+        } else if (!item.box) {
+          const note = document.createElement('div');
+          note.className = 'block-note warn';
+          note.textContent = '模型没给这一段的坐标';
+          row.appendChild(note);
         }
         row.addEventListener('mouseenter', () => highlight(index, true));
         row.addEventListener('mouseleave', () => highlight(index, false));
@@ -213,7 +229,47 @@
       })
     );
     el.copy.disabled = !list.some((b) => b.translation);
+    requestAnimationFrame(fitAll);
   }
+
+  /**
+   * 按框的大小自适应字号。
+   * 图上的文字区域往往很小，固定字号会被裁掉一半。
+   * 先按框高估一个字号，放不下再按溢出比例缩一次——两次测量就够，
+   * 不用循环逼近（每次测量都会触发一次强制布局）。
+   */
+  const FONT_MAX = 14;
+  const FONT_MIN = 8;
+
+  function fitOne(node) {
+    const fill = node.querySelector('.fill');
+    if (!fill) return;
+    const w = node.clientWidth;
+    const h = node.clientHeight;
+    if (!w || !h) return;
+
+    const clamp = (v) => Math.min(FONT_MAX, Math.max(FONT_MIN, v));
+    let size = clamp(h * 0.62);
+    fill.style.fontSize = `${size.toFixed(1)}px`;
+
+    const overflowing = () => fill.scrollWidth > w + 1 || fill.scrollHeight > h + 1;
+    if (overflowing()) {
+      const ratio = Math.min(w / Math.max(1, fill.scrollWidth), h / Math.max(1, fill.scrollHeight));
+      size = clamp(size * ratio * 0.95);
+      fill.style.fontSize = `${size.toFixed(1)}px`;
+    }
+  }
+
+  function fitAll() {
+    for (const node of el.overlay.querySelectorAll('.box')) fitOne(node);
+  }
+
+  // 图片随窗口缩放后，框的像素尺寸变了，字号要重算
+  let fitTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitAll, 150);
+  });
 
   function highlight(index, on) {
     for (const node of el.overlay.querySelectorAll('.box')) {
@@ -247,11 +303,12 @@
       });
       if (signal.aborted) return;
 
+      lastResult = result;
       el.raw.textContent = result.raw;
       el.rawWrap.hidden = false;
       const withBox = result.blocks.filter((b) => b.box).length;
       el.meta.textContent =
-        `${result.blocks.length} 段，${withBox} 段带坐标 · 坐标制式 ${result.scale.x}`;
+        `${result.blocks.length} 段，${withBox} 段带坐标 · 坐标制式 ${result.scale.x}×${result.scale.y}`;
 
       if (!result.blocks.length) {
         renderBlocks([]);
@@ -259,19 +316,42 @@
         return;
       }
 
-      // 先把识别结果画出来，翻译失败也能看到方框准不准
-      renderBlocks(result.blocks.map((b) => ({ ...b, translation: '' })));
+      // 星级、价格、尺码这类纯数字符号没有翻译的意义，
+      // 送去翻译只会原样返回，白花 token 还会盖住原图。
+      // 这里复用划词菜单同一套判断。
+      const translatable = result.blocks.filter((b) => L.shouldOffer(b.text));
+      const skipped = result.blocks.length - translatable.length;
+      const tagSkipped = (list, done) =>
+        list.map((b) => {
+          const translation = done.get(b) || '';
+          return {
+            ...b,
+            skipped: !done.has(b),
+            translation,
+            sameAsSource: Boolean(translation) && translation.trim() === b.text.trim(),
+          };
+        });
 
-      setStatus(`正在翻译 ${result.blocks.length} 段…`, true);
+      // 先把识别结果画出来，翻译失败也能看到方框准不准
+      renderBlocks(tagSkipped(result.blocks, new Map(translatable.map((b) => [b, '']))));
+
+      if (!translatable.length) {
+        setStatus(`识别到 ${result.blocks.length} 段，都无需翻译`);
+        return;
+      }
+
+      setStatus(`正在翻译 ${translatable.length} 段…`, true);
       const translations = await P.translateBatch({
-        texts: result.blocks.map((b) => b.text),
+        texts: translatable.map((b) => b.text),
         settings,
         signal,
       });
       if (signal.aborted) return;
 
-      renderBlocks(result.blocks.map((b, i) => ({ ...b, translation: translations[i] || '' })));
-      setStatus(`完成 · 用时 ${((Date.now() - started) / 1000).toFixed(1)}s`);
+      const done = new Map(translatable.map((b, i) => [b, translations[i] || '']));
+      renderBlocks(tagSkipped(result.blocks, done));
+      const tail = skipped ? `，跳过 ${skipped} 段` : '';
+      setStatus(`完成${tail} · 用时 ${((Date.now() - started) / 1000).toFixed(1)}s`);
     } catch (err) {
       if (signal.aborted || err?.name === 'AbortError') return;
       setStatus('');
@@ -339,6 +419,28 @@
   el.run.addEventListener('click', run);
   el.mode.addEventListener('change', () => {
     el.overlay.className = `overlay mode-${el.mode.value}`;
+    requestAnimationFrame(fitAll);
+  });
+
+  /** 按当前选择算出换算系数；选「自动」就用识别时判定的那个。 */
+  function currentScale() {
+    const choice = el.scale.value;
+    if (choice === 'ratio') return { x: 1, y: 1 };
+    if (choice === '1000') return { x: 1000, y: 1000 };
+    if (choice === 'pixel' && image?.size) {
+      return { x: image.size.width, y: image.size.height };
+    }
+    return lastResult?.scale || { x: 1000, y: 1000 };
+  }
+
+  // 自动判定偶尔会错（模型坐标带毛刺时）。这里在本地重算重画，
+  // 不重新请求接口，切换是免费的。
+  el.scale.addEventListener('change', () => {
+    if (!lastResult) return;
+    const scale = currentScale();
+    blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale) }));
+    renderBlocks(blocks);
+    el.meta.textContent = `${blocks.length} 段 · 坐标制式 ${scale.x}×${scale.y}`;
   });
   el.copy.addEventListener('click', async () => {
     const text = blocks.map((b) => b.translation).filter(Boolean).join('\n');
