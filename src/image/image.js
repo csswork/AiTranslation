@@ -11,19 +11,20 @@
   const P = globalThis.AITrProviders;
   const L = globalThis.AITrLang;
 
-  /** 各平台支持视觉的模型。识图必须用这些，普通文本模型会报错。 */
-  const VISION_MODELS = {
-    deepseek: ['deepseek-flash'],
-    openai: ['gpt-5.6-luna', 'gpt-5.6-terra', 'gpt-6-astra'],
-  };
-
-  /** 送去识别前的最长边。太大既费流量也费 token，接口那边也会再缩。 */
-  const MAX_SEND_SIDE = 2048;
+  /**
+   * 送检尺寸限制。按「总像素」而不是「最长边」来限——
+   * 长图按最长边缩会把宽度压没，文字就糊了。
+   * 例：700×4400 按最长边 2048 会缩成 326×2048（宽度只剩 326）。
+   */
+  const MAX_PIXELS = 4000000;
+  const MAX_SIDE = 8000;
+  const sendScale = (w, h) =>
+    Math.min(1, Math.sqrt(MAX_PIXELS / (w * h)), MAX_SIDE / Math.max(w, h));
 
   const $ = (id) => document.getElementById(id);
   const el = {
     provider: $('provider'), model: $('model'), models: $('visionModels'),
-    mode: $('mode'), scale: $('scale'), status: $('status'), run: $('run'),
+    mode: $('mode'), scale: $('scale'), order: $('order'), status: $('status'), run: $('run'),
     stage: $('stage'), drop: $('drop'), file: $('file'), url: $('url'),
     canvas: $('canvas'), preview: $('preview'), overlay: $('overlay'),
     imageNote: $('imageNote'), clear: $('clear'),
@@ -91,10 +92,10 @@
   /** 超过上限就等比缩小；顺便把跨域图片转成 data URL（失败则保留原网址）。 */
   function prepare(img, src) {
     const { naturalWidth: w, naturalHeight: h } = img;
-    const scale = Math.min(1, MAX_SEND_SIDE / Math.max(w, h));
+    const scale = sendScale(w, h);
     const needResize = scale < 1;
     if (!needResize && src.startsWith('data:')) {
-      return { sendSrc: src, size: { width: w, height: h }, resized: false };
+      return { sendSrc: src, size: { width: w, height: h }, resized: false, natural: { w, h } };
     }
     try {
       const canvas = document.createElement('canvas');
@@ -105,10 +106,14 @@
         sendSrc: canvas.toDataURL('image/jpeg', 0.9),
         size: { width: canvas.width, height: canvas.height },
         resized: needResize,
+        natural: { w, h },
       };
     } catch {
       // 跨域图片会污染画布，读不出像素。直接把网址交给接口去取。
-      return { sendSrc: src, size: { width: w, height: h }, resized: false, byUrl: true };
+      return {
+        sendSrc: src, size: { width: w, height: h },
+        resized: false, byUrl: true, natural: { w, h },
+      };
     }
   }
 
@@ -119,7 +124,13 @@
       const img = await loadImage(src);
       const prepared = prepare(img, src);
       image = { displaySrc: src, ...prepared };
+      // 坐标是相对值，显示一律用原图，不用送检那份缩过的
       el.preview.src = src;
+      // 长图若按高度缩进窗口，宽度会小到看不清，改成按宽度铺开并纵向滚动
+      el.canvas.classList.toggle(
+        'tall',
+        img.naturalHeight / Math.max(1, img.naturalWidth) > 1.6
+      );
       el.drop.hidden = true;
       el.canvas.hidden = false;
       el.clear.hidden = false;
@@ -297,6 +308,7 @@
         imageSize: image.size,
         settings,
         model: el.model.value.trim() || undefined,
+        order: el.order.value,
         signal,
       });
       if (signal.aborted) return;
@@ -436,13 +448,19 @@
 
   // 自动判定偶尔会错（模型坐标带毛刺时）。这里在本地重算重画，
   // 不重新请求接口，切换是免费的。
-  el.scale.addEventListener('change', () => {
+  /** 换一种换算方式重画。都在本地算，不重新请求接口，切换是免费的。 */
+  function requantize() {
     if (!lastResult) return;
     const scale = currentScale();
-    blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale) }));
+    const order = el.order.value;
+    blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale, order) }));
     renderBlocks(blocks);
-    el.meta.textContent = `${blocks.length} 段 · 坐标制式 ${scale.x}×${scale.y}`;
-  });
+    el.meta.textContent = `${blocks.length} 段 · 制式 ${scale.x}×${scale.y} · 顺序 ${order}`;
+  }
+
+  // 自动判定偶尔会错（模型坐标带毛刺、或顺序与提示词不一致时）
+  el.scale.addEventListener('change', requantize);
+  el.order.addEventListener('change', requantize);
   el.copy.addEventListener('click', async () => {
     const text = blocks.map((b) => b.translation).filter(Boolean).join('\n');
     if (!text) return;
@@ -460,7 +478,7 @@
   el.settings.addEventListener('click', () => chrome.runtime.openOptionsPage());
 
   function renderModelOptions() {
-    const list = VISION_MODELS[el.provider.value] || [];
+    const list = S.VISION_MODELS[el.provider.value] || [];
     el.models.replaceChildren(
       ...list.map((name) => {
         const option = document.createElement('option');

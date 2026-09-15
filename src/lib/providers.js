@@ -392,17 +392,26 @@
     return { x: 1000, y: 1000 }; // 提示词里约定的 0-1000
   }
 
-  /** 按给定制式把一个 box 换算成 0-1 的比例。 */
-  function normalizeBox(box, scale = { x: 1000, y: 1000 }) {
+  /**
+   * 按给定制式把一个 box 换算成 0-1 的比例。
+   * @param {'xyxy'|'yxyx'} order 坐标顺序。提示词要求 [x0,y0,x1,y1]，
+   *   但不少视觉模型的惯例是 [y0,x0,y1,x1]（先纵后横）。两者搞混时，
+   *   在长图上会表现为「框特别高、位置整体偏移」。
+   */
+  function normalizeBox(box, scale = { x: 1000, y: 1000 }, order = 'xyxy') {
     if (!Array.isArray(box) || box.length < 4) return null;
     const nums = box.slice(0, 4).map(Number);
     if (nums.some((n) => !Number.isFinite(n))) return null;
 
+    const [a, b, c, d] = nums;
+    const [rawX0, rawY0, rawX1, rawY1] =
+      order === 'yxyx' ? [b, a, d, c] : [a, b, c, d];
+
     const clamp = (v) => Math.min(1, Math.max(0, v));
-    const x0 = clamp(nums[0] / scale.x);
-    const y0 = clamp(nums[1] / scale.y);
-    const x1 = clamp(nums[2] / scale.x);
-    const y1 = clamp(nums[3] / scale.y);
+    const x0 = clamp(rawX0 / scale.x);
+    const y0 = clamp(rawY0 / scale.y);
+    const x1 = clamp(rawX1 / scale.x);
+    const y1 = clamp(rawY1 / scale.y);
     return {
       x: Math.min(x0, x1),
       y: Math.min(y0, y1),
@@ -416,7 +425,7 @@
    * @param {string} image data: URL 或 http(s) 图片地址
    * @returns {Promise<{blocks: Array<{text: string, box: object|null}>, raw: string}>}
    */
-  async function readImageText({ image, settings, providerId, model, imageSize, signal }) {
+  async function readImageText({ image, settings, providerId, model, imageSize, order, signal }) {
     const S = globalThis.AITrSettings;
     const base = S.resolveProvider(settings, providerId);
     // 识图需要指定支持视觉的模型，允许调用方覆盖配置里的模型
@@ -450,7 +459,7 @@
         text: typeof item?.text === 'string' ? item.text : String(item?.text ?? ''),
         // 保留原始坐标：制式判错时可以在本地换一种换算重画，不必重新请求
         rawBox: Array.isArray(item?.box) ? item.box.slice(0, 4) : null,
-        box: normalizeBox(item?.box, scale),
+        box: normalizeBox(item?.box, scale, order),
       }))
       .filter((item) => item.text.trim());
     return { blocks, raw, scale };

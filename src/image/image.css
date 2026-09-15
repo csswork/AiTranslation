@@ -114,6 +114,9 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 
 .canvas { position: relative; margin: auto; line-height: 0; }
 .canvas img { display: block; max-width: 100%; height: auto; border-radius: 8px; }
+/* 长图按宽度铺开、纵向滚动；按高度缩会把宽度压到看不清 */
+.canvas.tall { width: 100%; margin: 0 auto; }
+.stage { align-items: flex-start; }
 .overlay { position: absolute; inset: 0; pointer-events: none; }
 
 /* 识别到的每一块 */

@@ -31,6 +31,21 @@
   const PROVIDER_ORDER = ['openai', 'deepseek'];
 
   /**
+   * 支持图像理解的模型。识图必须用这些，普通文本模型会报错。
+   * 与对话模型分开记：用户在设置里选的模型未必支持视觉。
+   */
+  const VISION_MODELS = {
+    openai: ['gpt-5.6-luna', 'gpt-5.6-terra', 'gpt-6-astra'],
+    deepseek: ['deepseek-flash'],
+  };
+
+  /** 某个平台识图该用哪个模型。 */
+  function visionModel(providerId) {
+    const list = VISION_MODELS[providerId] || [];
+    return list[0] || '';
+  }
+
+  /**
    * 目标语言。`menu` 用于右键菜单标题（默认即「翻译成中文」），
    * `prompt` 是喂给模型的说法。
    */
@@ -120,6 +135,8 @@
   globalThis.AITrSettings = {
     PROVIDERS,
     PROVIDER_ORDER,
+    VISION_MODELS,
+    visionModel,
     TARGETS,
     DEFAULTS,
     normalize,

@@ -40,7 +40,8 @@
         "src/lib/rules.js",
         "src/lib/selector.js",
         "src/content/content.js",
-        "src/content/elements.js"
+        "src/content/elements.js",
+        "src/content/image.js"
       ],
       "run_at": "document_idle",
       "all_frames": true,

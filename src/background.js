@@ -7,6 +7,7 @@ import './lib/providers.js';
 
 const MENU_ID = 'ai-translate-selection';
 const ELEMENT_MENU_ID = 'ai-translate-element';
+const IMAGE_MENU_ID = 'ai-translate-image';
 const PORT_NAME = 'ai-translate-panel';
 // 必须与 manifest 的 content_scripts 保持一致
 const CONTENT_FILES = [
@@ -15,6 +16,7 @@ const CONTENT_FILES = [
   'src/lib/selector.js',
   'src/content/content.js',
   'src/content/elements.js',
+  'src/content/image.js',
 ];
 
 /** `${tabId}:${frameId}` -> 该框架最近一次上报的选中文字（保留换行）。 */
@@ -67,7 +69,18 @@ function createMenu() {
     await create({
       id: ELEMENT_MENU_ID,
       title: '为这个区域添加翻译按钮',
-      contexts: ['page', 'link', 'image', 'video', 'audio'],
+      // 只留 'page'。'page' 的含义是「点击处不是链接/图片/视频/音频」，
+      // 所以右键图片时这一项一定不出现——图片被 <a> 包着也一样，
+      // 那种情况上下文同时是 image 和 link，留着 'link' 就会撞车。
+      // 代价：整块是链接的区域（信息流卡片）加不了元素规则，
+      // 可以右键它外层的容器。
+      contexts: ['page'],
+      visible: true,
+    });
+    await create({
+      id: IMAGE_MENU_ID,
+      title: '翻译图片里的文字',
+      contexts: ['image'],
       visible: true,
     });
     console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
@@ -223,6 +236,19 @@ async function startTranslation({ tabId, text, providerId }) {
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  if (info.menuItemId === IMAGE_MENU_ID && tab?.id) {
+    if (!(await ensureContentScript(tab.id))) return;
+    try {
+      await chrome.tabs.sendMessage(
+        tab.id,
+        { type: 'translate-image', srcUrl: info.srcUrl },
+        { frameId: info.frameId ?? 0 }
+      );
+    } catch (err) {
+      console.warn('[AI 划词翻译] 无法在该页面翻译图片：', err?.message);
+    }
+    return;
+  }
   if (info.menuItemId === ELEMENT_MENU_ID && tab?.id) {
     if (!(await ensureContentScript(tab.id))) return;
     try {
@@ -259,6 +285,41 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     updateMenuVisibility(message.text);
     return false;
+  }
+
+  // 识图 + 翻译一次做完，内容脚本只负责显示
+  if (type === 'read-image') {
+    (async () => {
+      try {
+        const settings = await AITrSettings.loadSettings();
+        const result = await AITrProviders.readImageText({
+          image: message.image,
+          imageSize: message.imageSize,
+          settings,
+          model: AITrSettings.visionModel(settings.provider),
+        });
+
+        // 星级、价格、尺码这类纯数字符号没有翻译的意义，
+        // 送去翻译只会原样返回，还会白白盖住原图
+        const worth = result.blocks.filter((b) => b.box && AITrLang.shouldOffer(b.text));
+        let translations = [];
+        if (worth.length) {
+          translations = await AITrProviders.translateBatch({
+            texts: worth.map((b) => b.text),
+            settings,
+          });
+        }
+        const blocks = worth
+          .map((b, i) => ({ text: b.text, box: b.box, translation: translations[i] || '' }))
+          // 译文和原文一模一样的，盖上去等于只是挡住原图
+          .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
+
+        sendResponse({ ok: true, blocks, total: result.blocks.length });
+      } catch (err) {
+        sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null });
+      }
+    })();
+    return true; // 异步回复
   }
 
   // 内容脚本不能直接请求接口（会受页面 CORS 限制），统一由这里代发
