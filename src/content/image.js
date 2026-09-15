@@ -18,6 +18,8 @@
    */
   const MAX_PIXELS = 4000000;
   const MAX_SIDE = 8000;
+  const Lang = globalThis.AITrLang;
+  const Tiles = globalThis.AITrTiles;
 
   /** 返回不超过上述限制的缩放系数（不放大）。 */
   function sendScale(w, h) {
@@ -72,24 +74,87 @@
     const scale = sendScale(w, h);
     const sw = Math.round(w * scale);
     const sh = Math.round(h * scale);
-    // 坐标是相对值，所以显示一律用原图——送检那份缩过，清晰度不如原图
+    // 坐标是相对值，显示一律用原图——送检那份缩过，清晰度不如原图
     const url = img.currentSrc || img.src;
+    const natural = { w, h };
 
-    let data = toDataUrl(img, sw, sh);
-    if (!data) {
+    // 先把图画进画布：既是缩放，也是后面切块和扫描墨水的基础
+    let canvas = null;
+    try {
+      canvas = document.createElement('canvas');
+      canvas.width = sw;
+      canvas.height = sh;
+      canvas.getContext('2d').drawImage(img, 0, 0, sw, sh);
+      // 探测画布有没有被跨域图片污染。读一个像素就够，
+      // 用 toDataURL 试探会把整张大图白编码一遍。
+      canvas.getContext('2d').getImageData(0, 0, 1, 1);
+    } catch {
+      canvas = null;
+    }
+    if (!canvas) {
       const fresh = await reloadWithCors(url);
-      if (fresh) data = toDataUrl(fresh, sw, sh);
+      if (fresh) {
+        try {
+          canvas = document.createElement('canvas');
+          canvas.width = sw;
+          canvas.height = sh;
+          canvas.getContext('2d').drawImage(fresh, 0, 0, sw, sh);
+          canvas.getContext('2d').getImageData(0, 0, 1, 1);
+        } catch {
+          canvas = null;
+        }
+      }
     }
-    if (data) {
-      return { image: data, size: { width: sw, height: sh }, display: url, natural: { w, h } };
+
+    // 读不到像素，只能整张交给接口按网址取图（长图也就没法分块了）
+    if (!canvas) {
+      return {
+        parts: [{ image: url, size: { width: w, height: h } }],
+        plan: [{ top: 0, height: h }],
+        fullHeight: h,
+        display: url,
+        natural,
+        byUrl: true,
+      };
     }
-    // 读不到像素，只能让接口按网址取图。原图尺寸要如实报，坐标才算得准。
+
+    const ctx = canvas.getContext('2d');
+    if (!Tiles.needsTiling(sw, sh)) {
+      return {
+        parts: [{ image: canvas.toDataURL('image/jpeg', 0.9), size: { width: sw, height: sh } }],
+        plan: [{ top: 0, height: sh }],
+        fullHeight: sh,
+        display: url,
+        natural,
+      };
+    }
+
+    // 长图：先扫每行墨水量，把切缝挪到空白处，再切
+    const plan = Tiles.refinePlan(
+      Tiles.planTiles(sw, sh),
+      Tiles.rowDarkness(ctx, sw, sh),
+      sh
+    );
+    const images = Tiles.cutTiles(canvas, sw, sh, plan);
+    if (!images) {
+      return {
+        parts: [{ image: canvas.toDataURL('image/jpeg', 0.9), size: { width: sw, height: sh } }],
+        plan: [{ top: 0, height: sh }],
+        fullHeight: sh,
+        display: url,
+        natural,
+      };
+    }
     return {
-      image: url,
-      size: { width: w, height: h },
+      parts: images.map((image, i) => ({
+        image,
+        size: { width: sw, height: plan[i].height },
+      })),
+      plan,
+      fullHeight: sh,
       display: url,
-      natural: { w, h },
-      byUrl: true,
+      natural,
+      tiled: true,
     };
   }
 
@@ -388,32 +453,60 @@
         return;
       }
 
-      mask.label.textContent = '正在识别并翻译…';
-      const reply = await chrome.runtime.sendMessage({
-        type: 'read-image',
-        image: grabbed.image,
-        imageSize: grabbed.size,
-      });
+      // 逐块识别。长图切成多块后每块比例正常，定位更准，
+      // 也各自独享接口的单图 token 预算，小字更清楚。
+      const total = grabbed.parts.length;
+      const perTile = [];
+      for (let i = 0; i < total; i += 1) {
+        mask.label.textContent =
+          total > 1 ? `正在识别 ${i + 1}/${total}…` : '正在识别图中文字…';
+        const reply = await chrome.runtime.sendMessage({
+          type: 'read-image',
+          image: grabbed.parts[i].image,
+          imageSize: grabbed.parts[i].size,
+        });
+        if (!reply?.ok) {
+          showFailure(reply?.error || '识别失败');
+          return;
+        }
+        perTile.push(reply.blocks);
+      }
 
+      const merged = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
+      // 星级、价格、尺码这类纯数字符号翻了也是原样返回，白花 token
+      const worth = merged.filter((b) => Lang.shouldOffer(b.text));
+      if (!worth.length) {
+        showFailure(merged.length ? '图中没有需要翻译的文字' : '图中没有识别到文字');
+        return;
+      }
+
+      mask.label.textContent = `正在翻译 ${worth.length} 段…`;
+      const reply = await chrome.runtime.sendMessage({
+        type: 'translate-batch',
+        texts: worth.map((b) => b.text),
+      });
       if (!reply?.ok) {
         showFailure(reply?.error || '翻译失败');
         return;
       }
-      if (!reply.blocks.length) {
-        showFailure(reply.total ? '图中没有需要翻译的文字' : '图中没有识别到文字');
+
+      const blocks = worth
+        .map((b, i) => ({ ...b, translation: reply.texts[i] || '' }))
+        // 译文和原文一模一样的，盖上去只是挡住原图
+        .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
+      if (!blocks.length) {
+        showFailure('图中没有需要翻译的文字');
         return;
       }
 
       hideMask();
-      const scaled = grabbed.natural
-        && (grabbed.size.width !== grabbed.natural.w || grabbed.size.height !== grabbed.natural.h);
       openPanel({
         display: grabbed.display,
         natural: grabbed.natural,
-        blocks: reply.blocks,
+        blocks,
         meta: [
-          `${reply.blocks.length} 段`,
-          scaled ? `送检 ${grabbed.size.width}×${grabbed.size.height}` : '',
+          `${blocks.length} 段`,
+          grabbed.tiled ? `分 ${total} 块识别` : '',
           grabbed.byUrl ? '按网址取图' : '',
         ].filter(Boolean).join(' · '),
       });

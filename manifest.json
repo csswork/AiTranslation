@@ -39,6 +39,7 @@
         "src/lib/lang.js",
         "src/lib/rules.js",
         "src/lib/selector.js",
+        "src/lib/tiles.js",
         "src/content/content.js",
         "src/content/elements.js",
         "src/content/image.js"

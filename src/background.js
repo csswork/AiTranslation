@@ -14,6 +14,7 @@ const CONTENT_FILES = [
   'src/lib/lang.js',
   'src/lib/rules.js',
   'src/lib/selector.js',
+  'src/lib/tiles.js',
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
@@ -288,6 +289,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   // 识图 + 翻译一次做完，内容脚本只负责显示
+  // 只做识别，不翻译。长图会切成多块分别识别，
+  // 合并去重之后再统一翻译，避免同一段话被翻两次。
   if (type === 'read-image') {
     (async () => {
       try {
@@ -298,23 +301,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           settings,
           model: AITrSettings.visionModel(settings.provider),
         });
-
-        // 星级、价格、尺码这类纯数字符号没有翻译的意义，
-        // 送去翻译只会原样返回，还会白白盖住原图
-        const worth = result.blocks.filter((b) => b.box && AITrLang.shouldOffer(b.text));
-        let translations = [];
-        if (worth.length) {
-          translations = await AITrProviders.translateBatch({
-            texts: worth.map((b) => b.text),
-            settings,
-          });
-        }
-        const blocks = worth
-          .map((b, i) => ({ text: b.text, box: b.box, translation: translations[i] || '' }))
-          // 译文和原文一模一样的，盖上去等于只是挡住原图
-          .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
-
-        sendResponse({ ok: true, blocks, total: result.blocks.length });
+        sendResponse({ ok: true, blocks: result.blocks });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null });
       }
