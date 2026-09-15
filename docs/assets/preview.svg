@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500"
+     role="img" aria-label="效果示意：网页上选中的一段外文，屏幕中央的弹窗里正在逐字显示中文译文">
+  <title>AI 划词翻译 · 效果示意</title>
+
+  <defs>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="26" flood-color="#000" flood-opacity=".6"/>
+    </filter>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0c11" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0a0c11" stop-opacity=".9"/>
+    </linearGradient>
+    <style>
+      .t { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+           "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 页面底色 -->
+  <rect width="800" height="500" fill="#0d1016"/>
+
+  <!-- ============ 背后的网页：标题 + 正文，用色块示意 ============ -->
+  <g>
+    <rect x="64" y="56" width="286" height="15" rx="7.5" fill="#ffffff" opacity=".20"/>
+    <rect x="64" y="82" width="150" height="9"  rx="4.5" fill="#ffffff" opacity=".09"/>
+
+    <rect x="64" y="126" width="620" height="10" rx="5" fill="#ffffff" opacity=".12"/>
+    <rect x="64" y="150" width="672" height="10" rx="5" fill="#ffffff" opacity=".12"/>
+
+    <!-- 被选中的那两行：强调色的选区底 -->
+    <rect x="60" y="170" width="676" height="26" rx="5" fill="#6d70f5" opacity=".30"/>
+    <rect x="60" y="196" width="382" height="26" rx="5" fill="#6d70f5" opacity=".30"/>
+    <rect x="64" y="178" width="668" height="10" rx="5" fill="#ffffff" opacity=".42"/>
+    <rect x="64" y="204" width="370" height="10" rx="5" fill="#ffffff" opacity=".42"/>
+
+    <rect x="64" y="244" width="640" height="10" rx="5" fill="#ffffff" opacity=".12"/>
+    <rect x="64" y="268" width="672" height="10" rx="5" fill="#ffffff" opacity=".12"/>
+    <rect x="64" y="292" width="470" height="10" rx="5" fill="#ffffff" opacity=".12"/>
+    <rect x="64" y="332" width="610" height="10" rx="5" fill="#ffffff" opacity=".08"/>
+    <rect x="64" y="356" width="672" height="10" rx="5" fill="#ffffff" opacity=".08"/>
+    <rect x="64" y="380" width="300" height="10" rx="5" fill="#ffffff" opacity=".08"/>
+  </g>
+
+  <rect x="0" y="300" width="800" height="200" fill="url(#fade)"/>
+
+  <!-- 弹窗打开时的背景压暗 -->
+  <rect width="800" height="500" fill="#05070b" opacity=".55"/>
+
+  <!-- ==================== 屏幕中央的译文弹窗 ==================== -->
+  <g filter="url(#lift)">
+    <rect x="168" y="132" width="464" height="236" rx="14" fill="#151924" stroke="#2a3142"/>
+
+    <!-- 标题栏（实际可拖动） -->
+    <rect x="168" y="132" width="464" height="42" rx="14" fill="#1b202b"/>
+    <rect x="168" y="158" width="464" height="16" fill="#1b202b"/>
+    <line x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
+    <circle cx="192" cy="153" r="4.5" fill="#6d70f5"/>
+    <text class="t" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">翻译成中文</text>
+    <rect x="556" y="147" width="40" height="13" rx="6.5" fill="#ffffff" opacity=".10"/>
+    <circle cx="612" cy="153" r="4" fill="#ffffff" opacity=".28"/>
+
+    <!-- 译文：逐字出现，末尾留一个光标 -->
+    <text class="t" x="194" y="214" font-size="15.5" fill="#e8eaf0">这个扩展只会发送你要求它翻译的</text>
+    <text class="t" x="194" y="243" font-size="15.5" fill="#e8eaf0">内容，并且只发往你自己选定的那</text>
+    <text class="t" x="194" y="272" font-size="15.5" fill="#e8eaf0">家平台</text>
+    <rect x="248" y="259" width="2" height="17" fill="#6d70f5"/>
+
+    <!-- 底部：原文折叠面板 + 操作 -->
+    <line x1="194" y1="302" x2="606" y2="302" stroke="#242a37"/>
+    <path d="M196 319 l5 5 l5 -5" fill="none" stroke="#626c80" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="t" x="214" y="324" font-size="11.5" fill="#9aa3b5">原文</text>
+    <rect x="516" y="310" width="42" height="17" rx="5" fill="#ffffff" opacity=".07"/>
+    <rect x="566" y="310" width="42" height="17" rx="5" fill="#ffffff" opacity=".07"/>
+  </g>
+</svg>

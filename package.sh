@@ -10,7 +10,8 @@ OUT="../ai-translation-${VERSION}.zip"
 rm -f "$OUT"
 zip -r -q "$OUT" . \
   -x '.git/*' '.git' '.gitignore' '.DS_Store' '*/.DS_Store' \
-     '.harness/*' 'package.sh' 'README.md' 'PRIVACY.md' '*.zip'
+     '.harness/*' 'package.sh' 'README.md' 'PRIVACY.md' '*.zip' \
+     'docs/*' 'docs' '.claude/*' '.claude'
 
 echo "已打包: $(cd .. && pwd)/$(basename "$OUT")"
 unzip -l "$OUT" | tail -1
