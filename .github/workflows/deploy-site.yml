@@ -46,9 +46,9 @@ jobs:
           : "${VERCEL_ORG_ID:?缺少仓库 Secret: VERCEL_ORG_ID}"
           : "${VERCEL_PROJECT_ID:?缺少仓库 Secret: VERCEL_PROJECT_ID}"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
 
