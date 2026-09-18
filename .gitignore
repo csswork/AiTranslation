@@ -8,3 +8,4 @@
 
 # Vercel CLI 本地产物（含项目 ID，不要提交）
 .vercel
+.env*
