@@ -37,14 +37,14 @@
             <span class="help">在 <a id="keyLink" href="#" target="_blank" rel="noreferrer">平台控制台</a> 创建。</span>
           </label>
 
-          <label class="field">
+          <label class="field" id="modelField">
             <span class="label">模型</span>
             <input id="model" list="modelList" autocomplete="off" spellcheck="false" />
             <datalist id="modelList"></datalist>
             <span class="help" id="modelHelp"></span>
           </label>
 
-          <details class="advanced">
+          <details class="advanced" id="advanced">
             <summary>高级：自定义接口地址</summary>
             <label class="field">
               <span class="label">Base URL</span>
@@ -53,6 +53,7 @@
             </label>
           </details>
         </div>
+        <p class="vision-note" id="visionNote" hidden></p>
         <div class="actions">
           <button id="test" class="btn" type="button">测试连接</button>
           <span id="testResult" class="test-result"></span>
@@ -71,7 +72,7 @@
             <input id="stream" type="checkbox" />
             <span>
               <b>流式输出</b>
-              <i>译文逐字显示，等待感更低。</i>
+              <i id="streamHelp">译文逐字显示，等待感更低。</i>
             </span>
           </label>
           <label class="switch">

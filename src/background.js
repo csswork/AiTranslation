@@ -41,7 +41,8 @@ function createMenu() {
   menuTask = menuTask.catch(() => {}).then(async () => {
     // 标题先算好：removeAll 与 create 之间不能再有 await，
     // 否则又给别的调用留出插进来的空隙
-    const title = await menuTitle();
+    const settings = await AITrSettings.loadSettings();
+    const title = `翻译成${AITrSettings.targetMenu(settings)}`;
     await chrome.contextMenus.removeAll();
     const created = [];
     const create = (props) =>
@@ -82,7 +83,8 @@ function createMenu() {
       id: IMAGE_MENU_ID,
       title: '翻译图片里的文字',
       contexts: ['image'],
-      visible: true,
+      // 识图只有 LLM 平台能做，一开始就按当前平台决定
+      visible: AITrSettings.supportsVision(settings.provider),
     });
     console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
   });
@@ -116,13 +118,26 @@ async function updateMenuVisibility(text) {
   }
 }
 
+/** 传统翻译接口识别不了图片，换到这类平台时把「翻译图片」藏起来。 */
+async function syncImageMenu(settings) {
+  try {
+    await chrome.contextMenus.update(IMAGE_MENU_ID, {
+      visible: AITrSettings.supportsVision(settings.provider),
+    });
+  } catch {
+    await createMenu();
+  }
+}
+
 chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area !== 'local' || !changes.settings) return;
+  const settings = await AITrSettings.loadSettings();
   try {
     await chrome.contextMenus.update(MENU_ID, { title: await menuTitle() });
   } catch {
     await createMenu();
   }
+  await syncImageMenu(settings);
 });
 
 /* -------------------------------------------------------------- 页面脚本 */

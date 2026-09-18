@@ -7,6 +7,8 @@
     toggleKey: $('toggleKey'),
     keyLink: $('keyLink'),
     model: $('model'),
+    modelField: $('modelField'),
+    advanced: $('advanced'),
     modelList: $('modelList'),
     modelHelp: $('modelHelp'),
     baseUrl: $('baseUrl'),
@@ -16,6 +18,7 @@
     target: $('target'),
     targetPreview: $('targetPreview'),
     stream: $('stream'),
+    streamHelp: $('streamHelp'),
     showOriginal: $('showOriginal'),
     floating: $('floating'),
     shortcut: $('shortcut'),
@@ -24,6 +27,7 @@
     editShortcut: $('editShortcut'),
     status: $('status'),
     manage: $('manage'),
+    visionNote: $('visionNote'),
     ruleCount: $('ruleCount'),
   };
 
@@ -75,6 +79,12 @@
   function renderProviderConfig() {
     const def = S.PROVIDERS[settings.provider];
     const conf = settings[settings.provider];
+
+    // 传统翻译接口没有「模型」这个概念，地址也由 key 自动判断，
+    // 把这两块藏起来，而不是留着让人填一个没用的值
+    const isLLM = S.needsModel(settings.provider);
+    el.modelField.hidden = !isLLM;
+    el.advanced.hidden = !isLLM;
     el.apiKey.value = conf.apiKey;
     el.apiKey.placeholder = `${def.keyPrefix}...`;
     el.apiKey.type = 'password';
@@ -100,6 +110,17 @@
 
     el.testResult.textContent = '';
     el.testResult.className = 'test-result';
+
+    el.visionNote.hidden = S.supportsVision(settings.provider);
+    el.visionNote.textContent = `${def.label} 只能翻译文本，图片翻译需要切换到 ChatGPT 或 DeepSeek。`;
+
+    // 传统翻译接口一次性返回，流式开关在这里不起作用，
+    // 与其留个没用的开关，不如禁用并说明
+    const canStream = S.supportsStreaming(settings.provider);
+    el.stream.disabled = !canStream;
+    el.streamHelp.textContent = canStream
+      ? '译文逐字显示，等待感更低。'
+      : `${def.label} 一次性返回全部译文，没有逐字显示。`;
   }
 
   function renderBehavior() {

@@ -175,7 +175,9 @@
       for await (const chunk of P.translate({
         text,
         settings,
+        // LLM 收自然语言描述，DeepL 收语言代码，两者都给，由平台自己取
         targetLanguage: prompt(targetId),
+        targetId,
         signal,
       })) {
         if (signal.aborted) return;

@@ -12,7 +12,9 @@
   ],
   "host_permissions": [
     "https://api.openai.com/*",
-    "https://api.deepseek.com/*"
+    "https://api.deepseek.com/*",
+    "https://api-free.deepl.com/*",
+    "https://api.deepl.com/*"
   ],
   "optional_host_permissions": [
     "https://*/*"

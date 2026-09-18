@@ -230,9 +230,22 @@
    * 翻译。异步生成器，逐段吐出译文片段。
    * @returns {AsyncGenerator<string>}
    */
-  async function* translate({ text, settings, providerId, targetLanguage, signal }) {
+  async function* translate({ text, settings, providerId, targetLanguage, targetId, signal }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
+
+    // 传统翻译接口：一次性返回，没有流式可言
+    if (provider.kind === 'mt') {
+      const [out] = await deeplTranslate({
+        provider,
+        texts: [text],
+        targetCode: S.deeplCode(targetId || settings.target),
+        signal,
+      });
+      if (out) yield out;
+      return;
+    }
+
     // 翻译面板会显式传入 targetLanguage（可能是任意语言）；右键菜单不传，
     // 于是沿用设置里的目标语言和原来的提示词，请求内容完全不变。
     const target = targetLanguage || S.targetPrompt(settings);
@@ -329,9 +342,20 @@
    * 一次翻译多段文字，返回等长、同序的译文数组。
    * @returns {Promise<string[]>}
    */
-  async function translateBatch({ texts, settings, providerId, targetLanguage, signal }) {
+  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, signal }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
+
+    // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
+    if (provider.kind === 'mt') {
+      return deeplTranslate({
+        provider,
+        texts,
+        targetCode: S.deeplCode(targetId || settings.target),
+        signal,
+      });
+    }
+
     if (!provider.apiKey) {
       throw new TranslateError(`还没有配置 ${provider.label} 的 API Key`, 'open-options');
     }
@@ -428,6 +452,12 @@
   async function readImageText({ image, settings, providerId, model, imageSize, order, signal }) {
     const S = globalThis.AITrSettings;
     const base = S.resolveProvider(settings, providerId);
+    if (base.kind === 'mt') {
+      throw new TranslateError(
+        `${base.label} 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek`,
+        'open-options'
+      );
+    }
     // 识图需要指定支持视觉的模型，允许调用方覆盖配置里的模型
     const provider = model ? { ...base, model } : base;
     if (!provider.apiKey) {
@@ -465,11 +495,83 @@
     return { blocks, raw, scale };
   }
 
+  /* ------------------------------------------------ DeepL（传统机器翻译） */
+
+  /**
+   * DeepL 的请求形态和对话接口完全不同：没有 messages、没有流式、
+   * 不需要提示词——直接文本数组进、译文数组出。
+   * @returns {Promise<string[]>} 与输入等长、同序
+   */
+  async function deeplTranslate({ provider, texts, targetCode, signal }) {
+    if (!provider.apiKey) {
+      throw new TranslateError(`还没有配置 ${provider.label} 的 API Key`, 'open-options');
+    }
+    if (!targetCode) {
+      throw new TranslateError('DeepL 不支持这个目标语言');
+    }
+
+    const url = `${String(provider.baseUrl).replace(/\/+$/, '')}/v2/translate`;
+    let response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        signal,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `DeepL-Auth-Key ${provider.apiKey}`,
+        },
+        body: JSON.stringify({ text: texts, target_lang: targetCode }),
+      });
+    } catch (err) {
+      if (err?.name === 'AbortError') throw err;
+      let host = url;
+      try {
+        host = new URL(url).host;
+      } catch {
+        /* 忽略 */
+      }
+      throw new TranslateError(`无法连接 ${host}，请检查网络或代理`);
+    }
+
+    if (!response.ok) {
+      const detail = await readDetail(response);
+      // DeepL 用 456 表示用完额度，这是它特有的，别混进通用映射
+      if (response.status === 456) {
+        throw new TranslateError('DeepL 本月的翻译额度已用完', 'open-options');
+      }
+      if (response.status === 403) {
+        throw new TranslateError(
+          `DeepL 的 API Key 无效${detail ? `（${detail}）` : ''}`,
+          'open-options'
+        );
+      }
+      throw failureFor(response.status, detail, provider);
+    }
+
+    const data = await response.json();
+    const list = Array.isArray(data?.translations) ? data.translations : null;
+    if (!list) throw new TranslateError('DeepL 返回了预期之外的内容');
+    if (list.length !== texts.length) {
+      throw new TranslateError(`DeepL 返回 ${list.length} 条，与原文 ${texts.length} 条对不上`);
+    }
+    return list.map((item) => String(item?.text ?? ''));
+  }
+
   /** 设置页的「测试连接」。 */
   async function testConnection({ settings, providerId }) {
-    const provider = globalThis.AITrSettings.resolveProvider(settings, providerId);
+    const S = globalThis.AITrSettings;
+    const provider = S.resolveProvider(settings, providerId);
     if (!provider.apiKey) {
       throw new TranslateError(`请先填写 ${provider.label} 的 API Key`);
+    }
+    if (provider.kind === 'mt') {
+      const [sample] = await deeplTranslate({
+        provider,
+        texts: ['Hello! This is a connection test.'],
+        targetCode: S.deeplCode(settings.target),
+      });
+      if (!sample) throw new TranslateError('接口通了，但没有返回译文');
+      return { model: provider.label, sample: sample.trim().slice(0, 60) };
     }
     const response = await request({
       provider,
@@ -485,6 +587,7 @@
 
   globalThis.AITrProviders = {
     translate,
+    deeplTranslate,
     translateBatch,
     parseBatch,
     readImageText,
