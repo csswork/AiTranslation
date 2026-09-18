@@ -39,7 +39,7 @@ body {
   font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
-.page { max-width: 680px; margin: 0 auto; padding: 40px 24px 64px; }
+.page { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; }
 
 .head { display: flex; gap: 14px; align-items: center; margin-bottom: 26px; }
 .mark {
@@ -65,7 +65,12 @@ code {
   background: var(--accent-soft);
 }
 
-.providers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+/* 三个平台排一行。窄窗口下直接落成单列，不做 2+1 那种参差的中间态 */
+.providers {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px; margin-top: 14px;
+}
+@media (max-width: 680px) { .providers { grid-template-columns: 1fr; } }
 .provider-card {
   display: flex; flex-direction: column; gap: 2px;
   padding: 12px 14px; cursor: pointer; text-align: left;
@@ -76,7 +81,10 @@ code {
 .provider-card:hover { border-color: rgba(79, 70, 229, 0.4); }
 .provider-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .provider-card b { font-size: 14px; font-weight: 600; }
-.provider-card i { font-style: normal; font-size: 12px; color: var(--muted); }
+.provider-card i {
+  font-style: normal; font-size: 12px; color: var(--muted);
+  line-height: 1.5; min-height: 2.9em;   /* 两行高度对齐，避免卡片高低不齐 */
+}
 .provider-card em {
   font-style: normal; font-size: 11px; margin-top: 4px;
   color: var(--faint);
@@ -84,7 +92,9 @@ code {
 .provider-card em.ready { color: var(--ok); }
 
 .fields { display: grid; gap: 16px; margin-top: 16px; }
-.field { display: grid; gap: 6px; }
+/* max-width：页面加宽到 860px 后，单行输入框拉满会显得很空。
+   卡片本身仍占整幅宽度，标签和说明照旧左对齐。 */
+.field { display: grid; gap: 6px; max-width: 460px; }
 .label { font-size: 12.5px; font-weight: 560; }
 .help { font-size: 11.5px; color: var(--faint); }
 .help a { color: var(--accent); }

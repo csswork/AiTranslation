@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "AI 划词翻译",
   "version": "1.0.0",
-  "description": "选中非中文文字后右键「翻译成中文」，用 ChatGPT / DeepSeek 翻译并在屏幕中央弹窗显示。",
+  "description": "划词、整块元素、图片里的文字都能翻译。支持 ChatGPT / DeepSeek / DeepL，API Key 只保存在本机浏览器。",
   "minimum_chrome_version": "116",
   "permissions": [
     "contextMenus",
