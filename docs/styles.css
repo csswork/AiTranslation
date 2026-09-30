@@ -255,6 +255,98 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .ph span { font-size: .8rem; }
 .frame.has-media .ph { display: none; }
 
+/* ------------------------------------ 首屏示意图：两层，载入时归位、悬停时错开
+
+   内联 SVG 拆成两层：底下是网页，上面是弹窗。两层都是和展示框一样大的 <svg>，
+   坐标系完全重合，静止时和一张图没有区别。
+   动的是这两个 <svg> 盒子本身，而不是 SVG 内部的 <g>：前者的 transform / opacity
+   交给合成器线程，后者每帧都要重画整张图——弹窗带一个半径 26 的阴影滤镜，重画很贵。 */
+.pv {
+  position: absolute; inset: 0; overflow: hidden;
+  /* 网页层缩起来时露出的「桌面」，比网页底色深一档，纸的四条边才看得出来 */
+  background: var(--pv-desk, #06080c);
+
+  /* 「错开」的样子只在这里定义一次，悬停和载入动画共用 */
+  --pv-page-off:  translate3d(-8px, 6px, 0) scale(.95);         /* 网页整张往左下沉、缩小 */
+  --pv-popup-off: translate3d(12px, -9px, 0) scale(1.025);      /* 弹窗往右上浮起、略放大 */
+  --pv-ease: cubic-bezier(.22, .8, .24, 1);
+}
+.pv-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* 网页层是一整张纸：1px 描边 + 阴影常驻，铺满时都落在展示框外被裁掉，缩起来才显形。
+   描边是深色下的关键：那里网页盖着压暗层，和桌面几乎同色，光靠色差看不出纸的边 */
+.pv-page {
+  overflow: hidden; border-radius: 0;
+  box-shadow: 0 0 0 1px var(--pv-edge, #262c3a), 0 18px 44px -20px var(--shadow);
+}
+.pv-popup { overflow: visible; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 载入时播一次：两层从错开的位置归位，弹窗同时淡入。所有设备都播，和能不能悬停无关。
+     backwards：延迟期间就停在起点，不会先闪一下归位后的样子；播完即撤，不挡悬停的 transition */
+  .pv-page  { animation: pv-page-in  1.1s var(--pv-ease) .2s backwards; }
+  .pv-popup { animation: pv-popup-in 1.1s var(--pv-ease) .4s backwards; }
+}
+@keyframes pv-page-in  { from { transform: var(--pv-page-off); border-radius: 12px; } }
+@keyframes pv-popup-in { from { transform: var(--pv-popup-off); opacity: 0; } }
+
+/* 悬停只给有真实悬停的设备：触屏上 :hover 会在点一下之后卡住 */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .pv-layer { transition: transform .9s var(--pv-ease), border-radius .9s var(--pv-ease); }
+  .frame:hover .pv-page  { transform: var(--pv-page-off); border-radius: 12px; }
+  .frame:hover .pv-popup { transform: var(--pv-popup-off); }
+}
+
+/* 配色：标记里写的是深色原稿，老浏览器（不认 light-dark()、全站固定深色）直接用它；
+   新浏览器在这里换成随配色切换的 token。整块放在 @supports 里，
+   否则老浏览器会因为 token 无效而把颜色全部丢掉，连深色原稿都显示不出来。 */
+@supports (color: light-dark(#000, #fff)) {
+  .pv {
+    --pv-desk:      light-dark(#e9e9f3, #06080c);
+    --pv-edge:      light-dark(#dcdce9, #262c3a);
+    --pv-bg:        light-dark(#fbfbfe, #0d1016);
+    --pv-fade:      light-dark(#fbfbfe, #0a0c11);
+    --pv-dim:       light-dark(transparent, rgba(5, 7, 11, .55));
+    --pv-t1:        light-dark(rgba(22, 23, 31, .16), rgba(255, 255, 255, .2));
+    --pv-t2:        light-dark(rgba(22, 23, 31, .08), rgba(255, 255, 255, .09));
+    --pv-ln:        light-dark(rgba(22, 23, 31, .09), rgba(255, 255, 255, .12));
+    --pv-ln2:       light-dark(rgba(22, 23, 31, .06), rgba(255, 255, 255, .08));
+    --pv-pick:      light-dark(rgba(22, 23, 31, .3),  rgba(255, 255, 255, .42));
+    --pv-sel:       light-dark(rgba(91, 94, 234, .16), rgba(109, 112, 245, .3));
+    --pv-card:      light-dark(#ffffff, #151924);
+    --pv-card-line: light-dark(#e2e2ee, #2a3142);
+    --pv-head:      light-dark(#f4f4fa, #1b202b);
+    --pv-head-line: light-dark(#e6e6f0, #2a3142);
+    --pv-chip:      light-dark(rgba(22, 23, 31, .07), rgba(255, 255, 255, .1));
+    --pv-close:     light-dark(rgba(22, 23, 31, .22), rgba(255, 255, 255, .28));
+    --pv-foot-line: light-dark(#ececf4, #242a37);
+    --pv-chev:      light-dark(#8a8fa3, #626c80);
+    --pv-muted:     light-dark(#666b82, #9aa3b5);
+    --pv-btn:       light-dark(rgba(22, 23, 31, .06), rgba(255, 255, 255, .07));
+    --pv-shadow:    light-dark(rgba(46, 48, 130, .18), rgba(0, 0, 0, .6));
+  }
+  .pv-bg        { fill: var(--pv-bg); }
+  .pv-fade-stop { stop-color: var(--pv-fade); }
+  .pv-dim       { fill: var(--pv-dim); }
+  .pv-t1        { fill: var(--pv-t1); }
+  .pv-t2        { fill: var(--pv-t2); }
+  .pv-ln        { fill: var(--pv-ln); }
+  .pv-ln2       { fill: var(--pv-ln2); }
+  .pv-pick      { fill: var(--pv-pick); }
+  .pv-sel       { fill: var(--pv-sel); }
+  .pv-card      { fill: var(--pv-card); stroke: var(--pv-card-line); }
+  .pv-head      { fill: var(--pv-head); }
+  .pv-head-line { stroke: var(--pv-head-line); }
+  .pv-accent    { fill: var(--accent); }
+  .pv-text      { fill: var(--text); }
+  .pv-chip      { fill: var(--pv-chip); }
+  .pv-close     { fill: var(--pv-close); }
+  .pv-foot-line { stroke: var(--pv-foot-line); }
+  .pv-chev      { stroke: var(--pv-chev); }
+  .pv-muted     { fill: var(--pv-muted); }
+  .pv-btn       { fill: var(--pv-btn); }
+  .pv-shadow    { flood-color: var(--pv-shadow); }
+}
+
 /* ------------------------------------------------------------------ 区块 */
 
 .section { padding: var(--s7) 0; }
@@ -503,9 +595,9 @@ html:not(.js) .theme-toggle { display: none; }
 
 /* 图标表示「点了会变成什么」：深色时是太阳（.only-dark），浅色时是月亮（.only-light） */
 
-/* 只在某一套配色下出现的元素：画死了颜色的插画、切换按钮的图标。
-   只写「藏」的规则，显示时沿用元素本来的 display（插画是 block，不能退回 inline）。
-   选择器都带 :root，特异性压过 .frame-body img 这类 display 声明。 */
+/* 只在某一套配色下出现的元素（目前是切换按钮的两个图标）。
+   只写「藏」的规则，显示时沿用元素本来的 display，不会退回 inline。
+   选择器都带 :root，特异性压过 .theme-toggle svg 这类 display 声明。 */
 :root[data-theme="dark"] .only-light,
 :root[data-theme="light"] .only-dark { display: none; }
 @media (prefers-color-scheme: dark) {

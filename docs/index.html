@@ -80,8 +80,69 @@
           <span class="addr"></span>
         </div>
         <div class="frame-body">
-          <img class="only-dark" src="assets/preview.svg" alt="扩展效果示意：选中的外文段落上方浮着一个居中弹窗，译文正在逐字出现。" />
-          <img class="only-light" src="assets/preview-light.svg" alt="扩展效果示意：选中的外文段落上方浮着一个居中弹窗，译文正在逐字出现。" />
+          <!-- 示意图拆成两层独立的 <svg>：载入时从错开的位置归位、弹窗淡入；
+               鼠标移上来时两层反向错开（styles.css「首屏示意图」）。
+               颜色属性是深色原稿，给不认 light-dark() 的老浏览器兜底；新浏览器由 CSS token 接管、随配色切换。 -->
+          <div class="pv" role="img" aria-label="扩展效果示意：选中的外文段落上方浮着一个居中弹窗，译文正在逐字出现。">
+            <!-- 底层：背后的网页，整张一起动（错开时微缩成一张带圆角的纸） -->
+            <svg class="pv-layer pv-page" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="pv-fade" x1="0" y1="0" x2="0" y2="1">
+                  <stop class="pv-fade-stop" offset="0" stop-color="#0a0c11" stop-opacity="0"/>
+                  <stop class="pv-fade-stop" offset="1" stop-color="#0a0c11" stop-opacity=".9"/>
+                </linearGradient>
+              </defs>
+              <rect class="pv-bg" width="800" height="500" fill="#0d1016"/>
+              <rect class="pv-t1" x="64" y="56" width="286" height="15" rx="7.5" fill="rgba(255,255,255,.2)"/>
+              <rect class="pv-t2" x="64" y="82" width="150" height="9" rx="4.5" fill="rgba(255,255,255,.09)"/>
+              <rect class="pv-ln" x="64" y="126" width="620" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+              <rect class="pv-ln" x="64" y="150" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+              <!-- 被选中的那两行：强调色的选区底 -->
+              <rect class="pv-sel" x="60" y="170" width="676" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
+              <rect class="pv-sel" x="60" y="196" width="382" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
+              <rect class="pv-pick" x="64" y="178" width="668" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
+              <rect class="pv-pick" x="64" y="204" width="370" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
+              <rect class="pv-ln" x="64" y="244" width="640" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+              <rect class="pv-ln" x="64" y="268" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+              <rect class="pv-ln" x="64" y="292" width="470" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+              <rect class="pv-ln2" x="64" y="332" width="610" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect class="pv-ln2" x="64" y="356" width="672" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect class="pv-ln2" x="64" y="380" width="300" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect x="0" y="300" width="800" height="200" fill="url(#pv-fade)"/>
+              <!-- 弹窗打开时的背景压暗：浅色不画（实际产品已去掉压暗层），深色保留原稿 -->
+              <rect class="pv-dim" width="800" height="500" fill="rgba(5,7,11,.55)"/>
+            </svg>
+            <!-- 上层：译文弹窗，透明底 -->
+            <svg class="pv-layer pv-popup" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
+              <defs>
+                <filter id="pv-lift" x="-30%" y="-30%" width="160%" height="180%">
+                  <feDropShadow class="pv-shadow" dx="0" dy="18" stdDeviation="26" flood-color="rgba(0,0,0,.6)"/>
+                </filter>
+              </defs>
+              <g filter="url(#pv-lift)">
+                <rect class="pv-card" x="168" y="132" width="464" height="236" rx="14" fill="#151924" stroke="#2a3142"/>
+                <!-- 标题栏（实际可拖动） -->
+                <rect class="pv-head" x="168.5" y="132.5" width="463" height="41.5" rx="13.5" fill="#1b202b"/>
+                <rect class="pv-head" x="168.5" y="158" width="463" height="16" fill="#1b202b"/>
+                <line class="pv-head-line" x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
+                <circle class="pv-accent" cx="192" cy="153" r="4.5" fill="#6d70f5"/>
+                <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">翻译成中文</text>
+                <rect class="pv-chip" x="556" y="147" width="40" height="13" rx="6.5" fill="rgba(255,255,255,.1)"/>
+                <circle class="pv-close" cx="612" cy="153" r="4" fill="rgba(255,255,255,.28)"/>
+                <!-- 译文：逐字出现，末尾留一个光标 -->
+                <text class="pv-text" x="194" y="214" font-size="15.5" fill="#e8eaf0">这个扩展只会发送你要求它翻译的</text>
+                <text class="pv-text" x="194" y="243" font-size="15.5" fill="#e8eaf0">内容，并且只发往你自己选定的那</text>
+                <text class="pv-text" x="194" y="272" font-size="15.5" fill="#e8eaf0">家平台</text>
+                <rect class="pv-accent" x="248" y="259" width="2" height="17" fill="#6d70f5"/>
+                <!-- 底部：原文折叠面板 + 操作 -->
+                <line class="pv-foot-line" x1="194" y1="302" x2="606" y2="302" stroke="#242a37"/>
+                <path class="pv-chev" d="M196 319 l5 5 l5 -5" fill="none" stroke="#626c80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <text class="pv-muted" x="214" y="324" font-size="11.5" fill="#9aa3b5">原文</text>
+                <rect class="pv-btn" x="516" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
+                <rect class="pv-btn" x="566" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
