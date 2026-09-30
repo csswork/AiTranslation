@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500"
+     font-family="-apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, sans-serif"
      role="img" aria-label="效果示意：网页上选中的一段外文，屏幕中央的弹窗里正在逐字显示中文译文">
   <title>AI 划词翻译 · 效果示意</title>
 
@@ -10,10 +11,6 @@
       <stop offset="0" stop-color="#0a0c11" stop-opacity="0"/>
       <stop offset="1" stop-color="#0a0c11" stop-opacity=".9"/>
     </linearGradient>
-    <style>
-      .t { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
-           "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
-    </style>
   </defs>
 
   <!-- 页面底色 -->
@@ -55,21 +52,21 @@
     <rect x="168" y="158" width="464" height="16" fill="#1b202b"/>
     <line x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
     <circle cx="192" cy="153" r="4.5" fill="#6d70f5"/>
-    <text class="t" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">翻译成中文</text>
+    <text x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">翻译成中文</text>
     <rect x="556" y="147" width="40" height="13" rx="6.5" fill="#ffffff" opacity=".10"/>
     <circle cx="612" cy="153" r="4" fill="#ffffff" opacity=".28"/>
 
     <!-- 译文：逐字出现，末尾留一个光标 -->
-    <text class="t" x="194" y="214" font-size="15.5" fill="#e8eaf0">这个扩展只会发送你要求它翻译的</text>
-    <text class="t" x="194" y="243" font-size="15.5" fill="#e8eaf0">内容，并且只发往你自己选定的那</text>
-    <text class="t" x="194" y="272" font-size="15.5" fill="#e8eaf0">家平台</text>
+    <text x="194" y="214" font-size="15.5" fill="#e8eaf0">这个扩展只会发送你要求它翻译的</text>
+    <text x="194" y="243" font-size="15.5" fill="#e8eaf0">内容，并且只发往你自己选定的那</text>
+    <text x="194" y="272" font-size="15.5" fill="#e8eaf0">家平台</text>
     <rect x="248" y="259" width="2" height="17" fill="#6d70f5"/>
 
     <!-- 底部：原文折叠面板 + 操作 -->
     <line x1="194" y1="302" x2="606" y2="302" stroke="#242a37"/>
     <path d="M196 319 l5 5 l5 -5" fill="none" stroke="#626c80" stroke-width="1.6"
           stroke-linecap="round" stroke-linejoin="round"/>
-    <text class="t" x="214" y="324" font-size="11.5" fill="#9aa3b5">原文</text>
+    <text x="214" y="324" font-size="11.5" fill="#9aa3b5">原文</text>
     <rect x="516" y="310" width="42" height="17" rx="5" fill="#ffffff" opacity=".07"/>
     <rect x="566" y="310" width="42" height="17" rx="5" fill="#ffffff" opacity=".07"/>
   </g>

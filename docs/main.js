@@ -8,6 +8,8 @@
  *   2. 演示视频 —— 快进视口时才创建 <video>，进入播放、离开暂停；
  *      文件还没放进来就静默留住占位层，不出现破图
  *   3. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
+ *
+ * 另外有配色切换：只在点击按钮、或系统切换明暗时才运行。
  */
 (() => {
   'use strict';
@@ -28,6 +30,72 @@
       { threshold: 0 },
     ).observe(sentinel);
   }
+
+  /* ------------------------------------------------------------ 配色切换 */
+
+  /*
+   * 默认跟随系统，纯 CSS 完成（color-scheme: light dark + light-dark()）。
+   * 手动切换后把选择写进 localStorage，<head> 里的内联脚本在首次绘制前读回来，
+   * 所以刷新、换页都不会先闪一下另一套配色。
+   * 切到和系统一致的那一套时清掉记录：等于回到「跟随系统」，以后系统怎么变就怎么变。
+   */
+  const root = document.documentElement;
+  const toggle = document.querySelector('[data-theme-toggle]');
+  const systemDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  // theme-color 有深浅两条、各带 media。手动选了配色时两条都改成那一套，
+  // 否则浏览器地址栏会按系统取色、和页面对不上；回到跟随系统时还原
+  const themeMetas = [...document.querySelectorAll('meta[name="theme-color"]')];
+  const metaColor = {};
+  themeMetas.forEach((meta) => {
+    meta.dataset.auto = meta.content;
+    metaColor[meta.media.includes('light') ? 'light' : 'dark'] = meta.content;
+  });
+
+  const systemTheme = () => (systemDark && systemDark.matches ? 'dark' : 'light');
+  const currentTheme = () => root.dataset.theme || systemTheme();
+
+  const syncThemeUi = () => {
+    if (toggle) {
+      const label = currentTheme() === 'dark' ? '切换到浅色' : '切换到深色';
+      toggle.setAttribute('aria-label', label);
+      toggle.title = label;
+    }
+    const forced = root.dataset.theme;
+    themeMetas.forEach((meta) => {
+      meta.content = (forced && metaColor[forced]) || meta.dataset.auto;
+    });
+  };
+
+  const setTheme = (theme) => {
+    if (theme === systemTheme()) delete root.dataset.theme;
+    else root.dataset.theme = theme;
+    try {
+      if (root.dataset.theme) localStorage.setItem('theme', theme);
+      else localStorage.removeItem('theme');
+    } catch {
+      /* 隐私模式等存不了：这一页里照样生效，只是不记住 */
+    }
+    syncThemeUi();
+  };
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      // 支持 View Transitions 的浏览器里两套配色交叉淡入，其余直接切
+      if (document.startViewTransition && !reduceMotion) {
+        const transition = document.startViewTransition(() => setTheme(next));
+        // 页面在后台、或连点把上一次顶掉时，过渡会被跳过、ready 随之 reject。
+        // 配色照样已经切好了，只是没有淡入，吞掉即可，别在控制台留未处理的错误
+        transition.ready.catch(() => {});
+      } else {
+        setTheme(next);
+      }
+    });
+  }
+  // 跟随系统时系统切了明暗：图标由 CSS 自己换，这里只更新按钮文字
+  if (systemDark && systemDark.addEventListener) systemDark.addEventListener('change', syncThemeUi);
+  syncThemeUi();
 
   /* -------------------------------------------------------------- 演示视频 */
 

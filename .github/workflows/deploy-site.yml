@@ -52,6 +52,11 @@ jobs:
         with:
           node-version: '22'
 
+      # 页面里的内联脚本必须和 vercel.json 里 CSP 的 sha256 对上，否则线上会被静默拦掉
+      # （配色初始化失效、浅色用户每次先闪一下深色），本地预览没有 CSP 看不出来
+      - name: 检查 CSP 哈希
+        run: node test/csp.mjs
+
       # 不锁小版本；万一哪天 CLI 发版把构建弄挂了，把 latest 换成具体版本号即可
       - name: 安装 Vercel CLI
         run: npm install --global vercel@latest

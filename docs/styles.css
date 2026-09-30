@@ -4,22 +4,38 @@
    跑在合成器线程上，不监听 scroll、不占用主线程。
    ========================================================================== */
 
+/* 配色：深浅两套，默认跟随系统（color-scheme: light dark），
+   用户在导航里手动切换后由 <html data-theme> 固定。
+   每个颜色用 light-dark(浅, 深) 一行写完，两套放在一起对照着改。
+   浅色不用纯白：底色带一丝品牌靛紫的冷调，卡片比底色更白一档、浮在上面。 */
 :root {
-  /* 深色中性底，不用纯黑 */
-  --ink-900: #0a0c11;
-  --ink-800: #0e1117;
-  --ink-700: #141821;
-  --ink-600: #1b202b;
-  --line:    #232936;
+  color-scheme: light dark;
 
-  --text:    #e8eaf0;
-  --text-2:  #9aa3b5;
-  --text-3:  #626c80;
+  --bg:          light-dark(#f6f6fb, #0a0c11);  /* 页面底；深色不用纯黑 */
+  --surface:     light-dark(#fdfdff, #0e1117);  /* 展示框、结尾卡片 */
+  --surface-2:   light-dark(#efeff7, #141821);  /* 展示框标题栏、按钮悬停 */
+  --surface-3:   light-dark(#e5e5f0, #1b202b);  /* 地址栏 */
+  --line:        light-dark(#e2e2ee, #232936);
+  --line-strong: light-dark(#b9bbd3, #2e3547);
+  --btn-line:    light-dark(#c3c5d9, #232936);  /* 浅色底上按钮描边要比分隔线实一点 */
 
-  /* 单一强调色，来自扩展图标；渐变只留给 logo，正文不铺 */
-  --accent:   #6d70f5;
-  --accent-2: #a855f7;
-  --accent-ink: #c7c9ff;
+  --text:        light-dark(#16171f, #e8eaf0);
+  --text-2:      light-dark(#4e5267, #9aa3b5);
+  --text-3:      light-dark(#666b82, #626c80);
+
+  /* 单一强调色，来自扩展图标；渐变只留给 logo，正文不铺。
+     浅色底上压深一档，白字按钮和紫色文字才够读（均 ≥ 4.5:1） */
+  --accent:       light-dark(#5b5eea, #6d70f5);
+  --accent-hover: light-dark(#4d50de, #7b7ef7);
+  --accent-2:     light-dark(#9747ec, #a855f7);
+  --accent-ink:   light-dark(#4649cf, #c7c9ff);
+
+  /* 质感层：背景网格、占位斜纹、展示框阴影、加载环底色 */
+  --grid-line:  light-dark(rgba(40, 44, 120, .055), rgba(255, 255, 255, .028));
+  --stripe:     light-dark(rgba(40, 44, 120, .03),  rgba(255, 255, 255, .017));
+  --shadow:     light-dark(rgba(46, 48, 130, .2),   rgba(0, 0, 0, .85));
+  --dot:        light-dark(#d4d5e4, #2f3647);
+  --ring-track: light-dark(rgba(30, 32, 90, .12),   rgba(255, 255, 255, .14));
 
   --page: min(1180px, 100% - 3rem);
   --radius: 14px;
@@ -33,8 +49,25 @@
      调手感：DevTools 里选中 <html>，在 :root 上直接改这两个值，滚动即可看到。 */
   --drift-slow: 26px;
   --drift-fast: 52px;
+}
 
-  color-scheme: dark;
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+/* 不认 light-dark() 的老浏览器（Safari 17.4 及更早等）：固定用深色，
+   保证不会整页失色；切换按钮也藏起来，免得点了没反应。 */
+@supports not (color: light-dark(#000, #fff)) {
+  :root {
+    --bg: #0a0c11; --surface: #0e1117; --surface-2: #141821; --surface-3: #1b202b;
+    --line: #232936; --line-strong: #2e3547; --btn-line: #232936;
+    --text: #e8eaf0; --text-2: #9aa3b5; --text-3: #626c80;
+    --accent: #6d70f5; --accent-hover: #7b7ef7; --accent-2: #a855f7; --accent-ink: #c7c9ff;
+    --grid-line: rgba(255, 255, 255, .028); --stripe: rgba(255, 255, 255, .017);
+    --shadow: rgba(0, 0, 0, .85); --dot: #2f3647; --ring-track: rgba(255, 255, 255, .14);
+    color-scheme: dark;
+  }
+  .theme-toggle { display: none; }
+  :root .only-light { display: none; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -44,7 +77,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--ink-900);
+  background: var(--bg);
   color: var(--text);
   font: 400 16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI",
         "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -62,12 +95,12 @@ a { color: inherit; text-decoration: none; }
   font-size: .85em;
 }
 
-/* 背景的一层极淡网格，给深色底一点质地。固定层、不吃事件 */
+/* 背景的一层极淡网格，给底色一点质地。固定层、不吃事件 */
 .grid-bg {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(255,255,255,.028) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.028) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 68px 68px;
   mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 20%, transparent 78%);
 }
@@ -78,7 +111,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .nav {
   position: sticky; top: 0; z-index: 50;
   backdrop-filter: blur(14px);
-  background: color-mix(in srgb, var(--ink-900) 78%, transparent);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
   border-bottom: 1px solid transparent;
   transition: border-color .25s ease, background .25s ease;
 }
@@ -93,6 +126,19 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .nav-links a { color: var(--text-2); font-size: .92rem; transition: color .18s ease; }
 .nav-links a:hover { color: var(--text); }
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
+/* 导航里塞进了配色切换按钮，窄屏上会挤：任何一项都不许折行，间距收紧 */
+.brand, .nav-links a { white-space: nowrap; }
+@media (max-width: 480px) {
+  .nav-in { gap: .75rem; }
+  .nav-links { gap: .9rem; }
+}
+/* 再窄（360 宽的安卓机、iPhone SE）：品牌只留图标，文字仍留给读屏 */
+@media (max-width: 370px) {
+  .brand span {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip-path: inset(50%);
+  }
+}
 
 /* ----------------------------------------------------------------- 按钮 */
 
@@ -105,9 +151,9 @@ main, .nav, .foot { position: relative; z-index: 1; }
 }
 .btn:active { transform: translateY(1px) scale(.99); }
 .btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: #7b7ef7; }
-.btn-ghost { border-color: var(--line); color: var(--text); }
-.btn-ghost:hover { background: var(--ink-700); border-color: #2e3547; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-ghost { border-color: var(--btn-line); color: var(--text); }
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--line-strong); }
 
 /* ------------------------------------------------------------------ 英雄区 */
 
@@ -153,20 +199,20 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 .frame {
   border: 1px solid var(--line); border-radius: var(--radius);
-  background: var(--ink-800); overflow: hidden;
-  box-shadow: 0 30px 70px -30px rgba(0,0,0,.85);
+  background: var(--surface); overflow: hidden;
+  box-shadow: 0 30px 70px -30px var(--shadow);
 }
 .frame-bar {
   display: flex; align-items: center; gap: .45rem;
   padding: .6rem .8rem; border-bottom: 1px solid var(--line);
-  background: var(--ink-700);
+  background: var(--surface-2);
 }
-.frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: #2f3647; }
+.frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
 .frame-bar .addr {
   margin-left: .6rem; flex: 1; height: 20px; border-radius: 5px;
-  background: var(--ink-600);
+  background: var(--surface-3);
 }
-.frame-body { position: relative; aspect-ratio: 16 / 10; background: var(--ink-900); }
+.frame-body { position: relative; aspect-ratio: 16 / 10; background: var(--bg); }
 .frame-body video, .frame-body img {
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
@@ -178,13 +224,13 @@ main, .nav, .foot { position: relative; z-index: 1; }
   position: absolute; inset: 0; z-index: 2;
   display: grid; place-content: center;
   pointer-events: none;
-  background: var(--ink-800);
+  background: var(--surface);
   opacity: 1; transition: opacity .4s ease;
 }
 .frame-loading.is-gone { opacity: 0; }
 .frame-loading .ring {
   width: 26px; height: 26px; border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, .14);
+  border: 2px solid var(--ring-track);
   border-top-color: var(--accent);
   animation: frame-spin 900ms linear infinite;
 }
@@ -202,8 +248,8 @@ main, .nav, .foot { position: relative; z-index: 1; }
   display: grid; place-content: center; gap: .5rem; justify-items: center;
   color: var(--text-3); text-align: center; padding: var(--s2);
   background:
-    repeating-linear-gradient(-45deg, rgba(255,255,255,.017) 0 10px, transparent 10px 20px),
-    var(--ink-800);
+    repeating-linear-gradient(-45deg, var(--stripe) 0 10px, transparent 10px 20px),
+    var(--surface);
 }
 .ph strong { color: var(--text-2); font-weight: 560; font-size: .95rem; }
 .ph span { font-size: .8rem; }
@@ -283,7 +329,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   border: 1px solid var(--line); border-radius: 20px;
   background:
     radial-gradient(120% 140% at 8% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 62%),
-    var(--ink-800);
+    var(--surface);
 }
 .cta h2 { font-size: clamp(1.6rem, 3.2vw, 2.1rem); letter-spacing: -.03em; }
 .cta p { margin-top: var(--s2); color: var(--text-2); max-width: 44ch; }
@@ -396,7 +442,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* 更新日志条目里加粗的小标题 */
 .log-body b { color: var(--text); font-weight: 600; }
 
-/* 键盘焦点必须看得见 —— 深色底上默认的焦点环不够稳 */
+/* 键盘焦点必须看得见 —— 默认的焦点环在两套底色上都不够稳 */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -440,3 +486,38 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* 顶部那句「最后更新」 */
 .policy .updated { margin-top: var(--s2); color: var(--text-3); font-size: .9rem; }
+
+/* ------------------------------------------------------------- 配色切换 */
+
+.theme-toggle {
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px; padding: 0;
+  border: 1px solid var(--line); border-radius: 9px;
+  background: transparent; color: var(--text-2); cursor: pointer;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.theme-toggle:hover { color: var(--text); background: var(--surface-2); border-color: var(--line-strong); }
+.theme-toggle svg { display: block; width: 17px; height: 17px; }
+/* 没有脚本时按钮点了也没用：配色照样跟随系统，只是不能手动切 */
+html:not(.js) .theme-toggle { display: none; }
+
+/* 图标表示「点了会变成什么」：深色时是太阳（.only-dark），浅色时是月亮（.only-light） */
+
+/* 只在某一套配色下出现的元素：画死了颜色的插画、切换按钮的图标。
+   只写「藏」的规则，显示时沿用元素本来的 display（插画是 block，不能退回 inline）。
+   选择器都带 :root，特异性压过 .frame-body img 这类 display 声明。 */
+:root[data-theme="dark"] .only-light,
+:root[data-theme="light"] .only-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .only-light { display: none; }
+}
+/* 老浏览器固定深色，就算系统是浅色也不能藏掉深色那份 */
+@supports (color: light-dark(#000, #fff)) {
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .only-dark { display: none; }
+  }
+}
+
+/* 手动切换时两套配色交叉淡入（View Transitions，脚本里已排除减少动效的用户） */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .28s; }
