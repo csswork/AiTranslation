@@ -28,6 +28,12 @@
   --s1: .5rem; --s2: 1rem; --s3: 1.5rem; --s4: 2rem;
   --s5: 3rem;  --s6: 4.5rem; --s7: 7rem;
 
+  /* 视差幅度：展示框从进入视口到离开，总共位移 2 倍于此值。
+     只作用于 .parallax-slow / .parallax-fast（展示框），文字不受影响。
+     调手感：DevTools 里选中 <html>，在 :root 上直接改这两个值，滚动即可看到。 */
+  --drift-slow: 26px;
+  --drift-fast: 52px;
+
   color-scheme: dark;
 }
 
@@ -307,10 +313,10 @@ main, .nav, .foot { position: relative; z-index: 1; }
       animation-range: entry 0% exit 100%;
     }
     /* 幅度克制：够感知，不会让人找不到内容 */
-    @keyframes drift-up      { from { transform: translate3d(0, 26px, 0); }
-                               to   { transform: translate3d(0, -26px, 0); } }
-    @keyframes drift-up-far  { from { transform: translate3d(0, 52px, 0); }
-                               to   { transform: translate3d(0, -52px, 0); } }
+    @keyframes drift-up      { from { transform: translate3d(0, var(--drift-slow), 0); }
+                               to   { transform: translate3d(0, calc(var(--drift-slow) * -1), 0); } }
+    @keyframes drift-up-far  { from { transform: translate3d(0, var(--drift-fast), 0); }
+                               to   { transform: translate3d(0, calc(var(--drift-fast) * -1), 0); } }
 
     .reveal {
       animation: rise linear both;
@@ -371,3 +377,41 @@ main, .nav, .foot { position: relative; z-index: 1; }
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ------------------------------------------------------------- 隐私政策页 */
+
+.policy { margin-top: var(--s5); display: grid; gap: var(--s5); }
+/* grid 项默认 min-width:auto，会被下面表格的 min-width 撑破，窄屏直接横向溢出。
+   给 0 让它老实收缩，超出的部分交给 .table-wrap 自己横滚。 */
+.policy > section { min-width: 0; max-width: 78ch; }
+.policy h3 { font-size: 1.22rem; margin-top: var(--s4); }
+.policy > section > h3:first-child { margin-top: 0; }
+.policy h3 + p, .policy h3 + ul, .policy h3 + .table-wrap { margin-top: var(--s2); }
+.policy p { color: var(--text-2); }
+.policy p + p { margin-top: var(--s2); }
+.policy ul { margin: var(--s2) 0 0; padding-left: 1.15rem; color: var(--text-2); }
+.policy li { margin-bottom: .4rem; }
+.policy li::marker { color: var(--text-3); }
+.policy b, .policy strong { color: var(--text); font-weight: 600; }
+.policy code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: .86em; color: var(--accent-ink);
+}
+.policy hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+/* 表格窄屏不折行挤压：整块横向滚动，比把表格拆成卡片可读 */
+.policy .table-wrap { overflow-x: auto; max-width: 100%; }
+.policy table { width: 100%; min-width: 340px; border-collapse: collapse; font-size: .93rem; }
+.policy th, .policy td {
+  text-align: left; vertical-align: top;
+  padding: .72rem var(--s3) .72rem 0; border-top: 1px solid var(--line);
+  color: var(--text-2); font-weight: 400;
+}
+.policy th {
+  color: var(--text-3); font-weight: 560; font-size: .8rem;
+  letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+}
+.policy tr:last-child td { border-bottom: 1px solid var(--line); }
+
+/* 顶部那句「最后更新」 */
+.policy .updated { margin-top: var(--s2); color: var(--text-3); font-size: .9rem; }

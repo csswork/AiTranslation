@@ -1,6 +1,6 @@
 /**
- * 元素翻译：右键某个元素 → 给它挂一个翻译按钮 → 点击把元素内的文字就地换成中文。
- * 规则按域名记住，下次访问自动挂上按钮。
+ * 元素翻译：右键某个元素 → 记成规则 → 鼠标移到这类元素上时出现翻译按钮 →
+ * 点击把元素内的文字就地换成中文。规则按域名记住，下次访问照样生效。
  *
  * 独立于 content.js（划词翻译那套）：自己的事件监听、自己的 shadow 宿主，
  * 互不引用，一边出问题不影响另一边。
@@ -27,7 +27,6 @@
     'CODE', 'PRE', 'KBD', 'SAMP', 'SVG', 'CANVAS', 'IFRAME',
   ]);
 
-  const MAX_OBSERVED_PER_RULE = 300; // 一条规则最多盯多少个元素（按钮按需懒挂）
   const MAX_NODES = 300;            // 单个元素最多翻译多少段
   const MAX_CHARS = 20000;          // 单个元素最多翻译多少字
   const CHUNK_NODES = 25;           // 每批送多少段
@@ -165,11 +164,33 @@
     return 'light'; // 一路透明到顶，浏览器默认是白底
   }
 
-  /** element -> { host, button, state, originals } */
+  /**
+   * element -> { element, host, button, state, originals, themeEpoch }
+   * 鼠标第一次移到元素上时才建（宿主 + shadow + 按钮），从没碰过的元素零开销。
+   */
   const attached = new WeakMap();
   let layer = null;
   /** 滚动期间整层隐藏的状态，与 layer 同生命周期，所以声明在一起。 */
   let hiddenByScroll = false;
+
+  /**
+   * 正在显示的按钮：鼠标所在的那一个，加上正在翻译 / 出错的。
+   * 滚动、缩放、换主题时只处理这几个。其余按钮不在文档里，
+   * 不读 rect、不参与任何重排。
+   */
+  const shown = new Set();
+  /** 鼠标所在的规则元素对应的按钮。嵌套匹配时只取最外层的一个。 */
+  let hovered = null;
+  /** 站点每切一次明暗就加一；按钮显示时发现自己的版本旧了才重算主题。 */
+  let themeEpoch = 0;
+
+  /** 只观察正在显示的元素：悬停中卡片展开、翻译后文字变长，按钮都要跟着挪。 */
+  let sizeObserver = null;
+  try {
+    sizeObserver = new ResizeObserver(() => repositionShown());
+  } catch {
+    sizeObserver = null; // 老浏览器没有 ResizeObserver，靠 resize 事件兜底
+  }
 
   function ensureLayer() {
     if (layer && layer.isConnected) return layer;
@@ -205,25 +226,69 @@
     host.style.left = `${Math.round(rect.right - 8)}px`;
   }
 
-  function position(entry) {
+  /** 翻译中要一直看得到进度，出错要让人看得到结果；其余只在悬停时出现。 */
+  const wantsVisible = (entry) =>
+    entry === hovered || entry.state === 'busy' || entry.state === 'error';
+
+  /** 收起：比 display:none 更彻底，直接移出文档。按钮状态留在 entry 里，下次原样接上。 */
+  function conceal(entry) {
+    shown.delete(entry);
+    sizeObserver?.unobserve(entry.element);
+    entry.host.remove();
+  }
+
+  /** 按悬停与状态决定显示还是收起；显示时顺带摆好位置。 */
+  function sync(entry) {
     if (!entry.element.isConnected) {
-      entry.host.remove();
-      trackedElements.delete(entry.element);
+      if (hovered === entry) hovered = null;
+      conceal(entry);
       return;
     }
-    // 页面整块重建时宿主可能被一起移走，重新挂回去
+    if (!wantsVisible(entry)) {
+      if (shown.has(entry)) conceal(entry);
+      return;
+    }
+    if (!shown.has(entry)) {
+      shown.add(entry);
+      sizeObserver?.observe(entry.element);
+      if (entry.themeEpoch !== themeEpoch) {
+        entry.button.dataset.theme = detectTheme(entry.element);
+        entry.themeEpoch = themeEpoch;
+      }
+    }
+    // 页面整块重建时层可能被一起移走，ensureLayer 会重建
     if (!entry.host.isConnected) ensureLayer().appendChild(entry.host);
     applyPosition(entry, entry.element.getBoundingClientRect());
+  }
+
+  /** 先集中读 rect、再集中写样式。读写交错会反复触发强制布局。 */
+  function repositionShown() {
+    if (!shown.size) return;
+    const pending = [];
+    for (const entry of [...shown]) {
+      if (!entry.element.isConnected) {
+        if (hovered === entry) hovered = null;
+        conceal(entry);
+        continue;
+      }
+      if (!entry.host.isConnected) ensureLayer().appendChild(entry.host);
+      pending.push([entry, entry.element.getBoundingClientRect()]);
+    }
+    for (const [entry, rect] of pending) applyPosition(entry, rect);
   }
 
   function setState(entry, state, text) {
     entry.state = state;
     entry.button.dataset.state = state;
     entry.button.textContent = text;
+    // 显示与否取决于状态：翻译中常驻，翻完鼠标不在上面就收起
+    sync(entry);
   }
 
-  function attach(element) {
-    if (!(element instanceof Element) || attached.has(element)) return;
+  /** 取元素的按钮，没有就现建。只建不显示，显示与否交给 sync。 */
+  function entryFor(element) {
+    let entry = attached.get(element);
+    if (entry) return entry;
 
     const host = document.createElement('div');
     host.style.cssText =
@@ -238,42 +303,100 @@
     button.title = '把这个区域的文字翻译成中文';
     button.textContent = '译';
     button.dataset.state = 'idle';
-    button.dataset.theme = detectTheme(element);
     root.appendChild(style);
     root.appendChild(button);
 
-    const entry = { element, host, button, state: 'idle', originals: null };
+    entry = { element, host, button, state: 'idle', originals: null, themeEpoch: -1 };
     attached.set(element, entry);
-    ensureLayer().appendChild(host);
-    position(entry);
 
     button.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
       onButtonClick(entry);
     });
-
-    // 元素尺寸变化时跟着挪
-    try {
-      const observer = new ResizeObserver(() => position(entry));
-      observer.observe(element);
-      entry.observer = observer;
-    } catch {
-      /* 老浏览器没有 ResizeObserver，靠 resize 事件兜底 */
-    }
     return entry;
+  }
+
+  function setHovered(element) {
+    const next = element ? entryFor(element) : null;
+    if (next === hovered) return;
+    const previous = hovered;
+    hovered = next;
+    if (previous) sync(previous);
+    if (next) sync(next);
   }
 
   let repositionTimer = 0;
   function scheduleReposition(delay = 150) {
+    if (!shown.size) return;
     clearTimeout(repositionTimer);
-    repositionTimer = setTimeout(() => repositionAll(), delay);
+    repositionTimer = setTimeout(repositionShown, delay);
   }
   window.addEventListener('resize', () => scheduleReposition());
 
+  /* ----------------------------------------------------------- 悬停 */
+
+  /** 各条规则的选择器拼成一条，每往上找一层匹配只要一次 closest。 */
+  let ruleSelector = '';
+  let listening = false;
+  /** 滚动中不读布局，停下后统一重判。 */
+  let scrolling = false;
+  /** 最近一次的鼠标位置。滚动时内容会从静止的鼠标下面滑过，停下后要按它重判。 */
+  let pointerX = -1;
+  let pointerY = -1;
+
+  /**
+   * 鼠标下面属于哪个规则元素。嵌套时取最外层：外层一译就连里层一起译了，
+   * 再给里层一个按钮只会造成重复翻译、恢复时对不上原文。
+   */
+  function ruleElementAt(target) {
+    if (!ruleSelector || !(target instanceof Element)) return null;
+    try {
+      let outermost = null;
+      for (let el = target.closest(ruleSelector); el; el = el.parentElement?.closest(ruleSelector)) {
+        outermost = el;
+      }
+      return outermost;
+    } catch {
+      return null;
+    }
+  }
+
+  function onMouseOver(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    if (scrolling) return;
+    // 移到我们自己的按钮上：保持现状，否则鼠标还没够到按钮它就收起来了
+    if (layer && layer.contains(event.target)) return;
+    setHovered(ruleElementAt(event.target));
+  }
+
+  function onMouseMove(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  }
+
+  function onMouseOut(event) {
+    if (event.relatedTarget) return; // 为空说明鼠标离开了窗口
+    pointerX = -1;
+    pointerY = -1;
+    setHovered(null);
+  }
+
+  /** 这个网站没有规则时一个监听都不挂。 */
+  function setListening(on) {
+    if (on === listening) return;
+    listening = on;
+    const method = on ? 'addEventListener' : 'removeEventListener';
+    const options = { capture: true, passive: true };
+    document[method]('mouseover', onMouseOver, options);
+    document[method]('mousemove', onMouseMove, options);
+    document[method]('mouseout', onMouseOut, options);
+  }
+
   /**
    * 滚动期间把整层藏起来，停下来再摆好显示。
-   * 逐帧跟随一来观感上会有拖影，二来每帧都要读几十个 rect，代价不小。
+   * 逐帧跟随一来观感上会有拖影，二来每帧都要读 rect。
    * 藏起来只需对 layer 写一次 display，滚动全程零 getBoundingClientRect。
    */
   const SCROLL_SETTLE = 150;
@@ -291,20 +414,23 @@
   window.addEventListener(
     'scroll',
     () => {
-      if (!layer) return;
+      if (!listening && !shown.size) return;
+      scrolling = true;
       setLayerHidden(true);
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
+        scrolling = false;
+        // 层还藏着，elementFromPoint 不会命中我们自己的按钮
+        if (listening && pointerX >= 0) {
+          setHovered(ruleElementAt(document.elementFromPoint(pointerX, pointerY)));
+        }
         // 顺序不能反：先摆好位置再显示，否则会闪一下旧位置
-        repositionAll();
+        repositionShown();
         setLayerHidden(false);
       }, SCROLL_SETTLE);
     },
     { capture: true, passive: true }
   );
-
-  /** WeakMap 不能遍历，另外留一份普通集合用于重新定位。 */
-  const trackedElements = new Set();
 
   /* ------------------------------------------------------- 收集与替换 */
 
@@ -380,13 +506,11 @@
       });
       done += 1;
       setState(entry, 'busy', `${done}/${batches.length}`);
-      position(entry);
     }
 
     entry.originals = originals;
     entry.button.title = '恢复原文';
     setState(entry, 'done', '原文');
-    position(entry);
   }
 
   function restoreElement(entry) {
@@ -399,7 +523,6 @@
     entry.originals = null;
     entry.button.title = '把这个区域的文字翻译成中文';
     setState(entry, 'idle', '译');
-    position(entry);
   }
 
   function onButtonClick(entry) {
@@ -416,99 +539,50 @@
 
   /* --------------------------------------------------------- 规则应用 */
 
-  let activeRules = [];
-  const observed = new WeakSet();
-
-  /** 进入视口附近才挂按钮，这样不必给「最多挂几个」设一个武断的上限。 */
-  let viewObserver = null;
-  function ensureViewObserver() {
-    if (viewObserver) return viewObserver;
-    try {
-      viewObserver = new IntersectionObserver(
-        (entries) => {
-          for (const item of entries) {
-            if (!item.isIntersecting) continue;
-            const element = item.target;
-            viewObserver.unobserve(element);
-            if (attached.has(element)) continue;
-            if (attach(element)) trackedElements.add(element);
-          }
-        },
-        { rootMargin: '400px' } // 提前一屏挂好，滚到时按钮已经在
-      );
-    } catch {
-      viewObserver = null; // 老浏览器没有 IntersectionObserver，回落到直接挂
-    }
-    return viewObserver;
-  }
-
-  /** AJAX 插入的内容会把已有元素挤动，已挂的按钮要跟着重新定位。 */
-  function repositionAll() {
-    // 先集中读 rect、再集中写样式。读写交错会反复触发强制布局，
-    // 滚动时几十个按钮一起算会明显掉帧。
-    const pending = [];
-    for (const element of [...trackedElements]) {
-      const entry = attached.get(element);
-      if (!entry) {
-        trackedElements.delete(element);
-        continue;
-      }
-      if (!element.isConnected) {
-        entry.host.remove();
-        trackedElements.delete(element);
-        continue;
-      }
-      if (!entry.host.isConnected) ensureLayer().appendChild(entry.host);
-      pending.push([entry, element.getBoundingClientRect()]);
-    }
-    for (const [entry, rect] of pending) applyPosition(entry, rect);
-  }
-
-  function applyRules() {
-    for (const rule of activeRules) {
-      let matched;
+  /**
+   * 选择器逐条校验后拼成一条。站点改版不会让选择器语法失效，
+   * 但存储里的内容不可全信，坏的一条不能拖垮其余的。
+   */
+  function compileRules(rules) {
+    const probe = document.createDocumentFragment();
+    const valid = [];
+    for (const rule of rules) {
       try {
-        matched = document.querySelectorAll(rule.selector);
+        probe.querySelector(rule.selector);
+        valid.push(rule.selector);
       } catch {
-        continue; // 选择器失效（站点改版）就跳过
-      }
-      let seen = 0;
-      for (const element of matched) {
-        if (seen >= MAX_OBSERVED_PER_RULE) break;
-        seen += 1;
-        if (attached.has(element) || observed.has(element)) continue;
-        const io = ensureViewObserver();
-        if (io) {
-          observed.add(element);
-          io.observe(element);
-        } else if (attach(element)) {
-          trackedElements.add(element);
-        }
+        /* 跳过无效选择器 */
       }
     }
-    repositionAll();
+    return valid.join(', ');
   }
 
   async function reloadRules() {
+    let rules = [];
     try {
-      activeRules = await Rules.rulesFor(HOST);
+      rules = await Rules.rulesFor(HOST);
     } catch {
-      activeRules = [];
+      rules = [];
     }
-    applyRules();
+    ruleSelector = compileRules(rules);
+    setListening(Boolean(ruleSelector));
+    // 规则删了或改了，鼠标下面那个元素可能已经不算数了
+    if (hovered && ruleElementAt(hovered.element) !== hovered.element) setHovered(null);
   }
 
   /* 站点在运行时切换明暗（通常是改 <html>/<body> 的 class）时，按钮要跟着换 */
   let themeTimer = 0;
   function refreshThemes() {
-    for (const element of [...trackedElements]) {
-      const entry = attached.get(element);
-      if (entry && element.isConnected) entry.button.dataset.theme = detectTheme(element);
+    for (const entry of shown) {
+      entry.button.dataset.theme = detectTheme(entry.element);
+      entry.themeEpoch = themeEpoch;
     }
   }
 
   function watchTheme() {
     const schedule = () => {
+      themeEpoch += 1; // 没显示的按钮下次出现时自己重算
+      if (!shown.size) return;
       clearTimeout(themeTimer);
       themeTimer = setTimeout(refreshThemes, 200);
     };
@@ -531,28 +605,11 @@
     }
   }
 
-  /* 页面高度变化（图片加载完、内容展开）会让已挂按钮错位 */
+  /* 页面高度变化（图片加载完、内容展开）会让正在显示的按钮错位 */
   function watchLayout() {
     try {
       const observer = new ResizeObserver(() => scheduleReposition(120));
       observer.observe(document.body);
-    } catch {
-      /* 忽略 */
-    }
-  }
-
-  /* 页面内容是后加载的（SPA、无限滚动）时也要能挂上按钮 */
-  let observerTimer = 0;
-  function watchDom() {
-    try {
-      const observer = new MutationObserver(() => {
-        if (!activeRules.length || observerTimer) return;
-        observerTimer = setTimeout(() => {
-          observerTimer = 0;
-          applyRules();
-        }, 800);
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
     } catch {
       /* 忽略 */
     }
@@ -584,6 +641,8 @@
         return;
       }
       await reloadRules();
+      // 马上亮出刚右键那个元素的按钮，告诉用户规则生效了；鼠标移到别的元素上就回到正常的悬停逻辑
+      setHovered(ruleElementAt(lastTarget));
       sendResponse({ ok: true, selector: built.selector, matches: built.matches });
     })();
     return true; // 异步回复
@@ -596,7 +655,6 @@
   /* ---------------------------------------------------------- 启动 */
 
   reloadRules();
-  watchDom();
   watchLayout();
   watchTheme();
 })();
