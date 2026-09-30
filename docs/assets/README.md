@@ -4,33 +4,38 @@
 **不需要改 HTML**：`main.js` 会在对应的展示框滚到视口附近时去找同名文件，
 找到就用，找不到就静静留着占位层——不会出现破图或红色报错。
 
-## 演示视频
+## 演示视频（已就位）
 
-放这四个文件（名字要一致）：
+五段都已录好放在这里，`main.js` 会自动接管，不需要改 HTML：
 
-| 文件名 | 出现在哪 | 拍什么 |
-| --- | --- | --- |
-| `demo-hero.mp4` | 首屏右侧的大框 | 一段最有代表性的画面，通常就是划词翻译 |
-| `demo-selection.mp4` | 功能 01 划词翻译 | 选中外文 → 右键 → 弹窗里译文逐字出现 |
-| `demo-element.mp4` | 功能 02 元素翻译 | 右键区域 → 挂上按钮 → 点击就地替换 |
-| `demo-image.mp4` | 功能 03 图片翻译 | 右键图片 → 转圈 → 译文盖回原位 |
-| `demo-panel.mp4` | 功能 04 翻译面板 | 左边贴原文，右边出译文 |
+| 文件名 | 出现在哪 | 内容 | 时长 |
+| --- | --- | --- | --- |
+| `demo-hero.mp4` | 首屏右侧的大框 | 划词 → 浮动按钮 → 弹窗里译文逐字出现 | 9.6s |
+| `demo-selection.mp4` | 功能 01 划词翻译 | 同样一遍操作，但跑在真实的维基百科页面上 | 9.7s |
+| `demo-element.mp4` | 功能 02 元素翻译 | 悬停区域出现按钮 → 点击就地变中文 | 8.2s |
+| `demo-image.mp4` | 功能 03 图片翻译 | 载入图片 → 识别并翻译 → 译文盖回原位、鼠标划过联动高亮 | 8.0s |
+| `demo-panel.mp4` | 功能 04 翻译面板 | 输入原文 → 右侧逐字出译文 | 10.6s |
 
-录制建议：
+全部 1280×800（16:10）、30fps、约 4 Mbps、H.264 + faststart、**无音轨**，单文件 0.36–1.01 MB。
+首尾各有一段淡出到页面底色的过渡，循环播放时不会跳。
 
-- **比例 16:10**，展示框就是按这个比例留的。比如 1440×900 或 1280×800。
-- **不要带声音**。视频是静音自动循环播放的（浏览器的自动播放策略也要求静音）。
-- **短**。8 到 15 秒，能看清一次完整操作就够，会一直循环。
-- 单个文件尽量压到 2 MB 以内。GitHub Pages 有 100 MB 单文件上限和 1 GB 仓库软上限，
-  但更现实的问题是手机流量。用 H.264 + faststart 即可：
+重新生成走仓库外的拍摄工具链（`tools/capture/`，不进 git）：
 
-  ```
-  ffmpeg -i 原片.mov -vf "scale=1280:-2" -c:v libx264 -crf 26 -preset slow \
-         -an -movflags +faststart demo-selection.mp4
-  ```
+```bash
+cd tools/capture
+node record-demos.mjs                    # 录 5 段（可只录某几段：node record-demos.mjs hero panel）
+/Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/compose_demos.py
+for c in hero selection element image panel; do
+  node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i out/demo-frames/$c/frame_%06d.png \
+    -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -an -movflags +faststart \
+    ../../docs/assets/demo-$c.mp4
+done
+```
 
-视频只在滚到视口附近时才开始加载，离开视口自动暂停；
-访客开了「减少动态效果」时不会自动播放，改为显示播放控件。
+录制环境、假接口与文案都在那套工具里，改完重跑即可；细节见 `tools/capture/lib/content.mjs` 的注释。
+
+> 注意：示例里的译文是**预先写好的演示文案**（真实模型调用会消耗额度、且不可复现），
+> 界面、交互、请求与流式链路都是真的。
 
 ## 静态图
 
