@@ -6,26 +6,30 @@
 
 ## 演示视频（已就位）
 
-五段都已录好放在这里，`main.js` 会自动接管，不需要改 HTML：
+**首屏刻意不放视频**：那里用静态示意图（`preview.svg`），第一眼就完整可读，
+也不和下面「01 划词翻译」那段视频重复。四个功能区块各放一段，`main.js` 自动接管，不需要改 HTML：
 
 | 文件名 | 出现在哪 | 内容 | 时长 |
 | --- | --- | --- | --- |
-| `demo-hero.mp4` | 首屏右侧的大框 | 划词 → 浮动按钮 → 弹窗里译文逐字出现 | 9.6s |
-| `demo-selection.mp4` | 功能 01 划词翻译 | 同样一遍操作，但跑在真实的维基百科页面上 | 9.7s |
+| `demo-selection.mp4` | 功能 01 划词翻译 | 在真实的维基百科页面上划词 → 浮动按钮 → 弹窗里译文逐字出现 | 9.7s |
 | `demo-element.mp4` | 功能 02 元素翻译 | 悬停区域出现按钮 → 点击就地变中文 | 8.2s |
-| `demo-image.mp4` | 功能 03 图片翻译 | 载入图片 → 识别并翻译 → 译文盖回原位、鼠标划过联动高亮 | 8.0s |
+| `demo-image.mp4` | 功能 03 图片翻译 | **在网页里右键一张图片** → 图上转圈识别 → 结果面板把译文盖回原位 → 切回原图对照 | 11.3s |
 | `demo-panel.mp4` | 功能 04 翻译面板 | 输入原文 → 右侧逐字出译文 | 10.6s |
 
-全部 1280×800（16:10）、30fps、约 4 Mbps、H.264 + faststart、**无音轨**，单文件 0.36–1.01 MB。
+全部 1280×800（16:10）、30fps、H.264 + faststart、**无音轨**，单文件 0.36–1.2 MB。
 首尾各有一段淡出到页面底色的过渡，循环播放时不会跳。
+
+视频是滚到视口附近才开始拉的。**空窗期由 `main.js` 压一层转圈**（`.frame-loading`），
+就绪后视频淡入、转圈淡出再移除；加载失败则摘掉 video，占位层原样留着。切到「减少动态效果」时
+不转圈、不自动播放，改为显示播放控件。
 
 重新生成走仓库外的拍摄工具链（`tools/capture/`，不进 git）：
 
 ```bash
 cd tools/capture
-node record-demos.mjs                    # 录 5 段（可只录某几段：node record-demos.mjs hero panel）
+node record-demos.mjs                    # 录 4 段（可只录某几段：node record-demos.mjs image）
 /Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/compose_demos.py
-for c in hero selection element image panel; do
+for c in selection element image panel; do
   node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i out/demo-frames/$c/frame_%06d.png \
     -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -an -movflags +faststart \
     ../../docs/assets/demo-$c.mp4
@@ -41,7 +45,7 @@ done
 
 | 文件名 | 用途 | 现在是什么 |
 | --- | --- | --- |
-| `preview.svg` | 首屏大框在视频到位前显示的图 | 手画的效果示意图，可以直接用 |
+| `preview.svg` | **首屏右侧大框的正式配图**（该处不放视频） | 手画的效果示意图，可以直接用 |
 | `og.png` | 分享到社交媒体 / IM 时的预览图（1200×630） | 已生成 |
 | `icon128.png` | favicon 和导航栏图标 | 从仓库根目录 `icons/` 复制来的 |
 

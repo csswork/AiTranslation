@@ -262,6 +262,26 @@ DOM. It is never evaluated as code.
 属于「提供或改进单一用途功能」这一 approved use case；扩展本身既不收集也不转售任何数据，
 作者没有服务器、拿不到这些内容。这一点隐私政策里写得很直白，两边口径一致。
 
+### 4.3 发布时提示「you must certify that your data usage complies…」
+
+这三个框是**发布的硬性前置条件**，空着就发不出去。报错原文：
+
+> To publish your item, you must certify that your data usage complies with our Developer Program
+> Policies. You can certify this on the Privacy practices tab of the item edit page.
+
+处理顺序：
+
+1. 回到这一页拉到底，三个框全勾；
+2. **点页面底部的「保存」**——这是最常漏的一步，勾完不保存等于没勾；
+3. 再回去点「提交审核」。
+
+保存后仍然报同一句话时，按顺序排查：
+
+- 本页还有别的必填项没填完：单一用途、每一项权限的理由、远程代码那栏的 Justification、
+  隐私权政策网址（`https://www.huaci.app/privacy.html`）。上面几节都有现成文案。
+- 后台没刷新：退出重进或强制刷新一次，保存结果有时要等一两分钟。
+- 该商品是政策更新前创建的：即使以前发过版本，也需要在新版政策下重新认证一次。
+
 ---
 
 ## 5. 隐私权政策网址（Privacy policy URL）

@@ -54,11 +54,27 @@
     /**
      * 挂上视频。文件不存在时（用户还没把录屏放进 assets/）
      * error 事件会把它摘掉，CSS 里的 .ph 占位层原样留着。
+     *
+     * 等待期间压一层转圈：视频是滚到视口附近才开始拉的，
+     * 这一两秒里如果什么都不给，展示框就是一块空白。
      */
     const attach = (frame) => {
       const src = frame.dataset.video;
       const body = frame.querySelector('.frame-body');
       if (!src || !body) return;
+
+      const loading = document.createElement('div');
+      loading.className = 'frame-loading';
+      loading.setAttribute('aria-hidden', 'true');
+      loading.innerHTML = '<span class="ring"></span>';
+      body.appendChild(loading);
+
+      const dropLoading = () => {
+        loading.classList.add('is-gone');
+        loading.addEventListener('transitionend', () => loading.remove(), { once: true });
+        // 万一 transitionend 没来（元素被隐藏等），兜一个底
+        setTimeout(() => loading.remove(), 800);
+      };
 
       const video = document.createElement('video');
       video.muted = true; // 必须在 play() 之前，否则自动播放会被拦
@@ -77,6 +93,8 @@
           // 占位用的静态图让位给视频，两者不叠在一起
           body.querySelectorAll('img').forEach((img) => img.remove());
           frame.classList.add('has-media');
+          video.classList.add('is-ready'); // 淡入，避免第一帧闪一下黑
+          dropLoading();
           if (!reduceMotion) playback.observe(video);
         },
         { once: true },
@@ -86,6 +104,7 @@
         'error',
         () => {
           video.remove();
+          dropLoading();
         },
         { once: true },
       );

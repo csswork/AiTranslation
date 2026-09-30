@@ -171,6 +171,31 @@ main, .nav, .foot { position: relative; z-index: 1; }
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
 
+/* 视频就绪前压住的转圈层：展示框是滚到视口附近才开始拉视频的，
+   这一段空窗期给个「正在加载」的反馈，别让人以为是坏的。
+   就绪后视频淡入，转圈层淡出再移除。 */
+.frame-loading {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; place-content: center;
+  pointer-events: none;
+  background: var(--ink-800);
+  opacity: 1; transition: opacity .4s ease;
+}
+.frame-loading.is-gone { opacity: 0; }
+.frame-loading .ring {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .14);
+  border-top-color: var(--accent);
+  animation: frame-spin 900ms linear infinite;
+}
+@keyframes frame-spin { to { transform: rotate(360deg); } }
+.frame-body video { opacity: 0; transition: opacity .45s ease; }
+.frame-body video.is-ready { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .frame-loading .ring { animation: none; }
+  .frame-body video, .frame-loading { transition: none; }
+}
+
 /* 视频没放进来之前的占位，做成有意为之的样子而不是破图 */
 .ph {
   position: absolute; inset: 0;
