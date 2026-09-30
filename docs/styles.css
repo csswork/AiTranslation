@@ -255,54 +255,78 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .ph span { font-size: .8rem; }
 .frame.has-media .ph { display: none; }
 
-/* ------------------------------------ 首屏示意图：两层，载入时归位、悬停时错开
+/* ------------------------------------------------ 首屏示意图：载入时演示一遍
 
    内联 SVG 拆成两层：底下是网页，上面是弹窗。两层都是和展示框一样大的 <svg>，
    坐标系完全重合，静止时和一张图没有区别。
-   动的是这两个 <svg> 盒子本身，而不是 SVG 内部的 <g>：前者的 transform / opacity
-   交给合成器线程，后者每帧都要重画整张图——弹窗带一个半径 26 的阴影滤镜，重画很贵。 */
+   载入时按顺序演示：鼠标拖选两行 → 松开，弹窗淡入 → 译文逐段流出 → 光标闪烁。
+     · 前两步是这里的 CSS 动画。backwards 让每个元素从第一帧起就停在起点，
+       不会先闪一下完成后的样子，也不依赖脚本；
+     · 译文流出由 main.js 接手（要按实际排出的字宽摆光标）。脚本没跑时，译文随弹窗整段出现。
+   减少动效时什么都不播，直接就是完成后的样子。
+   弹窗的淡入做在 <svg> 盒子上、交给合成器：弹窗带半径 26 的阴影滤镜，不能每帧重画。 */
 .pv {
-  position: absolute; inset: 0; overflow: hidden;
-  /* 网页层缩起来时露出的「桌面」，比网页底色深一档，纸的四条边才看得出来 */
-  background: var(--pv-desk, #06080c);
+  position: absolute; inset: 0;
 
-  /* 「错开」的样子只在这里定义一次，悬停和载入动画共用 */
-  --pv-page-off:  translate3d(-8px, 6px, 0) scale(.95);         /* 网页整张往左下沉、缩小 */
-  --pv-popup-off: translate3d(12px, -9px, 0) scale(1.025);      /* 弹窗往右上浮起、略放大 */
-  --pv-ease: cubic-bezier(.22, .8, .24, 1);
+  /* 时间线：改节奏只动这里 */
+  --pv-t-press: .35s;   /* 指针出现、按下 */
+  --pv-t-drag:  .5s;    /* 开始拖过第一行 */
+  --pv-drag:    .65s;   /* 拖过第一行用时 */
+  --pv-t-line2: 1.3s;   /* 指针落到第二行：第二行一下子整行选中，真实的选区就是这样跳的 */
+  --pv-t-popup: 1.8s;   /* 松开，弹窗淡入 */
+  --pv-ease-drag: cubic-bezier(.45, 0, .4, 1);  /* 指针和选区共用，选区边缘才能一直贴着指针 */
 }
 .pv-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-/* 网页层是一整张纸：1px 描边 + 阴影常驻，铺满时都落在展示框外被裁掉，缩起来才显形。
-   描边是深色下的关键：那里网页盖着压暗层，和桌面几乎同色，光靠色差看不出纸的边 */
-.pv-page {
-  overflow: hidden; border-radius: 0;
-  box-shadow: 0 0 0 1px var(--pv-edge, #262c3a), 0 18px 44px -20px var(--shadow);
-}
 .pv-popup { overflow: visible; }
 
-@media (prefers-reduced-motion: no-preference) {
-  /* 载入时播一次：两层从错开的位置归位，弹窗同时淡入。所有设备都播，和能不能悬停无关。
-     backwards：延迟期间就停在起点，不会先闪一下归位后的样子；播完即撤，不挡悬停的 transition */
-  .pv-page  { animation: pv-page-in  1.1s var(--pv-ease) .2s backwards; }
-  .pv-popup { animation: pv-popup-in 1.1s var(--pv-ease) .4s backwards; }
-}
-@keyframes pv-page-in  { from { transform: var(--pv-page-off); border-radius: 12px; } }
-@keyframes pv-popup-in { from { transform: var(--pv-popup-off); opacity: 0; } }
+/* 选区、选中的文字从左往右长出来；选中之前的普通文字从左往右退掉 */
+.pv-sel, .pv-pick, .pv-unpick { transform-box: fill-box; transform-origin: left center; }
+.pv-unpick { visibility: hidden; transform-origin: right center; }  /* 静止时就是已选中，用不着它 */
+.pv-pointer { opacity: 0; }                                         /* 指针只在演示过程中出现 */
 
-/* 悬停只给有真实悬停的设备：触屏上 :hover 会在点一下之后卡住 */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .pv-layer { transition: transform .9s var(--pv-ease), border-radius .9s var(--pv-ease); }
-  .frame:hover .pv-page  { transform: var(--pv-page-off); border-radius: 12px; }
-  .frame:hover .pv-popup { transform: var(--pv-popup-off); }
+@media (prefers-reduced-motion: no-preference) {
+  /* 第一行跟着指针一点点选中 */
+  .pv-sel-1, .pv-pick-1 { animation: pv-grow   var(--pv-drag) var(--pv-ease-drag) var(--pv-t-drag) backwards; }
+  .pv-unpick-1          { animation: pv-shrink var(--pv-drag) var(--pv-ease-drag) var(--pv-t-drag) backwards; }
+  /* 第二行在指针落下的那一刻整行选中 */
+  .pv-sel-2, .pv-pick-2 { animation: pv-hidden var(--pv-t-line2) linear; }
+  .pv-unpick-2          { animation: pv-shown  var(--pv-t-line2) linear; }
+
+  .pv-pointer {
+    animation: pv-fade-in  .15s ease-out var(--pv-t-press) both,
+               pv-fade-out .25s ease-in  var(--pv-t-popup) forwards;
+  }
+  .pv-ptr-drag { animation: pv-ptr-drag var(--pv-drag) var(--pv-ease-drag) var(--pv-t-drag) both; }
+  .pv-ptr-drop { animation: pv-ptr-drop .2s ease-in-out calc(var(--pv-t-line2) - .1s) both; }
+  .pv-ptr-back { animation: pv-ptr-back .3s ease-out    calc(var(--pv-t-line2) + .1s) both; }
+
+  /* 松开：弹窗淡入（深色下背后的压暗一起出现） */
+  .pv-dim   { animation: pv-fade-in .35s ease-out var(--pv-t-popup) backwards; }
+  .pv-popup { animation: pv-pop-in  .4s cubic-bezier(.2, .8, .3, 1) var(--pv-t-popup) backwards; }
+
+  /* 光标：等待和译完时闪；流式输出期间常亮（main.js 给 .pv 加 is-typing），和真实输入框一致 */
+  .pv-caret { animation: pv-blink 1.06s step-end infinite; }
+  .pv.is-typing .pv-caret { animation: none; }
 }
+@keyframes pv-grow     { from { transform: scaleX(0); } }
+@keyframes pv-shrink   { from { visibility: visible; transform: scaleX(1); }
+                         to   { visibility: visible; transform: scaleX(0); } }
+@keyframes pv-hidden   { from, to { visibility: hidden; } }
+@keyframes pv-shown    { from, to { visibility: visible; } }
+@keyframes pv-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pv-fade-out { from { opacity: 1; } to { opacity: 0; } }
+/* 位移都是 SVG 坐标（800×500 画布）：第一行选区右端 736、第二行文字末尾约 446 */
+@keyframes pv-ptr-drag { from { transform: translateX(0); } to { transform: translateX(674px); } }
+@keyframes pv-ptr-drop { from { transform: translateY(0); } to { transform: translateY(26px); } }
+@keyframes pv-ptr-back { from { transform: translateX(0); } to { transform: translateX(-290px); } }
+@keyframes pv-pop-in   { from { opacity: 0; transform: translate3d(0, 8px, 0) scale(.985); } }
+@keyframes pv-blink    { 50% { opacity: 0; } }
 
 /* 配色：标记里写的是深色原稿，老浏览器（不认 light-dark()、全站固定深色）直接用它；
    新浏览器在这里换成随配色切换的 token。整块放在 @supports 里，
    否则老浏览器会因为 token 无效而把颜色全部丢掉，连深色原稿都显示不出来。 */
 @supports (color: light-dark(#000, #fff)) {
   .pv {
-    --pv-desk:      light-dark(#e9e9f3, #06080c);
-    --pv-edge:      light-dark(#dcdce9, #262c3a);
     --pv-bg:        light-dark(#fbfbfe, #0d1016);
     --pv-fade:      light-dark(#fbfbfe, #0a0c11);
     --pv-dim:       light-dark(transparent, rgba(5, 7, 11, .55));

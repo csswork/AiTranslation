@@ -9,7 +9,8 @@
  *      文件还没放进来就静默留住占位层，不出现破图
  *   3. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
  *
- * 另外有配色切换：只在点击按钮、或系统切换明暗时才运行。
+ * 另外有配色切换：只在点击按钮、或系统切换明暗时才运行；
+ * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
  */
 (() => {
   'use strict';
@@ -96,6 +97,71 @@
   // 跟随系统时系统切了明暗：图标由 CSS 自己换，这里只更新按钮文字
   if (systemDark && systemDark.addEventListener) systemDark.addEventListener('change', syncThemeUi);
   syncThemeUi();
+
+  /* ------------------------------------------------ 首屏示意图：译文逐段流出 */
+
+  /*
+   * 拖选、弹窗淡入是 CSS 动画（styles.css「首屏示意图」），这里只接最后一步：
+   * 等弹窗淡入播完，把译文像接口流式返回那样一小段一小段放出来，光标跟在最后一个字后面。
+   * 光标位置按浏览器实际排出的字宽算（getComputedTextLength），换了字体也不会错位。
+   * 拿不到弹窗的淡入动画（减少动效、浏览器太老、脚本来得太晚）就什么都不做，译文保持整段。
+   */
+  const preview = document.querySelector('.pv');
+  const previewPopup = preview && preview.querySelector('.pv-popup');
+  const popIn =
+    previewPopup && typeof previewPopup.getAnimations === 'function'
+      ? previewPopup.getAnimations().find((a) => a.animationName === 'pv-pop-in')
+      : null;
+
+  if (popIn && popIn.playState !== 'finished') {
+    const lines = [...preview.querySelectorAll('.pv-stream')];
+    const caret = preview.querySelector('.pv-caret');
+    const texts = lines.map((line) => line.textContent);
+    const CARET_GAP = 7.5; // 光标离最后一个字的距离，与原稿一致
+    const CARET_RISE = 13; // 光标顶端在基线之上多少
+
+    const placeCaret = (line) => {
+      if (!caret || !line) return;
+      const x = Number(line.getAttribute('x')) + line.getComputedTextLength() + CARET_GAP;
+      caret.setAttribute('x', x.toFixed(1));
+      caret.setAttribute('y', String(Number(line.getAttribute('y')) - CARET_RISE));
+    };
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    // 弹窗这时还是透明的，清空这一步看不见
+    lines.forEach((line) => {
+      line.textContent = '';
+    });
+    placeCaret(lines[0]);
+
+    popIn.finished
+      .then(async () => {
+        await sleep(280); // 弹窗出现后停一拍，像在等接口的第一个字
+        preview.classList.add('is-typing');
+        for (let i = 0; i < lines.length; i++) {
+          const text = texts[i];
+          let shown = 0;
+          while (shown < text.length) {
+            // 流式接口一次吐 1～3 个字、间隔也不均匀，比匀速的打字机更像真的
+            shown = Math.min(text.length, shown + 1 + Math.floor(Math.random() * 3));
+            lines[i].textContent = text.slice(0, shown);
+            placeCaret(lines[i]);
+            await sleep(45 + Math.random() * 55);
+          }
+        }
+      })
+      .catch(() => {
+        /* 动画被取消（元素被隐藏等）：交给 finally 补全 */
+      })
+      .finally(() => {
+        // 无论怎样结束，都把译文补全、光标放回末尾，绝不停在半截
+        lines.forEach((line, i) => {
+          line.textContent = texts[i];
+        });
+        placeCaret(lines[lines.length - 1]);
+        preview.classList.remove('is-typing');
+      });
+  }
 
   /* -------------------------------------------------------------- 演示视频 */
 
