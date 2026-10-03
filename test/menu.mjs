@@ -98,8 +98,9 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 3, '不靠任何事件，启动时就应建好三个菜单项');
+  assert.equal(state.items.size, 4, '不靠任何事件，启动时就应建好四个菜单项');
   assert.ok(state.items.has('ai-translate-selection'));
+  assert.ok(state.items.has('ai-translate-video'), '视频字幕项必须存在');
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
   assert.equal(state.items.get('ai-translate-element').visible, true);
@@ -117,7 +118,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 3, '划词项 + 元素项 + 图片项，共三个');
+  assert.equal(state.items.size, 4, '划词项 + 元素项 + 图片项 + 视频项，共四个');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -127,7 +128,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 3);
+  assert.equal(state.items.size, 4);
   assert.equal(state.items.get('ai-translate-selection').visible, false,
     '选中中文时，重建后仍应把菜单隐藏');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 隐藏）');
@@ -154,9 +155,13 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.deepEqual(image.contexts, ['image']);
   assert.equal(image.visible, true);
 
-  // 三项两两不得共享 contexts：任何重叠都会让两项同时出现，
+  const video = state.items.get('ai-translate-video');
+  assert.deepEqual(video.contexts, ['video']);
+  assert.equal(video.visible, true);
+
+  // 各项两两不得共享 contexts：任何重叠都会让两项同时出现，
   // 被 Chrome 折叠成二级子菜单，反而更难点。
-  const all = [sel, elem, image];
+  const all = [sel, elem, image, video];
   for (let i = 0; i < all.length; i += 1) {
     for (let j = i + 1; j < all.length; j += 1) {
       const overlap = all[i].contexts.filter((c) => all[j].contexts.includes(c));
@@ -167,7 +172,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.ok(!elem.contexts.includes('link'),
     '元素项必须让出 link：<a><img></a> 的上下文同时含 image 与 link');
   assert.equal(image.title, '翻译图片里的文字');
-  console.log('✓ 三个菜单项的 contexts 两两不重叠（不会被折叠成子菜单）');
+  console.log('✓ 四个菜单项的 contexts 两两不重叠（不会被折叠成子菜单）');
 
   // 换到只能翻文本的平台时，「翻译图片」要自动消失
   state.listeners.storage({ settings: {} }, 'local');

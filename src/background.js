@@ -1,5 +1,5 @@
 /**
- * Service worker：管右键菜单的显隐、发起翻译、把结果流式推给页面。
+ * Service worker：管右键菜单的显隐、发起翻译、把结果流式推给页面，以及开关视频字幕。
  */
 import './lib/lang.js';
 import './lib/settings.js';
@@ -8,7 +8,10 @@ import './lib/providers.js';
 const MENU_ID = 'ai-translate-selection';
 const ELEMENT_MENU_ID = 'ai-translate-element';
 const IMAGE_MENU_ID = 'ai-translate-image';
+const VIDEO_MENU_ID = 'ai-translate-video';
 const PORT_NAME = 'ai-translate-panel';
+const VIDEO_FILE = 'src/content/video.js';
+const OFFSCREEN_URL = 'src/offscreen/offscreen.html';
 // 必须与 manifest 的 content_scripts 保持一致
 const CONTENT_FILES = [
   'src/lib/lang.js',
@@ -85,6 +88,13 @@ function createMenu() {
       contexts: ['image'],
       // 识图只有 LLM 平台能做，一开始就按当前平台决定
       visible: AITrSettings.supportsVision(settings.provider),
+    });
+    // 'video' 与上面三项都不重叠：'page' 本来就不含视频
+    await create({
+      id: VIDEO_MENU_ID,
+      title: '视频实时字幕（实验）',
+      contexts: ['video'],
+      visible: true,
     });
     console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
   });
@@ -251,7 +261,101 @@ async function startTranslation({ tabId, text, providerId }) {
   // 端口由页面侧关闭：紧跟在 postMessage 后面 disconnect 有丢消息的风险。
 }
 
+/* ---------------------------------------------------------------- 视频字幕 */
+
+/**
+ * 截取和识别都在 offscreen 文档里做（见 src/offscreen/offscreen.js），
+ * 字幕由它经长连接直接推给页面，不经过这里。后台只负责开关。
+ */
+
+/** 并发创建会报 "Only a single offscreen document may be created"，所以共用同一个创建任务。 */
+let offscreenTask = null;
+
+async function hasOffscreen() {
+  const contexts = await chrome.runtime.getContexts({ contextTypes: ['OFFSCREEN_DOCUMENT'] });
+  return contexts.length > 0;
+}
+
+async function ensureOffscreen() {
+  if (await hasOffscreen()) return;
+  offscreenTask ??= chrome.offscreen
+    .createDocument({
+      url: OFFSCREEN_URL,
+      reasons: ['USER_MEDIA'],
+      justification: '截取标签页声音，在本机做语音识别，生成视频字幕',
+    })
+    .finally(() => {
+      offscreenTask = null;
+    });
+  await offscreenTask;
+}
+
+/** 问 offscreen 文档：这个标签页的字幕是不是正开着。 */
+async function videoRunning(tabId) {
+  if (!(await hasOffscreen())) return false;
+  try {
+    return Boolean(await chrome.runtime.sendMessage({ target: 'offscreen', type: 'video-running', tabId }));
+  } catch {
+    return false;
+  }
+}
+
+/** tabCapture 的报错是英文，换成用户看得懂的说法。 */
+function captureErrorText(err) {
+  const raw = String(err?.message || err);
+  if (/not been invoked/i.test(raw)) {
+    return '没有拿到截取这个标签页的授权，请从视频的右键菜单或扩展图标重新打开';
+  }
+  if (/active stream/i.test(raw)) return '这个标签页的声音正被别的程序截取（比如录屏或其他扩展）';
+  return `无法截取这个标签页的声音：${raw}`;
+}
+
+/**
+ * 开关某个标签页的视频字幕：开着就关，关着就开。
+ * 只能由用户操作触发（右键菜单、扩展图标弹窗）：tabCapture 要求扩展在这个页面上
+ * 「被调用过」，也就是拿到了 activeTab 授权。
+ */
+async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
+  if (await videoRunning(tabId)) {
+    await chrome.runtime.sendMessage({ target: 'offscreen', type: 'video-stop', tabId }).catch(() => {});
+    return;
+  }
+  try {
+    await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: [VIDEO_FILE] });
+  } catch (err) {
+    console.warn('[AI 划词翻译] 无法在该页面显示视频字幕：', err?.message);
+    return;
+  }
+
+  const lang = AITrSettings.videoLang(await AITrSettings.loadSettings());
+  const show = (message) =>
+    chrome.tabs.sendMessage(tabId, { srcUrl, langLabel: lang.label, ...message }, { frameId }).catch((err) => {
+      console.warn('[AI 划词翻译] 视频字幕消息发送失败：', err?.message);
+    });
+
+  try {
+    await ensureOffscreen();
+  } catch (err) {
+    await show({ type: 'video-error', message: `无法启动语音识别：${err?.message || err}` });
+    return;
+  }
+  // 流 ID 放到最后拿：它有有效期，拿到后要尽快交给 offscreen 去用
+  let streamId;
+  try {
+    streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
+  } catch (err) {
+    console.warn('[AI 划词翻译] 截取标签页声音失败：', err?.message);
+    await show({ type: 'video-error', message: captureErrorText(err) });
+    return;
+  }
+  await show({ type: 'video-start', streamId, lang: lang.id });
+}
+
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  if (info.menuItemId === VIDEO_MENU_ID && tab?.id) {
+    await toggleVideoCaptions({ tabId: tab.id, frameId: info.frameId ?? 0, srcUrl: info.srcUrl || '' });
+    return;
+  }
   if (info.menuItemId === IMAGE_MENU_ID && tab?.id) {
     if (!(await ensureContentScript(tab.id))) return;
     try {
@@ -349,6 +453,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (type === 'open-options') {
     chrome.runtime.openOptionsPage();
+    return false;
+  }
+
+  // 扩展图标弹窗里的入口：播放器拦掉右键、点不到视频菜单项时用它
+  if (type === 'video-toggle') {
+    if (message.tabId != null) toggleVideoCaptions({ tabId: message.tabId });
     return false;
   }
 

@@ -102,6 +102,19 @@
     },
   };
 
+  /**
+   * 视频实时字幕的识别语言。设备端识别不会自己判断语种，只能让用户选。
+   * id 直接用作 SpeechRecognition.lang（BCP 47）。
+   */
+  const VIDEO_LANGS = {
+    'en-US': { id: 'en-US', label: '英语' },
+    'ja-JP': { id: 'ja-JP', label: '日语' },
+    'ko-KR': { id: 'ko-KR', label: '韩语' },
+    'fr-FR': { id: 'fr-FR', label: '法语' },
+    'de-DE': { id: 'de-DE', label: '德语' },
+    'es-ES': { id: 'es-ES', label: '西班牙语' },
+  };
+
   const DEFAULTS = {
     provider: 'openai',
     target: 'zh-Hans',
@@ -109,6 +122,7 @@
     showOriginal: true,
     floating: true, // 划词后在选区旁显示浮动按钮
     shortcut: true, // 快捷键翻译选中文字
+    videoLang: 'en-US',
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -125,6 +139,7 @@
       showOriginal: input.showOriginal !== false,
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
+      videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : DEFAULTS.videoLang,
     };
     for (const id of PROVIDER_ORDER) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};
@@ -190,6 +205,8 @@
   const providerList = () =>
     PROVIDER_ORDER.map((id) => ({ id, label: PROVIDERS[id].label, hint: PROVIDERS[id].hint }));
   const targetList = () => Object.values(TARGETS).map((t) => ({ id: t.id, label: t.label }));
+  const videoLang = (settings) => VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
+  const videoLangList = () => Object.values(VIDEO_LANGS);
 
   globalThis.AITrSettings = {
     PROVIDERS,
@@ -213,5 +230,8 @@
     targetMenu,
     providerList,
     targetList,
+    VIDEO_LANGS,
+    videoLang,
+    videoLangList,
   };
 })();

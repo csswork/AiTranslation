@@ -8,7 +8,9 @@
     "contextMenus",
     "storage",
     "scripting",
-    "activeTab"
+    "activeTab",
+    "tabCapture",
+    "offscreen"
   ],
   "host_permissions": [
     "https://api.openai.com/*",

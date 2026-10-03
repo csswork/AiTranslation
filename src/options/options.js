@@ -29,6 +29,9 @@
     manage: $('manage'),
     visionNote: $('visionNote'),
     ruleCount: $('ruleCount'),
+    videoLang: $('videoLang'),
+    installLang: $('installLang'),
+    langState: $('langState'),
   };
 
   let settings = S.normalize(null);
@@ -171,6 +174,69 @@
     }
   }
 
+  /* ------------------------------------------------------------- 视频字幕 */
+
+  const SR = globalThis.SpeechRecognition || globalThis.webkitSpeechRecognition;
+  /** 设备端识别（离线语言包）是比较新的接口，老版本 Chrome 没有。 */
+  const canRecognizeLocally = Boolean(
+    SR && typeof SR.available === 'function' && typeof SR.install === 'function'
+  );
+  let langPollTimer = 0;
+
+  function renderVideoLang() {
+    el.videoLang.replaceChildren(
+      ...S.videoLangList().map((item) => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label;
+        option.selected = item.id === settings.videoLang;
+        return option;
+      })
+    );
+  }
+
+  function showLangState(text, tone = '') {
+    el.langState.textContent = text;
+    el.langState.className = `test-result ${tone}`;
+  }
+
+  /**
+   * 离线语言包的状态。语言包按源隔离：在这里装的，
+   * 和做识别的 offscreen 文档（同为扩展的源）共用，所以只能在扩展自己的页面里装。
+   */
+  async function renderLangState() {
+    clearTimeout(langPollTimer);
+    el.installLang.hidden = true;
+    if (!canRecognizeLocally) {
+      showLangState('当前 Chrome 不支持设备端语音识别，请升级到最新版。', 'err');
+      return;
+    }
+    const lang = settings.videoLang;
+    let status;
+    try {
+      status = await SR.available({ langs: [lang], processLocally: true });
+    } catch (err) {
+      showLangState(`读取语言包状态失败：${err?.message || err}`, 'err');
+      return;
+    }
+    if (lang !== settings.videoLang) return; // 等结果期间又换了语言
+    switch (status) {
+      case 'available':
+        showLangState('离线语言包已就绪', 'ok');
+        break;
+      case 'downloadable':
+        showLangState('还没有下载这个语言的离线语言包');
+        el.installLang.hidden = false;
+        break;
+      case 'downloading':
+        showLangState('正在下载离线语言包…');
+        langPollTimer = setTimeout(renderLangState, 2000);
+        break;
+      default:
+        showLangState('这台设备不支持该语言的离线识别', 'err');
+    }
+  }
+
   /** 把 Base URL 换成 chrome.permissions 认的 origin 形式；不合法则返回 null。 */
   function originOf(rawUrl) {
     if (!rawUrl) return null;
@@ -229,6 +295,28 @@
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
+
+  el.videoLang.addEventListener('change', async () => {
+    await save({ videoLang: el.videoLang.value });
+    renderLangState();
+  });
+
+  el.installLang.addEventListener('click', async () => {
+    // install() 要求用户手势：必须紧贴点击调用，前面不能有任何 await
+    const task = SR.install({ langs: [settings.videoLang], processLocally: true });
+    el.installLang.disabled = true;
+    showLangState('正在下载离线语言包，视网速可能要等一会儿…');
+    let ok = false;
+    let error = '';
+    try {
+      ok = await task;
+    } catch (err) {
+      error = String(err?.message || err);
+    }
+    el.installLang.disabled = false;
+    if (ok) renderLangState();
+    else showLangState(error ? `下载失败：${error}` : '下载失败，稍后再试', 'err');
+  });
 
   el.manage.addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('src/manage/manage.html') });
@@ -306,5 +394,7 @@
     renderBehavior();
     renderShortcutKey();
     renderRuleCount();
+    renderVideoLang();
+    renderLangState();
   })();
 })();

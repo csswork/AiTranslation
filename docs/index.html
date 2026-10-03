@@ -290,8 +290,8 @@
         <div class="fact">
           <b>只有一个出口</b>
           <p>
-            整个项目只有一处 <span class="mono">fetch</span> 调用，写在
-            <span class="mono">src/lib/providers.js</span> 里，只发往你在设置中选的那家平台。其余代码没有任何网络请求。
+            所有发往翻译平台的请求都写在
+            <span class="mono">src/lib/providers.js</span> 这一个文件里，只发往你在设置中选的那家平台。其余代码不会把你的内容发到任何地方。
           </p>
         </div>
         <div class="fact">

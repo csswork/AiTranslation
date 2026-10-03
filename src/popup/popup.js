@@ -6,6 +6,7 @@
     keyState: document.getElementById('keyState'),
     panel: document.getElementById('panel'),
     image: document.getElementById('image'),
+    video: document.getElementById('video'),
     targetName: document.getElementById('targetName'),
     open: document.getElementById('open'),
   };
@@ -42,6 +43,15 @@
 
   el.image.addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('src/image/image.html') });
+    window.close();
+  });
+
+  // 打开这个弹窗时，Chrome 已经给了当前标签页 activeTab 授权，后台截取声音靠的就是它
+  el.video.addEventListener('click', async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.id != null) {
+      await chrome.runtime.sendMessage({ type: 'video-toggle', tabId: tab.id }).catch(() => {});
+    }
     window.close();
   });
 

@@ -118,6 +118,25 @@
         </div>
       </section>
 
+      <section class="card">
+        <h2>视频实时字幕 <span class="tag">实验</span></h2>
+        <p class="desc">
+          在网页视频上右键，选「视频实时字幕（实验）」；播放器拦掉了右键的话，点扩展图标里的「视频实时字幕」。
+          语音在本机识别，声音不会离开浏览器。目前只显示原文字幕，还不翻译。
+        </p>
+        <div class="fields">
+          <label class="field">
+            <span class="label">视频语言</span>
+            <select id="videoLang"></select>
+            <span class="help">识别不会自动判断语种，需要按视频选好。</span>
+          </label>
+        </div>
+        <div class="actions">
+          <button id="installLang" class="btn" type="button" hidden>下载离线语言包</button>
+          <span class="test-result" id="langState"></span>
+        </div>
+      </section>
+
       <footer class="foot">
         <span id="status" class="status" role="status" aria-live="polite"></span>
         <span class="tip">修改会自动保存</span>
