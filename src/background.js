@@ -332,9 +332,11 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   const cloud = settings.videoCloud;
   const langLabel = cloud ? `${lang.label}（云端识别）` : lang.label;
   const show = (message) =>
-    chrome.tabs.sendMessage(tabId, { srcUrl, langLabel, ...message }, { frameId }).catch((err) => {
-      console.warn('[AI 划词翻译] 视频字幕消息发送失败：', err?.message);
-    });
+    chrome.tabs
+      .sendMessage(tabId, { srcUrl, langLabel, langName: lang.label, ...message }, { frameId })
+      .catch((err) => {
+        console.warn('[AI 划词翻译] 视频字幕消息发送失败：', err?.message);
+      });
 
   try {
     await ensureOffscreen();
@@ -351,7 +353,13 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     await show({ type: 'video-error', message: captureErrorText(err) });
     return;
   }
-  await show({ type: 'video-start', streamId, lang: lang.id, cloud });
+  await show({
+    type: 'video-start',
+    streamId,
+    lang: lang.id,
+    cloud,
+    translate: settings.videoTranslate,
+  });
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -440,6 +448,29 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse({ ok: true, texts });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err) });
+      }
+    })();
+    return true; // 异步回复
+  }
+
+  // 视频字幕逐行翻译。和 translate-batch 一样，内容脚本不能直接请求接口，由这里代发
+  if (type === 'translate-caption') {
+    (async () => {
+      const startedAt = Date.now();
+      try {
+        const settings = await AITrSettings.loadSettings();
+        const text = await AITrProviders.translateCaption({
+          text: message.text,
+          context: message.context,
+          settings,
+        });
+        const elapsed = Date.now() - startedAt;
+        // 翻译延迟只能用真实 Key 量，留一条日志方便对照
+        const provider = AITrSettings.resolveProvider(settings);
+        console.info(`[AI 划词翻译] 字幕翻译 ${elapsed}ms（${provider.label} ${provider.model}）`);
+        sendResponse({ ok: true, text, elapsed });
+      } catch (err) {
+        sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null });
       }
     })();
     return true; // 异步回复

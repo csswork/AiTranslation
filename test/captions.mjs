@@ -23,6 +23,9 @@ console.log('✓ 分段拼接：英文补空格，日文不补');
   assert.deepEqual(seg.update('the quick', 0), { lines: [], partial: 'the quick' });
   assert.deepEqual(seg.update('the quick brown fox', 300), { lines: [], partial: 'the quick brown fox' });
   assert.deepEqual(seg.tick(1000), [], '距最后一次变化不到 900ms，不提交');
+  const quick = C.createSegmenter({ lang: 'en-US', translate: true });
+  quick.update('hello there', 0);
+  assert.deepEqual(quick.tick(700), ['hello there'], '要翻译时停顿 700ms 就提交');
   assert.deepEqual(seg.tick(1200), ['the quick brown fox'], '停顿够久，整段提交');
   assert.deepEqual(seg.tick(5000), [], '已提交的不会再提交一次');
   assert.deepEqual(seg.update('the quick brown fox jumps over', 5100), { lines: [], partial: 'jumps over' },
@@ -47,7 +50,13 @@ console.log('✓ 分段拼接：英文补空格，日文不补');
   const r = jaSeg.update(ja, 0);
   assert.deepEqual(r.lines.map((l) => l.length), [40, 40], '日文没有标点和空格时按 40 字硬切');
   assert.equal(r.partial.length, 20);
-  console.log('✓ 太长按句末或空格切，日文一行更短');
+  // 要翻译时切得更短：每提交一行才翻译一次，行越长译文越晚
+  const tr = C.createSegmenter({ lang: 'en-US', translate: true }).update(words, 0);
+  for (const line of tr.lines) assert.ok(line.length <= 56, `翻译时英文一行不超过 56 字符：${line.length}`);
+  assert.equal([...tr.lines, tr.partial].join(' '), words);
+  const trJa = C.createSegmenter({ lang: 'ja-JP', translate: true }).update(ja, 0);
+  assert.deepEqual(trJa.lines.map((l) => l.length), [24, 24, 24, 24], '翻译时日文按 24 字切');
+  console.log('✓ 太长按句末或空格切，日文一行更短；要翻译时切得更短');
 }
 
 /* ---- 4. 说完一句就提交，不等停顿 ---- */

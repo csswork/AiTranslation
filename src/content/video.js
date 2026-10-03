@@ -2,7 +2,8 @@
  * 视频实时字幕：在视频上叠一层字幕。
  *
  * 不随页面常驻：用户点「视频实时字幕」时，后台才把它注入到视频所在的框架。
- * 识别在 offscreen 文档里做，这里只负责连过去、收字幕、画出来。
+ * 识别在 offscreen 文档里做，这里只负责连过去、收字幕、画出来；
+ * 每提交一行就请后台翻译（设置里可关），显示成「译文大字 + 实时原文小字」的双语字幕。
  * 连接一断（页面跳走、标签页关闭、用户点关闭），offscreen 那边就停止截取。
  */
 (() => {
@@ -15,6 +16,12 @@
   /** 视频比这还小（或露在窗口里的部分比这还小）就不贴着它，改贴窗口底部。 */
   const MIN_WIDTH = 120;
   const MIN_HEIGHT = 40;
+  /** 翻译停用时的提示显示多久。字幕照常出，提示一直挂着太碍眼。 */
+  const NOTICE_MS = 8000;
+  /** 偶发的翻译失败（网络、超时）连续这么多次才放弃翻译。 */
+  const MAX_FAILS = 3;
+  /** 留几行在手里：画面只用最后两行，多留的给翻译当前文。 */
+  const MAX_ENTRIES = 4;
 
   // 字幕惯例是黑底白字，不跟随深浅色模式
   const STYLE = `
@@ -36,6 +43,8 @@
     pointer-events: auto;
   }
   .prev { font-size: 0.8em; opacity: 0.62; }
+  /* 双语时的实时原文：比译文小一号，跟在译文下面 */
+  .orig { font-size: 0.7em; font-weight: 400; opacity: 0.78; margin-top: 0.1em; }
   .status {
     display: flex; align-items: center; justify-content: center; gap: 7px;
     font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, 0.86);
@@ -43,6 +52,7 @@
   .dot { width: 7px; height: 7px; border-radius: 50%; background: #a5b4fc; flex: none; }
   .status.listening .dot { background: #4ade80; animation: pulse 1.4s ease-in-out infinite; }
   .status.error .dot { background: #f87171; }
+  .status.notice .dot { background: #fbbf24; }
   @keyframes pulse { 50% { opacity: 0.3 } }
   .act {
     font: inherit; font-size: 12px; color: #a5b4fc; cursor: pointer;
@@ -121,6 +131,7 @@
     box.innerHTML = `
       <div class="prev" hidden></div>
       <div class="cur" hidden></div>
+      <div class="orig" hidden></div>
       <div class="status"><span class="dot"></span><span class="label"></span><button class="act" type="button" hidden>去设置</button></div>
       <button class="close" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
     root.append(style, box);
@@ -131,39 +142,62 @@
       box,
       prev: box.querySelector('.prev'),
       cur: box.querySelector('.cur'),
+      orig: box.querySelector('.orig'),
       status: box.querySelector('.status'),
       label: box.querySelector('.label'),
       act: box.querySelector('.act'),
       key: '',
-      fresh: null,
+      sig: '',
     };
     box.querySelector('.close').addEventListener('click', close);
     ui.act.addEventListener('click', () => send({ type: 'open-options' }));
     raf = requestAnimationFrame(follow);
   }
 
-  const isFresh = () =>
-    Boolean(state.partial) || (state.lines.length > 0 && Date.now() - state.activeAt < IDLE_HIDE_MS);
+  const isFresh = () => {
+    if (state.error) return false;
+    if (state.partial) return true;
+    return state.entries.length > 0 && Date.now() - state.activeAt < IDLE_HIDE_MS;
+  };
+  const noticeOn = () => Boolean(state.notice) && Date.now() - state.noticeAt < NOTICE_MS;
+  /** 画面该不该变的指纹：字幕过期收起、提示到点消失都要重画。 */
+  const signature = () => `${isFresh()}|${noticeOn()}`;
+
+  function fill(el, text) {
+    el.textContent = text;
+    el.hidden = !text;
+  }
 
   function render() {
     if (!ui || !state) return;
-    const showCaption = !state.error && isFresh();
-    ui.fresh = showCaption;
-    const last = state.lines.at(-1) || '';
-    const before = state.lines.at(-2) || '';
-    const curText = showCaption ? state.partial || last : '';
-    const prevText = showCaption ? (state.partial ? last : before) : '';
-    ui.prev.textContent = prevText;
-    ui.prev.hidden = !prevText;
-    ui.cur.textContent = curText;
-    ui.cur.hidden = !curText;
+    ui.sig = signature();
+    let prevText = '';
+    let curText = '';
+    let origText = '';
+    if (isFresh()) {
+      const last = state.entries.at(-1)?.text || '';
+      if (state.translate) {
+        // 译文按到达的先后显示最近两句；原文是实时的那一句，没有就显示最近提交的那一句
+        const done = state.entries.filter((entry) => entry.tr);
+        prevText = done.at(-2)?.tr || '';
+        curText = done.at(-1)?.tr || '';
+        origText = state.partial || last;
+      } else {
+        curText = state.partial || last;
+        prevText = state.partial ? last : state.entries.at(-2)?.text || '';
+      }
+    }
+    fill(ui.prev, prevText);
+    fill(ui.cur, curText);
+    fill(ui.orig, origText);
 
-    ui.status.hidden = Boolean(curText);
+    const notice = noticeOn() ? state.notice : '';
+    ui.status.hidden = Boolean(curText || origText) && !state.error && !notice;
     ui.box.classList.toggle('has-status', !ui.status.hidden);
-    ui.status.className = `status ${state.error ? 'error' : state.phase}`;
+    ui.status.className = `status ${state.error ? 'error' : notice ? 'notice' : state.phase}`;
     ui.label.textContent =
-      state.error || (state.phase === 'listening' ? `正在听${state.langLabel}…` : '正在连接…');
-    ui.act.hidden = !(state.error && state.action === 'open-options');
+      state.error || notice || (state.phase === 'listening' ? `正在听${state.langLabel}…` : '正在连接…');
+    ui.act.hidden = !(state.error ? state.action : notice ? state.noticeAction : null);
   }
 
   /** 每帧跟着视频走：位置、大小、全屏切换、字幕过期收起。 */
@@ -186,7 +220,7 @@
       css.setProperty('height', `${r.height}px`, 'important');
       ui.box.style.setProperty('--fs', `${Math.round(Math.min(30, Math.max(14, r.width * 0.03)))}px`);
     }
-    if (ui.fresh !== (!state.error && isFresh())) render();
+    if (ui.sig !== signature()) render();
   }
 
   function teardown() {
@@ -208,11 +242,56 @@
     teardown();
   }
 
-  function open({ srcUrl, langLabel }) {
+  function open({ srcUrl, langLabel, translate = false }) {
     close(); // 同一个页面只保留一路
     video = findVideo(srcUrl);
-    state = { phase: 'connecting', langLabel: langLabel || '', lines: [], partial: '', activeAt: 0, error: null, action: null };
+    state = {
+      phase: 'connecting',
+      langLabel: langLabel || '',
+      translate: Boolean(translate),
+      entries: [], // 已提交的行：{ text, tr }
+      partial: '',
+      activeAt: 0,
+      error: null,
+      action: null,
+      notice: '', // 翻译停用的原因；字幕本身照常出
+      noticeAction: null,
+      noticeAt: 0,
+      fails: 0,
+    };
     build();
+    render();
+  }
+
+  /** 翻译出问题时退回只显示原文。字幕不停，只提示一下。 */
+  function stopTranslating(session, message, action = null) {
+    session.translate = false;
+    session.notice = `${message}，先只显示原文`;
+    session.noticeAction = action;
+    session.noticeAt = Date.now();
+  }
+
+  /** 请后台翻译一行。回来时这一路可能已经关了或换了，按 session 对一下再写。 */
+  async function translateEntry(session, entry) {
+    const index = session.entries.indexOf(entry);
+    const context = session.entries.slice(Math.max(0, index - 2), index).map((item) => item.text);
+    let reply = null;
+    try {
+      reply = await chrome.runtime.sendMessage({ type: 'translate-caption', text: entry.text, context });
+    } catch {
+      /* 扩展刚更新时上下文会失效，按失败处理 */
+    }
+    if (state !== session || !session.translate) return;
+    if (reply?.ok && reply.text) {
+      entry.tr = reply.text;
+      session.fails = 0;
+      session.activeAt = Date.now();
+    } else if (reply?.action === 'open-options') {
+      // 没配 Key、额度用完之类：后面每一行都会一样失败，不再请求
+      stopTranslating(session, reply.error || '翻译不可用', 'open-options');
+    } else if ((session.fails += 1) >= MAX_FAILS) {
+      stopTranslating(session, `字幕翻译连续失败（${reply?.error || '没有响应'}）`);
+    }
     render();
   }
 
@@ -241,12 +320,15 @@
         if (had) return;
         break;
       }
-      case 'line':
+      case 'line': {
         // 停顿提交时后面不会再跟一条 partial，这里先清掉，免得同一句显示两遍
         state.partial = '';
-        state.lines = [...state.lines, message.text].slice(-2);
+        const entry = { text: message.text, tr: '' };
+        state.entries = [...state.entries, entry].slice(-MAX_ENTRIES);
         state.activeAt = Date.now();
+        if (state.translate) translateEntry(state, entry);
         break;
+      }
       case 'error':
         fail(message.message, message.action);
         return;
@@ -280,7 +362,9 @@
       type: 'start',
       streamId: message.streamId,
       lang: message.lang,
+      name: message.langName,
       cloud: Boolean(message.cloud),
+      translate: state.translate, // 要翻译时断句切得短些，译文出来得早
     });
   }
 

@@ -73,11 +73,15 @@
   }
 
   /**
-   * @param {{lang?: string, pauseMs?: number, maxChars?: number}} [options]
+   * @param {{lang?: string, translate?: boolean, pauseMs?: number, maxChars?: number}} [options]
    */
-  function createSegmenter({ lang = '', pauseMs = 900, maxChars } = {}) {
-    // 字号约为视频宽度的 3%，这个长度在视频上大约折成一行半
-    const max = maxChars || (WIDE.test(lang) ? 40 : 80);
+  function createSegmenter({ lang = '', translate = false, pauseMs, maxChars } = {}) {
+    // 只显示原文时：字号约为视频宽度的 3%，80 个字符在视频上大约折成一行半。
+    // 要翻译时切短些、停顿判得快些：每提交一行才翻译一次，行越长译文出来得越晚
+    // （实测连续说话时 80 字符要攒四五秒）。
+    const wide = WIDE.test(lang);
+    const max = maxChars || (translate ? (wide ? 24 : 56) : wide ? 40 : 80);
+    const pause = pauseMs ?? (translate ? 700 : 900);
     let text = '';
     let committed = 0; // 已提交到第几个字符（相对于当前这次识别的全文）
     let changedAt = 0;
@@ -109,7 +113,7 @@
     /** 定时调用：停顿够久就把剩下的整段提交。 */
     function tick(now) {
       const lines = [];
-      if (now - changedAt >= pauseMs) take(text.length, lines);
+      if (now - changedAt >= pause) take(text.length, lines);
       return lines;
     }
 

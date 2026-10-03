@@ -33,6 +33,8 @@
     installLang: $('installLang'),
     langState: $('langState'),
     videoCloud: $('videoCloud'),
+    videoTranslate: $('videoTranslate'),
+    videoTarget: $('videoTarget'),
   };
 
   let settings = S.normalize(null);
@@ -191,6 +193,8 @@
       })
     );
     el.videoCloud.checked = settings.videoCloud;
+    el.videoTranslate.checked = settings.videoTranslate;
+    el.videoTarget.textContent = S.targetMenu(settings);
   }
 
   function showLangState(text, tone = '') {
@@ -297,6 +301,7 @@
   el.target.addEventListener('change', async () => {
     await save({ target: el.target.value });
     el.targetPreview.textContent = S.targetMenu(settings);
+    el.videoTarget.textContent = S.targetMenu(settings);
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
@@ -307,6 +312,8 @@
     await save({ videoLang: el.videoLang.value });
     renderLangState();
   });
+
+  el.videoTranslate.addEventListener('change', () => save({ videoTranslate: el.videoTranslate.checked }));
 
   el.videoCloud.addEventListener('change', async () => {
     await save({ videoCloud: el.videoCloud.checked });

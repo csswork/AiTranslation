@@ -34,16 +34,18 @@
     }
   }
 
-  function langPackError(status) {
-    if (status === 'downloading') return new VideoError('离线语言包还在下载，稍后再试', 'open-options');
-    if (status === 'downloadable') return new VideoError('还没有下载识别这个语言所需的离线语言包', 'open-options');
-    return new VideoError('这台设备不支持该语言的离线识别', 'open-options');
+  function langPackError(status, name = '这个语言') {
+    if (status === 'downloading') return new VideoError(`${name}的离线语言包还在下载，稍后再试`, 'open-options');
+    if (status === 'downloadable') return new VideoError(`还没有下载${name}的离线语言包`, 'open-options');
+    return new VideoError(`这台设备不支持${name}的离线识别`, 'open-options');
   }
 
-  function recognitionError(code, cloud) {
+  function recognitionError(code, session) {
     switch (code) {
       case 'language-not-supported':
-        return cloud ? new VideoError('云端识别不支持这个语言') : langPackError('unavailable');
+        return session.cloud
+          ? new VideoError(`云端识别不支持${session.name}`)
+          : langPackError('unavailable', session.name);
       case 'network':
         return new VideoError('连不上云端语音识别服务（需要能访问 Google）');
       case 'audio-capture':
@@ -132,7 +134,7 @@
       if (session.stopped || session.rec !== rec) return;
       console.info('[AI 划词翻译] 识别器结束，准备重启');
       if (session.fatal) {
-        fail(tabId, session, recognitionError(session.fatal, session.cloud));
+        fail(tabId, session, recognitionError(session.fatal, session));
         return;
       }
       // 新的识别器从空白开始计数，旧的没提交完的先提交掉
@@ -155,11 +157,12 @@
     rec.start(session.track);
   }
 
-  async function start(tabId, port, { streamId, lang, cloud = false }) {
+  async function start(tabId, port, { streamId, lang, name, cloud = false, translate = false }) {
     stop(tabId); // 同一个标签页只保留一路
     const session = {
       port,
       lang,
+      name: name || '这个语言',
       cloud,
       stopped: false,
       fatal: null,
@@ -169,7 +172,7 @@
       rec: null,
       timer: 0,
       restarts: [],
-      segmenter: Captions.createSegmenter({ lang }),
+      segmenter: Captions.createSegmenter({ lang, translate }),
     };
     sessions.set(tabId, session);
 
@@ -184,7 +187,7 @@
           );
         }
         const status = await Speech.packStatus(lang);
-        if (status !== 'available') throw langPackError(status);
+        if (status !== 'available') throw langPackError(status, session.name);
         if (session.stopped) return;
       }
 

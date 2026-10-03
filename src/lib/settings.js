@@ -125,6 +125,7 @@
     videoLang: 'en-US',
     // 视频字幕默认在本机识别；打开后改用 Chrome 的云端识别，声音会发给 Google
     videoCloud: false,
+    videoTranslate: true, // 把识别出的每一句翻译成目标语言，显示双语字幕
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -143,6 +144,7 @@
       shortcut: input.shortcut !== false,
       videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
+      videoTranslate: input.videoTranslate !== false,
     };
     for (const id of PROVIDER_ORDER) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};
