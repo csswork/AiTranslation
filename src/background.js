@@ -327,9 +327,12 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     return;
   }
 
-  const lang = AITrSettings.videoLang(await AITrSettings.loadSettings());
+  const settings = await AITrSettings.loadSettings();
+  const lang = AITrSettings.videoLang(settings);
+  const cloud = settings.videoCloud;
+  const langLabel = cloud ? `${lang.label}（云端识别）` : lang.label;
   const show = (message) =>
-    chrome.tabs.sendMessage(tabId, { srcUrl, langLabel: lang.label, ...message }, { frameId }).catch((err) => {
+    chrome.tabs.sendMessage(tabId, { srcUrl, langLabel, ...message }, { frameId }).catch((err) => {
       console.warn('[AI 划词翻译] 视频字幕消息发送失败：', err?.message);
     });
 
@@ -348,7 +351,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     await show({ type: 'video-error', message: captureErrorText(err) });
     return;
   }
-  await show({ type: 'video-start', streamId, lang: lang.id });
+  await show({ type: 'video-start', streamId, lang: lang.id, cloud });
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {

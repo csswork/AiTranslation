@@ -8,6 +8,13 @@ assert.equal(C.joinParts(['hello', 'world'], 'en-US'), 'hello world', '英文分
 assert.equal(C.joinParts(['hello', ' world'], 'en-US'), 'hello world', '自带空格时不重复补');
 assert.equal(C.joinParts(['こんにちは', '世界'], 'ja-JP'), 'こんにちは世界', '日文不补空格');
 assert.equal(C.joinParts(['', undefined, 'ok'], 'en-US'), 'ok', '空段跳过');
+// 设备端日文中间结果实测会按词加空格，要与不加空格的版本归一成同一串
+assert.equal(
+  C.joinParts(['この 拡張 機能 は 翻訳 を 頼ん だ テキスト だけ を 送信 し ます API が この パソコン から'], 'ja-JP'),
+  C.joinParts(['この拡張機能は翻訳を頼んだテキストだけを送信します API がこのパソコンから'], 'ja-JP'),
+  '日文按词加空格的版本与不加空格的版本一致');
+assert.equal(C.joinParts(['ご視聴 ありがとう ござい ました 。'], 'ja-JP'), 'ご視聴ありがとうございました。', '标点前的空格也去掉');
+assert.equal(C.joinParts(['API がこの'], 'ja-JP'), 'API がこの', '与英文单词之间的空格保留');
 console.log('✓ 分段拼接：英文补空格，日文不补');
 
 /* ---- 2. 停顿提交 ---- */
@@ -66,7 +73,21 @@ console.log('✓ 分段拼接：英文补空格，日文不补');
   const seg = C.createSegmenter({ lang: 'en-US', pauseMs: 100 });
   seg.update('I scream for', 0);
   seg.tick(500);
-  assert.deepEqual(seg.update('ice', 600), { lines: [], partial: '' }, '全文变短时不出错、不吐出半截');
+  assert.deepEqual(seg.update('ice', 600), { lines: [], partial: 'ice' }, '改写幅度小：退回重新显示，不吐出半截');
+
+  // 云端识别实测：已出现的「API」被整个撤掉，接着说的话不能被吞掉开头
+  const cloud = C.createSegmenter({ lang: 'ja-JP', pauseMs: 900 });
+  cloud.update('送信します', 0);
+  cloud.update('送信しますAPI', 100);
+  assert.deepEqual(cloud.tick(1200), ['送信しますAPI']);
+  assert.deepEqual(cloud.update('送信しますこのパソコンから', 1300), { lines: [], partial: 'このパソコンから' },
+    '撤掉的部分之后的新内容完整保留');
+
+  // 很靠前的改写不往回退，免得把一大段旧字幕重放一遍
+  const far = C.createSegmenter({ lang: 'en-US', pauseMs: 100 });
+  far.update('we went to the store and bought apples', 0);
+  far.tick(500);
+  assert.deepEqual(far.update('he went to the store and bought apples today', 600), { lines: [], partial: 'today' });
 
   const restart = C.createSegmenter({ lang: 'en-US' });
   restart.update('first part', 0);
@@ -74,7 +95,7 @@ console.log('✓ 分段拼接：英文补空格，日文不补');
   assert.deepEqual(restart.update('second', 100), { lines: [], partial: 'second' }, '重启后从头计数');
   assert.deepEqual(restart.reset(), ['second']);
   assert.deepEqual(restart.reset(), [], '空的时候不提交空行');
-  console.log('✓ 全文变短、识别器重启都能接住');
+  console.log('✓ 识别器改写已提交的内容、识别器重启都能接住');
 }
 
 /* ---- 6. 模拟识别器逐词吐字：全部切完后不丢字、不重复 ---- */

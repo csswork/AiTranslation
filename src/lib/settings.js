@@ -123,6 +123,8 @@
     floating: true, // 划词后在选区旁显示浮动按钮
     shortcut: true, // 快捷键翻译选中文字
     videoLang: 'en-US',
+    // 视频字幕默认在本机识别；打开后改用 Chrome 的云端识别，声音会发给 Google
+    videoCloud: false,
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -140,6 +142,7 @@
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
       videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : DEFAULTS.videoLang,
+      videoCloud: input.videoCloud === true,
     };
     for (const id of PROVIDER_ORDER) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

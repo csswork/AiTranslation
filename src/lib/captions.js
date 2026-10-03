@@ -7,8 +7,8 @@
  *   2. 说完一句：句末标点后面已经有新内容，提交到标点为止，不等停顿；
  *   3. 停顿：全文超过 pauseMs 没有变化，把没提交的部分整段提交。
  *
- * 已提交的部分按字符数记。识别器偶尔会回头改写已经提交的词，
- * 这时下一行开头会有少量错位，原型阶段先接受。
+ * 已提交的部分按字符数记。识别器回头改写已提交的内容时（云端识别常见，实测连已出现的词都会整个撤掉），
+ * 退回到新旧全文一致的位置重新计数：改动不大时宁可重复显示几个字，也不把新说的话吞掉。
  */
 (() => {
   /** 不用空格分词的语言：拼接分段时不补空格。 */
@@ -16,10 +16,19 @@
   /** 全角字符的语言：一行要短一些。 */
   const WIDE = /^(ja|zh|ko)\b/i;
   const SENTENCE_END = /[.!?。！？…]/;
+  /** 改写退回超过这么多字就不退了，只按长度截齐：再往回退会把一大段旧字幕重放一遍。 */
+  const REWRITE_MAX = 12;
   /** 全角句末标点后面不跟空格也算一句结束；半角的必须跟空格，免得把 3.5、U.S. 切开。 */
   const WIDE_SENTENCE_END = /[。！？…]/;
+  /** 汉字、假名、长音符、全角标点之间的空白。 */
+  const CJK_GAP =
+    /([\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u3000-\u303F\u30FC\uFF00-\uFFEF])\s+(?=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u3000-\u303F\u30FC\uFF00-\uFFEF])/gu;
 
-  /** 把识别结果的各段拼成全文。英文等语言分段之间可能没有空格，要补上。 */
+  /**
+   * 把识别结果的各段拼成全文。英文等语言分段之间可能没有空格，要补上。
+   * 日文的中间结果时而按词加空格（「この 拡張 機能 は」）、时而不加（实测），
+   * 统一去掉汉字假名之间的空格，否则字幕会来回跳，按字符数记的提交位置也会错开。
+   */
   function joinParts(parts, lang) {
     const spaced = !UNSPACED.test(lang || '');
     let out = '';
@@ -29,7 +38,7 @@
       if (spaced && out && !/\s$/.test(out) && !/^\s/.test(part)) out += ' ';
       out += part;
     }
-    return out;
+    return spaced ? out : out.replace(CJK_GAP, '$1');
   }
 
   /** 在 text[from, from + max) 里找切点（返回绝对位置）：优先句末标点，其次空白，都没有就硬切。 */
@@ -43,6 +52,13 @@
       if (/\s/.test(window[i])) return from + i + 1;
     }
     return from + max;
+  }
+
+  /** a 与 b 的公共前缀长度。 */
+  function commonPrefix(a, b) {
+    let i = 0;
+    while (i < a.length && i < b.length && a[i] === b[i]) i += 1;
+    return i;
   }
 
   /** from 之后最后一个「后面已经有新内容」的句末位置；没有则返回 -1。 */
@@ -77,10 +93,13 @@
       const lines = [];
       const next = String(full || '');
       if (next !== text) {
+        const agreed = commonPrefix(text.slice(0, committed), next);
+        if (agreed < committed) {
+          committed = committed - agreed <= REWRITE_MAX ? agreed : Math.min(committed, next.length);
+        }
         text = next;
         changedAt = now;
       }
-      if (committed > text.length) committed = text.length; // 识别器把全文改短了
       while (text.length - committed > max) take(cutPoint(text, committed, max), lines);
       const end = lastSentenceEnd(text, committed);
       if (end > committed) take(end, lines);

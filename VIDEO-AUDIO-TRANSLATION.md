@@ -35,7 +35,7 @@ OpenAI 实时翻译改为备选（第五节）；如果走那条路，上一版�
 | tabCapture → offscreen → `getUserMedia(tab)` | ✅ 通，0.6–0.9 秒建立，原始轨 48kHz 双声道 | 实测 |
 | offscreen 里做语音识别 | ✅ `SpeechRecognition.start(track)` 可以直接喂 tab 原始轨，云端、设备端都行 | 实测 |
 | 设备端识别 · 英文 | ✅ 首字约 0.76 秒，准确率高，不联网 | 实测 |
-| 设备端识别 · 日语 | ⚠️ 语言包装好、状态 available，但**零结果**（同一段音频云端正常），要用真实日语视频复测 | 实测 |
+| 设备端识别 · 日语 | ✅ 可用，但**必须连同英语语言包一起装**：识别引擎随英语包下载，只装日语包时一识别就 aborted（韩语、法语同样） | 实测 |
 | 云端识别 · 英 / 日 | ✅ 都通，首字约 0.9 秒；但**音频发往 Google** | 实测 |
 | 截取后用户还听得到吗 | ✅ 在 offscreen 里把流接回 `AudioContext.destination` 即可；不接则标签页静音 | 实测 / 文档 |
 | 加 `tabCapture` / `offscreen` 会不会多出安装警告 | ✅ 不会，现有警告已经覆盖 | 实测 |
@@ -98,7 +98,7 @@ offscreen 文档（扩展自己的源）
 | tabCapture → offscreen → `getUserMedia(tab)` | 通，0.6–0.9s 建立，原始轨 48kHz 双声道 |
 | offscreen 里 `SpeechRecognition.start(track)` | 通（云端、设备端都行）；tab 原始轨可以直接喂，不必先转单声道 |
 | 设备端 · 英文 | 首字约 0.76s，准确率高，识别不联网 |
-| 设备端 · 日语 | 失败：install 成功、状态 available，但零结果、无报错（同一段音频云端正常） |
+| 设备端 · 日语 | 本轮失败：install 成功、状态 available，但零结果。根因见第三轮：没装英语包 |
 | 云端 · 英 / 日 | 都通，首字约 0.9s；音频发往 Google |
 | 语言包 | 按源隔离：扩展页里装的，offscreen（同为扩展源）能直接用；普通网页要按网页的源另装 |
 | `install()` | 状态为 downloadable 时必须有用户手势 |
@@ -116,6 +116,20 @@ offscreen 文档（扩展自己的源）
 - **puppeteer 默认参数会让设备端识别静默失效**：`--disable-background-networking` 一类参数会导致 `install()` 返回 true、状态 available，
   但零结果、不报错。必须 `ignoreDefaultArgs: true` 自己给参数。日语那次失败的测试脚本是直接启动 Chrome 的，不受这个坑影响。
 - puppeteer 无头模式默认带 `--mute-audio`，tabCapture 截到的是静音（RMS 0）。
+
+### 第三轮：P0 原型（2026-10-03，同一台机器，真实扩展）
+
+用 puppeteer 加载真实扩展：设置页点「下载离线语言包」→ 模拟点击图标打开 popup → 点「视频实时字幕」→ 用 CDP 穿透 closed shadow root 读字幕浮层。
+
+| 项 | 结果 |
+| --- | --- |
+| 端到端（popup 入口） | 点击到第一条字幕：英文设备端约 1.0s、日语设备端约 1.3s、日语云端约 1.6s；视频照常播放；再点一次能关闭，offscreen 会话随之结束 |
+| offscreen 里的 AudioContext | 无用户手势新建也是 running，接回播放不受自动播放策略影响 |
+| **设备端日语零结果的根因** | 识别引擎随英语包一起下载。只装 `ja-JP`（或 `ko-KR`、`fr-FR`）时 `available()` 照样报 available，但 `start()` 后约 10ms 就 `aborted`，之后一直如此，换文档、换音轨都一样；补装 `en-US` 后立即恢复，不用重启。`install({ langs: ['ja-JP', 'en-US'] })` 一次装两个可行。第二轮只装了日语包，所以零结果 |
+| 设备端英文 | 不带标点，「句末」规则用不上，只能靠停顿和长度断句 |
+| 设备端日语 | 中间结果时而按词加空格（「この 拡張 機能 は」）、时而不加，要统一去掉汉字假名之间的空格 |
+| 云端识别 | 会给 isFinal；中间结果会整段改写，甚至把已出现的词撤掉（「API が」最终被丢掉）；同一段话连续识别第二遍时质量明显下降 |
+| 没有用户调用时 | 连 `scripting.executeScript` 都会被拒（Cannot access contents of the page），浮层出不来 |
 
 ### 第一轮：`video.captureStream()`（Chrome for Testing 150，无头）
 
@@ -182,13 +196,14 @@ tabCapture 的两个代价（收整页声音、必须接回播放）都能处理
 
 | 路线 | 链路 | 音频去向 | 计费 | 现状 |
 | --- | --- | --- | --- | --- |
-| **A. 设备端识别 + 现有文本翻译**（推荐） | tabCapture → 设备端识别 → `providers.js` | 不出浏览器，只有文字发往所选平台 | 只按文字 | 英文实测可用；日语待复测；翻译延迟未测 |
+| **A. 设备端识别 + 现有文本翻译**（推荐） | tabCapture → 设备端识别 → `providers.js` | 不出浏览器，只有文字发往所选平台 | 只按文字 | 英文、日语实测可用（非英语要连同英语包安装）；翻译延迟未测 |
 | B. OpenAI 实时语音翻译 | 音频 → `gpt-realtime-translate` | 发往 OpenAI | 按音频时长 | 未测 |
 | C. 云端识别 + 现有文本翻译 | tabCapture → 云端 Web Speech → `providers.js` | 发往 Google | 识别免费 | 英 / 日实测可用 |
 
 ### 路线 A（推荐）
 
-见第二节。主要风险是语言覆盖：日语是中文用户看番剧的高频场景，如果设备端日语复测仍不可用，日语要靠 B 或 C 兜底。
+见第二节。设备端日语已确认可用，前提是连同英语包一起装（第三节第三轮），设置页的安装按钮已经这样做。
+设备不支持某个语言时，用路线 C 兜底。
 
 ### 路线 B：OpenAI 实时语音翻译
 
@@ -212,6 +227,7 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
 
 识别本身免费、英日都通，但音频会发给 Google，违背「内容只发往你选的那家平台」的现有承诺。
 最多只能作为用户主动打开的选项，并在隐私政策里写明，默认不启用。
+P0 已经实现为设置页的「改用云端识别」开关，默认关闭。注意它需要能访问 Google，国内网络环境下多半用不了。
 
 ### 呈现形态
 
@@ -229,11 +245,14 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
 | `manifest.json` | `permissions` 加 `tabCapture`、`offscreen`（实测不新增安装警告） |
 | `src/background.js` · 右键菜单 | 新增 `contexts: ['video']` 菜单项。现有「为这个区域添加翻译按钮」用的是 `'page'`，而 `'page'` 本来就不含视频，所以仍然保持「任何时刻只出现一项」 |
 | `src/background.js` · 流程 | 菜单点击 → `getMediaStreamId` → 创建 / 复用 offscreen；收 offscreen 送来的句子 → `AITrProviders.translate()` → 转发给标签页；标签页关闭或用户停止时收尾 |
-| `src/offscreen/`（新） | `getUserMedia(tab)`、接回播放、`SpeechRecognition`、断句、按 tabId 分路 |
+| `src/offscreen/`（新） | `getUserMedia(tab)`、接回播放、`SpeechRecognition`、按 tabId 分路 |
+| `src/lib/captions.js`（新） | 断句（停顿 / 长度 / 句末）、识别结果拼接与改写对齐，纯函数，有单测 |
+| `src/lib/speech.js`（新） | 语言包状态与安装，非英语自动连同英语包 |
 | `src/content/video.js`（新） | 字幕浮层：复用 `content.js` 里 Shadow DOM + `all: initial` 的写法，挂在 video 容器上，处理全屏 |
-| `src/options/` | 「视频实时翻译」开关、视频语言选择、语言包状态与安装按钮（`available()` / `install()`） |
+| `src/options/` | 视频语言选择、「改用云端识别」开关、语言包状态与安装按钮 |
+| `src/popup/` | 「视频实时字幕」按钮：播放器拦掉右键时的兜底入口 |
 | `src/lib/providers.js` | 不用改 |
-| `docs/privacy.html` | 上线时补一行：视频语音在本机识别，只把识别出的文字发往你选的平台 |
+| `docs/privacy.html`、`PRIVACY.md` | 上线时补：视频语音默认在本机识别；打开云端识别时声音会发给 Google |
 
 ---
 
@@ -253,9 +272,9 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
    官方文档只举了点击图标的例子。实测：扩展未被调用就 `getMediaStreamId` 会报错，报错文案明确指向 activeTab；
    而右键菜单点击会授予 activeTab（文档）。自动化里模拟不了右键菜单，需要手动验证。
 
-4. **设备端日语零结果**（实测，原因未明）
-   语言包装好、状态 available，同一段音频云端能识别。可能的原因：样本是 `say` 合成音、语言标签写法、设备端日语模型本身的问题。
-   要用真实日语视频复测，必要时换 `ja` / `ja-JP` 等写法对照。
+4. **非英语的设备端识别依赖英语语言包**（实测，P0 已处理）
+   识别引擎随英语包下载，`available()` 却不反映这一点：只装日语包时报 available，一识别就 aborted。
+   P0 的安装按钮和识别前检查都连同英语包一起算（`src/lib/speech.js`）。Chrome 以后改了这个行为，这里要跟着改。
 
 5. **设备端连续模式基本不发 isFinal**（实测）
    断句要自己做，见第二节。断句太早会把半句话送去翻译，太晚则字幕延迟高，需要在原型里调。
@@ -265,6 +284,7 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
 
 7. **隐私**
    只有路线 A 符合「内容只发往你选的那家平台」。路线 B / C 的音频都会外发，上线前必须改隐私政策，并在界面上让用户明确知情。
+   P0 已带「改用云端识别」开关（默认关闭，设置页写明声音会发给 Google），隐私政策还没改，上线前要补。
 
 8. **DRM 内容**（未测）
    Netflix / Disney+ 等走 Widevine，captureStream 和 tabCapture 能否拿到解密后的音频都没测过。要在产品文案里写清楚，避免用户以为是 bug。
@@ -281,7 +301,7 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
 
 | 阶段 | 内容 | 验收标准 |
 | --- | --- | --- |
-| **P0** | 右键 video → tabCapture → offscreen 设备端识别 → 字幕浮层显示**原文**（暂不翻译）；设置页装语言包 | 手动右键能拿到 streamId（或确定兜底入口）；英文视频原文字幕持续输出、标签页声音正常；拿真实日语视频确认设备端日语是否可用 |
+| **P0**（已完成，`feature/video-subtitle`） | 右键 video → tabCapture → offscreen 设备端识别 → 字幕浮层显示**原文**（暂不翻译）；设置页装语言包；popup 兜底入口；云端识别开关 | 自动化已验证：英文、日语原文字幕持续输出，视频照常播放，能开能关。还差手动验证：真实右键、YouTube / B 站、真实日语视频 |
 | **P1** | 断句 + 接现有翻译，双语字幕 | 英文视频双语字幕稳定；量出翻译环节延迟 |
 | **P2** | 全屏、切换视频、多标签、运行指示与一键停止、错误提示（不支持的语言、语言包未装、chrome:// 页面） | 主流站点（YouTube、B 站）全流程可用 |
 | **P3**（可选） | 路线 B 或 C 作为可选识别来源（如日语兜底）、配音 | — |
@@ -292,7 +312,7 @@ OpenAI 有专用的连续语音翻译会话（[Realtime translation](https://dev
 
 1. **右键菜单 → tabCapture**：在真实浏览器里手动右键 video，确认 `getMediaStreamId` 成功。
 2. **主流站点的右键入口**：YouTube、B 站上能否点到 video 菜单项；不能就以 popup 按钮或快捷键为主入口。
-3. **设备端日语**：用真实日语视频复测。
+3. **设备端日语**：合成语音已确认可用（第二轮失败的根因是缺英语包），用真实番剧再看一次准确率。
 4. **翻译延迟**：用用户自己的 API Key 量从句子提交到译文首字的时间。
 5. **DRM 站点**：Netflix 等站点上 captureStream / tabCapture 是抛错、静音还是能用。
 6. 如果走路线 B：按官网定价页确认 `gpt-realtime-translate` 每分钟成本，再定默认开关策略。

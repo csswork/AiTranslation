@@ -32,6 +32,7 @@
     videoLang: $('videoLang'),
     installLang: $('installLang'),
     langState: $('langState'),
+    videoCloud: $('videoCloud'),
   };
 
   let settings = S.normalize(null);
@@ -176,11 +177,7 @@
 
   /* ------------------------------------------------------------- 视频字幕 */
 
-  const SR = globalThis.SpeechRecognition || globalThis.webkitSpeechRecognition;
-  /** 设备端识别（离线语言包）是比较新的接口，老版本 Chrome 没有。 */
-  const canRecognizeLocally = Boolean(
-    SR && typeof SR.available === 'function' && typeof SR.install === 'function'
-  );
+  const Speech = globalThis.AITrSpeech;
   let langPollTimer = 0;
 
   function renderVideoLang() {
@@ -193,6 +190,7 @@
         return option;
       })
     );
+    el.videoCloud.checked = settings.videoCloud;
   }
 
   function showLangState(text, tone = '') {
@@ -203,29 +201,38 @@
   /**
    * 离线语言包的状态。语言包按源隔离：在这里装的，
    * 和做识别的 offscreen 文档（同为扩展的源）共用，所以只能在扩展自己的页面里装。
+   * 非英语要连英语包一起算，见 lib/speech.js。
    */
   async function renderLangState() {
     clearTimeout(langPollTimer);
     el.installLang.hidden = true;
-    if (!canRecognizeLocally) {
-      showLangState('当前 Chrome 不支持设备端语音识别，请升级到最新版。', 'err');
+    if (settings.videoCloud) {
+      showLangState('云端识别不需要语言包');
+      return;
+    }
+    if (!Speech.supported()) {
+      showLangState('当前 Chrome 不支持设备端语音识别，请升级到最新版，或改用云端识别。', 'err');
       return;
     }
     const lang = settings.videoLang;
     let status;
     try {
-      status = await SR.available({ langs: [lang], processLocally: true });
+      status = await Speech.packStatus(lang);
     } catch (err) {
       showLangState(`读取语言包状态失败：${err?.message || err}`, 'err');
       return;
     }
-    if (lang !== settings.videoLang) return; // 等结果期间又换了语言
+    if (lang !== settings.videoLang || settings.videoCloud) return; // 等结果期间设置又变了
     switch (status) {
       case 'available':
         showLangState('离线语言包已就绪', 'ok');
         break;
       case 'downloadable':
-        showLangState('还没有下载这个语言的离线语言包');
+        showLangState(
+          Speech.packsFor(lang).length > 1
+            ? '还没有下载离线语言包（会连同英语包一起下载，识别引擎随它附带）'
+            : '还没有下载离线语言包'
+        );
         el.installLang.hidden = false;
         break;
       case 'downloading':
@@ -233,7 +240,7 @@
         langPollTimer = setTimeout(renderLangState, 2000);
         break;
       default:
-        showLangState('这台设备不支持该语言的离线识别', 'err');
+        showLangState('这台设备不支持该语言的离线识别，可以改用云端识别', 'err');
     }
   }
 
@@ -301,9 +308,14 @@
     renderLangState();
   });
 
+  el.videoCloud.addEventListener('change', async () => {
+    await save({ videoCloud: el.videoCloud.checked });
+    renderLangState();
+  });
+
   el.installLang.addEventListener('click', async () => {
     // install() 要求用户手势：必须紧贴点击调用，前面不能有任何 await
-    const task = SR.install({ langs: [settings.videoLang], processLocally: true });
+    const task = Speech.installPacks(settings.videoLang);
     el.installLang.disabled = true;
     showLangState('正在下载离线语言包，视网速可能要等一会儿…');
     let ok = false;

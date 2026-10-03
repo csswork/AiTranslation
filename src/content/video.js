@@ -229,10 +229,18 @@
       case 'state':
         state.phase = message.state;
         break;
-      case 'partial':
+      case 'partial': {
+        const had = state.partial;
         state.partial = message.text || '';
-        if (state.partial) state.activeAt = Date.now();
+        if (state.partial) {
+          state.activeAt = Date.now();
+          break;
+        }
+        // 识别器把刚出现的字撤掉了（云端识别常见）：画面先不动，等下一条结果再更新，
+        // 否则上一行会被挪回主行，字幕上下跳
+        if (had) return;
         break;
+      }
       case 'line':
         // 停顿提交时后面不会再跟一条 partial，这里先清掉，免得同一句显示两遍
         state.partial = '';
@@ -268,7 +276,12 @@
       }
       teardown(); // 后台让停的（再点一次菜单）
     });
-    current.postMessage({ type: 'start', streamId: message.streamId, lang: message.lang });
+    current.postMessage({
+      type: 'start',
+      streamId: message.streamId,
+      lang: message.lang,
+      cloud: Boolean(message.cloud),
+    });
   }
 
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
