@@ -29,6 +29,8 @@
     const configured = Boolean(provider.apiKey);
     el.keyState.textContent = configured ? '已配置' : '未配置';
     el.keyState.className = `state ${configured ? 'ok' : 'warn'}`;
+    // 视频字幕默认关闭：没打开时连入口都不显示
+    el.video.hidden = !settings.videoEnabled;
   }
 
   el.provider.addEventListener('change', async () => {

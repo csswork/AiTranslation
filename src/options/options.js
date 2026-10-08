@@ -29,6 +29,8 @@
     manage: $('manage'),
     visionNote: $('visionNote'),
     ruleCount: $('ruleCount'),
+    videoEnabled: $('videoEnabled'),
+    videoOptions: $('videoOptions'),
     videoLang: $('videoLang'),
     installLang: $('installLang'),
     langState: $('langState'),
@@ -182,7 +184,14 @@
   const Speech = globalThis.AITrSpeech;
   let langPollTimer = 0;
 
+  /** 总开关关着时，下面的细节整块收起；开关本身留着，不然没法再打开。 */
+  function applyVideoVisibility() {
+    el.videoOptions.hidden = !settings.videoEnabled;
+  }
+
   function renderVideoLang() {
+    el.videoEnabled.checked = settings.videoEnabled;
+    applyVideoVisibility();
     el.videoLang.replaceChildren(
       ...S.videoLangList().map((item) => {
         const option = document.createElement('option');
@@ -210,6 +219,11 @@
   async function renderLangState() {
     clearTimeout(langPollTimer);
     el.installLang.hidden = true;
+    // 总开关关着时不去探测语言包，界面上也没有地方显示状态
+    if (!settings.videoEnabled) {
+      showLangState('');
+      return;
+    }
     if (settings.videoCloud) {
       showLangState('云端识别不需要语言包');
       return;
@@ -307,6 +321,12 @@
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
+
+  el.videoEnabled.addEventListener('change', async () => {
+    await save({ videoEnabled: el.videoEnabled.checked });
+    applyVideoVisibility();
+    renderLangState();
+  });
 
   el.videoLang.addEventListener('change', async () => {
     await save({ videoLang: el.videoLang.value });

@@ -121,33 +121,45 @@
       <section class="card">
         <h2>视频实时字幕 <span class="tag">实验</span></h2>
         <p class="desc">
-          在网页视频上右键，选「视频实时字幕（实验）」；播放器拦掉了右键的话，点扩展图标里的「视频实时字幕」。
-          默认在本机识别，声音不会离开浏览器；识别出的文字用上面选的翻译平台翻译。
+          截取标签页的声音，在本机识别成文字，再翻成双语字幕；音频不会离开浏览器。
         </p>
         <div class="fields">
-          <label class="field">
-            <span class="label">视频语言</span>
-            <select id="videoLang"></select>
-            <span class="help">识别不会自动判断语种，需要按视频选好。</span>
-          </label>
           <label class="switch">
-            <input id="videoTranslate" type="checkbox" />
+            <input id="videoEnabled" type="checkbox" />
             <span>
-              <b>翻译字幕</b>
-              <i>每识别出一句，就翻译成<span id="videoTarget">中文</span>，显示双语字幕（每句调用一次翻译接口）。关闭后只显示原文。</i>
+              <b>启用视频实时字幕</b>
+              <i>默认关闭。打开后才会出现右键视频的菜单项、扩展图标里的入口和下面的设置等一切视频字幕功能。</i>
             </span>
           </label>
-          <label class="switch">
-            <input id="videoCloud" type="checkbox" />
-            <span>
-              <b>改用云端识别</b>
-              <i>不用下载语言包，但视频的声音会发给 Google 的语音识别服务，并且需要能访问 Google。</i>
-            </span>
-          </label>
-        </div>
-        <div class="actions">
-          <button id="installLang" class="btn" type="button" hidden>下载离线语言包</button>
-          <span class="test-result" id="langState"></span>
+          <!-- 总开关关着时整块收起：videoOptions 里是这项功能的全部设置 -->
+          <div class="fields" id="videoOptions" hidden>
+            <p class="desc">
+              在网页视频上右键，选「视频实时字幕（实验）」；播放器拦掉了右键的话，点扩展图标里的「视频实时字幕」。
+            </p>
+            <label class="field">
+              <span class="label">视频语言</span>
+              <select id="videoLang"></select>
+              <span class="help">识别不会自动判断语种，需要按视频选好。</span>
+            </label>
+            <label class="switch">
+              <input id="videoTranslate" type="checkbox" />
+              <span>
+                <b>翻译字幕</b>
+                <i>每识别出一句，就翻译成<span id="videoTarget">中文</span>，显示双语字幕（每句调用一次翻译接口）。关闭后只显示原文。</i>
+              </span>
+            </label>
+            <label class="switch">
+              <input id="videoCloud" type="checkbox" />
+              <span>
+                <b>改用云端识别</b>
+                <i>不用下载语言包，但视频的声音会发给 Google 的语音识别服务，并且需要能访问 Google。</i>
+              </span>
+            </label>
+            <div class="actions">
+              <button id="installLang" class="btn" type="button" hidden>下载离线语言包</button>
+              <span class="test-result" id="langState"></span>
+            </div>
+          </div>
         </div>
       </section>
 

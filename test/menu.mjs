@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 
-function boot() {
+function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   const state = {
     items: new Map(),
     createCalls: 0,
@@ -11,6 +11,7 @@ function boot() {
     uncheckedErrors: 0, // create 报错但回调没读 lastError 的次数
     warns: [],
     listeners: {},
+    settings: initialSettings,
   };
 
   let pendingError = null;
@@ -22,6 +23,8 @@ function boot() {
     onMessage: { addListener: (f) => (state.listeners.message = f) },
     onConnect: { addListener: () => {} },
     openOptionsPage: () => {},
+    // 测试里不创建 offscreen 文档：总开关关闭时要用它判断有没有在播的字幕
+    getContexts: async () => [],
     get lastError() {
       pendingRead = true;
       return pendingError;
@@ -60,8 +63,11 @@ function boot() {
     },
     storage: {
       local: {
-        get: async (k) => (k === 'settings' ? { settings: { target: 'zh-Hans', provider: 'deepseek' } } : {}),
-        set: async () => {},
+        get: async (k) => (k === 'settings' ? { settings: state.settings } : {}),
+        // 设置页保存后 storage 里就是新值：总开关的用例要靠它读到改后的配置
+        set: async (patch) => {
+          if (patch && 'settings' in patch) state.settings = patch.settings;
+        },
       },
       onChanged: { addListener: (f) => (state.listeners.storage = f) },
     },
@@ -98,11 +104,12 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 4, '不靠任何事件，启动时就应建好四个菜单项');
+  assert.equal(state.items.size, 3, '不靠任何事件，启动时就应建好三个常驻菜单项');
   assert.ok(state.items.has('ai-translate-selection'));
-  assert.ok(state.items.has('ai-translate-video'), '视频字幕项必须存在');
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
+  assert.equal(state.items.has('ai-translate-video'), false,
+    '视频字幕默认关闭，不应建出菜单项');
   assert.equal(state.items.get('ai-translate-element').visible, true);
   assert.equal(state.duplicateErrors, 0);
   console.log('✓ service worker 启动即建菜单（不依赖 onInstalled / onStartup）');
@@ -118,7 +125,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 4, '划词项 + 元素项 + 图片项 + 视频项，共四个');
+  assert.equal(state.items.size, 3, '划词项 + 元素项 + 图片项，共三个（视频字幕默认关闭）');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -128,7 +135,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 4);
+  assert.equal(state.items.size, 3);
   assert.equal(state.items.get('ai-translate-selection').visible, false,
     '选中中文时，重建后仍应把菜单隐藏');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 隐藏）');
@@ -136,7 +143,8 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 
 /* --- 2b. 元素项常显；互斥由 contexts 保证，不靠页面上报 --- */
 {
-  const { state } = boot();
+  // 这个用例里视频字幕是打开的，否则拿不到视频菜单项
+  const { state } = boot({ target: 'zh-Hans', provider: 'deepseek', videoEnabled: true });
   state.listeners.installed({ reason: 'update' });
   await settle();
   const sel = state.items.get('ai-translate-selection');
@@ -193,6 +201,34 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.equal(item.title, '翻译成中文');
   assert.equal(state.duplicateErrors, 0);
   console.log('✓ 选中非中文时显示，标题为「翻译成中文」');
+}
+
+/* --- 4. 视频字幕总开关：默认关闭不建项，打开后出现，关掉后整块消失 --- */
+{
+  const { state, chrome } = boot();
+  await settle();
+  assert.equal(state.items.has('ai-translate-video'), false, '默认关闭：没有视频菜单项');
+
+  const before = state.settings;
+  const on = { ...before, videoEnabled: true };
+  await chrome.storage.local.set({ settings: on });
+  state.listeners.storage({ settings: { oldValue: before, newValue: on } }, 'local');
+  await settle();
+  const video = state.items.get('ai-translate-video');
+  assert.ok(video, '打开总开关后应出现视频菜单项');
+  assert.equal(state.items.size, 4, '打开后共四个菜单项');
+  assert.deepEqual(video.contexts, ['video']);
+  assert.equal(video.visible, true);
+  assert.equal(state.duplicateErrors, 0);
+
+  const off = { ...on, videoEnabled: false };
+  await chrome.storage.local.set({ settings: off });
+  state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
+  await settle();
+  assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
+  assert.equal(state.items.size, 3);
+  assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
+  console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭）');
 }
 
 console.log('\n全部通过');

@@ -22,7 +22,12 @@ const chat = (content) => ({ choices: [{ message: { content } }] });
 assert.equal(S.normalize(null).videoTranslate, true, '默认翻译字幕');
 assert.equal(S.normalize({ videoTranslate: false }).videoTranslate, false);
 assert.equal(S.normalize({ videoTranslate: 'no' }).videoTranslate, true, '非 false 的脏值按默认处理');
-console.log('✓ 「翻译字幕」默认打开，关闭能存住');
+/* 视频字幕整块是实验功能，默认关闭：只有显式 true 才算打开 */
+assert.equal(S.normalize(null).videoEnabled, false, '视频实时字幕默认关闭');
+assert.equal(S.normalize({}).videoEnabled, false);
+assert.equal(S.normalize({ videoEnabled: 'yes' }).videoEnabled, false, '非 true 的脏值按关闭处理');
+assert.equal(S.normalize({ videoEnabled: true }).videoEnabled, true, '打开后能存住');
+console.log('✓ 「翻译字幕」默认打开，关闭能存住；「视频实时字幕」总开关默认关闭');
 
 /* ---- 2. 大模型：字幕专用提示词、前文只作参考、不流式 ---- */
 const llm = await S.saveSettings({ ...S.normalize(null), provider: 'deepseek',

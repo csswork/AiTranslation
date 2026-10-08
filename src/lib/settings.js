@@ -122,6 +122,8 @@
     showOriginal: true,
     floating: true, // 划词后在选区旁显示浮动按钮
     shortcut: true, // 快捷键翻译选中文字
+    // 视频字幕是实验功能，默认关闭：关着的时候入口、菜单项与设置都不出现
+    videoEnabled: false,
     videoLang: 'en-US',
     // 视频字幕默认在本机识别；打开后改用 Chrome 的云端识别，声音会发给 Google
     videoCloud: false,
@@ -142,6 +144,7 @@
       showOriginal: input.showOriginal !== false,
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
+      videoEnabled: input.videoEnabled === true,
       videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,

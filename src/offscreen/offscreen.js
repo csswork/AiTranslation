@@ -245,6 +245,10 @@
     } else if (message.type === 'video-stop') {
       stop(message.tabId);
       sendResponse(true);
+    } else if (message.type === 'video-stop-all') {
+      // 总开关被关掉：所有标签页的字幕一起停
+      for (const tabId of [...sessions.keys()]) stop(tabId);
+      sendResponse(true);
     }
     return false;
   });

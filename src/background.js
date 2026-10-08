@@ -89,13 +89,17 @@ function createMenu() {
       // 识图只有 LLM 平台能做，一开始就按当前平台决定
       visible: AITrSettings.supportsVision(settings.provider),
     });
-    // 'video' 与上面三项都不重叠：'page' 本来就不含视频
-    await create({
-      id: VIDEO_MENU_ID,
-      title: '视频实时字幕（实验）',
-      contexts: ['video'],
-      visible: true,
-    });
+    // 'video' 与上面三项都不重叠：'page' 本来就不含视频。
+    // 视频实时字幕是默认关闭的实验功能：没打开就根本不建这一项，
+    // 免得在视频上右键时看到一个用不了的入口。
+    if (settings.videoEnabled) {
+      await create({
+        id: VIDEO_MENU_ID,
+        title: '视频实时字幕（实验）',
+        contexts: ['video'],
+        visible: true,
+      });
+    }
     console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
   });
   return menuTask;
@@ -142,6 +146,14 @@ async function syncImageMenu(settings) {
 chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area !== 'local' || !changes.settings) return;
   const settings = await AITrSettings.loadSettings();
+  const wasEnabled = AITrSettings.normalize(changes.settings.oldValue).videoEnabled;
+  // 视频字幕总开关变了：菜单项要整块新增或删除，只能重建
+  if (wasEnabled !== settings.videoEnabled) {
+    await createMenu(); // 重建时已按当前设置决定所有菜单项的显隐
+    // 关掉开关时，正在播的字幕也要停掉
+    if (!settings.videoEnabled) await stopAllVideoCaptions();
+    return;
+  }
   try {
     await chrome.contextMenus.update(MENU_ID, { title: await menuTitle() });
   } catch {
@@ -300,6 +312,16 @@ async function videoRunning(tabId) {
   }
 }
 
+/** 关掉总开关时，把所有标签页正在播的字幕一起停掉。 */
+async function stopAllVideoCaptions() {
+  try {
+    if (!(await hasOffscreen())) return;
+    await chrome.runtime.sendMessage({ target: 'offscreen', type: 'video-stop-all' });
+  } catch {
+    /* offscreen 文档已经不在了，那就没有在播的字幕 */
+  }
+}
+
 /** tabCapture 的报错是英文，换成用户看得懂的说法。 */
 function captureErrorText(err) {
   const raw = String(err?.message || err);
@@ -316,10 +338,14 @@ function captureErrorText(err) {
  * 「被调用过」，也就是拿到了 activeTab 授权。
  */
 async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
+  // 「再点一次就关」不受总开关影响：关掉开关时也要能把正在播的停下
   if (await videoRunning(tabId)) {
     await chrome.runtime.sendMessage({ target: 'offscreen', type: 'video-stop', tabId }).catch(() => {});
     return;
   }
+  const settings = await AITrSettings.loadSettings();
+  // 总开关关着时入口本来就不该出现，这里再兜一层，挡住旧页面里残留的入口
+  if (!settings.videoEnabled) return;
   try {
     await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: [VIDEO_FILE] });
   } catch (err) {
@@ -327,7 +353,6 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     return;
   }
 
-  const settings = await AITrSettings.loadSettings();
   const lang = AITrSettings.videoLang(settings);
   const cloud = settings.videoCloud;
   const langLabel = cloud ? `${lang.label}（云端识别）` : lang.label;
