@@ -129,6 +129,8 @@ select { cursor: pointer; }
 .switch:has(input:disabled) b { opacity: .55; }
 .switch b { display: block; font-size: 13px; font-weight: 560; }
 .switch i { font-style: normal; font-size: 12px; color: var(--muted); }
+/* 警告性的说明（例如实验功能的劝退文案）：和上面 .tag 用的是同一档颜色 */
+.switch i.warn { color: var(--warn); }
 /* 缩进 25px：与开关文字左对齐（复选框 15px + 间距 10px） */
 .shortcut-row {
   display: flex; align-items: center; gap: 8px;

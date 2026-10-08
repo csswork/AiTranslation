@@ -12,6 +12,8 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     warns: [],
     listeners: {},
     settings: initialSettings,
+    offscreen: false, // offscreen 文档在不在（决定要不要发消息过去）
+    sent: [], // 发给 offscreen 的消息
   };
 
   let pendingError = null;
@@ -23,8 +25,12 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     onMessage: { addListener: (f) => (state.listeners.message = f) },
     onConnect: { addListener: () => {} },
     openOptionsPage: () => {},
-    // 测试里不创建 offscreen 文档：总开关关闭时要用它判断有没有在播的字幕
-    getContexts: async () => [],
+    // 总开关关闭时用它判断有没有在播的字幕；默认当作没有 offscreen 文档
+    getContexts: async () => (state.offscreen ? [{ contextType: 'OFFSCREEN_DOCUMENT' }] : []),
+    sendMessage: async (message) => {
+      state.sent.push(message);
+      return true;
+    },
     get lastError() {
       pendingRead = true;
       return pendingError;
@@ -221,6 +227,11 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.equal(video.visible, true);
   assert.equal(state.duplicateErrors, 0);
 
+  assert.equal(state.sent.some((m) => m.type === 'video-stop-all'), false,
+    '打开总开关不该去停字幕');
+
+  // 关掉时要顺手把正在播的字幕停掉（offscreen 文档在的时候）
+  state.offscreen = true;
   const off = { ...on, videoEnabled: false };
   await chrome.storage.local.set({ settings: off });
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
@@ -228,7 +239,11 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
   assert.equal(state.items.size, 3);
   assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
-  console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭）');
+  assert.ok(
+    state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),
+    '关闭总开关时要通知 offscreen 停掉所有字幕'
+  );
+  console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭），关掉时停掉在播字幕');
 }
 
 console.log('\n全部通过');
