@@ -1,0 +1,168 @@
+{
+  "base": "zh-Hans",
+  "fallback": "en",
+  "site": "https://huaci.app",
+  "locales": [
+    {
+      "code": "zh-Hans",
+      "path": "",
+      "label": "简体中文",
+      "htmlLang": "zh-Hans",
+      "ogLocale": "zh_CN",
+      "dir": "ltr",
+      "enabled": true,
+      "match": [
+        "zh",
+        "zh-hans",
+        "zh-cn",
+        "zh-sg",
+        "zh-my"
+      ],
+      "auto": "自动",
+      "switchLabel": "语言"
+    },
+    {
+      "code": "en",
+      "path": "en",
+      "label": "English",
+      "htmlLang": "en",
+      "ogLocale": "en_US",
+      "dir": "ltr",
+      "enabled": true,
+      "match": [
+        "en"
+      ],
+      "auto": "Auto",
+      "switchLabel": "Language"
+    },
+    {
+      "code": "zh-Hant",
+      "path": "zh-Hant",
+      "label": "繁體中文",
+      "htmlLang": "zh-Hant",
+      "ogLocale": "zh_TW",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "zh-hant",
+        "zh-tw",
+        "zh-hk",
+        "zh-mo"
+      ],
+      "auto": "自動",
+      "switchLabel": "語言"
+    },
+    {
+      "code": "ja",
+      "path": "ja",
+      "label": "日本語",
+      "htmlLang": "ja",
+      "ogLocale": "ja_JP",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "ja"
+      ],
+      "auto": "自動",
+      "switchLabel": "言語"
+    },
+    {
+      "code": "ko",
+      "path": "ko",
+      "label": "한국어",
+      "htmlLang": "ko",
+      "ogLocale": "ko_KR",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "ko"
+      ],
+      "auto": "자동",
+      "switchLabel": "언어"
+    },
+    {
+      "code": "es",
+      "path": "es",
+      "label": "Español",
+      "htmlLang": "es",
+      "ogLocale": "es_ES",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "es"
+      ],
+      "auto": "Automático",
+      "switchLabel": "Idioma"
+    },
+    {
+      "code": "pt",
+      "path": "pt",
+      "label": "Português",
+      "htmlLang": "pt",
+      "ogLocale": "pt_BR",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "pt"
+      ],
+      "auto": "Automático",
+      "switchLabel": "Idioma"
+    },
+    {
+      "code": "fr",
+      "path": "fr",
+      "label": "Français",
+      "htmlLang": "fr",
+      "ogLocale": "fr_FR",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "fr"
+      ],
+      "auto": "Automatique",
+      "switchLabel": "Langue"
+    },
+    {
+      "code": "de",
+      "path": "de",
+      "label": "Deutsch",
+      "htmlLang": "de",
+      "ogLocale": "de_DE",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "de"
+      ],
+      "auto": "Automatisch",
+      "switchLabel": "Sprache"
+    },
+    {
+      "code": "ru",
+      "path": "ru",
+      "label": "Русский",
+      "htmlLang": "ru",
+      "ogLocale": "ru_RU",
+      "dir": "ltr",
+      "enabled": false,
+      "match": [
+        "ru"
+      ],
+      "auto": "Авто",
+      "switchLabel": "Язык"
+    },
+    {
+      "code": "ar",
+      "path": "ar",
+      "label": "العربية",
+      "htmlLang": "ar",
+      "ogLocale": "ar_AR",
+      "dir": "rtl",
+      "enabled": false,
+      "match": [
+        "ar"
+      ],
+      "auto": "تلقائي",
+      "switchLabel": "اللغة"
+    }
+  ]
+}

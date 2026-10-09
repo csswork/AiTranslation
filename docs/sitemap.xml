@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://huaci.app/changelog.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/changelog.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/changelog.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/en/changelog.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/changelog.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/changelog.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/" />
+  </url>
+  <url>
+    <loc>https://huaci.app/en/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/" />
+  </url>
+  <url>
+    <loc>https://huaci.app/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/privacy.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/privacy.html" />
+  </url>
+</urlset>

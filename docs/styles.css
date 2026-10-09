@@ -617,6 +617,39 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* 没有脚本时按钮点了也没用：配色照样跟随系统，只是不能手动切 */
 html:not(.js) .theme-toggle { display: none; }
 
+/* ------------------------------------------------------------- 语言切换 */
+
+/* 导航里的语言下拉。结构由 lang.js 填：<label class="lang"><svg/><span data-lang-switcher><select/></span></label> */
+.lang {
+  display: inline-flex; align-items: center; gap: 3px;
+  height: 34px; padding: 0 7px 0 9px;
+  border: 1px solid var(--line); border-radius: 9px;
+  color: var(--text-2); cursor: pointer;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.lang:hover { color: var(--text); background: var(--surface-2); border-color: var(--line-strong); }
+.lang svg { display: block; width: 16px; height: 16px; flex: none; }
+.lang select {
+  appearance: none; -webkit-appearance: none;
+  border: 0; background: transparent; color: inherit;
+  font: inherit; font-size: .82rem; line-height: 1.2;
+  padding: 0 1px; cursor: pointer; max-width: 7.5em;
+}
+.lang select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+/* 没有脚本时下拉是空的：整块藏起来，导航保持原样 */
+html:not(.js) .lang { display: none; }
+@media (max-width: 640px) { .lang select { max-width: 5em; } }
+
+/* 窄屏导航：英文品牌名（AI Selection Translator）比中文长一倍，加上语言下拉会撑破一行。
+   GitHub 入口页脚里还有，这里让位：只留图标 + 功能/隐私 + 语言 + 配色。 */
+@media (max-width: 620px) {
+  .brand span { display: none; }
+  .nav-links a[data-nav-github] { display: none; }
+  .lang { padding: 0 5px 0 7px; }
+  .lang svg { display: none; }
+  .lang select { max-width: 4.6em; }
+}
+
 /* 图标表示「点了会变成什么」：深色时是太阳（.only-dark），浅色时是月亮（.only-light） */
 
 /* 只在某一套配色下出现的元素（目前是切换按钮的两个图标）。

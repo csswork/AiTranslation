@@ -5,6 +5,7 @@
  * 这里把每个页面的每段内联脚本都算一遍，和 CSP 对上。
  */
 import fs from 'node:fs';
+import path from 'node:path';
 import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -20,7 +21,17 @@ const allowed = new Set([...scriptSrc.matchAll(/'sha256-([^']+)'/g)].map((m) => 
 assert.ok(!/'unsafe-inline'/.test(scriptSrc), "script-src 不应放开 'unsafe-inline'");
 
 const used = new Set();
-const pages = fs.readdirSync(`${ROOT}docs`).filter((f) => f.endsWith('.html'));
+// 递归：docs/en/ 这类多语言子目录里的页面同样受 CSP 约束
+function htmlPages(dir, prefix = '') {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('.')) continue;
+    if (entry.isDirectory()) out.push(...htmlPages(path.join(dir, entry.name), `${prefix}${entry.name}/`));
+    else if (entry.name.endsWith('.html')) out.push(`${prefix}${entry.name}`);
+  }
+  return out;
+}
+const pages = htmlPages(`${ROOT}docs`).sort();
 assert.ok(pages.length, 'docs/ 下应当有页面');
 
 for (const page of pages) {
