@@ -303,6 +303,41 @@
       "index.html"
     ]
   },
+  "翻译成中文": {
+    "kind": "text",
+    "tag": "text",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "这个扩展只会发送你要求它翻译的": {
+    "kind": "text",
+    "tag": "text",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "内容，并且只发往你自己选定的那": {
+    "kind": "text",
+    "tag": "text",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "家平台": {
+    "kind": "text",
+    "tag": "text",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "原文": {
+    "kind": "text",
+    "tag": "text",
+    "pages": [
+      "index.html"
+    ]
+  },
   "四个入口，都在右键菜单里": {
     "kind": "text",
     "tag": "h2",

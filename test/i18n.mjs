@@ -61,10 +61,10 @@ try {
       const file = ROOT + 'docs/' + loc.path + '/' + page;
       assert.ok(fs.existsSync(file), file + ' 不存在，跑一次 build.mjs');
       const html = fs.readFileSync(file, 'utf8');
+      // 不剥 <svg>：首屏示意图里的 <text> 也是要翻的文案，剥掉就查不出漏译
       const stripped = html
         .replace(/<!--[\s\S]*?-->/g, ' ')
-        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-        .replace(/<svg[\s\S]*?<\/svg>/gi, ' ');
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ');
       if (!loc.usesHan) {
         const han = stripped.match(/[\u3400-\u9FFF]+/g) || [];
         assert.deepEqual(han.slice(0, 5), [], loc.code + '/' + page + ' 还有没翻的中文：' + han.slice(0, 5).join(' / '));

@@ -66,7 +66,13 @@ function scan(html) {
     const start = m.index;
     if (tok.startsWith('<!--')) continue;
     if (tok[0] !== '<') {
-      if (skip.length === 0 && CJK.test(tok)) for (const el of stack) el.hasCJK = true;
+      if (CJK.test(tok)) {
+        // 从里往外标；碰到被跳过的容器就停，别让 SVG 里的文字把外层 div 也标成「有中文」
+        for (let i = stack.length - 1; i >= 0; i -= 1) {
+          stack[i].hasCJK = true;
+          if (stack[i].skipped) break;
+        }
+      }
       continue;
     }
     if (tok.startsWith('</')) {
@@ -98,7 +104,12 @@ function scan(html) {
     if (!nameMatch) continue;
     const tag = nameMatch[1].toLowerCase();
     const selfClose = /\/>\s*$/.test(tok);
-    if (skip.length > 0) { if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: false, skipped: true }); continue; }
+    // SVG 整体不翻（装饰性图形），但里面的 <text> 是给读者看的文案（首屏示意图里那几句），要翻
+    if (skip.length > 0) {
+      const readable = tag === 'text';
+      if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: false, skipped: !readable });
+      continue;
+    }
     // 属性：只认白名单，值里得有中文
     const attrs = {};
     const attrRe = /([a-zA-Z_:][-a-zA-Z0-9_:.]*)\s*=\s*"([^"]*)"/g;
@@ -118,7 +129,8 @@ function scan(html) {
       edits.push({ start: info.at, end: info.at + info.value.length, key, kind: 'attr', tag });
     }
     if (SKIP_TAGS.has(tag)) skip.push(tag);
-    if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: textAttr });
+    // script/style/svg 整棵子树都跳过；只有其中的 <text> 例外（见上面的分支）
+    if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: textAttr, skipped: SKIP_TAGS.has(tag) });
   }
   edits.sort((x, y) => x.start - y.start);
   return edits;

@@ -456,7 +456,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .foot { border-top: 1px solid var(--line); padding: var(--s4) 0 var(--s5); }
 .foot-in { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: center; }
 .foot-in p { color: var(--text-3); font-size: .85rem; }
-.foot-links { margin-inline-start: auto; display: flex; gap: var(--s3); }
+.foot-links { margin-inline-start: auto; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); }
 .foot-links a { color: var(--text-2); font-size: .88rem; }
 .foot-links a:hover { color: var(--text); }
 @media (max-width: 640px) { .foot-links { margin-inline-start: 0; } }
@@ -640,6 +640,10 @@ html:not(.js) .theme-toggle { display: none; }
 html:not(.js) .lang { display: none; }
 @media (max-width: 640px) { .lang select { max-width: 5em; } }
 
+/* 首屏示意图里的字是 SVG <text>，从 x 往右排。
+   RTL 页面上若跟着翻转，文字会从卡片左边缘往外长——这里按 LTR 排版，阿拉伯字母自身仍正常连写。 */
+[dir="rtl"] .pv svg text { direction: ltr; }
+
 /* 窄屏导航：英文品牌名（AI Selection Translator）比中文长一倍，加上语言下拉会撑破一行。
    GitHub 入口页脚里还有，这里让位：只留图标 + 功能/隐私 + 语言 + 配色。 */
 @media (max-width: 620px) {
@@ -648,6 +652,12 @@ html:not(.js) .lang { display: none; }
   .lang { padding: 0 5px 0 7px; }
   .lang svg { display: none; }
   .lang select { max-width: 4.6em; }
+  /* 法语、俄语的导航词比英文长得多（Confidentialité、Конфиденциальность），一行放不下就换行，
+     否则整行会被撑破；导航高度随之改成自适应 */
+  .nav-in { height: auto; min-height: 62px; flex-wrap: wrap; row-gap: .4rem; padding-block: .5rem; }
+  /* 再长的词（俄语 Возможности / Конфиденциальность）让链接自己再折一行，字号也跟着收一点 */
+  .nav-links { flex-wrap: wrap; justify-content: flex-end; gap: .8rem; row-gap: .4rem; }
+  .nav-links a { font-size: .88rem; }
 }
 
 /* 图标表示「点了会变成什么」：深色时是太阳（.only-dark），浅色时是月亮（.only-light） */
