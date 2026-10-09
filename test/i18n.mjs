@@ -52,6 +52,21 @@ try {
   }
 }
 
+/* ---- 2b. 语言切换器不能被卷进翻译目录 ---- */
+{
+  const zh = JSON.parse(fs.readFileSync(ROOT + 'i18n/' + CONFIG.base + '.json', 'utf8'));
+  const leaked = Object.entries(zh).filter(([k, v]) => /data-lang-switcher|notranslate|class="lang"/.test(k + v));
+  assert.deepEqual(leaked.map(([k]) => k.slice(0, 40)), [], '语言切换器的标记混进了待译清单');
+  for (const loc of enabled) {
+    if (loc.code === CONFIG.base) continue;
+    for (const page of PAGES) {
+      const html = fs.readFileSync(ROOT + 'docs/' + loc.path + '/' + page, 'utf8');
+      assert.match(html, /class="lang notranslate" translate="no"/, loc.code + '/' + page + '：切换器缺 translate="no"');
+    }
+  }
+  console.log('✓ 语言切换器带 translate="no"，且没有进入任何语言的待译清单');
+}
+
 /* ---- 3. 生成页面的硬性要求 ---- */
 {
   for (const loc of enabled) {

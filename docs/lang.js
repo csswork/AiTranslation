@@ -15,7 +15,7 @@
 (function () {
   'use strict';
 
-  var DATA = {"defaultLocale":"zh-Hans","fallback":"en","locales":[{"code":"zh-Hans","path":"","label":"简体中文","match":["zh","zh-hans","zh-cn","zh-sg","zh-my"],"auto":"自动","switchLabel":"语言"},{"code":"en","path":"en","label":"English","match":["en"],"auto":"Auto","switchLabel":"Language"},{"code":"zh-Hant","path":"zh-Hant","label":"繁體中文","match":["zh-hant","zh-tw","zh-hk","zh-mo"],"auto":"自動","switchLabel":"語言"},{"code":"ja","path":"ja","label":"日本語","match":["ja"],"auto":"自動","switchLabel":"言語"},{"code":"ko","path":"ko","label":"한국어","match":["ko"],"auto":"자동","switchLabel":"언어"},{"code":"es","path":"es","label":"Español","match":["es"],"auto":"Automático","switchLabel":"Idioma"},{"code":"pt","path":"pt","label":"Português","match":["pt"],"auto":"Automático","switchLabel":"Idioma"},{"code":"fr","path":"fr","label":"Français","match":["fr"],"auto":"Automatique","switchLabel":"Langue"},{"code":"de","path":"de","label":"Deutsch","match":["de"],"auto":"Automatisch","switchLabel":"Sprache"},{"code":"ru","path":"ru","label":"Русский","match":["ru"],"auto":"Авто","switchLabel":"Язык"},{"code":"ar","path":"ar","label":"العربية","match":["ar"],"auto":"تلقائي","switchLabel":"اللغة"}]};
+  var DATA = {"defaultLocale":"zh-Hans","fallback":"en","locales":[{"code":"zh-Hans","path":"","label":"简体中文","htmlLang":"zh-Hans","match":["zh","zh-hans","zh-cn","zh-sg","zh-my"],"auto":"自动","switchLabel":"语言"},{"code":"en","path":"en","label":"English","htmlLang":"en","match":["en"],"auto":"Auto","switchLabel":"Language"},{"code":"zh-Hant","path":"zh-Hant","label":"繁體中文","htmlLang":"zh-Hant","match":["zh-hant","zh-tw","zh-hk","zh-mo"],"auto":"自動","switchLabel":"語言"},{"code":"ja","path":"ja","label":"日本語","htmlLang":"ja","match":["ja"],"auto":"自動","switchLabel":"言語"},{"code":"ko","path":"ko","label":"한국어","htmlLang":"ko","match":["ko"],"auto":"자동","switchLabel":"언어"},{"code":"es","path":"es","label":"Español","htmlLang":"es","match":["es"],"auto":"Automático","switchLabel":"Idioma"},{"code":"pt","path":"pt","label":"Português","htmlLang":"pt","match":["pt"],"auto":"Automático","switchLabel":"Idioma"},{"code":"fr","path":"fr","label":"Français","htmlLang":"fr","match":["fr"],"auto":"Automatique","switchLabel":"Langue"},{"code":"de","path":"de","label":"Deutsch","htmlLang":"de","match":["de"],"auto":"Automatisch","switchLabel":"Sprache"},{"code":"ru","path":"ru","label":"Русский","htmlLang":"ru","match":["ru"],"auto":"Авто","switchLabel":"Язык"},{"code":"ar","path":"ar","label":"العربية","htmlLang":"ar","match":["ar"],"auto":"تلقائي","switchLabel":"اللغة"}]};
   var KEY = 'lang';
   var html = document.documentElement;
   var CRAWLER = /bot|crawler|spider|slurp|bingpreview|headlesschrome|lighthouse|google-inspectiontool/i.test(navigator.userAgent || '');
@@ -96,17 +96,24 @@
     var here = byCode(current());
     var select = document.createElement('select');
     select.setAttribute('aria-label', here.switchLabel || 'Language');
+    // 语言名要按各自语言原样显示：浏览器翻译、翻译插件都不该动它
+    select.setAttribute('translate', 'no');
+    select.className = 'notranslate';
     for (var i = 0; i < DATA.locales.length; i++) {
       var loc = DATA.locales[i];
       var o = document.createElement('option');
       o.value = loc.code;
       o.textContent = loc.label;
+      o.lang = loc.htmlLang; // 让「日本語」用日语发音/断词，而不是当前页面语言的规则
+      o.setAttribute('translate', 'no');
       if (loc.code === here.code) o.selected = true;
       select.appendChild(o);
     }
     var auto = document.createElement('option');
     auto.value = 'auto';
     auto.textContent = here.auto || 'Auto';
+    auto.lang = here.htmlLang;
+    auto.setAttribute('translate', 'no');
     auto.selected = !choice;
     select.appendChild(auto);
     select.addEventListener('change', function () {

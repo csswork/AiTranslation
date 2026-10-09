@@ -115,8 +115,14 @@ function scan(html) {
     const attrRe = /([a-zA-Z_:][-a-zA-Z0-9_:.]*)\s*=\s*"([^"]*)"/g;
     let a;
     while ((a = attrRe.exec(tok)) !== null) attrs[a[1].toLowerCase()] = { value: a[2], at: start + a.index + a[0].indexOf('"') + 1 };
+    // 显式声明「不要翻译」的子树（translate="no" 或 class 里有 notranslate）整块跳过：
+    // 语言切换器就是这一类——它的语言名必须按各自语言原样显示。
+    const noTranslate = (attrs.translate && attrs.translate.value.toLowerCase() === 'no')
+      || (attrs.class && /(^|\s)notranslate(\s|$)/i.test(attrs.class.value));
     let textAttr = false;
     for (const [attrName, info] of Object.entries(attrs)) {
+      if (noTranslate) break;
+      if (!info.value || !CJK.test(info.value)) continue;
       if (!info.value || !CJK.test(info.value)) continue;
       let key = null;
       if (TEXT_ATTRS.has(attrName)) key = '@' + attrName + '|' + norm(info.value);
@@ -130,7 +136,7 @@ function scan(html) {
     }
     if (SKIP_TAGS.has(tag)) skip.push(tag);
     // script/style/svg 整棵子树都跳过；只有其中的 <text> 例外（见上面的分支）
-    if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: textAttr, skipped: SKIP_TAGS.has(tag) });
+    if (!selfClose && !VOID_TAGS.has(tag)) stack.push({ tag, innerStart: start + tok.length, hasCJK: false, blockCJK: false, hasTextAttr: textAttr, skipped: SKIP_TAGS.has(tag) || noTranslate });
   }
   edits.sort((x, y) => x.start - y.start);
   return edits;
@@ -305,7 +311,7 @@ function writeLangJs() {
   const data = {
     defaultLocale: BASE,
     fallback: CONFIG.fallback,
-    locales: enabled().map((l) => ({ code: l.code, path: l.path, label: l.label, match: l.match, auto: l.auto, switchLabel: l.switchLabel })),
+    locales: enabled().map((l) => ({ code: l.code, path: l.path, label: l.label, htmlLang: l.htmlLang, match: l.match, auto: l.auto, switchLabel: l.switchLabel })),
   };
   const tpl = read(path.join(HERE, 'lang.template.js'));
   fs.writeFileSync(path.join(DOCS, 'lang.js'), tpl.replace('__DATA__', JSON.stringify(data)));
@@ -370,6 +376,8 @@ function check() {
     if (!html.includes('src="/lang.js"')) problems.push('docs/' + p + '：缺 <script src="/lang.js">');
     if (!html.includes(ALT_START)) problems.push('docs/' + p + '：缺 hreflang 块');
     if (!html.includes('data-lang-switcher')) problems.push('docs/' + p + '：导航里缺语言切换器占位');
+    // 切换器必须显式声明不翻译：否则浏览器翻译/翻译插件会把「日本語」这类语言名也译掉
+    if (!/class="lang notranslate" translate="no"/.test(html)) problems.push('docs/' + p + '：语言切换器缺 translate="no" / notranslate 标记');
   }
   if (problems.length) { console.error(problems.map((p) => '✗ ' + p).join('\n')); process.exitCode = 1; return; }
   console.log('✓ 多语言产物与中文源一致（' + sourceKeys.size + ' 段，' + enabled().length + ' 种语言）');

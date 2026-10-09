@@ -96,17 +96,24 @@
     var here = byCode(current());
     var select = document.createElement('select');
     select.setAttribute('aria-label', here.switchLabel || 'Language');
+    // 语言名要按各自语言原样显示：浏览器翻译、翻译插件都不该动它
+    select.setAttribute('translate', 'no');
+    select.className = 'notranslate';
     for (var i = 0; i < DATA.locales.length; i++) {
       var loc = DATA.locales[i];
       var o = document.createElement('option');
       o.value = loc.code;
       o.textContent = loc.label;
+      o.lang = loc.htmlLang; // 让「日本語」用日语发音/断词，而不是当前页面语言的规则
+      o.setAttribute('translate', 'no');
       if (loc.code === here.code) o.selected = true;
       select.appendChild(o);
     }
     var auto = document.createElement('option');
     auto.value = 'auto';
     auto.textContent = here.auto || 'Auto';
+    auto.lang = here.htmlLang;
+    auto.setAttribute('translate', 'no');
     auto.selected = !choice;
     select.appendChild(auto);
     select.addEventListener('change', function () {
