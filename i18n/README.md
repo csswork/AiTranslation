@@ -41,6 +41,18 @@ i18n/
 3. 把 `enabled` 改成 `true`，跑 `node i18n/build.mjs`，再跑 `bash test/run.sh`。
 
 `--translate` 只补缺失的段，已译的不会覆盖；批次间随时中断也不会丢（每批写完即落盘）。
+它按**数组**把段落发给模型（`[{id, kind, html}]` → `[{id, text}]`）：键是整段中文 HTML，让模型原样回传长键不可靠，
+所以用 id 对齐；整批失败或漏回来时自动逐条重试，最后仍缺的段会报出来并把退出码设成 1。
+
+## 区域相关的三个标记
+
+- `usesHan: true`：日语与繁体中文本来就用汉字，`test/i18n.mjs` 不会对它们做「不得出现汉字」的检查
+  （繁体中文另有一条「不得出现简体字」的检查）。新增这类语言时记得在 `locales.json` 里加这个字段。
+- `<!-- i18n:base-only -->`：只给中文页看的整块内容（隐私页里那份英文原文），生成其他语言时整块删掉。
+- `#english` 锚点：只存在于中文隐私页；生成其他语言时，指向它的链接会连同前后的「 · 」分隔符一起去掉，免得死链。
+
+站点的 CSS 用的是逻辑属性（`margin-inline-start`、`padding-inline`、`text-align: start`…），
+所以阿拉伯语（`dir="rtl"`）不需要额外的方向覆盖。
 
 ## 访客怎么看到自己语言的版本
 
@@ -54,8 +66,13 @@ i18n/
 
 `hreflang`（含 `x-default` → 中文）写在每个页面的 head 里，由构建维护；`sitemap.xml` 里也带一份。
 
+## 状态
+
+11 种语言已上线：`zh-Hans`（基础）· `en` · `zh-Hant` · `ja` · `ko` · `es` · `pt` · `fr` · `de` · `ru` · `ar`，
+每种语言一份完整译文（141/141 段），页面里没有残留中文，`sitemap.xml` 与 hreflang 都已包含。
+阿拉伯语是 RTL：站点 CSS 用的是逻辑属性，`dir="rtl"` 不需要额外覆盖，真实 Chrome 里已核对过布局不溢出。
+
 ## 还没做的
 
-- 扩展本体（`src/`）仍然是中文单语；商店列表、隐私政策 Markdown、README 的英文版也另说。
-- `i18n/locales.json` 里已列出的 zh-Hant / ja / ko / es / pt / fr / de / ru / ar 尚未翻译（`enabled: false`）。
-  阿拉伯语是 RTL，启用前要先过一遍 `[dir="rtl"]` 的样式。
+- 扩展本体（`src/`）仍然是中文单语；商店列表、`PRIVACY.md`、README 的英文版另说。
+- 站点地图只有 `loc` + hreflang，没有 `lastmod`；需要时再加。

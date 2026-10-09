@@ -35,19 +35,28 @@
     return DATA.defaultLocale;
   }
 
-  /** 浏览器语言 → 已支持的语言：命中 match 前缀就选它，都不认时给 fallback */
+  function supported(code) { for (var i = 0; i < DATA.locales.length; i++) if (DATA.locales[i].code === code) return true; return false; }
+
+  /**
+   * 浏览器语言 → 已支持的语言：取「匹配得最长」的那条，都不认时给 fallback。
+   * 不能按数组顺序取第一个命中：zh-Hans 的 match 里有裸 'zh'，
+   * 先到先得的话 zh-TW / zh-HK 会被它抢走，永远轮不到 zh-Hant。
+   */
   function detect() {
     var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
     for (var i = 0; i < list.length; i++) {
       var tag = String(list[i] || '').toLowerCase();
       if (!tag) continue;
+      var best = null;
       for (var j = 0; j < DATA.locales.length; j++) {
         var loc = DATA.locales[j];
         for (var k = 0; k < loc.match.length; k++) {
           var m = String(loc.match[k]).toLowerCase();
-          if (tag === m || tag.indexOf(m + '-') === 0) return loc.code;
+          if (tag !== m && tag.indexOf(m + '-') !== 0) continue;
+          if (!best || m.length > best.matched) best = { code: loc.code, matched: m.length };
         }
       }
+      if (best) return best.code;
     }
     return DATA.fallback;
   }
@@ -69,6 +78,8 @@
 
   /* ------------------------------------------------------------ 跳转 */
   var choice = read();
+  // 记录里的语言如果已经不启用了（下架/改名），当没选过，回到跟随浏览器
+  if (choice && choice !== 'auto' && !supported(choice)) choice = null;
   var want = choice && choice !== 'auto' ? choice : detect();
   if (!CRAWLER && !navigator.webdriver && html.getAttribute('data-no-redirect') !== 'true' && want !== current()) {
     var target = hrefFor(want) + location.search + location.hash;

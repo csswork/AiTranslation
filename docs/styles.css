@@ -122,7 +122,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 }
 .brand { display: flex; align-items: center; gap: .6rem; font-weight: 620; letter-spacing: -.01em; }
 .brand img { width: 26px; height: 26px; }
-.nav-links { margin-left: auto; display: flex; align-items: center; gap: var(--s3); }
+.nav-links { margin-inline-start: auto; display: flex; align-items: center; gap: var(--s3); }
 .nav-links a { color: var(--text-2); font-size: .92rem; transition: color .18s ease; }
 .nav-links a:hover { color: var(--text); }
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
@@ -209,7 +209,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 }
 .frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
 .frame-bar .addr {
-  margin-left: .6rem; flex: 1; height: 20px; border-radius: 5px;
+  margin-inline-start: .6rem; flex: 1; height: 20px; border-radius: 5px;
   background: var(--surface-3);
 }
 .frame-body { position: relative; aspect-ratio: 16 / 10; background: var(--bg); }
@@ -410,9 +410,9 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* 圆点用绝对定位，不用 grid 分栏：li 是 grid 容器的话，里面的
    <span class="mono"> 之类行内元素会各自变成一个格子被甩到下一行、
    顶到最左边。改成这样，li 里可以正常混排任何行内元素。 */
-.feature li { position: relative; padding-left: 1.45rem; }
+.feature li { position: relative; padding-inline-start: 1.45rem; }
 .feature li::before {
-  content: ""; position: absolute; left: 0; top: .62rem;
+  content: ""; position: absolute; inset-inline-start: 0; top: .62rem;
   width: 5px; height: 5px; border-radius: 50%;
   background: var(--accent); opacity: .8;
 }
@@ -421,8 +421,8 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: var(--s5); }
 @media (max-width: 820px) { .facts { grid-template-columns: 1fr; } }
 .fact { padding: var(--s3) var(--s3) var(--s3) 0; border-top: 1px solid var(--line); }
-.fact + .fact { padding-left: var(--s3); }
-@media (min-width: 821px) { .fact + .fact { border-left: 1px solid var(--line); } }
+.fact + .fact { padding-inline-start: var(--s3); }
+@media (min-width: 821px) { .fact + .fact { border-inline-start: 1px solid var(--line); } }
 .fact b { display: block; font-size: 1.02rem; font-weight: 600; }
 .fact p { margin-top: .4rem; color: var(--text-2); font-size: .9rem; }
 
@@ -456,10 +456,10 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .foot { border-top: 1px solid var(--line); padding: var(--s4) 0 var(--s5); }
 .foot-in { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: center; }
 .foot-in p { color: var(--text-3); font-size: .85rem; }
-.foot-links { margin-left: auto; display: flex; gap: var(--s3); }
+.foot-links { margin-inline-start: auto; display: flex; gap: var(--s3); }
 .foot-links a { color: var(--text-2); font-size: .88rem; }
 .foot-links a:hover { color: var(--text); }
-@media (max-width: 640px) { .foot-links { margin-left: 0; } }
+@media (max-width: 640px) { .foot-links { margin-inline-start: 0; } }
 
 /* ------------------------------------------------------------- 更新日志 */
 
@@ -476,7 +476,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   color: var(--accent-ink); font-family: ui-monospace, Menlo, monospace; font-size: .8rem;
 }
 .log-body h3 { font-size: 1.1rem; }
-.log-body ul { margin: var(--s2) 0 0; padding-left: 1.1rem; color: var(--text-2); }
+.log-body ul { margin: var(--s2) 0 0; padding-inline-start: 1.1rem; color: var(--text-2); }
 .log-body li { margin-bottom: .4rem; }
 .log-body li::marker { color: var(--text-3); }
 
@@ -531,7 +531,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* 导航吸顶的哨兵：脚本观察它离开视口，替代 scroll 监听。不占版面。 */
 .nav-sentinel {
-  position: absolute; top: 0; left: 0;
+  position: absolute; top: 0; inset-inline-start: 0;
   width: 1px; height: 1px; pointer-events: none;
 }
 
@@ -576,7 +576,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .policy h3 + p, .policy h3 + ul, .policy h3 + .table-wrap { margin-top: var(--s2); }
 .policy p { color: var(--text-2); }
 .policy p + p { margin-top: var(--s2); }
-.policy ul { margin: var(--s2) 0 0; padding-left: 1.15rem; color: var(--text-2); }
+.policy ul { margin: var(--s2) 0 0; padding-inline-start: 1.15rem; color: var(--text-2); }
 .policy li { margin-bottom: .4rem; }
 .policy li::marker { color: var(--text-3); }
 .policy b, .policy strong { color: var(--text); font-weight: 600; }
@@ -590,8 +590,8 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .policy .table-wrap { overflow-x: auto; max-width: 100%; }
 .policy table { width: 100%; min-width: 340px; border-collapse: collapse; font-size: .93rem; }
 .policy th, .policy td {
-  text-align: left; vertical-align: top;
-  padding: .72rem var(--s3) .72rem 0; border-top: 1px solid var(--line);
+  text-align: start; vertical-align: top;
+  padding-block: .72rem; padding-inline: 0 var(--s3); border-top: 1px solid var(--line);
   color: var(--text-2); font-weight: 400;
 }
 .policy th {

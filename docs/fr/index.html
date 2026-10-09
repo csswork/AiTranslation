@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="zh-Hans" data-locale="zh-Hans">
+<html lang="fr" data-locale="fr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AI 划词翻译 · 网页里的外文，选中右键就读懂</title>
-<meta name="description" content="一个开源的 Chrome 扩展：选中外文右键就地译成中文，也能翻译整块区域和图片里的文字。自备 API Key，无服务器、无统计、无埋点。" />
+<title>AI Selection Translator · Comprendre le texte étranger d’une page d’un clic droit</title>
+<meta name="description" content="Une extension Chrome open source : sélectionnez un texte en langue étrangère et faites un clic droit pour le traduire sur place en chinois ; elle traduit aussi des zones entières et le texte contenu dans les images. Apportez votre propre API Key : aucun serveur, aucune statistique, aucun traçage." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
-<link rel="icon" href="assets/icon128.png" />
-<link rel="canonical" href="https://huaci.app/" />
+<link rel="icon" href="/assets/icon128.png" />
+<link rel="canonical" href="https://huaci.app/fr/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
 <link rel="alternate" hreflang="en" href="https://huaci.app/en/" />
@@ -24,17 +24,17 @@
 <link rel="alternate" hreflang="x-default" href="https://huaci.app/" />
 <!-- /i18n:alternates -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="AI 划词翻译" />
-<meta property="og:locale" content="zh_CN" />
-<meta property="og:url" content="https://huaci.app/" />
-<meta property="og:title" content="AI 划词翻译" />
-<meta property="og:description" content="选中外文，右键，然后接着读。网页文字、整块区域、图片里的字都能就地译成中文。开源、无服务器、自备 API Key。" />
+<meta property="og:site_name" content="AI Selection Translator" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:url" content="https://huaci.app/fr/" />
+<meta property="og:title" content="AI Selection Translator" />
+<meta property="og:description" content="Sélectionnez, faites un clic droit, puis continuez à lire. Le texte des pages, des zones entières et le texte des images sont traduits en chinois sur place. Open source, sans serveur, avec votre propre API Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="AI 划词翻译：选中，右键，然后接着读。" />
+<meta property="og:image:alt" content="AI Selection Translator : sélectionnez, faites un clic droit, puis continuez à lire." />
 <meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
 <!-- 首次绘制前读回手动选的配色，避免先闪一下另一套。
@@ -48,22 +48,19 @@
 
 <header class="nav">
   <div class="nav-in">
-    <a class="brand" href="./">
-      <img src="assets/icon128.png" alt="" width="26" height="26" />
-      <span>AI 划词翻译</span>
-    </a>
+    <a class="brand" href="/fr/"><img src="/assets/icon128.png" alt="" width="26" height="26" /> <span>AI Selection Translator</span></a>
     <nav class="nav-links">
-      <a href="#features">功能</a>
-      <a href="#privacy">隐私</a>
-      <a href="#install" class="hide-sm">安装</a>
-      <a href="changelog.html" class="hide-sm">更新日志</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#privacy">Confidentialité</a>
+      <a href="#install" class="hide-sm">Installation</a>
+      <a href="/fr/changelog.html" class="hide-sm">Journal des modifications</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
       <!-- 语言切换：选项由 /lang.js 按 i18n/locales.json 里的启用语言填进来 -->
       <label class="lang">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg>
         <span data-lang-switcher></span>
       </label>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换配色" title="切换配色">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Changer de thème" title="Changer de thème">
         <svg class="i-sun only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
         <svg class="i-moon only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
       </button>
@@ -77,20 +74,11 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow"><b>开源</b> GPL-3.0 · 自备 API Key</span>
-        <h1>选中，右键，<br /><span class="dim">然后接着读。</span></h1>
-        <p class="hero-sub">
-          一个 Chrome 扩展。网页里的外文、整块区域、甚至图片里的文字，都能就地译成中文。译文逐字流式出现，用的是你自己的 API Key——中间不经过任何服务器。
-        </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#install">安装到 Chrome</a>
-          <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">查看源码</a>
-        </div>
-        <div class="hero-meta">
-          <span><i class="dot"></i>Chrome 116+</span>
-          <span><i class="dot"></i>无服务器 · 无统计</span>
-          <span><i class="dot"></i>四种翻译方式</span>
-        </div>
+        <span class="eyebrow"><b>Open source</b> GPL-3.0 · Apportez votre propre API Key</span>
+        <h1>Sélectionnez, faites un clic droit,<br /><span class="dim">puis continuez à lire.</span></h1>
+        <p class="hero-sub">Une extension Chrome. Le texte étranger d’une page, des zones entières, et même le texte contenu dans les images : tout est traduit en chinois sur place. La traduction apparaît mot après mot, en flux, avec votre propre API Key — sans passer par aucun serveur.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#install">Ajouter à Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
+        <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>Sans serveur · Sans statistiques</span> <span><i class="dot"></i>Quatre modes de traduction</span></div>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
@@ -104,7 +92,7 @@
           <!-- 示意图拆成两层独立的 <svg>，载入时演示一遍：鼠标拖选两行 → 弹窗淡入 → 译文逐段流出 → 光标闪烁
                （styles.css「首屏示意图」、main.js「译文逐段流出」）。静止时就是完成后的样子。
                颜色属性是深色原稿，给不认 light-dark() 的老浏览器兜底；新浏览器由 CSS token 接管、随配色切换。 -->
-          <div class="pv" role="img" aria-label="扩展效果示意：选中的外文段落上方浮着一个居中弹窗，译文正在逐字出现。">
+          <div class="pv" role="img" aria-label="Illustration du fonctionnement de l’extension : une fenêtre centrée flotte au-dessus du paragraphe en langue étrangère sélectionné, la traduction apparaît mot après mot.">
             <!-- 底层：背后的网页 -->
             <svg class="pv-layer pv-page" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
               <defs>
@@ -185,8 +173,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Features</p>
-        <h2>四个入口，都在右键菜单里</h2>
-        <p>不用切换标签页，不用复制粘贴。看不懂的那一段在哪，翻译就发生在哪。</p>
+        <h2>Quatre entrées, toutes dans le menu contextuel</h2>
+        <p>Pas besoin de changer d’onglet ni de copier-coller. Là où se trouve le passage que vous ne comprenez pas, la traduction s’y produit.</p>
       </div>
 
       <div class="features">
@@ -194,25 +182,22 @@
         <article class="feature">
           <div class="feature-copy reveal">
             <p class="no">01</p>
-            <h3>划词翻译</h3>
-            <p>选中一段非中文文字，右键点「翻译成中文」，译文在屏幕中央的弹窗里逐字出现。</p>
+            <h3>Traduction par sélection</h3>
+            <p>Sélectionnez un passage en langue étrangère, faites un clic droit et choisissez « Traduire en chinois » ; la traduction apparaît mot après mot dans une fenêtre au centre de l’écran.</p>
             <ul>
-              <li>选中的本来就是中文时菜单不出现，纯数字、标点、表情同理</li>
-              <li>弹窗居中且可拖动，<span class="mono">Esc</span> 或点背景关闭，不是追着光标跑的小气泡</li>
-              <li>可折叠的原文面板，对照着读</li>
-              <li>也有快捷键：<span class="mono">Alt+Shift+T</span>（macOS 为 <span class="mono">Command+Shift+Y</span>）</li>
+              <li>Si la sélection est déjà en chinois, l’entrée de menu n’apparaît pas ; il en va de même pour les nombres, la ponctuation et les emojis seuls</li>
+              <li>La fenêtre est centrée et déplaçable, se ferme avec <span class="mono">Esc</span> ou un clic sur l’arrière-plan — pas une petite bulle qui suit le curseur</li>
+              <li>Un panneau de texte source repliable pour lire en regard de la traduction</li>
+              <li>Un raccourci clavier existe aussi : <span class="mono">Alt+Shift+T</span> (sur macOS : <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="assets/demo-selection.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-selection.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph">
-                <strong>演示视频占位</strong>
-                <span class="mono">assets/demo-selection.mp4</span>
-              </div>
+              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-selection.mp4</span></div>
             </div>
           </div>
         </article>
@@ -220,24 +205,21 @@
         <article class="feature">
           <div class="feature-copy reveal">
             <p class="no">02</p>
-            <h3>元素翻译</h3>
-            <p>右键页面上的某个区域，给它挂一个翻译按钮。点一下，区域里的文字就地换成中文。</p>
+            <h3>Traduction d’éléments</h3>
+            <p>Faites un clic droit sur une zone de la page pour y attacher un bouton de traduction. Un clic, et le texte de la zone est remplacé sur place par sa traduction en chinois.</p>
             <ul>
-              <li>规则按域名记住，下次再来同一个网站，按钮自动挂上</li>
-              <li>长内容分批送出，边译边替换，不用等整块跑完</li>
-              <li>攒下的规则可以在管理页逐条查看和删除</li>
+              <li>Les règles sont mémorisées par domaine : la prochaine fois que vous revenez sur le même site, le bouton s’attache automatiquement</li>
+              <li>Les contenus longs sont envoyés par lots et remplacés au fil de la traduction, sans attendre que tout le bloc soit terminé</li>
+              <li>Les règles enregistrées peuvent être consultées et supprimées une par une depuis la page de gestion</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="assets/demo-element.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-element.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph">
-                <strong>演示视频占位</strong>
-                <span class="mono">assets/demo-element.mp4</span>
-              </div>
+              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-element.mp4</span></div>
             </div>
           </div>
         </article>
@@ -245,24 +227,21 @@
         <article class="feature">
           <div class="feature-copy reveal">
             <p class="no">03</p>
-            <h3>图片翻译</h3>
-            <p>右键一张图片，识别图里的文字，再把译文按识别到的位置盖回原图上。</p>
+            <h3>Traduction d’images</h3>
+            <p>Faites un clic droit sur une image, reconnaissez le texte qu’elle contient, puis replacez la traduction sur l’image d’origine aux positions détectées.</p>
             <ul>
-              <li>长图会先切块再识别，切缝自动挪到文字之间的空白行，不会把一句话劈成两半</li>
-              <li>送检前按总像素缩放而不是按最长边，长图的宽度不会被压没</li>
-              <li>结果在独立窗口打开，可以和原图对照着看</li>
+              <li>Les images longues sont découpées en blocs avant la reconnaissance, les jointures étant automatiquement déplacées vers les lignes vides entre les textes, pour ne jamais couper une phrase en deux</li>
+              <li>Avant l’envoi, les images sont redimensionnées selon le nombre total de pixels et non selon le côté le plus long : la largeur d’une image longue n’est pas écrasée</li>
+              <li>Le résultat s’ouvre dans une fenêtre séparée, à comparer avec l’image d’origine</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="assets/demo-image.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph">
-                <strong>演示视频占位</strong>
-                <span class="mono">assets/demo-image.mp4</span>
-              </div>
+              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-image.mp4</span></div>
             </div>
           </div>
         </article>
@@ -270,24 +249,21 @@
         <article class="feature">
           <div class="feature-copy reveal">
             <p class="no">04</p>
-            <h3>翻译面板</h3>
-            <p>一个独立页面，左边贴原文右边出译文，适合处理成段的、不在网页上的文字。</p>
+            <h3>Panneau de traduction</h3>
+            <p>Une page autonome : le texte source à gauche, la traduction à droite, idéale pour les passages qui ne se trouvent pas sur une page web.</p>
             <ul>
-              <li>十余种目标语言可选，不限于中文</li>
-              <li>自动判断输入语言：中文默认译成英文，其他语言默认译成中文</li>
-              <li>平台和目标语言就在工具栏上，随时切换重译</li>
+              <li>Une douzaine de langues cibles disponibles, pas seulement le chinois</li>
+              <li>Détecte automatiquement la langue d’entrée : le chinois est traduit par défaut en anglais, toutes les autres langues en chinois</li>
+              <li>La plateforme et la langue cible sont dans la barre d’outils ; vous pouvez changer et retraduire à tout moment</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="assets/demo-panel.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph">
-                <strong>演示视频占位</strong>
-                <span class="mono">assets/demo-panel.mp4</span>
-              </div>
+              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-panel.mp4</span></div>
             </div>
           </div>
         </article>
@@ -301,37 +277,26 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>没有服务器，就没有可以泄露的地方</h2>
-        <p>
-          只有你主动触发翻译时，内容才会发出去，并且只发往你自己选定的那家平台。这不是一句承诺，是可以照着源码逐行核对的事实。
-        </p>
+        <h2>Pas de serveur, rien à divulguer</h2>
+        <p>Le contenu ne quitte votre navigateur que lorsque vous déclenchez vous-même une traduction, et uniquement vers la plateforme que vous avez choisie. Ce n’est pas une promesse, c’est un fait que vous pouvez vérifier ligne par ligne dans le code source.</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>只有一个出口</b>
-          <p>
-            所有发往翻译平台的请求都写在
-            <span class="mono">src/lib/providers.js</span> 这一个文件里，只发往你在设置中选的那家平台。其余代码不会把你的内容发到任何地方。
-          </p>
+          <b>Un seul point de sortie</b>
+          <p>Toutes les requêtes vers une plateforme de traduction se trouvent dans un seul fichier, <span class="mono">src/lib/providers.js</span>, et ne partent que vers la plateforme sélectionnée dans vos paramètres. Aucun autre code n’envoie votre contenu où que ce soit.</p>
         </div>
         <div class="fact">
-          <b>没有服务端</b>
-          <p>
-            作者不运营任何服务器，也没有统计、埋点、广告或第三方 SDK。你翻译过什么，这边无从知道。
-          </p>
+          <b>Aucun serveur</b>
+          <p>L’auteur n’exploite aucun serveur et n’utilise ni statistiques, ni traçage, ni publicité, ni SDK tiers. Ce que vous traduisez nous est inconnu.</p>
         </div>
         <div class="fact">
-          <b>Key 留在本机</b>
-          <p>
-            API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 账号同步，只用于向你选的平台鉴权。卸载扩展即一并清除。
-          </p>
+          <b>Votre clé reste sur votre machine</b>
+          <p>L’API Key est stockée dans <span class="mono">chrome.storage.local</span>, elle n’est pas synchronisée avec votre compte Chrome et sert uniquement à vous authentifier auprès de la plateforme que vous avez choisie. La désinstallation de l’extension la supprime également.</p>
         </div>
       </div>
 
-      <p class="after-facts reveal">
-        完整说明见<a class="link" href="privacy.html">隐私政策</a>（中英双语），以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公开的全部源码</a>。
-      </p>
+      <p class="after-facts reveal">Tous les détails se trouvent dans la <a class="link" href="/fr/privacy.html">politique de confidentialité</a>, ainsi que dans <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">l’intégralité du code source, public sous GPL-3.0</a>.</p>
     </div>
   </section>
 
@@ -340,53 +305,35 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Install</p>
-        <h2>四步装好</h2>
-        <p>目前以开发者模式加载。需要 Chrome 116 或更高版本，以及一个你自己的 API Key。</p>
+        <h2>Installation en quatre étapes</h2>
+        <p>Actuellement chargée en mode développeur. Nécessite Chrome 116 ou une version ultérieure, ainsi qu’une API Key personnelle.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div>
-            <b>拿到源码</b>
-            <span>——在 GitHub 上 Download ZIP 后解压，或者直接
-              <span class="mono">git clone</span> 仓库。</span>
-          </div>
+          <div><b>Récupérez le code source</b> <span>— téléchargez le fichier ZIP depuis GitHub et décompressez-le, ou faites directement <span class="mono">git clone</span> du dépôt.</span></div>
         </div>
         <div class="step">
-          <div>
-            <b>打开扩展页</b>
-            <span>——地址栏输入 <span class="mono">chrome://extensions/</span>，打开右上角的「开发者模式」。</span>
-          </div>
+          <div><b>Ouvrez la page des extensions</b> <span>— saisissez <span class="mono">chrome://extensions/</span> dans la barre d’adresse, puis activez le « Mode développeur » en haut à droite.</span></div>
         </div>
         <div class="step">
-          <div>
-            <b>加载扩展</b>
-            <span>——点「加载已解压的扩展程序」，选中刚才那个目录。</span>
-          </div>
+          <div><b>Chargez l’extension</b> <span>— cliquez sur « Charger l’extension non empaquetée », puis sélectionnez le dossier que vous venez d’extraire.</span></div>
         </div>
         <div class="step">
-          <div>
-            <b>填入 API Key</b>
-            <span>——首次安装会自动打开设置页。选好平台、粘贴 Key，点「测试连接」确认能通。</span>
-          </div>
+          <div><b>Renseignez votre API Key</b> <span>— la page de paramètres s’ouvre automatiquement à la première installation. Choisissez la plateforme, collez la clé, puis cliquez sur « Tester la connexion » pour vérifier que tout fonctionne.</span></div>
         </div>
       </div>
 
-      <p class="after-facts reveal">
-        支持接入 ChatGPT（OpenAI）与 DeepSeek 的 API，随时可以切换。两者都默认选用各自最便宜的档位——翻译是高频、短输入的活，没必要上贵的。
-      </p>
+      <p class="after-facts reveal">Compatible avec les API de ChatGPT (OpenAI) et de DeepSeek, que vous pouvez changer à tout moment. Les deux utilisent par défaut leur modèle le moins cher — la traduction est un travail fréquent et à entrées courtes, inutile de payer pour du haut de gamme.</p>
     </div>
   </section>
 
   <!-- ===================================================== 结尾 CTA -->
   <section class="wrap">
     <div class="cta reveal">
-      <h2>装上它，然后忘了它</h2>
-      <p>直到下一次，你又选中了一段看不懂的文字。</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">去 GitHub 拿源码</a>
-        <a class="btn btn-ghost" href="changelog.html">更新日志</a>
-      </div>
+      <h2>Installez-la, puis oubliez-la</h2>
+      <p>Jusqu’à la prochaine fois, où vous sélectionnerez un passage que vous ne comprenez pas.</p>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Obtenir le code source sur GitHub</a> <a class="btn btn-ghost" href="/fr/changelog.html">Journal des modifications</a></div>
     </div>
   </section>
 
@@ -395,21 +342,13 @@
 <footer class="foot">
   <div class="wrap">
     <div class="foot-in">
-      <p>© 2026 Haibo · 以 GPL-3.0 发布</p>
-      <nav class="foot-links">
-        <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a>
-        <a href="privacy.html">隐私政策</a>
-        <a href="changelog.html">更新日志</a>
-        <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">反馈问题</a>
-      </nav>
+      <p>© 2026 Haibo · Publié sous GPL-3.0</p>
+      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/fr/privacy.html">Politique de confidentialité</a> <a href="/fr/changelog.html">Journal des modifications</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">Signaler un problème</a></nav>
     </div>
-    <p class="foot-note">
-      本项目为独立的开源作品，与 OpenAI、DeepSeek、DeepL 及其关联公司无任何隶属、授权或合作关系。
-      ChatGPT、DeepSeek、DeepL 等名称为其各自权利人的商标，此处仅用于说明本扩展可以接入的 API。
-    </p>
+    <p class="foot-note">Ce projet est une œuvre open source indépendante, sans aucune affiliation, autorisation ni partenariat avec OpenAI, DeepSeek, DeepL ou leurs sociétés affiliées. ChatGPT, DeepSeek, DeepL et les autres noms cités sont des marques de leurs propriétaires respectifs, mentionnées ici uniquement pour désigner les API auxquelles cette extension peut se connecter.</p>
   </div>
 </footer>
 
-<script src="main.js" defer></script>
+<script src="/main.js" defer></script>
 </body>
 </html>

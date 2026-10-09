@@ -42,7 +42,8 @@
       "htmlLang": "zh-Hant",
       "ogLocale": "zh_TW",
       "dir": "ltr",
-      "enabled": false,
+      "usesHan": true,
+      "enabled": true,
       "match": [
         "zh-hant",
         "zh-tw",
@@ -59,7 +60,8 @@
       "htmlLang": "ja",
       "ogLocale": "ja_JP",
       "dir": "ltr",
-      "enabled": false,
+      "usesHan": true,
+      "enabled": true,
       "match": [
         "ja"
       ],
@@ -73,7 +75,7 @@
       "htmlLang": "ko",
       "ogLocale": "ko_KR",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "ko"
       ],
@@ -87,7 +89,7 @@
       "htmlLang": "es",
       "ogLocale": "es_ES",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "es"
       ],
@@ -101,7 +103,7 @@
       "htmlLang": "pt",
       "ogLocale": "pt_BR",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "pt"
       ],
@@ -115,7 +117,7 @@
       "htmlLang": "fr",
       "ogLocale": "fr_FR",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "fr"
       ],
@@ -129,7 +131,7 @@
       "htmlLang": "de",
       "ogLocale": "de_DE",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "de"
       ],
@@ -143,7 +145,7 @@
       "htmlLang": "ru",
       "ogLocale": "ru_RU",
       "dir": "ltr",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "ru"
       ],
@@ -157,7 +159,7 @@
       "htmlLang": "ar",
       "ogLocale": "ar_AR",
       "dir": "rtl",
-      "enabled": false,
+      "enabled": true,
       "match": [
         "ar"
       ],

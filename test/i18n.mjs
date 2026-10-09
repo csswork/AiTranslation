@@ -34,9 +34,21 @@ try {
     const cat = JSON.parse(fs.readFileSync(ROOT + 'i18n/' + loc.code + '.json', 'utf8'));
     const missing = Object.keys(zh).filter((k) => !cat[k]);
     assert.deepEqual(missing, [], loc.code + ' 缺 ' + missing.length + ' 条译文');
-    const withHan = Object.entries(cat).filter(([, v]) => /[\u3400-\u9FFF]/.test(v));
-    assert.deepEqual(withHan.map(([k]) => k.slice(0, 30)), [], loc.code + ' 的译文里还留着汉字');
-    console.log('✓ ' + loc.code + '：' + Object.keys(cat).length + ' 条译文，无缺漏、无残留中文');
+    // 日语与繁体中文本来就用汉字，这两条检查只对拉丁/西里尔/阿拉伯/谚文语言成立
+    if (loc.usesHan) {
+      const han = Object.values(cat).filter((v) => /[\u3400-\u9FFF]/.test(v)).length;
+      console.log('✓ ' + loc.code + '：' + Object.keys(cat).length + ' 条译文，无缺漏（' + han + ' 条含汉字，符合该语言）');
+    } else {
+      const withHan = Object.entries(cat).filter(([, v]) => /[\u3400-\u9FFF]/.test(v));
+      assert.deepEqual(withHan.map(([k]) => k.slice(0, 30)), [], loc.code + ' 的译文里还留着汉字');
+      console.log('✓ ' + loc.code + '：' + Object.keys(cat).length + ' 条译文，无缺漏、无残留中文');
+    }
+    // 繁体中文不该出现简体字：简繁同形字太多，这里只查一批只存在于简体里的字
+    if (loc.code === 'zh-Hant') {
+      const SIMPLIFIED = /[这个说时发对们应该会与网设软视频档数据语译扩页图键连关选择认让记请谢读终备]/;
+      const bad = Object.entries(cat).filter(([, v]) => SIMPLIFIED.test(v));
+      assert.deepEqual(bad.map(([k]) => k.slice(0, 30)), [], 'zh-Hant 里混进了简体字');
+    }
   }
 }
 
@@ -53,8 +65,10 @@ try {
         .replace(/<!--[\s\S]*?-->/g, ' ')
         .replace(/<script[\s\S]*?<\/script>/gi, ' ')
         .replace(/<svg[\s\S]*?<\/svg>/gi, ' ');
-      const han = stripped.match(/[\u3400-\u9FFF]+/g) || [];
-      assert.deepEqual(han.slice(0, 5), [], loc.code + '/' + page + ' 还有没翻的中文：' + han.slice(0, 5).join(' / '));
+      if (!loc.usesHan) {
+        const han = stripped.match(/[\u3400-\u9FFF]+/g) || [];
+        assert.deepEqual(han.slice(0, 5), [], loc.code + '/' + page + ' 还有没翻的中文：' + han.slice(0, 5).join(' / '));
+      }
       assert.match(html, new RegExp('<html lang="' + loc.htmlLang + '" data-locale="' + loc.code + '"'), file + ' 的 <html> 不对');
       assert.ok(html.includes('href="' + CONFIG.site + (loc.path ? prefix : '/') + (page === 'index.html' ? '' : page) + '"'), file + ' 缺 canonical');
       assert.ok(html.includes('data-lang-switcher'), file + ' 缺语言切换器');

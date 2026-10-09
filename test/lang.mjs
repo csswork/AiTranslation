@@ -11,6 +11,15 @@ import assert from 'node:assert/strict';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const CODE = fs.readFileSync(ROOT + 'docs/lang.js', 'utf8');
+const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'i18n/locales.json', 'utf8'));
+const ENABLED = CONFIG.locales.filter((l) => l.enabled);
+/** 启用了哪些语言、哪个还没启用，都从 locales.json 推导：加语言时不用改这个测试 */
+const DISABLED = CONFIG.locales.find((l) => !l.enabled);
+const pathOf = (code) => {
+  const loc = CONFIG.locales.find((l) => l.code === code);
+  return loc.path ? '/' + loc.path + '/' : '/';
+};
+const FALLBACK = pathOf(CONFIG.fallback);
 
 function boot({ pathname = '/', langs = ['en-US'], stored = null, attrs = {}, crawler = false, webdriver = false } = {}) {
   const state = { replaced: [], store: stored, href: '' };
@@ -57,8 +66,14 @@ const target = (t) => (t.state.replaced[0] || null);
   assert.equal(target(boot({ pathname: '/privacy.html', langs: ['en-GB'] })), '/en/privacy.html', '换页也要保留路径');
   assert.equal(target(boot({ pathname: '/', langs: ['zh-CN'] })), null, '中文用户留在 /');
   assert.equal(target(boot({ pathname: '/en/', langs: ['zh-CN'] })), '/', '中文用户从 /en/ 回 /');
-  assert.equal(target(boot({ pathname: '/', langs: ['th-TH', 'ja-JP'] })), '/en/', '都不认时落到 fallback（en）');
-  assert.equal(target(boot({ pathname: '/', langs: ['ja-JP', 'en-US'] })), '/en/', '未启用的语言顺延到下一个可认的');
+  assert.equal(target(boot({ pathname: '/', langs: ['th-TH'] })), FALLBACK, '都不认时落到 fallback');
+  if (DISABLED) {
+    assert.equal(
+      target(boot({ pathname: '/', langs: [DISABLED.match[0], 'en-US'] })),
+      pathOf('en'),
+      '未启用的语言（' + DISABLED.code + '）顺延到下一个可认的'
+    );
+  }
   console.log('✓ 没选过时按浏览器语言判断（含后备与路径保留）');
 }
 
@@ -91,7 +106,7 @@ const target = (t) => (t.state.replaced[0] || null);
   const t = boot({ pathname: '/', langs: ['zh-CN'] });
   assert.ok(t.select, '应当生成 <select>');
   const values = t.select.children.map((o) => o.value);
-  assert.deepEqual(values, ['zh-Hans', 'en', 'auto'], '选项 = 启用语言 + 自动');
+  assert.deepEqual(values, [...ENABLED.map((l) => l.code), 'auto'], '选项 = 启用语言 + 自动');
   assert.equal(t.select.children.find((o) => o.value === 'zh-Hans').selected, true, '当前语言选中');
   assert.equal(t.select.children.find((o) => o.value === 'auto').selected, true, '没选过时显示「自动」');
   assert.ok(t.select.attrs['aria-label'], '下拉要有 aria-label');

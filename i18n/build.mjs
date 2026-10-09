@@ -241,6 +241,9 @@ function rewrite(html, loc, page) {
   out = rewriteLinks(out, loc);
   // 非基础语言：删掉只给中文页看的整块内容（例如隐私页里那份英文原文）
   out = out.replace(new RegExp('<!--\\s*i18n:base-only[^>]*-->[\\s\\S]*?<!--\\s*/i18n:base-only\\s*-->', 'g'), '');
+  // 那些页面里已经没有 #english 那一节了，指向它的链接（连同前后的「 · 」分隔符）必须一起去掉，
+  // 否则读者点到的是一条死锚点。译文里若已删掉这个链接，这行正则不会命中。
+  out = out.replace(/<a\b[^>]*href="#english"[^>]*>[\s\S]*?<\/a>\s*·\s*/g, '');
   return withAlternates(out, alternatesBlock(page));
 }
 
@@ -406,31 +409,85 @@ async function translate(code) {
     return;
   }
   console.log('用 ' + model + ' 翻译 ' + todo.length + ' 段 → ' + loc.label);
-  const system = '你在翻译一个 Chrome 扩展的产品官网（中文 → ' + loc.label + '）。'
-    + '输入是 JSON：键是中文原文（可能含 HTML 行内标签），值是它在页面里的位置（kind/tag/page）。'
-    + '只输出 JSON 对象，键与输入完全一致，值是译文。'
-    + '要求：保留原文里的所有 HTML 标签、实体与代码/URL 原样；不要添加或删掉标签；'
-    + '语气与原文一致（技术说明文，克制、不用感叹号）；不要翻译专有名词 OpenAI/DeepSeek/DeepL/ChatGPT/chrome.storage.local/GPL-3.0。';
-  const BATCH = 20;
-  for (let i = 0; i < todo.length; i += BATCH) {
-    const batch = todo.slice(i, i + BATCH);
-    const payload = {};
-    for (const k of batch) payload[k] = index[k] ? index[k].kind + ' / ' + index[k].tag + ' / ' + index[k].pages.join(',') : 'text';
-    const res = await fetch(baseUrl.replace(/\/+$/, '') + '/chat/completions', {
+
+  // 键是整段中文 HTML，让模型原样回传键不可靠（长键容易被改写），所以按数组进出、用 id 对齐。
+  const system = [
+    '你在本地化一个 Chrome 扩展的产品官网，把中文页面文案翻译成 ' + loc.label + '。',
+    '输入是 JSON 数组，每项 {"id": 数字, "kind": "标签名", "html": "中文原文"}。',
+    '输出必须是 JSON 数组，长度与输入完全一致、顺序一致，每项 {"id": 同输入, "text": "译文"}；除这个数组外不要输出任何内容。',
+    '规则：',
+    '1. HTML 标签与属性原样保留（如 <span class="mono">chrome.storage.local</span>、<a class="link" href="...">）；标签不能增删，href/src 一个字符都不要改；',
+    '2. 不翻译 OpenAI、ChatGPT、DeepSeek、DeepL、GitHub、Chrome、GPL-3.0、API Key、chrome.storage.local、URL 与代码；',
+    '3. 产品名「AI 划词翻译」统一写作 AI Selection Translator；',
+    '4. 技术说明文语气，克制准确，不用感叹号；表格单元格保持简短；',
+    '5. 只输出译文，不要解释。',
+  ].join('\n');
+
+  const kindOf = (k) => (index[k] && index[k].kind === 'attr' ? k.slice(0, k.indexOf('|')) : index[k] && index[k].tag) || 'text';
+  const tagSeq = (s) => (s.match(/<\/?([a-zA-Z][-a-zA-Z0-9]*)/g) || []).map((x) => x.replace(/[<\/]/g, '').toLowerCase()).sort().join(',');
+
+  /** 一次请求：返回 id → 译文。模型漏 id 时按位置兜底。 */
+  async function ask(items) {
+    const res = await fetch(baseUrl + '/chat/completions', {
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: 'Bearer ' + key },
-      body: JSON.stringify({ model, temperature: 0, messages: [ { role: 'system', content: system }, { role: 'user', content: JSON.stringify(payload, null, 1) } ] }),
+      body: JSON.stringify({
+        model,
+        temperature: 0,
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: JSON.stringify(items) },
+        ],
+      }),
     });
-    if (!res.ok) throw new Error('翻译接口返回 ' + res.status + '：' + (await res.text()).slice(0, 300));
+    if (!res.ok) throw new Error('翻译接口返回 ' + res.status + '：' + (await res.text()).slice(0, 200));
     const data = await res.json();
-    const text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-    const json = JSON.parse(String(text).replace(/^```(?:json)?|```$/g, '').trim());
-    let n = 0;
-    for (const k of batch) if (typeof json[k] === 'string' && json[k]) { cat[k] = json[k]; n += 1; }
-    saveCatalog(code, cat);
-    console.log('  ' + Math.min(i + BATCH, todo.length) + '/' + todo.length + '（本批写入 ' + n + '）');
+    const text = String((data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '')
+      .replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '').trim();
+    let parsed;
+    try { parsed = JSON.parse(text); } catch (err) { throw new Error('模型返回的不是 JSON：' + text.slice(0, 160)); }
+    const list = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.items) ? parsed.items : null);
+    if (!list) throw new Error('返回结构不对：' + text.slice(0, 160));
+    const out = new Map();
+    list.forEach((item, i) => {
+      const value = typeof (item && item.text) === 'string' ? item.text : '';
+      if (!value.trim()) return;
+      const id = Number(item && item.id);
+      out.set(Number.isFinite(id) ? id : (items[i] && items[i].id), value);
+    });
+    return out;
   }
-  console.log('✓ 已写入 i18n/' + code + '.json；把 locales.json 里的 enabled 改成 true 并跑一次 build 即可上线');
+
+  const before = Object.keys(cat).length;
+  const failed = [];
+  for (let i = 0; i < todo.length; i += 20) {
+    const batch = todo.slice(i, i + 20);
+    const items = batch.map((k, id) => ({ id, kind: kindOf(k), html: source[k] }));
+    let got = new Map();
+    try { got = await ask(items); } catch (err) { console.warn('  ! 整批失败，改为逐条重试：' + err.message); }
+    for (let j = 0; j < batch.length; j += 1) {
+      const value = got.get(j);
+      if (!value) continue;
+      if (tagSeq(batch[j]) !== tagSeq(value)) console.warn('  ~ 标签结构可能变了：' + JSON.stringify(source[batch[j]]).slice(0, 40));
+      cat[batch[j]] = value;
+    }
+    // 整批没给的，逐条再要一次；还拿不到就记下来，最后一起报
+    for (const k of batch.filter((x) => !cat[x])) {
+      try {
+        const one = await ask([{ id: 0, kind: kindOf(k), html: source[k] }]);
+        if (one.get(0)) { cat[k] = one.get(0); continue; }
+      } catch (err) { console.warn('  ! 单条重试失败：' + err.message); }
+      failed.push(k);
+    }
+    saveCatalog(code, cat);
+    console.log('  已写 ' + (Object.keys(cat).length - before) + '/' + todo.length + (failed.length ? '，仍缺 ' + failed.length : ''));
+  }
+  if (failed.length) {
+    console.error('✗ 还有 ' + failed.length + ' 段没译上：' + failed.slice(0, 5).map((k) => JSON.stringify(k).slice(0, 40)).join(' / '));
+    process.exitCode = 1;
+    return;
+  }
+  console.log('✓ 已写入 i18n/' + code + '.json；把 locales.json 里的 enabled 改成 true 并跑一次 i18n/build.mjs 即可上线');
 }
 
 /* ---------------------------------------------------------------- 入口 */
