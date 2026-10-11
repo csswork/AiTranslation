@@ -13,7 +13,7 @@
         <div class="titles">
           <h1>图片翻译</h1>
           <p class="sub">
-            识别图片里的文字并翻译成中文，译文按识别到的位置盖在原图上。
+            识别图片里的文字并翻译成你选择的语言，译文按识别到的位置盖在原图上。
             <b>目前是验证阶段</b>，重点看方框位置准不准。
           </p>
         </div>
@@ -21,6 +21,7 @@
       </header>
 
       <div class="bar">
+        <label class="pick"><span class="pick-label">目标语言</span><select id="target"></select></label>
         <label class="pick">
           <span class="pick-label">平台</span>
           <select id="provider"></select>
@@ -101,6 +102,9 @@
       </div>
     </main>
 
+    <script src="../lib/languages.js"></script>
+    <script src="../lib/messages.js"></script>
+    <script src="../lib/i18n.js"></script>
     <script src="../lib/lang.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/providers.js"></script>

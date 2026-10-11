@@ -11,6 +11,7 @@
  * 这时立刻停掉这一路。一个扩展同时只能有一个 offscreen 文档，所以这里按 tabId 管理多路。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   const PORT_NAME = 'ai-video';
   const SR = globalThis.SpeechRecognition || globalThis.webkitSpeechRecognition;
   const Captions = globalThis.AITrCaptions;
@@ -34,27 +35,27 @@
     }
   }
 
-  function langPackError(status, name = '这个语言') {
-    if (status === 'downloading') return new VideoError(`${name}的离线语言包还在下载，稍后再试`, 'open-options');
-    if (status === 'downloadable') return new VideoError(`还没有下载${name}的离线语言包`, 'open-options');
-    return new VideoError(`这台设备不支持${name}的离线识别`, 'open-options');
+  function langPackError(status, name = t("这个语言")) {
+    if (status === 'downloading') return new VideoError(t("$1的离线语言包还在下载，稍后再试", [name]), 'open-options');
+    if (status === 'downloadable') return new VideoError(t("还没有下载$1的离线语言包", [name]), 'open-options');
+    return new VideoError(t("这台设备不支持$1的离线识别", [name]), 'open-options');
   }
 
   function recognitionError(code, session) {
     switch (code) {
       case 'language-not-supported':
         return session.cloud
-          ? new VideoError(`云端识别不支持${session.name}`)
+          ? new VideoError(t("云端识别不支持$1", [session.name]))
           : langPackError('unavailable', session.name);
       case 'network':
-        return new VideoError('连不上云端语音识别服务（需要能访问 Google）');
+        return new VideoError(t("连不上云端语音识别服务（需要能访问 Google）"));
       case 'audio-capture':
-        return new VideoError('读不到标签页的声音');
+        return new VideoError(t("读不到标签页的声音"));
       case 'not-allowed':
       case 'service-not-allowed':
-        return new VideoError('浏览器不允许语音识别');
+        return new VideoError(t("浏览器不允许语音识别"));
       default:
-        return new VideoError(`语音识别出错（${code}）`);
+        return new VideoError(t("语音识别出错（$1）", [code]));
     }
   }
 
@@ -103,7 +104,7 @@
   function fail(tabId, session, err) {
     post(session, {
       type: 'error',
-      message: String(err?.message || err) || '视频字幕出错',
+      message: String(err?.message || err) || t("视频字幕出错"),
       action: err?.action || null,
     });
     release(session);
@@ -127,12 +128,12 @@
     };
     rec.onerror = (event) => {
       if (session.stopped) return; // 自己 abort 的
-      console.warn('[AI 划词翻译] 语音识别出错：', event.error, event.message || '');
+      console.warn("[AI Translator] Speech recognition error:", event.error, event.message || '');
       if (!RECOVERABLE.has(event.error)) session.fatal = event.error;
     };
     rec.onend = () => {
       if (session.stopped || session.rec !== rec) return;
-      console.info('[AI 划词翻译] 识别器结束，准备重启');
+      console.info("[AI Translator] Recognition ended; restarting");
       if (session.fatal) {
         fail(tabId, session, recognitionError(session.fatal, session));
         return;
@@ -146,7 +147,7 @@
         fail(
           tabId,
           session,
-          new VideoError('语音识别反复中断，已停止', session.cloud ? null : 'open-options')
+          new VideoError(t("语音识别反复中断，已停止"), session.cloud ? null : 'open-options')
         );
         return;
       }
@@ -162,7 +163,7 @@
     const session = {
       port,
       lang,
-      name: name || '这个语言',
+      name: name || t("这个语言"),
       cloud,
       stopped: false,
       fatal: null,
@@ -178,11 +179,11 @@
 
     try {
       if (cloud) {
-        if (!SR) throw new VideoError('当前浏览器不支持语音识别');
+        if (!SR) throw new VideoError(t("当前浏览器不支持语音识别"));
       } else {
         if (!Speech.supported()) {
           throw new VideoError(
-            '当前 Chrome 不支持设备端语音识别，请升级到最新版，或在设置里改用云端识别',
+            t("当前 Chrome 不支持设备端语音识别，请升级到最新版，或在设置里改用云端识别"),
             'open-options'
           );
         }
@@ -196,7 +197,7 @@
           audio: { mandatory: { chromeMediaSource: 'tab', chromeMediaSourceId: streamId } },
         });
       } catch (err) {
-        throw new VideoError(`截取标签页声音失败：${err?.message || err}`);
+        throw new VideoError(t("截取标签页声音失败：$1", [err?.message || err]));
       }
       if (session.stopped) {
         release(session);

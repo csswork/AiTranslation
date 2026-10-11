@@ -8,6 +8,7 @@
  * 所以不能出现 import / export。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   const STORE_KEY = 'domRules';
 
   /** 单个域名下最多记多少条，避免误操作攒出一大堆。 */
@@ -93,14 +94,14 @@
     const key = hostKey(host);
     const clean = str(selector);
     const all = await loadRules();
-    if (!clean) return { ok: false, error: '选择器不能为空', rules: all };
+    if (!clean) return { ok: false, error: t("选择器不能为空"), rules: all };
 
     const list = all[key];
     const target = list && list.find((item) => item.id === id);
-    if (!target) return { ok: false, error: '规则不存在', rules: all };
+    if (!target) return { ok: false, error: t("规则不存在"), rules: all };
     if (target.selector === clean) return { ok: true, rules: all };
     if (list.some((item) => item.id !== id && item.selector === clean)) {
-      return { ok: false, error: '这个网站下已经有相同的选择器', rules: all };
+      return { ok: false, error: t("这个网站下已经有相同的选择器"), rules: all };
     }
 
     all[key] = list.map((item) =>

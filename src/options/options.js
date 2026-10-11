@@ -1,4 +1,6 @@
-(() => {
+(async () => {
+  await AITrI18n.ready;
+  const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
   const $ = (id) => document.getElementById(id);
   const el = {
@@ -16,6 +18,7 @@
     test: $('test'),
     testResult: $('testResult'),
     target: $('target'),
+    uiLanguage: $('uiLanguage'),
     targetPreview: $('targetPreview'),
     stream: $('stream'),
     streamHelp: $('streamHelp'),
@@ -51,7 +54,7 @@
 
   async function save(patch) {
     settings = await S.saveSettings({ ...settings, ...patch });
-    flash('已保存');
+    flash(t("已保存"));
     renderCards();
   }
 
@@ -74,7 +77,7 @@
           `<b></b><i></i><em class="${configured ? 'ready' : ''}"></em>`;
         card.querySelector('b').textContent = item.label;
         card.querySelector('i').textContent = item.hint;
-        card.querySelector('em').textContent = configured ? '● 已配置 Key' : '○ 未配置 Key';
+        card.querySelector('em').textContent = configured ? t("● 已配置 Key") : t("○ 未配置 Key");
         card.addEventListener('click', () => {
           if (settings.provider === item.id) return;
           save({ provider: item.id }).then(renderProviderConfig);
@@ -96,13 +99,13 @@
     el.apiKey.value = conf.apiKey;
     el.apiKey.placeholder = `${def.keyPrefix}...`;
     el.apiKey.type = 'password';
-    el.toggleKey.textContent = '显示';
+    el.toggleKey.textContent = t("显示");
     el.keyLink.href = def.keyUrl;
-    el.keyLink.textContent = `${def.label} 控制台`;
+    el.keyLink.textContent = t("$1 控制台", [def.label]);
 
     el.model.value = conf.model;
     el.model.placeholder = def.defaultModel;
-    el.modelHelp.textContent = `留空则使用 ${def.defaultModel}。可以直接填任意该平台支持的模型名。`;
+    el.modelHelp.textContent = t("留空则使用 $1。可以直接填任意该平台支持的模型名。", [def.defaultModel]);
     el.modelList.replaceChildren(
       ...def.models.map((name) => {
         const option = document.createElement('option');
@@ -114,24 +117,30 @@
     el.baseUrl.value = conf.baseUrl;
     el.baseUrl.placeholder = def.defaultBaseUrl;
     el.baseUrlHelp.textContent =
-      `留空则使用 ${def.defaultBaseUrl}。填写代理或中转地址时，需要额外授权该域名。`;
+      t("留空则使用 $1。填写代理或中转地址时，需要额外授权该域名。", [def.defaultBaseUrl]);
 
     el.testResult.textContent = '';
     el.testResult.className = 'test-result';
 
     el.visionNote.hidden = S.supportsVision(settings.provider);
-    el.visionNote.textContent = `${def.label} 只能翻译文本，图片翻译需要切换到 ChatGPT 或 DeepSeek。`;
+    el.visionNote.textContent = t("$1 只能翻译文本，图片翻译需要切换到 ChatGPT 或 DeepSeek。", [def.label]);
 
     // 传统翻译接口一次性返回，流式开关在这里不起作用，
     // 与其留个没用的开关，不如禁用并说明
     const canStream = S.supportsStreaming(settings.provider);
     el.stream.disabled = !canStream;
     el.streamHelp.textContent = canStream
-      ? '译文逐字显示，等待感更低。'
-      : `${def.label} 一次性返回全部译文，没有逐字显示。`;
+      ? t("译文逐字显示，等待感更低。")
+      : t("$1 一次性返回全部译文，没有逐字显示。", [def.label]);
   }
 
   function renderBehavior() {
+    const auto = document.createElement('option');
+    auto.value = 'auto'; auto.textContent = t('跟随 Chrome');
+    el.uiLanguage.replaceChildren(auto, ...S.targetList().map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id; option.textContent = item.nativeLabel; return option;
+    }));
     el.target.replaceChildren(
       ...S.targetList().map((item) => {
         const option = document.createElement('option');
@@ -141,7 +150,8 @@
         return option;
       })
     );
-    el.targetPreview.textContent = S.targetMenu(settings);
+    el.targetPreview.textContent = t('右键菜单：$1', [t('翻译成$1', [S.targetMenu(settings)])]);
+    el.uiLanguage.value = settings.uiLanguage;
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
     el.floating.checked = settings.floating;
@@ -165,17 +175,17 @@
       const commands = await chrome.commands.getAll();
       const found = commands.find((item) => item.name === 'translate-selection');
       if (!found) {
-        show('未注册', '命令没有注册成功，到 chrome://extensions 重新加载一次扩展。');
+        show(t("未注册"), t("命令没有注册成功，到 chrome://extensions 重新加载一次扩展。"));
         return;
       }
       show(
-        found.shortcut || '未分配',
+        found.shortcut || t("未分配"),
         found.shortcut
           ? ''
-          : '建议快捷键只在扩展「安装时」生效，所以这里需要手动设置一次：点右边「修改」，在打开的页面里找到「翻译选中的文字」那一行，按下你想用的组合键。'
+          : t("建议快捷键只在扩展「安装时」生效，所以这里需要手动设置一次：点右边「修改」，在打开的页面里找到「翻译选中的文字」那一行，按下你想用的组合键。")
       );
     } catch {
-      show('读取失败', '无法读取快捷键信息。');
+      show(t("读取失败"), t("无法读取快捷键信息。"));
     }
   }
 
@@ -203,7 +213,7 @@
     );
     el.videoCloud.checked = settings.videoCloud;
     el.videoTranslate.checked = settings.videoTranslate;
-    el.videoTarget.textContent = S.targetMenu(settings);
+    el.videoTarget.textContent = t('字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。', [S.targetMenu(settings)]);
   }
 
   function showLangState(text, tone = '') {
@@ -225,11 +235,11 @@
       return;
     }
     if (settings.videoCloud) {
-      showLangState('云端识别不需要语言包');
+      showLangState(t("云端识别不需要语言包"));
       return;
     }
     if (!Speech.supported()) {
-      showLangState('当前 Chrome 不支持设备端语音识别，请升级到最新版，或改用云端识别。', 'err');
+      showLangState(t("当前 Chrome 不支持设备端语音识别，请升级到最新版，或改用云端识别。"), 'err');
       return;
     }
     const lang = settings.videoLang;
@@ -237,28 +247,28 @@
     try {
       status = await Speech.packStatus(lang);
     } catch (err) {
-      showLangState(`读取语言包状态失败：${err?.message || err}`, 'err');
+      showLangState(t("读取语言包状态失败：$1", [err?.message || err]), 'err');
       return;
     }
     if (lang !== settings.videoLang || settings.videoCloud) return; // 等结果期间设置又变了
     switch (status) {
       case 'available':
-        showLangState('离线语言包已就绪', 'ok');
+        showLangState(t("离线语言包已就绪"), 'ok');
         break;
       case 'downloadable':
         showLangState(
           Speech.packsFor(lang).length > 1
-            ? '还没有下载离线语言包（会连同英语包一起下载，识别引擎随它附带）'
-            : '还没有下载离线语言包'
+            ? t("还没有下载离线语言包（会连同英语包一起下载，识别引擎随它附带）")
+            : t("还没有下载离线语言包")
         );
         el.installLang.hidden = false;
         break;
       case 'downloading':
-        showLangState('正在下载离线语言包…');
+        showLangState(t("正在下载离线语言包…"));
         langPollTimer = setTimeout(renderLangState, 2000);
         break;
       default:
-        showLangState('这台设备不支持该语言的离线识别，可以改用云端识别', 'err');
+        showLangState(t("这台设备不支持该语言的离线识别，可以改用云端识别"), 'err');
     }
   }
 
@@ -294,7 +304,7 @@
   el.baseUrl.addEventListener('change', async () => {
     const value = el.baseUrl.value.trim().replace(/\/+$/, '');
     if (value && !originOf(value)) {
-      el.baseUrlHelp.textContent = '请填写合法的 https 地址（出于安全考虑不支持 http）。';
+      el.baseUrlHelp.textContent = t("请填写合法的 https 地址（出于安全考虑不支持 http）。");
       el.baseUrl.value = settings[settings.provider].baseUrl;
       return;
     }
@@ -302,20 +312,30 @@
     renderProviderConfig();
     const origin = await missingOrigin();
     if (origin) {
-      el.baseUrlHelp.textContent = `还需要授权访问 ${origin}：点下方「测试连接」时会弹出授权请求。`;
+      el.baseUrlHelp.textContent = t("还需要授权访问 $1：点下方「测试连接」时会弹出授权请求。", [origin]);
     }
   });
 
   el.toggleKey.addEventListener('click', () => {
     const hidden = el.apiKey.type === 'password';
     el.apiKey.type = hidden ? 'text' : 'password';
-    el.toggleKey.textContent = hidden ? '隐藏' : '显示';
+    el.toggleKey.textContent = hidden ? t("隐藏") : t("显示");
+  });
+
+  el.uiLanguage.addEventListener('change', async () => {
+    await save({ uiLanguage: el.uiLanguage.value });
+    await AITrI18n.reload();
+  });
+  AITrI18n.onChange(() => {
+    renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang();
+    renderShortcutKey(); renderRuleCount(); renderLangState();
   });
 
   el.target.addEventListener('change', async () => {
     await save({ target: el.target.value });
-    el.targetPreview.textContent = S.targetMenu(settings);
-    el.videoTarget.textContent = S.targetMenu(settings);
+    el.targetPreview.textContent = t('右键菜单：$1', [t('翻译成$1', [S.targetMenu(settings)])]);
+    el.uiLanguage.value = settings.uiLanguage;
+    el.videoTarget.textContent = t('字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。', [S.targetMenu(settings)]);
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
@@ -344,7 +364,7 @@
     // install() 要求用户手势：必须紧贴点击调用，前面不能有任何 await
     const task = Speech.installPacks(settings.videoLang);
     el.installLang.disabled = true;
-    showLangState('正在下载离线语言包，视网速可能要等一会儿…');
+    showLangState(t("正在下载离线语言包，视网速可能要等一会儿…"));
     let ok = false;
     let error = '';
     try {
@@ -354,7 +374,7 @@
     }
     el.installLang.disabled = false;
     if (ok) renderLangState();
-    else showLangState(error ? `下载失败：${error}` : '下载失败，稍后再试', 'err');
+    else showLangState(error ? t("下载失败：$1", [error]) : t("下载失败，稍后再试"), 'err');
   });
 
   el.manage.addEventListener('click', () => {
@@ -367,7 +387,7 @@
       const all = await globalThis.AITrRules.loadRules();
       const hosts = Object.keys(all);
       const total = hosts.reduce((sum, host) => sum + all[host].length, 0);
-      el.ruleCount.textContent = total ? `已记录 ${hosts.length} 个网站、${total} 条规则` : '还没有规则';
+      el.ruleCount.textContent = total ? t("已记录 $1 个网站、$2 条规则", [hosts.length, total]) : t("还没有规则");
     } catch {
       el.ruleCount.textContent = '';
     }
@@ -389,7 +409,7 @@
     const origin = originOf(el.baseUrl.value.trim());
     if (origin && !(await chrome.permissions.request({ origins: [origin] }))) {
       el.testResult.className = 'test-result err';
-      el.testResult.textContent = `未授权访问 ${origin}，无法使用该接口地址`;
+      el.testResult.textContent = t("未授权访问 $1，无法使用该接口地址", [origin]);
       return;
     }
 
@@ -403,7 +423,7 @@
     });
     el.test.disabled = true;
     el.testResult.className = 'test-result';
-    el.testResult.textContent = '正在请求…';
+    el.testResult.textContent = t("正在请求…");
     try {
       const reply = await chrome.runtime.sendMessage({
         type: 'test-provider',
@@ -411,10 +431,10 @@
       });
       if (reply?.ok) {
         el.testResult.className = 'test-result ok';
-        el.testResult.textContent = `连接正常（${reply.model}）：${reply.sample}`;
+        el.testResult.textContent = t("连接正常（$1）：$2", [reply.model, reply.sample]);
       } else {
         el.testResult.className = 'test-result err';
-        el.testResult.textContent = reply?.error || '测试失败';
+        el.testResult.textContent = reply?.error || t("测试失败");
       }
     } catch (err) {
       el.testResult.className = 'test-result err';

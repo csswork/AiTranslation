@@ -41,23 +41,23 @@ Travel  Well-being  │  Make Chrome Yours: Accessibility · Functionality & UI 
 ```
 选中网页上的外文，右键，译文就在屏幕中央逐字浮现——不用切标签页，不用复制粘贴。
 
-AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里的文字就地译成中文。译文由你自己配置的大模型 API 生成，支持 ChatGPT（OpenAI）、DeepSeek 与 DeepL，随时切换。
+AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里的文字就地译成你选择的语言。译文由你自己配置的大模型 API 生成，支持 ChatGPT（OpenAI）、DeepSeek 与 DeepL，随时切换。
 
 
 ▍四个入口，都在右键菜单里
 
 · 划词翻译
-选中一段非中文文字，右键点「翻译成中文」，译文在居中弹窗里流式出现，可展开原文对照阅读。
-选中的本来就是中文时菜单不会出现，纯数字、标点、表情同理——不打扰是最基本的设计。
+选中任意语言的文字，右键点「翻译成…」，译文在居中弹窗里流式出现，可展开原文对照阅读。
+中文、短词和混合语言也可以翻译；纯数字、标点和表情不会触发翻译入口。
 
 · 元素翻译
-给页面上的某个区域挂一个翻译按钮。点一下，区域里的文字就地换成中文。规则按域名记住，下次再访问同一个网站，按钮自动挂上；长内容分批送出，边译边替换，不用等整块跑完。
+给页面上的某个区域挂一个翻译按钮。点一下，区域里的文字就地换成所选语言。规则按域名记住，下次再访问同一个网站，按钮自动挂上；长内容分批送出，边译边替换，不用等整块跑完。
 
 · 图片翻译
 右键一张图片，识别图里的文字，再把译文按识别到的位置盖回原图。长图先切块再识别，切缝落在文字之间的空白行上，不会把一句话劈成两半。
 
 · 翻译面板
-一个独立页面，左边原文右边译文，用来处理成段的、不在网页上的文字。14 种目标语言可选（英文、日文、韩文、法文、德文、西班牙文、俄文、阿拉伯文……），并会自动判断输入语言：中文默认译成英文，其他语言默认译成中文。
+一个独立页面，左边原文右边译文，用来处理成段的、不在网页上的文字。24 种目标语言可选。源语言可自动识别或手动指定，目标语言由你选择，面板会记住选择；指定源语言后可以交换翻译方向。
 
 
 ▍为什么值得装
@@ -65,7 +65,7 @@ AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里�
 · 不离开页面：翻译就发生在你正在读的那一段旁边。
 · 流式输出：译文逐字出现，不用等整段生成完。
 · 跟随系统深浅色；弹窗可拖动、Esc 关闭；支持快捷键 ⌘⇧Y（macOS）/ Alt+Shift+T。
-· 划词、元素、图片三种方式默认译成简体或繁体中文，可在设置里切换。
+· 划词、区域、图片和字幕共用 24 种目标语言；界面语言与默认翻译目标独立设置。
 
 
 ▍关于隐私
@@ -80,7 +80,7 @@ AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里�
 ▍开始使用
 
 1. 首次安装会自动打开设置页：选一个平台，粘贴你自己的 API Key，点「测试连接」确认能通。
-2. 之后在任意网页选中外文 → 右键 → 点「翻译成中文」。
+2. 之后在任意网页选中文字 → 右键 → 点「翻译成…」。
 需要 Chrome 116 或更高版本。
 
 
@@ -104,27 +104,21 @@ AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里�
 
 ## 三、English description（备用）
 
-**先说清一件事**：官方文档写明「每个语言区域对应于扩展程序中包含的一个 `_locales/LOCALE_CODE` 目录」，
-而你的仓库里**没有 `_locales` 目录、manifest 里也没有 `default_locale`**，
-所以现在后台大概率只能维护一份（默认）商品详情，无法单独添加英文语言区域的说明。
-要真正做英文区上架，得先给扩展加上 `_locales/en/messages.json` 并在 manifest 里声明 `default_locale`。
-
-如果之后要做，直接用下面这份：
+扩展已声明 `default_locale`，本地化文案位于 `_locales/`。以下为英文商品说明草稿：
 
 ```
 Select foreign text on a web page, right-click, and the translation appears in the middle of
 the screen, word by word. No switching tabs, no copy-paste.
 
 AI Selection Translator is an open-source Chrome extension (Manifest V3) that translates web
-page text into Chinese, using your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
+page text into your chosen language, using your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
 
 
 FOUR ENTRY POINTS, ALL IN THE RIGHT-CLICK MENU
 
 · Selection translation
-Select a passage, right-click "Translate to Chinese", and the translation streams into a
-centered popup with a collapsible original-text panel. If the selection is already Chinese —
-or only digits, punctuation or emoji — the menu item simply does not appear.
+Select a passage, right-click "Translate to…", and the translation streams into a
+centered popup with a collapsible original-text panel. Chinese and mixed-language selections are supported. Only digits, punctuation and emoji are filtered.
 
 · Block translation
 Attach a translate button to any region of a page. One click replaces the text inside it with
@@ -165,7 +159,7 @@ GETTING STARTED
 
 1. The settings page opens on first install: pick a provider, paste your own API key, and hit
    "Test connection".
-2. Then select foreign text on any page → right-click → "Translate to Chinese".
+2. Then select foreign text on any page → right-click → "Translate to…".
 Requires Chrome 116 or later.
 
 KNOWN LIMITATIONS

@@ -1,4 +1,6 @@
-(() => {
+(async () => {
+  await AITrI18n.ready;
+  const t = (...args) => AITrI18n.t(...args);
   const R = globalThis.AITrRules;
   const el = {
     list: document.getElementById('list'),
@@ -33,11 +35,11 @@
    * 静默跳过，整条规则失效且没有任何提示。
    */
   function invalidSelector(value) {
-    if (!value) return '选择器不能为空';
+    if (!value) return t("选择器不能为空");
     try {
       document.querySelector(value);
     } catch {
-      return '这不是合法的 CSS 选择器';
+      return t("这不是合法的 CSS 选择器");
     }
     return null;
   }
@@ -90,12 +92,12 @@
     row.append(
       main,
       date,
-      button('编辑', 'btn ghost small', () => {
+      button(t("编辑"), 'btn ghost small', () => {
         editingId = rule.id;
         adding = null;
         render();
       }),
-      button('删除', 'btn ghost small', async () => {
+      button(t("删除"), 'btn ghost small', async () => {
         rules = await R.removeRule(host, rule.id);
         render();
       })
@@ -115,7 +117,7 @@
     input.className = 'rule-input';
     input.value = rule.selector;
     input.spellcheck = false;
-    input.setAttribute('aria-label', 'CSS 选择器');
+    input.setAttribute('aria-label', t("CSS 选择器"));
 
     const error = document.createElement('div');
     error.className = 'rule-error';
@@ -158,8 +160,8 @@
 
     row.append(
       main,
-      button('保存', 'btn small', save),
-      button('取消', 'btn ghost small', cancel)
+      button(t("保存"), 'btn small', save),
+      button(t("取消"), 'btn ghost small', cancel)
     );
     // 进入编辑就把光标放进去，省一次点击
     queueMicrotask(() => {
@@ -185,18 +187,18 @@
       hostInput = document.createElement('input');
       hostInput.type = 'text';
       hostInput.className = 'rule-input';
-      hostInput.placeholder = '域名，例如 example.com（也可直接粘贴网址）';
+      hostInput.placeholder = t("域名，例如 example.com（也可直接粘贴网址）");
       hostInput.spellcheck = false;
-      hostInput.setAttribute('aria-label', '域名');
+      hostInput.setAttribute('aria-label', t("域名"));
       main.appendChild(hostInput);
     }
 
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'rule-input';
-    input.placeholder = 'CSS 选择器，例如 div#main > article.post > p';
+    input.placeholder = t("CSS 选择器，例如 div#main > article.post > p");
     input.spellcheck = false;
-    input.setAttribute('aria-label', 'CSS 选择器');
+    input.setAttribute('aria-label', t("CSS 选择器"));
     main.appendChild(input);
 
     const error = document.createElement('div');
@@ -218,17 +220,17 @@
 
     const submit = async () => {
       const targetHost = host === null ? normalizeHostInput(hostInput.value) : host;
-      if (!targetHost) return fail('请填写有效的域名', hostInput);
+      if (!targetHost) return fail(t("请填写有效的域名"), hostInput);
       const value = input.value.trim();
       const problem = invalidSelector(value);
       if (problem) return fail(problem);
 
       const result = await R.addRule(targetHost, value);
-      if (!result) return fail('无法添加这条规则');
+      if (!result) return fail(t("无法添加这条规则"));
       if (result.full) {
-        return fail(`${targetHost} 的规则已达上限（${R.MAX_RULES_PER_HOST} 条）`);
+        return fail(t("$1 的规则已达上限（$2 条）", [targetHost, R.MAX_RULES_PER_HOST]));
       }
-      if (!result.added) return fail('这个网站下已经有相同的选择器');
+      if (!result.added) return fail(t("这个网站下已经有相同的选择器"));
 
       rules = result.rules;
       adding = null;
@@ -247,7 +249,7 @@
       });
     }
 
-    row.append(main, button('添加', 'btn small', submit), button('取消', 'btn ghost small', cancel));
+    row.append(main, button(t("添加"), 'btn small', submit), button(t("取消"), 'btn ghost small', cancel));
     queueMicrotask(() => (hostInput || input).focus());
     return row;
   }
@@ -257,7 +259,7 @@
     const total = hosts.reduce((sum, host) => sum + rules[host].length, 0);
 
     el.count.textContent = total
-      ? `${hosts.length} 个网站，共 ${total} 条规则`
+      ? t("$1 个网站，共 $2 条规则", [hosts.length, total])
       : '';
     // 正在填新站点表单时别显示空状态，否则「还没有任何规则」会压在表单旁边
     el.empty.hidden = total > 0 || Boolean(adding);
@@ -277,14 +279,14 @@
 
         const badge = document.createElement('span');
         badge.className = 'host-count';
-        badge.textContent = `${rules[host].length} 条`;
+        badge.textContent = t("$1 条", [rules[host].length]);
 
         const removeHost = document.createElement('button');
         removeHost.type = 'button';
         removeHost.className = 'btn danger small';
-        removeHost.textContent = '删除整站';
+        removeHost.textContent = t("删除整站");
         removeHost.addEventListener('click', async () => {
-          if (!confirm(`删除 ${host} 下的全部 ${rules[host].length} 条规则？`)) return;
+          if (!confirm(t("删除 $1 下的全部 $2 条规则？", [host, rules[host].length]))) return;
           rules = await R.removeHost(host);
           render();
         });
@@ -292,7 +294,7 @@
         head.append(
           name,
           badge,
-          button('添加', 'btn ghost small', () => {
+          button(t("添加"), 'btn ghost small', () => {
             editingId = null;
             adding = { host };
             render();
@@ -318,7 +320,7 @@
       head.className = 'host-head';
       const name = document.createElement('span');
       name.className = 'host-name';
-      name.textContent = '新增规则';
+      name.textContent = t("新增规则");
       head.appendChild(name);
       card.append(head, addRow(null));
       cards.unshift(card);
@@ -327,6 +329,8 @@
     el.list.replaceChildren(...cards);
   }
 
+  AITrI18n.onChange(() => { if (!isEditingOrAdding()) render(); });
+
   el.addRule.addEventListener('click', () => {
     editingId = null;
     adding = { host: null };
@@ -334,7 +338,7 @@
   });
 
   el.clearAll.addEventListener('click', async () => {
-    if (!confirm('清空全部网站的元素翻译规则？此操作无法撤销。')) return;
+    if (!confirm(t("清空全部网站的元素翻译规则？此操作无法撤销。"))) return;
     rules = await R.clearAll();
     render();
   });

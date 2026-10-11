@@ -6,6 +6,7 @@
  * 自己的 shadow 宿主，互不引用。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   if (window.__aiTranslationImageLoaded) return;
   window.__aiTranslationImageLoaded = true;
 
@@ -244,7 +245,7 @@
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
                    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      font-size: 14px; line-height: 1.6; letter-spacing: normal; text-align: left;
+      font-size: 14px; line-height: 1.6; letter-spacing: normal; text-align: start;
       animation: pop 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.1);
     }
     @keyframes pop { from { opacity: 0 } }
@@ -283,6 +284,7 @@
     .canvas:not(.tall) img { max-height: calc(94vh - 80px); }
     /* 长图必须给面板一个明确宽度：面板本来按内容收缩，
        长图的收缩计算会把它挤到很窄（实测只剩 186px）。 */
+    select.target { font: inherit; max-width: 160px; color: inherit; background: #20232c; border: 1px solid #555; border-radius: 6px; padding: 3px; }
     .panel.tall { width: min(94vw, 860px); }
     .panel.tall .body { align-items: flex-start; }
     .panel.tall .canvas { width: 100%; }
@@ -306,6 +308,9 @@
     'stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   let panel = null;
+  let imageResult = null;
+  let generation = 0;
+  let controller = null;
 
   function buildPanel() {
     const host = document.createElement('div');
@@ -324,6 +329,7 @@
         <div class="bar">
           <span class="title">图片翻译</span>
           <span class="meta"></span>
+          <select class="target" title="目标语言"></select>
           <button class="act toggle" type="button">显示原图</button>
           <button class="act icon close" type="button" title="关闭（Esc）" aria-label="关闭">
             ${CLOSE_ICON}
@@ -335,6 +341,7 @@
       </div>`;
     root.append(style);
     while (wrap.firstChild) root.appendChild(wrap.firstChild);
+      AITrI18n.localize(root);
 
     const q = (sel) => root.querySelector(sel);
     panel = {
@@ -345,16 +352,20 @@
       img: q('.canvas img'),
       layer: q('.layer'),
       meta: q('.meta'),
+      target: q('.target'),
       toggle: q('.toggle'),
       close: q('.close'),
       open: false,
     };
 
+    panel.target.addEventListener('change', () => {
+      if (imageResult) translateBlocks(imageResult, panel.target.value);
+    });
     panel.close.addEventListener('click', closePanel);
     panel.backdrop.addEventListener('mousedown', closePanel);
     panel.toggle.addEventListener('click', () => {
       const hidden = panel.canvas.classList.toggle('hide-translation');
-      panel.toggle.textContent = hidden ? '显示译文' : '显示原图';
+      panel.toggle.textContent = hidden ? t("显示译文") : t("显示原图");
     });
 
     (document.body || document.documentElement).appendChild(host);
@@ -370,6 +381,9 @@
 
   function closePanel() {
     if (!panel) return;
+    generation += 1;
+    controller?.abort();
+    hideMask();
     panel.open = false;
     panel.host.style.setProperty('display', 'none', 'important');
     window.removeEventListener('keydown', onKeydown, true);
@@ -393,18 +407,24 @@
   /** 高宽比超过这个值就按长图处理。 */
   const TALL_RATIO = 1.6;
 
-  function openPanel({ display, blocks, meta, natural }) {
+  function openPanel({ display, blocks, meta, natural, targetId }) {
     if (!panel) buildPanel();
     if (!panel.host.isConnected) {
       (document.body || document.documentElement).appendChild(panel.host);
     }
+    panel.target.replaceChildren(...AITrSettings.targetList().map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id; option.textContent = item.label;
+      option.selected = item.id === targetId;
+      return option;
+    }));
     panel.img.src = display;
     panel.meta.textContent = meta;
     const tall = Boolean(natural && natural.h / Math.max(1, natural.w) > TALL_RATIO);
     panel.canvas.classList.toggle('tall', tall);
     panel.panel.classList.toggle('tall', tall);
     panel.canvas.classList.remove('hide-translation');
-    panel.toggle.textContent = '显示原图';
+    panel.toggle.textContent = t("显示原图");
 
     panel.layer.replaceChildren(
       ...blocks.map((item) => {
@@ -418,6 +438,7 @@
         const fill = document.createElement('div');
         fill.className = 'fill';
         fill.textContent = item.translation;
+        fill.dir = 'auto';
         node.appendChild(fill);
         return node;
       })
@@ -437,89 +458,81 @@
   function showFailure(message) {
     if (!mask) return;
     mask.label.textContent = message;
-    setTimeout(hideMask, 4500); // 提示可能较长，留够阅读时间
+    const current = mask;
+    setTimeout(() => { if (mask === current) hideMask(); }, 4500); // 提示可能较长，留够阅读时间
   }
 
   /* ---------------------------------------------------------- 主流程 */
 
+  async function translateBlocks(result, targetId, token = ++generation) {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    const { grabbed, merged, settings } = result;
+    const worth = merged.filter((b) => Lang.shouldOffer(b.text));
+    if (!worth.length) {
+      showFailure(merged.length ? t("图中没有需要翻译的文字") : t("图中没有识别到文字"));
+      return;
+    }
+    if (panel) panel.target.disabled = true;
+    if (mask) mask.label.textContent = t('正在翻译 $1 段…', [worth.length]);
+    try {
+      const reply = await AITrRequests.request({
+        type: 'translate-batch', texts: worth.map((b) => b.text),
+        targetId, providerId: settings.provider,
+      }, { signal });
+      if (token !== generation) return;
+      if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
+      const blocks = worth.map((b, i) => ({ ...b, translation: reply.texts[i] || '' }))
+        .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
+      hideMask();
+      result.targetId = targetId;
+      imageResult = result;
+      openPanel({ display: grabbed.display, natural: grabbed.natural, blocks, targetId,
+        meta: `${AITrLanguages.label(targetId)} · ${blocks.length}` });
+    } catch (err) {
+      if (token !== generation) return;
+      if (panel?.open) {
+        panel.meta.textContent = String(err?.message || err);
+        panel.target.value = result.targetId || settings.target;
+      }
+      showFailure(String(err?.message || err));
+    } finally {
+      if (token === generation && panel) panel.target.disabled = false;
+    }
+  }
+
   async function translateImage(srcUrl) {
     const img = findImage(srcUrl);
     if (!img) return;
-
-    showMask(img, '正在读取图片…');
+    const token = ++generation;
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    const settings = await AITrSettings.loadSettings();
+    if (token !== generation) return;
+    showMask(img, t("正在读取图片…"));
     try {
       const grabbed = await grabImage(img);
-      if (!grabbed) {
-        showFailure('这张图还没加载完');
-        return;
-      }
-
-      // 逐块识别。长图切成多块后每块比例正常，定位更准，
-      // 也各自独享接口的单图 token 预算，小字更清楚。
+      if (token !== generation) return;
+      if (!grabbed) { showFailure(t("这张图还没加载完")); return; }
       const total = grabbed.parts.length;
       const perTile = [];
       for (let i = 0; i < total; i += 1) {
-        mask.label.textContent =
-          total > 1 ? `正在识别 ${i + 1}/${total}…` : '正在识别图中文字…';
-        const reply = await chrome.runtime.sendMessage({
-          type: 'read-image',
-          image: grabbed.parts[i].image,
-          imageSize: grabbed.parts[i].size,
-        });
+        mask.label.textContent = total > 1 ? t('正在识别 $1/$2…', [i + 1, total]) : t('正在识别图中文字…');
+        const reply = await AITrRequests.request({ type: 'read-image',
+          image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
+        if (token !== generation) return;
         if (!reply?.ok) {
-          // 读不到像素只能把网址交给接口去取，这时若站点有防盗链就会失败。
-          // 后台代取需要 <all_urls> 权限，代价太大；复制图片再粘贴到
-          // 翻译面板可以绕开，所以把这条出路直接告诉用户。
-          showFailure(
-            grabbed.byUrl
-              ? '这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板'
-              : reply?.error || '识别失败'
-          );
+          showFailure(grabbed.byUrl ? t("这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板") : reply?.error || t('识别失败'));
           return;
         }
         perTile.push(reply.blocks);
       }
-
       const merged = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
-      // 星级、价格、尺码这类纯数字符号翻了也是原样返回，白花 token
-      const worth = merged.filter((b) => Lang.shouldOffer(b.text));
-      if (!worth.length) {
-        showFailure(merged.length ? '图中没有需要翻译的文字' : '图中没有识别到文字');
-        return;
-      }
-
-      mask.label.textContent = `正在翻译 ${worth.length} 段…`;
-      const reply = await chrome.runtime.sendMessage({
-        type: 'translate-batch',
-        texts: worth.map((b) => b.text),
-      });
-      if (!reply?.ok) {
-        showFailure(reply?.error || '翻译失败');
-        return;
-      }
-
-      const blocks = worth
-        .map((b, i) => ({ ...b, translation: reply.texts[i] || '' }))
-        // 译文和原文一模一样的，盖上去只是挡住原图
-        .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
-      if (!blocks.length) {
-        showFailure('图中没有需要翻译的文字');
-        return;
-      }
-
-      hideMask();
-      openPanel({
-        display: grabbed.display,
-        natural: grabbed.natural,
-        blocks,
-        meta: [
-          `${blocks.length} 段`,
-          grabbed.tiled ? `分 ${total} 块识别` : '',
-          grabbed.byUrl ? '按网址取图' : '',
-        ].filter(Boolean).join(' · '),
-      });
+      await translateBlocks({ grabbed, merged, settings }, settings.target, token);
     } catch (err) {
-      showFailure(String(err?.message || err));
+      if (token === generation) showFailure(String(err?.message || err));
     }
   }
 

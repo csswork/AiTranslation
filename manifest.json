@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI 划词翻译",
+  "name": "__MSG_extensionName__",
   "version": "1.0.0",
-  "description": "划词、整块元素、图片里的文字都能翻译。支持 ChatGPT / DeepSeek / DeepL，API Key 只保存在本机浏览器。",
+  "description": "__MSG_extensionDescription__",
   "minimum_chrome_version": "116",
   "permissions": [
     "contextMenus",
@@ -31,7 +31,7 @@
         "default": "Alt+Shift+T",
         "mac": "Command+Shift+Y"
       },
-      "description": "翻译选中的文字"
+      "description": "__MSG_translateSelection__"
     }
   },
   "content_scripts": [
@@ -40,6 +40,11 @@
         "<all_urls>"
       ],
       "js": [
+        "src/lib/languages.js",
+        "src/lib/messages.js",
+        "src/lib/i18n.js",
+        "src/lib/settings.js",
+        "src/lib/requests.js",
         "src/lib/lang.js",
         "src/lib/rules.js",
         "src/lib/selector.js",
@@ -58,7 +63,7 @@
     "open_in_tab": true
   },
   "action": {
-    "default_title": "AI 划词翻译",
+    "default_title": "__MSG_extensionName__",
     "default_popup": "src/popup/popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -72,5 +77,6 @@
     "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "default_locale": "en"
 }

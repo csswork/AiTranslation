@@ -1,17 +1,15 @@
 # AI Selection Translator
 
-A Chrome extension: **select non-Chinese text → right-click "翻译成中文" → the translation streams into a popup at the center of the screen**. Translation is done by an LLM, with support for **ChatGPT (OpenAI)** and **DeepSeek**, switchable at any time.
+A Chrome extension for translating selected text, page regions, images and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
 
-> The extension translates *into* Chinese, and its own UI is in Chinese. The context menu item reads 翻译成中文 ("Translate to Chinese").
-
-## Features
-
-- **Only shows up when it makes sense.** If the selected text is already Chinese, the context menu item does not appear. Neither does it for selections that are only digits, punctuation, or emoji. Japanese and Korean are offered normally.
-- **Centered popup.** Not a small bubble chasing the cursor, but a centered modal with a draggable title bar. Close with `Esc` or by clicking the backdrop.
-- **Streaming output.** The translation appears token by token instead of making you wait for the whole thing.
-- **Two providers.** ChatGPT / DeepSeek, switchable straight from the popup's header to re-translate.
-- **Copy**, **re-translate**, and a collapsible **source text** panel for side-by-side reading.
-- Follows the system light / dark theme.
+- **24 language choices throughout the extension:** Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese (Brazil), French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean.
+- **Independent preferences:** interface language, default translation target, and source language are separate. A new installation chooses its default target from Chrome's language; upgrades preserve the existing target and API configuration.
+- **Translate any script**, including Chinese and mixed-language text. Only selections containing no letters are filtered out. Simplified ↔ Traditional conversion remains available.
+- **Temporary target changes:** the selection popup retranslates the original text. Its star button explicitly saves the current target as the default. The text panel remembers its own source/target choices, and swaps only when a source has been selected.
+- **Images:** changing the target reuses recognized source text; changing the image clears that cache.
+- **Regions:** translation uses a fixed target for all batches, preserves originals, and supports restoring the source. Failed batches restore completed portions rather than leaving mixed languages.
+- **RTL:** Arabic, Hebrew, Persian and Urdu interfaces use right-to-left layout. Original and translated text have independent direction; opening an overlay does not change the host page's direction.
+- **Provider capabilities:** DeepL language support is checked against the configured API. Unsupported pairs return an error without switching to a different language. Vision requires a vision-capable provider/model.
 
 ## Install
 
@@ -32,11 +30,11 @@ Pick a provider on the options page and paste in an API key:
 
 Both default to the cheapest tier available, since translation is a high-frequency, short-input task. The model field also suggests `gpt-5.6-terra` / `gpt-5.6-sol` / `gpt-6-astra` and `deepseek-v4-pro`, and accepts any model name the provider supports. Hit **测试连接** ("Test connection") to verify.
 
-Other settings: target language (Simplified / Traditional Chinese — the context menu title follows it), streaming on/off, and whether to keep the source text in the popup.
+Choose your interface language and default translation target independently, then configure streaming and source-text visibility. Video speech recognition has its own source-language setting and checks device support; the experimental feature remains off by default.
 
 ## Usage
 
-Select some foreign-language text → right-click → **翻译成中文**.
+Select text → right-click → **Translate to your target language**. You can also use the floating selection button or keyboard shortcut.
 
 ## Layout
 
@@ -58,7 +56,7 @@ icons/                     Icons
 
 - **Timing of menu visibility.** Chrome decides which context menu items to show at the moment of the right-click, while `contextMenus.update()` is asynchronous. So the content script reports the selection to the background and updates the menu on `mouseup` / `selectionchange` — i.e. *before* the right-click — and treats the `contextmenu` event only as a fallback. The item defaults to visible, so even if reporting fails the feature never silently disappears.
 
-- **How "is this Chinese?" is decided.** Kana (Japanese) and Hangul (Korean) are excluded first, then the ratio of Han characters to all letters is measured; at 50% or above the text counts as Chinese and no translation is offered. So "这个 API 很好用" is not offered, while "ChatGPT is 很 good" is.
+- **Language detection never hides an explicit translation request.** Short, mixed, and same-language selections remain translatable. The provider detects the source unless the text panel explicitly specifies it.
 
 - **Why the popup uses Shadow DOM.** Page-wide rules like `* { font-family: ... !important }` are extremely common, and Shadow DOM is what keeps the popup looking identical on every site. The host node starts from `all: initial`, and every inheritable property is declared explicitly on the panel.
 
@@ -72,7 +70,7 @@ icons/                     Icons
 
 - **Rejected parameters fall back gracefully.** Both providers keep changing their model lineups and parameters, and users can type in any model name. So when a request comes back 400 complaining about a parameter, it is retried once with a minimal body (`model` / `messages` / `stream` only), rather than failing outright over one unsupported field. Non-parameter 400s are not retried.
 
-- **Where the API key lives.** `chrome.storage.local` — on this machine only. It is not synced through the Chrome account and never sent to any third party. Requests only go to the base URL of the provider you selected.
+- **Where the API key lives.** `chrome.storage.local` — on this machine only. It is not synced through the Chrome account. The key is sent only to the configured provider endpoint to authenticate requests.
 
 ## Known limitations
 
@@ -80,11 +78,23 @@ icons/                     Icons
 - At most 6000 characters per translation; anything beyond that is truncated, and the popup says so.
 - A custom base URL (proxy or relay) needs its origin authorized separately — the permission prompt appears when you click **测试连接** — and only https is supported.
 
+## Development
+
+```sh
+node scripts/build-extension-i18n.mjs
+node scripts/build-extension-i18n.mjs --check
+bash test/run.sh
+```
+
+`extension-i18n/` contains the extension catalogs and language registry. Native Chrome `_locales/` catalogs and `src/lib/messages.js` are generated files. The website in `docs/` has its own independent build in `i18n/`.
+
+Catalog generation tools are development-only; the shipped extension does not download a model or contact a translation service to localize its interface.
+
 ## License
 
 Released under the [GNU General Public License v3.0](LICENSE).
 
-    AI Selection Translator — a Chrome extension that translates selected text into Chinese with an LLM
+    AI Selection Translator — a Chrome extension that translates selected text into your chosen language
     Copyright (C) 2026  Haibo
 
     This program is free software: you can redistribute it and/or modify

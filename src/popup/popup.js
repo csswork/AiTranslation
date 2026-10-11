@@ -1,4 +1,6 @@
-(() => {
+(async () => {
+  await AITrI18n.ready;
+  const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
   const el = {
     provider: document.getElementById('provider'),
@@ -25,13 +27,15 @@
     );
     const provider = S.resolveProvider(settings);
     el.model.textContent = provider.model;
-    el.targetName.textContent = S.targetMenu(settings);
+    el.targetName.textContent = t('选中文字，右键 → $1', [t('翻译成$1', [S.targetMenu(settings)])]);
     const configured = Boolean(provider.apiKey);
-    el.keyState.textContent = configured ? '已配置' : '未配置';
+    el.keyState.textContent = configured ? t("已配置") : t("未配置");
     el.keyState.className = `state ${configured ? 'ok' : 'warn'}`;
     // 视频字幕默认关闭：没打开时连入口都不显示
     el.video.hidden = !settings.videoEnabled;
   }
+
+  AITrI18n.onChange(() => render());
 
   el.provider.addEventListener('change', async () => {
     settings = await S.patchSettings({ provider: el.provider.value });

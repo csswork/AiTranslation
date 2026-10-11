@@ -6,7 +6,9 @@
  *
  * 和翻译面板一样直接在本页调接口，不经过 service worker。
  */
-(() => {
+(async () => {
+  await AITrI18n.ready;
+  const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
   const P = globalThis.AITrProviders;
   const L = globalThis.AITrLang;
@@ -23,6 +25,7 @@
 
   const $ = (id) => document.getElementById(id);
   const el = {
+    target: $('target'),
     provider: $('provider'), model: $('model'), models: $('visionModels'),
     mode: $('mode'), scale: $('scale'), order: $('order'), status: $('status'), run: $('run'),
     stage: $('stage'), drop: $('drop'), file: $('file'), url: $('url'),
@@ -49,13 +52,13 @@
 
   function showError(message, action, raw) {
     el.error.hidden = false;
-    el.errorText.textContent = message || '出错了';
+    el.errorText.textContent = message || t("出错了");
     el.error.querySelectorAll('button').forEach((n) => n.remove());
     if (action === 'open-options') {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'btn ghost small';
-      b.textContent = '打开设置';
+      b.textContent = t("打开设置");
       b.addEventListener('click', () => chrome.runtime.openOptionsPage());
       el.error.appendChild(b);
     }
@@ -74,7 +77,7 @@
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(String(reader.result));
-      reader.onerror = () => reject(new Error('读取文件失败'));
+      reader.onerror = () => reject(new Error(t("读取文件失败")));
       reader.readAsDataURL(file);
     });
 
@@ -85,7 +88,7 @@
       // 读不到就退回「把网址交给接口自己去取」。
       img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('图片加载失败'));
+      img.onerror = () => reject(new Error(t("图片加载失败")));
       img.src = src;
     });
 
@@ -117,11 +120,18 @@
     }
   }
 
+  let imageLoad = 0;
   async function useImage(src, label) {
+    const token = ++imageLoad;
+    controller?.abort();
+    controller = null;
+    lastResult = null;
+    el.target.disabled = el.provider.disabled = el.model.disabled = false;
     clearError();
-    setStatus('正在载入图片…', true);
+    setStatus(t("正在载入图片…"), true);
     try {
       const img = await loadImage(src);
+      if (token !== imageLoad) return;
       const prepared = prepare(img, src);
       image = { displaySrc: src, ...prepared };
       // 坐标是相对值，显示一律用原图，不用送检那份缩过的
@@ -141,18 +151,21 @@
       const note = [
         label,
         `${img.naturalWidth}×${img.naturalHeight}`,
-        prepared.resized ? `送检缩至 ${prepared.size.width}×${prepared.size.height}` : '',
-        prepared.byUrl ? '跨域，改由接口按网址取图' : '',
+        prepared.resized ? t("送检缩至 $1×$2", [prepared.size.width, prepared.size.height]) : '',
+        prepared.byUrl ? t("跨域，改由接口按网址取图") : '',
       ].filter(Boolean);
       el.imageNote.textContent = note.join(' · ');
       setStatus('');
     } catch (err) {
+      if (token !== imageLoad) return;
       setStatus('');
       showError(String(err?.message || err));
     }
   }
 
   function reset() {
+    imageLoad += 1;
+    el.target.disabled = el.provider.disabled = el.model.disabled = false;
     image = null;
     blocks = [];
     lastResult = null;
@@ -198,6 +211,7 @@
         const fill = document.createElement('div');
         fill.className = 'fill';
         fill.textContent = item.translation || item.text;
+        fill.dir = 'auto';
         // 小框放不下时会裁切，鼠标悬停能看到完整内容
         node.title = item.translation || item.text;
         node.appendChild(fill);
@@ -219,17 +233,19 @@
         const src = document.createElement('div');
         src.className = 'block-src';
         src.textContent = item.text;
+        src.dir = 'auto';
         row.appendChild(src);
         if (item.translation) {
           const dst = document.createElement('div');
           dst.className = 'block-dst';
           dst.textContent = item.translation;
+          dst.dir = 'auto';
           row.appendChild(dst);
         }
         if (!item.box) {
           const note = document.createElement('div');
           note.className = 'block-note';
-          note.textContent = '模型没给这一段的坐标';
+          note.textContent = t("模型没给这一段的坐标");
           row.appendChild(note);
         }
         row.addEventListener('mouseenter', () => highlight(index, true));
@@ -291,22 +307,27 @@
 
   /* -------------------------------------------------------------- 主流程 */
 
-  async function run() {
+  async function run(reuse = false) {
     if (!image) return;
     controller?.abort();
     controller = new AbortController();
     const { signal } = controller;
+    const requestSettings = S.normalize({ ...settings, target: el.target.value });
+    const requestImage = image;
+    el.target.disabled = true;
+    el.provider.disabled = true;
+    el.model.disabled = true;
 
     clearError();
     el.run.disabled = true;
     const started = Date.now();
 
     try {
-      setStatus('正在识别图中文字…', true);
-      const result = await P.readImageText({
+      setStatus(t("正在识别图中文字…"), true);
+      const result = reuse && lastResult ? lastResult : await P.readImageText({
         image: image.sendSrc,
         imageSize: image.size,
-        settings,
+        settings: requestSettings,
         model: el.model.value.trim() || undefined,
         order: el.order.value,
         signal,
@@ -318,11 +339,11 @@
       el.rawWrap.hidden = false;
       const withBox = result.blocks.filter((b) => b.box).length;
       el.meta.textContent =
-        `识别 ${result.blocks.length} 段，${withBox} 段带坐标 · 坐标制式 ${result.scale.x}×${result.scale.y}`;
+        t("识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4", [result.blocks.length, withBox, result.scale.x, result.scale.y]);
 
       if (!result.blocks.length) {
         renderBlocks([]);
-        setStatus('图中没有识别到文字');
+        setStatus(t("图中没有识别到文字"));
         return;
       }
 
@@ -346,14 +367,14 @@
       renderBlocks(tagSkipped(result.blocks, new Map(translatable.map((b) => [b, '']))));
 
       if (!translatable.length) {
-        setStatus(`识别到 ${result.blocks.length} 段，都无需翻译`);
+        setStatus(t("识别到 $1 段，都无需翻译", [result.blocks.length]));
         return;
       }
 
-      setStatus(`正在翻译 ${translatable.length} 段…`, true);
+      setStatus(t("正在翻译 $1 段…", [translatable.length]), true);
       const translations = await P.translateBatch({
         texts: translatable.map((b) => b.text),
-        settings,
+        settings: requestSettings,
         signal,
       });
       if (signal.aborted) return;
@@ -363,15 +384,20 @@
       renderBlocks(tagged);
       // 列表里不显示被跳过的条目，所以在状态里把数量说清楚
       const hidden = tagged.filter((b) => b.skipped || b.sameAsSource).length;
-      const tail = hidden ? `，隐藏 ${hidden} 段无需翻译的` : '';
-      setStatus(`完成${tail} · 用时 ${((Date.now() - started) / 1000).toFixed(1)}s`);
+      const tail = hidden ? t("，隐藏 $1 段无需翻译的", [hidden]) : '';
+      setStatus(t("完成$1 · 用时 $2s", [tail, ((Date.now() - started) / 1000).toFixed(1)]));
     } catch (err) {
       if (signal.aborted || err?.name === 'AbortError') return;
       setStatus('');
       showError(String(err?.message || err), err?.action, err?.raw);
     } finally {
-      if (controller?.signal === signal) controller = null;
-      el.run.disabled = !image;
+      if (controller?.signal === signal && image === requestImage) {
+        controller = null;
+        el.target.disabled = false;
+        el.provider.disabled = false;
+        el.model.disabled = false;
+        el.run.disabled = !image;
+      }
     }
   }
 
@@ -409,7 +435,7 @@
       const file = item.getAsFile();
       if (file) {
         event.preventDefault();
-        await useImage(await readFile(file), '剪贴板图片');
+        await useImage(await readFile(file), t("剪贴板图片"));
       }
       return;
     }
@@ -429,7 +455,10 @@
   });
 
   el.clear.addEventListener('click', reset);
-  el.run.addEventListener('click', run);
+  el.run.addEventListener('click', () => run());
+  el.target.addEventListener('change', () => {
+    if (lastResult) run(true);
+  });
   el.mode.addEventListener('change', () => {
     el.overlay.className = `overlay mode-${el.mode.value}`;
     requestAnimationFrame(fitAll);
@@ -455,7 +484,7 @@
     const order = el.order.value;
     blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale, order) }));
     renderBlocks(blocks);
-    el.meta.textContent = `${blocks.length} 段 · 制式 ${scale.x}×${scale.y} · 顺序 ${order}`;
+    el.meta.textContent = t("$1 段 · 制式 $2×$3 · 顺序 $4", [blocks.length, scale.x, scale.y, order]);
   }
 
   // 自动判定偶尔会错（模型坐标带毛刺、或顺序与提示词不一致时）
@@ -470,9 +499,9 @@
     } catch {
       ok = false;
     }
-    el.copy.textContent = ok ? '已复制' : '复制失败';
+    el.copy.textContent = ok ? t("已复制") : t("复制失败");
     setTimeout(() => {
-      el.copy.textContent = '复制译文';
+      el.copy.textContent = t("复制译文");
     }, 1400);
   });
   el.settings.addEventListener('click', () => chrome.runtime.openOptionsPage());
@@ -487,7 +516,7 @@
       })
     );
     el.model.value = list[0] || '';
-    el.model.placeholder = list[0] || '支持视觉的模型名';
+    el.model.placeholder = list[0] || t("支持视觉的模型名");
   }
 
   el.provider.addEventListener('change', async () => {
@@ -499,6 +528,12 @@
 
   (async () => {
     settings = await S.loadSettings();
+    el.target.replaceChildren(...S.targetList().map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id; option.textContent = item.label;
+      option.selected = item.id === settings.target;
+      return option;
+    }));
     el.provider.replaceChildren(
       ...S.providerList().map((item) => {
         const option = document.createElement('option');

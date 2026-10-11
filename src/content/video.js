@@ -7,6 +7,7 @@
  * 连接一断（页面跳走、标签页关闭、用户点关闭），offscreen 那边就停止截取。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   if (window.__aiTranslationVideoLoaded) return;
   window.__aiTranslationVideoLoaded = true;
 
@@ -135,6 +136,7 @@
       <div class="status"><span class="dot"></span><span class="label"></span><button class="act" type="button" hidden>去设置</button></div>
       <button class="close" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
     root.append(style, box);
+    AITrI18n.localize(root);
     (document.body || document.documentElement).appendChild(host);
 
     ui = {
@@ -164,6 +166,7 @@
   const signature = () => `${isFresh()}|${noticeOn()}`;
 
   function fill(el, text) {
+    el.dir = 'auto';
     el.textContent = text;
     el.hidden = !text;
   }
@@ -196,7 +199,7 @@
     ui.box.classList.toggle('has-status', !ui.status.hidden);
     ui.status.className = `status ${state.error ? 'error' : notice ? 'notice' : state.phase}`;
     ui.label.textContent =
-      state.error || notice || (state.phase === 'listening' ? `正在听${state.langLabel}…` : '正在连接…');
+      state.error || notice || (state.phase === 'listening' ? t("正在听$1…", [state.langLabel]) : t("正在连接…"));
     ui.act.hidden = !(state.error ? state.action : notice ? state.noticeAction : null);
   }
 
@@ -224,6 +227,7 @@
   }
 
   function teardown() {
+    state?.controller.abort();
     cancelAnimationFrame(raf);
     ui?.host.remove();
     ui = null;
@@ -242,13 +246,15 @@
     teardown();
   }
 
-  function open({ srcUrl, langLabel, translate = false }) {
+  function open({ srcUrl, langLabel, translate = false, targetId, providerId }) {
     close(); // 同一个页面只保留一路
     video = findVideo(srcUrl);
     state = {
+      controller: new AbortController(),
       phase: 'connecting',
       langLabel: langLabel || '',
       translate: Boolean(translate),
+      targetId, providerId,
       entries: [], // 已提交的行：{ text, tr }
       partial: '',
       activeAt: 0,
@@ -266,7 +272,7 @@
   /** 翻译出问题时退回只显示原文。字幕不停，只提示一下。 */
   function stopTranslating(session, message, action = null) {
     session.translate = false;
-    session.notice = `${message}，先只显示原文`;
+    session.notice = t("$1，先只显示原文", [message]);
     session.noticeAction = action;
     session.noticeAt = Date.now();
   }
@@ -277,7 +283,7 @@
     const context = session.entries.slice(Math.max(0, index - 2), index).map((item) => item.text);
     let reply = null;
     try {
-      reply = await chrome.runtime.sendMessage({ type: 'translate-caption', text: entry.text, context });
+      reply = await AITrRequests.request({ type: 'translate-caption', text: entry.text, context, targetId: session.targetId, providerId: session.providerId }, { signal: session.controller.signal });
     } catch {
       /* 扩展刚更新时上下文会失效，按失败处理 */
     }
@@ -288,16 +294,16 @@
       session.activeAt = Date.now();
     } else if (reply?.action === 'open-options') {
       // 没配 Key、额度用完之类：后面每一行都会一样失败，不再请求
-      stopTranslating(session, reply.error || '翻译不可用', 'open-options');
+      stopTranslating(session, reply.error || t("翻译不可用"), 'open-options');
     } else if ((session.fails += 1) >= MAX_FAILS) {
-      stopTranslating(session, `字幕翻译连续失败（${reply?.error || '没有响应'}）`);
+      stopTranslating(session, t("字幕翻译连续失败（$1）", [reply?.error || t('没有响应')]));
     }
     render();
   }
 
   function fail(message, action = null) {
     if (!state) return;
-    state.error = message || '视频字幕出错';
+    state.error = message || t("视频字幕出错");
     state.action = action;
     render();
   }
@@ -342,7 +348,7 @@
     try {
       current = chrome.runtime.connect({ name: PORT_NAME });
     } catch {
-      fail('扩展已更新，请刷新页面后再试');
+      fail(t("扩展已更新，请刷新页面后再试"));
       return;
     }
     port = current;
@@ -353,7 +359,7 @@
       port = null;
       if (!state || state.error) return; // 错误留着给用户看，由用户关闭
       if (state.phase === 'connecting') {
-        fail('没有连上识别服务，再试一次');
+        fail(t("没有连上识别服务，再试一次"));
         return;
       }
       teardown(); // 后台让停的（再点一次菜单）

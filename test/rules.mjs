@@ -1,3 +1,4 @@
+import { installExtensionFixture } from './extension-fixture.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -5,6 +6,7 @@ const store = {};
 globalThis.chrome = { storage: { local: {
   get: async (k) => (k in store ? { [k]: store[k] } : {}),
   set: async (o) => Object.assign(store, o) }}};
+installExtensionFixture(chrome);
 new Function(fs.readFileSync(`${ROOT}/src/lib/rules.js`, 'utf8'))();
 const R = globalThis.AITrRules;
 

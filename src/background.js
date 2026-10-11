@@ -1,9 +1,14 @@
 /**
  * Service worker：管右键菜单的显隐、发起翻译、把结果流式推给页面，以及开关视频字幕。
  */
+import './lib/languages.js';
+import './lib/messages.js';
+import './lib/i18n.js';
 import './lib/lang.js';
 import './lib/settings.js';
 import './lib/providers.js';
+
+const t = (...args) => AITrI18n.t(...args);
 
 const MENU_ID = 'ai-translate-selection';
 const ELEMENT_MENU_ID = 'ai-translate-element';
@@ -14,6 +19,11 @@ const VIDEO_FILE = 'src/content/video.js';
 const OFFSCREEN_URL = 'src/offscreen/offscreen.html';
 // 必须与 manifest 的 content_scripts 保持一致
 const CONTENT_FILES = [
+  'src/lib/languages.js',
+  'src/lib/messages.js',
+  'src/lib/i18n.js',
+  'src/lib/settings.js',
+  'src/lib/requests.js',
   'src/lib/lang.js',
   'src/lib/rules.js',
   'src/lib/selector.js',
@@ -30,7 +40,7 @@ const selections = new Map();
 
 async function menuTitle() {
   const settings = await AITrSettings.loadSettings();
-  return `翻译成${AITrSettings.targetMenu(settings)}`;
+  return t("翻译成$1", [AITrSettings.targetMenu(settings)]);
 }
 
 /**
@@ -44,8 +54,10 @@ function createMenu() {
   menuTask = menuTask.catch(() => {}).then(async () => {
     // 标题先算好：removeAll 与 create 之间不能再有 await，
     // 否则又给别的调用留出插进来的空隙
+    await AITrI18n.ready;
+    await AITrSettings.migrateSettings();
     const settings = await AITrSettings.loadSettings();
-    const title = `翻译成${AITrSettings.targetMenu(settings)}`;
+    const title = t("翻译成$1", [AITrSettings.targetMenu(settings)]);
     await chrome.contextMenus.removeAll();
     const created = [];
     const create = (props) =>
@@ -53,7 +65,7 @@ function createMenu() {
         chrome.contextMenus.create(props, () => {
           // 必须读一次 lastError，否则会以 "Unchecked runtime.lastError" 冒到控制台
           const error = chrome.runtime.lastError;
-          if (error) console.warn('[AI 划词翻译] 创建右键菜单失败：', props.id, error.message);
+          if (error) console.warn("[AI Translator] Failed to create context menu:", props.id, error.message);
           else created.push(props.id);
           resolve();
         });
@@ -73,7 +85,7 @@ function createMenu() {
     // 而且不依赖内容脚本上报，没有时序问题。
     await create({
       id: ELEMENT_MENU_ID,
-      title: '为这个区域添加翻译按钮',
+      title: t("为这个区域添加翻译按钮"),
       // 只留 'page'。'page' 的含义是「点击处不是链接/图片/视频/音频」，
       // 所以右键图片时这一项一定不出现——图片被 <a> 包着也一样，
       // 那种情况上下文同时是 image 和 link，留着 'link' 就会撞车。
@@ -84,7 +96,7 @@ function createMenu() {
     });
     await create({
       id: IMAGE_MENU_ID,
-      title: '翻译图片里的文字',
+      title: t("翻译图片里的文字"),
       contexts: ['image'],
       // 识图只有 LLM 平台能做，一开始就按当前平台决定
       visible: AITrSettings.supportsVision(settings.provider),
@@ -95,12 +107,12 @@ function createMenu() {
     if (settings.videoEnabled) {
       await create({
         id: VIDEO_MENU_ID,
-        title: '视频实时字幕（实验）',
+        title: t("视频实时字幕（实验）"),
         contexts: ['video'],
         visible: true,
       });
     }
-    console.info('[AI 划词翻译] 右键菜单已就绪：', created.join(' + ') || '（无）');
+    console.info("[AI Translator] Context menu ready:", created.join(' + ') || t("（无）"));
   });
   return menuTask;
 }
@@ -110,13 +122,14 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') chrome.runtime.openOptionsPage();
 });
 chrome.runtime.onStartup.addListener(createMenu);
+AITrI18n.onChange(createMenu);
 
 // 光靠上面两个事件不够：重新加载已解压的扩展时它们未必触发，
 // 而右键菜单是持久化的——旧菜单会留着，于是新增的菜单项永远建不出来。
 // createMenu 是 removeAll + create 且已串行化，每次 service worker 启动跑一次是安全的。
 createMenu();
 
-/** 选中的是中文（或没有可翻译的字母）时把菜单藏起来。 */
+/** 没有可翻译的文字时把菜单藏起来；任何语言都允许手动翻译。 */
 async function updateMenuVisibility(text) {
   const visible = AITrLang.shouldOffer(text);
   try {
@@ -182,7 +195,7 @@ async function ensureContentScript(tabId) {
       files: CONTENT_FILES,
     });
   } catch (err) {
-    console.warn('[AI 划词翻译] 无法在该页面注入脚本：', err?.message);
+    console.warn("[AI Translator] Could not inject scripts:", err?.message);
     return false;
   }
   return ping(tabId);
@@ -200,17 +213,24 @@ function pickText(cached, fromMenu) {
   return String(fromMenu || '').trim();
 }
 
-async function startTranslation({ tabId, text, providerId }) {
+const translationRuns = new Map();
+async function startTranslation({ tabId, text, providerId, targetId }) {
   if (!tabId || !text) return;
+  translationRuns.get(tabId)?.abort();
+  const controller = new AbortController();
+  translationRuns.set(tabId, controller);
 
-  if (providerId) await AITrSettings.patchSettings({ provider: providerId });
-  const settings = await AITrSettings.loadSettings();
+  const stored = await AITrSettings.loadSettings();
+  const settings = AITrSettings.normalize({ ...stored,
+    provider: AITrSettings.PROVIDERS[providerId] ? providerId : stored.provider,
+    target: AITrSettings.TARGETS[targetId] ? targetId : stored.target,
+  });
   const provider = AITrSettings.resolveProvider(settings);
 
   const truncated = text.length > AITrLang.MAX_TEXT_LENGTH;
   const payload = truncated ? text.slice(0, AITrLang.MAX_TEXT_LENGTH) : text;
 
-  if (!(await ensureContentScript(tabId))) return;
+  if (!(await ensureContentScript(tabId)) || controller.signal.aborted) return;
 
   let port;
   try {
@@ -219,11 +239,11 @@ async function startTranslation({ tabId, text, providerId }) {
     return;
   }
 
-  const controller = new AbortController();
   let closed = false;
   const stop = () => {
     closed = true;
     controller.abort();
+    if (translationRuns.get(tabId) === controller) translationRuns.delete(tabId);
   };
   port.onDisconnect.addListener(stop);
   port.onMessage.addListener((message) => {
@@ -244,6 +264,8 @@ async function startTranslation({ tabId, text, providerId }) {
     text: payload,
     truncated,
     target: AITrSettings.targetMenu(settings),
+    targetId: settings.target,
+    targets: AITrSettings.targetList(),
     provider: { id: provider.id, label: provider.label, model: provider.model },
     providers: AITrSettings.providerList(),
     showOriginal: settings.showOriginal,
@@ -258,7 +280,7 @@ async function startTranslation({ tabId, text, providerId }) {
       post({ type: 'delta', chunk });
     }
     if (!received) {
-      post({ type: 'error', message: '模型没有返回任何内容，重试或换个模型试试' });
+      post({ type: 'error', message: t("模型没有返回任何内容，重试或换个模型试试") });
       return;
     }
     post({ type: 'done', elapsed: Date.now() - startedAt });
@@ -266,7 +288,7 @@ async function startTranslation({ tabId, text, providerId }) {
     if (closed || controller.signal.aborted || err?.name === 'AbortError') return;
     post({
       type: 'error',
-      message: String(err?.message || err) || '翻译失败',
+      message: String(err?.message || err) || t("翻译失败"),
       action: err?.action || null,
     });
   }
@@ -294,7 +316,7 @@ async function ensureOffscreen() {
     .createDocument({
       url: OFFSCREEN_URL,
       reasons: ['USER_MEDIA'],
-      justification: '截取标签页声音，在本机做语音识别，生成视频字幕',
+      justification: t("截取标签页声音，在本机做语音识别，生成视频字幕"),
     })
     .finally(() => {
       offscreenTask = null;
@@ -326,10 +348,10 @@ async function stopAllVideoCaptions() {
 function captureErrorText(err) {
   const raw = String(err?.message || err);
   if (/not been invoked/i.test(raw)) {
-    return '没有拿到截取这个标签页的授权，请从视频的右键菜单或扩展图标重新打开';
+    return t("没有拿到截取这个标签页的授权，请从视频的右键菜单或扩展图标重新打开");
   }
-  if (/active stream/i.test(raw)) return '这个标签页的声音正被别的程序截取（比如录屏或其他扩展）';
-  return `无法截取这个标签页的声音：${raw}`;
+  if (/active stream/i.test(raw)) return t("这个标签页的声音正被别的程序截取（比如录屏或其他扩展）");
+  return t("无法截取这个标签页的声音：$1", [raw]);
 }
 
 /**
@@ -347,26 +369,26 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   // 总开关关着时入口本来就不该出现，这里再兜一层，挡住旧页面里残留的入口
   if (!settings.videoEnabled) return;
   try {
-    await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: [VIDEO_FILE] });
+    await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: ['src/lib/languages.js', 'src/lib/messages.js', 'src/lib/i18n.js', 'src/lib/requests.js', VIDEO_FILE] });
   } catch (err) {
-    console.warn('[AI 划词翻译] 无法在该页面显示视频字幕：', err?.message);
+    console.warn("[AI Translator] Could not show captions:", err?.message);
     return;
   }
 
   const lang = AITrSettings.videoLang(settings);
   const cloud = settings.videoCloud;
-  const langLabel = cloud ? `${lang.label}（云端识别）` : lang.label;
+  const langLabel = cloud ? t("$1（云端识别）", [lang.label]) : lang.label;
   const show = (message) =>
     chrome.tabs
       .sendMessage(tabId, { srcUrl, langLabel, langName: lang.label, ...message }, { frameId })
       .catch((err) => {
-        console.warn('[AI 划词翻译] 视频字幕消息发送失败：', err?.message);
+        console.warn("[AI Translator] Caption message failed:", err?.message);
       });
 
   try {
     await ensureOffscreen();
   } catch (err) {
-    await show({ type: 'video-error', message: `无法启动语音识别：${err?.message || err}` });
+    await show({ type: 'video-error', message: t("无法启动语音识别：$1", [err?.message || err]) });
     return;
   }
   // 流 ID 放到最后拿：它有有效期，拿到后要尽快交给 offscreen 去用
@@ -374,7 +396,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   try {
     streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   } catch (err) {
-    console.warn('[AI 划词翻译] 截取标签页声音失败：', err?.message);
+    console.warn("[AI Translator] Tab capture failed:", err?.message);
     await show({ type: 'video-error', message: captureErrorText(err) });
     return;
   }
@@ -384,6 +406,8 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     lang: lang.id,
     cloud,
     translate: settings.videoTranslate,
+    targetId: settings.target,
+    providerId: settings.provider,
   });
 }
 
@@ -401,7 +425,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         { frameId: info.frameId ?? 0 }
       );
     } catch (err) {
-      console.warn('[AI 划词翻译] 无法在该页面翻译图片：', err?.message);
+      console.warn("[AI Translator] Could not translate image:", err?.message);
     }
     return;
   }
@@ -409,9 +433,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (!(await ensureContentScript(tab.id))) return;
     try {
       const reply = await chrome.tabs.sendMessage(tab.id, { type: 'add-element-rule' }, { frameId: 0 });
-      if (!reply?.ok) console.warn('[AI 划词翻译] 添加元素规则失败：', reply?.error);
+      if (!reply?.ok) console.warn("[AI Translator] Could not add region rule:", reply?.error);
     } catch (err) {
-      console.warn('[AI 划词翻译] 添加元素规则失败：', err?.message);
+      console.warn("[AI Translator] Could not add region rule:", err?.message);
     }
     return;
   }
@@ -424,8 +448,50 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 /* ---------------------------------------------------------------- 消息 */
 
+// One port owns one request. Closing an overlay or replacing an image aborts the fetch.
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name !== 'ai-translation-request') return;
+  const controller = new AbortController();
+  let started = false;
+  port.onDisconnect.addListener(() => controller.abort());
+  port.onMessage.addListener(async (message) => {
+    if (started) return;
+    started = true;
+    let reply;
+    try {
+      const stored = await AITrSettings.loadSettings();
+      const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
+      const options = { settings, signal: controller.signal };
+      if (message.type === 'read-image') {
+        const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, model: AITrSettings.visionModel(settings.provider) });
+        reply = { ok: true, blocks: result.blocks };
+      } else if (message.type === 'translate-batch') {
+        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts }) };
+      } else if (message.type === 'translate-caption') {
+        const start = Date.now();
+        const text = await AITrProviders.translateCaption({ ...options, text: message.text, context: message.context });
+        reply = { ok: true, text, elapsed: Date.now() - start };
+      } else { throw new Error('Unknown translation request'); }
+    } catch (error) {
+      reply = { ok: false, error: String(error?.message || error), action: error?.action || null };
+    }
+    if (!controller.signal.aborted) {
+      try { port.postMessage(reply); } catch { controller.abort(); }
+    }
+  });
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const type = message?.type;
+  if (type === 'get-ui-messages') {
+    AITrI18n.ready.then(() => sendResponse(AITrI18n.snapshot()));
+    return true;
+  }
+  if (type === 'set-default-target') {
+    if (!AITrSettings.TARGETS[message.targetId]) { sendResponse({ ok: false }); return false; }
+    AITrSettings.patchSettings({ target: message.targetId }).then(() => sendResponse({ ok: true }));
+    return true;
+  }
 
   if (type === 'ping') {
     sendResponse({ ok: true });
@@ -449,7 +515,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'read-image') {
     (async () => {
       try {
-        const settings = await AITrSettings.loadSettings();
+        const stored = await AITrSettings.loadSettings();
+        const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider });
         const result = await AITrProviders.readImageText({
           image: message.image,
           imageSize: message.imageSize,
@@ -468,7 +535,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'translate-batch') {
     (async () => {
       try {
-        const settings = await AITrSettings.loadSettings();
+        const stored = await AITrSettings.loadSettings();
+        const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
         const texts = await AITrProviders.translateBatch({ texts: message.texts, settings });
         sendResponse({ ok: true, texts });
       } catch (err) {
@@ -483,7 +551,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     (async () => {
       const startedAt = Date.now();
       try {
-        const settings = await AITrSettings.loadSettings();
+        const stored = await AITrSettings.loadSettings();
+        const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
         const text = await AITrProviders.translateCaption({
           text: message.text,
           context: message.context,
@@ -492,7 +561,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const elapsed = Date.now() - startedAt;
         // 翻译延迟只能用真实 Key 量，留一条日志方便对照
         const provider = AITrSettings.resolveProvider(settings);
-        console.info(`[AI 划词翻译] 字幕翻译 ${elapsed}ms（${provider.label} ${provider.model}）`);
+        console.info(t("[AI 划词翻译] 字幕翻译 $1ms（$2 $3）", [elapsed, provider.label, provider.model]));
         sendResponse({ ok: true, text, elapsed });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null });
@@ -506,6 +575,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       tabId: sender.tab?.id,
       text: message.text,
       providerId: message.providerId,
+      targetId: message.targetId,
     });
     return false;
   }
@@ -542,6 +612,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 /* 标签页关掉后清掉它的选区缓存 */
 chrome.tabs.onRemoved.addListener((tabId) => {
+  translationRuns.get(tabId)?.abort();
+  translationRuns.delete(tabId);
   for (const key of selections.keys()) {
     if (key.startsWith(`${tabId}:`)) selections.delete(key);
   }
@@ -567,14 +639,14 @@ async function selectionForTab(tabId) {
 }
 
 /** 快捷键没生效时，这里是唯一的线索来源，所以每个提前退出都要说明原因。 */
-const shortcutLog = (reason) => console.info(`[AI 划词翻译] 快捷键未触发翻译：${reason}`);
+const shortcutLog = (reason) => console.info(t("[AI 划词翻译] 快捷键未触发翻译：$1", [reason]));
 
 async function onShortcut(command, tab) {
   if (command !== 'translate-selection') return;
 
   const settings = await AITrSettings.loadSettings();
   if (!settings.shortcut) {
-    shortcutLog('设置里已关闭「快捷键翻译」');
+    shortcutLog(t("设置里已关闭「快捷键翻译」"));
     return;
   }
 
@@ -587,24 +659,24 @@ async function onShortcut(command, tab) {
     tabId = active?.id;
   }
   if (tabId == null) {
-    shortcutLog('拿不到当前标签页');
+    shortcutLog(t("拿不到当前标签页"));
     return;
   }
 
   // 先确保页面脚本在位，否则问不到选区（刚重载扩展、或标签页是旧的）
   if (!(await ensureContentScript(tabId))) {
-    shortcutLog('这个页面不允许注入脚本（例如 chrome:// 开头的页面）');
+    shortcutLog(t("这个页面不允许注入脚本（例如 chrome:// 开头的页面）"));
     return;
   }
 
   const text = await selectionForTab(tabId);
   if (!text) {
-    shortcutLog('当前没有选中任何文字');
+    shortcutLog(t("当前没有选中任何文字"));
     return;
   }
   // 与右键菜单同一套规则
   if (!AITrLang.shouldOffer(text)) {
-    shortcutLog('选中的内容本身是中文，或没有可翻译的文字');
+    shortcutLog(t("选中的内容没有可翻译的文字"));
     return;
   }
 
@@ -619,5 +691,5 @@ if (chrome.commands?.onCommand) {
     onShortcut(command, tab).catch((err) => shortcutLog(String(err?.message || err)));
   });
 } else {
-  console.warn('[AI 划词翻译] chrome.commands 不可用，快捷键功能已跳过；请重新加载扩展。');
+  console.warn("[AI Translator] chrome.commands is unavailable. Reload the extension to enable keyboard shortcuts.");
 }

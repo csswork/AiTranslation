@@ -1,3 +1,4 @@
+import { installExtensionFixture, deepLLanguages } from './extension-fixture.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -6,12 +7,13 @@ globalThis.chrome = { storage: { local: {
   get: async (k) => (k in store ? { [k]: store[k] } : {}),
   set: async (o) => Object.assign(store, o) }}};
 const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
-load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
+installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
 const { AITrSettings: S, AITrProviders: P } = globalThis;
 
 let cap;
 const reply = (body, status = 200) => {
   globalThis.fetch = async (url, init) => {
+    if (url.includes('/v3/languages')) return { ok: true, json: async () => deepLLanguages };
     cap = { url, init, body: init.body ? JSON.parse(init.body) : null };
     return { ok: status < 400, status, json: async () => body };
   };
@@ -44,7 +46,7 @@ assert.equal(cap.body.stream, false, '字幕一行很短，不走流式');
 const [system, user] = cap.body.messages;
 assert.match(system.content, /实时字幕/);
 assert.match(system.content, /只翻译「当前行」/);
-assert.match(system.content, /简体中文/, '目标语言沿用设置');
+assert.match(system.content, /Simplified Chinese/, '目标语言沿用设置');
 assert.equal(user.content,
   "前文：\nwe tried the wildest food in Yunnan\n\n当前行：\nthis is one of the weirdest things I've",
   '前文与当前行分开标注，空的前文行被丢掉');

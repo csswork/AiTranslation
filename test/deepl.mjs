@@ -1,3 +1,4 @@
+import { installExtensionFixture, deepLLanguages } from './extension-fixture.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -6,7 +7,7 @@ globalThis.chrome = { storage: { local: {
   get: async (k) => (k in store ? { [k]: store[k] } : {}),
   set: async (o) => Object.assign(store, o) }}};
 const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
-load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
+installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
 const { AITrSettings: S, AITrProviders: P } = globalThis;
 
 const base = S.normalize(null);
@@ -16,6 +17,7 @@ const withKey = (key) => S.saveSettings({ ...base, provider: 'deepl',
 let cap;
 const reply = (body, status = 200) => {
   globalThis.fetch = async (url, init) => {
+    if (url.includes('/v3/languages')) return { ok: true, json: async () => deepLLanguages };
     cap = { url, init, body: init.body ? JSON.parse(init.body) : null };
     return { ok: status < 400, status, json: async () => body };
   };
@@ -94,6 +96,7 @@ console.log('✓ 识图被明确拒绝并指出替代方案');
 const llm = await S.saveSettings({ ...base, provider: 'deepseek', stream: false,
   deepseek: { apiKey: 'sk-test', model: '', baseUrl: '' } });
 globalThis.fetch = async (url, init) => {
+    if (url.includes('/v3/languages')) return { ok: true, json: async () => deepLLanguages };
   cap = { url, body: JSON.parse(init.body) };
   return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: '译文' } }] }) };
 };

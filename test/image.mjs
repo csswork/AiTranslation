@@ -1,3 +1,4 @@
+import { installExtensionFixture, deepLLanguages } from './extension-fixture.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -6,7 +7,7 @@ globalThis.chrome = { storage: { local: {
   get: async (k) => (k in store ? { [k]: store[k] } : {}),
   set: async (o) => Object.assign(store, o) }}};
 const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
-load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
+installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
 const { AITrSettings: S, AITrProviders: P } = globalThis;
 const settings = await S.saveSettings({ ...S.normalize(null),
   provider: 'deepseek', deepseek: { apiKey: 'sk-test', model: '', baseUrl: '' } });
@@ -70,6 +71,7 @@ console.log('✓ 颠倒 / 越界 / 残缺坐标都能兜住');
 let captured;
 const reply = (content) => {
   globalThis.fetch = async (url, init) => {
+    if (url.includes('/v3/languages')) return { ok: true, json: async () => deepLLanguages };
     captured = { url, body: JSON.parse(init.body) };
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content } }] }) };
   };

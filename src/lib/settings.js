@@ -2,6 +2,7 @@
  * 平台定义 + 配置读写。与 lang.js 一样，不能使用 import / export。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   /**
    * 平台分两种形态：
    *   llm —— OpenAI 兼容的对话接口。能流式、能识图、能用提示词控制译文风格。
@@ -13,7 +14,7 @@
       id: 'openai',
       label: 'ChatGPT',
       kind: 'llm',
-      hint: 'OpenAI 官方接口',
+      hint: "OpenAI 官方接口",
       defaultBaseUrl: 'https://api.openai.com/v1',
       // 翻译是高频短任务，默认用最便宜的 luna
       defaultModel: 'gpt-5.6-luna',
@@ -25,7 +26,7 @@
       id: 'deepseek',
       label: 'DeepSeek',
       kind: 'llm',
-      hint: '国内直连，价格更低',
+      hint: "国内直连，价格更低",
       // 官方文档给的 OpenAI 格式地址不带 /v1
       defaultBaseUrl: 'https://api.deepseek.com',
       defaultModel: 'deepseek-v4-flash',
@@ -37,7 +38,7 @@
       id: 'deepl',
       label: 'DeepL',
       kind: 'mt',
-      hint: '译文质量好，不用选模型',
+      hint: "译文质量好，不用选模型",
       // 免费版和付费版域名不同，但免费 key 以 :fx 结尾，
       // 所以不让用户填地址，运行时按 key 判断（见 resolveProvider）。
       defaultBaseUrl: 'https://api-free.deepl.com',
@@ -56,22 +57,7 @@
    * LLM 平台收的是自然语言描述（「简体中文」），传统翻译接口只认代码。
    * 这里的 id 与 TARGETS、以及翻译面板里的语言表用的是同一套。
    */
-  const DEEPL_CODES = {
-    'zh-Hans': 'ZH-HANS',
-    'zh-Hant': 'ZH-HANT',
-    en: 'EN-US',
-    ja: 'JA',
-    ko: 'KO',
-    fr: 'FR',
-    de: 'DE',
-    es: 'ES',
-    pt: 'PT-BR',
-    it: 'IT',
-    ru: 'RU',
-    ar: 'AR',
-    th: 'TH',
-    vi: 'VI',
-  };
+  const DEEPL_CODES = Object.fromEntries(Object.values(AITrLanguages.LANGUAGES).map((l) => [l.id, l.deepl]));
 
   /**
    * 支持图像理解的模型。识图必须用这些，普通文本模型会报错。
@@ -92,32 +78,22 @@
    * 目标语言。`menu` 用于右键菜单标题（默认即「翻译成中文」），
    * `prompt` 是喂给模型的说法。
    */
-  const TARGETS = {
-    'zh-Hans': { id: 'zh-Hans', label: '简体中文', menu: '中文', prompt: '简体中文' },
-    'zh-Hant': {
-      id: 'zh-Hant',
-      label: '繁體中文',
-      menu: '繁體中文',
-      prompt: '繁體中文（台灣常用譯法與用詞）',
-    },
-  };
+  const TARGETS = AITrLanguages.LANGUAGES;
 
   /**
    * 视频实时字幕的识别语言。设备端识别不会自己判断语种，只能让用户选。
    * id 直接用作 SpeechRecognition.lang（BCP 47）。
    */
-  const VIDEO_LANGS = {
-    'en-US': { id: 'en-US', label: '英语' },
-    'ja-JP': { id: 'ja-JP', label: '日语' },
-    'ko-KR': { id: 'ko-KR', label: '韩语' },
-    'fr-FR': { id: 'fr-FR', label: '法语' },
-    'de-DE': { id: 'de-DE', label: '德语' },
-    'es-ES': { id: 'es-ES', label: '西班牙语' },
-  };
+  const VIDEO_LANGS = Object.fromEntries(Object.values(TARGETS).map((language) => {
+    const id = ({ 'zh-Hans': 'zh-CN', 'zh-Hant': 'zh-TW', en: 'en-US', pt: 'pt-BR' })[language.id] || language.id;
+    return [id, { id, languageId: language.id }];
+  }));
 
   const DEFAULTS = {
+    schemaVersion: 2,
+    uiLanguage: 'auto',
     provider: 'openai',
-    target: 'zh-Hans',
+    target: AITrLanguages.browserTarget(),
     stream: true,
     showOriginal: true,
     floating: true, // 划词后在选区旁显示浮动按钮
@@ -137,15 +113,18 @@
   /** 把任意存储内容补齐成完整、可信的配置对象。 */
   function normalize(raw) {
     const input = raw && typeof raw === 'object' ? raw : {};
+    const legacy = input.schemaVersion !== 2 && Object.keys(input).length > 0;
     const out = {
+      schemaVersion: 2,
+      uiLanguage: TARGETS[input.uiLanguage] ? input.uiLanguage : 'auto',
       provider: PROVIDERS[input.provider] ? input.provider : DEFAULTS.provider,
-      target: TARGETS[input.target] ? input.target : DEFAULTS.target,
+      target: TARGETS[input.target] ? input.target : legacy ? 'zh-Hans' : AITrLanguages.browserTarget(),
       stream: input.stream !== false,
       showOriginal: input.showOriginal !== false,
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
       videoEnabled: input.videoEnabled === true,
-      videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : DEFAULTS.videoLang,
+      videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : Object.values(VIDEO_LANGS).find((v) => v.languageId === AITrLanguages.match(input.videoLang))?.id || DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,
     };
@@ -163,6 +142,12 @@
   async function loadSettings() {
     const stored = await chrome.storage.local.get('settings');
     return normalize(stored.settings);
+  }
+
+  async function migrateSettings() {
+    const stored = await chrome.storage.local.get('settings');
+    if (stored.settings?.schemaVersion === 2) return;
+    await saveSettings(normalize(stored.settings));
   }
 
   async function saveSettings(next) {
@@ -200,7 +185,7 @@
 
   const target = (settings) => TARGETS[settings.target] || TARGETS[DEFAULTS.target];
   const targetPrompt = (settings) => target(settings).prompt;
-  const targetMenu = (settings) => target(settings).menu;
+  const targetMenu = (settings) => AITrLanguages.label(target(settings).id);
   const providerKind = (id) => PROVIDERS[id]?.kind || 'llm';
   /** 只有 LLM 平台能识图；传统翻译接口只能文本进文本出。 */
   const supportsVision = (id) => providerKind(id) === 'llm';
@@ -211,10 +196,13 @@
   const deeplCode = (languageId) => DEEPL_CODES[languageId] || '';
 
   const providerList = () =>
-    PROVIDER_ORDER.map((id) => ({ id, label: PROVIDERS[id].label, hint: PROVIDERS[id].hint }));
-  const targetList = () => Object.values(TARGETS).map((t) => ({ id: t.id, label: t.label }));
-  const videoLang = (settings) => VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
-  const videoLangList = () => Object.values(VIDEO_LANGS);
+    PROVIDER_ORDER.map((id) => ({ id, label: PROVIDERS[id].label, hint: t(PROVIDERS[id].hint) }));
+  const targetList = () => AITrLanguages.list();
+  const videoLang = (settings) => {
+    const value = VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
+    return { ...value, label: AITrLanguages.label(value.languageId) };
+  };
+  const videoLangList = () => Object.values(VIDEO_LANGS).map((v) => ({ ...v, label: AITrLanguages.label(v.languageId) }));
 
   globalThis.AITrSettings = {
     PROVIDERS,
@@ -231,6 +219,7 @@
     DEFAULTS,
     normalize,
     loadSettings,
+    migrateSettings,
     saveSettings,
     patchSettings,
     resolveProvider,

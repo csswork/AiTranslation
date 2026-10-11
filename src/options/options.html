@@ -12,7 +12,7 @@
         <img class="mark" src="../../icons/icon128.png" alt="" />
         <div>
           <h1>AI 划词翻译</h1>
-          <p class="sub">选中非中文文字 → 右键「翻译成中文」→ 屏幕中央弹窗显示译文</p>
+          <p class="sub">选中文字，通过右键、浮动按钮或快捷键翻译成你选择的语言。</p>
         </div>
       </header>
 
@@ -24,9 +24,7 @@
 
       <section class="card" id="providerConfig">
         <h2>接口配置</h2>
-        <p class="desc">
-          API Key 只保存在本机浏览器（<code>chrome.storage.local</code>），不会同步、不会上传到任何第三方。
-        </p>
+        <p class="desc">API Key 只保存在本机，不同步；仅用于向你选择的平台鉴权。</p>
         <div class="fields">
           <label class="field">
             <span class="label">API Key</span>
@@ -62,11 +60,13 @@
 
       <section class="card">
         <h2>翻译行为</h2>
+        <p class="desc">界面语言和翻译目标语言可以分别选择。</p>
         <div class="fields">
+          <label class="field"><span class="label">界面语言</span><select id="uiLanguage"></select></label>
           <label class="field">
-            <span class="label">目标语言</span>
+            <span class="label">默认翻译目标语言</span>
             <select id="target"></select>
-            <span class="help">右键菜单会显示为「翻译成<span id="targetPreview">中文</span>」。</span>
+            <span class="help" id="targetPreview"></span>
           </label>
           <label class="switch">
             <input id="stream" type="checkbox" />
@@ -86,7 +86,7 @@
             <input id="floating" type="checkbox" />
             <span>
               <b>划词浮动按钮</b>
-              <i>选中非中文文字后，在选区旁浮出一个小按钮，点它即可翻译，比右键更快。</i>
+              <i>选中文字后，在选区旁显示翻译按钮。</i>
             </span>
           </label>
           <label class="switch">
@@ -145,7 +145,7 @@
               <input id="videoTranslate" type="checkbox" />
               <span>
                 <b>翻译字幕</b>
-                <i>每识别出一句，就翻译成<span id="videoTarget">中文</span>，显示双语字幕（每句调用一次翻译接口）。关闭后只显示原文。</i>
+                <i id="videoTarget"></i>
               </span>
             </label>
             <label class="switch">
@@ -170,6 +170,9 @@
       </footer>
     </main>
 
+    <script src="../lib/languages.js"></script>
+    <script src="../lib/messages.js"></script>
+    <script src="../lib/i18n.js"></script>
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/speech.js"></script>

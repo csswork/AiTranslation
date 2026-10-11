@@ -5,39 +5,26 @@
  *   - 直接在本页调用 AITrProviders.translate()，不经过 service worker，
  *     所以完全不影响右键翻译那条链路。
  */
-(() => {
+(async () => {
+  await AITrI18n.ready;
+  const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
   const Lang = globalThis.AITrLang;
   const P = globalThis.AITrProviders;
 
-  /** 目标语言。`prompt` 是喂给模型的说法。 */
-  const LANGUAGES = [
-    { id: 'zh-Hans', label: '简体中文', prompt: '简体中文' },
-    { id: 'zh-Hant', label: '繁體中文', prompt: '繁體中文（台灣常用譯法與用詞）' },
-    { id: 'en', label: 'English', prompt: '英语（English）' },
-    { id: 'ja', label: '日本語', prompt: '日语（日本語）' },
-    { id: 'ko', label: '한국어', prompt: '韩语（한국어）' },
-    { id: 'fr', label: 'Français', prompt: '法语（Français）' },
-    { id: 'de', label: 'Deutsch', prompt: '德语（Deutsch）' },
-    { id: 'es', label: 'Español', prompt: '西班牙语（Español）' },
-    { id: 'pt', label: 'Português', prompt: '葡萄牙语（Português）' },
-    { id: 'it', label: 'Italiano', prompt: '意大利语（Italiano）' },
-    { id: 'ru', label: 'Русский', prompt: '俄语（Русский）' },
-    { id: 'ar', label: 'العربية', prompt: '阿拉伯语（العربية）' },
-    { id: 'th', label: 'ไทย', prompt: '泰语（ไทย）' },
-    { id: 'vi', label: 'Tiếng Việt', prompt: '越南语（Tiếng Việt）' },
-  ];
+  const LANGUAGES = S.targetList();
   const AUTO = 'auto';
-  /** 独立的存储键，和 settings 那份配置互不干扰。 */
   const STORE_KEY = 'panelTarget';
 
   const byId = Object.fromEntries(LANGUAGES.map((item) => [item.id, item]));
-  const label = (id) => byId[id]?.label || id;
+  const label = (id) => AITrLanguages.label(id);
   const prompt = (id) => byId[id]?.prompt || id;
 
   const $ = (id) => document.getElementById(id);
   const el = {
     target: $('target'),
+    source: $('source'),
+    swap: $('swap'),
     provider: $('provider'),
     detect: $('detect'),
     run: $('run'),
@@ -58,7 +45,8 @@
 
   const isMac = /Mac|iPhone|iPad/i.test(navigator.userAgent);
   let settings = S.normalize(null);
-  let choice = AUTO;
+  let choice = settings.target;
+  let source = AUTO;
   let controller = null;
   let translation = '';
   let autoTimer = 0;
@@ -78,25 +66,20 @@
 
   /* ------------------------------------------------------------ 目标语言 */
 
-  /** 「自动」的含义：中文译成英文，其他语言译成用户设置里的中文变体。 */
-  const autoTarget = (text) => (Lang.analyze(text).isChinese ? 'en' : settings.target);
-
-  const effectiveTarget = (text) => (choice === AUTO ? autoTarget(text) : choice);
+  const effectiveTarget = () => choice;
 
   function renderTargetOptions() {
+    const options = () => LANGUAGES.map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id; option.textContent = label(item.id);
+      return option;
+    });
+    el.target.replaceChildren(...options());
     const auto = document.createElement('option');
-    auto.value = AUTO;
-    auto.textContent = '自动';
-    el.target.replaceChildren(
-      auto,
-      ...LANGUAGES.map((item) => {
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.textContent = item.label;
-        return option;
-      })
-    );
-    el.target.value = choice;
+    auto.value = AUTO; auto.textContent = t("自动识别");
+    el.source.replaceChildren(auto, ...options());
+    el.target.value = choice; el.source.value = source;
+    el.swap.disabled = source === AUTO;
   }
 
   /* ---------------------------------------------------------------- 状态 */
@@ -107,40 +90,35 @@
     const over = length > Lang.MAX_TEXT_LENGTH;
     el.count.textContent = length
       ? over
-        ? `${length} 字符 · 超出上限，只翻译前 ${Lang.MAX_TEXT_LENGTH} 个`
-        : `${length} 字符`
+        ? t("$1 字符 · 超出上限，只翻译前 $2 个", [length, Lang.MAX_TEXT_LENGTH])
+        : t("$1 字符", [length])
       : '';
 
-    if (!text.trim()) {
-      el.detect.textContent = '';
-    } else if (choice === AUTO) {
-      const source = Lang.analyze(text).isChinese ? '中文' : '非中文';
-      el.detect.textContent = `自动：${source} → ${label(autoTarget(text))}`;
-    } else {
-      el.detect.textContent = `译成 ${label(choice)}`;
-    }
+    el.detect.textContent = text.trim() ? t("$1 → $2", [source === AUTO ? t('自动识别') : label(source), label(choice)]) : '';
 
     el.run.disabled = !text.trim() && !controller;
   }
 
   function setBusy(busy) {
     el.out.classList.toggle('streaming', busy);
-    el.run.textContent = busy ? '停止' : '翻译';
+    el.run.textContent = busy ? t("停止") : t("翻译");
     if (!busy) el.run.append(el.shortcut);
     el.copy.disabled = busy || !translation.trim();
     el.target.disabled = busy;
+    el.source.disabled = busy;
+    el.swap.disabled = busy || source === AUTO;
     el.provider.disabled = busy;
   }
 
   function showError(message, action) {
     el.error.hidden = false;
-    el.errorText.textContent = message || '翻译失败';
+    el.errorText.textContent = message || t("翻译失败");
     el.error.querySelectorAll('button').forEach((node) => node.remove());
     if (action === 'open-options') {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'btn ghost small';
-      button.textContent = '打开设置';
+      button.textContent = t("打开设置");
       button.addEventListener('click', () => chrome.runtime.openOptionsPage());
       el.error.appendChild(button);
     }
@@ -160,10 +138,13 @@
 
     const text = raw.slice(0, Lang.MAX_TEXT_LENGTH);
     const targetId = effectiveTarget(text);
-    const provider = S.resolveProvider(settings);
+    const requestSettings = S.normalize(settings);
+    const sourceId = source === AUTO ? undefined : source;
+    const provider = S.resolveProvider(requestSettings);
 
     translation = '';
     el.out.textContent = '';
+    el.out.dir = S.TARGETS[targetId].dir;
     el.error.hidden = true;
     el.meta.textContent = `${provider.label} · ${provider.model} · ${label(targetId)}`;
     setBusy(true);
@@ -174,7 +155,8 @@
       let received = false;
       for await (const chunk of P.translate({
         text,
-        settings,
+        settings: requestSettings,
+        sourceId,
         // LLM 收自然语言描述，DeepL 收语言代码，两者都给，由平台自己取
         targetLanguage: prompt(targetId),
         targetId,
@@ -186,7 +168,7 @@
         el.out.textContent = translation;
       }
       if (!received) {
-        showError('模型没有返回任何内容，重试或换个模型试试');
+        showError(t("模型没有返回任何内容，重试或换个模型试试"));
         return;
       }
       const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
@@ -196,9 +178,11 @@
       if (signal.aborted || err?.name === 'AbortError') return;
       showError(String(err?.message || err), err?.action);
     } finally {
-      if (controller?.signal === signal) controller = null;
-      setBusy(false);
-      renderStatus();
+      if (controller?.signal === signal) {
+        controller = null;
+        setBusy(false);
+        renderStatus();
+      }
     }
   }
 
@@ -211,9 +195,9 @@
     } catch {
       ok = false;
     }
-    el.copy.textContent = ok ? '已复制' : '复制失败';
+    el.copy.textContent = ok ? t("已复制") : t("复制失败");
     setTimeout(() => {
-      el.copy.textContent = '复制';
+      el.copy.textContent = t("复制");
     }, 1400);
   }
 
@@ -263,8 +247,30 @@
 
   el.target.addEventListener('change', async () => {
     choice = el.target.value;
-    await chrome.storage.local.set({ [STORE_KEY]: choice });
+    chrome.storage.local.set({ [STORE_KEY]: choice });
+    lastSent = '';
     renderStatus();
+    if (el.input.value.trim()) run();
+  });
+
+  el.source.addEventListener('change', async () => {
+    source = el.source.value;
+    chrome.storage.local.set({ panelSource: source });
+    lastSent = '';
+    renderStatus();
+    el.swap.disabled = source === AUTO;
+    if (el.input.value.trim()) run();
+  });
+
+  el.swap.addEventListener('click', async () => {
+    if (source === AUTO || controller) return;
+    [source, choice] = [choice, source];
+    if (translation.trim()) el.input.value = translation;
+    await chrome.storage.local.set({ [STORE_KEY]: choice, panelSource: source });
+    renderTargetOptions();
+    lastSent = '';
+    renderStatus();
+    if (el.input.value.trim()) run();
   });
 
   el.provider.addEventListener('change', async () => {
@@ -273,22 +279,26 @@
     el.meta.textContent = `${provider.label} · ${provider.model}`;
   });
 
+  AITrI18n.onChange(() => { renderTargetOptions(); renderStatus(); });
+
   /* -------------------------------------------------------------- 初始化 */
 
   (async () => {
     el.shortcut.textContent = isMac ? '⌘ ↩' : 'Ctrl ↩';
     settings = await S.loadSettings();
 
-    const stored = await chrome.storage.local.get(STORE_KEY);
+    const stored = await chrome.storage.local.get([STORE_KEY, 'panelSource']);
     const saved = stored[STORE_KEY];
-    choice = saved === AUTO || byId[saved] ? saved : AUTO;
+    choice = byId[saved] ? saved : settings.target;
+    source = byId[stored.panelSource] ? stored.panelSource : AUTO;
+    await chrome.storage.local.set({ [STORE_KEY]: choice, panelSource: source });
 
     renderTargetOptions();
     el.provider.replaceChildren(
       ...S.providerList().map((item) => {
         const option = document.createElement('option');
         option.value = item.id;
-        option.textContent = item.label;
+        option.textContent = label(item.id);
         option.selected = item.id === settings.provider;
         return option;
       })

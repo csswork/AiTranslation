@@ -74,5 +74,5 @@ i18n/
 
 ## 还没做的
 
-- 扩展本体（`src/`）仍然是中文单语；商店列表、`PRIVACY.md`、README 的英文版另说。
+- 扩展本体使用独立的 `extension-i18n/` 与 `_locales/`，不与本站的语言目录混用。
 - 站点地图只有 `loc` + hreflang，没有 `lastmod`；需要时再加。

@@ -48,7 +48,7 @@
     const info = analyze(raw);
     if (!info.text) return false;
     if (info.letters === 0) return false; // 纯数字 / 标点 / emoji，没有翻译的意义
-    return !info.isChinese;
+    return true; // Preserve explicit translation for every script, including Chinese script conversion.
   }
 
   globalThis.AITrLang = { analyze, shouldOffer, MAX_TEXT_LENGTH };

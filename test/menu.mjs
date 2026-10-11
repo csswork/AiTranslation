@@ -1,3 +1,4 @@
+import { installExtensionFixture, deepLLanguages } from './extension-fixture.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
@@ -87,7 +88,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   const console2 = { info: () => {}, warn: (...a) => state.warns.push(a.join(' ')), log: () => {}, error: () => {} };
   globalThis.chrome = chrome;
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
-  load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
+  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');
   new Function('chrome', 'console', bg)(chrome, console2);
   return { state, chrome };
@@ -142,9 +143,9 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
   assert.equal(state.items.size, 3);
-  assert.equal(state.items.get('ai-translate-selection').visible, false,
-    '选中中文时，重建后仍应把菜单隐藏');
-  console.log('✓ 重建后会补上正确的显隐状态（中文 → 隐藏）');
+  assert.equal(state.items.get('ai-translate-selection').visible, true,
+    '选中中文时，保留翻译入口');
+  console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
 }
 
 /* --- 2b. 元素项常显；互斥由 contexts 保证，不靠页面上报 --- */
@@ -204,7 +205,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   const item = state.items.get('ai-translate-selection');
   assert.equal(item.visible, true);
-  assert.equal(item.title, '翻译成中文');
+  assert.equal(item.title, '翻译成简体中文');
   assert.equal(state.duplicateErrors, 0);
   console.log('✓ 选中非中文时显示，标题为「翻译成中文」');
 }

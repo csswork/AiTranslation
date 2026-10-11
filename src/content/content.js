@@ -6,6 +6,7 @@
  * 上报在所有 iframe 里都跑，弹窗只在顶层框架显示（后台固定 connect frameId: 0）。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   if (window.__aiTranslationContentLoaded) return;
   window.__aiTranslationContentLoaded = true;
 
@@ -112,7 +113,7 @@
                  "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     font-size: 14px; font-weight: 400; font-style: normal;
     line-height: 1.6; letter-spacing: normal; word-spacing: normal;
-    text-align: left; text-indent: 0; text-transform: none;
+    text-align: start; text-indent: 0; text-transform: none;
     animation: pop 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.1);
   }
   .panel.dragging { animation: none; transition: none; }
@@ -138,7 +139,7 @@
   .dot.busy { animation: pulse 1.1s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.35 } }
   .title { font-size: 13px; font-weight: 600; flex: 1 1 auto; }
-  select.provider {
+  select.provider, select.target {
     font: inherit; font-size: 12px; color: inherit;
     background: rgba(15, 23, 42, 0.05);
     border: 1px solid rgba(15, 23, 42, 0.08);
@@ -163,7 +164,7 @@
   .result:empty { display: none; }
   .result.streaming::after {
     content: ""; display: inline-block; vertical-align: -2px;
-    width: 2px; height: 1.05em; margin-left: 2px;
+    width: 2px; height: 1.05em; margin-inline-start: 2px;
     background: #6366f1; animation: caret 1s step-end infinite;
   }
   @keyframes caret { 50% { opacity: 0 } }
@@ -238,7 +239,7 @@
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
     }
     .bar, footer { border-color: rgba(255, 255, 255, 0.08) }
-    select.provider {
+    select.provider, select.target {
       background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.1);
     }
     button.icon { color: rgba(233, 234, 238, 0.6) }
@@ -276,6 +277,8 @@
     let translation = '';
     let providerLabel = '';
     let providerModel = '';
+    let targetId = '';
+    let providerId = '';
 
     function build() {
       const host = document.createElement('div');
@@ -296,7 +299,9 @@
           <div class="bar">
             <span class="dot"></span>
             <span class="title">翻译成中文</span>
+            <select class="target" title="目标语言"></select>
             <select class="provider" title="切换翻译平台"></select>
+            <button class="btn default-target" type="button" title="设置为默认目标语言">★</button>
             <button class="icon retry" type="button" title="重新翻译" aria-label="重新翻译">${ICON.retry}</button>
             <button class="icon close" type="button" title="关闭（Esc）" aria-label="关闭">${ICON.close}</button>
           </div>
@@ -316,6 +321,7 @@
           </footer>
         </div>`;
       while (wrap.firstChild) root.appendChild(wrap.firstChild);
+      AITrI18n.localize(root);
 
       const q = (sel) => root.querySelector(sel);
       dom = {
@@ -327,6 +333,8 @@
         dot: q('.dot'),
         title: q('.title'),
         provider: q('.provider'),
+        target: q('.target'),
+        defaultTarget: q('.default-target'),
         retry: q('.retry'),
         close: q('.close'),
         body: q('.body'),
@@ -345,6 +353,8 @@
       dom.backdrop.addEventListener('mousedown', () => hide());
       dom.retry.addEventListener('click', () => retranslate());
       dom.provider.addEventListener('change', () => retranslate(dom.provider.value));
+      dom.target.addEventListener('change', () => retranslate(undefined, dom.target.value));
+      dom.defaultTarget.addEventListener('click', () => send({ type: 'set-default-target', targetId }));
       dom.copy.addEventListener('click', copyResult);
       enableDrag();
 
@@ -431,10 +441,10 @@
       releasePort();
     }
 
-    function retranslate(providerId) {
+    function retranslate(nextProvider, nextTarget) {
       if (!sourceText) return;
       closePort();
-      send({ type: 'retranslate', text: sourceText, providerId: providerId || undefined });
+      send({ type: 'retranslate', text: sourceText, providerId: nextProvider || providerId, targetId: nextTarget || targetId });
     }
 
     async function copyResult() {
@@ -458,9 +468,9 @@
           ok = false;
         }
       }
-      dom.copy.textContent = ok ? '已复制' : '复制失败';
+      dom.copy.textContent = ok ? t("已复制") : t("复制失败");
       setTimeout(() => {
-        if (dom) dom.copy.textContent = '复制译文';
+        if (dom) dom.copy.textContent = t("复制译文");
       }, 1400);
     }
 
@@ -480,24 +490,34 @@
       translation = '';
       providerLabel = message.provider?.label || '';
       providerModel = message.provider?.model || '';
+      providerId = message.provider?.id;
+      targetId = message.targetId;
 
       if (!dom) build();
-      dom.title.textContent = `翻译成${message.target || '中文'}`;
+      dom.title.textContent = t("翻译成$1", [message.target || '中文']);
       dom.result.textContent = '';
+      dom.result.dir = AITrLanguages.LANGUAGES[targetId]?.dir || 'auto';
+      dom.originalText.dir = 'auto';
       dom.error.hidden = true;
       dom.skeleton.hidden = false;
       dom.meta.textContent = `${providerLabel} · ${providerModel}`;
-      dom.copy.textContent = '复制译文';
+      dom.copy.textContent = t("复制译文");
 
       dom.note.hidden = !message.truncated;
       if (message.truncated) {
-        dom.note.textContent = `选中内容较长，只翻译了前 ${Lang.MAX_TEXT_LENGTH} 个字符。`;
+        dom.note.textContent = t("选中内容较长，只翻译了前 $1 个字符。", [Lang.MAX_TEXT_LENGTH]);
       }
 
       dom.original.hidden = !message.showOriginal;
       dom.original.open = false;
       dom.originalText.textContent = sourceText;
 
+      dom.target.replaceChildren(...(message.targets || []).map((item) => {
+        const option = document.createElement('option');
+        option.value = item.id; option.textContent = item.label;
+        option.selected = item.id === targetId;
+        return option;
+      }));
       const providers = message.providers || [];
       dom.provider.hidden = providers.length < 2;
       dom.provider.replaceChildren(
@@ -540,14 +560,14 @@
       setBusy(false);
       releasePort();
       dom.error.hidden = false;
-      dom.errorText.textContent = message || '翻译失败';
+      dom.errorText.textContent = message || t("翻译失败");
 
       dom.error.querySelectorAll('button').forEach((el) => el.remove());
       if (action === 'open-options') {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'btn ghost';
-        button.textContent = '打开设置';
+        button.textContent = t("打开设置");
         button.addEventListener('click', () => send({ type: 'open-options' }));
         dom.error.appendChild(button);
       }
@@ -559,13 +579,16 @@
 
   /* ------------------------------------------------------------ 结果通道 */
 
+  let latestPort = null;
   chrome.runtime.onConnect.addListener((incoming) => {
     if (incoming.name !== PORT_NAME) return;
     if (!IS_TOP) {
       incoming.disconnect(); // 弹窗只在顶层框架显示
       return;
     }
+    latestPort = incoming;
     incoming.onMessage.addListener((message) => {
+      if (incoming !== latestPort) return;
       switch (message?.type) {
         case 'start':
           panel.begin(message, incoming);
@@ -663,8 +686,8 @@
       chip = document.createElement('button');
       chip.type = 'button';
       chip.className = 'chip';
-      chip.title = '翻译成中文';
-      chip.textContent = '译';
+      chip.title = t("翻译");
+      chip.textContent = t("译");
 
       root.appendChild(style);
       root.appendChild(chip);

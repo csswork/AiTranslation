@@ -1,11 +1,12 @@
 /**
  * 元素翻译：右键某个元素 → 记成规则 → 鼠标移到这类元素上时出现翻译按钮 →
- * 点击把元素内的文字就地换成中文。规则按域名记住，下次访问照样生效。
+ * 点击把元素内的文字翻译成所选语言。规则按域名记住，下次访问照样生效。
  *
  * 独立于 content.js（划词翻译那套）：自己的事件监听、自己的 shadow 宿主，
  * 互不引用，一边出问题不影响另一边。
  */
 (() => {
+  const t = (...args) => AITrI18n.t(...args);
   if (window.__aiTranslationElementsLoaded) return;
   window.__aiTranslationElementsLoaded = true;
 
@@ -300,8 +301,8 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn';
-    button.title = '把这个区域的文字翻译成中文';
-    button.textContent = '译';
+    button.title = t("翻译此区域");
+    button.textContent = t("译");
     button.dataset.state = 'idle';
     root.appendChild(style);
     root.appendChild(button);
@@ -477,65 +478,91 @@
   }
 
   async function translateElement(entry) {
+    if (entry.originals) restoreElement(entry);
+    setState(entry, 'busy', '…');
+    const controller = new AbortController();
+    entry.controller?.abort();
+    entry.controller = controller;
+    const { signal } = controller;
+    const settings = await AITrSettings.loadSettings();
+    if (signal.aborted) return;
     const nodes = collectTextNodes(entry.element);
     if (!nodes.length) {
-      setState(entry, 'error', '无文字');
-      setTimeout(() => setState(entry, 'idle', '译'), 1600);
+      setState(entry, 'error', t('无文字'));
       return;
     }
-
-    const originals = nodes.map((node) => ({ node, text: node.nodeValue }));
+    const originals = nodes.map((node) => ({ node, text: node.nodeValue, translated: null }));
+    entry.originals = originals;
+    entry.originalDir = entry.element.getAttribute('dir');
+    const records = new Map(originals.map((item) => [item.node, item]));
     const batches = chunk(nodes);
     let done = 0;
-
-    setState(entry, 'busy', `0/${batches.length}`);
-
-    for (const batch of batches) {
-      const texts = batch.map((node) => node.nodeValue);
-      const reply = await ask({ type: 'translate-batch', texts });
-      if (!reply?.ok) {
-        // 已经换掉的部分保留，按钮上给出错误
-        entry.originals = originals;
-        setState(entry, 'error', '失败');
-        entry.button.title = reply?.error || '翻译失败';
-        return;
+    entry.button.title = t('正在将区域翻译成 $1', [AITrLanguages.label(settings.target)]);
+    try {
+      for (const batch of batches) {
+        const texts = batch.map((node) => records.get(node).text);
+        const reply = await AITrRequests.request({ type: 'translate-batch', texts, targetId: settings.target, providerId: settings.provider }, { signal });
+        if (signal.aborted) return;
+        if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
+        batch.forEach((node, index) => {
+          const record = records.get(node);
+          const translated = reply.texts[index];
+          // A live page may update a text node while a request is in flight.
+          if (node.isConnected && node.nodeValue === record.text && typeof translated === 'string' && translated) {
+            node.nodeValue = translated;
+            record.translated = translated;
+          }
+        });
+        entry.element.dir = AITrLanguages.LANGUAGES[settings.target].dir;
+        setState(entry, 'busy', `${++done}/${batches.length}`);
       }
-      batch.forEach((node, index) => {
-        const translated = reply.texts[index];
-        if (typeof translated === 'string' && translated) node.nodeValue = translated;
-      });
-      done += 1;
-      setState(entry, 'busy', `${done}/${batches.length}`);
+      entry.targetId = settings.target;
+      entry.button.title = t('已翻译成 $1；点击恢复原文', [AITrLanguages.label(settings.target)]);
+      setState(entry, 'done', t('原文'));
+    } catch (error) {
+      restoreElement(entry);
+      if (error?.name !== 'AbortError') {
+        setState(entry, 'error', t('失败'));
+        entry.button.title = String(error?.message || error);
+      }
     }
-
-    entry.originals = originals;
-    entry.button.title = '恢复原文';
-    setState(entry, 'done', '原文');
   }
 
   function restoreElement(entry) {
+    entry.controller?.abort();
     if (entry.originals) {
       for (const item of entry.originals) {
-        // 节点可能已被页面自身替换掉
-        if (item.node.isConnected) item.node.nodeValue = item.text;
+        if (item.node.isConnected && item.node.nodeValue === item.translated) item.node.nodeValue = item.text;
       }
+      if (entry.originalDir === null) entry.element.removeAttribute('dir');
+      else entry.element.setAttribute('dir', entry.originalDir);
     }
     entry.originals = null;
-    entry.button.title = '把这个区域的文字翻译成中文';
-    setState(entry, 'idle', '译');
+    entry.button.title = t('翻译此区域');
+    setState(entry, 'idle', t('译'));
   }
 
-  function onButtonClick(entry) {
+  async function onButtonClick(entry) {
     if (entry.state === 'busy') return;
     if (entry.state === 'done') {
+      setState(entry, 'busy', '…');
+      const settings = await AITrSettings.loadSettings();
+      const changed = entry.targetId !== settings.target;
       restoreElement(entry);
-      return;
+      if (!changed) return;
     }
     translateElement(entry).catch((err) => {
-      setState(entry, 'error', '失败');
+      setState(entry, 'error', t("失败"));
       entry.button.title = String(err?.message || err);
     });
   }
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local' || !changes.settings || changes.settings.oldValue?.target === changes.settings.newValue?.target) return;
+    for (const entry of shown) {
+      if (entry.state === 'done' || entry.state === 'busy') restoreElement(entry);
+    }
+  });
 
   /* --------------------------------------------------------- 规则应用 */
 
@@ -621,23 +648,23 @@
     if (message?.type !== 'add-element-rule') return false;
     (async () => {
       if (!lastTarget || !lastTarget.isConnected) {
-        sendResponse({ ok: false, error: '没有记录到右键的元素' });
+        sendResponse({ ok: false, error: t("没有记录到右键的元素") });
         return;
       }
       const built = Selector.build(lastTarget);
       if (!built) {
-        sendResponse({ ok: false, error: '无法为这个元素生成可复用的选择器' });
+        sendResponse({ ok: false, error: t("无法为这个元素生成可复用的选择器") });
         return;
       }
       const result = await Rules.addRule(HOST, built.selector, built.label);
       // 拿不到域名（file://、about:blank 等）时无法记录规则，
       // 这里必须如实报错，不能假装成功让用户以为没生效是别的原因
       if (!result) {
-        sendResponse({ ok: false, error: '这个页面没有有效域名，无法记录规则' });
+        sendResponse({ ok: false, error: t("这个页面没有有效域名，无法记录规则") });
         return;
       }
       if (result.full) {
-        sendResponse({ ok: false, error: '这个网站的规则已达上限' });
+        sendResponse({ ok: false, error: t("这个网站的规则已达上限") });
         return;
       }
       await reloadRules();

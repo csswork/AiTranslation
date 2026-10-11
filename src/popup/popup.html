@@ -68,9 +68,7 @@
       <div class="name">AI 划词翻译</div>
     </div>
 
-    <p class="steps">
-      选中一段<b>非中文</b>文字 → <b>右键</b> → 点「翻译成<span id="targetName">中文</span>」
-    </p>
+    <p class="steps" id="targetName"></p>
 
     <div class="row">
       <span class="label">翻译平台</span>
@@ -90,8 +88,11 @@
     <!-- 实验功能，默认关闭：popup.js 按设置决定显不显示 -->
     <button id="video" class="btn ghost" type="button" hidden title="给当前页面的视频开 / 关实时字幕">视频实时字幕</button>
     <button id="open" class="btn" type="button">打开设置</button>
-    <p class="hint">选中的文字如果本身是中文，菜单不会出现</p>
+    <p class="hint">任何语言的文字都可以翻译，包括中文。</p>
 
+    <script src="../lib/languages.js"></script>
+    <script src="../lib/messages.js"></script>
+    <script src="../lib/i18n.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="popup.js"></script>
   </body>
