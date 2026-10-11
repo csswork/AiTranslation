@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "AI-vertaler · Videolabels"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "AI-vertaler · Instellingen"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "AI-vertaler"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "Vertaalprovider"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "Kies een standaardprovider. Je kunt ook wisselen in het vertaalvenster."
+  },
+  "m_59a00b5a0134e610": {
+    "message": "API-configuratie"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "Weergeven"
+  },
+  "m_12404a0b63817240": {
+    "message": "Maak een sleutel aan in het"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "providerdashboard"
+  },
+  "m_7fe42a654775395d": {
+    "message": "."
+  },
+  "m_c98e118e0a43f078": {
+    "message": "Model"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "Geavanceerd: aangepaste API-URL"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "Verbinding testen"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "Vertaalvoorkeuren"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "Doeltaal"
+  },
+  "m_72726d8818f69306": {
+    "message": "Chinees"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "Streaming vertaling"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "Toon de vertaling terwijl deze binnenkomt."
+  },
+  "m_9919810c2932030f": {
+    "message": "Brontaal opnemen"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "Toon de geselecteerde brontekst in een uitklapbaar gedeelte onder de vertaling."
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "Selectieknop"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "Sneltoets"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "Selecteer tekst en druk op de sneltoets om te vertalen."
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "Huidige sneltoets"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "Laden…"
+  },
+  "m_37090f45651676fc": {
+    "message": "Wijzigen"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "Regels voor gebiedsvertaling"
+  },
+  "m_ec141602f97fae38": {
+    "message": "Klik met de rechtermuisknop op een gebied en kies ‘Een vertaalknop aan dit gebied toevoegen’. Beweeg over overeenkomende gebieden om ze te vertalen, ook bij toekomstige bezoeken."
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "Regels beheren"
+  },
+  "m_58b60fd867baac67": {
+    "message": "Live videolabels"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "Experimenteel"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "Herken tab-audio lokaal en vertaal deze naar tweetalige labels. Bij lokale herkenning blijft audio in je browser."
+  },
+  "m_1b8f5e262210961c": {
+    "message": "Live videolabels inschakelen"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "Deze experimentele functie kan herkennings- of vertaalfouten, vertraagde labels, tragere pagina's of audioproblemen veroorzaken. Deze staat standaard uit. Inschakelen voegt videolabelbediening toe aan het contextmenu en de extensiepop-up."
+  },
+  "m_cacb38617171e87b": {
+    "message": "Klik met de rechtermuisknop op een video en kies ‘Live videolabels (experimenteel)’. Als de speler het contextmenu blokkeert, gebruik ‘Live videolabels’ in de extensiepop-up."
+  },
+  "m_e189607eb47e0666": {
+    "message": "Taal voor spraakherkenning"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "Selecteer de taal die in de video wordt gesproken. Spraakherkenning detecteert deze niet automatisch."
+  },
+  "m_96dd88617e672350": {
+    "message": "Labels vertalen"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "Cloudherkenning gebruiken"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "Geen taalpakketten nodig. Audio wordt naar de spraakherkenningsservice van Google verzonden, waarvoor toegang tot Google nodig is."
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "Offline taalpakketten downloaden"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "Wijzigingen worden automatisch opgeslagen"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "Privacybeleid"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "rechtermuisknop"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "Huidig model"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "Vertaalpaneel openen"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "Afbeeldingsvertaling"
+  },
+  "m_29abef4167eb152f": {
+    "message": "Live ondertiteling voor de video op dit tabblad in-/uitschakelen"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "Instellingen openen"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "Vertaalpaneel · AI-vertaler"
+  },
+  "m_63299708d4f7d479": {
+    "message": "Vertaalpaneel"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "Detecteert automatisch de brontaal en vertaalt naar de door jou gekozen doeltaal. Het paneel onthoudt je keuze."
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "Instellingen"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "Brontaal"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "Kies een brontaal om te kunnen wisselen"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "Wisselen"
+  },
+  "m_910887705c7a66d2": {
+    "message": "Provider"
+  },
+  "m_a52a08335185f048": {
+    "message": "Vertalen"
+  },
+  "m_354b28c853334568": {
+    "message": "Origineel"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "Wissen"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "Plak of typ tekst om te vertalen…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "Vertaling"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "Kopiëren"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "Afbeeldingsvertaling · AI-vertaler"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "Herken tekst in een afbeelding en vertaal deze naar de door jou gekozen taal. De vertaling wordt op de oorspronkelijke tekstpositie geplaatst."
+  },
+  "m_1477d9e39af456ef": {
+    "message": "Momenteel in testfase"
+  },
+  "m_6578246c1828eb16": {
+    "message": ", let vooral op de nauwkeurigheid van de kaderposities."
+  },
+  "m_51354da23fa60f98": {
+    "message": "Coördinatenstelsel"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "Automatisch"
+  },
+  "m_217d642265e59d2c": {
+    "message": "0-1-verhouding"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "Afbeeldingspixels"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "Coördinaatvolgorde"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "Tekstkaders + vertalingen"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "Alleen vertalingen"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "Alleen tekstkaders"
+  },
+  "m_79cbcd837d618881": {
+    "message": "Alleen originele afbeelding"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "Herken en vertaal"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "Afbeelding"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "Sleep een afbeelding hierheen"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "Je kunt ook"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "plakken, of klik hier om een bestand te kiezen"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "Of plak een afbeeldings-URL en druk op Enter"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "Herkenningstekst"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "Vertaling kopiëren"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "Onbewerkte modelreactie"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "Elementvertaalregels · AI-vertaler"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "Klik met de rechtermuisknop op een gebied en kies “Vertaalknop voor dit gebied toevoegen”. De regel wordt hier opgeslagen; beweeg bij een volgend bezoek aan dezelfde website de muis over een overeenkomend gebied om een vertaalknop te zien."
+  },
+  "m_c9f9e18b06233971": {
+    "message": "Regel toevoegen"
+  },
+  "m_1b590914091ca145": {
+    "message": "Alles wissen"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "Nog geen regels"
+  },
+  "m_93e924b1de331953": {
+    "message": "deze taal"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "Offline pakketten voor $arg1$ worden nog gedownload. Probeer het later opnieuw.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "Download eerst de offline pakketten voor $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "Dit apparaat ondersteunt geen lokale herkenning voor $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "Cloudherkenning ondersteunt $arg1$ niet.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "Kan geen verbinding maken met cloudherkenning. Toegang tot Google is vereist."
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "Kan de audio van het tabblad niet lezen."
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "De browser staat spraakherkenning niet toe."
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "Fout bij spraakherkenning ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "Fout bij videobijschriften"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "Spraakherkenning gestopt na herhaalde onderbrekingen."
+  },
+  "m_133899c4819d1798": {
+    "message": "Deze browser ondersteunt geen spraakherkenning."
+  },
+  "m_697dae4b009517c9": {
+    "message": "Deze Chrome-versie ondersteunt geen lokale spraakherkenning. Werk Chrome bij of schakel cloudherkenning in via de instellingen."
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "Kan audio van tabblad niet vastleggen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "Opgeslagen"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● Key geconfigureerd"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ Key ontbreekt"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "$arg1$-dashboard",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "Laat leeg om $arg1$ te gebruiken, of voer een model in dat door deze provider wordt ondersteund.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "Laat leeg om $arg1$ te gebruiken. Een aangepaste URL vereist toestemming voor het domein.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$ ondersteunt alleen tekst. Schakel over naar ChatGPT of DeepSeek voor beeldvertaling.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$ retourneert de volledige vertaling in één keer en ondersteunt geen streaming.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "Niet geregistreerd"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "De opdracht is niet geregistreerd. Laad de extensie opnieuw via chrome://extensions."
+  },
+  "m_52496e5aeff43353": {
+    "message": "Niet toegewezen"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "Klik op Wijzigen, zoek de vertaalopdracht van deze extensie en wijs je voorkeurssneltoets toe."
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "Kan niet lezen"
+  },
+  "m_11549f27aead732c": {
+    "message": "Kan sneltoetsinformatie niet lezen."
+  },
+  "m_c634021981632019": {
+    "message": "Cloudherkenning vereist geen taalpakketten."
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "Werk Chrome bij voor lokale spraakherkenning, of gebruik cloudherkenning."
+  },
+  "m_3177d62d329033f9": {
+    "message": "Kan taalpakketten niet controleren: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "Offline taalpakketten zijn gereed."
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "Offline taalpakketten ontbreken. Het Engelse pakket bevat de herkenningsengine en wordt ook gedownload."
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "Offline taalpakketten ontbreken."
+  },
+  "m_af27ec592962322f": {
+    "message": "Offline taalpakketten worden gedownload…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "Dit apparaat ondersteunt geen lokale herkenning voor deze taal. Gebruik in plaats daarvan cloudherkenning."
+  },
+  "m_c897be932b695c0b": {
+    "message": "Voer een geldige HTTPS-URL in. HTTP wordt niet ondersteund."
+  },
+  "m_050d25598c0376c9": {
+    "message": "Toestemming voor $arg1$ is nodig. Klik op Verbinding testen om toegang te verlenen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "Verbergen"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "Offline pakketten worden gedownload. Dit kan even duren…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "Download mislukt: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "Download mislukt. Probeer het later opnieuw."
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg2$ regels op $arg1$ websites",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "Nog geen regels"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "Toegang tot $arg1$ is niet verleend. Deze API-URL kan niet worden gebruikt.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "Verbinden…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "Verbonden ($arg1$): $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "Verbindingstest mislukt"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "Geconfigureerd"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "Niet geconfigureerd"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "Automatisch detecteren"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$ tekens · Alleen de eerste $arg2$ worden vertaald",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$ tekens",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "Stoppen"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "Vertaling mislukt"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "Het model heeft niets teruggegeven. Probeer het opnieuw of kies een ander model."
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "Gekopieerd"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "Kopiëren mislukt"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "Vt"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "Geen tekst"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "Mislukt"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "Origineel herstellen"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "Er is geen met rechtermuisknop aangeklikt element geregistreerd."
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "Kan geen herbruikbare selector voor dit element genereren."
+  },
+  "m_e68fcc025975add3": {
+    "message": "Deze pagina heeft geen geldig domein. Een regel kan niet worden opgeslagen."
+  },
+  "m_fdc852167becfb29": {
+    "message": "Deze website heeft de limiet voor regels bereikt."
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "Origineel tonen"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "Sluiten (Esc)"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "Sluiten"
+  },
+  "m_7cd62999f274e547": {
+    "message": "Vertaling tonen"
+  },
+  "m_92c1e98d69346932": {
+    "message": "Er is geen tekst in deze afbeelding die vertaald moet worden."
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "Er is geen tekst herkend in deze afbeelding."
+  },
+  "m_8646e9fb979e4595": {
+    "message": "$arg1$ tekstblokken worden vertaald…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "Afbeelding lezen…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "Deze afbeelding is nog niet volledig geladen."
+  },
+  "m_e640442431db48ae": {
+    "message": "Herkennen $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "Afbeeldingstekst herkennen…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "Deze afbeelding is niet toegankelijk. Kopieer de afbeelding en plak deze in het paneel Afbeeldingsvertaling."
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "Herkennen mislukt"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "Instellingen"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "Ondertiteling sluiten"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "Luisteren in $arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "Verbinden…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$. Alleen bronondertiteling wordt getoond.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "Vertaling niet beschikbaar"
+  },
+  "m_5f6069123981822c": {
+    "message": "Vertaling van ondertiteling is herhaaldelijk mislukt ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "De extensie is bijgewerkt. Vernieuw de pagina en probeer het opnieuw."
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "Geen verbinding met de spraakherkenningsservice. Probeer het opnieuw."
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "AI-vertaalresultaat"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "Vertalen"
+  },
+  "m_f823028377c7f65d": {
+    "message": "Vertaalprovider wisselen"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "Opnieuw vertalen"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "Vertalen naar $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "De selectie is lang. Alleen de eerste $arg1$ tekens zijn vertaald.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "Er is een fout opgetreden"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "Kan het bestand niet lezen"
+  },
+  "m_572993f5820a55ba": {
+    "message": "Kan de afbeelding niet laden"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "Afbeelding laden…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "Verkleind naar $arg1$×$arg2$ voor herkenning",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "Cross-origin afbeelding; de provider haalt de URL op"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "Geen coördinaten voor dit tekstblok ontvangen"
+  },
+  "m_9255552a10e62692": {
+    "message": "$arg1$ tekstblokken, $arg2$ met coördinaten · Schaal $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "$arg1$ tekstblokken herkend; geen enkele hoeft te worden vertaald",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": "; $arg1$ ongewijzigde tekstblokken verborgen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "Klaar$arg1$ · $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "Klembordafbeelding"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$ tekstblokken · Schaal $arg2$×$arg3$ · Volgorde $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "Naam van een vision-model"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "De selector mag niet leeg zijn."
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "Deze regel bestaat niet meer."
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "Deze website heeft al een regel met dezelfde selector."
+  },
+  "m_81f1f1a720788251": {
+    "message": "Kan geen verbinding maken met $arg1$. Controleer je netwerk, proxy en API-URL.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "Verzoek geweigerd$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "De API Key van $arg1$ is ongeldig of heeft geen rechten$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "Onvoldoende saldo op je $arg1$-account$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "Model ‘$arg1$’ niet gevonden of de API-URL is onjuist$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "De selectie is te lang. Vertaal deze in kleinere delen$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "Limiet of quota overschreden. Probeer het later opnieuw$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "$arg1$ serverfout ($arg2$)$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "Verzoek mislukt ($arg1$)$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "Stel eerst je API Key voor $arg1$ in.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "Het model heeft geen geldige JSON-array geretourneerd."
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "Het model heeft geen array geretourneerd."
+  },
+  "m_90d478f772504027": {
+    "message": "Het model retourneerde $arg1$ items voor $arg2$ bronitems.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$ ondersteunt alleen tekst. Schakel over naar ChatGPT of DeepSeek om afbeeldingen te herkennen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepL ondersteunt deze doeltaal niet."
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "Kan geen verbinding maken met $arg1$. Controleer je netwerk of proxy.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "Je maandelijkse DeepL-vertaalquota is uitgeput."
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepL retourneerde een onverwachte reactie."
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepL retourneerde $arg1$ vertalingen voor $arg2$ bronitems.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "Vul eerst je API Key voor $arg1$ in.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "Verbonden, maar er is geen vertaling geretourneerd."
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "Verbonden, maar het model retourneerde geen tekst. Probeer een ander model."
+  },
+  "m_076603dff5ad4734": {
+    "message": "Officiële OpenAI API"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "DeepSeek API"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "Goede vertaalkwaliteit, geen modelkeuze nodig"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "Engels"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "Japans"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "Koreaans"
+  },
+  "m_99cdf164a8140865": {
+    "message": "Frans"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "Dit is geen geldige CSS-selector"
+  },
+  "m_051836569928a9f9": {
+    "message": "Bewerken"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "Verwijderen"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "CSS-selector"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "Opslaan"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "Annuleren"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "Domein, bijvoorbeeld example.com (of plak een URL)"
+  },
+  "m_222952431147e537": {
+    "message": "Domein"
+  },
+  "m_8ec296825c405074": {
+    "message": "CSS-selector, bijvoorbeeld div#main > article.post > p"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "Voer een geldig domein in"
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "Kan deze regel niet toevoegen"
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$ heeft de limiet van $arg2$ regels bereikt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "Toevoegen"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg1$ websites, in totaal $arg2$ regels",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$ regels",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "Hele site verwijderen"
+  },
+  "m_5ae5095877338e86": {
+    "message": "Alle $arg2$ regels onder $arg1$ verwijderen?",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "Nieuwe regel"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "Alle regels voor elementvertaling van alle websites wissen? Deze actie kan niet ongedaan worden gemaakt."
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "Een vertaalknop aan dit gebied toevoegen"
+  },
+  "m_9e20239a7234a964": {
+    "message": "Tekst in afbeeldingen vertalen"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "Realtime ondertiteling voor video's (experimenteel)"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "(geen)"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "Tabbladaudio opnemen, spraakherkenning lokaal uitvoeren en ondertiteling genereren"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "Geen toestemming verkregen om dit tabblad op te nemen. Open opnieuw via het rechtermuisknopmenu van de video of het extensiepictogram"
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "De audio van dit tabblad wordt al opgenomen door een ander programma (bijvoorbeeld schermopname of een andere extensie)"
+  },
+  "m_819842bc861d8f50": {
+    "message": "Kan de audio van dit tabblad niet opnemen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$ (cloudherkenning)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "Kan spraakherkenning niet starten: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[AI-vertaling] Ondertiteling vertaald in $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[AI-vertaling] Sneltoets heeft niet vertaald: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "'Sneltoetsvertaling' is uitgeschakeld in de instellingen"
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "Kan het huidige tabblad niet ophalen"
+  },
+  "m_9aea932d4811acdc": {
+    "message": "Op deze pagina kan geen script worden geïnjecteerd (bijvoorbeeld pagina's die beginnen met chrome://)"
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "Er is momenteel geen tekst geselecteerd"
+  },
+  "m_ffafce8c4494350d": {
+    "message": "De vertaling verschijnt hier"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "Selecteer tekst, rechtermuisklik → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "Tekst in elke taal kan worden vertaald, inclusief Chinees."
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "Rechtermuisknopmenu: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "Interfacetaal"
+  },
+  "m_b9c76f096644d599": {
+    "message": "Chrome volgen"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "Standaarddoeltaal voor vertaling"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "Kies de interfacetaal en de doeltaal voor vertalingen apart."
+  },
+  "m_2b41309c016fe33f": {
+    "message": "Selecteer tekst en vertaal deze naar de taal van je keuze via het contextmenu, de selectieknop of een sneltoets."
+  },
+  "m_35a88c7914864612": {
+    "message": "Toon een vertaalknop naast geselecteerde tekst."
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "API-sleutels worden lokaal opgeslagen en nooit gesynchroniseerd. Ze worden alleen gebruikt om verzoeken naar je gekozen provider te verifiëren."
+  },
+  "m_6076121593793789": {
+    "message": "Vertaal ondertitels naar $arg1$, met één vertaalverzoek per regel. Schakel uit om alleen de brontekst te tonen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "Klik met de rechtermuisknop op een gebied op een pagina en kies “Een vertaalknop aan dit gebied toevoegen”, of voeg handmatig een regel toe."
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "Gebied wordt naar $arg1$ vertaald",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "Vertaald naar $arg1$; klik om het origineel te herstellen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "Dit gebied vertalen"
+  },
+  "m_2121da766aab06cc": {
+    "message": "Instellen als standaarddoel"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "Geselecteerde tekst vertalen"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "De selectie bevat geen tekst om te vertalen"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "Vertaal tekst en afbeeldingen naar de taal die je wilt lezen met je gekozen provider."
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "Vertaalverbinding verbroken. Probeer het opnieuw."
+  },
+  "m_71abc609ccad93e7": {
+    "message": "Geen reactie"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL ondersteunt deze brontaal niet."
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "Kan de door DeepL ondersteunde talen niet ophalen. Probeer het opnieuw."
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "De API-sleutel van DeepL is ongeldig$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "AI-vertaler"
+  },
+  "extensionDescription": {
+    "message": "Vertaal tekst en afbeeldingen naar de taal die je wilt lezen met je gekozen provider."
+  },
+  "translateSelection": {
+    "message": "Geselecteerde tekst vertalen"
+  }
+}

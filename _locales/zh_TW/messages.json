@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "AI 劃詞翻譯 · 影片字幕"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "AI 劃詞翻譯 · 設定"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "AI 劃詞翻譯"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "翻譯平台"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "選擇一個作為預設平台，彈出視窗中也能隨時切換。"
+  },
+  "m_59a00b5a0134e610": {
+    "message": "API 設定"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "顯示"
+  },
+  "m_12404a0b63817240": {
+    "message": "在"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "平台主控台"
+  },
+  "m_7fe42a654775395d": {
+    "message": "建立。"
+  },
+  "m_c98e118e0a43f078": {
+    "message": "模型"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "進階：自訂 API 網址"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "測試連線"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "翻譯行為"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "目標語言"
+  },
+  "m_72726d8818f69306": {
+    "message": "中文"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "串流輸出"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "譯文逐字顯示，減少等待感。"
+  },
+  "m_9919810c2932030f": {
+    "message": "彈出視窗內保留原文"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "在譯文下方以折疊方式顯示選取的原文，方便對照。"
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "劃詞浮動按鈕"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "快速鍵翻譯"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "選取文字後按快速鍵，直接翻譯並彈出譯文，不用透過右鍵選單。"
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "目前快速鍵"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "讀取中…"
+  },
+  "m_37090f45651676fc": {
+    "message": "修改"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "元素翻譯規則"
+  },
+  "m_ec141602f97fae38": {
+    "message": "在網頁上對某個區域按右鍵，選「為這個區域新增翻譯按鈕」，即可記住該網站的這個區域；下次造訪時，滑鼠移到這類區域上就會出現翻譯按鈕。"
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "管理規則"
+  },
+  "m_58b60fd867baac67": {
+    "message": "影片即時字幕"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "實驗"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "擷取分頁的聲音，在本機辨識成文字，再翻成雙語字幕；音訊不會離開瀏覽器。"
+  },
+  "m_1b8f5e262210961c": {
+    "message": "啟用影片即時字幕"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "實驗功能，完成度很低、並不完善：語音辨識、斷句和譯文都可能出錯，也可能出現字幕長時間不出、頁面卡頓或影片聲音異常。預設關閉，開啟後才會出現右鍵影片的選單項目和擴充功能圖示裡的入口。僅供嘗鮮，謹慎開啟。"
+  },
+  "m_cacb38617171e87b": {
+    "message": "在網頁影片上按右鍵，選「影片即時字幕（實驗）」；播放器攔掉右鍵的話，點擴充功能圖示裡的「影片即時字幕」。"
+  },
+  "m_e189607eb47e0666": {
+    "message": "影片語言"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "辨識不會自動判斷語種，需要按影片選好。"
+  },
+  "m_96dd88617e672350": {
+    "message": "翻譯字幕"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "改用雲端辨識"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "不用下載語言套件，但影片的聲音會傳給 Google 的語音辨識服務，並且需要能存取 Google。"
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "下載離線語言套件"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "修改會自動儲存"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "隱私權政策"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "右鍵"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "目前模型"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "開啟翻譯面板"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "圖片翻譯"
+  },
+  "m_29abef4167eb152f": {
+    "message": "為目前分頁的影片開啟 / 關閉即時字幕"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "開啟設定"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "翻譯面板 · AI 劃詞翻譯"
+  },
+  "m_63299708d4f7d479": {
+    "message": "翻譯面板"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "自動辨識來源語言，並翻譯成你選擇的目標語言。面板會記住你的選擇。"
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "設定"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "來源語言"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "指定來源語言後即可交換"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "交換"
+  },
+  "m_910887705c7a66d2": {
+    "message": "平台"
+  },
+  "m_a52a08335185f048": {
+    "message": "翻譯"
+  },
+  "m_354b28c853334568": {
+    "message": "原文"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "清空"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "貼上或輸入要翻譯的文字…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "譯文"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "複製"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "圖片翻譯 · AI 劃詞翻譯"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "辨識圖片中的文字並翻譯成你選擇的語言，譯文會依辨識到的位置覆蓋在原圖上。"
+  },
+  "m_1477d9e39af456ef": {
+    "message": "目前為驗證階段"
+  },
+  "m_6578246c1828eb16": {
+    "message": "，重點在於方框位置是否準確。"
+  },
+  "m_51354da23fa60f98": {
+    "message": "座標格式"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "自動"
+  },
+  "m_217d642265e59d2c": {
+    "message": "0-1 比例"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "圖片像素"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "座標順序"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "原文框 + 譯文"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "僅顯示譯文"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "僅顯示方框"
+  },
+  "m_79cbcd837d618881": {
+    "message": "僅顯示原圖"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "辨識並翻譯"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "圖片"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "將圖片拖曳到這裡"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "也可以直接"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "貼上，或點這裡選擇檔案"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "或貼上圖片網址，按 Enter 載入"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "辨識結果"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "複製譯文"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "模型原始回覆"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "元素翻譯規則 · AI 劃詞翻譯"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "在網頁上對某個區域按右鍵 → 選擇「為這個區域新增翻譯按鈕」，規則會記錄在這裡； 下次造訪同一網站時，將滑鼠移到符合的區域上就會出現翻譯按鈕。"
+  },
+  "m_c9f9e18b06233971": {
+    "message": "新增規則"
+  },
+  "m_1b590914091ca145": {
+    "message": "清空全部"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "還沒有任何規則"
+  },
+  "m_93e924b1de331953": {
+    "message": "這個語言"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "$arg1$ 的離線語言包還在下載中，請稍後再試",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "請先下載 $arg1$ 的離線語言包",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "這台裝置不支援 $arg1$ 的離線辨識",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "雲端辨識不支援 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "無法連線至雲端語音辨識服務（需要能存取 Google）"
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "無法讀取分頁音訊"
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "瀏覽器不允許語音辨識"
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "語音辨識錯誤（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "影片字幕錯誤"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "語音辨識多次中斷，已停止"
+  },
+  "m_133899c4819d1798": {
+    "message": "目前瀏覽器不支援語音辨識"
+  },
+  "m_697dae4b009517c9": {
+    "message": "目前 Chrome 不支援裝置端語音辨識，請更新至最新版本，或在設定中改用雲端辨識"
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "擷取分頁音訊失敗：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "已儲存"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● 已設定 Key"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ 未設定 Key"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "$arg1$ 主控台",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "留空則使用 $arg1$。可直接填入該平台支援的任何模型名稱。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "留空則使用 $arg1$。填寫代理或中轉位址時，需要額外授權該網域。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$ 僅支援文字翻譯，圖片翻譯需切換至 ChatGPT 或 DeepSeek。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$ 會一次回傳全部譯文，不支援逐字顯示。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "未註冊"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "指令未註冊成功，請至 chrome://extensions 重新載入擴充功能。"
+  },
+  "m_52496e5aeff43353": {
+    "message": "未指派"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "點選「變更」，找到此外掛的翻譯指令，並指派你偏好的快速鍵。"
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "讀取失敗"
+  },
+  "m_11549f27aead732c": {
+    "message": "無法讀取快速鍵資訊。"
+  },
+  "m_c634021981632019": {
+    "message": "雲端辨識不需要語言套件"
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "請更新 Chrome 以使用裝置端語音辨識，或改用雲端辨識。"
+  },
+  "m_3177d62d329033f9": {
+    "message": "無法檢查語言套件：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "離線語言套件已就緒"
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "尚未下載離線語言套件。英文套件包含辨識引擎，將會一併下載。"
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "尚未下載離線語言套件"
+  },
+  "m_af27ec592962322f": {
+    "message": "正在下載離線語言套件…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "這台裝置不支援此語言的離線辨識，請改用雲端辨識"
+  },
+  "m_c897be932b695c0b": {
+    "message": "請輸入有效的 HTTPS 網址。不支援 HTTP。"
+  },
+  "m_050d25598c0376c9": {
+    "message": "需要 $arg1$ 的存取權限。點選「測試連線」以授予權限。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "隱藏"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "正在下載離線語言套件，可能需要一些時間…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "下載失敗：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "下載失敗，請稍後再試"
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg1$ 個網站、$arg2$ 條規則",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "尚無規則"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "未授予 $arg1$ 的存取權限，無法使用此 API 網址",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "正在連線…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "連線正常（$arg1$）：$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "測試失敗"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "已設定"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "未設定"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "自動辨識"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$ 個字元 · 超出上限，只翻譯前 $arg2$ 個",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$ 個字元",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "停止"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "翻譯失敗"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "模型沒有傳回任何內容，請重試或換個模型試試"
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "已複製"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "複製失敗"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "譯"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "無文字"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "失敗"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "還原原文"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "沒有記錄到按右鍵的元素"
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "無法為這個元素產生可重複使用的選擇器"
+  },
+  "m_e68fcc025975add3": {
+    "message": "這個頁面沒有有效網域，無法記錄規則"
+  },
+  "m_fdc852167becfb29": {
+    "message": "這個網站的規則已達上限"
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "顯示原圖"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "關閉（Esc）"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "關閉"
+  },
+  "m_7cd62999f274e547": {
+    "message": "顯示譯文"
+  },
+  "m_92c1e98d69346932": {
+    "message": "圖中沒有需要翻譯的文字"
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "圖中沒有辨識到文字"
+  },
+  "m_8646e9fb979e4595": {
+    "message": "正在翻譯 $arg1$ 段…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "正在讀取圖片…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "這張圖還沒載入完成"
+  },
+  "m_e640442431db48ae": {
+    "message": "正在辨識 $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "正在辨識圖中文字…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "這張圖取不到（可能是網站防盜連）。可以複製圖片後貼到「圖片翻譯」面板"
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "辨識失敗"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "前往設定"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "關閉字幕"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "正在聆聽$arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "正在連線…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$，先只顯示原文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "翻譯無法使用"
+  },
+  "m_5f6069123981822c": {
+    "message": "字幕翻譯連續失敗（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "擴充功能已更新，請重新整理頁面後再試"
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "沒有連上語音辨識服務，請再試一次"
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "AI 翻譯結果"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "翻譯"
+  },
+  "m_f823028377c7f65d": {
+    "message": "切換翻譯平台"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "重新翻譯"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "翻譯成$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "選取內容較長，只翻譯了前 $arg1$ 個字元。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "發生錯誤"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "讀取檔案失敗"
+  },
+  "m_572993f5820a55ba": {
+    "message": "圖片載入失敗"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "正在載入圖片…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "送檢縮至 $arg1$×$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "跨域，改由介面按網址取圖"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "模型沒給這一段的座標"
+  },
+  "m_9255552a10e62692": {
+    "message": "辨識 $arg1$ 段，$arg2$ 段帶座標 · 座標制式 $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "辨識到 $arg1$ 段，都無需翻譯",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": "，隱藏 $arg1$ 段無需翻譯的",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "完成$arg1$ · 用時 $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "剪貼簿圖片"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$ 段 · 制式 $arg2$×$arg3$ · 順序 $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "支援視覺的模型名稱"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "選擇器不能為空"
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "規則不存在"
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "這個網站下已經有相同的選擇器"
+  },
+  "m_81f1f1a720788251": {
+    "message": "無法連接 $arg1$，請檢查網路、代理，或介面位址是否填錯",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "請求被拒絕$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "$arg1$ 的 API Key 無效或沒有權限$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "$arg1$ 帳戶餘額不足$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "找不到模型「$arg1$」或介面位址不正確$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "選取的字太長了，請分段翻譯$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "請求太頻繁或額度已用盡，請稍後再試$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "$arg1$ 伺服器錯誤（$arg2$）$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "請求失敗（$arg1$）$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "還沒有設定 $arg1$ 的 API Key",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "模型沒有回傳合法的 JSON 陣列"
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "模型回傳的不是陣列"
+  },
+  "m_90d478f772504027": {
+    "message": "模型回傳 $arg1$ 條，與原文 $arg2$ 條對不上",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$ 只能翻譯文字，辨識不了圖片裡的文字。請切換到 ChatGPT 或 DeepSeek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepL 不支援這個目標語言"
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "無法連接 $arg1$，請檢查網路或代理",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "DeepL 本月的翻譯額度已用完"
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepL 回傳了預期之外的內容"
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepL 回傳 $arg1$ 條，與原文 $arg2$ 條對不上",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "請先填寫 $arg1$ 的 API Key",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "介面通了，但沒有回傳譯文"
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "介面通了，但模型沒有回傳內容，換個模型試試"
+  },
+  "m_076603dff5ad4734": {
+    "message": "OpenAI 官方介面"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "國內直連，價格更低"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "機器翻譯；無需選擇模型"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "英文"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "日文"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "韓文"
+  },
+  "m_99cdf164a8140865": {
+    "message": "法文"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "這不是有效的 CSS 選擇器"
+  },
+  "m_051836569928a9f9": {
+    "message": "編輯"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "刪除"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "CSS 選擇器"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "儲存"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "取消"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "網域，例如 example.com（也可直接貼上網址）"
+  },
+  "m_222952431147e537": {
+    "message": "網域"
+  },
+  "m_8ec296825c405074": {
+    "message": "CSS 選擇器，例如 div#main > article.post > p"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "請填寫有效的網域"
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "無法新增這條規則"
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$ 的規則已達上限（$arg2$ 條）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "新增"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg1$ 個網站，共 $arg2$ 條規則",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$ 條",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "刪除整站"
+  },
+  "m_5ae5095877338e86": {
+    "message": "刪除 $arg1$ 下的全部 $arg2$ 條規則？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "新增規則"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "清空全部網站的元素翻譯規則？此操作無法復原。"
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "為這個區域新增翻譯按鈕"
+  },
+  "m_9e20239a7234a964": {
+    "message": "翻譯圖片裡的文字"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "影片即時字幕（實驗）"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "（無）"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "擷取分頁音訊，在本機做語音辨識，產生影片字幕"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "沒有取得擷取這個分頁的授權，請從影片的右鍵選單或擴充功能圖示重新開啟"
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "這個分頁的音訊正被其他程式擷取（例如螢幕錄影或其他擴充功能）"
+  },
+  "m_819842bc861d8f50": {
+    "message": "無法擷取這個分頁的音訊：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$（雲端辨識）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "無法啟動語音辨識：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[AI 劃詞翻譯] 字幕翻譯 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[AI 劃詞翻譯] 快速鍵未觸發翻譯：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "設定裡已關閉「快速鍵翻譯」"
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "拿不到目前分頁"
+  },
+  "m_9aea932d4811acdc": {
+    "message": "這個頁面不允許注入指令碼（例如 chrome:// 開頭的頁面）"
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "目前沒有選取任何文字"
+  },
+  "m_ffafce8c4494350d": {
+    "message": "譯文會顯示在這裡"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "選取文字，按右鍵 → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "任何語言的文字都可以翻譯，包括中文。"
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "右鍵選單：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "介面語言"
+  },
+  "m_b9c76f096644d599": {
+    "message": "跟隨 Chrome"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "預設翻譯目標語言"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "介面語言和翻譯目標語言可以分別選擇。"
+  },
+  "m_2b41309c016fe33f": {
+    "message": "選取文字，透過右鍵、浮動按鈕或快速鍵翻譯成你選擇的語言。"
+  },
+  "m_35a88c7914864612": {
+    "message": "選取文字後，在選取區旁顯示翻譯按鈕。"
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "API Key 只保存在本機，不會同步；僅用於向你選擇的平台驗證。"
+  },
+  "m_6076121593793789": {
+    "message": "將字幕翻譯成 $arg1$，每行呼叫一次翻譯介面。關閉後只顯示原文。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "開啟網頁，在想翻譯的區域上按右鍵，選擇「為這個區域新增翻譯按鈕」即可；也可以手動新增規則。"
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "正在將區域翻譯成 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "已翻譯成 $arg1$；點擊還原原文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "翻譯此區域"
+  },
+  "m_2121da766aab06cc": {
+    "message": "設為預設目標語言"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "翻譯選取的文字"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "選取的內容沒有可翻譯的文字"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "用你選擇的平台，把文字和圖片翻譯成你想讀的語言。"
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "翻譯連線已中斷，請重試。"
+  },
+  "m_71abc609ccad93e7": {
+    "message": "沒有回應"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL 不支援這個來源語言"
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "無法讀取 DeepL 支援的語言，請重試。"
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "DeepL 的 API Key 無效$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "AI 劃詞翻譯"
+  },
+  "extensionDescription": {
+    "message": "用你選擇的平台，把文字和圖片翻譯成你想讀的語言。"
+  },
+  "translateSelection": {
+    "message": "翻譯選取的文字"
+  }
+}

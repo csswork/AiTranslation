@@ -21,7 +21,7 @@
 
 ```
 AI Selection Translator has one purpose: translating text the user selects on a web page into
-Chinese. That single purpose covers the four ways a user can pick the text — a text selection,
+the user’s chosen language. That single purpose covers the four ways a user can pick the text — a text selection,
 a page region the user has marked, text inside an image the user right-clicks, or text typed
 into the extension's own translation panel. The extension does nothing else: it does not
 replace the new tab page, manage bookmarks, block ads, inject its own content, or collect
@@ -31,7 +31,7 @@ analytics.
 **中文 — 直接粘贴：**
 
 ```
-本扩展只有一个用途：把用户在网页上选中的文字译成中文。这一个用途涵盖用户挑出文字的四种方式——
+本扩展只有一个用途：把用户在网页上选中的文字译成其选择的语言。这一个用途涵盖用户挑出文字的四种方式——
 划选一段文字、标记过的页面区域、右键的一张图片、以及在扩展自带翻译面板里输入的文字。
 除此之外它什么都不做：不替换新标签页、不管理书签、不拦截广告、不注入自己的内容、不做任何统计。
 ```
@@ -70,7 +70,7 @@ any other tab, and never acts without a user gesture.
 **EN**
 
 ```
-All four entry points are right-click menu entries: "Translate to Chinese" (selection),
+All four entry points are right-click menu entries: "Translate to…" (selection),
 "Add a translate button for this region" (page), and "Translate text in this image" (image).
 The extension creates these items and updates their labels and visibility to follow the user's
 target language and selected provider.
@@ -79,7 +79,7 @@ target language and selected provider.
 **中文**
 
 ```
-四个入口全部是右键菜单项：「翻译成中文」（划词）、「为这个区域添加翻译按钮」（页面）、
+四个入口全部是右键菜单项：「翻译成…」（划词）、「为这个区域添加翻译按钮」（页面）、
 「翻译图片里的文字」（图片）。扩展需要创建这些菜单项，并按用户设置的目标语言和所选平台
 更新它们的标题与显隐。
 ```
@@ -148,8 +148,7 @@ endpoints.
 ```
 Three reasons. (1) The user may select text on any page they read, so the extension has to be
 present on any page. (2) Chrome decides which context menu items to show at the moment of the
-right-click, so the selection must be evaluated before it — to know whether the text is already
-Chinese and hide the menu item when it is. (3) Element translation rules are stored per domain
+right-click, so the selection must be evaluated before it — to filter selections containing no letters while keeping every source language available. (3) Element translation rules are stored per domain
 and can point at any site the user chooses. The content script only reads the current selection
 or the text of an element the user explicitly marked, sends it to the extension's own service
 worker, and does nothing else — it never scans, uploads or reports page content on its own.
@@ -159,8 +158,7 @@ worker, and does nothing else — it never scans, uploads or reports page conten
 
 ```
 三个原因。(1) 用户可能在任何他正在阅读的网页上划词，所以内容脚本必须存在于任意页面。
-(2) Chrome 是在右键按下的那一刻决定菜单项显隐的，因此必须在右键之前判断选区内容是不是中文，
-是中文时隐藏该菜单项。(3) 元素翻译规则按域名保存，可以指向用户选择的任意站点。内容脚本只读取
+(2) Chrome 是在右键按下的那一刻决定菜单项显隐的，因此在右键之前过滤纯数字、标点或表情组成的选区，任意语言的文字都保留翻译入口。(3) 元素翻译规则按域名保存，可以指向用户选择的任意站点。内容脚本只读取
 当前选区、或用户明确标记过的元素内的文字，并把它交给扩展自己的 service worker，此外不做任何事
 ——它不会自行扫描、上传或上报页面内容。
 ```

@@ -298,7 +298,7 @@
         <div class="panel" role="dialog" aria-modal="true" aria-label="AI 翻译结果" tabindex="-1">
           <div class="bar">
             <span class="dot"></span>
-            <span class="title">翻译成中文</span>
+            <span class="title"></span>
             <select class="target" title="目标语言"></select>
             <select class="provider" title="切换翻译平台"></select>
             <button class="btn default-target" type="button" title="设置为默认目标语言">★</button>
@@ -574,6 +574,11 @@
       show();
     }
 
+    AITrI18n.onChange(() => {
+      if (!dom || !targetId) return;
+      dom.title.textContent = t('翻译成$1', [AITrLanguages.label(targetId)]);
+      for (const option of dom.target.options) option.textContent = AITrLanguages.label(option.value);
+    });
     return { begin, append, finish, fail, hide, isOpen: () => open };
   })();
 

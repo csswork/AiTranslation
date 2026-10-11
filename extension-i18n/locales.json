@@ -145,7 +145,7 @@
   },
   {
     "id": "ur",
-    "chromeLocale": "ur",
+    "chromeLocale": null,
     "nativeLabel": "اردو",
     "prompt": "Urdu",
     "deepl": "UR",

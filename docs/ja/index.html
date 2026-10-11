@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · ページ上の外国語も、選択して右クリックするだけで読めます</title>
-<meta name="description" content="オープンソースの Chrome 拡張機能です。外国語を選択して右クリックするとその場で中国語に訳せます。領域全体や画像内の文字も翻訳できます。API Key はご自身で用意し、サーバーなし・統計なし・トラッキングなし。" />
+<meta name="description" content="オープンソースの Chrome 拡張機能：選択したテキスト、領域全体、画像内のテキストを、選んだ言語に翻訳します。24 のターゲット言語、API Key はご自身で用意、統計なし、トラッキングなし。" />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content="https://huaci.app/ja/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="外国語を選択して右クリックし、そのまま読み続けられます。ページのテキスト、領域全体、画像内の文字もその場で中国語に訳せます。オープンソース、サーバーなし、API Key はご自身で用意。" />
+<meta property="og:description" content="テキストを選択して右クリック、そのまま読み続けられます。Webページのテキスト、領域全体、画像内の文字を選択した言語に翻訳できます。オープンソース、API Keyはご自身で用意してください。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>オープンソース</b> GPL-3.0 · API Key はご自身で用意</span>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
-        <p class="hero-sub">Chrome 拡張機能です。ページ上の外国語、領域全体、さらには画像内の文字まで、その場で中国語に訳せます。訳文は一字ずつストリーミング表示され、使用するのはご自身の API Key です — 間にサーバーは一切ありません。</p>
+        <p class="hero-sub">Chrome 拡張機能です。選択したテキスト、領域全体、画像内のテキストを、選択した言語に翻訳できます。24 のターゲット言語に対応し、UI 言語は個別に設定でき、ご自身の API Key で選択したプラットフォームに直接接続します。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Chrome にインストール</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースを見る</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>サーバーなし · 統計なし</span> <span><i class="dot"></i>4 つの翻訳方法</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>選択翻訳</h3>
-            <p>中国語以外のテキストを選択し、右クリックで「中国語に翻訳」を選ぶと、訳文が画面中央のポップアップに一字ずつ表示されます。</p>
+            <p>任意の言語のテキストを選択し、右クリックで翻訳を選ぶと、訳文がポップアップに一文字ずつ表示されます。対象言語は一時的に切り替えられ、原文から再翻訳できます。</p>
             <ul>
-              <li>選択したテキストがもともと中国語の場合はメニューが表示されません。数字だけ、句読点、絵文字も同様です</li>
+              <li>中国語、短い語句、混在言語も翻訳可能。数字のみ、句読点、絵文字には翻訳入口を表示しない</li>
               <li>ポップアップは中央に表示され、ドラッグ可能です。<span class="mono">Esc</span> または背景のクリックで閉じられ、カーソルを追いかける小さなバブルではありません</li>
               <li>折りたたみ可能な原文パネルで、照らし合わせて読めます</li>
               <li>キーボードショートカットもあります：<span class="mono">Alt+Shift+T</span>（macOS では <span class="mono">Command+Shift+Y</span>）</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>要素翻訳</h3>
-            <p>ページ上の任意の領域を右クリックすると、翻訳ボタンが付きます。クリックすると、その領域内のテキストがその場で中国語に置き換わります。</p>
+            <p>ページ上の任意の領域を右クリックして、翻訳ボタンを割り当てます。クリックすると、その領域内のテキストが選択した言語にその場で置き換わり、もう一度クリックすると原文に戻ります。</p>
             <ul>
               <li>ルールはドメインごとに記憶され、次に同じサイトを訪れたときはボタンが自動的に付きます</li>
               <li>長い内容は分割して送信し、翻訳しながら置き換えるため、領域全体の完了を待つ必要はありません</li>
@@ -252,8 +252,8 @@
             <h3>翻訳パネル</h3>
             <p>独立したページで、左に原文を貼り、右に訳文が表示されます。ウェブページ上にない段落を扱うのに適しています。</p>
             <ul>
-              <li>10 数種類の対象言語から選択でき、中国語に限りません</li>
-              <li>入力言語を自動判定します：中国語は既定で英語に、その他の言語は既定で中国語に翻訳されます</li>
+              <li>24 種類のターゲット言語から選択可能で、世界の主要言語をカバー</li>
+              <li>ソース言語は自動認識または手動指定が可能で、ターゲット言語は個別に選択でき、パネルは前回の選択を記憶します</li>
               <li>プロバイダと対象言語はツールバーにあり、いつでも切り替えて再翻訳できます</li>
             </ul>
           </div>

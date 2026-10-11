@@ -273,16 +273,36 @@
     "message": "this language"
   },
   "m_a1dd6d1d1241e306": {
-    "message": "Offline packs for $1 are still downloading. Try again later."
+    "message": "Offline packs for $arg1$ are still downloading. Try again later.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_7e267c5e7859ecbb": {
-    "message": "Download offline packs for $1 first."
+    "message": "Download offline packs for $arg1$ first.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_46c50bdb25fce581": {
-    "message": "This device does not support local recognition for $1."
+    "message": "This device does not support local recognition for $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4429be062e7af0c9": {
-    "message": "Cloud recognition does not support $1."
+    "message": "Cloud recognition does not support $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f00115e8f289956f": {
     "message": "Cannot connect to cloud recognition. Access to Google is required."
@@ -294,7 +314,12 @@
     "message": "The browser does not allow speech recognition."
   },
   "m_5524c5571eaa1fd2": {
-    "message": "Speech recognition error ($1)"
+    "message": "Speech recognition error ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3ab9d6387b7496c6": {
     "message": "Video caption error"
@@ -309,7 +334,12 @@
     "message": "This Chrome version does not support local speech recognition. Update Chrome or enable cloud recognition in settings."
   },
   "m_559f1ddcfb4021ca": {
-    "message": "Failed to capture tab audio: $1"
+    "message": "Failed to capture tab audio: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_1bd91a7d0c53c936": {
     "message": "Saved"
@@ -321,19 +351,44 @@
     "message": "○ Key missing"
   },
   "m_1e68f87138bb6513": {
-    "message": "$1 dashboard"
+    "message": "$arg1$ dashboard",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b1b96346233660db": {
-    "message": "Leave blank to use $1, or enter any model supported by this provider."
+    "message": "Leave blank to use $arg1$, or enter any model supported by this provider.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f4e9af8a3ca54296": {
-    "message": "Leave blank to use $1. A custom URL requires permission for its domain."
+    "message": "Leave blank to use $arg1$. A custom URL requires permission for its domain.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_908728fa7365adae": {
-    "message": "$1 supports text only. Switch to ChatGPT or DeepSeek for image translation."
+    "message": "$arg1$ supports text only. Switch to ChatGPT or DeepSeek for image translation.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_96f71f1dfe6d8033": {
-    "message": "$1 returns the whole translation at once and does not support streaming."
+    "message": "$arg1$ returns the whole translation at once and does not support streaming.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_7b89c50978dee6ed": {
     "message": "Not registered"
@@ -360,7 +415,12 @@
     "message": "Update Chrome for local speech recognition, or use cloud recognition."
   },
   "m_3177d62d329033f9": {
-    "message": "Could not check language packs: $1"
+    "message": "Could not check language packs: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4cc885bb61d8f119": {
     "message": "Offline language packs are ready."
@@ -381,7 +441,12 @@
     "message": "Enter a valid HTTPS URL. HTTP is not supported."
   },
   "m_050d25598c0376c9": {
-    "message": "Permission for $1 is needed. Click Test connection to grant access."
+    "message": "Permission for $arg1$ is needed. Click Test connection to grant access.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_145219e726b87790": {
     "message": "Hide"
@@ -390,25 +455,51 @@
     "message": "Downloading offline packs. This may take a while…"
   },
   "m_e86b0222c4cd0aff": {
-    "message": "Download failed: $1"
+    "message": "Download failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_9c2c878e7330cfcf": {
     "message": "Download failed. Try again later."
   },
   "m_24bab8c7866d8f8a": {
-    "message": "$2 rules across $1 websites"
+    "message": "$arg2$ rules across $arg1$ websites",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_5df126d19a3f0d2a": {
     "message": "No rules yet"
   },
   "m_ba9e5175f4fde01e": {
-    "message": "Access to $1 was not granted. This API URL cannot be used."
+    "message": "Access to $arg1$ was not granted. This API URL cannot be used.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4da50aac5126af70": {
     "message": "Connecting…"
   },
   "m_f3f5cb253815dcc3": {
-    "message": "Connected ($1): $2"
+    "message": "Connected ($arg1$): $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_77c9e582e85583af": {
     "message": "Connection test failed"
@@ -423,10 +514,23 @@
     "message": "Detect automatically"
   },
   "m_eedd0dc8d2291fee": {
-    "message": "$1 characters · Only the first $2 will be translated"
+    "message": "$arg1$ characters · Only the first $arg2$ will be translated",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_850e2e3379c16b3e": {
-    "message": "$1 characters"
+    "message": "$arg1$ characters",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_ca4d973c0b006b75": {
     "message": "Stop"
@@ -486,7 +590,12 @@
     "message": "No text was recognized in this image."
   },
   "m_8646e9fb979e4595": {
-    "message": "Translating $1 text blocks…"
+    "message": "Translating $arg1$ text blocks…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_0ecc16e7fa2cccf4": {
     "message": "Reading image…"
@@ -495,7 +604,15 @@
     "message": "This image has not finished loading."
   },
   "m_e640442431db48ae": {
-    "message": "Recognizing $1/$2…"
+    "message": "Recognizing $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_c4273fd3abdd9f66": {
     "message": "Recognizing image text…"
@@ -513,19 +630,34 @@
     "message": "Close captions"
   },
   "m_bd320b4fdd38c332": {
-    "message": "Listening in $1…"
+    "message": "Listening in $arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_8be0ea36a9bba286": {
     "message": "Connecting…"
   },
   "m_01d7ccfdef6d3922": {
-    "message": "$1. Showing source captions only."
+    "message": "$arg1$. Showing source captions only.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_42fda0adf550d9a6": {
     "message": "Translation unavailable"
   },
   "m_5f6069123981822c": {
-    "message": "Caption translation repeatedly failed ($1)"
+    "message": "Caption translation repeatedly failed ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4b3ec20939d934a8": {
     "message": "The extension was updated. Refresh the page and try again."
@@ -546,10 +678,20 @@
     "message": "Translate again"
   },
   "m_2c1b3ce9d9f96651": {
-    "message": "Translate to $1"
+    "message": "Translate to $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_bfa65f4e94deb25b": {
-    "message": "The selection is long. Only the first $1 characters were translated."
+    "message": "The selection is long. Only the first $arg1$ characters were translated.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3f6c407778bda3a1": {
     "message": "An error occurred"
@@ -564,7 +706,15 @@
     "message": "Loading image…"
   },
   "m_b0834349795ce6f6": {
-    "message": "Resized to $1×$2 for recognition"
+    "message": "Resized to $arg1$×$arg2$ for recognition",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_a559f089f921f882": {
     "message": "Cross-origin image; the provider will fetch its URL"
@@ -573,22 +723,68 @@
     "message": "No coordinates returned for this text block"
   },
   "m_9255552a10e62692": {
-    "message": "$1 text blocks, $2 with coordinates · Scale $3×$4"
+    "message": "$arg1$ text blocks, $arg2$ with coordinates · Scale $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
   },
   "m_19adaa8fb34ede25": {
-    "message": "$1 text blocks recognized; none need translation"
+    "message": "$arg1$ text blocks recognized; none need translation",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f7cf8b907e09bb6c": {
-    "message": "; $1 unchanged text blocks hidden"
+    "message": "; $arg1$ unchanged text blocks hidden",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_a2ad55034ea859f6": {
-    "message": "Done$1 · $2s"
+    "message": "Done$arg1$ · $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_b875761a78995556": {
     "message": "Clipboard image"
   },
   "m_ae19cb4f305ce651": {
-    "message": "$1 text blocks · Scale $2×$3 · Order $4"
+    "message": "$arg1$ text blocks · Scale $arg2$×$arg3$ · Order $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
   },
   "m_9117469cb275dfa6": {
     "message": "Vision-capable model name"
@@ -603,34 +799,102 @@
     "message": "This website already has a rule with the same selector."
   },
   "m_81f1f1a720788251": {
-    "message": "Cannot connect to $1. Check your network, proxy, and API URL."
+    "message": "Cannot connect to $arg1$. Check your network, proxy, and API URL.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f3ad27c0495ff055": {
-    "message": "Request rejected$1"
+    "message": "Request rejected$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_375d8292ec598ad5": {
-    "message": "The $1 API key is invalid or lacks permission$2"
+    "message": "The $arg1$ API key is invalid or lacks permission$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_83559c2caf2d9a1d": {
-    "message": "Insufficient balance in your $1 account$2"
+    "message": "Insufficient balance in your $arg1$ account$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_b4d78b1bfacc2e0c": {
-    "message": "Model “$1” not found, or the API URL is incorrect$2"
+    "message": "Model “$arg1$” not found, or the API URL is incorrect$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_1b5aa0598d52e738": {
-    "message": "The selection is too long. Translate it in smaller parts$1"
+    "message": "The selection is too long. Translate it in smaller parts$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_6c7e4f22a6f0c723": {
-    "message": "Rate limit or quota exceeded. Try again later$1"
+    "message": "Rate limit or quota exceeded. Try again later$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_c9f0620e747c260e": {
-    "message": "$1 server error ($2)$3"
+    "message": "$arg1$ server error ($arg2$)$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
   },
   "m_8167d3fdefd2f55b": {
-    "message": "Request failed ($1)$2"
+    "message": "Request failed ($arg1$)$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_d8f5a58042fc6b0d": {
-    "message": "Configure your $1 API key first."
+    "message": "Configure your $arg1$ API key first.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_aac9747023e61c2a": {
     "message": "The model did not return a valid JSON array."
@@ -639,16 +903,34 @@
     "message": "The model did not return an array."
   },
   "m_90d478f772504027": {
-    "message": "The model returned $1 items for $2 source items."
+    "message": "The model returned $arg1$ items for $arg2$ source items.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_5ec085071155ead4": {
-    "message": "$1 supports text only. Switch to ChatGPT or DeepSeek to recognize images."
+    "message": "$arg1$ supports text only. Switch to ChatGPT or DeepSeek to recognize images.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b5ccd120e58b4ffb": {
     "message": "DeepL does not support this target language."
   },
   "m_effd9d91d429fcfa": {
-    "message": "Cannot connect to $1. Check your network or proxy."
+    "message": "Cannot connect to $arg1$. Check your network or proxy.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_61f70a2b468db71d": {
     "message": "Your monthly DeepL translation quota is exhausted."
@@ -657,10 +939,23 @@
     "message": "DeepL returned an unexpected response."
   },
   "m_7f1a81709956c7b3": {
-    "message": "DeepL returned $1 translations for $2 source items."
+    "message": "DeepL returned $arg1$ translations for $arg2$ source items.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_47f422807dffe6cb": {
-    "message": "Enter your $1 API key first."
+    "message": "Enter your $arg1$ API key first.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f318cf537d490155": {
     "message": "Connected, but no translation was returned."
@@ -723,22 +1018,51 @@
     "message": "Could not add this rule."
   },
   "m_9703faf7e71b2a5c": {
-    "message": "$1 has reached its limit of $2 rules."
+    "message": "$arg1$ has reached its limit of $arg2$ rules.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_7a8a11ead50742a2": {
     "message": "Add"
   },
   "m_688ec33981980d56": {
-    "message": "$2 rules across $1 websites"
+    "message": "$arg2$ rules across $arg1$ websites",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_6b30cb0e9995608d": {
-    "message": "$1 rules"
+    "message": "$arg1$ rules",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_bce5cd4967adea8b": {
     "message": "Delete website rules"
   },
   "m_5ae5095877338e86": {
-    "message": "Delete all $2 rules for $1?"
+    "message": "Delete all $arg2$ rules for $arg1$?",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_83009fcfe6c1dd94": {
     "message": "New rule"
@@ -768,19 +1092,50 @@
     "message": "Another program or extension is already capturing this tab's audio."
   },
   "m_819842bc861d8f50": {
-    "message": "Could not capture tab audio: $1"
+    "message": "Could not capture tab audio: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_78a86c9a04000e27": {
-    "message": "$1 (cloud recognition)"
+    "message": "$arg1$ (cloud recognition)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_37437c580bdefef0": {
-    "message": "Could not start speech recognition: $1"
+    "message": "Could not start speech recognition: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_37e77e790c005c96": {
-    "message": "[AI Translator] Caption translated in $1ms ($2 $3)"
+    "message": "[AI Translator] Caption translated in $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
   },
   "m_0b746476dc78d018": {
-    "message": "[AI Translator] Shortcut did not translate: $1"
+    "message": "[AI Translator] Shortcut did not translate: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_d4d291491a149142": {
     "message": "Keyboard translation is disabled in settings."
@@ -798,13 +1153,23 @@
     "message": "Your translation will appear here"
   },
   "m_65f5d083cf59b2c5": {
-    "message": "Select text, then right-click → $1"
+    "message": "Select text, then right-click → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b06e78e0d87ebbcb": {
     "message": "Translate text in any language, including Chinese."
   },
   "m_e4dd3da5090fa2dd": {
-    "message": "Context menu: $1"
+    "message": "Context menu: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3d13868593ae4eeb": {
     "message": "Interface language"
@@ -828,19 +1193,42 @@
     "message": "API keys are stored locally and never synced. They are used only to authenticate requests to your chosen provider."
   },
   "m_6076121593793789": {
-    "message": "Translate captions into $1, with one translation request per line. Turn off to show only the source text."
+    "message": "Translate captions into $arg1$, with one translation request per line. Turn off to show only the source text.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_d26e77c5f104f913": {
     "message": "Right-click a region on a page and choose “Add a translation button to this region”, or add a rule manually."
   },
   "m_df3a28050f22403e": {
-    "message": "$1 → $2"
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_4fb56dbb2ca458a0": {
-    "message": "Translating region to $1"
+    "message": "Translating region to $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_1e1c59b043456a1e": {
-    "message": "Translated to $1; click to restore the original"
+    "message": "Translated to $arg1$; click to restore the original",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_fb25e91b6a98300f": {
     "message": "Translate this region"
@@ -870,7 +1258,12 @@
     "message": "Could not retrieve supported DeepL languages. Please try again."
   },
   "m_4dd23759c47be9fc": {
-    "message": "The DeepL API key is invalid$1"
+    "message": "The DeepL API key is invalid$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "extensionName": {
     "message": "AI Translator"

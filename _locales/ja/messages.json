@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "AI翻訳・動画字幕"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "AI翻訳・設定"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "AI翻訳"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "翻訳プロバイダー"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "デフォルトのプロバイダーを選択します。翻訳ポップアップからいつでも切り替えられます。"
+  },
+  "m_59a00b5a0134e610": {
+    "message": "API設定"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "表示"
+  },
+  "m_12404a0b63817240": {
+    "message": "APIキーは"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "プロバイダーのダッシュボード"
+  },
+  "m_7fe42a654775395d": {
+    "message": "で作成してください。"
+  },
+  "m_c98e118e0a43f078": {
+    "message": "モデル"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "詳細設定：カスタムAPI URL"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "接続テスト"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "翻訳の動作"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "翻訳先の言語"
+  },
+  "m_72726d8818f69306": {
+    "message": "中国語"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "ストリーミング出力"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "翻訳をリアルタイムで表示し、待ち時間を短く感じさせます。"
+  },
+  "m_9919810c2932030f": {
+    "message": "原文を表示"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "翻訳の下に折りたたみ式で原文を表示し、見比べやすくします。"
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "選択時のフローティングボタン"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "ショートカットキーで翻訳"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "テキストを選択してショートカットキーを押すと、右クリックメニューを使わずに翻訳して結果を表示します。"
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "現在のショートカット"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "読み込み中…"
+  },
+  "m_37090f45651676fc": {
+    "message": "変更"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "領域翻訳ルール"
+  },
+  "m_ec141602f97fae38": {
+    "message": "ウェブページ上の領域を右クリックし、「この領域に翻訳ボタンを追加」を選ぶと、そのサイトの領域が記憶されます。次回以降、その領域にマウスを合わせると翻訳ボタンが表示されます。"
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "ルールを管理"
+  },
+  "m_58b60fd867baac67": {
+    "message": "動画リアルタイム字幕"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "実験的機能"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "タブの音声を取得して端末上でテキスト化し、バイリンガル字幕に翻訳します。音声はブラウザの外に送信されません。"
+  },
+  "m_1b8f5e262210961c": {
+    "message": "動画リアルタイム字幕を有効にする"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "実験的機能のため未完成です。音声認識、文の区切り、翻訳に誤りが生じたり、字幕が長時間表示されない、ページが重くなる、動画の音声に異常が起きる場合があります。デフォルトではオフです。オンにすると、動画の右クリックメニューと拡張機能アイコンに項目が表示されます。試用目的でのみ、慎重に有効にしてください。"
+  },
+  "m_cacb38617171e87b": {
+    "message": "ウェブページの動画を右クリックし、「動画リアルタイム字幕（実験）」を選択します。プレイヤーが右クリックをブロックする場合は、拡張機能アイコンの「動画リアルタイム字幕」を使用してください。"
+  },
+  "m_e189607eb47e0666": {
+    "message": "動画の言語"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "認識は言語を自動判定しないため、動画に合わせて選択してください。"
+  },
+  "m_96dd88617e672350": {
+    "message": "字幕を翻訳"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "クラウド認識を使用"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "言語パックのダウンロードは不要ですが、動画の音声がGoogleの音声認識サービスに送信され、Googleへのアクセスが必要です。"
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "オフライン言語パックをダウンロード"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "変更は自動的に保存されます"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "プライバシーポリシー"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "右クリック"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "現在のモデル"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "翻訳パネルを開く"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "画像翻訳"
+  },
+  "m_29abef4167eb152f": {
+    "message": "このタブのリアルタイム字幕をオン/オフ"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "設定を開く"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "翻訳パネル · AI 選択翻訳"
+  },
+  "m_63299708d4f7d479": {
+    "message": "翻訳パネル"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "元の言語を自動認識し、選択した言語に翻訳します。パネルは選択内容を記憶します。"
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "設定"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "元の言語"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "元の言語を指定すると交換できます"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "交換"
+  },
+  "m_910887705c7a66d2": {
+    "message": "プロバイダー"
+  },
+  "m_a52a08335185f048": {
+    "message": "翻訳"
+  },
+  "m_354b28c853334568": {
+    "message": "原文"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "クリア"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "翻訳するテキストを貼り付けるか入力…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "訳文"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "コピー"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "画像翻訳 · AI 選択翻訳"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "画像内のテキストを認識し、選択した言語に翻訳します。訳文は認識した位置に重ねて表示されます。"
+  },
+  "m_1477d9e39af456ef": {
+    "message": "現在は検証段階です"
+  },
+  "m_6578246c1828eb16": {
+    "message": "。枠の位置が正確かどうかを確認してください。"
+  },
+  "m_51354da23fa60f98": {
+    "message": "座標形式"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "自動"
+  },
+  "m_217d642265e59d2c": {
+    "message": "0-1 比率"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "画像ピクセル"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "座標順序"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "原文枠 + 訳文"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "訳文のみ"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "枠のみ"
+  },
+  "m_79cbcd837d618881": {
+    "message": "元画像のみ"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "認識して翻訳"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "画像"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "画像をここにドロップ"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "直接"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "貼り付けるか、ここをクリックしてファイルを選択"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "または画像 URL を貼り付けて Enter で読み込み"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "認識結果"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "訳文をコピー"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "モデルの生の応答"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "要素翻訳ルール · AI 選択翻訳"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "ウェブページ上の領域を右クリック →「この領域に翻訳ボタンを追加」を選択すると、ルールがここに記録されます。次回同じサイトを訪問した際、一致する領域にマウスを移動すると翻訳ボタンが表示されます。"
+  },
+  "m_c9f9e18b06233971": {
+    "message": "ルールを追加"
+  },
+  "m_1b590914091ca145": {
+    "message": "すべてクリア"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "ルールはまだありません"
+  },
+  "m_93e924b1de331953": {
+    "message": "この言語"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "$arg1$のオフライン言語パックをダウンロード中です。しばらくしてから再試行してください。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "先に$arg1$のオフライン言語パックをダウンロードしてください。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "このデバイスは$arg1$のオフライン認識に対応していません。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "クラウド認識は$arg1$に対応していません。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "クラウド音声認識サービスに接続できません（Googleへのアクセスが必要です）"
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "タブの音声を読み取れません。"
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "ブラウザが音声認識を許可していません。"
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "音声認識エラー（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "動画字幕エラー"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "音声認識が繰り返し中断されたため、停止しました。"
+  },
+  "m_133899c4819d1798": {
+    "message": "このブラウザは音声認識に対応していません。"
+  },
+  "m_697dae4b009517c9": {
+    "message": "このChromeはデバイス上の音声認識に対応していません。最新版にアップデートするか、設定でクラウド認識に切り替えてください。"
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "タブの音声のキャプチャに失敗しました：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "保存しました"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● Key設定済み"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ Key未設定"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "$arg1$ コンソール",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "空欄の場合は$arg1$を使用します。このプロバイダーが対応する任意のモデル名を入力できます。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "空欄の場合は$arg1$を使用します。プロキシや中継アドレスを入力する場合、そのドメインへの追加の許可が必要です。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$はテキストのみ翻訳できます。画像翻訳にはChatGPTまたはDeepSeekに切り替えてください。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$は翻訳を一度にまとめて返すため、逐次表示はされません。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "未登録"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "コマンドが登録されませんでした。chrome://extensions で拡張機能を再読み込みしてください。"
+  },
+  "m_52496e5aeff43353": {
+    "message": "未割り当て"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "推奨ショートカットは拡張機能の「インストール時」のみ有効なため、ここで手動設定が必要です：右側の「変更」をクリックし、開いたページで「選択したテキストを翻訳」の行を見つけ、使用したいキーの組み合わせを押してください。"
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "読み取り失敗"
+  },
+  "m_11549f27aead732c": {
+    "message": "ショートカット情報を読み取れません。"
+  },
+  "m_c634021981632019": {
+    "message": "クラウド認識には言語パックは不要です。"
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "このChromeはデバイス上の音声認識に対応していません。最新版にアップデートするか、クラウド認識に切り替えてください。"
+  },
+  "m_3177d62d329033f9": {
+    "message": "言語パックの状態を読み取れませんでした：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "オフライン言語パックの準備ができました"
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "オフライン言語パックがまだダウンロードされていません（英語パックと一緒にダウンロードされ、認識エンジンも付属します）"
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "オフライン言語パックがまだダウンロードされていません"
+  },
+  "m_af27ec592962322f": {
+    "message": "オフライン言語パックをダウンロード中…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "このデバイスはこの言語のオフライン認識に対応していません。クラウド認識に切り替えてください。"
+  },
+  "m_c897be932b695c0b": {
+    "message": "有効なhttpsアドレスを入力してください（セキュリティ上の理由によりhttpは非対応です）。"
+  },
+  "m_050d25598c0376c9": {
+    "message": "$arg1$へのアクセス許可が必要です：下の「接続テスト」をクリックすると許可リクエストが表示されます。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "非表示"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "オフライン言語パックをダウンロード中です。回線速度によってはしばらくかかる場合があります…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "ダウンロード失敗：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "ダウンロードに失敗しました。しばらくしてから再試行してください。"
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg1$件のサイト、$arg2$件のルールを記録しました",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "ルールはまだありません"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "$arg1$へのアクセスが許可されていないため、このAPIアドレスは使用できません。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "接続中…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "接続済み（$arg1$）：$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "接続テストに失敗しました"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "設定済み"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "未設定"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "自動検出"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$文字 · 上限を超えているため、最初の$arg2$文字のみ翻訳します",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$文字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "停止"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "翻訳に失敗しました"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "モデルが何も返しませんでした。再試行するか、別のモデルを試してください。"
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "コピーしました"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "コピーに失敗しました"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "訳"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "テキストなし"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "失敗"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "原文を復元"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "右クリックした要素が記録されていません。"
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "この要素の再利用可能なセレクターを生成できませんでした。"
+  },
+  "m_e68fcc025975add3": {
+    "message": "このページには有効なドメインがないため、ルールを保存できません。"
+  },
+  "m_fdc852167becfb29": {
+    "message": "このサイトのルールが上限に達しました。"
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "元の画像を表示"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "閉じる（Esc）"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "閉じる"
+  },
+  "m_7cd62999f274e547": {
+    "message": "翻訳を表示"
+  },
+  "m_92c1e98d69346932": {
+    "message": "この画像に翻訳が必要なテキストはありません。"
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "この画像からテキストを認識できませんでした。"
+  },
+  "m_8646e9fb979e4595": {
+    "message": "$arg1$件のテキストを翻訳中…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "画像を読み込み中…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "この画像はまだ読み込みが完了していません。"
+  },
+  "m_e640442431db48ae": {
+    "message": "認識中 $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "画像内のテキストを認識中…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "この画像を取得できません（サイトのホットリンク防止の可能性があります）。画像をコピーして「画像翻訳」パネルに貼り付けてください。"
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "認識に失敗しました"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "設定"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "字幕を閉じる"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "$arg1$で聞き取り中…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "接続中…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$。まず原文のみ表示します。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "翻訳を利用できません"
+  },
+  "m_5f6069123981822c": {
+    "message": "字幕翻訳が繰り返し失敗しました（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "拡張機能が更新されました。ページを更新して再試行してください。"
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "音声認識サービスに接続できませんでした。もう一度お試しください。"
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "AI翻訳結果"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "翻訳"
+  },
+  "m_f823028377c7f65d": {
+    "message": "翻訳プラットフォームを切り替え"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "再翻訳"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "$arg1$に翻訳",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "選択範囲が長いため、先頭の$arg1$文字のみ翻訳しました。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "エラーが発生しました"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "ファイルを読み込めませんでした"
+  },
+  "m_572993f5820a55ba": {
+    "message": "画像を読み込めませんでした"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "画像を読み込み中…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "認識用に$arg1$×$arg2$に縮小",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "クロスオリジンのため、APIがURLから画像を取得します"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "この段落の座標がモデルから返されませんでした"
+  },
+  "m_9255552a10e62692": {
+    "message": "$arg1$段落を認識、$arg2$段落に座標あり · 座標スケール $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "$arg1$段落を認識、翻訳が必要なものはありません",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": "、翻訳不要な$arg1$段落を非表示",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "完了$arg1$ · 所要時間 $arg2$秒",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "クリップボードの画像"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$段落 · スケール $arg2$×$arg3$ · 順序 $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "視覚対応モデル名"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "セレクターを入力してください。"
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "ルールが存在しません。"
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "このサイトには同じセレクターのルールが既にあります。"
+  },
+  "m_81f1f1a720788251": {
+    "message": "$arg1$に接続できません。ネットワーク、プロキシ、API URLを確認してください",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "リクエストが拒否されました$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "$arg1$のAPI Keyが無効か権限がありません$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "$arg1$アカウントの残高が不足しています$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "モデル「$arg1$」が見つからないか、API URLが正しくありません$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "選択したテキストが長すぎます。分割して翻訳してください$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "リクエストが多すぎるか、利用枠を使い切りました。しばらくしてから再試行してください$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "$arg1$サーバーエラー（$arg2$）$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "リクエストに失敗しました（$arg1$）$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "$arg1$のAPI Keyがまだ設定されていません",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "モデルが有効なJSON配列を返しませんでした"
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "モデルが配列以外を返しました"
+  },
+  "m_90d478f772504027": {
+    "message": "モデルは$arg1$件を返しましたが、原文は$arg2$件です",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$はテキストのみ対応で、画像内の文字は認識できません。ChatGPTまたはDeepSeekに切り替えてください",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepLはこのターゲット言語に対応していません"
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "$arg1$に接続できません。ネットワークまたはプロキシを確認してください",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "DeepLの今月の翻訳枠を使い切りました"
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepLが予期しない内容を返しました"
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepLは$arg1$件を返しましたが、原文は$arg2$件です",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "先に$arg1$のAPI Keyを入力してください",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "接続は成功しましたが、翻訳が返されませんでした"
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "接続は成功しましたが、モデルが内容を返しませんでした。別のモデルをお試しください"
+  },
+  "m_076603dff5ad4734": {
+    "message": "OpenAI公式API"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "中国国内から直接接続、より低価格"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "機械翻訳。モデルの選択は不要"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "英語"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "日本語"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "韓国語"
+  },
+  "m_99cdf164a8140865": {
+    "message": "フランス語"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "有効な CSS セレクターではありません"
+  },
+  "m_051836569928a9f9": {
+    "message": "編集"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "削除"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "CSS セレクター"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "保存"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "キャンセル"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "ドメイン（例: example.com）。URL を直接貼り付けても可"
+  },
+  "m_222952431147e537": {
+    "message": "ドメイン"
+  },
+  "m_8ec296825c405074": {
+    "message": "CSS セレクター（例: div#main > article.post > p）"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "有効なドメインを入力してください"
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "このルールを追加できませんでした"
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$ のルールが上限（$arg2$ 件）に達しました",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "追加"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg1$ 件のサイト、合計 $arg2$ 件のルール",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$ 件",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "サイト全体のルールを削除"
+  },
+  "m_5ae5095877338e86": {
+    "message": "$arg1$ の全 $arg2$ 件のルールを削除しますか？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "新しいルール"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "すべてのサイトの領域翻訳ルールを削除しますか？この操作は元に戻せません。"
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "この領域に翻訳ボタンを追加"
+  },
+  "m_9e20239a7234a964": {
+    "message": "画像内のテキストを翻訳"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "動画のリアルタイム字幕（実験的）"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "（なし）"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "タブの音声をキャプチャし、ローカルで音声認識して動画字幕を生成"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "このタブのキャプチャ許可が得られませんでした。動画の右クリックメニューまたは拡張機能アイコンから再度開いてください"
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "このタブの音声は別のプログラム（画面録画や他の拡張機能など）がキャプチャ中です"
+  },
+  "m_819842bc861d8f50": {
+    "message": "このタブの音声をキャプチャできません: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$（クラウド認識）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "音声認識を開始できません: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[AI 翻訳] 字幕翻訳 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[AI 翻訳] ショートカットで翻訳が実行されませんでした: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "設定で「ショートカット翻訳」が無効になっています"
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "現在のタブを取得できません"
+  },
+  "m_9aea932d4811acdc": {
+    "message": "このページではスクリプトを注入できません（例: chrome:// で始まるページ）"
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "テキストが選択されていません"
+  },
+  "m_ffafce8c4494350d": {
+    "message": "翻訳結果がここに表示されます"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "テキストを選択して右クリック → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "中国語を含むあらゆる言語のテキストを翻訳できます。"
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "右クリックメニュー: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "表示言語"
+  },
+  "m_b9c76f096644d599": {
+    "message": "Chrome に従う"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "デフォルトの翻訳先言語"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "インターフェース言語と翻訳先言語は個別に選択できます。"
+  },
+  "m_2b41309c016fe33f": {
+    "message": "テキストを選択し、右クリック、選択ボタン、またはキーボードショートカットで選択した言語に翻訳します。"
+  },
+  "m_35a88c7914864612": {
+    "message": "テキストを選択すると、選択範囲の横に翻訳ボタンを表示します。"
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "API Key は本機にのみ保存され、同期されません。選択したプロバイダーへの認証にのみ使用されます。"
+  },
+  "m_6076121593793789": {
+    "message": "字幕を $arg1$ に翻訳します。1 行ごとに翻訳 API を呼び出します。オフにすると原文のみ表示されます。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "ウェブページを開き、翻訳したい領域を右クリックして「この領域に翻訳ボタンを追加」を選択します。ルールを手動で追加することもできます。"
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "領域を $arg1$ に翻訳中",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "$arg1$ に翻訳済み。クリックで原文を復元",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "この領域を翻訳"
+  },
+  "m_2121da766aab06cc": {
+    "message": "デフォルトの翻訳先に設定"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "選択したテキストを翻訳"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "選択範囲に翻訳できるテキストがありません"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "選択したプロバイダーで、テキストと画像を読みたい言語に翻訳します。"
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "翻訳接続が切断されました。もう一度お試しください。"
+  },
+  "m_71abc609ccad93e7": {
+    "message": "応答がありません"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL はこのソース言語に対応していません"
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "DeepL の対応言語を取得できませんでした。もう一度お試しください。"
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "DeepL の API Key が無効です$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "AI翻訳"
+  },
+  "extensionDescription": {
+    "message": "選択したプロバイダーで、テキストと画像を読みたい言語に翻訳します。"
+  },
+  "translateSelection": {
+    "message": "選択したテキストを翻訳"
+  }
+}

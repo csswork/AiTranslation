@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "AI 번역 · 동영상 자막"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "AI 번역 · 설정"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "AI 번역"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "번역 플랫폼"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "기본으로 사용할 플랫폼을 선택하세요. 팝업에서도 언제든지 전환할 수 있습니다."
+  },
+  "m_59a00b5a0134e610": {
+    "message": "API 설정"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "표시"
+  },
+  "m_12404a0b63817240": {
+    "message": "에서 키를 생성하세요"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "플랫폼 콘솔"
+  },
+  "m_7fe42a654775395d": {
+    "message": "에서 생성하세요."
+  },
+  "m_c98e118e0a43f078": {
+    "message": "모델"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "고급: 사용자 지정 API 주소"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "연결 테스트"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "번역 동작"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "대상 언어"
+  },
+  "m_72726d8818f69306": {
+    "message": "중국어"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "스트리밍 출력"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "번역문을 실시간으로 표시하여 대기 시간을 줄입니다."
+  },
+  "m_9919810c2932030f": {
+    "message": "팝업에 원문 유지"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "번역문 아래에 선택한 원문을 접어서 표시하여 비교할 수 있습니다."
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "선택 시 플로팅 버튼"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "단축키 번역"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "텍스트를 선택한 후 단축키를 누르면 바로 번역되어 번역문이 표시됩니다. 우클릭 메뉴를 사용할 필요가 없습니다."
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "현재 단축키"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "불러오는 중…"
+  },
+  "m_37090f45651676fc": {
+    "message": "변경"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "요소 번역 규칙"
+  },
+  "m_ec141602f97fae38": {
+    "message": "웹페이지에서 특정 영역을 우클릭하고 '이 영역에 번역 버튼 추가'를 선택하면 해당 웹사이트의 이 영역이 기억됩니다. 다음 방문 시 이런 영역에 마우스를 올리면 번역 버튼이 나타납니다."
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "규칙 관리"
+  },
+  "m_58b60fd867baac67": {
+    "message": "동영상 실시간 자막"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "실험"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "탭의 소리를 캡처하여 로컬에서 텍스트로 인식한 후 이중 언어 자막으로 번역합니다. 오디오는 브라우저를 벗어나지 않습니다."
+  },
+  "m_1b8f5e262210961c": {
+    "message": "동영상 실시간 자막 사용"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "실험적 기능으로 완성도가 낮고 불완전합니다. 음성 인식, 문장 분리, 번역문에 오류가 발생할 수 있으며, 자막이 오랫동안 표시되지 않거나 페이지가 느려지거나 동영상 소리에 이상이 생길 수 있습니다. 기본적으로 꺼져 있으며, 켜야 동영상 우클릭 메뉴 항목과 확장 프로그램 아이콘의 항목이 나타납니다. 체험용으로만 신중하게 켜세요."
+  },
+  "m_cacb38617171e87b": {
+    "message": "웹페이지 동영상에서 우클릭하고 '동영상 실시간 자막(실험)'을 선택하세요. 플레이어가 우클릭을 막는 경우 확장 프로그램 아이콘의 '동영상 실시간 자막'을 클릭하세요."
+  },
+  "m_e189607eb47e0666": {
+    "message": "동영상 언어"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "인식은 언어를 자동으로 판단하지 않으므로 동영상에 맞게 선택해야 합니다."
+  },
+  "m_96dd88617e672350": {
+    "message": "자막 번역"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "클라우드 인식 사용"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "언어 팩을 다운로드할 필요가 없지만, 동영상 소리가 Google 음성 인식 서비스로 전송되며 Google에 접속할 수 있어야 합니다."
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "오프라인 언어 팩 다운로드"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "변경 사항은 자동으로 저장됩니다"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "개인정보 처리방침"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "우클릭"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "현재 모델"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "번역 패널 열기"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "이미지 번역"
+  },
+  "m_29abef4167eb152f": {
+    "message": "현재 탭의 동영상 실시간 자막 켜기/끄기"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "설정 열기"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "번역 패널 · AI 번역기"
+  },
+  "m_63299708d4f7d479": {
+    "message": "번역 패널"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "원본 언어를 자동으로 감지하여 선택한 대상 언어로 번역합니다. 패널은 선택 사항을 기억합니다."
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "설정"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "원본 언어"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "원본 언어를 지정하면 교체할 수 있습니다"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "교체"
+  },
+  "m_910887705c7a66d2": {
+    "message": "제공자"
+  },
+  "m_a52a08335185f048": {
+    "message": "번역"
+  },
+  "m_354b28c853334568": {
+    "message": "원문"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "지우기"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "번역할 텍스트를 붙여넣거나 입력하세요…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "번역문"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "복사"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "이미지 번역 · AI 번역기"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "이미지 속 텍스트를 인식하여 선택한 언어로 번역합니다. 번역문은 인식된 위치에 원본 이미지 위로 표시됩니다."
+  },
+  "m_1477d9e39af456ef": {
+    "message": "현재 실험 단계입니다"
+  },
+  "m_6578246c1828eb16": {
+    "message": ", 상자 위치의 정확도를 확인하세요."
+  },
+  "m_51354da23fa60f98": {
+    "message": "좌표 형식"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "자동"
+  },
+  "m_217d642265e59d2c": {
+    "message": "0-1 비율"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "이미지 픽셀"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "좌표 순서"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "원문 상자 + 번역문"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "번역문만"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "상자만"
+  },
+  "m_79cbcd837d618881": {
+    "message": "원본 이미지만"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "인식 및 번역"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "이미지"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "이미지를 여기에 끌어다 놓으세요"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "다음도 가능합니다:"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "붙여넣기 또는 여기를 클릭하여 파일 선택"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "또는 이미지 URL을 붙여넣고 Enter를 누르세요"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "인식 결과"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "번역문 복사"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "모델 원본 응답"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "요소 번역 규칙 · AI 번역기"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "웹페이지에서 영역을 마우스 오른쪽 버튼으로 클릭하고 「이 영역에 번역 버튼 추가」를 선택하면 규칙이 여기에 기록됩니다. 다음에 같은 웹사이트를 방문할 때 일치하는 영역 위로 마우스를 이동하면 번역 버튼이 나타납니다."
+  },
+  "m_c9f9e18b06233971": {
+    "message": "규칙 추가"
+  },
+  "m_1b590914091ca145": {
+    "message": "모두 지우기"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "아직 규칙이 없습니다"
+  },
+  "m_93e924b1de331953": {
+    "message": "이 언어"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "$arg1$의 오프라인 언어 팩을 아직 다운로드 중입니다. 나중에 다시 시도하세요.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "먼저 $arg1$의 오프라인 언어 팩을 다운로드하세요.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "이 기기는 $arg1$의 오프라인 인식을 지원하지 않습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "클라우드 인식은 $arg1$을 지원하지 않습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "클라우드 음성 인식 서비스에 연결할 수 없습니다(Google 접근 필요)."
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "탭 오디오를 읽을 수 없습니다."
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "브라우저에서 음성 인식을 허용하지 않습니다."
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "음성 인식 오류($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "동영상 자막 오류"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "음성 인식이 반복적으로 중단되어 정지했습니다."
+  },
+  "m_133899c4819d1798": {
+    "message": "현재 브라우저는 음성 인식을 지원하지 않습니다."
+  },
+  "m_697dae4b009517c9": {
+    "message": "현재 Chrome은 기기 내 음성 인식을 지원하지 않습니다. 최신 버전으로 업데이트하거나 설정에서 클라우드 인식으로 전환하세요."
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "탭 오디오 캡처 실패: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "저장됨"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● Key 설정됨"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ Key 미설정"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "$arg1$ 콘솔",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "비워 두면 $arg1$을 사용합니다. 해당 플랫폼이 지원하는 모델 이름을 직접 입력할 수 있습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "비워 두면 $arg1$을 사용합니다. 프록시 또는 중계 주소를 입력하려면 해당 도메인에 대한 추가 권한이 필요합니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$은 텍스트만 번역할 수 있습니다. 이미지 번역은 ChatGPT 또는 DeepSeek로 전환하세요.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$은 전체 번역을 한 번에 반환하며 실시간 표시를 지원하지 않습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "등록되지 않음"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "명령이 등록되지 않았습니다. chrome://extensions에서 확장 프로그램을 다시 로드하세요."
+  },
+  "m_52496e5aeff43353": {
+    "message": "할당되지 않음"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "변경을 클릭하고 이 확장 프로그램의 번역 명령을 찾아 원하는 단축키를 지정하세요."
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "읽기 실패"
+  },
+  "m_11549f27aead732c": {
+    "message": "단축키 정보를 읽을 수 없습니다."
+  },
+  "m_c634021981632019": {
+    "message": "클라우드 인식에는 언어 팩이 필요하지 않습니다."
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "기기 내 음성 인식을 사용하려면 Chrome을 업데이트하거나 클라우드 인식을 사용하세요."
+  },
+  "m_3177d62d329033f9": {
+    "message": "언어 팩 상태를 확인할 수 없습니다: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "오프라인 언어 팩이 준비되었습니다."
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "오프라인 언어 팩이 없습니다. 영어 팩에 인식 엔진이 포함되어 함께 다운로드됩니다."
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "오프라인 언어 팩이 없습니다."
+  },
+  "m_af27ec592962322f": {
+    "message": "오프라인 언어 팩 다운로드 중…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "이 기기는 이 언어의 오프라인 인식을 지원하지 않습니다. 클라우드 인식을 사용하세요."
+  },
+  "m_c897be932b695c0b": {
+    "message": "유효한 HTTPS 주소를 입력하세요. HTTP는 지원되지 않습니다."
+  },
+  "m_050d25598c0376c9": {
+    "message": "$arg1$에 대한 권한이 필요합니다. 연결 테스트를 클릭하여 권한을 부여하세요.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "숨기기"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "오프라인 언어 팩 다운로드 중입니다. 시간이 걸릴 수 있습니다…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "다운로드 실패: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "다운로드 실패. 나중에 다시 시도하세요."
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg1$개 웹사이트, $arg2$개 규칙 기록됨",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "규칙 없음"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "$arg1$에 대한 권한이 없어 이 API 주소를 사용할 수 없습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "연결 중…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "연결됨($arg1$): $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "연결 테스트 실패"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "설정됨"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "설정되지 않음"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "자동 감지"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$자 · 상한을 초과하여 처음 $arg2$자만 번역됩니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$자",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "중지"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "번역 실패"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "모델이 아무 내용도 반환하지 않았습니다. 다시 시도하거나 다른 모델을 선택하세요."
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "복사됨"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "복사 실패"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "번역"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "텍스트 없음"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "실패"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "원문 복원"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "우클릭한 요소가 기록되지 않았습니다."
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "이 요소에 사용할 재사용 가능한 선택자를 생성할 수 없습니다."
+  },
+  "m_e68fcc025975add3": {
+    "message": "이 페이지에는 유효한 도메인이 없어 규칙을 저장할 수 없습니다."
+  },
+  "m_fdc852167becfb29": {
+    "message": "이 웹사이트의 규칙이 상한에 도달했습니다."
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "원본 이미지 보기"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "닫기(Esc)"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "닫기"
+  },
+  "m_7cd62999f274e547": {
+    "message": "번역 보기"
+  },
+  "m_92c1e98d69346932": {
+    "message": "이미지에 번역할 텍스트가 없습니다."
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "이미지에서 텍스트를 인식하지 못했습니다."
+  },
+  "m_8646e9fb979e4595": {
+    "message": "$arg1$개 문단 번역 중…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "이미지 읽는 중…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "이 이미지는 아직 로드가 끝나지 않았습니다."
+  },
+  "m_e640442431db48ae": {
+    "message": "인식 중 $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "이미지 텍스트 인식 중…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "이 이미지를 가져올 수 없습니다(사이트의 핫링크 방지일 수 있음). 이미지를 복사한 뒤 '이미지 번역' 패널에 붙여넣으세요."
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "인식 실패"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "설정으로 이동"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "자막 끄기"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "$arg1$ 듣는 중…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "연결 중…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$. 우선 원문 자막만 표시합니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "번역을 사용할 수 없음"
+  },
+  "m_5f6069123981822c": {
+    "message": "자막 번역이 계속 실패했습니다($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "확장 프로그램이 업데이트되었습니다. 페이지를 새로 고친 후 다시 시도하세요."
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "음성 인식 서비스에 연결하지 못했습니다. 다시 시도하세요."
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "AI 번역 결과"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "번역"
+  },
+  "m_f823028377c7f65d": {
+    "message": "번역 플랫폼 전환"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "다시 번역"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "$arg1$(으)로 번역",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "선택한 내용이 길어 처음 $arg1$자만 번역했습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "오류가 발생했습니다"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "파일을 읽지 못했습니다"
+  },
+  "m_572993f5820a55ba": {
+    "message": "이미지를 불러오지 못했습니다"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "이미지 불러오는 중…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "인식을 위해 $arg1$×$arg2$(으)로 축소",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "교차 출처 이미지라 API가 URL로 가져옵니다"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "이 문단의 좌표를 모델이 반환하지 않았습니다"
+  },
+  "m_9255552a10e62692": {
+    "message": "$arg1$개 문단 인식, $arg2$개 좌표 포함 · 좌표 기준 $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "$arg1$개 문단 인식, 번역이 필요 없습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": ", 번역이 필요 없는 $arg1$개 문단 숨김",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "완료$arg1$ · $arg2$초 소요",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "클립보드 이미지"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$개 문단 · 기준 $arg2$×$arg3$ · 순서 $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "비전 지원 모델 이름"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "선택자는 비워 둘 수 없습니다"
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "규칙이 존재하지 않습니다"
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "이 웹사이트에 이미 같은 선택자 규칙이 있습니다"
+  },
+  "m_81f1f1a720788251": {
+    "message": "$arg1$에 연결할 수 없습니다. 네트워크, 프록시 또는 API 주소를 확인하세요",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "요청이 거부되었습니다$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "$arg1$ API Key가 유효하지 않거나 권한이 없습니다$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "$arg1$ 계정 잔액이 부족합니다$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "모델 “$arg1$”을(를) 찾을 수 없거나 API 주소가 올바르지 않습니다$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "선택한 텍스트가 너무 깁니다. 나눠서 번역하세요$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "요청이 너무 잦거나 할당량을 모두 사용했습니다. 나중에 다시 시도하세요$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "$arg1$ 서버 오류($arg2$)$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "요청 실패($arg1$)$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "$arg1$ API Key가 아직 설정되지 않았습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "모델이 올바른 JSON 배열을 반환하지 않았습니다"
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "모델이 배열을 반환하지 않았습니다"
+  },
+  "m_90d478f772504027": {
+    "message": "모델이 $arg1$개를 반환했지만 원문 $arg2$개와 맞지 않습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$은(는) 텍스트만 번역하며 이미지 속 글자는 인식하지 못합니다. ChatGPT 또는 DeepSeek로 전환하세요",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepL은 이 대상 언어를 지원하지 않습니다"
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "$arg1$에 연결할 수 없습니다. 네트워크 또는 프록시를 확인하세요",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "DeepL 이번 달 번역 할당량을 모두 사용했습니다"
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepL이 예상치 못한 응답을 반환했습니다"
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepL이 $arg1$개를 반환했지만 원문 $arg2$개와 맞지 않습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "먼저 $arg1$ API Key를 입력하세요",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "API는 연결되었지만 번역문이 반환되지 않았습니다"
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "API는 연결되었지만 모델이 내용을 반환하지 않았습니다. 다른 모델을 사용해 보세요"
+  },
+  "m_076603dff5ad4734": {
+    "message": "OpenAI 공식 API"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "중국 내 직접 연결, 더 저렴한 가격"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "기계 번역, 모델 선택 불필요"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "영어"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "일본어"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "한국어"
+  },
+  "m_99cdf164a8140865": {
+    "message": "프랑스어"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "유효하지 않은 CSS 선택자입니다."
+  },
+  "m_051836569928a9f9": {
+    "message": "편집"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "삭제"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "CSS 선택자"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "저장"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "취소"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "도메인, 예: example.com (URL을 직접 붙여넣어도 됨)"
+  },
+  "m_222952431147e537": {
+    "message": "도메인"
+  },
+  "m_8ec296825c405074": {
+    "message": "CSS 선택자, 예: div#main > article.post > p"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "유효한 도메인을 입력하세요."
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "이 규칙을 추가할 수 없습니다."
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$의 규칙이 최대치($arg2$개)에 도달했습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "추가"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg1$개 사이트, 총 $arg2$개 규칙",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$개",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "사이트 전체 삭제"
+  },
+  "m_5ae5095877338e86": {
+    "message": "$arg1$의 모든 $arg2$개 규칙을 삭제할까요?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "새 규칙"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "모든 사이트의 영역 번역 규칙을 삭제할까요? 이 작업은 되돌릴 수 없습니다."
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "이 영역에 번역 버튼 추가"
+  },
+  "m_9e20239a7234a964": {
+    "message": "이미지 속 텍스트 번역"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "실시간 동영상 자막 (실험적)"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "(없음)"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "탭 오디오를 캡처하여 로컬에서 음성 인식으로 동영상 자막 생성"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "이 탭 캡처 권한이 없습니다. 동영상 우클릭 메뉴 또는 확장 아이콘에서 다시 열어주세요."
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "다른 프로그램(예: 화면 녹화 또는 다른 확장)이 이 탭의 오디오를 캡처 중입니다."
+  },
+  "m_819842bc861d8f50": {
+    "message": "이 탭의 오디오를 캡처할 수 없습니다: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$ (클라우드 인식)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "음성 인식을 시작할 수 없습니다: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[AI 번역] 자막 번역 $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[AI 번역] 단축키가 번역을 실행하지 않았습니다: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "설정에서 '단축키 번역'이 꺼져 있습니다."
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "현재 탭을 찾을 수 없습니다."
+  },
+  "m_9aea932d4811acdc": {
+    "message": "이 페이지는 스크립트 주입이 허용되지 않습니다 (예: chrome:// 페이지)."
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "선택된 텍스트가 없습니다."
+  },
+  "m_ffafce8c4494350d": {
+    "message": "번역이 여기에 표시됩니다"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "텍스트를 선택한 후 우클릭 → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "중국어를 포함한 모든 언어의 텍스트를 번역할 수 있습니다."
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "우클릭 메뉴: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "인터페이스 언어"
+  },
+  "m_b9c76f096644d599": {
+    "message": "Chrome 따르기"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "기본 번역 대상 언어"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "인터페이스 언어와 번역 대상 언어를 각각 선택할 수 있습니다."
+  },
+  "m_2b41309c016fe33f": {
+    "message": "텍스트를 선택한 후 마우스 오른쪽 버튼, 플로팅 버튼 또는 단축키로 선택한 언어로 번역하세요."
+  },
+  "m_35a88c7914864612": {
+    "message": "텍스트를 선택하면 선택 영역 옆에 번역 버튼을 표시합니다."
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "API Key는 본 기기에만 저장되며 동기화되지 않습니다. 선택한 플랫폼의 인증에만 사용됩니다."
+  },
+  "m_6076121593793789": {
+    "message": "자막을 $arg1$(으)로 번역하며, 각 줄마다 번역 API를 한 번 호출합니다. 끄면 원문만 표시됩니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "웹페이지를 열고 번역할 영역을 마우스 오른쪽 버튼으로 클릭한 뒤 「이 영역에 번역 버튼 추가」를 선택하세요. 규칙을 직접 추가할 수도 있습니다."
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "영역을 $arg1$(으)로 번역하는 중",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "$arg1$(으)로 번역됨; 클릭하면 원문으로 복원됩니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "이 영역 번역"
+  },
+  "m_2121da766aab06cc": {
+    "message": "기본 대상 언어로 설정"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "선택한 텍스트 번역"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "선택한 내용에 번역할 텍스트가 없습니다"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "선택한 플랫폼으로 텍스트와 이미지를 원하는 언어로 번역하세요."
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "번역 연결이 끊어졌습니다. 다시 시도하세요."
+  },
+  "m_71abc609ccad93e7": {
+    "message": "응답 없음"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL은 이 원본 언어를 지원하지 않습니다"
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "DeepL 지원 언어를 불러올 수 없습니다. 다시 시도하세요."
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "DeepL API Key가 유효하지 않습니다$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "AI 번역"
+  },
+  "extensionDescription": {
+    "message": "선택한 플랫폼으로 텍스트와 이미지를 원하는 언어로 번역하세요."
+  },
+  "translateSelection": {
+    "message": "선택한 텍스트 번역"
+  }
+}

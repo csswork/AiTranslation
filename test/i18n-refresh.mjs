@@ -1,0 +1,41 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import assert from 'node:assert/strict';
+const repo = new URL('../', import.meta.url).pathname;
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'aitr-refresh-'));
+const write = (name, value) => fs.writeFileSync(path.join(dir, name), JSON.stringify(value));
+try {
+  for (const name of ['scripts', 'extension-i18n', 'src']) fs.mkdirSync(path.join(dir, name));
+  for (const name of ['translate-extension-i18n.mjs', 'extension-messages.mjs']) fs.copyFileSync(path.join(repo, 'scripts', name), path.join(dir, 'scripts', name));
+  write('extension-i18n/locales.json', [{ id: 'en', prompt: 'English' }, { id: 'fr', prompt: 'French' }]);
+  write('extension-i18n/en.json', { 翻译: 'Translate' });
+  write('extension-i18n/fr.json', { 翻译: 'Traduire' });
+  write('extension-i18n/source-snapshot.json', { fr: { 翻译: 'Translate' } });
+  fs.writeFileSync(path.join(dir, 'src/ui.js'), "t('翻译');");
+  let calls = [];
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(options.body);
+    calls.push(body);
+    const items = JSON.parse(body.messages[1].content);
+    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ translations: items.map(({ id, source }) => ({ id, text: source === '关闭' ? body.messages[0].content.includes('into English') ? 'Close' : 'Fermer' : 'Traduire le texte' })) }) } }] }) };
+  };
+  const run = async (round) => import(pathToFileURL(path.join(dir, 'scripts/translate-extension-i18n.mjs')).href + `?round=${round}`);
+  await run(1);
+  assert.equal(calls.length, 0, 'Unchanged messages must not call the API');
+  fs.writeFileSync(path.join(dir, '.env.local'), 'DEEPSEEK_API_KEY=fixture-only');
+  write('extension-i18n/en.json', { 翻译: 'Translate text' });
+  await run(2);
+  assert.equal(calls.length, 1, 'Changed English must invalidate cached translations');
+  assert.equal(calls[0].model, 'deepseek-flash');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'extension-i18n/fr.json'))).翻译, 'Traduire le texte');
+  fs.appendFileSync(path.join(dir, 'src/ui.js'), "t('关闭');");
+  await run(3);
+  assert.equal(calls.length, 3, 'New UI messages refresh English and the target catalog');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'extension-i18n/en.json'))).关闭, 'Close');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'extension-i18n/fr.json'))).关闭, 'Fermer');
+  await run(4);
+  assert.equal(calls.length, 3, 'Repeated builds reuse the refreshed translations');
+  console.log('Local refresh: no-op cache, content edits and new UI messages passed');
+} finally { fs.rmSync(dir, { recursive: true, force: true }); }

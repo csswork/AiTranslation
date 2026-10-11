@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Entiende el texto en otro idioma con solo seleccionarlo y hacer clic derecho</title>
-<meta name="description" content="Una extensión de Chrome de código abierto: selecciona texto en otro idioma, haz clic derecho y léelo traducido en el mismo lugar; también traduce zonas enteras y el texto de las imágenes. Trae tu propia API Key, sin servidores, sin estadísticas y sin seguimiento." />
+<meta name="description" content="Una extensión de Chrome de código abierto: traduce el texto seleccionado, regiones completas y el texto de las imágenes al idioma que elijas. 24 idiomas de destino, con tu propia API Key, sin estadísticas ni rastreo." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://huaci.app/es/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Selecciona, haz clic derecho y sigue leyendo. El texto de las páginas, zonas enteras y el texto de las imágenes se traducen en el mismo lugar. Código abierto, sin servidores, trae tu propia API Key." />
+<meta property="og:description" content="Selecciona texto, haz clic derecho y sigue leyendo. El texto de páginas web, regiones completas y el texto de las imágenes se pueden traducir al idioma que elijas. Código abierto, con tu propia API Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>Código abierto</b> GPL-3.0 · Trae tu propia API Key</span>
         <h1>Selecciona, haz clic derecho,<br /><span class="dim">y sigue leyendo.</span></h1>
-        <p class="hero-sub">Una extensión de Chrome. El texto en otro idioma de las páginas, zonas enteras e incluso el texto de las imágenes se traducen en el mismo lugar. La traducción aparece palabra por palabra, en streaming, con tu propia API Key y sin pasar por ningún servidor.</p>
+        <p class="hero-sub">Una extensión de Chrome. El texto seleccionado, regiones completas y el texto de las imágenes se pueden traducir al idioma que elijas. 24 idiomas de destino, idioma de la interfaz configurable por separado, conexión directa a la plataforma elegida con tu propia API Key.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Añadir a Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Ver el código</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>Sin servidores · Sin estadísticas</span> <span><i class="dot"></i>Cuatro formas de traducir</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Traducción por selección</h3>
-            <p>Selecciona un fragmento de texto que no esté en chino y haz clic derecho en «Traducir al chino»; la traducción aparece palabra por palabra en una ventana en el centro de la pantalla.</p>
+            <p>Selecciona texto en cualquier idioma, haz clic derecho y elige traducir; la traducción aparece carácter a carácter en la ventana emergente. Puedes cambiar temporalmente el idioma de destino y volver a traducir desde el texto original.</p>
             <ul>
-              <li>Si lo seleccionado ya está en chino, la opción no aparece; lo mismo ocurre con números, signos de puntuación y emojis</li>
+              <li>Se pueden traducir chino, palabras cortas y combinaciones de idiomas; los números, la puntuación y los emojis no muestran la opción de traducción</li>
               <li>La ventana está centrada y se puede arrastrar; se cierra con <span class="mono">Esc</span> o con un clic en el fondo, y no es una burbuja que persigue el cursor</li>
               <li>Un panel plegable con el original para leerlo en paralelo</li>
               <li>También hay atajos de teclado: <span class="mono">Alt+Shift+T</span> (en macOS, <span class="mono">Command+Shift+Y</span>)</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Traducción de elementos</h3>
-            <p>Haz clic derecho en una zona de la página para ponerle un botón de traducción. Con un clic, el texto de la zona se sustituye en el mismo lugar.</p>
+            <p>Haz clic derecho en una región de la página para añadirle un botón de traducción. Al pulsarlo, el texto de la región se sustituye en el lugar por el idioma elegido; al pulsarlo de nuevo, se restaura el texto original.</p>
             <ul>
               <li>Las reglas se recuerdan por dominio, así que la próxima vez que visites el mismo sitio el botón se coloca automáticamente</li>
               <li>El contenido largo se envía por lotes y se va sustituyendo a medida que se traduce, sin esperar a que termine todo</li>
@@ -252,8 +252,8 @@
             <h3>Panel de traducción</h3>
             <p>Una página independiente: pega el original a la izquierda y obtén la traducción a la derecha; ideal para párrafos que no están en una página web.</p>
             <ul>
-              <li>Más de diez idiomas de destino disponibles, no solo chino</li>
-              <li>Detecta el idioma de entrada: el chino se traduce al inglés por defecto y los demás idiomas, al chino</li>
+              <li>24 idiomas de destino disponibles, que cubren los principales idiomas del mundo</li>
+              <li>El idioma de origen se puede detectar automáticamente o especificar manualmente; el idioma de destino se elige por separado y el panel recuerda la última selección</li>
               <li>La plataforma y el idioma de destino están en la barra de herramientas; cámbialos y vuelve a traducir cuando quieras</li>
             </ul>
           </div>

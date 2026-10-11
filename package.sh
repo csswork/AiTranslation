@@ -8,12 +8,16 @@
 set -euo pipefail
 
 cd "$(dirname "$0")"
+node scripts/sync-extension-i18n.mjs
+node scripts/build-extension-i18n.mjs --check
+
 VERSION=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])")
-OUT="../ai-translation-${VERSION}.zip"
+mkdir -p dist
+OUT="dist/ai-translation-${VERSION}.zip"
 # 白名单。tools/ 是本地拍摄商店素材用的工具链（含 node_modules、Chrome 临时配置），
 # store-assets/ 是截图视频本身，两者都不属于扩展运行时，别加进来。
-INCLUDE=(manifest.json LICENSE icons src)
-EXCLUDE_DIRS='tools|store-assets'
+INCLUDE=(manifest.json LICENSE icons src _locales)
+EXCLUDE_DIRS='tools|store-assets|scripts|extension-i18n|test|i18n|docs|node_modules'
 
 rm -f "$OUT"
 zip -r -q "$OUT" "${INCLUDE[@]}" -x '*.DS_Store'
@@ -32,7 +36,7 @@ if unzip -Z1 "$OUT" | grep -E "^(${EXCLUDE_DIRS})/" ; then
   exit 1
 fi
 
-echo "已打包: $(cd .. && pwd)/$(basename "$OUT")"
+echo "已打包: $(pwd)/$OUT"
 unzip -l "$OUT" | tail -1
 echo
 echo "根目录内容（manifest.json 必须在其中）："

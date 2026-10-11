@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Fremdsprachige Texte im Web mit einem Rechtsklick verstehen</title>
-<meta name="description" content="Eine quelloffene Chrome-Erweiterung: Fremdsprachigen Text markieren und per Rechtsklick an Ort und Stelle übersetzen – ebenso ganze Bereiche und Text in Bildern. Eigener API-Schlüssel; keine Server, keine Statistik, kein Tracking." />
+<meta name="description" content="Eine Open-Source-Chrome-Erweiterung: übersetzt markierten Text, ganze Bereiche und Text in Bildern in die von dir gewählte Sprache. 24 Zielsprachen, eigener API Key, keine Statistiken, kein Tracking." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="de_DE" />
 <meta property="og:url" content="https://huaci.app/de/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Fremdsprache markieren, Rechtsklick, weiterlesen. Seitentexte, ganze Bereiche und Text in Bildern werden an Ort und Stelle übersetzt. Open Source, keine Server, eigener API-Schlüssel." />
+<meta property="og:description" content="Text markieren, Rechtsklick, weiterlesen. Webseitentext, ganze Bereiche und Text in Bildern lassen sich in die von dir gewählte Sprache übersetzen. Open Source, eigener API Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>Open Source</b> GPL-3.0 · Eigener API-Schlüssel</span>
         <h1>Markieren, Rechtsklick,<br /><span class="dim">weiterlesen.</span></h1>
-        <p class="hero-sub">Eine Chrome-Erweiterung. Fremdsprachige Texte im Web, ganze Bereiche und sogar Text in Bildern lassen sich an Ort und Stelle ins Chinesische übersetzen. Die Übersetzung erscheint Wort für Wort als Stream und nutzt Ihren eigenen API-Schlüssel – dazwischen liegt kein Server.</p>
+        <p class="hero-sub">Eine Chrome-Erweiterung. Markierter Text, ganze Bereiche und Text in Bildern lassen sich in die von dir gewählte Sprache übersetzen. 24 Zielsprachen, separate Einstellung der Oberflächensprache, direkte Verbindung zur gewählten Plattform mit deinem eigenen API Key.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Zu Chrome hinzufügen</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Quellcode ansehen</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>Keine Server · Keine Statistik</span> <span><i class="dot"></i>Vier Übersetzungswege</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Auswahlübersetzung</h3>
-            <p>Markieren Sie eine Passage nicht-chinesischen Textes und wählen Sie per Rechtsklick „Ins Chinesische übersetzen“; die Übersetzung erscheint Wort für Wort in einem Popup in der Bildschirmmitte.</p>
+            <p>Text in beliebiger Sprache markieren, im Kontextmenü die Übersetzung wählen, die Übersetzung erscheint Zeichen für Zeichen im Popup. Die Zielsprache lässt sich vorübergehend wechseln, um den Originaltext erneut zu übersetzen.</p>
             <ul>
-              <li>Ist die Auswahl bereits Chinesisch, erscheint der Menüeintrag nicht; dasselbe gilt für reine Zahlen, Satzzeichen und Emojis</li>
+              <li>Chinesisch, kurze Wörter und gemischte Sprachen lassen sich übersetzen; bei reinen Zahlen, Satzzeichen und Emojis wird kein Übersetzungseinstieg angezeigt</li>
               <li>Das Popup ist zentriert und verschiebbar, schließt mit <span class="mono">Esc</span> oder einem Klick auf den Hintergrund – keine kleine Sprechblase, die dem Cursor folgt</li>
               <li>Ein einklappbarer Ausgangstextbereich zum Mitlesen</li>
               <li>Es gibt auch einen Kurzbefehl: <span class="mono">Alt+Shift+T</span> (unter macOS <span class="mono">Command+Shift+Y</span>)</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Elementübersetzung</h3>
-            <p>Klicken Sie mit der rechten Maustaste auf einen Bereich der Seite, um dort eine Übersetzungsschaltfläche anzubringen. Ein Klick ersetzt den Text im Bereich an Ort und Stelle durch die chinesische Übersetzung.</p>
+            <p>Rechtsklick auf einen Bereich der Seite, um ihm eine Übersetzungsschaltfläche zuzuweisen. Ein Klick ersetzt den Text im Bereich direkt durch die gewählte Sprache, ein weiterer Klick stellt das Original wieder her.</p>
             <ul>
               <li>Regeln werden pro Domain gespeichert; beim nächsten Besuch derselben Website wird die Schaltfläche automatisch angebracht</li>
               <li>Lange Inhalte werden in Stapeln gesendet und während der Übersetzung ersetzt, sodass Sie nicht auf den gesamten Bereich warten müssen</li>
@@ -252,8 +252,8 @@
             <h3>Übersetzungsbereich</h3>
             <p>Eine eigenständige Seite: links der Ausgangstext, rechts die Übersetzung – geeignet für zusammenhängende Textpassagen, die nicht auf einer Webseite stehen.</p>
             <ul>
-              <li>Über ein Dutzend Zielsprachen zur Auswahl, nicht auf Chinesisch beschränkt</li>
-              <li>Erkennt die Eingabesprache automatisch: Chinesisch wird standardmäßig ins Englische übersetzt, alle anderen Sprachen ins Chinesische</li>
+              <li>24 Zielsprachen zur Auswahl, die wichtigsten Sprachen weltweit abgedeckt</li>
+              <li>Die Ausgangssprache kann automatisch erkannt oder manuell festgelegt werden, die Zielsprache wird separat gewählt, das Panel merkt sich die letzte Auswahl</li>
               <li>Anbieter und Zielsprache befinden sich in der Symbolleiste; jederzeit umschalten und neu übersetzen</li>
             </ul>
           </div>

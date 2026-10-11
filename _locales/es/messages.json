@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "Traductor IA · Subtítulos de video"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "Traductor IA · Ajustes"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "Traductor IA"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "Proveedor de traducción"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "Elige tu proveedor predeterminado. También puedes cambiarlo en la ventana de traducción."
+  },
+  "m_59a00b5a0134e610": {
+    "message": "Configuración de la API"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "Mostrar"
+  },
+  "m_12404a0b63817240": {
+    "message": "Crea una clave en el"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "panel del proveedor"
+  },
+  "m_7fe42a654775395d": {
+    "message": "."
+  },
+  "m_c98e118e0a43f078": {
+    "message": "Modelo"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "Avanzado: URL de API personalizada"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "Probar conexión"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "Preferencias de traducción"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "Idioma de destino"
+  },
+  "m_72726d8818f69306": {
+    "message": "Chino"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "Traducción en streaming"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "Muestra la traducción a medida que llega."
+  },
+  "m_9919810c2932030f": {
+    "message": "Incluir texto original"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "Muestra el texto original en una sección plegable debajo de la traducción."
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "Botón al seleccionar"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "Atajo de teclado"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "Selecciona texto y pulsa el atajo para traducirlo."
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "Atajo actual"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "Cargando…"
+  },
+  "m_37090f45651676fc": {
+    "message": "Cambiar"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "Reglas de traducción por región"
+  },
+  "m_ec141602f97fae38": {
+    "message": "Haz clic derecho en una región y elige «Añadir un botón de traducción a esta región». Pasa el cursor sobre las regiones coincidentes para traducirlas, incluso en futuras visitas."
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "Gestionar reglas"
+  },
+  "m_58b60fd867baac67": {
+    "message": "Subtítulos en vivo"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "Experimental"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "Reconoce el audio de la pestaña localmente y lo traduce a subtítulos bilingües. Con el reconocimiento local, el audio permanece en tu navegador."
+  },
+  "m_1b8f5e262210961c": {
+    "message": "Activar subtítulos en vivo"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "Esta función experimental puede producir errores de reconocimiento o traducción, subtítulos con retraso, ralentización de la página o problemas de audio. Está desactivada de forma predeterminada. Al activarla, se añaden controles de subtítulos al menú contextual y a la ventana de la extensión."
+  },
+  "m_cacb38617171e87b": {
+    "message": "Haz clic derecho en un video y elige «Subtítulos en vivo (experimental)». Si el reproductor bloquea el menú contextual, usa «Subtítulos en vivo» en la ventana de la extensión."
+  },
+  "m_e189607eb47e0666": {
+    "message": "Idioma de reconocimiento de voz"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "Selecciona el idioma hablado en el video. El reconocimiento de voz no lo detecta automáticamente."
+  },
+  "m_96dd88617e672350": {
+    "message": "Traducir subtítulos"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "Usar reconocimiento en la nube"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "No se necesitan paquetes de idioma. El audio se envía al servicio de reconocimiento de voz de Google, que requiere acceso a Google."
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "Descargar paquetes de idioma sin conexión"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "Los cambios se guardan automáticamente"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "Política de privacidad"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "clic derecho"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "Modelo actual"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "Abrir panel de traducción"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "Traducción de imágenes"
+  },
+  "m_29abef4167eb152f": {
+    "message": "Activar o desactivar subtítulos en tiempo real para esta pestaña"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "Abrir ajustes"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "Panel de traducción · Traductor con IA"
+  },
+  "m_63299708d4f7d479": {
+    "message": "Panel de traducción"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "Detecta automáticamente el idioma de origen y traduce al idioma de destino que elijas. El panel recuerda tu elección."
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "Ajustes"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "Idioma de origen"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "Elige un idioma de origen para poder intercambiar"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "Intercambiar"
+  },
+  "m_910887705c7a66d2": {
+    "message": "Proveedor"
+  },
+  "m_a52a08335185f048": {
+    "message": "Traducir"
+  },
+  "m_354b28c853334568": {
+    "message": "Original"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "Borrar"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "Pega o escribe el texto que quieras traducir…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "Traducción"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "Copiar"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "Traducción de imágenes · Traductor con IA"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "Reconoce el texto de una imagen y tradúcelo al idioma que elijas. La traducción se superpone al texto original según su posición."
+  },
+  "m_1477d9e39af456ef": {
+    "message": "Actualmente en fase experimental"
+  },
+  "m_6578246c1828eb16": {
+    "message": "; comprueba la precisión de la posición de los cuadros."
+  },
+  "m_51354da23fa60f98": {
+    "message": "Sistema de coordenadas"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "Automático"
+  },
+  "m_217d642265e59d2c": {
+    "message": "Proporción 0-1"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "Píxeles de la imagen"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "Orden de coordenadas"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "Cuadros de texto + traducciones"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "Solo traducciones"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "Solo cuadros de texto"
+  },
+  "m_79cbcd837d618881": {
+    "message": "Solo imagen original"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "Reconocer y traducir"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "Imagen"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "Arrastra una imagen aquí"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "También puedes"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "pegarla, o hacer clic aquí para elegir un archivo"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "O pega la URL de una imagen y pulsa Intro"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "Texto reconocido"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "Copiar traducción"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "Respuesta original del modelo"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "Reglas de regiones · Traductor con IA"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "Haz clic derecho en una región de la página y elige «Añadir un botón de traducción a esta región». La regla se guardará aquí; la próxima vez que visites el mismo sitio, al pasar el ratón por las regiones coincidentes aparecerá un botón de traducción."
+  },
+  "m_c9f9e18b06233971": {
+    "message": "Añadir regla"
+  },
+  "m_1b590914091ca145": {
+    "message": "Borrar todo"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "Aún no hay reglas"
+  },
+  "m_93e924b1de331953": {
+    "message": "este idioma"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "Los paquetes sin conexión para $arg1$ aún se están descargando. Inténtalo de nuevo más tarde.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "Primero descarga los paquetes sin conexión para $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "Este dispositivo no admite reconocimiento local para $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "El reconocimiento en la nube no admite $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "No se puede conectar al servicio de reconocimiento en la nube. Se requiere acceso a Google."
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "No se puede leer el audio de la pestaña."
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "El navegador no permite el reconocimiento de voz."
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "Error de reconocimiento de voz ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "Error en los subtítulos del video"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "El reconocimiento de voz se detuvo tras interrupciones repetidas."
+  },
+  "m_133899c4819d1798": {
+    "message": "Este navegador no admite el reconocimiento de voz."
+  },
+  "m_697dae4b009517c9": {
+    "message": "Esta versión de Chrome no admite el reconocimiento de voz local. Actualiza Chrome o activa el reconocimiento en la nube en los ajustes."
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "No se pudo capturar el audio de la pestaña: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "Guardado"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● Clave configurada"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ Clave sin configurar"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "Panel de $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "Déjalo en blanco para usar $arg1$, o introduce cualquier modelo compatible con este proveedor.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "Déjalo en blanco para usar $arg1$. Una URL personalizada requiere permiso para su dominio.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$ solo admite texto. Cambia a ChatGPT o DeepSeek para traducir imágenes.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$ devuelve toda la traducción de una vez y no admite transmisión.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "Sin registrar"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "El comando no se registró. Vuelve a cargar la extensión en chrome://extensions."
+  },
+  "m_52496e5aeff43353": {
+    "message": "Sin asignar"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "Haz clic en Cambiar, busca el comando de traducción de esta extensión y asigna tu atajo preferido."
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "No se pudo leer"
+  },
+  "m_11549f27aead732c": {
+    "message": "No se pudo leer la información de los atajos."
+  },
+  "m_c634021981632019": {
+    "message": "El reconocimiento en la nube no requiere paquetes de idioma."
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "Actualiza Chrome para el reconocimiento de voz local, o usa el reconocimiento en la nube."
+  },
+  "m_3177d62d329033f9": {
+    "message": "No se pudo comprobar el estado de los paquetes de idioma: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "Los paquetes de idioma sin conexión están listos."
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "Faltan los paquetes de idioma sin conexión. El paquete de inglés incluye el motor de reconocimiento y también se descargará."
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "Faltan los paquetes de idioma sin conexión."
+  },
+  "m_af27ec592962322f": {
+    "message": "Descargando paquetes de idioma sin conexión…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "Este dispositivo no admite reconocimiento local para este idioma. Usa el reconocimiento en la nube."
+  },
+  "m_c897be932b695c0b": {
+    "message": "Introduce una URL HTTPS válida. HTTP no es compatible."
+  },
+  "m_050d25598c0376c9": {
+    "message": "Se necesita permiso para $arg1$. Haz clic en Probar conexión para conceder acceso.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "Ocultar"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "Descargando paquetes sin conexión. Esto puede tardar un poco…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "Error de descarga: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "Error de descarga. Inténtalo de nuevo más tarde."
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg2$ reglas en $arg1$ sitios web",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "Aún no hay reglas"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "No se concedió acceso a $arg1$. Esta URL de API no se puede usar.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "Conectando…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "Conectado ($arg1$): $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "La prueba de conexión falló"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "Configurado"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "Sin configurar"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "Detectar automáticamente"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$ caracteres · Solo se traducirán los primeros $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$ caracteres",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "Detener"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "La traducción falló"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "El modelo no devolvió ningún texto. Inténtalo de nuevo o elige otro modelo."
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "Copiado"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "No se pudo copiar"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "Tr"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "Sin texto"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "Falló"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "Restaurar original"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "No se registró ningún elemento del clic derecho."
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "No se pudo generar un selector reutilizable para este elemento."
+  },
+  "m_e68fcc025975add3": {
+    "message": "Esta página no tiene un dominio válido. No se puede guardar la regla."
+  },
+  "m_fdc852167becfb29": {
+    "message": "Este sitio web ha alcanzado su límite de reglas."
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "Mostrar original"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "Cerrar (Esc)"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "Cerrar"
+  },
+  "m_7cd62999f274e547": {
+    "message": "Mostrar traducción"
+  },
+  "m_92c1e98d69346932": {
+    "message": "No hay texto que traducir en esta imagen."
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "No se reconoció ningún texto en esta imagen."
+  },
+  "m_8646e9fb979e4595": {
+    "message": "Traduciendo $arg1$ bloques de texto…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "Leyendo imagen…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "Esta imagen aún no ha terminado de cargarse."
+  },
+  "m_e640442431db48ae": {
+    "message": "Reconociendo $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "Reconociendo el texto de la imagen…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "No se puede acceder a esta imagen. Cópiala y pégala en el panel de traducción de imágenes."
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "El reconocimiento falló"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "Configuración"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "Cerrar subtítulos"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "Escuchando en $arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "Conectando…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$. Mostrando solo los subtítulos originales.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "Traducción no disponible"
+  },
+  "m_5f6069123981822c": {
+    "message": "La traducción de subtítulos falló repetidamente ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "La extensión se actualizó. Actualiza la página e inténtalo de nuevo."
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "No se pudo conectar con el servicio de reconocimiento. Inténtalo de nuevo."
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "Resultado de la traducción con IA"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "Traducir"
+  },
+  "m_f823028377c7f65d": {
+    "message": "Cambiar proveedor de traducción"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "Traducir de nuevo"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "Traducir al $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "La selección es larga. Solo se tradujeron los primeros $arg1$ caracteres.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "Se produjo un error"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "No se pudo leer el archivo"
+  },
+  "m_572993f5820a55ba": {
+    "message": "No se pudo cargar la imagen"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "Cargando imagen…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "Redimensionado a $arg1$×$arg2$ para el reconocimiento",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "Imagen de origen cruzado; el proveedor obtendrá su URL"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "No se devolvieron coordenadas para este bloque de texto"
+  },
+  "m_9255552a10e62692": {
+    "message": "$arg1$ bloques de texto, $arg2$ con coordenadas · Escala $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "$arg1$ bloques de texto reconocidos; ninguno necesita traducción",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": "; $arg1$ bloques de texto sin cambios ocultos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "Completado$arg1$ · $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "Imagen del portapapeles"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$ bloques de texto · Escala $arg2$×$arg3$ · Orden $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "Nombre del modelo con capacidad de visión"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "El selector no puede estar vacío."
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "Esta regla ya no existe."
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "Este sitio web ya tiene una regla con el mismo selector."
+  },
+  "m_81f1f1a720788251": {
+    "message": "No se puede conectar con $arg1$. Comprueba tu red, el proxy y la URL de la API.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "Solicitud rechazada$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "La clave de API de $arg1$ no es válida o no tiene permisos$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "Saldo insuficiente en tu cuenta de $arg1$$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "No se encontró el modelo «$arg1$» o la URL de la API es incorrecta$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "La selección es demasiado larga. Tradúcela en partes más pequeñas$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "Se superó el límite de solicitudes o la cuota. Inténtalo de nuevo más tarde$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "Error del servidor de $arg1$ ($arg2$)$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "Error en la solicitud ($arg1$)$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "Configura primero tu clave de API de $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "El modelo no devolvió un array JSON válido."
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "El modelo no devolvió un array."
+  },
+  "m_90d478f772504027": {
+    "message": "El modelo devolvió $arg1$ elementos para $arg2$ elementos de origen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$ solo admite texto. Cambia a ChatGPT o DeepSeek para reconocer imágenes.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepL no admite este idioma de destino."
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "No se puede conectar con $arg1$. Comprueba tu red o el proxy.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "Tu cuota mensual de traducción de DeepL está agotada."
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepL devolvió una respuesta inesperada."
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepL devolvió $arg1$ traducciones para $arg2$ elementos de origen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "Introduce primero tu clave de API de $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "Conexión establecida, pero no se devolvió ninguna traducción."
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "Conexión establecida, pero el modelo no devolvió texto. Prueba con otro modelo."
+  },
+  "m_076603dff5ad4734": {
+    "message": "API oficial de OpenAI"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "API de DeepSeek"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "Traducción automática; sin selección de modelo"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "Inglés"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "Japonés"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "Coreano"
+  },
+  "m_99cdf164a8140865": {
+    "message": "Francés"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "Este no es un selector CSS válido."
+  },
+  "m_051836569928a9f9": {
+    "message": "Editar"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "Eliminar"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "Selector CSS"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "Guardar"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "Cancelar"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "Dominio, p. ej. example.com (o pega una URL)"
+  },
+  "m_222952431147e537": {
+    "message": "Dominio"
+  },
+  "m_8ec296825c405074": {
+    "message": "Selector CSS, p. ej. div#main > article.post > p"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "Introduce un dominio válido."
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "No se pudo añadir esta regla."
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$ ha alcanzado su límite de $arg2$ reglas.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "Añadir"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg2$ reglas en $arg1$ sitios web",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$ reglas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "Eliminar reglas del sitio"
+  },
+  "m_5ae5095877338e86": {
+    "message": "¿Eliminar las $arg2$ reglas de $arg1$?",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "Nueva regla"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "¿Eliminar todas las reglas de traducción de regiones? Esta acción no se puede deshacer."
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "Añadir un botón de traducción a esta región"
+  },
+  "m_9e20239a7234a964": {
+    "message": "Traducir texto en imagen"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "Subtítulos en vivo (experimental)"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "(ninguno)"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "Captura el audio de la pestaña para reconocimiento de voz local y subtítulos de video"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "Abre los subtítulos desde el menú contextual del video o la ventana de la extensión para autorizar la captura de la pestaña."
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "Otro programa o extensión ya está capturando el audio de esta pestaña."
+  },
+  "m_819842bc861d8f50": {
+    "message": "No se pudo capturar el audio de la pestaña: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$ (reconocimiento en la nube)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "No se pudo iniciar el reconocimiento de voz: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[AI Translator] Subtítulo traducido en $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[AI Translator] El atajo no tradujo: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "La traducción por atajo está desactivada en los ajustes."
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "No se pudo encontrar la pestaña activa."
+  },
+  "m_9aea932d4811acdc": {
+    "message": "Esta página no permite la inyección de scripts (por ejemplo, páginas chrome://)."
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "No hay texto seleccionado."
+  },
+  "m_ffafce8c4494350d": {
+    "message": "Tu traducción aparecerá aquí"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "Selecciona texto y haz clic derecho → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "Traduce texto en cualquier idioma, incluido el chino."
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "Menú contextual: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "Idioma de la interfaz"
+  },
+  "m_b9c76f096644d599": {
+    "message": "Seguir Chrome"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "Idioma de destino predeterminado"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "Elige el idioma de la interfaz y el idioma de destino de la traducción de forma independiente."
+  },
+  "m_2b41309c016fe33f": {
+    "message": "Selecciona texto y tradúcelo al idioma que elijas con el menú contextual, el botón flotante o el atajo de teclado."
+  },
+  "m_35a88c7914864612": {
+    "message": "Muestra un botón de traducción junto al texto seleccionado."
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "Las claves de API se guardan localmente y no se sincronizan. Solo se usan para autenticar las solicitudes al proveedor que elijas."
+  },
+  "m_6076121593793789": {
+    "message": "Traduce los subtítulos a $arg1$, con una solicitud de traducción por línea. Desactívalo para mostrar solo el texto original.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "Haz clic derecho en una zona de la página y elige «Añadir un botón de traducción a esta zona», o añade una regla manualmente."
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "Traduciendo la zona a $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "Traducido a $arg1$; haz clic para restaurar el original",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "Traducir esta zona"
+  },
+  "m_2121da766aab06cc": {
+    "message": "Usar como destino predeterminado"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "Traducir el texto seleccionado"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "La selección no contiene texto que traducir"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "Traduce texto e imágenes al idioma que quieras con el proveedor que elijas."
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "Se interrumpió la conexión de traducción. Inténtalo de nuevo."
+  },
+  "m_71abc609ccad93e7": {
+    "message": "Sin respuesta"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL no admite este idioma de origen."
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "No se pudieron obtener los idiomas compatibles con DeepL. Inténtalo de nuevo."
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "La clave de API de DeepL no es válida$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "Traductor IA"
+  },
+  "extensionDescription": {
+    "message": "Traduce texto e imágenes al idioma que quieras con el proveedor que elijas."
+  },
+  "translateSelection": {
+    "message": "Traducir el texto seleccionado"
+  }
+}

@@ -3,11 +3,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { sourceMessages } from './extension-messages.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
 const english = read('extension-i18n/en.json');
 const locales = read('extension-i18n/locales.json');
+for (const source of sourceMessages(root)) {
+  if (!Object.hasOwn(english, source)) throw new Error(`Missing source message: ${source}. Run the local i18n sync.`);
+}
+const snapshots = read('extension-i18n/source-snapshot.json');
 const ids = Object.fromEntries(Object.keys(english).map((key) => [key, 'm_' + crypto.createHash('sha256').update(key).digest('hex').slice(0, 16)]));
 const files = {
   'src/lib/languages.js': fs.readFileSync(path.join(root, 'extension-i18n/languages.template.js'), 'utf8').replace('__LANGUAGES__', JSON.stringify(locales)),
@@ -19,18 +24,28 @@ const slots = (s) => [...new Set(s.match(/\$\d+/g) || [])].sort().join(',');
 for (const locale of locales) {
   const catalog = locale.id === 'zh-Hans' ? Object.fromEntries(Object.keys(english).map((key) => [key, key])) : read(`extension-i18n/${locale.id}.json`);
   if (Object.keys(catalog).some((key) => !Object.hasOwn(english, key))) throw new Error(`Orphan messages: ${locale.id}`);
+  if (!['en', 'zh-Hans'].includes(locale.id)) {
+    for (const [source, value] of Object.entries(english)) {
+      if (snapshots[locale.id]?.[source] !== value) throw new Error(`Outdated ${locale.id} source: ${source}. Run the local i18n sync.`);
+    }
+  }
   const messages = {};
   for (const [source, id] of Object.entries(ids)) {
     const message = catalog[source];
     if (typeof message !== 'string' || !message.trim()) throw new Error(`Missing ${locale.id}: ${source}`);
     if (slots(source) !== slots(message)) throw new Error(`Placeholder mismatch ${locale.id}: ${source}`);
-    messages[id] = { message };
+    const placeholders = {};
+    const nativeMessage = message.replace(/\$(\d+)/g, (_, n) => {
+      placeholders[`arg${n}`] = { content: `$${n}` };
+      return `$arg${n}$`;
+    });
+    messages[id] = { message: nativeMessage, ...(Object.keys(placeholders).length ? { placeholders } : {}) };
   }
   // Chrome substitutes these manifest strings using the browser locale.
   for (const [key, source] of Object.entries({ extensionName: 'AI 划词翻译', extensionDescription: '用你选择的平台，把文字和图片翻译成你想读的语言。', translateSelection: '翻译选中的文字' })) {
     messages[key] = { message: catalog[source] };
   }
-  files[`_locales/${locale.chromeLocale}/messages.json`] = JSON.stringify(messages, null, 2) + '\n';
+  files[locale.chromeLocale ? `_locales/${locale.chromeLocale}/messages.json` : `src/locales/${locale.id}/messages.json`] = JSON.stringify(messages, null, 2) + '\n';
 }
 const check = process.argv.includes('--check');
 for (const [name, content] of Object.entries(files)) {

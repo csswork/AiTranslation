@@ -81,12 +81,15 @@ icons/                     Icons
 ## Development
 
 ```sh
-node scripts/build-extension-i18n.mjs
+node scripts/sync-extension-i18n.mjs
+node scripts/sync-extension-i18n.mjs --watch  # optional local auto-refresh
 node scripts/build-extension-i18n.mjs --check
 bash test/run.sh
 ```
 
 `extension-i18n/` contains the extension catalogs and language registry. Native Chrome `_locales/` catalogs and `src/lib/messages.js` are generated files. The website in `docs/` has its own independent build in `i18n/`.
+
+Run `bash package.sh` to refresh changed messages locally and build `dist/ai-translation-<version>.zip`. Put `DEEPSEEK_API_KEY` in your local `.env.local`; unchanged catalogs need no API call. See [extension-i18n/README.md](extension-i18n/README.md).
 
 Catalog generation tools are development-only; the shipped extension does not download a model or contact a translation service to localize its interface.
 

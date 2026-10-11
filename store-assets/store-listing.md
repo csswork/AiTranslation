@@ -122,7 +122,7 @@ centered popup with a collapsible original-text panel. Chinese and mixed-languag
 
 · Block translation
 Attach a translate button to any region of a page. One click replaces the text inside it with
-Chinese, in place. Rules are remembered per domain, and long content is translated in batches
+your chosen language, in place. Rules are remembered per domain, and long content is translated in batches
 so the page updates as it goes.
 
 · Image translation
@@ -131,9 +131,7 @@ Long images are split into tiles along blank lines first, so a sentence is never
 
 · Translation panel
 A standalone page, source on the left and translation on the right, for paragraphs that are not
-on a web page. 14 target languages (English, Japanese, Korean, French, German, Spanish, Russian,
-Arabic and more), with automatic source-language detection: Chinese translates to English by
-default, everything else to Chinese.
+on a web page. Choose from 24 target languages. Detect the source automatically or select it explicitly; the panel remembers your choices and can swap explicitly selected languages.
 
 
 WHY INSTALL IT
@@ -142,7 +140,7 @@ WHY INSTALL IT
 · Streaming output, so you are not waiting for the whole answer.
 · Follows your system light/dark theme. Draggable popup, Esc to close, keyboard shortcut
   ⌘⇧Y on macOS / Alt+Shift+T elsewhere.
-· Selection, block and image translation all target Simplified or Traditional Chinese.
+· Selection, region, image and caption translation share the same 24 target languages. Choose interface and target languages independently.
 
 
 PRIVACY
@@ -189,11 +187,11 @@ Privacy policy: https://huaci.app/privacy.html
 | --- | --- |
 | Manifest V3、Chrome 116+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version` |
 | 三个平台：ChatGPT / DeepSeek / DeepL | `src/lib/settings.js` 的 `PROVIDERS`，`src/lib/providers.js` 里 DeepL 走 `/v2/translate` |
-| 面板 14 种目标语言 | `src/translate/translate.js` 的 `LANGUAGES` 数组，实为 14 项 |
-| 划词/元素/图片默认译成简繁中文 | `src/lib/settings.js` 的 `TARGETS` 只有 `zh-Hans`、`zh-Hant` |
+| 统一的 24 种语言 | `extension-i18n/locales.json`，生成 `src/lib/languages.js` |
+| 首装目标按浏览器语言选择，升级保留原选择 | `src/lib/settings.js` 的 `normalize` / `migrateSettings` |
 | 单次 6000 字符 | `src/lib/lang.js` 的 `MAX_TEXT_LENGTH = 6000` |
 | 快捷键 ⌘⇧Y / Alt+Shift+T | `manifest.json` 的 `commands` |
-| 网络请求只发往选定平台 | `grep -rn "fetch(" src/` 只有 `providers.js` 两处（OpenAI 兼容接口 + DeepL），全项目再无其他网络调用 |
+| 网络请求只发往选定平台 | `providers.js` 处理所选平台的请求；`i18n.js` 只读取安装包内的语言文件 |
 | Key 存 `chrome.storage.local` | `src/lib/settings.js` 的读写实现 |
 
 > **和落地页口径不一致的两处，建议顺手改掉**（我按代码为准写的商店文案）：

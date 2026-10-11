@@ -1,0 +1,1277 @@
+{
+  "m_55a050e5c488b946": {
+    "message": "Trình dịch AI · Phụ đề video"
+  },
+  "m_0f8745ff49920b04": {
+    "message": "Trình dịch AI · Cài đặt"
+  },
+  "m_0ca04424eabd8889": {
+    "message": "Trình dịch AI"
+  },
+  "m_96e2ba41ae2e3d9c": {
+    "message": "Nền tảng dịch"
+  },
+  "m_32c8c75105a6b7de": {
+    "message": "Chọn một nền tảng làm mặc định, có thể chuyển đổi bất cứ lúc nào trong cửa sổ dịch."
+  },
+  "m_59a00b5a0134e610": {
+    "message": "Cấu hình API"
+  },
+  "m_4e1449e7d5e50593": {
+    "message": "Hiển thị"
+  },
+  "m_12404a0b63817240": {
+    "message": "Tạo khóa trong"
+  },
+  "m_8a8dbecea2b5daaa": {
+    "message": "bảng điều khiển nền tảng"
+  },
+  "m_7fe42a654775395d": {
+    "message": "."
+  },
+  "m_c98e118e0a43f078": {
+    "message": "Mô hình"
+  },
+  "m_9a181b1d29bac7bc": {
+    "message": "Nâng cao: địa chỉ API tùy chỉnh"
+  },
+  "m_0a98a48eaaac4175": {
+    "message": "Kiểm tra kết nối"
+  },
+  "m_dbe6ee048aead031": {
+    "message": "Hành vi dịch"
+  },
+  "m_966a23e84aedeea5": {
+    "message": "Ngôn ngữ đích"
+  },
+  "m_72726d8818f69306": {
+    "message": "Tiếng Trung"
+  },
+  "m_c65e6c6ea8ca51a2": {
+    "message": "Xuất luồng"
+  },
+  "m_d8231d385a6c34d9": {
+    "message": "Bản dịch hiển thị từng chữ, giảm cảm giác chờ đợi."
+  },
+  "m_9919810c2932030f": {
+    "message": "Giữ nguyên văn trong cửa sổ"
+  },
+  "m_8ea1f97d23b2a9d5": {
+    "message": "Hiển thị thu gọn văn bản gốc đã chọn bên dưới bản dịch để tiện đối chiếu."
+  },
+  "m_409bc4871ea56eb3": {
+    "message": "Nút nổi khi chọn văn bản"
+  },
+  "m_1de2c9cff12ac678": {
+    "message": "Dịch bằng phím tắt"
+  },
+  "m_5b7405a6803f6015": {
+    "message": "Chọn văn bản rồi nhấn phím tắt để dịch trực tiếp và hiện bản dịch, không cần dùng menu chuột phải."
+  },
+  "m_a42cbea1ed1df1e7": {
+    "message": "Phím tắt hiện tại"
+  },
+  "m_346ff60e6c7c5181": {
+    "message": "Đang đọc…"
+  },
+  "m_37090f45651676fc": {
+    "message": "Thay đổi"
+  },
+  "m_981aa1e678c1872a": {
+    "message": "Quy tắc dịch phần tử"
+  },
+  "m_ec141602f97fae38": {
+    "message": "Nhấp chuột phải vào một vùng trên trang web và chọn \"Thêm nút dịch cho vùng này\" để ghi nhớ vùng đó của trang web; lần sau truy cập, di chuột vào vùng này sẽ hiện nút dịch."
+  },
+  "m_9c6cf77a9e98989c": {
+    "message": "Quản lý quy tắc"
+  },
+  "m_58b60fd867baac67": {
+    "message": "Phụ đề video trực tiếp"
+  },
+  "m_5e42855db36df8e9": {
+    "message": "Thử nghiệm"
+  },
+  "m_aa70ecae8cf5d43d": {
+    "message": "Thu âm thanh của tab, nhận dạng thành văn bản ngay trên máy rồi dịch thành phụ đề song ngữ; âm thanh không rời khỏi trình duyệt."
+  },
+  "m_1b8f5e262210961c": {
+    "message": "Bật phụ đề video trực tiếp"
+  },
+  "m_e9007cb9e379ac16": {
+    "message": "Tính năng thử nghiệm, độ hoàn thiện rất thấp và chưa hoàn chỉnh: nhận dạng giọng nói, ngắt câu và bản dịch đều có thể sai, cũng có thể gặp tình trạng phụ đề lâu không hiện, trang bị lag hoặc âm thanh video bất thường. Mặc định tắt, chỉ khi bật mới xuất hiện mục menu chuột phải video và lối vào trong biểu tượng tiện ích. Chỉ để trải nghiệm, hãy cân nhắc khi bật."
+  },
+  "m_cacb38617171e87b": {
+    "message": "Nhấp chuột phải vào video trên trang web và chọn \"Phụ đề video trực tiếp (thử nghiệm)\"; nếu trình phát chặn chuột phải, hãy nhấp vào \"Phụ đề video trực tiếp\" trong biểu tượng tiện ích."
+  },
+  "m_e189607eb47e0666": {
+    "message": "Ngôn ngữ video"
+  },
+  "m_4148c53cbde826f2": {
+    "message": "Nhận dạng không tự động phát hiện ngôn ngữ, cần chọn theo video."
+  },
+  "m_96dd88617e672350": {
+    "message": "Dịch phụ đề"
+  },
+  "m_771d4d64cde33e13": {
+    "message": "Chuyển sang nhận dạng đám mây"
+  },
+  "m_16d7b3bca388744f": {
+    "message": "Không cần tải gói ngôn ngữ, nhưng âm thanh video sẽ được gửi đến dịch vụ nhận dạng giọng nói của Google và cần truy cập được Google."
+  },
+  "m_78ceb811bad4dbf0": {
+    "message": "Tải gói ngôn ngữ ngoại tuyến"
+  },
+  "m_d5480315a26fa50e": {
+    "message": "Thay đổi sẽ tự động lưu"
+  },
+  "m_e464b41fd5c45ba5": {
+    "message": "Chính sách bảo mật"
+  },
+  "m_3ca47485aee8b3f0": {
+    "message": "nhấp chuột phải"
+  },
+  "m_52f79fed15ec2723": {
+    "message": "Mô hình hiện tại"
+  },
+  "m_ba4851711d819a1e": {
+    "message": "Mở bảng dịch"
+  },
+  "m_0c84c73f4b24b3b8": {
+    "message": "Dịch hình ảnh"
+  },
+  "m_29abef4167eb152f": {
+    "message": "Bật / tắt phụ đề trực tiếp cho video trên tab này"
+  },
+  "m_37aa6ad6a36d46fa": {
+    "message": "Mở cài đặt"
+  },
+  "m_f507fe773cd7235f": {
+    "message": "Bảng dịch · Dịch AI"
+  },
+  "m_63299708d4f7d479": {
+    "message": "Bảng dịch"
+  },
+  "m_20741b08b0c89f28": {
+    "message": "Tự động nhận diện ngôn ngữ nguồn và dịch sang ngôn ngữ đích bạn chọn. Bảng sẽ ghi nhớ lựa chọn của bạn."
+  },
+  "m_df3d58c7d84b85f2": {
+    "message": "Cài đặt"
+  },
+  "m_e43b09f6fbc23598": {
+    "message": "Ngôn ngữ nguồn"
+  },
+  "m_a939ee4ca2d1fadc": {
+    "message": "Chọn ngôn ngữ nguồn để bật hoán đổi"
+  },
+  "m_c9c3d2d1754925a4": {
+    "message": "Hoán đổi"
+  },
+  "m_910887705c7a66d2": {
+    "message": "Nhà cung cấp"
+  },
+  "m_a52a08335185f048": {
+    "message": "Dịch"
+  },
+  "m_354b28c853334568": {
+    "message": "Bản gốc"
+  },
+  "m_1ef3de06b32e521b": {
+    "message": "Xóa"
+  },
+  "m_3266ae8d5436f4c6": {
+    "message": "Dán hoặc nhập văn bản cần dịch…"
+  },
+  "m_80461c2decc549dc": {
+    "message": "Bản dịch"
+  },
+  "m_63d90d977348ab1f": {
+    "message": "Sao chép"
+  },
+  "m_48e8f7fa1ae030bc": {
+    "message": "Dịch hình ảnh · Dịch AI"
+  },
+  "m_fa6d68b9593568a9": {
+    "message": "Nhận diện văn bản trong hình ảnh và dịch sang ngôn ngữ bạn chọn. Đặt bản dịch lên vị trí văn bản gốc."
+  },
+  "m_1477d9e39af456ef": {
+    "message": "Hiện đang trong giai đoạn thử nghiệm"
+  },
+  "m_6578246c1828eb16": {
+    "message": ", hãy kiểm tra độ chính xác của vị trí khung."
+  },
+  "m_51354da23fa60f98": {
+    "message": "Hệ tọa độ"
+  },
+  "m_7eb336e42cb5076b": {
+    "message": "Tự động"
+  },
+  "m_217d642265e59d2c": {
+    "message": "Tỷ lệ 0–1"
+  },
+  "m_a98e38ae25ff9dbb": {
+    "message": "Điểm ảnh hình ảnh"
+  },
+  "m_ec963ea1f02bf036": {
+    "message": "Thứ tự tọa độ"
+  },
+  "m_21ada2c353ae08ee": {
+    "message": "Khung văn bản + bản dịch"
+  },
+  "m_c47f2bdab118a2db": {
+    "message": "Chỉ bản dịch"
+  },
+  "m_38b50b1c1cfa79cb": {
+    "message": "Chỉ khung văn bản"
+  },
+  "m_79cbcd837d618881": {
+    "message": "Chỉ hình ảnh gốc"
+  },
+  "m_e14b3decb8a3f9f3": {
+    "message": "Nhận diện và dịch"
+  },
+  "m_d24c10d37db0feea": {
+    "message": "Hình ảnh"
+  },
+  "m_faab250e2c65b7c5": {
+    "message": "Kéo hình ảnh vào đây"
+  },
+  "m_55a83dba1ba8b82a": {
+    "message": "Bạn cũng có thể"
+  },
+  "m_e1f35b73bb67dae0": {
+    "message": "dán, hoặc nhấp vào đây để chọn tệp"
+  },
+  "m_4196e45efecd38e6": {
+    "message": "Hoặc dán URL hình ảnh và nhấn Enter để tải"
+  },
+  "m_71fb8ae998dc9987": {
+    "message": "Văn bản nhận diện"
+  },
+  "m_032eb48c7a431ec0": {
+    "message": "Sao chép bản dịch"
+  },
+  "m_7695cba7ed357f85": {
+    "message": "Phản hồi gốc của mô hình"
+  },
+  "m_d8aafa661326dc18": {
+    "message": "Quy tắc vùng · Dịch AI"
+  },
+  "m_940cdeb96103d3a1": {
+    "message": "Nhấp chuột phải vào một vùng và chọn “Thêm nút dịch cho vùng này”. Di chuột qua các vùng khớp để dịch chúng trong lần truy cập sau."
+  },
+  "m_c9f9e18b06233971": {
+    "message": "Thêm quy tắc"
+  },
+  "m_1b590914091ca145": {
+    "message": "Xóa tất cả"
+  },
+  "m_3223859f8fdc982e": {
+    "message": "Chưa có quy tắc nào"
+  },
+  "m_93e924b1de331953": {
+    "message": "ngôn ngữ này"
+  },
+  "m_a1dd6d1d1241e306": {
+    "message": "Gói ngoại tuyến cho $arg1$ vẫn đang tải. Hãy thử lại sau.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7e267c5e7859ecbb": {
+    "message": "Hãy tải gói ngoại tuyến cho $arg1$ trước.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c50bdb25fce581": {
+    "message": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4429be062e7af0c9": {
+    "message": "Nhận dạng đám mây không hỗ trợ $arg1$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f00115e8f289956f": {
+    "message": "Không thể kết nối dịch vụ nhận dạng giọng nói đám mây. Cần truy cập được Google."
+  },
+  "m_05e72c9799eaddd0": {
+    "message": "Không thể đọc âm thanh của tab."
+  },
+  "m_dafc6b9b8a608886": {
+    "message": "Trình duyệt không cho phép nhận dạng giọng nói."
+  },
+  "m_5524c5571eaa1fd2": {
+    "message": "Lỗi nhận dạng giọng nói ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3ab9d6387b7496c6": {
+    "message": "Lỗi phụ đề video"
+  },
+  "m_50b6d41d08d69103": {
+    "message": "Nhận dạng giọng nói đã dừng sau nhiều lần bị ngắt."
+  },
+  "m_133899c4819d1798": {
+    "message": "Trình duyệt này không hỗ trợ nhận dạng giọng nói."
+  },
+  "m_697dae4b009517c9": {
+    "message": "Chrome này không hỗ trợ nhận dạng giọng nói trên thiết bị. Hãy cập nhật Chrome hoặc bật nhận dạng đám mây trong cài đặt."
+  },
+  "m_559f1ddcfb4021ca": {
+    "message": "Không thể thu âm thanh của tab: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1bd91a7d0c53c936": {
+    "message": "Đã lưu"
+  },
+  "m_3c766294e5ea24fb": {
+    "message": "● Đã cấu hình Key"
+  },
+  "m_915f76c44e23a2b1": {
+    "message": "○ Chưa cấu hình Key"
+  },
+  "m_1e68f87138bb6513": {
+    "message": "Bảng điều khiển $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1b96346233660db": {
+    "message": "Để trống để dùng $arg1$, hoặc nhập bất kỳ mô hình nào mà nhà cung cấp này hỗ trợ.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4e9af8a3ca54296": {
+    "message": "Để trống để dùng $arg1$. URL tùy chỉnh cần được cấp quyền cho tên miền của nó.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_908728fa7365adae": {
+    "message": "$arg1$ chỉ hỗ trợ văn bản. Hãy chuyển sang ChatGPT hoặc DeepSeek để dịch hình ảnh.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_96f71f1dfe6d8033": {
+    "message": "$arg1$ trả về toàn bộ bản dịch cùng lúc và không hỗ trợ hiển thị từng chữ.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7b89c50978dee6ed": {
+    "message": "Chưa đăng ký"
+  },
+  "m_4b267d84c102d2b9": {
+    "message": "Lệnh chưa được đăng ký. Hãy tải lại tiện ích tại chrome://extensions."
+  },
+  "m_52496e5aeff43353": {
+    "message": "Chưa gán"
+  },
+  "m_b2ae9ddc7cae352f": {
+    "message": "Nhấp vào Thay đổi, tìm lệnh dịch của tiện ích này và gán tổ hợp phím bạn muốn."
+  },
+  "m_6aa27f14bff16faa": {
+    "message": "Không thể đọc"
+  },
+  "m_11549f27aead732c": {
+    "message": "Không thể đọc thông tin phím tắt."
+  },
+  "m_c634021981632019": {
+    "message": "Nhận dạng đám mây không cần gói ngôn ngữ."
+  },
+  "m_9ed1592941f9e7fb": {
+    "message": "Hãy cập nhật Chrome để nhận dạng giọng nói trên thiết bị, hoặc dùng nhận dạng đám mây."
+  },
+  "m_3177d62d329033f9": {
+    "message": "Không thể kiểm tra gói ngôn ngữ: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4cc885bb61d8f119": {
+    "message": "Gói ngôn ngữ ngoại tuyến đã sẵn sàng."
+  },
+  "m_184f8dfe7cc598c8": {
+    "message": "Thiếu gói ngôn ngữ ngoại tuyến. Gói tiếng Anh bao gồm công cụ nhận dạng và cũng sẽ được tải xuống."
+  },
+  "m_68f3fdf2fc855df0": {
+    "message": "Thiếu gói ngôn ngữ ngoại tuyến."
+  },
+  "m_af27ec592962322f": {
+    "message": "Đang tải gói ngôn ngữ ngoại tuyến…"
+  },
+  "m_19f394c9dc6e21fd": {
+    "message": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho ngôn ngữ này. Hãy dùng nhận dạng đám mây."
+  },
+  "m_c897be932b695c0b": {
+    "message": "Nhập URL HTTPS hợp lệ. HTTP không được hỗ trợ."
+  },
+  "m_050d25598c0376c9": {
+    "message": "Cần cấp quyền cho $arg1$. Nhấp vào Kiểm tra kết nối để cấp quyền.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_145219e726b87790": {
+    "message": "Ẩn"
+  },
+  "m_3a6bfccd125a8b03": {
+    "message": "Đang tải gói ngoại tuyến. Quá trình này có thể mất một lúc…"
+  },
+  "m_e86b0222c4cd0aff": {
+    "message": "Tải xuống thất bại: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_9c2c878e7330cfcf": {
+    "message": "Tải xuống thất bại. Hãy thử lại sau."
+  },
+  "m_24bab8c7866d8f8a": {
+    "message": "$arg2$ quy tắc trên $arg1$ trang web",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5df126d19a3f0d2a": {
+    "message": "Chưa có quy tắc"
+  },
+  "m_ba9e5175f4fde01e": {
+    "message": "Chưa được cấp quyền truy cập $arg1$. Không thể dùng URL API này.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4da50aac5126af70": {
+    "message": "Đang kết nối…"
+  },
+  "m_f3f5cb253815dcc3": {
+    "message": "Đã kết nối ($arg1$): $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77c9e582e85583af": {
+    "message": "Kiểm tra kết nối thất bại"
+  },
+  "m_de8184da1ef88d03": {
+    "message": "Đã cấu hình"
+  },
+  "m_80a57e03f0717f91": {
+    "message": "Chưa cấu hình"
+  },
+  "m_1b43fb7df76a6812": {
+    "message": "Tự động nhận diện"
+  },
+  "m_eedd0dc8d2291fee": {
+    "message": "$arg1$ ký tự · Vượt giới hạn, chỉ dịch $arg2$ ký tự đầu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_850e2e3379c16b3e": {
+    "message": "$arg1$ ký tự",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_ca4d973c0b006b75": {
+    "message": "Dừng"
+  },
+  "m_d5f50706fbd9f648": {
+    "message": "Dịch thất bại"
+  },
+  "m_9cf1d3a137338b9d": {
+    "message": "Mô hình không trả về nội dung nào. Hãy thử lại hoặc chọn mô hình khác."
+  },
+  "m_8f6f8d979c981ced": {
+    "message": "Đã sao chép"
+  },
+  "m_753d8bb0da9913ce": {
+    "message": "Sao chép thất bại"
+  },
+  "m_8a6cb14e2f9a7cd5": {
+    "message": "Dịch"
+  },
+  "m_3c9bbffe58507bbd": {
+    "message": "Không có văn bản"
+  },
+  "m_28384d7afd2e4fa6": {
+    "message": "Thất bại"
+  },
+  "m_3bfddecb8ca89f2f": {
+    "message": "Khôi phục bản gốc"
+  },
+  "m_0b58dd407ffeaebd": {
+    "message": "Không ghi nhận được phần tử nhấp chuột phải."
+  },
+  "m_93b056d8d5da9de9": {
+    "message": "Không thể tạo bộ chọn tái sử dụng cho phần tử này."
+  },
+  "m_e68fcc025975add3": {
+    "message": "Trang này không có tên miền hợp lệ, không thể lưu quy tắc."
+  },
+  "m_fdc852167becfb29": {
+    "message": "Trang web này đã đạt giới hạn quy tắc."
+  },
+  "m_c4507a67622d9c7c": {
+    "message": "Hiện ảnh gốc"
+  },
+  "m_240d2127ad8d1bb8": {
+    "message": "Đóng (Esc)"
+  },
+  "m_3fd47edce45b3603": {
+    "message": "Đóng"
+  },
+  "m_7cd62999f274e547": {
+    "message": "Hiện bản dịch"
+  },
+  "m_92c1e98d69346932": {
+    "message": "Không có văn bản cần dịch trong ảnh."
+  },
+  "m_390d0c8f558d95e7": {
+    "message": "Không nhận diện được văn bản trong ảnh."
+  },
+  "m_8646e9fb979e4595": {
+    "message": "Đang dịch $arg1$ đoạn…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0ecc16e7fa2cccf4": {
+    "message": "Đang đọc ảnh…"
+  },
+  "m_3b938f156c41918a": {
+    "message": "Ảnh này chưa tải xong."
+  },
+  "m_e640442431db48ae": {
+    "message": "Đang nhận diện $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c4273fd3abdd9f66": {
+    "message": "Đang nhận diện văn bản trong ảnh…"
+  },
+  "m_7a616e3048b7de12": {
+    "message": "Không truy cập được ảnh này. Hãy sao chép ảnh rồi dán vào bảng Dịch ảnh."
+  },
+  "m_10ba9d3eb67fa179": {
+    "message": "Nhận diện thất bại"
+  },
+  "m_93112c231d6a7c6b": {
+    "message": "Cài đặt"
+  },
+  "m_b479f4bb3ff0cda7": {
+    "message": "Tắt phụ đề"
+  },
+  "m_bd320b4fdd38c332": {
+    "message": "Đang nghe $arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8be0ea36a9bba286": {
+    "message": "Đang kết nối…"
+  },
+  "m_01d7ccfdef6d3922": {
+    "message": "$arg1$, tạm thời chỉ hiện phụ đề gốc.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_42fda0adf550d9a6": {
+    "message": "Dịch không khả dụng"
+  },
+  "m_5f6069123981822c": {
+    "message": "Dịch phụ đề liên tục thất bại ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_4b3ec20939d934a8": {
+    "message": "Tiện ích đã cập nhật, hãy tải lại trang rồi thử lại."
+  },
+  "m_16e1264ca7b80f51": {
+    "message": "Không kết nối được dịch vụ nhận diện, hãy thử lại."
+  },
+  "m_6a07b1765ee5d7db": {
+    "message": "Kết quả dịch AI"
+  },
+  "m_6f07b54a5a8a1d5d": {
+    "message": "Dịch"
+  },
+  "m_f823028377c7f65d": {
+    "message": "Chuyển nền tảng dịch"
+  },
+  "m_496b5f088e5b9bbf": {
+    "message": "Dịch lại"
+  },
+  "m_2c1b3ce9d9f96651": {
+    "message": "Dịch sang $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bfa65f4e94deb25b": {
+    "message": "Nội dung chọn khá dài, chỉ dịch $arg1$ ký tự đầu tiên.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3f6c407778bda3a1": {
+    "message": "Đã xảy ra lỗi"
+  },
+  "m_0fec6e87c85a612b": {
+    "message": "Không đọc được tệp"
+  },
+  "m_572993f5820a55ba": {
+    "message": "Không tải được ảnh"
+  },
+  "m_40f67a2ffb954fbe": {
+    "message": "Đang tải ảnh…"
+  },
+  "m_b0834349795ce6f6": {
+    "message": "Thu nhỏ còn $arg1$×$arg2$ để nhận dạng",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_a559f089f921f882": {
+    "message": "Khác miền, chuyển sang lấy ảnh theo URL qua API"
+  },
+  "m_ca304155c75f8bac": {
+    "message": "Mô hình không trả về tọa độ cho đoạn này"
+  },
+  "m_9255552a10e62692": {
+    "message": "Nhận dạng $arg1$ đoạn, $arg2$ đoạn có tọa độ · Tỷ lệ $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_19adaa8fb34ede25": {
+    "message": "Nhận dạng được $arg1$ đoạn, đều không cần dịch",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f7cf8b907e09bb6c": {
+    "message": ", ẩn $arg1$ đoạn không cần dịch",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a2ad55034ea859f6": {
+    "message": "Hoàn tất$arg1$ · Mất $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b875761a78995556": {
+    "message": "Ảnh từ clipboard"
+  },
+  "m_ae19cb4f305ce651": {
+    "message": "$arg1$ đoạn · Tỷ lệ $arg2$×$arg3$ · Thứ tự $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
+  },
+  "m_9117469cb275dfa6": {
+    "message": "Tên mô hình hỗ trợ thị giác"
+  },
+  "m_0eb953ef59c05055": {
+    "message": "Bộ chọn không được để trống"
+  },
+  "m_d0bcde5e8e326da0": {
+    "message": "Quy tắc không tồn tại"
+  },
+  "m_63fa818b7b1c855c": {
+    "message": "Trang web này đã có quy tắc với cùng bộ chọn"
+  },
+  "m_81f1f1a720788251": {
+    "message": "Không kết nối được $arg1$, vui lòng kiểm tra mạng, proxy hoặc địa chỉ API",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f3ad27c0495ff055": {
+    "message": "Yêu cầu bị từ chối$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_375d8292ec598ad5": {
+    "message": "API Key của $arg1$ không hợp lệ hoặc không có quyền$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_83559c2caf2d9a1d": {
+    "message": "Tài khoản $arg1$ không đủ số dư$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b4d78b1bfacc2e0c": {
+    "message": "Không tìm thấy mô hình “$arg1$” hoặc địa chỉ API không đúng$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_1b5aa0598d52e738": {
+    "message": "Đoạn văn bản chọn quá dài, vui lòng dịch theo từng phần$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6c7e4f22a6f0c723": {
+    "message": "Yêu cầu quá thường xuyên hoặc đã hết hạn mức, thử lại sau$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c9f0620e747c260e": {
+    "message": "Lỗi máy chủ $arg1$ ($arg2$)$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_8167d3fdefd2f55b": {
+    "message": "Yêu cầu thất bại ($arg1$)$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_d8f5a58042fc6b0d": {
+    "message": "Chưa cấu hình API Key cho $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aac9747023e61c2a": {
+    "message": "Mô hình không trả về mảng JSON hợp lệ"
+  },
+  "m_ab54c76b0c9e5767": {
+    "message": "Mô hình trả về không phải là mảng"
+  },
+  "m_90d478f772504027": {
+    "message": "Mô hình trả về $arg1$ mục, không khớp với $arg2$ mục gốc",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ec085071155ead4": {
+    "message": "$arg1$ chỉ dịch được văn bản, không nhận dạng được chữ trong ảnh. Vui lòng chuyển sang ChatGPT hoặc DeepSeek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b5ccd120e58b4ffb": {
+    "message": "DeepL không hỗ trợ ngôn ngữ đích này"
+  },
+  "m_effd9d91d429fcfa": {
+    "message": "Không kết nối được $arg1$, vui lòng kiểm tra mạng hoặc proxy",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_61f70a2b468db71d": {
+    "message": "Đã hết hạn mức dịch DeepL trong tháng này"
+  },
+  "m_76f33df2c71efec0": {
+    "message": "DeepL trả về nội dung ngoài dự kiến"
+  },
+  "m_7f1a81709956c7b3": {
+    "message": "DeepL trả về $arg1$ mục, không khớp với $arg2$ mục gốc",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_47f422807dffe6cb": {
+    "message": "Vui lòng nhập API Key của $arg1$ trước",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f318cf537d490155": {
+    "message": "Kết nối thành công nhưng không trả về bản dịch"
+  },
+  "m_180f373f2fe1dce5": {
+    "message": "Kết nối thành công nhưng mô hình không trả về nội dung, thử mô hình khác"
+  },
+  "m_076603dff5ad4734": {
+    "message": "API chính thức của OpenAI"
+  },
+  "m_5d2c5061acbd29c2": {
+    "message": "Kết nối trực tiếp trong nước, giá thấp hơn"
+  },
+  "m_4f17c4b867be421f": {
+    "message": "Dịch máy; không cần chọn mô hình"
+  },
+  "m_d1648bacbc1630a6": {
+    "message": "Tiếng Anh"
+  },
+  "m_3a944ddb3868f4b2": {
+    "message": "Tiếng Nhật"
+  },
+  "m_259cdcf751996c6c": {
+    "message": "Tiếng Hàn"
+  },
+  "m_99cdf164a8140865": {
+    "message": "Tiếng Pháp"
+  },
+  "m_d76c7e13b112b046": {
+    "message": "Đây không phải là bộ chọn CSS hợp lệ"
+  },
+  "m_051836569928a9f9": {
+    "message": "Chỉnh sửa"
+  },
+  "m_2f9daa828907b93f": {
+    "message": "Xóa"
+  },
+  "m_222b2f12d4f198b4": {
+    "message": "Bộ chọn CSS"
+  },
+  "m_a3030bf8f16dc63c": {
+    "message": "Lưu"
+  },
+  "m_2cd0f3be8738a86c": {
+    "message": "Hủy"
+  },
+  "m_e554b6c9a946080f": {
+    "message": "Tên miền, ví dụ example.com (hoặc dán URL)"
+  },
+  "m_222952431147e537": {
+    "message": "Tên miền"
+  },
+  "m_8ec296825c405074": {
+    "message": "Bộ chọn CSS, ví dụ div#main > article.post > p"
+  },
+  "m_5af2f4b1d6b7fbb5": {
+    "message": "Vui lòng nhập tên miền hợp lệ"
+  },
+  "m_e245bf9c1c6f485b": {
+    "message": "Không thể thêm quy tắc này"
+  },
+  "m_9703faf7e71b2a5c": {
+    "message": "$arg1$ đã đạt giới hạn $arg2$ quy tắc",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7a8a11ead50742a2": {
+    "message": "Thêm"
+  },
+  "m_688ec33981980d56": {
+    "message": "$arg2$ quy tắc trên $arg1$ trang web",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6b30cb0e9995608d": {
+    "message": "$arg1$ quy tắc",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bce5cd4967adea8b": {
+    "message": "Xóa quy tắc cả trang"
+  },
+  "m_5ae5095877338e86": {
+    "message": "Xóa tất cả $arg2$ quy tắc của $arg1$?",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_83009fcfe6c1dd94": {
+    "message": "Thêm quy tắc"
+  },
+  "m_7b5a3b7cdb5135e8": {
+    "message": "Xóa tất cả quy tắc dịch vùng trên mọi trang web? Không thể hoàn tác."
+  },
+  "m_4cde9c64807fd79b": {
+    "message": "Thêm nút dịch cho vùng này"
+  },
+  "m_9e20239a7234a964": {
+    "message": "Dịch chữ trong ảnh"
+  },
+  "m_fe957901e8fc7452": {
+    "message": "Phụ đề video trực tiếp (thử nghiệm)"
+  },
+  "m_c7bcc6d27f3abaaa": {
+    "message": "(không)"
+  },
+  "m_4a0aea1c32ab62f4": {
+    "message": "Thu âm thanh tab, nhận dạng giọng nói cục bộ, tạo phụ đề video"
+  },
+  "m_ecbd351fbc469cd3": {
+    "message": "Chưa được cấp quyền thu âm thanh tab này, vui lòng mở lại từ menu chuột phải của video hoặc biểu tượng tiện ích"
+  },
+  "m_f5864a1d3e1cbe67": {
+    "message": "Âm thanh của tab này đang bị chương trình khác thu (như ghi màn hình hoặc tiện ích khác)"
+  },
+  "m_819842bc861d8f50": {
+    "message": "Không thể thu âm thanh tab này: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_78a86c9a04000e27": {
+    "message": "$arg1$ (nhận dạng đám mây)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37437c580bdefef0": {
+    "message": "Không thể khởi động nhận dạng giọng nói: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_37e77e790c005c96": {
+    "message": "[Dịch AI] Dịch phụ đề $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_0b746476dc78d018": {
+    "message": "[Dịch AI] Phím tắt không kích hoạt dịch: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d4d291491a149142": {
+    "message": "\"Dịch bằng phím tắt\" đã tắt trong cài đặt"
+  },
+  "m_b13e4b3e4e03a043": {
+    "message": "Không lấy được tab hiện tại"
+  },
+  "m_9aea932d4811acdc": {
+    "message": "Trang này không cho phép chèn script (ví dụ trang bắt đầu bằng chrome://)"
+  },
+  "m_1b85f9a2207380eb": {
+    "message": "Hiện không có văn bản nào được chọn"
+  },
+  "m_ffafce8c4494350d": {
+    "message": "Bản dịch sẽ hiển thị ở đây"
+  },
+  "m_65f5d083cf59b2c5": {
+    "message": "Chọn văn bản, nhấp chuột phải → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b06e78e0d87ebbcb": {
+    "message": "Có thể dịch văn bản mọi ngôn ngữ, kể cả tiếng Trung."
+  },
+  "m_e4dd3da5090fa2dd": {
+    "message": "Menu chuột phải: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3d13868593ae4eeb": {
+    "message": "Ngôn ngữ giao diện"
+  },
+  "m_b9c76f096644d599": {
+    "message": "Theo Chrome"
+  },
+  "m_cb7f03bd242decd7": {
+    "message": "Ngôn ngữ đích dịch mặc định"
+  },
+  "m_9c2df1b30eababa3": {
+    "message": "Có thể chọn riêng ngôn ngữ giao diện và ngôn ngữ đích dịch."
+  },
+  "m_2b41309c016fe33f": {
+    "message": "Chọn văn bản, dịch sang ngôn ngữ bạn chọn bằng menu chuột phải, nút nổi hoặc phím tắt."
+  },
+  "m_35a88c7914864612": {
+    "message": "Hiển thị nút dịch bên cạnh văn bản đã chọn."
+  },
+  "m_30d623ca3b93af9a": {
+    "message": "API Key chỉ được lưu trên máy, không đồng bộ; chỉ dùng để xác thực với nền tảng bạn chọn."
+  },
+  "m_6076121593793789": {
+    "message": "Dịch phụ đề sang $arg1$, gọi API dịch một lần cho mỗi dòng. Tắt để chỉ hiển thị văn bản gốc.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d26e77c5f104f913": {
+    "message": "Mở trang web, nhấp chuột phải vào vùng muốn dịch và chọn “Thêm nút dịch cho vùng này”; hoặc thêm quy tắc thủ công."
+  },
+  "m_df3a28050f22403e": {
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4fb56dbb2ca458a0": {
+    "message": "Đang dịch vùng sang $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_1e1c59b043456a1e": {
+    "message": "Đã dịch sang $arg1$; nhấp để khôi phục bản gốc",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb25e91b6a98300f": {
+    "message": "Dịch vùng này"
+  },
+  "m_2121da766aab06cc": {
+    "message": "Đặt làm ngôn ngữ đích mặc định"
+  },
+  "m_0f95605f11e6ea98": {
+    "message": "Dịch văn bản đã chọn"
+  },
+  "m_dfdc3c425e764c96": {
+    "message": "Nội dung đã chọn không có văn bản để dịch"
+  },
+  "m_537e47ba77f9f37b": {
+    "message": "Dịch văn bản và hình ảnh sang ngôn ngữ bạn muốn đọc bằng nền tảng bạn chọn."
+  },
+  "m_ea7e6317fe591be3": {
+    "message": "Kết nối dịch đã bị ngắt, vui lòng thử lại."
+  },
+  "m_71abc609ccad93e7": {
+    "message": "Không có phản hồi"
+  },
+  "m_314fe68e11d3c10f": {
+    "message": "DeepL không hỗ trợ ngôn ngữ nguồn này"
+  },
+  "m_c3ab35ecb9e65423": {
+    "message": "Không thể đọc các ngôn ngữ DeepL hỗ trợ, vui lòng thử lại."
+  },
+  "m_4dd23759c47be9fc": {
+    "message": "API Key của DeepL không hợp lệ$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionName": {
+    "message": "Trình dịch AI"
+  },
+  "extensionDescription": {
+    "message": "Dịch văn bản và hình ảnh sang ngôn ngữ bạn muốn đọc bằng nền tảng bạn chọn."
+  },
+  "translateSelection": {
+    "message": "Dịch văn bản đã chọn"
+  }
+}

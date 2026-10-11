@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Understand foreign text on any page with a right-click</title>
-<meta name="description" content="An open-source Chrome extension: select foreign text, right-click, and read the translation in place — plus whole regions and text inside images. Bring your own API key; no servers, no analytics, no tracking." />
+<meta name="description" content="An open-source Chrome extension that translates selected text, whole regions, and text in images into your chosen language. 24 target languages, bring your own API Key, no analytics, no tracking." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://huaci.app/en/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Select, right-click, and keep reading. Page text, whole regions and text inside images are translated in place. Open source, no servers, bring your own API key." />
+<meta property="og:description" content="Select text, right-click, and keep reading. Translate web page text, whole regions, and text in images into your chosen language. Open source, bring your own API Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>Open source</b> GPL-3.0 · Bring your own API key</span>
         <h1>Select, right-click,<br /><span class="dim">then keep reading.</span></h1>
-        <p class="hero-sub">A Chrome extension. Foreign text on a page, whole regions, even text inside images — translated in place. The translation streams in word by word, using your own API key, with no server in between.</p>
+        <p class="hero-sub">A Chrome extension. Selected text, whole regions, and text in images can all be translated into your chosen language. 24 target languages, interface language set independently, connect directly to your chosen platform with your own API Key.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Add to Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">View source</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>No servers · No analytics</span> <span><i class="dot"></i>Four ways to translate</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Selection translation</h3>
-            <p>Select a passage of non-Chinese text, right-click and choose "Translate into Chinese"; the translation appears word by word in a popup in the middle of the screen.</p>
+            <p>Select text in any language, right-click to translate, and the translation appears character by character in a popup. You can temporarily switch the target language and retranslate from the original text.</p>
             <ul>
-              <li>If the selection is already Chinese the menu item does not appear; the same goes for plain numbers, punctuation and emoji</li>
+              <li>Chinese, short phrases, and mixed-language text can all be translated; pure numbers, punctuation, and emoji do not show the translation entry point</li>
               <li>The popup is centered and draggable, closes with <span class="mono">Esc</span> or a click on the backdrop — not a little bubble chasing your cursor</li>
               <li>A collapsible source panel to read alongside the translation</li>
               <li>There is a keyboard shortcut too: <span class="mono">Alt+Shift+T</span> (<span class="mono">Command+Shift+Y</span> on macOS)</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Element translation</h3>
-            <p>Right-click a region of a page to attach a translate button to it. One click and the text inside that region is replaced in place.</p>
+            <p>Right-click a region on the page to attach a translation button to it. Click once and the text in the region is replaced in place with the selected language; click again to restore the original text.</p>
             <ul>
               <li>Rules are remembered per domain, so the button is attached automatically the next time you visit that site</li>
               <li>Long content is sent in batches and replaced as it is translated, so you do not wait for the whole region</li>
@@ -252,8 +252,8 @@
             <h3>Translation panel</h3>
             <p>A standalone page with the source on the left and the translation on the right, for passages that are not on a web page.</p>
             <ul>
-              <li>A dozen or so target languages, not just Chinese</li>
-              <li>Detects the input language: Chinese is translated into English by default, everything else into Chinese</li>
+              <li>24 target languages available, covering major global languages</li>
+              <li>The source language can be auto-detected or specified manually, the target language is selected independently, and the panel remembers the last selection</li>
               <li>Provider and target language sit in the toolbar; switch and re-translate at any time</li>
             </ul>
           </div>

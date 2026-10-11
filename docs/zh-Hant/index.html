@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
-<meta name="description" content="一個開源的 Chrome 擴充功能：選取外文後按右鍵就能就地翻譯成中文，也能翻譯整塊區域和圖片裡的文字。自備 API Key，無伺服器、無統計、無追蹤。" />
+<meta name="description" content="一個開源的 Chrome 擴充功能：把選取文字、整塊區域和圖片裡的文字翻譯成你選擇的語言。24 種目標語言，自備 API Key，無統計、無埋點。" />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/" />
 <meta property="og:title" content="AI 劃詞翻譯" />
-<meta property="og:description" content="選取外文，按右鍵，然後繼續閱讀。網頁文字、整塊區域、圖片裡的文字都能就地翻譯成中文。開源、無伺服器、自備 API Key。" />
+<meta property="og:description" content="選取文字，右鍵，然後接著讀。網頁文字、整塊區域、圖片裡的字都能翻譯成你選擇的語言。開源，自備 API Key。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>開源</b> GPL-3.0 · 自備 API Key</span>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">一個 Chrome 擴充功能。網頁裡的外文、整塊區域、甚至圖片裡的文字，都能就地翻譯成中文。譯文會逐字串流出現，用的是你自己的 API Key——中間不經過任何伺服器。</p>
+        <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊區域和圖片裡的文字，都能翻譯成你選擇的語言。24 種目標語言，介面語言獨立設定，用你自己的 API Key 直接連接所選平台。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">安裝到 Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>無伺服器 · 無統計</span> <span><i class="dot"></i>四種翻譯方式</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>劃詞翻譯</h3>
-            <p>選取一段非中文文字，按右鍵點選「翻譯成中文」，譯文會在螢幕中央的彈出視窗中逐字出現。</p>
+            <p>選取任意語言的文字，右鍵選擇翻譯，譯文在彈窗裡逐字出現。可臨時切換目標語言，用原文重新翻譯。</p>
             <ul>
-              <li>選取的本來就是中文時，選單不會出現；純數字、標點、表情符號也是如此</li>
+              <li>中文、短詞和混合語言都可以翻譯；純數字、標點和表情不顯示翻譯入口</li>
               <li>彈出視窗置中且可拖曳，按 <span class="mono">Esc</span> 或點擊背景即可關閉，不是追著游標跑的小氣泡</li>
               <li>可收合的原文面板，方便對照閱讀</li>
               <li>也有鍵盤快速鍵：<span class="mono">Alt+Shift+T</span>（macOS 為 <span class="mono">Command+Shift+Y</span>）</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>元素翻譯</h3>
-            <p>在網頁上的某個區域按右鍵，為它掛上一個翻譯按鈕。點一下，區域裡的文字就會就地換成中文。</p>
+            <p>右鍵頁面上的某個區域，給它掛一個翻譯按鈕。點一下，區域裡的文字就地換成所選語言，再點可恢復原文。</p>
             <ul>
               <li>規則會依網域記住，下次再來同一個網站，按鈕會自動掛上</li>
               <li>長內容分批送出，邊翻譯邊取代，不用等整塊完成</li>
@@ -252,8 +252,8 @@
             <h3>翻譯面板</h3>
             <p>一個獨立頁面，左邊貼原文、右邊輸出譯文，適合處理成段的、不在網頁上的文字。</p>
             <ul>
-              <li>十餘種目標語言可選，不限於中文</li>
-              <li>自動判斷輸入語言：中文預設翻譯成英文，其他語言預設翻譯成中文</li>
+              <li>24 種目標語言可選，覆蓋全球主流語言</li>
+              <li>來源語言可自動識別或手動指定，目標語言獨立選擇，面板記住上次選擇</li>
               <li>平台和目標語言就在工具列上，隨時切換重新翻譯</li>
             </ul>
           </div>

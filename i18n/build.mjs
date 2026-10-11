@@ -421,7 +421,7 @@ async function translate(code) {
   const key = process.env.HUACI_TRANSLATE_KEY || process.env.OPENAI_API_KEY || process.env.DEEPSEEK_API_KEY;
   const useDeepSeek = !process.env.OPENAI_API_KEY && Boolean(process.env.DEEPSEEK_API_KEY);
   const baseUrl = process.env.HUACI_TRANSLATE_BASE || (useDeepSeek ? 'https://api.deepseek.com' : 'https://api.openai.com/v1');
-  const model = process.env.HUACI_TRANSLATE_MODEL || (useDeepSeek ? 'deepseek-chat' : 'gpt-4o-mini');
+  const model = process.env.HUACI_TRANSLATE_MODEL || (useDeepSeek ? 'deepseek-flash' : 'gpt-4o-mini');
   if (!key) {
     console.error('缺少 API Key：请设置 HUACI_TRANSLATE_KEY（或 OPENAI_API_KEY / DEEPSEEK_API_KEY）后重跑');
     console.error('待翻译 ' + todo.length + ' 段，可用 --extract 先看清单：' + path.relative(ROOT, catalogPath(BASE)));
@@ -453,6 +453,7 @@ async function translate(code) {
       headers: { 'content-type': 'application/json', authorization: 'Bearer ' + key },
       body: JSON.stringify({
         model,
+        ...(useDeepSeek ? { thinking: { type: 'disabled' } } : {}),
         temperature: 0,
         messages: [
           { role: 'system', content: system },

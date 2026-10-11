@@ -273,16 +273,36 @@
     "message": "这个语言"
   },
   "m_a1dd6d1d1241e306": {
-    "message": "$1的离线语言包还在下载，稍后再试"
+    "message": "$arg1$的离线语言包还在下载，稍后再试",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_7e267c5e7859ecbb": {
-    "message": "还没有下载$1的离线语言包"
+    "message": "还没有下载$arg1$的离线语言包",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_46c50bdb25fce581": {
-    "message": "这台设备不支持$1的离线识别"
+    "message": "这台设备不支持$arg1$的离线识别",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4429be062e7af0c9": {
-    "message": "云端识别不支持$1"
+    "message": "云端识别不支持$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f00115e8f289956f": {
     "message": "连不上云端语音识别服务（需要能访问 Google）"
@@ -294,7 +314,12 @@
     "message": "浏览器不允许语音识别"
   },
   "m_5524c5571eaa1fd2": {
-    "message": "语音识别出错（$1）"
+    "message": "语音识别出错（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3ab9d6387b7496c6": {
     "message": "视频字幕出错"
@@ -309,7 +334,12 @@
     "message": "当前 Chrome 不支持设备端语音识别，请升级到最新版，或在设置里改用云端识别"
   },
   "m_559f1ddcfb4021ca": {
-    "message": "截取标签页声音失败：$1"
+    "message": "截取标签页声音失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_1bd91a7d0c53c936": {
     "message": "已保存"
@@ -321,19 +351,44 @@
     "message": "○ 未配置 Key"
   },
   "m_1e68f87138bb6513": {
-    "message": "$1 控制台"
+    "message": "$arg1$ 控制台",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b1b96346233660db": {
-    "message": "留空则使用 $1。可以直接填任意该平台支持的模型名。"
+    "message": "留空则使用 $arg1$。可以直接填任意该平台支持的模型名。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f4e9af8a3ca54296": {
-    "message": "留空则使用 $1。填写代理或中转地址时，需要额外授权该域名。"
+    "message": "留空则使用 $arg1$。填写代理或中转地址时，需要额外授权该域名。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_908728fa7365adae": {
-    "message": "$1 只能翻译文本，图片翻译需要切换到 ChatGPT 或 DeepSeek。"
+    "message": "$arg1$ 只能翻译文本，图片翻译需要切换到 ChatGPT 或 DeepSeek。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_96f71f1dfe6d8033": {
-    "message": "$1 一次性返回全部译文，没有逐字显示。"
+    "message": "$arg1$ 一次性返回全部译文，没有逐字显示。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_7b89c50978dee6ed": {
     "message": "未注册"
@@ -360,7 +415,12 @@
     "message": "当前 Chrome 不支持设备端语音识别，请升级到最新版，或改用云端识别。"
   },
   "m_3177d62d329033f9": {
-    "message": "读取语言包状态失败：$1"
+    "message": "读取语言包状态失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4cc885bb61d8f119": {
     "message": "离线语言包已就绪"
@@ -381,7 +441,12 @@
     "message": "请填写合法的 https 地址（出于安全考虑不支持 http）。"
   },
   "m_050d25598c0376c9": {
-    "message": "还需要授权访问 $1：点下方「测试连接」时会弹出授权请求。"
+    "message": "还需要授权访问 $arg1$：点下方「测试连接」时会弹出授权请求。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_145219e726b87790": {
     "message": "隐藏"
@@ -390,25 +455,51 @@
     "message": "正在下载离线语言包，视网速可能要等一会儿…"
   },
   "m_e86b0222c4cd0aff": {
-    "message": "下载失败：$1"
+    "message": "下载失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_9c2c878e7330cfcf": {
     "message": "下载失败，稍后再试"
   },
   "m_24bab8c7866d8f8a": {
-    "message": "已记录 $1 个网站、$2 条规则"
+    "message": "已记录 $arg1$ 个网站、$arg2$ 条规则",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_5df126d19a3f0d2a": {
     "message": "还没有规则"
   },
   "m_ba9e5175f4fde01e": {
-    "message": "未授权访问 $1，无法使用该接口地址"
+    "message": "未授权访问 $arg1$，无法使用该接口地址",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4da50aac5126af70": {
     "message": "正在请求…"
   },
   "m_f3f5cb253815dcc3": {
-    "message": "连接正常（$1）：$2"
+    "message": "连接正常（$arg1$）：$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_77c9e582e85583af": {
     "message": "测试失败"
@@ -423,10 +514,23 @@
     "message": "自动识别"
   },
   "m_eedd0dc8d2291fee": {
-    "message": "$1 字符 · 超出上限，只翻译前 $2 个"
+    "message": "$arg1$ 字符 · 超出上限，只翻译前 $arg2$ 个",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_850e2e3379c16b3e": {
-    "message": "$1 字符"
+    "message": "$arg1$ 字符",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_ca4d973c0b006b75": {
     "message": "停止"
@@ -486,7 +590,12 @@
     "message": "图中没有识别到文字"
   },
   "m_8646e9fb979e4595": {
-    "message": "正在翻译 $1 段…"
+    "message": "正在翻译 $arg1$ 段…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_0ecc16e7fa2cccf4": {
     "message": "正在读取图片…"
@@ -495,7 +604,15 @@
     "message": "这张图还没加载完"
   },
   "m_e640442431db48ae": {
-    "message": "正在识别 $1/$2…"
+    "message": "正在识别 $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_c4273fd3abdd9f66": {
     "message": "正在识别图中文字…"
@@ -513,19 +630,34 @@
     "message": "关闭字幕"
   },
   "m_bd320b4fdd38c332": {
-    "message": "正在听$1…"
+    "message": "正在听$arg1$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_8be0ea36a9bba286": {
     "message": "正在连接…"
   },
   "m_01d7ccfdef6d3922": {
-    "message": "$1，先只显示原文"
+    "message": "$arg1$，先只显示原文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_42fda0adf550d9a6": {
     "message": "翻译不可用"
   },
   "m_5f6069123981822c": {
-    "message": "字幕翻译连续失败（$1）"
+    "message": "字幕翻译连续失败（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_4b3ec20939d934a8": {
     "message": "扩展已更新，请刷新页面后再试"
@@ -546,10 +678,20 @@
     "message": "重新翻译"
   },
   "m_2c1b3ce9d9f96651": {
-    "message": "翻译成$1"
+    "message": "翻译成$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_bfa65f4e94deb25b": {
-    "message": "选中内容较长，只翻译了前 $1 个字符。"
+    "message": "选中内容较长，只翻译了前 $arg1$ 个字符。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3f6c407778bda3a1": {
     "message": "出错了"
@@ -564,7 +706,15 @@
     "message": "正在载入图片…"
   },
   "m_b0834349795ce6f6": {
-    "message": "送检缩至 $1×$2"
+    "message": "送检缩至 $arg1$×$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_a559f089f921f882": {
     "message": "跨域，改由接口按网址取图"
@@ -573,22 +723,68 @@
     "message": "模型没给这一段的坐标"
   },
   "m_9255552a10e62692": {
-    "message": "识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4"
+    "message": "识别 $arg1$ 段，$arg2$ 段带坐标 · 坐标制式 $arg3$×$arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
   },
   "m_19adaa8fb34ede25": {
-    "message": "识别到 $1 段，都无需翻译"
+    "message": "识别到 $arg1$ 段，都无需翻译",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f7cf8b907e09bb6c": {
-    "message": "，隐藏 $1 段无需翻译的"
+    "message": "，隐藏 $arg1$ 段无需翻译的",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_a2ad55034ea859f6": {
-    "message": "完成$1 · 用时 $2s"
+    "message": "完成$arg1$ · 用时 $arg2$s",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_b875761a78995556": {
     "message": "剪贴板图片"
   },
   "m_ae19cb4f305ce651": {
-    "message": "$1 段 · 制式 $2×$3 · 顺序 $4"
+    "message": "$arg1$ 段 · 制式 $arg2$×$arg3$ · 顺序 $arg4$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg4": {
+        "content": "$4"
+      }
+    }
   },
   "m_9117469cb275dfa6": {
     "message": "支持视觉的模型名"
@@ -603,34 +799,102 @@
     "message": "这个网站下已经有相同的选择器"
   },
   "m_81f1f1a720788251": {
-    "message": "无法连接 $1，请检查网络、代理，或接口地址是否填错"
+    "message": "无法连接 $arg1$，请检查网络、代理，或接口地址是否填错",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f3ad27c0495ff055": {
-    "message": "请求被拒绝$1"
+    "message": "请求被拒绝$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_375d8292ec598ad5": {
-    "message": "$1 的 API Key 无效或没有权限$2"
+    "message": "$arg1$ 的 API Key 无效或没有权限$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_83559c2caf2d9a1d": {
-    "message": "$1 账户余额不足$2"
+    "message": "$arg1$ 账户余额不足$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_b4d78b1bfacc2e0c": {
-    "message": "找不到模型「$1」或接口地址不正确$2"
+    "message": "找不到模型「$arg1$」或接口地址不正确$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_1b5aa0598d52e738": {
-    "message": "选中的文字太长了，请分段翻译$1"
+    "message": "选中的文字太长了，请分段翻译$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_6c7e4f22a6f0c723": {
-    "message": "请求太频繁或额度已用尽，稍后再试$1"
+    "message": "请求太频繁或额度已用尽，稍后再试$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_c9f0620e747c260e": {
-    "message": "$1 服务端错误（$2）$3"
+    "message": "$arg1$ 服务端错误（$arg2$）$arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
   },
   "m_8167d3fdefd2f55b": {
-    "message": "请求失败（$1）$2"
+    "message": "请求失败（$arg1$）$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_d8f5a58042fc6b0d": {
-    "message": "还没有配置 $1 的 API Key"
+    "message": "还没有配置 $arg1$ 的 API Key",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_aac9747023e61c2a": {
     "message": "模型没有返回合法的 JSON 数组"
@@ -639,16 +903,34 @@
     "message": "模型返回的不是数组"
   },
   "m_90d478f772504027": {
-    "message": "模型返回 $1 条，与原文 $2 条对不上"
+    "message": "模型返回 $arg1$ 条，与原文 $arg2$ 条对不上",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_5ec085071155ead4": {
-    "message": "$1 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek"
+    "message": "$arg1$ 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b5ccd120e58b4ffb": {
     "message": "DeepL 不支持这个目标语言"
   },
   "m_effd9d91d429fcfa": {
-    "message": "无法连接 $1，请检查网络或代理"
+    "message": "无法连接 $arg1$，请检查网络或代理",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_61f70a2b468db71d": {
     "message": "DeepL 本月的翻译额度已用完"
@@ -657,10 +939,23 @@
     "message": "DeepL 返回了预期之外的内容"
   },
   "m_7f1a81709956c7b3": {
-    "message": "DeepL 返回 $1 条，与原文 $2 条对不上"
+    "message": "DeepL 返回 $arg1$ 条，与原文 $arg2$ 条对不上",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_47f422807dffe6cb": {
-    "message": "请先填写 $1 的 API Key"
+    "message": "请先填写 $arg1$ 的 API Key",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_f318cf537d490155": {
     "message": "接口通了，但没有返回译文"
@@ -723,22 +1018,51 @@
     "message": "无法添加这条规则"
   },
   "m_9703faf7e71b2a5c": {
-    "message": "$1 的规则已达上限（$2 条）"
+    "message": "$arg1$ 的规则已达上限（$arg2$ 条）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_7a8a11ead50742a2": {
     "message": "添加"
   },
   "m_688ec33981980d56": {
-    "message": "$1 个网站，共 $2 条规则"
+    "message": "$arg1$ 个网站，共 $arg2$ 条规则",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_6b30cb0e9995608d": {
-    "message": "$1 条"
+    "message": "$arg1$ 条",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_bce5cd4967adea8b": {
     "message": "删除整站"
   },
   "m_5ae5095877338e86": {
-    "message": "删除 $1 下的全部 $2 条规则？"
+    "message": "删除 $arg1$ 下的全部 $arg2$ 条规则？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_83009fcfe6c1dd94": {
     "message": "新增规则"
@@ -768,19 +1092,50 @@
     "message": "这个标签页的声音正被别的程序截取（比如录屏或其他扩展）"
   },
   "m_819842bc861d8f50": {
-    "message": "无法截取这个标签页的声音：$1"
+    "message": "无法截取这个标签页的声音：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_78a86c9a04000e27": {
-    "message": "$1（云端识别）"
+    "message": "$arg1$（云端识别）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_37437c580bdefef0": {
-    "message": "无法启动语音识别：$1"
+    "message": "无法启动语音识别：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_37e77e790c005c96": {
-    "message": "[AI 划词翻译] 字幕翻译 $1ms（$2 $3）"
+    "message": "[AI 划词翻译] 字幕翻译 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
   },
   "m_0b746476dc78d018": {
-    "message": "[AI 划词翻译] 快捷键未触发翻译：$1"
+    "message": "[AI 划词翻译] 快捷键未触发翻译：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_d4d291491a149142": {
     "message": "设置里已关闭「快捷键翻译」"
@@ -798,13 +1153,23 @@
     "message": "译文会显示在这里"
   },
   "m_65f5d083cf59b2c5": {
-    "message": "选中文字，右键 → $1"
+    "message": "选中文字，右键 → $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_b06e78e0d87ebbcb": {
     "message": "任何语言的文字都可以翻译，包括中文。"
   },
   "m_e4dd3da5090fa2dd": {
-    "message": "右键菜单：$1"
+    "message": "右键菜单：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_3d13868593ae4eeb": {
     "message": "界面语言"
@@ -828,19 +1193,42 @@
     "message": "API Key 只保存在本机，不同步；仅用于向你选择的平台鉴权。"
   },
   "m_6076121593793789": {
-    "message": "字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。"
+    "message": "字幕翻译成 $arg1$，每行调用一次翻译接口。关闭后只显示原文。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_d26e77c5f104f913": {
     "message": "打开网页，在想翻译的区域上点右键，选择「为这个区域添加翻译按钮」即可；也可以手动添加规则。"
   },
   "m_df3a28050f22403e": {
-    "message": "$1 → $2"
+    "message": "$arg1$ → $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
   },
   "m_4fb56dbb2ca458a0": {
-    "message": "正在将区域翻译成 $1"
+    "message": "正在将区域翻译成 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_1e1c59b043456a1e": {
-    "message": "已翻译成 $1；点击恢复原文"
+    "message": "已翻译成 $arg1$；点击恢复原文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "m_fb25e91b6a98300f": {
     "message": "翻译此区域"
@@ -870,7 +1258,12 @@
     "message": "无法读取 DeepL 支持的语言，请重试。"
   },
   "m_4dd23759c47be9fc": {
-    "message": "DeepL 的 API Key 无效$1"
+    "message": "DeepL 的 API Key 无效$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
   },
   "extensionName": {
     "message": "AI 划词翻译"

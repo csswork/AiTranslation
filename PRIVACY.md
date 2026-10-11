@@ -72,7 +72,7 @@ The complete source code is public under GPL-3.0, so you can verify all of the a
 | `activeTab` | Act only on the tab you are working in |
 | Access to `api.openai.com`, `api.deepseek.com`, `api-free.deepl.com`, `api.deepl.com` | Send translation requests to the provider you selected |
 | Optional access to your own API origin | Only if you enter a custom API base URL (a proxy or relay). Requested for that single origin when you click "Test connection"; never for all sites |
-| Content script on all sites | You may select text on any page; and the extension must know whether the selected text is already Chinese *before* the right-click, to decide whether the menu item appears |
+| Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. |
 
 ### Contact
 
@@ -139,7 +139,7 @@ Questions? Please open an issue at
 | `activeTab` | 仅作用于你当前操作的那个标签页 |
 | 访问 `api.openai.com`、`api.deepseek.com`、`api-free.deepl.com`、`api.deepl.com` | 向你选定的平台发送翻译请求 |
 | 可选：访问你自己的接口域名 | 仅当你填写了自定义接口地址（代理或中转）时申请，且只申请那一个域名；在点击「测试连接」时弹出授权，不会申请所有网站 |
-| 内容脚本匹配所有网站 | 你可能在任何网页上划词翻译；且需在右键之前判断选中的文字是否为中文，以决定菜单是否出现 |
+| 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区 |
 
 ### 联系方式
 

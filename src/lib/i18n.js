@@ -16,7 +16,8 @@
     const key = globalThis.AITrMessageIds[source];
     const native = !catalog && key && globalThis.chrome?.i18n?.getMessage?.(key, values.map(String));
     if (native) return native;
-    const template = catalog?.[key]?.message || globalThis.AITrEnglish[source] || source;
+    const entry = catalog?.[key];
+    const template = entry?.message?.replace(/\$([a-z][a-z\d_]*)\$/gi, (token, name) => entry.placeholders?.[name.toLowerCase()]?.content || token) || globalThis.AITrEnglish[source] || source;
     // Values are plain text. Never interpret translated messages as HTML or code.
     return template.replace(/\$(\d+)/g, (_, n) => String(values[Number(n) - 1] ?? ''));
   }
@@ -76,7 +77,7 @@
       const stored = await chrome.storage.local.get('settings');
       const choice = stored.settings?.uiLanguage;
       const locale = L.LANGUAGES[choice] ? choice : L.browserTarget();
-      const response = await fetch(chrome.runtime.getURL(`_locales/${L.LANGUAGES[locale].chromeLocale}/messages.json`));
+      const response = await fetch(chrome.runtime.getURL(L.catalogPath(locale)));
       if (!response.ok) throw new Error(`Missing locale: ${locale}`);
       result = { locale, messages: await response.json() };
     } else {

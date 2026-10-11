@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Comprendre le texte étranger d’une page d’un clic droit</title>
-<meta name="description" content="Une extension Chrome open source : sélectionnez un texte en langue étrangère et faites un clic droit pour le traduire sur place en chinois ; elle traduit aussi des zones entières et le texte contenu dans les images. Apportez votre propre API Key : aucun serveur, aucune statistique, aucun traçage." />
+<meta name="description" content="Une extension Chrome open source : traduisez le texte sélectionné, des zones entières et le texte contenu dans les images vers la langue de votre choix. 24 langues cibles, votre propre API Key, aucune statistique, aucun tracking." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:url" content="https://huaci.app/fr/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Sélectionnez, faites un clic droit, puis continuez à lire. Le texte des pages, des zones entières et le texte des images sont traduits en chinois sur place. Open source, sans serveur, avec votre propre API Key." />
+<meta property="og:description" content="Sélectionnez du texte, faites un clic droit, puis continuez à lire. Le texte des pages web, des zones entières et des images peut être traduit vers la langue de votre choix. Open source, votre propre API Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -76,7 +76,7 @@
       <div>
         <span class="eyebrow"><b>Open source</b> GPL-3.0 · Apportez votre propre API Key</span>
         <h1>Sélectionnez, faites un clic droit,<br /><span class="dim">puis continuez à lire.</span></h1>
-        <p class="hero-sub">Une extension Chrome. Le texte étranger d’une page, des zones entières, et même le texte contenu dans les images : tout est traduit en chinois sur place. La traduction apparaît mot après mot, en flux, avec votre propre API Key — sans passer par aucun serveur.</p>
+        <p class="hero-sub">Une extension Chrome. Le texte sélectionné, des zones entières et le texte contenu dans les images peuvent être traduits vers la langue de votre choix. 24 langues cibles, langue de l'interface configurable indépendamment, connexion directe à la plateforme choisie avec votre propre API Key.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Ajouter à Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>Sans serveur · Sans statistiques</span> <span><i class="dot"></i>Quatre modes de traduction</span></div>
       </div>
@@ -183,9 +183,9 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Traduction par sélection</h3>
-            <p>Sélectionnez un passage en langue étrangère, faites un clic droit et choisissez « Traduire en chinois » ; la traduction apparaît mot après mot dans une fenêtre au centre de l’écran.</p>
+            <p>Sélectionnez du texte dans n'importe quelle langue, faites un clic droit et choisissez traduire ; la traduction apparaît caractère par caractère dans une fenêtre contextuelle. Vous pouvez changer temporairement la langue cible et retraduire à partir du texte original.</p>
             <ul>
-              <li>Si la sélection est déjà en chinois, l’entrée de menu n’apparaît pas ; il en va de même pour les nombres, la ponctuation et les emojis seuls</li>
+              <li>Le chinois, les termes courts et les langues mixtes peuvent être traduits ; les chiffres seuls, la ponctuation et les emojis n'affichent pas d'entrée de traduction</li>
               <li>La fenêtre est centrée et déplaçable, se ferme avec <span class="mono">Esc</span> ou un clic sur l’arrière-plan — pas une petite bulle qui suit le curseur</li>
               <li>Un panneau de texte source repliable pour lire en regard de la traduction</li>
               <li>Un raccourci clavier existe aussi : <span class="mono">Alt+Shift+T</span> (sur macOS : <span class="mono">Command+Shift+Y</span>)</li>
@@ -206,7 +206,7 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Traduction d’éléments</h3>
-            <p>Faites un clic droit sur une zone de la page pour y attacher un bouton de traduction. Un clic, et le texte de la zone est remplacé sur place par sa traduction en chinois.</p>
+            <p>Faites un clic droit sur une zone de la page pour y attacher un bouton de traduction. Un clic remplace le texte de la zone par la langue choisie, un second clic restaure le texte original.</p>
             <ul>
               <li>Les règles sont mémorisées par domaine : la prochaine fois que vous revenez sur le même site, le bouton s’attache automatiquement</li>
               <li>Les contenus longs sont envoyés par lots et remplacés au fil de la traduction, sans attendre que tout le bloc soit terminé</li>
@@ -252,8 +252,8 @@
             <h3>Panneau de traduction</h3>
             <p>Une page autonome : le texte source à gauche, la traduction à droite, idéale pour les passages qui ne se trouvent pas sur une page web.</p>
             <ul>
-              <li>Une douzaine de langues cibles disponibles, pas seulement le chinois</li>
-              <li>Détecte automatiquement la langue d’entrée : le chinois est traduit par défaut en anglais, toutes les autres langues en chinois</li>
+              <li>24 langues cibles disponibles, couvrant les principales langues mondiales</li>
+              <li>La langue source peut être détectée automatiquement ou spécifiée manuellement, la langue cible est choisie indépendamment, le panneau mémorise le dernier choix</li>
               <li>La plateforme et la langue cible sont dans la barre d’outils ; vous pouvez changer et retraduire à tout moment</li>
             </ul>
           </div>

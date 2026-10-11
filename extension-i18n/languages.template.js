@@ -15,6 +15,7 @@
       return new Intl.DisplayNames([globalThis.AITrI18n?.locale?.() || browserTarget()], { type: 'language' }).of(id) || language.nativeLabel;
     } catch { return language.nativeLabel; }
   }
+  const catalogPath = (id) => LANGUAGES[id]?.chromeLocale ? `_locales/${LANGUAGES[id].chromeLocale}/messages.json` : `src/locales/${id}/messages.json`;
   const list = () => definitions.map((language) => ({ ...language, label: label(language.id) }));
-  globalThis.AITrLanguages = { LANGUAGES, match, browserTarget, label, list };
+  globalThis.AITrLanguages = { LANGUAGES, match, browserTarget, label, list, catalogPath };
 })();
