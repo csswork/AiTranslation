@@ -140,11 +140,13 @@
   }
 
   async function loadSettings() {
+    await AITrLanguages.ready;
     const stored = await chrome.storage.local.get('settings');
     return normalize(stored.settings);
   }
 
   async function migrateSettings() {
+    await AITrLanguages.ready;
     const stored = await chrome.storage.local.get('settings');
     if (stored.settings?.schemaVersion === 2) return;
     await saveSettings(normalize(stored.settings));

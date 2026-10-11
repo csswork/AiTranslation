@@ -74,6 +74,7 @@
     const token = ++sequence;
     let result;
     if (isWorker) {
+      await L.ready;
       const stored = await chrome.storage.local.get('settings');
       const choice = stored.settings?.uiLanguage;
       const locale = L.LANGUAGES[choice] ? choice : L.browserTarget();

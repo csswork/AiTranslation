@@ -2,6 +2,8 @@
 
 `locales.json` 是 24 种语言的唯一注册表，包含目标语言描述、文字方向和 Chrome 语言代码。`en.json` 是英文基准，键为界面源文；其他语言各有一份完整目录。简体中文直接使用源文。
 
+“跟随 Chrome”按 Chrome 首选语言列表选择首个支持的语言；取不到时依次使用 `navigator.languages`、`navigator.language` 和浏览器 UI locale，最后回退英文。显式选择的界面语言优先，已有翻译目标不随检测结果覆盖。
+
 ## 本地更新
 
 ```sh
