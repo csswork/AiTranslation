@@ -29,7 +29,7 @@
           <label class="field">
             <span class="label">API Key</span>
             <span class="key-row">
-              <input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-..." />
+              <input dir="ltr" id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-..." />
               <button id="toggleKey" class="btn ghost small" type="button">显示</button>
             </span>
             <span class="help">在 <a id="keyLink" href="#" target="_blank" rel="noreferrer">平台控制台</a> 创建。</span>
@@ -37,7 +37,7 @@
 
           <label class="field" id="modelField">
             <span class="label">模型</span>
-            <input id="model" list="modelList" autocomplete="off" spellcheck="false" />
+            <input dir="ltr" id="model" list="modelList" autocomplete="off" spellcheck="false" />
             <datalist id="modelList"></datalist>
             <span class="help" id="modelHelp"></span>
           </label>
@@ -46,7 +46,7 @@
             <summary>高级：自定义接口地址</summary>
             <label class="field">
               <span class="label">Base URL</span>
-              <input id="baseUrl" type="url" autocomplete="off" spellcheck="false" />
+              <input dir="ltr" id="baseUrl" type="url" autocomplete="off" spellcheck="false" />
               <span class="help" id="baseUrlHelp"></span>
             </label>
           </details>
@@ -99,7 +99,7 @@
           <!-- 按钮放在 label 外面：label 里嵌按钮会让点击语义变得含糊 -->
           <div class="shortcut-row">
             <span class="shortcut-label">当前快捷键</span>
-            <kbd id="shortcutKey">读取中…</kbd>
+            <kbd dir="ltr" id="shortcutKey">读取中…</kbd>
             <button id="editShortcut" class="btn ghost small" type="button">修改</button>
           </div>
           <p class="shortcut-hint" id="shortcutHint" hidden></p>

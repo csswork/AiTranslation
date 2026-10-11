@@ -114,6 +114,7 @@
 
     const input = document.createElement('input');
     input.type = 'text';
+    input.dir = 'ltr';
     input.className = 'rule-input';
     input.value = rule.selector;
     input.spellcheck = false;
@@ -195,6 +196,7 @@
 
     const input = document.createElement('input');
     input.type = 'text';
+    input.dir = 'ltr';
     input.className = 'rule-input';
     input.placeholder = t("CSS 选择器，例如 div#main > article.post > p");
     input.spellcheck = false;
