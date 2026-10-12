@@ -6,6 +6,8 @@ const script = (name) => fs.readFileSync(new URL(`src/lib/${name}.js`, root), 'u
 async function environment({ preferred, navigatorLanguages = [], ui = 'en-US', settings, failure = false, delay = 0 } = {}) {
   let stored = settings;
   const context = vm.createContext({ Intl,
+    // Service workers also have a chrome-extension: URL, but no document.
+    location: { protocol: 'chrome-extension:' },
     navigator: { languages: navigatorLanguages, language: navigatorLanguages[0] },
     chrome: {
       i18n: { getUILanguage: () => ui, getAcceptLanguages: async () => { if (failure) throw new Error('unavailable'); if (delay) await new Promise((resolve) => setTimeout(resolve, delay)); return preferred; }, getMessage: () => '' },
@@ -16,6 +18,8 @@ async function environment({ preferred, navigatorLanguages = [], ui = 'en-US', s
   });
   for (const name of ['languages', 'messages', 'i18n', 'settings']) vm.runInContext(script(name), context);
   await Promise.all([context.AITrI18n.ready, context.AITrSettings.migrateSettings()]);
+  // Surface rejected startup callbacks, even if the main ready promise resolved.
+  await new Promise((resolve) => setImmediate(resolve));
   return { ...context, stored };
 }
 // Reproduce the mismatch in the service worker: English UI locale / Chinese preferences.

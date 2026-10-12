@@ -3,7 +3,7 @@
   if (globalThis.AITrI18n) return;
   const L = globalThis.AITrLanguages;
   const isWorker = typeof document === 'undefined';
-  const isExtensionPage = globalThis.location?.protocol === 'chrome-extension:';
+  const isExtensionPage = !isWorker && globalThis.location?.protocol === 'chrome-extension:';
   const listeners = new Set();
   const records = new Set();
   const seen = new WeakMap();
@@ -102,5 +102,9 @@
       api.reload().catch(() => {});
     }
   });
-  if (isExtensionPage) api.ready.then(() => { localize(document); refresh(); });
+  const extensionDocument = isExtensionPage ? globalThis.document : null;
+  if (extensionDocument) api.ready.then(() => {
+    localize(extensionDocument);
+    refresh();
+  });
 })();
