@@ -1,4 +1,4 @@
-/** Shared language registry. Update extension-i18n/locales.json and run the i18n build. */
+/** Shared language registry. Update i18n/locales.json and run the i18n build. */
 (() => {
   const definitions = __LANGUAGES__;
   const LANGUAGES = Object.fromEntries(definitions.map((language) => [language.id, language]));

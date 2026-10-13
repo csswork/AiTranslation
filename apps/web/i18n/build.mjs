@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const DOCS = path.join(ROOT, 'public');
+const PUBLIC = path.join(ROOT, 'public');
 // 本文件所在的 i18n/ 就是译文目录：locales.json + 每种语言一个 <code>.json
 const CATALOG_DIR = HERE;
 const CONFIG = JSON.parse(fs.readFileSync(path.join(CATALOG_DIR, 'locales.json'), 'utf8'));
@@ -30,7 +30,7 @@ const SITE = CONFIG.site;
 const BASE = CONFIG.base;
 /** 404 只做中文一份：Vercel 只会给它自己的 404.html，语言靠切换器兜底 */
 const SKIP_GENERATE = new Set(['404.html']);
-const PAGES = fs.readdirSync(DOCS).filter((f) => f.endsWith('.html')).sort();
+const PAGES = fs.readdirSync(PUBLIC).filter((f) => f.endsWith('.html')).sort();
 const GEN_PAGES = PAGES.filter((p) => !SKIP_GENERATE.has(p));
 
 const VOID_TAGS = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
@@ -45,7 +45,7 @@ const ALT_END = '<!-- /i18n:alternates -->';
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
 const read = (p) => fs.readFileSync(p, 'utf8');
-const pagePath = (page) => path.join(DOCS, page);
+const pagePath = (page) => path.join(PUBLIC, page);
 const byCode = (code) => CONFIG.locales.find((l) => l.code === code);
 const enabled = () => CONFIG.locales.filter((l) => l.enabled);
 
@@ -276,7 +276,7 @@ function refreshBase(page) {
 function buildLocale(loc) {
   const catalog = loadCatalog(loc.code);
   const missing = new Set();
-  const outDir = loc.path ? path.join(DOCS, loc.path) : DOCS;
+  const outDir = loc.path ? path.join(PUBLIC, loc.path) : PUBLIC;
   fs.mkdirSync(outDir, { recursive: true });
   for (const page of GEN_PAGES) {
     const html = read(pagePath(page));
@@ -303,8 +303,8 @@ function writeSitemap() {
     }
   }
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + urls.join('\n') + '\n</urlset>\n';
-  fs.writeFileSync(path.join(DOCS, 'sitemap.xml'), xml);
-  fs.writeFileSync(path.join(DOCS, 'robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n');
+  fs.writeFileSync(path.join(PUBLIC, 'sitemap.xml'), xml);
+  fs.writeFileSync(path.join(PUBLIC, 'robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: ' + SITE + '/sitemap.xml\n');
 }
 
 function writeLangJs() {
@@ -314,7 +314,7 @@ function writeLangJs() {
     locales: enabled().map((l) => ({ code: l.code, path: l.path, label: l.label, htmlLang: l.htmlLang, match: l.match, auto: l.auto, switchLabel: l.switchLabel })),
   };
   const tpl = read(path.join(HERE, 'lang.template.js'));
-  fs.writeFileSync(path.join(DOCS, 'lang.js'), tpl.replace('__DATA__', JSON.stringify(data)));
+  fs.writeFileSync(path.join(PUBLIC, 'lang.js'), tpl.replace('__DATA__', JSON.stringify(data)));
 }
 
 /* ----------------------------------------------------------------- 检查 */
@@ -349,7 +349,7 @@ function check() {
   const stale = [];
   for (const loc of enabled()) {
     if (loc.code === BASE) continue;
-    const dir = path.join(DOCS, loc.path);
+    const dir = path.join(PUBLIC, loc.path);
     for (const page of GEN_PAGES) {
       const file = path.join(dir, page);
       const html = read(pagePath(page));
@@ -360,14 +360,14 @@ function check() {
     }
   }
   for (const f of ['sitemap.xml', 'robots.txt', 'lang.js']) {
-    if (!fs.existsSync(path.join(DOCS, f))) { stale.push('public/' + f); continue; }
-    const before = read(path.join(DOCS, f));
+    if (!fs.existsSync(path.join(PUBLIC, f))) { stale.push('public/' + f); continue; }
+    const before = read(path.join(PUBLIC, f));
     if (f === 'sitemap.xml') writeSitemap(); else if (f === 'robots.txt') writeSitemap(); else writeLangJs();
-    if (read(path.join(DOCS, f)) !== before) stale.push('public/' + f);
+    if (read(path.join(PUBLIC, f)) !== before) stale.push('public/' + f);
   }
   if (stale.length) {
     problems.push('这些产物和中文源不一致，跑一次 node tools/i18n/build.mjs：' + stale.join(', '));
-  } else if (fs.existsSync(path.join(DOCS, 'sitemap.xml'))) {
+  } else if (fs.existsSync(path.join(PUBLIC, 'sitemap.xml'))) {
     writeSitemap(); writeLangJs();
   }
   for (const p of PAGES) {

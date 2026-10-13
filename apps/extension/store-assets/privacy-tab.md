@@ -290,7 +290,7 @@ DOM. It is never evaluated as code.
 https://www.huaci.app/privacy.html
 ```
 
-`docs/privacy.html` 已经做好（中英双语，沿用落地页样式），push 之后 Vercel 会自动部署。
+`../../web/public/privacy.html` 已经做好（中英双语，沿用落地页样式），push 之后 Vercel 会自动部署。
 
 为什么是 `www` 开头：`huaci.app` 会 308 永久跳转到 `www.huaci.app`，
 而页面本身受同样的路由规则影响，所以带 `www` 的这个地址是**直接返回 200** 的最终地址；

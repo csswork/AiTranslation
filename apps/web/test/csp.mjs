@@ -31,7 +31,7 @@ function htmlPages(dir, prefix = '') {
   }
   return out;
 }
-const pages = htmlPages(`${ROOT}docs`).sort();
+const pages = htmlPages(`${ROOT}public`).sort();
 assert.ok(pages.length, 'public/ 下应当有页面');
 
 for (const page of pages) {

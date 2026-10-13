@@ -2,7 +2,7 @@
  * 宣传站的语言选择器 + 自动跳转。
  *
  * 这个文件是生成出来的（源：i18n/lang.template.js，数据来自 i18n/locales.json），
- * 别直接改 docs/lang.js —— 下次 build 会被覆盖。
+ * 别直接改 public/lang.js —— 下次 build 会被覆盖。
  *
  * 两件事：
  *   1. 在 <head> 里同步加载、尽早跳转：localStorage 里选过就听用户的，没选过按浏览器语言猜；

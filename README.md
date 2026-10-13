@@ -67,6 +67,8 @@ Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`
 
 职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。
 
+后续开发约定见根目录 [AGENTS.md](AGENTS.md)。
+
 官网：<https://huaci.app/> · 源码：<https://github.com/csswork/AiTranslation>
 
 以 [GPL-3.0](LICENSE) 发布。

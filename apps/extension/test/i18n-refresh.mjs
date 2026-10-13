@@ -4,7 +4,9 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import assert from 'node:assert/strict';
 const repo = new URL('../', import.meta.url).pathname;
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'aitr-refresh-'));
+const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'aitr-refresh-'));
+const dir = path.join(workspace, 'apps/extension');
+fs.mkdirSync(dir, { recursive: true });
 const write = (name, value) => fs.writeFileSync(path.join(dir, name), JSON.stringify(value));
 try {
   for (const name of ['scripts', 'i18n', 'src']) fs.mkdirSync(path.join(dir, name));
@@ -16,6 +18,8 @@ try {
   fs.writeFileSync(path.join(dir, 'src/ui.js'), "t('翻译');");
   let calls = [];
   globalThis.fetch = async (_url, options) => {
+    const local = fs.existsSync(path.join(dir, '.env.local'));
+    assert.equal(options.headers.Authorization, `Bearer ${local ? 'app-fixture-only' : 'fixture-only'}`, 'Keep repository env fallback and app-local precedence');
     const body = JSON.parse(options.body);
     calls.push(body);
     const items = JSON.parse(body.messages[1].content);
@@ -24,12 +28,13 @@ try {
   const run = async (round) => import(pathToFileURL(path.join(dir, 'scripts/translate-extension-i18n.mjs')).href + `?round=${round}`);
   await run(1);
   assert.equal(calls.length, 0, 'Unchanged messages must not call the API');
-  fs.writeFileSync(path.join(dir, '.env.local'), 'DEEPSEEK_API_KEY=fixture-only');
+  fs.writeFileSync(path.join(workspace, '.env.local'), 'DEEPSEEK_API_KEY=fixture-only');
   write('i18n/en.json', { 翻译: 'Translate text' });
   await run(2);
   assert.equal(calls.length, 1, 'Changed English must invalidate cached translations');
   assert.equal(calls[0].model, 'deepseek-flash');
   assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'i18n/fr.json'))).翻译, 'Traduire le texte');
+  fs.writeFileSync(path.join(dir, '.env.local'), 'DEEPSEEK_API_KEY=app-fixture-only');
   fs.appendFileSync(path.join(dir, 'src/ui.js'), "t('关闭');");
   await run(3);
   assert.equal(calls.length, 3, 'New UI messages refresh English and the target catalog');
@@ -38,4 +43,4 @@ try {
   await run(4);
   assert.equal(calls.length, 3, 'Repeated builds reuse the refreshed translations');
   console.log('Local refresh: no-op cache, content edits and new UI messages passed');
-} finally { fs.rmSync(dir, { recursive: true, force: true }); }
+} finally { fs.rmSync(workspace, { recursive: true, force: true }); }
