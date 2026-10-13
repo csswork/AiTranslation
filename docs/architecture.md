@@ -52,7 +52,7 @@ flowchart LR
 
 扩展使用 `chrome.identity.launchWebAuthFlow` 发起用户主动登录，身份验证在 VPS 完成，经 Chrome 的扩展回调返回一次性授权码，再用 PKCE 校验交换短期会话令牌。会话支持刷新与撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，manifest 在接入时加入 `identity` 权限和 API 主机权限。
 
-网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前只有用户管理界面的网页登录；扩展登录、扩展会话与官网状态接口尚未实现。
+网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前已实现用户管理界面的网页登录与官网状态接口：接口暂由用户端主机提供（`/api/web/session`，CORS 白名单 + credentials），会话 Cookie 只绑定用户端主机；拆分出独立的 `api.huaci.app` 时再调整 Cookie 归属。官网入口在生产用户端上线前保持隐藏。扩展登录与扩展会话尚未实现。
 
 参考：[Chrome 登录 API](https://developer.chrome.com/docs/extensions/reference/api/identity)、[扩展跨域请求](https://developer.chrome.com/docs/extensions/develop/concepts/network-requests)、[网页携带会话凭据](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials)。
 

@@ -16,13 +16,15 @@
 | `APP_ORIGIN` | 必填，HTTPS | 用户管理界面地址，如 `https://app.huaci.app` |
 | `HOST` / `PORT` | 默认 `127.0.0.1` / `8787` | 只监听本机，由反向代理转发 |
 | `TRUST_PROXY` | `1` | 反向代理之后使用 |
+| `WEB_ORIGINS` | 默认 `https://huaci.app` | 可读取登录状态、可作为登录后返回地址的官网来源，逗号分隔，必须是 HTTPS |
 | `DATABASE_URL` | 必填 | PostgreSQL 连接串 |
 | `AUTH_SECRET` | 必填，≥32 字符 | 验证码 HMAC 密钥；更换后未完成的验证码失效 |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback` |
 | `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
 | `TRIAL_CREDITS` / `TRIAL_DAYS` | `TRIAL_CREDITS` 必填 | 实测托管成本后确定 |
 | `SESSION_DAYS` | 默认 30 | 会话有效天数 |
-| `WEBSITE_URL` / `EXTENSION_URL` / `FEEDBACK_URL` | 可选 | 帮助页链接 |
+| `WEBSITE_URL` / `EXTENSION_URL` / `FEEDBACK_URL` | 可选 | 官网地址（页头页脚链接）、扩展商店与反馈链接 |
+| `HTTPS_PROXY` | 通常不设 | 出站请求（如 Google 令牌交换）需经代理时使用，支持 `http://` 与 `socks5://` |
 
 ## 发布步骤
 
@@ -53,3 +55,4 @@ NoNewPrivileges=true
 3. 数据库备份与恢复演练。
 4. 按实际处理的账号数据更新隐私政策（`PRIVACY.md` 与官网隐私页）。
 5. 确定试用点数与有效期。
+6. 官网启用账户入口：在 `apps/web/public/main.js` 的 `ACCOUNT_ORIGIN` 填入 `https://app.huaci.app`，并把它加入 `vercel.json` CSP 的 `connect-src`。

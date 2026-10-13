@@ -25,7 +25,18 @@
 | U7 登录会话 | 列出有效会话、退出指定会话、退出其他全部会话 | 扩展会话（等扩展登录接入） |
 | U8 扩展与帮助 | 两种模式说明、安装/说明/反馈链接 | 商店链接需配置 `EXTENSION_URL` |
 
-界面目前只有中文。时间以 UTC 显示。
+### 多语言、配色与页头页脚
+
+- 界面支持与官网相同的 11 种语言（`i18n/locales.json`），阿拉伯语为从右到左排版。语言按 `?lang=`（官网跳转时带上）、`lang` Cookie、浏览器 `Accept-Language` 的顺序确定，页头下拉切换后记住。时间以 UTC 显示。
+- 中文文案本身就是翻译键，写在 `t('…')` 或 `k('…')` 里；译文在 `i18n/<code>.json`。`npm run i18n` 提取文案，优先沿用官网已有的同一句译文，其余用 DeepSeek 补齐（Key 读 `apps/backend/.env.local` 或根目录 `.env.local` 的 `DEEPSEEK_API_KEY`）；`npm run check:i18n` 与测试检查缺失、多余、占位符和译文错乱。
+- 配色与官网一致：默认跟随系统，页头按钮切换后写入 `theme` Cookie，服务端直接输出 `<html data-theme>`，不会闪烁。页面只有一个本站脚本 `account.js` 负责即时切换与语言下拉自动提交；没有脚本时两个表单照常提交。
+- 页头、页脚与官网首页使用相同的结构、类名、样式和链接（链接指向官网当前语言的页面），只是最右侧多出账户入口。`test/web.test.mjs` 对照 `apps/web/public/index.html` 检查链接一致；改动任何一边的页头或页脚时同步另一边。
+
+### 官网登录状态
+
+- `GET /api/web/session`：官网带 credentials 读取，返回 `signedIn`、用户名、点数余额与账户地址（未登录时返回登录地址），不含邮箱或内部 ID。只读，`Cache-Control: no-store`。
+- 只对 `WEB_ORIGINS` 白名单里的来源返回 `Access-Control-Allow-Origin` 与 `Allow-Credentials`。官网与用户端同属 `*.huaci.app`，属于同站跨源请求，用户端只绑定自身主机的 `SameSite=Lax` 会话 Cookie 会被附上，不需要把 Cookie 放宽到父域。
+- `/login?return=<官网地址>`：登录完成后回到该地址；只接受 `WEB_ORIGINS` 里的来源，已登录时直接返回。
 
 ### 账号与数据
 
@@ -39,7 +50,7 @@
 
 - 会话 Cookie：HttpOnly、SameSite=Lax；HTTPS 下为 Secure 并使用 `__Host-` 前缀，只属于用户端主机。
 - 所有 POST 必须来自本站（Origin 等于 `APP_ORIGIN`，或浏览器标记 `Sec-Fetch-Site: same-origin`），否则 403。
-- CSP：`default-src 'none'`，不允许脚本；页面带 `noindex`、`no-store`、`X-Frame-Options: DENY`，HTTPS 下加 HSTS。
+- CSP：`default-src 'none'`，脚本只允许本站（`script-src 'self'`，无内联脚本）；页面带 `noindex`、`no-store`、`X-Frame-Options: DENY`，HTTPS 下加 HSTS。静态资源地址带内容哈希，可长期缓存。
 - 生产环境配置校验：`APP_ORIGIN` 必须是 HTTPS，必须设置 `AUTH_SECRET` 与 `TRIAL_CREDITS`，且不能使用 console 发信，所以**接入正式发信服务前无法在生产环境启动**。
 
 ## 本地开发
@@ -86,8 +97,12 @@ src/
   credits/          点数账本
   mail/             发信（目前只有开发用 console）
   http/             Cookie、安全响应头、同源校验、限流
+  i18n/             界面语言协商、翻译与日期格式
+  api/              官网登录状态接口
 ui/
-  account/          用户管理界面：路由、页面、样式与图标
+  account/          用户管理界面：路由、页面、请求上下文、样式、脚本与图标
+i18n/               语言列表与各语言译文（中文为源）
+scripts/            开发期译文工具（不随服务运行）
 migrations/         SQL 迁移，按文件名顺序执行
 test/               服务端测试（node:test）
 deploy/             VPS 部署说明

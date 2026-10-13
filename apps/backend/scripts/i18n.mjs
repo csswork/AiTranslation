@@ -40,6 +40,11 @@ const catalogPath = (code) => path.join(I18N, `${code}.json`);
 const readCatalog = (code) => (fs.existsSync(catalogPath(code)) ? JSON.parse(fs.readFileSync(catalogPath(code), 'utf8')) : {});
 const placeholders = (text) => [...new Set(text.match(/\{\w+\}/g) || [])].sort().join(',');
 
+// 非拉丁文字的语言里，拉丁字母只应出现在专有名词与占位符中；用来发现「الحسAB」这类模型输出错乱。
+const NON_LATIN = new Set(['zh-Hant', 'ja', 'ko', 'ar']);
+const LATIN_ALLOWED = /AI Selection Translator|ChatGPT|OpenAI|DeepSeek|DeepL|Google|Chrome|GitHub|Haibo|GPL-3\.0|API|Key|UTC|AI|\{\w+\}/g;
+const strayLatin = (code, text) => NON_LATIN.has(code) && /[A-Za-z]/.test(text.replace(LATIN_ALLOWED, ''));
+
 /** 返回问题列表；空数组表示所有语言完整。 */
 export function checkCatalogs() {
   const keys = extractKeys();
@@ -50,6 +55,7 @@ export function checkCatalogs() {
     for (const key of keys) {
       if (typeof catalog[key] !== 'string' || !catalog[key].trim()) problems.push(`${code}: 缺少译文「${key}」`);
       else if (placeholders(catalog[key]) !== placeholders(key)) problems.push(`${code}: 占位符不一致「${key}」`);
+      else if (strayLatin(code, catalog[key])) problems.push(`${code}: 译文混入拉丁字母「${key}」→「${catalog[key]}」`);
     }
     for (const extra of Object.keys(catalog).filter((key) => !keys.includes(key))) problems.push(`${code}: 多余条目「${extra}」`);
   }
@@ -118,7 +124,8 @@ async function translateAll() {
       }
     }
     if (reused) console.log(`${locale.code}: 沿用官网译文 ${reused} 条`);
-    const missing = keys.filter((key) => typeof old[key] !== 'string' || placeholders(old[key]) !== placeholders(key));
+    const missing = keys.filter((key) => typeof old[key] !== 'string' || placeholders(old[key]) !== placeholders(key)
+      || strayLatin(locale.code, old[key]));
     if (missing.length) {
       credentials ||= loadKey();
       Object.assign(old, await translate(missing, locale, credentials));

@@ -48,14 +48,12 @@
     fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
       .then((state) => {
-        if (state.signedIn) {
-          accountLink.textContent = state.username;
-          accountLink.href = state.accountUrl;
-        } else {
-          const login = new URL(state.loginUrl);
-          login.searchParams.set('return', location.href);
-          accountLink.href = login.href;
-        }
+        // 用户端沿用官网当前语言（两边语言代码相同）。
+        const target = new URL(state.signedIn ? state.accountUrl : state.loginUrl);
+        target.searchParams.set('lang', document.documentElement.lang);
+        if (state.signedIn) accountLink.textContent = state.username;
+        else target.searchParams.set('return', location.href);
+        accountLink.href = target.href;
         accountLink.hidden = false;
       })
       .catch(() => {

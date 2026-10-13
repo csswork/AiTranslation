@@ -100,3 +100,14 @@ test('配色偏好：服务端输出 data-theme，Cookie 可被页面脚本改�
   b.jar.set('theme', 'purple');
   assert.doesNotMatch(await b.text('/login'), /data-theme=/);
 });
+
+test('从官网带 ?lang= 进入时沿用官网语言并记住', async () => {
+  const { app, config } = buildApp({ pool });
+  const b = browser(app, config);
+  const page = await (await b.get('/login?lang=ko')).text();
+  assert.match(page, /<html lang="ko"/);
+  assert.equal(b.jar.get('lang'), 'ko');
+  assert.match(await b.text('/login'), /<html lang="ko"/);
+  await b.get('/login?lang=xx');
+  assert.equal(b.jar.get('lang'), 'ko', '无效语言被忽略');
+});
