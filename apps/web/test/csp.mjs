@@ -10,7 +10,7 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 const ROOT = new URL('..', import.meta.url).pathname;
 
-const vercel = JSON.parse(fs.readFileSync(`${ROOT}vercel.json`, 'utf8'));
+const vercel = JSON.parse(fs.readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8'));
 const csp = vercel.headers
   .flatMap((rule) => rule.headers)
   .find((h) => h.key.toLowerCase() === 'content-security-policy')?.value;
@@ -21,7 +21,7 @@ const allowed = new Set([...scriptSrc.matchAll(/'sha256-([^']+)'/g)].map((m) => 
 assert.ok(!/'unsafe-inline'/.test(scriptSrc), "script-src 不应放开 'unsafe-inline'");
 
 const used = new Set();
-// 递归：docs/en/ 这类多语言子目录里的页面同样受 CSP 约束
+// 递归：public/en/ 这类多语言子目录里的页面同样受 CSP 约束
 function htmlPages(dir, prefix = '') {
   const out = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -32,10 +32,10 @@ function htmlPages(dir, prefix = '') {
   return out;
 }
 const pages = htmlPages(`${ROOT}docs`).sort();
-assert.ok(pages.length, 'docs/ 下应当有页面');
+assert.ok(pages.length, 'public/ 下应当有页面');
 
 for (const page of pages) {
-  const html = fs.readFileSync(`${ROOT}docs/${page}`, 'utf8');
+  const html = fs.readFileSync(`${ROOT}public/${page}`, 'utf8');
   // 只看没有 src 的 <script>：外链脚本走 'self'
   const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   for (const code of inline) {

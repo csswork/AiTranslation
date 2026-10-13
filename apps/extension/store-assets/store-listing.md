@@ -187,7 +187,7 @@ Privacy policy: https://huaci.app/privacy.html
 | --- | --- |
 | Manifest V3、Chrome 116+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version` |
 | 三个平台：ChatGPT / DeepSeek / DeepL | `src/lib/settings.js` 的 `PROVIDERS`，`src/lib/providers.js` 里 DeepL 走 `/v2/translate` |
-| 统一的 24 种语言 | `extension-i18n/locales.json`，生成 `src/lib/languages.js` |
+| 统一的 24 种语言 | `i18n/locales.json`，生成 `src/lib/languages.js` |
 | 首装目标按浏览器语言选择，升级保留原选择 | `src/lib/settings.js` 的 `normalize` / `migrateSettings` |
 | 单次 6000 字符 | `src/lib/lang.js` 的 `MAX_TEXT_LENGTH = 6000` |
 | 快捷键 ⌘⇧Y / Alt+Shift+T | `manifest.json` 的 `commands` |

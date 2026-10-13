@@ -25,7 +25,7 @@ async function sync() {
   }
 }
 if (process.argv.includes('--watch')) {
-  fs.watch(path.join(root, 'extension-i18n'), (_event, name) => {
+  fs.watch(path.join(root, 'i18n'), (_event, name) => {
     if (!['en.json', 'locales.json', 'languages.template.js'].includes(String(name))) return;
     clearTimeout(timer); timer = setTimeout(sync, 400);
   });

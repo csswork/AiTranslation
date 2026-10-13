@@ -1,114 +1,72 @@
-# AI Selection Translator
+# AI 划词翻译 · Huaci
 
-A Chrome extension for translating selected text, page regions, images and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
+一个仓库，三个应用：Vercel 上的 HTML 网站、VPS 上的后端服务、Chrome 扩展。
 
-- **24 language choices throughout the extension:** Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese (Brazil), French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean.
-- **Independent preferences:** interface language, default translation target, and source language are separate. A new installation chooses its default target from Chrome's language; upgrades preserve the existing target and API configuration.
-- **Translate any script**, including Chinese and mixed-language text. Only selections containing no letters are filtered out. Simplified ↔ Traditional conversion remains available.
-- **Temporary target changes:** the selection popup retranslates the original text. Its star button explicitly saves the current target as the default. The text panel remembers its own source/target choices, and swaps only when a source has been selected.
-- **Images:** changing the target reuses recognized source text; changing the image clears that cache.
-- **Regions:** translation uses a fixed target for all batches, preserves originals, and supports restoring the source. Failed batches restore completed portions rather than leaving mixed languages.
-- **RTL:** Arabic, Hebrew, Persian and Urdu interfaces use right-to-left layout. Original and translated text have independent direction; opening an overlay does not change the host page's direction.
-- **Provider capabilities:** DeepL language support is checked against the configured API. Unsupported pairs return an error without switching to a different language. Vision requires a vision-capable provider/model.
-
-## Install
-
-1. Open `chrome://extensions/`
-2. Turn on **Developer mode** (top right)
-3. Click **Load unpacked** and select this directory (`AiTranslation`)
-
-The options page opens automatically on first install.
-
-## Configure
-
-Pick a provider on the options page and paste in an API key:
-
-| Provider | Get a key | Default model | Base URL |
+| 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
-| ChatGPT | <https://platform.openai.com/api-keys> | `gpt-5.6-luna` | `https://api.openai.com/v1` |
-| DeepSeek | <https://platform.deepseek.com/api_keys> | `deepseek-v4-flash` | `https://api.deepseek.com` |
+| 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面 |
+| 后端 | [apps/backend](apps/backend/README.md) | VPS | 已确定职责边界；注册、托管翻译、订阅与管理系统待实现 |
+| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有划词、区域、图片、翻译面板及实验性视频字幕；24 种语言，使用用户自己的 API Key |
 
-Both default to the cheapest tier available, since translation is a high-frequency, short-input task. The model field also suggests `gpt-5.6-terra` / `gpt-5.6-sol` / `gpt-6-astra` and `deepseek-v4-pro`, and accepts any model name the provider supports. Hit **测试连接** ("Test connection") to verify.
+## 目录
 
-Choose your interface language and default translation target independently, then configure streaming and source-text visibility. Video speech recognition has its own source-language setting and checks device support; the experimental feature remains off by default.
-
-## Usage
-
-Select text → right-click → **Translate to your target language**. You can also use the floating selection button or keyboard shortcut.
-
-## Layout
-
+```text
+apps/
+  web/
+    public/          HTML、CSS、JS、静态资源和生成的各语言页面
+    i18n/            网站语言目录与页面构建工具
+    test/            网站、语言切换与 CSP 检查
+  backend/           VPS 后端；目前是边界与实施说明
+  extension/
+    manifest.json    Chrome 扩展声明
+    src/             扩展运行代码与界面
+    icons/           扩展图标
+    _locales/        Chrome 原生本地化产物
+    i18n/            开发期界面译文、语言注册表和模板
+    scripts/         本地多语言提取、翻译与构建
+    test/            扩展测试
+    store-assets/    商店文案、截图和宣传素材
+    package.sh       扩展专用打包工具
+docs/                架构、开发说明与技术研究
+test/run.sh          全项目测试入口
+package.sh           扩展打包入口
+vercel.json          Vercel 部署与安全响应头配置
+dist/extension/      生成的扩展 ZIP（不提交）
+tools/               本地拍摄与实验工具（不提交）
+LICENSE              仓库统一许可证
+PRIVACY.md           保留既有公开隐私政策路径
 ```
-manifest.json              Manifest V3 declaration
-src/
-  background.js            Service worker: menu visibility, translation requests, streaming to the page
-  lib/
-    lang.js                Language heuristics (does this text need translating?)
-    settings.js            Provider definitions and settings storage
-    providers.js           OpenAI-compatible requests, SSE parsing, error mapping
-  content/content.js       Selection reporting + the Shadow DOM popup
-  options/                 Options page
-  popup/                   Toolbar popup (status at a glance + quick provider switch)
-icons/                     Icons
-```
 
-## Design notes
+## 本地开发
 
-- **Timing of menu visibility.** Chrome decides which context menu items to show at the moment of the right-click, while `contextMenus.update()` is asynchronous. So the content script reports the selection to the background and updates the menu on `mouseup` / `selectionchange` — i.e. *before* the right-click — and treats the `contextmenu` event only as a fallback. The item defaults to visible, so even if reporting fails the feature never silently disappears.
-
-- **Language detection never hides an explicit translation request.** Short, mixed, and same-language selections remain translatable. The provider detects the source unless the text panel explicitly specifies it.
-
-- **Why the popup uses Shadow DOM.** Page-wide rules like `* { font-family: ... !important }` are extremely common, and Shadow DOM is what keeps the popup looking identical on every site. The host node starts from `all: initial`, and every inheritable property is declared explicitly on the panel.
-
-- **The popup only renders in the top frame.** Selection reporting runs in every iframe (otherwise selections inside frames could not be evaluated), but the background always connects with `frameId: 0`, so the popup is centered on the whole page rather than inside some small iframe.
-
-- **The page side closes the port.** Calling `disconnect()` immediately after `postMessage('done')` in the background risks dropping that message, so the page disconnects itself once it receives `done`.
-
-- **Both providers need "thinking" turned off explicitly.** DeepSeek v4 defaults to `thinking.type: enabled` (with `reasoning_effort` defaulting to high), and OpenAI's gpt-5.x / gpt-6 default to `reasoning.effort: medium`. Translation does not benefit from reasoning — it only adds latency and token cost — so requests turn it down explicitly: `thinking: {type: 'disabled'}` for DeepSeek, `reasoning_effort: 'low'` for OpenAI (`gpt-6-astra` rejects `none` with a 400, and the official guidance for latency-sensitive work is to start at `low` anyway).
-
-- **`temperature` is per-provider.** `0.2` for OpenAI's non-reasoning models; `1.3` for DeepSeek — that is the value their own parameter docs recommend for translation, and the semantics differ from OpenAI's, so it cannot be copied across. Reasoning models get no `temperature` at all.
-
-- **Rejected parameters fall back gracefully.** Both providers keep changing their model lineups and parameters, and users can type in any model name. So when a request comes back 400 complaining about a parameter, it is retried once with a minimal body (`model` / `messages` / `stream` only), rather than failing outright over one unsupported field. Non-parameter 400s are not retried.
-
-- **Where the API key lives.** `chrome.storage.local` — on this machine only. It is not synced through the Chrome account. The key is sent only to the configured provider endpoint to authenticate requests.
-
-## Known limitations
-
-- Protected pages (`chrome://`, the Chrome Web Store, and similar) do not allow script injection, so the extension does not work there.
-- At most 6000 characters per translation; anything beyond that is truncated, and the popup says so.
-- A custom base URL (proxy or relay) needs its origin authorized separately — the permission prompt appears when you click **测试连接** — and only https is supported.
-
-## Development
+开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。当前构建和测试使用标准库，不需要安装 npm 依赖。
 
 ```sh
-node scripts/sync-extension-i18n.mjs
-node scripts/sync-extension-i18n.mjs --watch  # optional local auto-refresh
-node scripts/build-extension-i18n.mjs --check
-bash test/run.sh
+npm test                      # 网站与扩展全部测试
+npm run test:web              # 只检查网站
+npm run test:extension        # 只检查扩展
+npm run dev:web               # http://localhost:8080
+npm run build:web             # 生成网站各语言页面
+npm run check:web             # 检查网站多语言产物
+npm run i18n:extension        # 本地刷新扩展文案
+npm run check:extension       # 检查扩展多语言产物
+npm run package:extension     # dist/extension/ai-translation-<version>.zip
 ```
 
-`extension-i18n/` contains the extension catalogs and language registry. Native Chrome `_locales/` catalogs and `src/lib/messages.js` are generated files. The website in `docs/` has its own independent build in `i18n/`.
+原来的 `bash test/run.sh`、`bash package.sh` 仍可从仓库根目录运行。各应用的脚本也可以进入应用目录单独运行。
 
-Run `bash package.sh` to refresh changed messages locally and build `dist/ai-translation-<version>.zip`. Put `DEEPSEEK_API_KEY` in your local `.env.local`; unchanged catalogs need no API call. See [extension-i18n/README.md](extension-i18n/README.md).
+Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`**，不再选择仓库根目录。开发版改变加载路径可能获得新的扩展 ID，需要重新配置；商店版更新继续使用同一个商店条目。
 
-Catalog generation tools are development-only; the shipped extension does not download a model or contact a translation service to localize its interface.
+扩展界面翻译生成器依次使用 `apps/extension/.env.local`、仓库根目录 `.env.local` 或进程环境中的配置；保留现有根目录 Key 即可。运行时的用户 API Key 仍只保存在 `chrome.storage.local`。环境文件与开发期翻译工具不进入安装包。
 
-## License
+## 部署
 
-Released under the [GNU General Public License v3.0](LICENSE).
+- **Vercel 网站**：保留仓库根目录作为 Vercel 项目根目录，`vercel.json` 构建 `apps/web`，仅发布 `apps/web/public`。GitHub 工作流在网站、Vercel 配置或相关构建入口发生变化时触发。
+- **VPS 后端**：后续在 `apps/backend` 实现认证、额度、托管翻译、支付 Webhook 与管理接口，独立部署；当前没有可启动的后端服务。
+- **Chrome 扩展**：单独打包发布到 Chrome 商店。ZIP 白名单为扩展 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。
 
-    AI Selection Translator — a Chrome extension that translates selected text into your chosen language
-    Copyright (C) 2026  Haibo
+职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+官网：<https://huaci.app/> · 源码：<https://github.com/csswork/AiTranslation>
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+以 [GPL-3.0](LICENSE) 发布。

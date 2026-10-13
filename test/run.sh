@@ -1,25 +1,10 @@
 #!/usr/bin/env bash
-# 跑全部测试。纯 node，无依赖。
+# 根目录入口：按应用运行测试；其中一组失败时继续报告另一组。
 set -uo pipefail
-cd "$(dirname "$0")/.."
-
+REPOSITORY_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 fail=0
-for f in test/*.mjs; do
-  name=$(basename "$f" .mjs)
-  printf '  %-10s ' "$name"
-  if out=$(node "$f" 2>&1); then
-    echo "$out" | tail -1
-  else
-    echo "失败"
-    echo "$out" | tail -12 | sed 's/^/      /'
-    fail=1
-  fi
-done
-
-echo
-echo -n '  语法检查   '
-for js in $(find src -name '*.js'); do
-  node --check "$js" || fail=1
-done
-[ $fail -eq 0 ] && echo '全部通过' || echo '有失败项'
-exit $fail
+echo 'Chrome extension'
+bash "$REPOSITORY_ROOT/apps/extension/test/run.sh" || fail=1
+echo 'Vercel website'
+bash "$REPOSITORY_ROOT/apps/web/test/run.sh" || fail=1
+exit "$fail"

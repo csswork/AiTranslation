@@ -1,0 +1,18 @@
+{
+  "name": "huaci",
+  "private": true,
+  "description": "Huaci website, backend services, and Chrome extension",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "bash test/run.sh",
+    "test:extension": "bash apps/extension/test/run.sh",
+    "test:web": "bash apps/web/test/run.sh",
+    "build:web": "node apps/web/i18n/build.mjs",
+    "check:web": "node apps/web/i18n/build.mjs --check",
+    "i18n:extension": "node apps/extension/scripts/sync-extension-i18n.mjs",
+    "i18n:extension:watch": "node apps/extension/scripts/sync-extension-i18n.mjs --watch",
+    "check:extension": "node apps/extension/scripts/build-extension-i18n.mjs --check",
+    "package:extension": "bash package.sh",
+    "dev:web": "python3 -m http.server 8080 --directory apps/web/public"
+  }
+}

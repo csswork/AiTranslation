@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "docs",
+  "buildCommand": "node apps/web/i18n/build.mjs",
+  "outputDirectory": "apps/web/public",
   "github": { "enabled": false },
   "headers": [
     {

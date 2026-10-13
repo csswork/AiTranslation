@@ -1,7 +1,7 @@
 /**
  * 宣传站多语言：产物必须和中文源同步。
  *
- * 中文页面（docs/*.html）是唯一的源；改了中文却没跑 node i18n/build.mjs，
+ * 中文页面（public/*.html）是唯一的源；改了中文却没跑 node i18n/build.mjs，
  * 英文页就会落后。这里把三种常见事故都拦下来：
  *   1. 有段没译 / 译文对不上中文（build.mjs --check）
  *   2. 生成本身没同步（同样由 --check 兜住）
@@ -60,7 +60,7 @@ try {
   for (const loc of enabled) {
     if (loc.code === CONFIG.base) continue;
     for (const page of PAGES) {
-      const html = fs.readFileSync(ROOT + 'docs/' + loc.path + '/' + page, 'utf8');
+      const html = fs.readFileSync(ROOT + 'public/' + loc.path + '/' + page, 'utf8');
       assert.match(html, /class="lang notranslate" translate="no"/, loc.code + '/' + page + '：切换器缺 translate="no"');
     }
   }
@@ -73,7 +73,7 @@ try {
     if (loc.code === CONFIG.base) continue;
     const prefix = '/' + loc.path + '/';
     for (const page of PAGES) {
-      const file = ROOT + 'docs/' + loc.path + '/' + page;
+      const file = ROOT + 'public/' + loc.path + '/' + page;
       assert.ok(fs.existsSync(file), file + ' 不存在，跑一次 build.mjs');
       const html = fs.readFileSync(file, 'utf8');
       // 不剥 <svg>：首屏示意图里的 <text> 也是要翻的文案，剥掉就查不出漏译
@@ -93,7 +93,7 @@ try {
       assert.deepEqual(rel, [], file + ' 还有相对链接：' + rel.join(', '));
     }
     // hreflang 要把所有启用语言都列全
-    const html = fs.readFileSync(ROOT + 'docs/' + loc.path + '/index.html', 'utf8');
+    const html = fs.readFileSync(ROOT + 'public/' + loc.path + '/index.html', 'utf8');
     for (const other of enabled) {
       assert.ok(html.includes('hreflang="' + other.htmlLang + '"'), loc.code + '/index.html 缺 ' + other.htmlLang + ' 的 hreflang');
     }
@@ -104,14 +104,14 @@ try {
 
 /* ---- 4. sitemap / robots / lang.js 与配置一致 ---- */
 {
-  const sitemap = fs.readFileSync(ROOT + 'docs/sitemap.xml', 'utf8');
-  const robots = fs.readFileSync(ROOT + 'docs/robots.txt', 'utf8');
+  const sitemap = fs.readFileSync(ROOT + 'public/sitemap.xml', 'utf8');
+  const robots = fs.readFileSync(ROOT + 'public/robots.txt', 'utf8');
   for (const loc of enabled) {
     const url = CONFIG.site + (loc.path ? '/' + loc.path + '/' : '/');
     assert.ok(sitemap.includes('<loc>' + url + '</loc>'), 'sitemap 缺 ' + url);
   }
   assert.ok(robots.includes(CONFIG.site + '/sitemap.xml'), 'robots.txt 没指向 sitemap');
-  const lang = fs.readFileSync(ROOT + 'docs/lang.js', 'utf8');
+  const lang = fs.readFileSync(ROOT + 'public/lang.js', 'utf8');
   for (const loc of enabled) assert.ok(lang.includes('"code":"' + loc.code + '"'), 'lang.js 缺 ' + loc.code);
   for (const loc of CONFIG.locales.filter((l) => !l.enabled)) {
     assert.ok(!lang.includes('"code":"' + loc.code + '"'), 'lang.js 不该出现未启用的 ' + loc.code);

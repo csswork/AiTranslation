@@ -1,9 +1,11 @@
 # huaci.app 宣传站的多语言
 
-中文页面（`docs/*.html`）是**唯一的源**。改完中文跑一次构建，英文页、`sitemap.xml`、`lang.js`
+中文页面（`public/*.html`）是**唯一的源**。改完中文跑一次构建，英文页、`sitemap.xml`、`lang.js`
 会一起重新生成；忘了跑也不会漏到线上——`test/i18n.mjs` 会把「产物落后于中文源」判成测试失败。
 
 ## 命令
+
+以下命令在 `apps/web` 目录运行；仓库根目录使用 `npm run build:web`、`npm run check:web` 和 `npm run test:web`。
 
 ```bash
 node i18n/build.mjs                 # 抽取中文段 + 生成所有启用的语言 + sitemap.xml + robots.txt + lang.js
@@ -19,7 +21,7 @@ node i18n/build.mjs --extract       # 只把中文段抽到 i18n/zh-Hans.json
 i18n/
   locales.json        语言清单：code、路径前缀、label、hreflang、浏览器语言匹配、是否启用
   build.mjs           工具本体（无第三方依赖）
-  lang.template.js    docs/lang.js 的模板（含语言数据后生成）
+  lang.template.js    public/lang.js 的模板（含语言数据后生成）
   zh-Hans.json        中文段 = 源文，由 --extract 维护，不要手改
   _index.json         每条中文段出现在哪些页 / 什么标签里（翻译时的上下文）
   en.json             英文译文：键 = 中文原文，值 = 同结构的目标语言 HTML
@@ -56,7 +58,7 @@ i18n/
 
 ## 访客怎么看到自己语言的版本
 
-`docs/lang.js`（由 `lang.template.js` 生成）在 `<head>` 里同步加载：
+`public/lang.js`（由 `lang.template.js` 生成）在 `<head>` 里同步加载：
 
 1. `localStorage.lang` 里选过 → **以选择为准**；没选过 → 按 `navigator.languages` 猜（认不出落到 `en`）。
 2. 发现语言不一致就 `location.replace` 到同一页的对应语言（路径保留，`/privacy.html` → `/en/privacy.html`）。
@@ -69,10 +71,10 @@ i18n/
 ## 状态
 
 11 种语言已上线：`zh-Hans`（基础）· `en` · `zh-Hant` · `ja` · `ko` · `es` · `pt` · `fr` · `de` · `ru` · `ar`，
-每种语言一份完整译文（141/141 段），页面里没有残留中文，`sitemap.xml` 与 hreflang 都已包含。
+每种语言一份完整译文（146/146 段），页面里没有残留中文，`sitemap.xml` 与 hreflang 都已包含。
 阿拉伯语是 RTL：站点 CSS 用的是逻辑属性，`dir="rtl"` 不需要额外覆盖，真实 Chrome 里已核对过布局不溢出。
 
 ## 还没做的
 
-- 扩展本体使用独立的 `extension-i18n/` 与 `_locales/`，不与本站的语言目录混用。
+- 扩展本体使用独立的 `../../extension/i18n/` 与 `../../extension/_locales/`，不与本站的语言目录混用。
 - 站点地图只有 `loc` + hreflang，没有 `lastmod`；需要时再加。

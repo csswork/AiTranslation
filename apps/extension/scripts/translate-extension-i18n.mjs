@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { sourceMessages } from './extension-messages.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name) => { const i = process.argv.indexOf(name); return i < 0 ? null : process.argv[i + 1]; };
-const envPath = arg('--env') || (fs.existsSync(path.join(root, '.env.local')) ? path.join(root, '.env.local') : null);
+// Prefer app-local configuration, then retain the repository's existing local Key.
+const envPath = arg('--env') || [path.join(root, '.env.local'), path.resolve(root, '../..', '.env.local')].find((file) => fs.existsSync(file));
 const config = { ...process.env };
 if (envPath) {
   for (const line of fs.readFileSync(envPath, 'utf8').split(/\r?\n/)) {
@@ -21,9 +22,9 @@ const key = config.DEEPSEEK_API_KEY || config.HUACI_TRANSLATE_KEY;
 
 const model = config.DEEPSEEK_MODEL || 'deepseek-flash';
 const endpoint = 'https://api.deepseek.com/chat/completions';
-const english = JSON.parse(fs.readFileSync(path.join(root, 'extension-i18n/en.json'), 'utf8'));
-const locales = JSON.parse(fs.readFileSync(path.join(root, 'extension-i18n/locales.json'), 'utf8'));
-const snapshotPath = path.join(root, 'extension-i18n/source-snapshot.json');
+const english = JSON.parse(fs.readFileSync(path.join(root, 'i18n/en.json'), 'utf8'));
+const locales = JSON.parse(fs.readFileSync(path.join(root, 'i18n/locales.json'), 'utf8'));
+const snapshotPath = path.join(root, 'i18n/source-snapshot.json');
 const snapshot = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf8')) : {};
 const requested = arg('--locale');
 const queue = locales.filter((l) => !['en', 'zh-Hans'].includes(l.id) && (!requested || requested === l.id));
@@ -66,11 +67,11 @@ for (let start = 0; start < missingEnglish.length; start += 45) {
     if (!values[i]) throw new Error('Invalid English baseline placeholders');
     english[items[i].source] = values[i];
   }
-  fs.writeFileSync(path.join(root, 'extension-i18n/en.json'), JSON.stringify(english, null, 2) + '\n');
+  fs.writeFileSync(path.join(root, 'i18n/en.json'), JSON.stringify(english, null, 2) + '\n');
 }
 
 async function run(locale) {
-  const file = path.join(root, `extension-i18n/${locale.id}.json`);
+  const file = path.join(root, `i18n/${locale.id}.json`);
   const old = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
   const catalog = Object.fromEntries(Object.entries(old).filter(([key]) => Object.hasOwn(english, key)));
   const todo = Object.entries(english).filter(([key]) => !catalog[key] || slots(key) !== slots(catalog[key]) || (snapshot[locale.id]?.[key] !== undefined && snapshot[locale.id][key] !== english[key]));

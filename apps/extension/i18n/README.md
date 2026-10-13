@@ -6,13 +6,15 @@
 
 ## 本地更新
 
+下列命令在 `apps/extension` 目录运行；仓库根目录可使用 `npm run i18n:extension` 与 `npm run package:extension`。
+
 ```sh
 node scripts/sync-extension-i18n.mjs          # 提取新增文案、补齐译文、生成运行文件
 node scripts/sync-extension-i18n.mjs --watch  # 修改 src/ 文案或英文基准后自动刷新
-bash package.sh                             # 先刷新并验证，再打包到 dist/
+bash package.sh                             # 先刷新并验证，再打包到根目录 dist/extension/
 ```
 
-在本机 `.env.local` 设置 `DEEPSEEK_API_KEY`。生成器默认使用 DeepSeek V4.1 Flash 的模型 ID `deepseek-flash`；可通过 `DEEPSEEK_MODEL` 覆盖。不执行 env 文件中的代码，不输出 Key。
+在本机 `.env.local` 设置 `DEEPSEEK_API_KEY`。生成器先读取 `apps/extension/.env.local`，不存在时沿用仓库根目录 `.env.local`，也支持进程环境。默认使用 DeepSeek V4.1 Flash 的模型 ID `deepseek-flash`；可通过 `DEEPSEEK_MODEL` 覆盖。不执行 env 文件中的代码，不输出 Key。
 
 - 只发送公开的界面文案。扩展使用过程中不调用此生成器。
 - `source-snapshot.json` 记录各语言对应的英文版本。新增源文或改动英文会触发增量翻译；未变化的内容直接复用，不请求 API。
@@ -25,7 +27,7 @@ bash package.sh                             # 先刷新并验证，再打包到 
 
 安装包白名单为 `manifest.json`、`LICENSE`、`icons/`、`src/` 和 `_locales/`。
 
-`extension-i18n/`、`scripts/`、`.env*`、测试、网站、开发工具、依赖、模型和缓存不进入安装包。
+`i18n/`、`scripts/`、`.env*`、测试、网站、开发工具、依赖、模型和缓存不进入安装包。
 
 构建产物：
 

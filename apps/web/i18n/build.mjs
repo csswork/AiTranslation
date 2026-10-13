@@ -1,7 +1,7 @@
 /**
  * huaci.app 宣传站的多语言工具（无第三方依赖）。
  *
- * 中文页面 docs/*.html 是唯一的源：
+ * 中文页面 public/*.html 是唯一的源：
  *   node i18n/build.mjs                 # 抽取中文段 + 生成所有启用的语言 + sitemap + lang.js
  *   node i18n/build.mjs --check         # 只检查：没译的段、过期产物、失配的 hreflang（CI 用）
  *   node i18n/build.mjs --coverage      # 检查中文页里有没有漏抽的段
@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const DOCS = path.join(ROOT, 'docs');
+const DOCS = path.join(ROOT, 'public');
 // 本文件所在的 i18n/ 就是译文目录：locales.json + 每种语言一个 <code>.json
 const CATALOG_DIR = HERE;
 const CONFIG = JSON.parse(fs.readFileSync(path.join(CATALOG_DIR, 'locales.json'), 'utf8'));
@@ -360,10 +360,10 @@ function check() {
     }
   }
   for (const f of ['sitemap.xml', 'robots.txt', 'lang.js']) {
-    if (!fs.existsSync(path.join(DOCS, f))) { stale.push('docs/' + f); continue; }
+    if (!fs.existsSync(path.join(DOCS, f))) { stale.push('public/' + f); continue; }
     const before = read(path.join(DOCS, f));
     if (f === 'sitemap.xml') writeSitemap(); else if (f === 'robots.txt') writeSitemap(); else writeLangJs();
-    if (read(path.join(DOCS, f)) !== before) stale.push('docs/' + f);
+    if (read(path.join(DOCS, f)) !== before) stale.push('public/' + f);
   }
   if (stale.length) {
     problems.push('这些产物和中文源不一致，跑一次 node tools/i18n/build.mjs：' + stale.join(', '));
@@ -372,12 +372,12 @@ function check() {
   }
   for (const p of PAGES) {
     const html = read(pagePath(p));
-    if (!html.includes('data-locale=')) problems.push('docs/' + p + '：<html> 上缺 data-locale');
-    if (!html.includes('src="/lang.js"')) problems.push('docs/' + p + '：缺 <script src="/lang.js">');
-    if (!html.includes(ALT_START)) problems.push('docs/' + p + '：缺 hreflang 块');
-    if (!html.includes('data-lang-switcher')) problems.push('docs/' + p + '：导航里缺语言切换器占位');
+    if (!html.includes('data-locale=')) problems.push('public/' + p + '：<html> 上缺 data-locale');
+    if (!html.includes('src="/lang.js"')) problems.push('public/' + p + '：缺 <script src="/lang.js">');
+    if (!html.includes(ALT_START)) problems.push('public/' + p + '：缺 hreflang 块');
+    if (!html.includes('data-lang-switcher')) problems.push('public/' + p + '：导航里缺语言切换器占位');
     // 切换器必须显式声明不翻译：否则浏览器翻译/翻译插件会把「日本語」这类语言名也译掉
-    if (!/class="lang notranslate" translate="no"/.test(html)) problems.push('docs/' + p + '：语言切换器缺 translate="no" / notranslate 标记');
+    if (!/class="lang notranslate" translate="no"/.test(html)) problems.push('public/' + p + '：语言切换器缺 translate="no" / notranslate 标记');
   }
   if (problems.length) { console.error(problems.map((p) => '✗ ' + p).join('\n')); process.exitCode = 1; return; }
   console.log('✓ 多语言产物与中文源一致（' + sourceKeys.size + ' 段，' + enabled().length + ' 种语言）');

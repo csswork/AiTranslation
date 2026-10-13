@@ -1,5 +1,5 @@
 /**
- * 宣传站的语言选择逻辑（docs/lang.js）：
+ * 宣传站的语言选择逻辑（public/lang.js）：
  *   - localStorage 里选过 → 一切以选择为准
  *   - 没选过 → 按 navigator.languages 判断，认不出就落到 fallback
  *   - 爬虫 / 无头浏览器不跳转（否则 Googlebot 会把中文原文跳没）
@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 const ROOT = new URL('..', import.meta.url).pathname;
-const CODE = fs.readFileSync(ROOT + 'docs/lang.js', 'utf8');
+const CODE = fs.readFileSync(ROOT + 'public/lang.js', 'utf8');
 const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'i18n/locales.json', 'utf8'));
 const ENABLED = CONFIG.locales.filter((l) => l.enabled);
 /** 启用了哪些语言、哪个还没启用，都从 locales.json 推导：加语言时不用改这个测试 */
