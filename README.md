@@ -5,7 +5,7 @@
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
 | 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面；登录入口及状态展示待实现 |
-| 后端 | [apps/backend](apps/backend/README.md) | VPS | API、用户管理界面与管理员界面均待实现；两套界面的首版范围待审核 |
+| 后端 | [apps/backend](apps/backend/README.md) | VPS | 用户管理界面第一批已可本地运行（邮箱验证码与 Google 登录、账户、会话），尚未部署；API 与管理员界面待实现 |
 | 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有 24 语言翻译；优先实现登录、点数与订阅入口，保留自带 Key |
 
 ## 目录
@@ -16,7 +16,11 @@ apps/
     public/          HTML、CSS、JS、静态资源和生成的各语言页面
     i18n/            网站语言目录与页面构建工具
     test/            网站、语言切换与 CSP 检查
-  backend/           VPS 后端：API、用户管理界面、管理员界面；目前只有实施说明
+  backend/
+    src/             Hono 服务：配置、数据库、认证、点数账本、发信
+    ui/account/      用户管理界面（服务端渲染）
+    migrations/      PostgreSQL 迁移
+    test/  deploy/   服务端测试与 VPS 部署说明
   extension/
     manifest.json    Chrome 扩展声明
     src/             扩展运行代码与界面
@@ -39,7 +43,7 @@ PRIVACY.md           保留既有公开隐私政策路径
 
 ## 本地开发
 
-开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。当前构建和测试使用标准库，不需要安装 npm 依赖。
+开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。网站与扩展的构建和测试使用标准库，不需要安装 npm 依赖；后端有自己的依赖（`cd apps/backend && npm ci`）并需要本机 PostgreSQL，未安装依赖时 `npm test` 会跳过后端。
 
 ```sh
 npm test                      # 网站与扩展全部测试
@@ -51,6 +55,9 @@ npm run check:web             # 检查网站多语言产物
 npm run i18n:extension        # 本地刷新扩展文案
 npm run check:extension       # 检查扩展多语言产物
 npm run package:extension     # dist/extension/ai-translation-<version>.zip
+npm run test:backend          # 后端测试（需要 PostgreSQL 的 huaci_test 库）
+npm run migrate:backend       # 执行后端数据库迁移
+npm run dev:backend           # http://localhost:8787 用户管理界面
 ```
 
 原来的 `bash test/run.sh`、`bash package.sh` 仍可从仓库根目录运行。各应用的脚本也可以进入应用目录单独运行。
@@ -62,7 +69,7 @@ Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`
 ## 部署
 
 - **Vercel 网站**：保留仓库根目录作为 Vercel 项目根目录，`vercel.json` 构建 `apps/web`，仅发布 `apps/web/public`。GitHub 工作流在网站、Vercel 配置或相关构建入口发生变化时触发。
-- **VPS 后端**：后续在 `apps/backend` 实现认证、额度、托管翻译、支付 Webhook 等 API，以及用户管理界面和管理员界面，独立部署；当前没有可启动的后端服务。
+- **VPS 后端**：`apps/backend` 独立部署，目前用户管理界面第一批可在本地运行；接入正式发信服务前生产配置会拒绝启动。部署草案见 [deploy/README.md](apps/backend/deploy/README.md)。托管翻译、支付、扩展 API 与管理员界面待实现。
 - **Chrome 扩展**：单独打包发布到 Chrome 商店。ZIP 白名单为扩展 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。
 
 职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。

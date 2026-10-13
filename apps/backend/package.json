@@ -1,0 +1,21 @@
+{
+  "name": "huaci-backend",
+  "private": true,
+  "description": "Huaci VPS backend: API, user account interface and admin interface",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch-path=src --watch-path=ui --watch-path=migrations src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "test": "bash test/run.sh"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.5",
+    "arctic": "3.7.0",
+    "hono": "4.13.13",
+    "pg": "8.23.1"
+  }
+}
