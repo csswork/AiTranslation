@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'assets');
-const TYPES = { '.css': 'text/css; charset=utf-8', '.png': 'image/png' };
+const TYPES = { '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png' };
 
 export const assets = new Map();
 for (const name of fs.readdirSync(DIR)) {

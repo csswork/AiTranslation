@@ -17,7 +17,7 @@ test('未登录访问用户界面会跳到登录页，并带安全响应头', as
   assert.equal(res.status, 303);
   assert.equal(location(res), '/login');
   const login = await browser(app, config).get('/login');
-  assert.match(login.headers.get('content-security-policy'), /script-src 'none'/);
+  assert.match(login.headers.get('content-security-policy'), /script-src 'self'(;|$)/);
   assert.equal(login.headers.get('cache-control'), 'no-store');
   assert.equal(login.headers.get('x-frame-options'), 'DENY');
 });

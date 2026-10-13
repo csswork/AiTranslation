@@ -55,7 +55,7 @@ export async function migrate(pool, { log = () => {} } = {}) {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   loadLocalEnv();
   if (!process.env.DATABASE_URL) {
     console.error('缺少 DATABASE_URL');

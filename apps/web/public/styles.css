@@ -128,6 +128,11 @@ main, .nav, .foot { position: relative; z-index: 1; }
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
 /* 导航里塞进了配色切换按钮，窄屏上会挤：任何一项都不许折行，间距收紧 */
 .brand, .nav-links a { white-space: nowrap; }
+/* 账户入口（main.js 读到用户端登录状态后才显示）：与用户端页头的 .account-link 相同 */
+.nav-links .account-link {
+  color: var(--text); font-weight: 600;
+  max-width: 12em; overflow: hidden; text-overflow: ellipsis;
+}
 @media (max-width: 480px) {
   .nav-in { gap: .75rem; }
   .nav-links { gap: .9rem; }

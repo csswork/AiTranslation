@@ -41,6 +41,16 @@ export function readConfig(env = process.env) {
     ? { clientId: need('GOOGLE_CLIENT_ID'), clientSecret: need('GOOGLE_CLIENT_SECRET') }
     : null;
 
+  // 允许读取登录状态、并可作为登录后返回地址的官网来源（逗号分隔，必须是完整来源）。
+  const webOrigins = (env.WEB_ORIGINS || (production ? 'https://huaci.app' : 'http://localhost:8080'))
+    .split(',').map((s) => s.trim()).filter(Boolean);
+  for (const origin of webOrigins) {
+    let valid = false;
+    try { valid = new URL(origin).origin === origin; } catch { /* 下面报告 */ }
+    if (!valid) problems.push(`WEB_ORIGINS 中的来源无效：${origin}`);
+    else if (production && !origin.startsWith('https://')) problems.push(`生产环境 WEB_ORIGINS 必须使用 HTTPS：${origin}`);
+  }
+
   const mailTransport = env.MAIL_TRANSPORT || 'console';
   if (mailTransport !== 'console') problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
 
@@ -60,6 +70,7 @@ export function readConfig(env = process.env) {
     // 部署在反向代理之后时设为 1，限流才按 X-Forwarded-For 区分来源。
     trustProxy: env.TRUST_PROXY === '1',
     appOrigin,
+    webOrigins,
     secureCookies: appOrigin.startsWith('https://'),
     databaseUrl,
     authSecret,

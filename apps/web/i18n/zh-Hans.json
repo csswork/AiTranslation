@@ -124,6 +124,7 @@
   "版本号取自 <span class=\"mono\">manifest.json</span>。更细的改动可以看仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": "版本号取自 <span class=\"mono\">manifest.json</span>。更细的改动可以看仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。",
   "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区": "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区",
   "用途": "用途",
+  "登录": "登录",
   "目前以开发者模式加载。需要 Chrome 116 或更高版本，以及一个你自己的 API Key。": "目前以开发者模式加载。需要 Chrome 116 或更高版本，以及一个你自己的 API Key。",
   "直到下一次，你又选中了一段看不懂的文字。": "直到下一次，你又选中了一段看不懂的文字。",
   "第一个版本": "第一个版本",

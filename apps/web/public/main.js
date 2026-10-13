@@ -9,7 +9,8 @@
  *      文件还没放进来就静默留住占位层，不出现破图
  *   3. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
  *
- * 另外有配色切换：只在点击按钮、或系统切换明暗时才运行；
+ * 另外有账户入口：载入时读取一次用户端的登录状态；
+ * 配色切换：只在点击按钮、或系统切换明暗时才运行；
  * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
  */
 (() => {
@@ -30,6 +31,36 @@
       },
       { threshold: 0 },
     ).observe(sentinel);
+  }
+
+  /* ------------------------------------------------------------ 账户入口 */
+
+  /*
+   * 登录与账户页面在 VPS 用户端（apps/backend）。这里只带 credentials 读取它的登录状态：
+   * 官网与用户端同属一个站点，浏览器会附上用户端的会话 Cookie；服务端按来源白名单返回 CORS。
+   * 未登录显示「登录」（登录后回到当前页面），已登录显示用户名并链接到账户页；
+   * 用户端未配置或读取失败时入口保持隐藏，不出现无法打开的链接。
+   * 生产环境的用户端（app.huaci.app）上线后，在这里填入地址，并把它加入 vercel.json 的 connect-src。
+   */
+  const ACCOUNT_ORIGIN = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787' : '';
+  const accountLink = document.querySelector('[data-account]');
+  if (accountLink && ACCOUNT_ORIGIN && window.fetch) {
+    fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include' })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((state) => {
+        if (state.signedIn) {
+          accountLink.textContent = state.username;
+          accountLink.href = state.accountUrl;
+        } else {
+          const login = new URL(state.loginUrl);
+          login.searchParams.set('return', location.href);
+          accountLink.href = login.href;
+        }
+        accountLink.hidden = false;
+      })
+      .catch(() => {
+        /* 用户端没启动或网络不通：保持隐藏 */
+      });
   }
 
   /* ------------------------------------------------------------ 配色切换 */

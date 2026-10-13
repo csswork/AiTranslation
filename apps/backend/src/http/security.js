@@ -3,12 +3,12 @@
 const SAFE_METHODS = /^(GET|HEAD|OPTIONS)$/;
 
 export function securityHeaders(config) {
-  // 界面没有浏览器脚本；表单提交到 Google 登录会经过重定向，form-action 需要放行。
+  // 只允许本站脚本（配色切换与语言下拉的增强）；表单提交到 Google 登录会经过重定向，form-action 需要放行。
   const csp = [
     "default-src 'none'",
     "style-src 'self'",
     "img-src 'self'",
-    "script-src 'none'",
+    "script-src 'self'",
     `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}`,
     "base-uri 'none'",
     "frame-ancestors 'none'",

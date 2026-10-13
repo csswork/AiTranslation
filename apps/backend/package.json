@@ -8,9 +8,11 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch-path=src --watch-path=ui --watch-path=migrations src/server.js",
+    "dev": "node --watch-path=src --watch-path=ui --watch-path=migrations --watch-path=i18n src/server.js",
     "migrate": "node src/db/migrate.js",
-    "test": "bash test/run.sh"
+    "test": "bash test/run.sh",
+    "i18n": "node scripts/i18n.mjs --translate",
+    "check:i18n": "node scripts/i18n.mjs --check"
   },
   "dependencies": {
     "@hono/node-server": "2.1.5",

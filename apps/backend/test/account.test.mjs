@@ -129,7 +129,7 @@ test('U7 会话列表、退出指定会话与退出其他全部会话', async ()
   const tablet = await signInWithEmail(app, config, mailbox, 'paul@example.com');
 
   let page = await laptop.text('/sessions');
-  assert.equal(page.match(/<tr>\s*<td>网站/g).length, 3);
+  assert.equal(page.match(/<tr data-client="web">/g).length, 3);
   assert.equal(page.match(/class="tag">当前/g).length, 1);
   assert.doesNotMatch(page, /User-Agent|IP/);
 

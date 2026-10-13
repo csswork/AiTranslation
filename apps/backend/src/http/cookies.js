@@ -17,6 +17,18 @@ export function clearSessionCookie(c, config) {
   deleteCookie(c, sessionName(config), base(config));
 }
 
+/**
+ * 界面偏好（语言、配色），保存一年。配色 Cookie 需由页面脚本直接改写，所以不设 HttpOnly；
+ * 两者都只是显示偏好，不含身份信息。
+ */
+export function setPreference(c, config, name, value, { httpOnly = true } = {}) {
+  setCookie(c, name, value, { ...base(config), httpOnly, maxAge: 365 * 86400 });
+}
+
+export function clearPreference(c, config, name, { httpOnly = true } = {}) {
+  deleteCookie(c, name, { ...base(config), httpOnly });
+}
+
 /** 流程中的短期数据，例如待验证的邮箱、OAuth state 与 PKCE verifier。 */
 export const getTemp = (c, name) => getCookie(c, name);
 

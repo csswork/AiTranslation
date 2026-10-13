@@ -77,7 +77,8 @@ export function buildApp({ pool, config = testConfig(), google = null } = {}) {
 export function browser(app, config) {
   const jar = new Map();
   async function request(path, { method = 'GET', form, headers = {} } = {}) {
-    const h = new Headers(headers);
+    // 现有断言使用中文界面；需要其他语言的测试自己传 accept-language 或 lang Cookie。
+    const h = new Headers({ 'accept-language': 'zh-CN', ...headers });
     if (jar.size) h.set('cookie', [...jar].map(([k, v]) => `${k}=${v}`).join('; '));
     let body;
     if (form) {

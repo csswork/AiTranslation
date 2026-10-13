@@ -1,5 +1,5 @@
 /**
- * 用户管理界面（用户端，规划 app.huaci.app）的路由：U1–U8。
+ * 用户管理界面（用户端，规划 app.huaci.app）的路由：U1–U8，以及界面语言与配色偏好。
  * 每个页面只读写当前登录用户自己的数据；权限在这里由服务端判断。
  */
 import { Hono } from 'hono';
@@ -14,44 +14,58 @@ import {
 } from '../../src/auth/users.js';
 import { creditSummary, ledgerEntries } from '../../src/credits/ledger.js';
 import {
-  clearSessionCookie, clearTemp, getSessionToken, getTemp, setSessionCookie, setTemp,
+  clearPreference, clearSessionCookie, clearTemp, getSessionToken, getTemp, setPreference, setSessionCookie, setTemp,
 } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter } from '../../src/http/security.js';
+import { isLocale, k } from '../../src/i18n/index.js';
+import { THEMES, safePath, uiContext } from './context.js';
 import * as views from './views.js';
 
-const ok = (text) => ({ kind: 'ok', text });
-const fail = (text) => ({ kind: 'error', text });
+const ok = (key, params) => ({ kind: 'ok', key, params });
+const fail = (key, params) => ({ kind: 'error', key, params });
 
 /** 跨重定向的一次性提示，Cookie 里只放键名。 */
 const FLASH = {
-  signed_out: ok('已退出登录。'),
-  code_resent: ok('新的验证码已发送。'),
-  username_saved: ok('用户名已更新。'),
-  email_changed: ok('邮箱已更换。'),
-  email_taken: fail('该邮箱已被其他账户使用。'),
-  google_linked: ok('已绑定 Google 账号。'),
-  google_unlinked: ok('已解除 Google 绑定。'),
-  google_failed: fail('Google 登录没有完成，请重试。'),
-  google_unverified: fail('该 Google 账号没有已验证的邮箱，请改用邮箱验证码登录。'),
-  google_taken: fail('该 Google 账号已绑定其他账户。'),
-  google_already: fail('当前账户已绑定 Google 账号。'),
-  google_conflict: fail('该邮箱的账户已绑定另一个 Google 账号，请用邮箱验证码登录后在账户里处理。'),
-  session_revoked: ok('已退出该会话。'),
-  others_revoked: ok('已退出其他全部会话。'),
-  too_soon: fail('验证码发送太频繁，请 60 秒后再试。'),
-  too_many: fail('该邮箱 1 小时内请求验证码次数过多，请稍后再试。'),
-  rate: fail('请求过于频繁，请稍后再试。'),
+  signed_out: ok(k('已退出登录。')),
+  code_resent: ok(k('新的验证码已发送。')),
+  username_saved: ok(k('用户名已更新。')),
+  email_changed: ok(k('邮箱已更换。')),
+  email_taken: fail(k('该邮箱已被其他账户使用。')),
+  google_linked: ok(k('已绑定 Google 账号。')),
+  google_unlinked: ok(k('已解除 Google 绑定。')),
+  google_failed: fail(k('Google 登录没有完成，请重试。')),
+  google_unverified: fail(k('该 Google 账号没有已验证的邮箱，请改用邮箱验证码登录。')),
+  google_taken: fail(k('该 Google 账号已绑定其他账户。')),
+  google_already: fail(k('当前账户已绑定 Google 账号。')),
+  google_conflict: fail(k('该邮箱的账户已绑定另一个 Google 账号，请用邮箱验证码登录后在账户里处理。')),
+  session_revoked: ok(k('已退出该会话。')),
+  others_revoked: ok(k('已退出其他全部会话。')),
+  too_soon: fail(k('验证码发送太频繁，请 60 秒后再试。')),
+  too_many: fail(k('该邮箱 1 小时内请求验证码次数过多，请稍后再试。')),
+  rate: fail(k('请求过于频繁，请稍后再试。')),
 };
 
 const verifyError = (result) => {
   if (result.reason === 'invalid') {
-    return fail(result.remaining ? `验证码不正确，还可以尝试 ${result.remaining} 次。` : '请输入 6 位数字验证码。');
+    return result.remaining
+      ? fail(k('验证码不正确，还可以尝试 {n} 次。'), { n: result.remaining })
+      : fail(k('请输入 6 位数字验证码。'));
   }
-  if (result.reason === 'locked') return fail('尝试次数过多，验证码已失效，请重新获取。');
-  return fail('验证码已过期或已失效，请重新获取。');
+  if (result.reason === 'locked') return fail(k('尝试次数过多，验证码已失效，请重新获取。'));
+  return fail(k('验证码已过期或已失效，请重新获取。'));
 };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** 登录后可返回的官网地址：只接受 WEB_ORIGINS 白名单里的来源。 */
+export function safeReturnUrl(value, config) {
+  try {
+    const url = new URL(String(value || ''));
+    return config.webOrigins.includes(url.origin) ? url.href : null;
+  } catch {
+    return null;
+  }
+}
 
 export function accountRoutes({ config, pool, mailer, google, log = console }) {
   const app = new Hono();
@@ -69,6 +83,7 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
     flash(c, key);
     return c.redirect(path, 303);
   };
+  const render = (c, view, props, status = 200) => c.html(view(uiContext(c, config), props), status);
 
   const sendCode = async (c, { email, purpose, userId = null }) => {
     if (!sendLimiter(clientAddress(c, config))) return { ok: false, reason: 'rate' };
@@ -77,9 +92,13 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
     return result;
   };
 
+  /** 建立网页会话；如果是从官网进入的登录，完成后回到官网原页面。 */
   const signIn = async (c, userId) => {
     const token = await createSession(pool, config, userId, 'web');
     setSessionCookie(c, config, token);
+    const returnTo = safeReturnUrl(getTemp(c, 'return_to'), config);
+    clearTemp(c, config, 'return_to');
+    return c.redirect(returnTo || '/', 303);
   };
 
   app.use('*', async (c, next) => {
@@ -93,34 +112,50 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
   };
   const user = (c) => c.get('auth').user;
 
+  /* ---------- 界面偏好 ---------- */
+
+  app.post('/preferences/lang', async (c) => {
+    const body = await c.req.parseBody();
+    if (isLocale(body.lang)) setPreference(c, config, 'lang', body.lang);
+    return c.redirect(safePath(body.next), 303);
+  });
+
+  app.post('/preferences/theme', async (c) => {
+    const body = await c.req.parseBody();
+    if (THEMES.includes(body.theme)) setPreference(c, config, 'theme', body.theme, { httpOnly: false });
+    else clearPreference(c, config, 'theme', { httpOnly: false });
+    return c.redirect(safePath(body.next), 303);
+  });
+
   /* ---------- U1 邮箱验证码登录 ---------- */
 
   app.get('/login', (c) => {
-    if (c.get('auth')) return c.redirect('/', 303);
-    return c.html(views.loginPage({ googleEnabled: Boolean(google), notice: takeFlash(c) }));
+    const returnTo = safeReturnUrl(c.req.query('return'), config);
+    if (c.get('auth')) return c.redirect(returnTo || '/', 303);
+    if (returnTo) setTemp(c, config, 'return_to', returnTo, 30 * 60);
+    return render(c, views.loginPage, { googleEnabled: Boolean(google), notice: takeFlash(c) });
   });
 
   app.post('/login/email', async (c) => {
     const body = await c.req.parseBody();
     const email = normalizeEmail(body.email);
     if (!isValidEmail(email)) {
-      return c.html(views.loginPage({ googleEnabled: Boolean(google), email, notice: fail('请输入有效的邮箱地址。') }), 400);
+      return render(c, views.loginPage, { googleEnabled: Boolean(google), email, notice: fail(k('请输入有效的邮箱地址。')) }, 400);
     }
     const result = await sendCode(c, { email, purpose: 'login' });
-    if (!result.ok) {
-      return c.html(views.loginPage({ googleEnabled: Boolean(google), email, notice: FLASH[result.reason] }), 429);
-    }
+    if (!result.ok) return render(c, views.loginPage, { googleEnabled: Boolean(google), email, notice: FLASH[result.reason] }, 429);
     setTemp(c, config, 'pending_login', email);
     return c.redirect('/login/verify', 303);
+  });
+
+  const loginVerifyView = (c, email, notice) => views.verifyPage(uiContext(c, config), {
+    title: uiContext(c, config).t('输入验证码'), email, action: '/login/verify', resendAction: '/login/resend', backHref: '/login', notice,
   });
 
   app.get('/login/verify', (c) => {
     const email = getTemp(c, 'pending_login');
     if (!email) return c.redirect('/login', 303);
-    return c.html(views.verifyPage({
-      title: '输入验证码', email, action: '/login/verify', resendAction: '/login/resend', backHref: '/login',
-      notice: takeFlash(c),
-    }));
+    return c.html(loginVerifyView(c, email, takeFlash(c)));
   });
 
   app.post('/login/resend', async (c) => {
@@ -135,16 +170,10 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
     if (!email) return c.redirect('/login', 303);
     const body = await c.req.parseBody();
     const result = await verifyCode(pool, config, { email, purpose: 'login', code: body.code });
-    if (!result.ok) {
-      return c.html(views.verifyPage({
-        title: '输入验证码', email, action: '/login/verify', resendAction: '/login/resend', backHref: '/login',
-        notice: verifyError(result),
-      }), 400);
-    }
+    if (!result.ok) return c.html(loginVerifyView(c, email, verifyError(result)), 400);
     const { user: account } = await findOrCreateUserByEmail(pool, config, email);
     clearTemp(c, config, 'pending_login');
-    await signIn(c, account.id);
-    return c.redirect('/', 303);
+    return signIn(c, account.id);
   });
 
   /* ---------- U1 / U6 Google 登录与绑定 ---------- */
@@ -210,8 +239,7 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
         userId = created.user.id;
       }
     }
-    await signIn(c, userId);
-    return c.redirect('/', 303);
+    return signIn(c, userId);
   });
 
   app.post('/logout', async (c) => {
@@ -223,52 +251,52 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
 
   /* ---------- U2–U5、U8 ---------- */
 
-  app.get('/', requireUser, async (c) => c.html(views.overviewPage({
+  app.get('/', requireUser, async (c) => render(c, views.overviewPage, {
     user: user(c), credits: await creditSummary(pool, user(c).id), notice: takeFlash(c),
-  })));
-  app.get('/plans', requireUser, (c) => c.html(views.plansPage({ user: user(c) })));
-  app.get('/billing', requireUser, (c) => c.html(views.billingPage({ user: user(c) })));
-  app.get('/usage', requireUser, async (c) => c.html(views.usagePage({
+  }));
+  app.get('/plans', requireUser, (c) => render(c, views.plansPage, { user: user(c) }));
+  app.get('/billing', requireUser, (c) => render(c, views.billingPage, { user: user(c) }));
+  app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
     user: user(c), entries: await ledgerEntries(pool, user(c).id),
-  })));
-  app.get('/help', requireUser, (c) => c.html(views.helpPage({ user: user(c), links: config.links })));
+  }));
+  app.get('/help', requireUser, (c) => render(c, views.helpPage, { user: user(c) }));
 
   /* ---------- U6 邮箱、用户名与登录方式 ---------- */
 
-  const accountView = async (c, extra = {}) => views.accountPage({
+  const renderAccount = async (c, extra = {}, status = 200) => render(c, views.accountPage, {
     user: user(c),
     identities: await listIdentities(pool, user(c).id),
     googleEnabled: Boolean(google),
     ...extra,
-  });
+  }, status);
 
-  app.get('/account', requireUser, async (c) => c.html(await accountView(c, { notice: takeFlash(c) })));
+  app.get('/account', requireUser, async (c) => renderAccount(c, { notice: takeFlash(c) }));
 
   app.post('/account/username', requireUser, async (c) => {
     const body = await c.req.parseBody();
     const result = await updateUsername(pool, user(c).id, body.username);
     if (result === 'ok') return back(c, 'username_saved', '/account');
-    const notice = fail(result === 'taken' ? '该用户名已被使用。' : '用户名需为 3–24 位小写字母、数字、下划线或短横线。');
-    return c.html(await accountView(c, { notice, username: String(body.username ?? '') }), 400);
+    const notice = result === 'taken' ? fail(k('该用户名已被使用。')) : fail(k('用户名需为 3–24 位小写字母、数字、下划线或短横线。'));
+    return renderAccount(c, { notice, username: String(body.username ?? '') }, 400);
   });
 
   app.post('/account/email', requireUser, async (c) => {
     const body = await c.req.parseBody();
     const email = normalizeEmail(body.email);
     let notice = null;
-    if (!isValidEmail(email)) notice = fail('请输入有效的邮箱地址。');
-    else if (email === user(c).email) notice = fail('这已经是当前邮箱。');
+    if (!isValidEmail(email)) notice = fail(k('请输入有效的邮箱地址。'));
+    else if (email === user(c).email) notice = fail(k('这已经是当前邮箱。'));
     else if (await findUserByEmail(pool, email)) notice = FLASH.email_taken;
-    if (notice) return c.html(await accountView(c, { notice, newEmail: email }), 400);
+    if (notice) return renderAccount(c, { notice, newEmail: email }, 400);
 
     const result = await sendCode(c, { email, purpose: 'change_email', userId: user(c).id });
-    if (!result.ok) return c.html(await accountView(c, { notice: FLASH[result.reason], newEmail: email }), 429);
+    if (!result.ok) return renderAccount(c, { notice: FLASH[result.reason], newEmail: email }, 429);
     setTemp(c, config, 'pending_email', email);
     return c.redirect('/account/email/verify', 303);
   });
 
-  const emailVerifyView = (c, email, notice) => views.verifyPage({
-    title: '验证新邮箱', email, action: '/account/email/verify', resendAction: '/account/email/resend',
+  const emailVerifyView = (c, email, notice) => views.verifyPage(uiContext(c, config), {
+    title: uiContext(c, config).t('验证新邮箱'), email, action: '/account/email/verify', resendAction: '/account/email/resend',
     backHref: '/account', user: user(c), active: 'account', notice,
   });
 
@@ -303,12 +331,12 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
 
   /* ---------- U7 登录会话 ---------- */
 
-  app.get('/sessions', requireUser, async (c) => c.html(views.sessionsPage({
+  app.get('/sessions', requireUser, async (c) => render(c, views.sessionsPage, {
     user: user(c),
     sessions: await listSessions(pool, user(c).id),
     currentId: c.get('auth').session.id,
     notice: takeFlash(c),
-  })));
+  }));
 
   app.post('/sessions/revoke-others', requireUser, async (c) => {
     await revokeOtherSessions(pool, user(c).id, c.get('auth').session.id);

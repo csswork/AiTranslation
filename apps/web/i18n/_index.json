@@ -63,6 +63,16 @@
       "privacy.html"
     ]
   },
+  "登录": {
+    "kind": "text",
+    "tag": "a",
+    "pages": [
+      "404.html",
+      "changelog.html",
+      "index.html",
+      "privacy.html"
+    ]
+  },
   "这个页面不存在": {
     "kind": "text",
     "tag": "h2",
