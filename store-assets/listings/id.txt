@@ -1,0 +1,77 @@
+Pilih teks di halaman web, klik kanan, dan lihat terjemahan muncul di panel mengambang—tanpa berpindah tab atau menyalin dan menempel.
+
+AI Selection Translator adalah ekstensi Chrome open-source yang dibangun di atas Manifest V3. Terjemahkan teks yang dipilih, area halaman, dan teks di dalam gambar ke bahasa pilihan Anda menggunakan kunci API OpenAI, DeepSeek, atau DeepL milik Anda sendiri.
+
+▍Empat cara menerjemahkan
+
+• Teks yang dipilih
+Pilih teks dan pilih “Terjemahkan ke…” dari menu klik kanan. Terjemahan muncul di panel tengah, dengan output streaming jika didukung dan tampilan teks asli yang dapat diperluas.
+
+Pilihan dalam bahasa apa pun—termasuk bahasa Mandarin—dapat diterjemahkan. Pilihan yang hanya berisi angka, tanda baca, atau emoji tidak memicu tawaran terjemahan.
+
+Ubah bahasa target langsung di panel untuk menerjemahkan ulang pilihan asli. Simpan sebagai default hanya saat Anda memilihnya.
+
+• Area halaman
+Tambahkan tombol terjemahan ke area tertentu di halaman web. Klik untuk mengganti teks di area tersebut dengan terjemahannya, dan pulihkan teks asli saat diperlukan.
+
+Aturan disimpan berdasarkan domain, sehingga tombol muncul kembali saat Anda mengunjungi situs web itu lagi. Area yang lebih panjang diproses secara bertahap, dengan terjemahan muncul secara progresif.
+
+• Gambar
+Klik kanan gambar untuk mengenali teksnya dan menampilkan terjemahan pada posisi yang terdeteksi. Gambar panjang dibagi menjadi bagian-bagian lebih kecil untuk pengenalan.
+
+Mengubah bahasa target akan menggunakan kembali teks yang telah dikenali, sehingga gambar yang sama tidak perlu dipindai lagi. Pengenalan gambar memerlukan penyedia dan model yang mendukung visi.
+
+• Panel terjemahan
+Buka halaman khusus dengan teks sumber di kiri dan terjemahan di kanan. Gunakan untuk bagian yang lebih panjang atau teks dari luar browser.
+
+Pilih dari 24 bahasa target: Tionghoa Sederhana, Tionghoa Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thailand, Jepang, dan Korea.
+
+Deteksi bahasa sumber secara otomatis atau pilih secara eksplisit. Bahasa sumber, bahasa target, dan bahasa antarmuka adalah pengaturan yang independen. Dukungan penyedia bervariasi menurut bahasa dan fitur.
+
+▍Dirancang untuk membaca sehari-hari
+
+• Tetap di halaman: terjemahkan saat membaca, tanpa mengganggu alur kerja Anda.
+• Output streaming: terjemahan muncul secara progresif jika didukung.
+• Tema terang dan gelap mengikuti preferensi sistem Anda.
+• Seret panel terjemahan untuk memindahkannya, atau tekan Esc untuk menutupnya.
+• Pintasan keyboard: ⌘⇧Y di macOS atau Alt+Shift+T di platform lain.
+• Antarmuka yang dilokalkan untuk 24 bahasa, termasuk tata letak kanan-ke-kiri.
+• Pilih bahasa terjemahan default Anda secara independen dari bahasa antarmuka.
+
+Terjemahan subtitle video eksperimental juga tersedia sebagai fitur opsional. Dukungan pengenalan suara bergantung pada browser, perangkat, dan bahasa sumber Anda.
+
+▍Privasi
+
+• Tidak ada server terjemahan yang dioperasikan pengembang. Permintaan terjemahan dikirim langsung ke penyedia atau endpoint kustom yang Anda konfigurasikan.
+• Tidak ada analitik, pelacakan, atau periklanan.
+• Kunci API Anda disimpan secara lokal di chrome.storage.local dan tidak disinkronkan melalui akun Chrome Anda.
+• Konten dikirim untuk terjemahan hanya saat Anda secara aktif memintanya. Pengembang tidak menerima riwayat terjemahan Anda.
+• Pengenalan suara video dapat berjalan secara lokal di perangkat yang didukung. Pengenalan cloud opsional mengirim audio ke layanan pengenalan suara browser.
+• Kode sumber lengkap tersedia di bawah GPL-3.0 untuk diperiksa.
+
+▍Memulai
+
+1. Setelah instalasi, halaman pengaturan terbuka secara otomatis. Pilih penyedia, masukkan kunci API Anda sendiri, dan gunakan “Uji koneksi” untuk memeriksa konfigurasi Anda.
+2. Pilih bahasa antarmuka dan target terjemahan default Anda.
+3. Pilih teks di halaman web, klik kanan, dan pilih “Terjemahkan ke…” untuk memulai.
+
+Memerlukan Chrome 116 atau lebih baru. Fitur video eksperimental mungkin memerlukan browser yang lebih baru dan pengaturan tambahan.
+
+Versi ini menggunakan kredensial penyedia Anda sendiri. Setiap biaya API ditagih oleh penyedia pilihan Anda.
+
+▍Keterbatasan yang diketahui
+
+• Halaman yang dilindungi browser, termasuk halaman chrome:// dan Chrome Web Store, tidak mengizinkan injeksi content-script. Overlay terjemahan tidak tersedia di sana.
+• Terjemahan teks individual dibatasi hingga 6.000 karakter. Pilihan yang lebih panjang dipotong, dengan pemberitahuan ditampilkan di panel.
+• Endpoint API kustom memerlukan izin terpisah untuk domainnya dan harus menggunakan HTTPS.
+• Bahasa yang tersedia, pengenalan gambar, dan kemampuan streaming bergantung pada penyedia dan model Anda.
+
+▍Tentang proyek ini
+
+Proyek open-source yang independen. Proyek ini tidak berafiliasi dengan, didukung oleh, atau disponsori oleh OpenAI, DeepSeek, DeepL, atau perusahaan terkait mereka.
+
+ChatGPT, DeepSeek, DeepL, dan nama produk lain adalah merek dagang dari pemiliknya masing-masing dan digunakan semata-mata untuk mengidentifikasi layanan yang kompatibel.
+
+Situs web: https://huaci.app/
+Kode sumber dan laporan masalah: https://github.com/csswork/AiTranslation
+Kebijakan privasi: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

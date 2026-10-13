@@ -1,0 +1,77 @@
+Chọn văn bản trên trang web, nhấp chuột phải và xem bản dịch xuất hiện trong bảng nổi—mà không cần chuyển tab hay sao chép và dán.
+
+AI Selection Translator là tiện ích mở rộng Chrome mã nguồn mở được xây dựng trên Manifest V3. Dịch văn bản đã chọn, vùng trang và văn bản trong hình ảnh sang ngôn ngữ bạn muốn bằng khóa API OpenAI, DeepSeek hoặc DeepL của riêng bạn.
+
+▍Bốn cách dịch
+
+• Văn bản đã chọn
+Chọn văn bản và chọn “Dịch sang…” từ menu nhấp chuột phải. Bản dịch xuất hiện trong bảng căn giữa, với đầu ra trực tuyến khi được hỗ trợ và chế độ xem văn bản gốc có thể mở rộng.
+
+Các lựa chọn bằng bất kỳ ngôn ngữ nào—kể cả tiếng Trung—đều có thể được dịch. Các lựa chọn chỉ chứa số, dấu câu hoặc biểu tượng cảm xúc sẽ không kích hoạt đề nghị dịch.
+
+Thay đổi ngôn ngữ đích trực tiếp trong bảng để dịch lại lựa chọn gốc. Chỉ lưu làm mặc định khi bạn chọn.
+
+• Vùng trang
+Thêm nút dịch vào một khu vực cụ thể của trang web. Nhấp vào nút để thay thế văn bản trong vùng đó bằng bản dịch và khôi phục bản gốc khi cần.
+
+Quy tắc được lưu theo tên miền, vì vậy nút sẽ trở lại khi bạn truy cập lại trang web. Các vùng dài hơn được xử lý theo lô, với bản dịch xuất hiện dần dần.
+
+• Hình ảnh
+Nhấp chuột phải vào hình ảnh để nhận dạng văn bản và phủ bản dịch tại các vị trí được phát hiện. Hình ảnh dài được chia thành các phần nhỏ hơn để nhận dạng.
+
+Thay đổi ngôn ngữ đích sẽ tái sử dụng văn bản đã nhận dạng, vì vậy không cần quét lại cùng một hình ảnh. Nhận dạng hình ảnh yêu cầu nhà cung cấp và mô hình có khả năng thị giác.
+
+• Bảng dịch
+Mở một trang chuyên dụng với văn bản nguồn ở bên trái và bản dịch ở bên phải. Sử dụng cho các đoạn văn dài hơn hoặc văn bản từ bên ngoài trình duyệt.
+
+Chọn từ 24 ngôn ngữ đích: Tiếng Trung giản thể, Tiếng Trung phồn thể, Tiếng Anh, Tiếng Tây Ban Nha, Tiếng Bồ Đào Nha, Tiếng Pháp, Tiếng Đức, Tiếng Ý, Tiếng Hà Lan, Tiếng Nga, Tiếng Ukraina, Tiếng Ba Lan, Tiếng Thổ Nhĩ Kỳ, Tiếng Ả Rập, Tiếng Do Thái, Tiếng Ba Tư, Tiếng Hindi, Tiếng Bengal, Tiếng Urdu, Tiếng Indonesia, Tiếng Việt, Tiếng Thái, Tiếng Nhật và Tiếng Hàn.
+
+Tự động phát hiện ngôn ngữ nguồn hoặc chọn thủ công. Ngôn ngữ nguồn, ngôn ngữ đích và ngôn ngữ giao diện là các cài đặt độc lập. Hỗ trợ nhà cung cấp khác nhau tùy theo ngôn ngữ và tính năng.
+
+▍Được thiết kế cho việc đọc hàng ngày
+
+• Ở lại trên trang: dịch trong khi đọc, không làm gián đoạn quy trình làm việc của bạn.
+• Đầu ra trực tuyến: bản dịch xuất hiện dần dần khi được hỗ trợ.
+• Chủ đề sáng và tối theo tùy chọn hệ thống của bạn.
+• Kéo bảng dịch để định vị lại hoặc nhấn Esc để đóng.
+• Phím tắt: ⌘⇧Y trên macOS hoặc Alt+Shift+T trên các nền tảng khác.
+• Giao diện được bản địa hóa cho 24 ngôn ngữ, bao gồm bố cục từ phải sang trái.
+• Chọn ngôn ngữ dịch mặc định độc lập với ngôn ngữ giao diện.
+
+Tính năng dịch phụ đề video thử nghiệm cũng có sẵn như một tính năng tùy chọn. Hỗ trợ nhận dạng giọng nói phụ thuộc vào trình duyệt, thiết bị và ngôn ngữ nguồn của bạn.
+
+▍Quyền riêng tư
+
+• Không có máy chủ dịch do nhà phát triển vận hành. Yêu cầu dịch được gửi trực tiếp đến nhà cung cấp hoặc điểm cuối tùy chỉnh mà bạn cấu hình.
+• Không có phân tích, theo dõi hoặc quảng cáo.
+• Khóa API của bạn được lưu trữ cục bộ trong chrome.storage.local và không được đồng bộ hóa qua tài khoản Chrome của bạn.
+• Nội dung chỉ được gửi để dịch khi bạn yêu cầu. Nhà phát triển không nhận được lịch sử dịch của bạn.
+• Nhận dạng giọng nói video có thể chạy cục bộ trên các thiết bị được hỗ trợ. Nhận dạng đám mây tùy chọn gửi âm thanh đến dịch vụ nhận dạng giọng nói của trình duyệt.
+• Mã nguồn đầy đủ có sẵn theo GPL-3.0 để kiểm tra.
+
+▍Bắt đầu
+
+1. Sau khi cài đặt, trang cài đặt sẽ tự động mở. Chọn nhà cung cấp, nhập khóa API của riêng bạn và sử dụng “Kiểm tra kết nối” để kiểm tra cấu hình của bạn.
+2. Chọn ngôn ngữ giao diện và mục tiêu dịch mặc định của bạn.
+3. Chọn văn bản trên trang web, nhấp chuột phải và chọn “Dịch sang…” để bắt đầu.
+
+Yêu cầu Chrome 116 trở lên. Các tính năng video thử nghiệm có thể yêu cầu trình duyệt mới hơn và thiết lập bổ sung.
+
+Phiên bản này sử dụng thông tin xác thực nhà cung cấp của riêng bạn. Mọi khoản phí API do nhà cung cấp bạn chọn tính phí.
+
+▍Hạn chế đã biết
+
+• Các trang được trình duyệt bảo vệ, bao gồm các trang chrome:// và Chrome Web Store, không cho phép chèn tập lệnh nội dung. Lớp phủ dịch không khả dụng ở đó.
+• Dịch văn bản riêng lẻ được giới hạn ở 6.000 ký tự. Các lựa chọn dài hơn sẽ bị cắt bớt, với thông báo hiển thị trong bảng.
+• Điểm cuối API tùy chỉnh yêu cầu quyền riêng cho tên miền của chúng và phải sử dụng HTTPS.
+• Ngôn ngữ khả dụng, nhận dạng hình ảnh và khả năng truyền trực tuyến phụ thuộc vào nhà cung cấp và mô hình của bạn.
+
+▍Về dự án này
+
+Một dự án độc lập, mã nguồn mở. Nó không liên kết với, được xác nhận bởi hoặc tài trợ bởi OpenAI, DeepSeek, DeepL hoặc các công ty liên kết của họ.
+
+ChatGPT, DeepSeek, DeepL và các tên sản phẩm khác là thương hiệu của chủ sở hữu tương ứng và chỉ được sử dụng để xác định các dịch vụ tương thích.
+
+Trang web: https://huaci.app/
+Mã nguồn và báo cáo vấn đề: https://github.com/csswork/AiTranslation
+Chính sách bảo mật: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

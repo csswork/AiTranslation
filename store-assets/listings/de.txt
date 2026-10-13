@@ -1,0 +1,77 @@
+Wählen Sie Text auf einer Webseite aus, klicken Sie mit der rechten Maustaste und sehen Sie, wie die Übersetzung in einem schwebenden Panel erscheint – ohne Tab-Wechsel oder Kopieren und Einfügen.
+
+AI Selection Translator ist eine Open-Source-Chrome-Erweiterung auf Basis von Manifest V3. Übersetzen Sie ausgewählten Text, Seitenbereiche und Text in Bildern in Ihre bevorzugte Sprache mit Ihrem eigenen OpenAI-, DeepSeek- oder DeepL-API-Schlüssel.
+
+▍Vier Möglichkeiten zu übersetzen
+
+• Ausgewählter Text
+Wählen Sie Text aus und wählen Sie „Übersetzen nach…“ im Kontextmenü. Die Übersetzung erscheint in einem zentrierten Panel, mit Streaming-Ausgabe, wo unterstützt, und einer erweiterbaren Ansicht des Originaltexts.
+
+Auswahlen in jeder Sprache – einschließlich Chinesisch – können übersetzt werden. Auswahlen, die nur Zahlen, Satzzeichen oder Emoji enthalten, lösen das Übersetzungsangebot nicht aus.
+
+Ändern Sie die Zielsprache direkt im Panel, um die ursprüngliche Auswahl erneut zu übersetzen. Speichern Sie sie nur dann als Standard, wenn Sie es möchten.
+
+• Seitenbereiche
+Fügen Sie eine Übersetzungsschaltfläche zu einem bestimmten Bereich einer Webseite hinzu. Klicken Sie darauf, um den Text in diesem Bereich durch seine Übersetzung zu ersetzen und das Original bei Bedarf wiederherzustellen.
+
+Regeln werden pro Domain gespeichert, sodass die Schaltfläche beim erneuten Besuch der Website wieder erscheint. Längere Bereiche werden in Stapeln verarbeitet, wobei Übersetzungen nach und nach erscheinen.
+
+• Bilder
+Klicken Sie mit der rechten Maustaste auf ein Bild, um seinen Text zu erkennen und Übersetzungen an den erkannten Positionen einzublenden. Lange Bilder werden in kleinere Abschnitte aufgeteilt, um sie zu erkennen.
+
+Beim Ändern der Zielsprache wird der erkannte Text wiederverwendet, sodass dasselbe Bild nicht erneut gescannt werden muss. Die Bilderkennung erfordert einen Anbieter und ein Modell mit Bildverständnis.
+
+• Übersetzungs-Panel
+Öffnen Sie eine eigene Seite mit dem Quelltext links und der Übersetzung rechts. Verwenden Sie sie für längere Passagen oder Text von außerhalb des Browsers.
+
+Wählen Sie aus 24 Zielsprachen: Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch und Koreanisch.
+
+Erkennen Sie die Ausgangssprache automatisch oder wählen Sie sie explizit aus. Ausgangssprache, Zielsprache und Oberflächensprache sind unabhängige Einstellungen. Die Anbieterunterstützung variiert je nach Sprache und Funktion.
+
+▍Für das alltägliche Lesen konzipiert
+
+• Auf der Seite bleiben: Übersetzen Sie beim Lesen, ohne Ihren Arbeitsablauf zu unterbrechen.
+• Streaming-Ausgabe: Übersetzungen erscheinen nach und nach, wo unterstützt.
+• Helle und dunkle Designs folgen Ihrer Systemeinstellung.
+• Ziehen Sie das Übersetzungs-Panel, um es neu zu positionieren, oder drücken Sie Esc, um es zu schließen.
+• Tastenkürzel: ⌘⇧Y unter macOS oder Alt+Shift+T auf anderen Plattformen.
+• Lokalisierte Oberflächen für 24 Sprachen, einschließlich Layouts von rechts nach links.
+• Wählen Sie Ihre Standard-Übersetzungssprache unabhängig von der Oberflächensprache.
+
+Eine experimentelle Übersetzung von Video-Untertiteln ist ebenfalls als optionale Funktion verfügbar. Die Unterstützung der Spracherkennung hängt von Ihrem Browser, Gerät und der Ausgangssprache ab.
+
+▍Datenschutz
+
+• Kein vom Entwickler betriebener Übersetzungsserver. Übersetzungsanfragen gehen direkt an den Anbieter oder den von Ihnen konfigurierten benutzerdefinierten Endpunkt.
+• Keine Analysen, kein Tracking und keine Werbung.
+• Ihr API-Schlüssel wird lokal in chrome.storage.local gespeichert und nicht über Ihr Chrome-Konto synchronisiert.
+• Inhalte werden nur dann zur Übersetzung gesendet, wenn Sie sie aktiv anfordern. Der Entwickler erhält Ihren Übersetzungsverlauf nicht.
+• Die Video-Spracherkennung kann auf unterstützten Geräten lokal ausgeführt werden. Die optionale Cloud-Erkennung sendet Audio an den Spracherkennungsdienst des Browsers.
+• Der vollständige Quellcode ist unter GPL-3.0 zur Einsicht verfügbar.
+
+▍Erste Schritte
+
+1. Nach der Installation öffnet sich die Einstellungsseite automatisch. Wählen Sie einen Anbieter, geben Sie Ihren eigenen API-Schlüssel ein und verwenden Sie „Verbindung testen“, um Ihre Konfiguration zu prüfen.
+2. Wählen Sie Ihre Oberflächensprache und das standardmäßige Übersetzungsziel.
+3. Wählen Sie Text auf einer Webseite aus, klicken Sie mit der rechten Maustaste und wählen Sie „Übersetzen nach…“, um zu beginnen.
+
+Erfordert Chrome 116 oder neuer. Experimentelle Video-Funktionen können einen neueren Browser und zusätzliche Einrichtung erfordern.
+
+Diese Version verwendet Ihre eigenen Anbieter-Anmeldedaten. Etwaige API-Kosten werden von Ihrem gewählten Anbieter in Rechnung gestellt.
+
+▍Bekannte Einschränkungen
+
+• Vom Browser geschützte Seiten, einschließlich chrome://-Seiten und des Chrome Web Store, erlauben keine Injektion von Content-Skripten. Übersetzungs-Overlays sind dort nicht verfügbar.
+• Einzelne Textübersetzungen sind auf 6.000 Zeichen begrenzt. Längere Auswahlen werden abgeschnitten, mit einem Hinweis im Panel.
+• Benutzerdefinierte API-Endpunkte erfordern eine separate Berechtigung für ihre Domain und müssen HTTPS verwenden.
+• Verfügbare Sprachen, Bilderkennung und Streaming-Funktionen hängen von Ihrem Anbieter und Modell ab.
+
+▍Über dieses Projekt
+
+Ein unabhängiges Open-Source-Projekt. Es ist nicht mit OpenAI, DeepSeek, DeepL oder deren verbundenen Unternehmen verbunden, wird von ihnen nicht unterstützt oder gesponsert.
+
+ChatGPT, DeepSeek, DeepL und andere Produktnamen sind Marken ihrer jeweiligen Inhaber und werden ausschließlich zur Identifizierung kompatibler Dienste verwendet.
+
+Website: https://huaci.app/
+Quellcode und Fehlerberichte: https://github.com/csswork/AiTranslation
+Datenschutzrichtlinie: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

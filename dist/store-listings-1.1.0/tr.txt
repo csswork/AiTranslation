@@ -1,0 +1,77 @@
+Bir web sayfasında metin seçin, sağ tıklayın ve çevirinin sekme değiştirmeden veya kopyalayıp yapıştırmadan yüzen bir panelde görünmesini izleyin.
+
+AI Selection Translator, Manifest V3 üzerine kurulu açık kaynaklı bir Chrome uzantısıdır. Seçili metni, sayfa bölgelerini ve görsellerin içindeki metni kendi OpenAI, DeepSeek veya DeepL API anahtarınızı kullanarak tercih ettiğiniz dile çevirin.
+
+▍Dört çeviri yöntemi
+
+• Seçili metin
+Metni seçin ve sağ tıklama menüsünden “Şuna çevir…” seçeneğini seçin. Çeviri, ortalanmış bir panelde görünür; desteklenen yerlerde akış halinde çıktı ve genişletilebilir özgün metin görünümü sunulur.
+
+Çince dahil her dildeki seçimler çevrilebilir. Yalnızca sayı, noktalama işareti veya emoji içeren seçimler çeviri teklifini tetiklemez.
+
+Özgün seçimi yeniden çevirmek için hedef dili doğrudan panelden değiştirin. Yalnızca siz seçtiğinizde varsayılan olarak kaydedin.
+
+• Sayfa bölgeleri
+Bir web sayfasının belirli bir alanına çeviri düğmesi ekleyin. Metni o bölgedeki çevirisiyle değiştirmek için tıklayın ve gerektiğinde özgün halini geri yükleyin.
+
+Kurallar alan adına göre kaydedilir, böylece web sitesini yeniden ziyaret ettiğinizde düğme geri gelir. Daha uzun bölgeler gruplar halinde işlenir ve çeviriler aşamalı olarak görünür.
+
+• Görseller
+Metnini tanımak ve algılanan konumlara çevirileri yerleştirmek için bir görsele sağ tıklayın. Uzun görseller tanıma için daha küçük bölümlere ayrılır.
+
+Hedef dili değiştirmek tanınan metni yeniden kullanır, böylece aynı görselin yeniden taranması gerekmez. Görsel tanıma, görsel yeteneği olan bir sağlayıcı ve model gerektirir.
+
+• Çeviri paneli
+Solda kaynak metin, sağda çeviri olacak şekilde özel bir sayfa açın. Daha uzun pasajlar veya tarayıcı dışından gelen metinler için kullanın.
+
+24 hedef dil arasından seçim yapın: Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, İspanyolca, Portekizce, Fransızca, Almanca, İtalyanca, Hollandaca, Rusça, Ukraynaca, Lehçe, Türkçe, Arapça, İbranice, Farsça, Hintçe, Bengalce, Urduca, Endonezce, Vietnamca, Tayca, Japonca ve Korece.
+
+Kaynak dili otomatik olarak algılayın veya açıkça seçin. Kaynak dil, hedef dil ve arayüz dili bağımsız ayarlardır. Sağlayıcı desteği dile ve özelliğe göre değişir.
+
+▍Günlük okuma için tasarlandı
+
+• Sayfada kalın: iş akışınızı kesintiye uğratmadan okurken çevirin.
+• Akış halinde çıktı: çeviriler desteklenen yerlerde aşamalı olarak görünür.
+• Açık ve koyu temalar sistem tercihinizi izler.
+• Çeviri panelini yeniden konumlandırmak için sürükleyin veya kapatmak için Esc tuşuna basın.
+• Klavye kısayolu: macOS'te ⌘⇧Y veya diğer platformlarda Alt+Shift+T.
+• Sağdan sola düzenler dahil olmak üzere 24 dil için yerelleştirilmiş arayüzler.
+• Varsayılan çeviri dilinizi arayüz dilinden bağımsız olarak seçin.
+
+Deneysel video altyazı çevirisi de isteğe bağlı bir özellik olarak mevcuttur. Konuşma tanıma desteği tarayıcınıza, cihazınıza ve kaynak dilinize bağlıdır.
+
+▍Gizlilik
+
+• Geliştirici tarafından işletilen bir çeviri sunucusu yoktur. Çeviri istekleri doğrudan yapılandırdığınız sağlayıcıya veya özel uç noktaya gider.
+• Analitik, izleme veya reklam yoktur.
+• API anahtarınız yerel olarak chrome.storage.local içinde saklanır ve Chrome hesabınız üzerinden senkronize edilmez.
+• İçerik yalnızca siz etkin olarak talep ettiğinizde çeviri için gönderilir. Geliştirici çeviri geçmişinizi almaz.
+• Video konuşma tanıma, desteklenen cihazlarda yerel olarak çalışabilir. İsteğe bağlı bulut tanıma, sesi tarayıcının konuşma tanıma hizmetine gönderir.
+• Tam kaynak kodu, incelenebilmesi için GPL-3.0 altında mevcuttur.
+
+▍Başlarken
+
+1. Kurulumdan sonra ayarlar sayfası otomatik olarak açılır. Bir sağlayıcı seçin, kendi API anahtarınızı girin ve yapılandırmanızı kontrol etmek için “Bağlantıyı test et” seçeneğini kullanın.
+2. Arayüz dilinizi ve varsayılan çeviri hedefinizi seçin.
+3. Başlamak için bir web sayfasında metin seçin, sağ tıklayın ve “Şuna çevir…” seçeneğini seçin.
+
+Chrome 116 veya üstünü gerektirir. Deneysel video özellikleri daha yeni bir tarayıcı ve ek kurulum gerektirebilir.
+
+Bu sürüm kendi sağlayıcı kimlik bilgilerinizi kullanır. Tüm API ücretleri seçtiğiniz sağlayıcı tarafından faturalandırılır.
+
+▍Bilinen sınırlamalar
+
+• chrome:// sayfaları ve Chrome Web Store dahil olmak üzere tarayıcı tarafından korunan sayfalar, içerik betiği enjeksiyonuna izin vermez. Çeviri katmanları orada kullanılamaz.
+• Tek tek metin çevirileri 6.000 karakterle sınırlıdır. Daha uzun seçimler kesilir ve panelde bir bildirim gösterilir.
+• Özel API uç noktaları, alan adları için ayrı izin gerektirir ve HTTPS kullanmalıdır.
+• Kullanılabilir diller, görsel tanıma ve akış halinde çıktı yetenekleri sağlayıcınıza ve modelinize bağlıdır.
+
+▍Bu proje hakkında
+
+Bağımsız, açık kaynaklı bir proje. OpenAI, DeepSeek, DeepL veya bunlarla ilişkili şirketlerle bağlantılı değildir, onlar tarafından onaylanmamıştır veya desteklenmemektedir.
+
+ChatGPT, DeepSeek, DeepL ve diğer ürün adları, ilgili sahiplerinin ticari markalarıdır ve yalnızca uyumlu hizmetleri tanımlamak için kullanılır.
+
+Web sitesi: https://huaci.app/
+Kaynak kodu ve sorun bildirimleri: https://github.com/csswork/AiTranslation
+Gizlilik politikası: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

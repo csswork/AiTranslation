@@ -1,0 +1,77 @@
+Selecteer tekst op een webpagina, klik met de rechtermuisknop en zie de vertaling verschijnen in een zwevend paneel—zonder van tabblad te wisselen of te kopiëren en plakken.
+
+AI Selection Translator is een open-source Chrome-extensie gebouwd op Manifest V3. Vertaal geselecteerde tekst, paginagebieden en tekst in afbeeldingen naar je voorkeurstaal met je eigen OpenAI-, DeepSeek- of DeepL-API-sleutel.
+
+▍Vier manieren om te vertalen
+
+• Geselecteerde tekst
+Selecteer tekst en kies “Vertalen naar…” in het rechtermuisknopmenu. De vertaling verschijnt in een gecentreerd paneel, met streaming uitvoer waar ondersteund en een uitklapbare weergave van de originele tekst.
+
+Selecties in elke taal—inclusief Chinees—kunnen worden vertaald. Selecties die alleen cijfers, leestekens of emoji bevatten, activeren het vertaalaanbod niet.
+
+Wijzig de doeltaal direct in het paneel om de oorspronkelijke selectie opnieuw te vertalen. Sla deze alleen als standaard op wanneer je dat zelf kiest.
+
+• Paginagebieden
+Voeg een vertaalknop toe aan een specifiek gebied van een webpagina. Klik erop om de tekst in dat gebied te vervangen door de vertaling, en herstel het origineel wanneer nodig.
+
+Regels worden per domein opgeslagen, zodat de knop terugkeert wanneer je de website opnieuw bezoekt. Langere gebieden worden in batches verwerkt, waarbij vertalingen geleidelijk verschijnen.
+
+• Afbeeldingen
+Klik met de rechtermuisknop op een afbeelding om de tekst te herkennen en vertalingen op de gedetecteerde posities te tonen. Lange afbeeldingen worden in kleinere secties opgesplitst voor herkenning.
+
+Als je de doeltaal wijzigt, wordt de herkende tekst hergebruikt, zodat dezelfde afbeelding niet opnieuw hoeft te worden gescand. Beeldherkenning vereist een provider en model met beeldondersteuning.
+
+• Vertaalpaneel
+Open een speciale pagina met de brontekst links en de vertaling rechts. Gebruik het voor langere passages of tekst van buiten de browser.
+
+Kies uit 24 doeltalen: Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thais, Japans en Koreaans.
+
+Detecteer de brontaal automatisch of selecteer deze expliciet. Brontaal, doeltaal en interfacetaal zijn onafhankelijke instellingen. Providerondersteuning verschilt per taal en functie.
+
+▍Ontworpen voor dagelijks lezen
+
+• Blijf op de pagina: vertaal tijdens het lezen, zonder je workflow te onderbreken.
+• Streaming uitvoer: vertalingen verschijnen geleidelijk waar ondersteund.
+• Lichte en donkere thema's volgen je systeemvoorkeur.
+• Sleep het vertaalpaneel om het te verplaatsen, of druk op Esc om het te sluiten.
+• Sneltoets: ⌘⇧Y op macOS of Alt+Shift+T op andere platforms.
+• Gelokaliseerde interfaces voor 24 talen, inclusief rechts-naar-links lay-outs.
+• Kies je standaard vertaaltaal onafhankelijk van de interfacetaal.
+
+Experimentele vertaling van videosondertitels is ook beschikbaar als optionele functie. Ondersteuning voor spraakherkenning is afhankelijk van je browser, apparaat en brontaal.
+
+▍Privacy
+
+• Geen door de ontwikkelaar beheerde vertaalserver. Vertaalverzoeken gaan rechtstreeks naar de provider of aangepaste endpoint die je configureert.
+• Geen analytics, tracking of advertenties.
+• Je API-sleutel wordt lokaal opgeslagen in chrome.storage.local en wordt niet gesynchroniseerd via je Chrome-account.
+• Inhoud wordt alleen voor vertaling verzonden wanneer je er actief om vraagt. De ontwikkelaar ontvangt je vertaalgeschiedenis niet.
+• Spraakherkenning voor video kan lokaal op ondersteunde apparaten worden uitgevoerd. Optionele cloudherkenning stuurt audio naar de spraakherkenningsservice van de browser.
+• De volledige broncode is beschikbaar onder GPL-3.0 ter inspectie.
+
+▍Aan de slag
+
+1. Na installatie opent de instellingenpagina automatisch. Kies een provider, voer je eigen API-sleutel in en gebruik “Verbinding testen” om je configuratie te controleren.
+2. Kies je interfacetaal en standaard vertaaldoel.
+3. Selecteer tekst op een webpagina, klik met de rechtermuisknop en kies “Vertalen naar…” om te beginnen.
+
+Vereist Chrome 116 of later. Experimentele videofuncties kunnen een nieuwere browser en extra configuratie vereisen.
+
+Deze versie gebruikt je eigen providerreferenties. Eventuele API-kosten worden gefactureerd door de provider die je kiest.
+
+▍Bekende beperkingen
+
+• Door de browser beschermde pagina's, waaronder chrome:// pagina's en de Chrome Web Store, staan geen injectie van contentscripts toe. Vertaaloverlays zijn daar niet beschikbaar.
+• Individuele tekstvertalingen zijn beperkt tot 6.000 tekens. Langere selecties worden afgekapt, met een melding in het paneel.
+• Aangepaste API-endpoints vereisen aparte toestemming voor hun domein en moeten HTTPS gebruiken.
+• Beschikbare talen, beeldherkenning en streamingmogelijkheden zijn afhankelijk van je provider en model.
+
+▍Over dit project
+
+Een onafhankelijk, open-sourceproject. Het is niet verbonden aan, goedgekeurd door of gesponsord door OpenAI, DeepSeek, DeepL of hun gelieerde bedrijven.
+
+ChatGPT, DeepSeek, DeepL en andere productnamen zijn handelsmerken van hun respectieve eigenaren en worden uitsluitend gebruikt om compatibele services te identificeren.
+
+Website: https://huaci.app/
+Broncode en probleemmeldingen: https://github.com/csswork/AiTranslation
+Privacybeleid: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

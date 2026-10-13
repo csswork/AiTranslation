@@ -1,6 +1,8 @@
 # Chrome 网上应用店 · 上架素材
 
-全部素材都是真跑出来的：在装了本扩展的 Chrome for Testing 里自动操作真实页面，
+1.1.0 的完整商店长介绍提供 24 种语言，见 [语言索引](listings/README.md)。每种语言一个可直接复制的文本文件；生成和检查方式见索引说明。
+
+截图和视频都是真跑出来的：在装了本扩展的 Chrome for Testing 里自动操作真实页面，
 只有「大模型的回复」换成了本地假接口（内容写死在 `tools/capture/lib/content.mjs`），
 所以画面 100% 可复现，也没有消耗任何 API 额度。
 
@@ -8,6 +10,7 @@
 
 | 文件 | 规格 | 商店后台位置 |
 | --- | --- | --- |
+| `listings/*.txt` | 24 种语言的完整长介绍 | 商品详情 → 对应语言 → 详细说明 |
 | `screenshots/01-selection-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 1 张） |
 | `screenshots/02-block-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 2 张） |
 | `screenshots/03-image-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 3 张） |

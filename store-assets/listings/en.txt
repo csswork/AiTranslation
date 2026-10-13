@@ -1,0 +1,77 @@
+Select text on a webpage, right-click, and watch the translation appear in a floating panel—without switching tabs or copying and pasting.
+
+AI Selection Translator is an open-source Chrome extension built on Manifest V3. Translate selected text, page regions, and text inside images into your preferred language using your own OpenAI, DeepSeek, or DeepL API key.
+
+▍Four ways to translate
+
+• Selected text
+Select text and choose “Translate to…” from the right-click menu. The translation appears in a centered panel, with streaming output where supported and an expandable original-text view.
+
+Selections in any language—including Chinese—can be translated. Selections containing only numbers, punctuation, or emoji do not trigger the translation offer.
+
+Change the target language directly in the panel to translate the original selection again. Save it as your default only when you choose to.
+
+• Page regions
+Add a translation button to a specific area of a webpage. Click it to replace the text in that region with its translation, and restore the original when needed.
+
+Rules are saved by domain, so the button returns when you revisit the website. Longer regions are processed in batches, with translations appearing progressively.
+
+• Images
+Right-click an image to recognize its text and overlay translations at the detected positions. Long images are split into smaller sections for recognition.
+
+Changing the target language reuses the recognized text, so the same image does not need to be scanned again. Image recognition requires a vision-capable provider and model.
+
+• Translation panel
+Open a dedicated page with source text on the left and translation on the right. Use it for longer passages or text from outside the browser.
+
+Choose from 24 target languages: Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese, and Korean.
+
+Detect the source language automatically or select it explicitly. Source language, target language, and interface language are independent settings. Provider support varies by language and feature.
+
+▍Designed for everyday reading
+
+• Stay on the page: translate while reading, without interrupting your workflow.
+• Streaming output: translations appear progressively where supported.
+• Light and dark themes follow your system preference.
+• Drag the translation panel to reposition it, or press Esc to close it.
+• Keyboard shortcut: ⌘⇧Y on macOS or Alt+Shift+T on other platforms.
+• Localized interfaces for 24 languages, including right-to-left layouts.
+• Choose your default translation language independently of the interface language.
+
+Experimental video subtitle translation is also available as an optional feature. Speech recognition support depends on your browser, device, and source language.
+
+▍Privacy
+
+• No developer-operated translation server. Translation requests go directly to the provider or custom endpoint you configure.
+• No analytics, tracking, or advertising.
+• Your API key is stored locally in chrome.storage.local and is not synced through your Chrome account.
+• Content is sent for translation only when you actively request it. The developer does not receive your translation history.
+• Video speech recognition can run locally on supported devices. Optional cloud recognition sends audio to the browser’s speech recognition service.
+• The complete source code is available under GPL-3.0 for inspection.
+
+▍Getting started
+
+1. After installation, the settings page opens automatically. Choose a provider, enter your own API key, and use “Test connection” to check your configuration.
+2. Choose your interface language and default translation target.
+3. Select text on a webpage, right-click, and choose “Translate to…” to begin.
+
+Requires Chrome 116 or later. Experimental video features may require a newer browser and additional setup.
+
+This version uses your own provider credentials. Any API charges are billed by your chosen provider.
+
+▍Known limitations
+
+• Browser-protected pages, including chrome:// pages and the Chrome Web Store, do not allow content-script injection. Translation overlays are unavailable there.
+• Individual text translations are limited to 6,000 characters. Longer selections are truncated, with a notice shown in the panel.
+• Custom API endpoints require separate permission for their domain and must use HTTPS.
+• Available languages, image recognition, and streaming capabilities depend on your provider and model.
+
+▍About this project
+
+An independent, open-source project. It is not affiliated with, endorsed by, or sponsored by OpenAI, DeepSeek, DeepL, or their associated companies.
+
+ChatGPT, DeepSeek, DeepL, and other product names are trademarks of their respective owners and are used solely to identify compatible services.
+
+Website: https://huaci.app/
+Source code and issue reports: https://github.com/csswork/AiTranslation
+Privacy policy: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md

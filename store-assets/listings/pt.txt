@@ -1,0 +1,77 @@
+Selecione o texto em uma página da web, clique com o botão direito e veja a tradução aparecer em um painel flutuante — sem trocar de aba ou copiar e colar.
+
+O AI Selection Translator é uma extensão de Chrome de código aberto criada no Manifest V3. Traduza o texto selecionado, regiões da página e texto dentro de imagens para o idioma de sua preferência usando sua própria chave de API da OpenAI, DeepSeek ou DeepL.
+
+▍Quatro maneiras de traduzir
+
+• Texto selecionado
+Selecione o texto e escolha “Traduzir para…” no menu do botão direito. A tradução aparece em um painel centralizado, com saída em streaming quando compatível e uma visualização expansível do texto original.
+
+Seleções em qualquer idioma — incluindo chinês — podem ser traduzidas. Seleções contendo apenas números, pontuação ou emoji não acionam a oferta de tradução.
+
+Altere o idioma de destino diretamente no painel para traduzir novamente a seleção original. Salve-o como padrão somente quando você quiser.
+
+• Regiões da página
+Adicione um botão de tradução a uma área específica de uma página da web. Clique nele para substituir o texto daquela região pela tradução e restaurar o original quando necessário.
+
+As regras são salvas por domínio, então o botão reaparece quando você visita o site novamente. Regiões mais longas são processadas em lotes, com as traduções aparecendo progressivamente.
+
+• Imagens
+Clique com o botão direito em uma imagem para reconhecer seu texto e sobrepor as traduções nas posições detectadas. Imagens longas são divididas em seções menores para reconhecimento.
+
+Alterar o idioma de destino reutiliza o texto reconhecido, então a mesma imagem não precisa ser escaneada novamente. O reconhecimento de imagens requer um provedor e modelo com capacidade de visão.
+
+• Painel de tradução
+Abra uma página dedicada com o texto de origem à esquerda e a tradução à direita. Use-a para trechos mais longos ou texto de fora do navegador.
+
+Escolha entre 24 idiomas de destino: chinês simplificado, chinês tradicional, inglês, espanhol, português, francês, alemão, italiano, holandês, russo, ucraniano, polonês, turco, árabe, hebraico, persa, hindi, bengali, urdu, indonésio, vietnamita, tailandês, japonês e coreano.
+
+Detecte o idioma de origem automaticamente ou selecione-o explicitamente. Idioma de origem, idioma de destino e idioma da interface são configurações independentes. O suporte do provedor varia conforme o idioma e o recurso.
+
+▍Feito para a leitura do dia a dia
+
+• Fique na página: traduza enquanto lê, sem interromper seu fluxo de trabalho.
+• Saída em streaming: as traduções aparecem progressivamente quando compatível.
+• Temas claro e escuro seguem a preferência do seu sistema.
+• Arraste o painel de tradução para reposicioná-lo ou pressione Esc para fechá-lo.
+• Atalho de teclado: ⌘⇧Y no macOS ou Alt+Shift+T em outras plataformas.
+• Interfaces localizadas para 24 idiomas, incluindo layouts da direita para a esquerda.
+• Escolha seu idioma de tradução padrão independentemente do idioma da interface.
+
+A tradução experimental de legendas de vídeo também está disponível como recurso opcional. O suporte ao reconhecimento de fala depende do seu navegador, dispositivo e idioma de origem.
+
+▍Privacidade
+
+• Nenhum servidor de tradução operado pelo desenvolvedor. As solicitações de tradução vão diretamente para o provedor ou endpoint personalizado que você configurar.
+• Sem análises, rastreamento ou publicidade.
+• Sua chave de API é armazenada localmente em chrome.storage.local e não é sincronizada pela sua conta do Chrome.
+• O conteúdo é enviado para tradução somente quando você solicita ativamente. O desenvolvedor não recebe seu histórico de traduções.
+• O reconhecimento de fala de vídeo pode ser executado localmente em dispositivos compatíveis. O reconhecimento opcional na nuvem envia o áudio para o serviço de reconhecimento de fala do navegador.
+• O código-fonte completo está disponível sob a GPL-3.0 para inspeção.
+
+▍Primeiros passos
+
+1. Após a instalação, a página de configurações abre automaticamente. Escolha um provedor, insira sua própria chave de API e use “Testar conexão” para verificar sua configuração.
+2. Escolha o idioma da interface e o destino de tradução padrão.
+3. Selecione o texto em uma página da web, clique com o botão direito e escolha “Traduzir para…” para começar.
+
+Requer Chrome 116 ou posterior. Os recursos experimentais de vídeo podem exigir um navegador mais recente e configuração adicional.
+
+Esta versão usa suas próprias credenciais de provedor. Quaisquer cobranças de API são faturadas pelo provedor escolhido por você.
+
+▍Limitações conhecidas
+
+• Páginas protegidas pelo navegador, incluindo páginas chrome:// e a Chrome Web Store, não permitem a injeção de content script. As sobreposições de tradução não estão disponíveis nesses locais.
+• Traduções de textos individuais são limitadas a 6.000 caracteres. Seleções mais longas são truncadas, com um aviso exibido no painel.
+• Endpoints de API personalizados exigem permissão separada para seu domínio e devem usar HTTPS.
+• Idiomas disponíveis, reconhecimento de imagens e recursos de streaming dependem do seu provedor e modelo.
+
+▍Sobre este projeto
+
+Um projeto independente e de código aberto. Não é afiliado, endossado ou patrocinado pela OpenAI, DeepSeek, DeepL ou suas empresas associadas.
+
+ChatGPT, DeepSeek, DeepL e outros nomes de produtos são marcas registradas de seus respectivos proprietários e são usados apenas para identificar serviços compatíveis.
+
+Site: https://huaci.app/
+Código-fonte e relatórios de problemas: https://github.com/csswork/AiTranslation
+Política de privacidade: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md
