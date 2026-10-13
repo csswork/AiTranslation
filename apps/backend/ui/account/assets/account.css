@@ -39,6 +39,7 @@
   }
   .theme-form { display: none; }
   :root .only-light { display: none; }
+  .google-button, .google-button:hover { background: #131314; border-color: #8e918f; color: #e3e3e3; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -246,6 +247,23 @@ input {
 .button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .button.primary:hover { background: var(--accent-hover); }
 .auth > .button { width: 100%; margin-bottom: var(--s2); }
+
+/* Google 登录按钮：按 Google 品牌规范的浅色 / 深色两套（白底灰边、#131314 底），
+   官方四色 G 标志放左侧；悬停时叠一层 8% 的文字色。随页面明暗切换。 */
+.google-button {
+  gap: 12px; min-height: 44px;
+  background: light-dark(#ffffff, #131314);
+  border-color: light-dark(#747775, #8e918f);
+  color: light-dark(#1f1f1f, #e3e3e3);
+  font-weight: 500; letter-spacing: .01em;
+}
+.google-button:hover {
+  background: color-mix(in srgb, light-dark(#1f1f1f, #e3e3e3) 8%, light-dark(#ffffff, #131314));
+  color: light-dark(#1f1f1f, #e3e3e3);
+}
+.google-button:active { background: color-mix(in srgb, light-dark(#1f1f1f, #e3e3e3) 12%, light-dark(#ffffff, #131314)); }
+.google-logo { width: 18px; height: 18px; flex: none; }
+.google-button.compact { min-height: 38px; padding-block: .4rem; font-size: .92rem; }
 .link-button {
   font: inherit; color: var(--accent-ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline;
 }

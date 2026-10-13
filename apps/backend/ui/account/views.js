@@ -24,6 +24,9 @@ const NAV = [
 /** 官网当前语言下的地址，例如 https://huaci.app/en/#features。 */
 const site = (ui, page = '') => `${ui.links.website.replace(/\/?$/, '/')}${ui.locale.path ? `${ui.locale.path}/` : ''}${page}`;
 
+// Google 官方四色 “G” 标志（品牌规范要求原样使用，不改颜色或比例）。
+const googleLogo = html`<svg class="google-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>`;
+
 const globe = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg>`;
 const sun = html`<svg class="i-sun only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>`;
 const moon = html`<svg class="i-moon only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>`;
@@ -130,7 +133,7 @@ export function loginPage(ui, { googleEnabled, email = '', notice = null }) {
     <button class="button primary" type="submit">${t('发送验证码')}</button>
   </form>
   ${googleEnabled ? html`<div class="divider"><span>${t('或')}</span></div>
-  <a class="button" href="/auth/google">${t('使用 Google 登录')}</a>` : ''}
+  <a class="button google-button" href="/auth/google">${googleLogo}<span>${t('使用 Google 登录')}</span></a>` : ''}
   <p class="fine">${t('账户只保存邮箱和用户名，不保存姓名、头像等资料。')}</p>
 </section>`,
   });
@@ -297,7 +300,7 @@ export function accountPage(ui, { user, identities, googleEnabled, notice, usern
     ${googleEnabled || google ? html`<li><span>Google</span>${google
       ? html`<span class="muted">${t('已绑定 · {date}', { date: ui.date(google.created_at) })}</span>
         <form method="post" action="/account/google/unlink"><button class="link-button" type="submit">${t('解除绑定')}</button></form>`
-      : html`<form method="post" action="/auth/google/link"><button class="button" type="submit">${t('绑定 Google')}</button></form>`}</li>` : ''}
+      : html`<form method="post" action="/auth/google/link"><button class="button google-button compact" type="submit">${googleLogo}<span>${t('绑定 Google')}</span></button></form>`}</li>` : ''}
   </ul>
   <p class="fine">${t('绑定新的登录方式不会重复发放试用点数。Google 只用于验证身份，不保存姓名或头像。')}</p>
 </section>`,
