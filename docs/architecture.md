@@ -4,9 +4,9 @@
 
 | 应用 | 负责什么 | 发布什么 |
 | --- | --- | --- |
-| `apps/web` | 宣传、语言页面；后续前台账户与订阅页面 | Vercel 静态 HTML、CSS、JS 与资源 |
-| `apps/backend` | 身份、试用额度、托管翻译、支付订阅、后台管理界面与数据 | VPS 服务、管理界面与数据库迁移；目前尚未实现 |
-| `apps/extension` | Chrome 内的划词、区域、图片、文字面板与视频字幕交互 | Chrome 商店扩展 ZIP |
+| `apps/web` | 宣传、语言页面；后续登录入口和登录状态展示 | Vercel 静态 HTML、CSS、JS 与资源 |
+| `apps/backend` | 身份、试用额度、托管翻译、支付订阅、完整账户和管理页面与数据 | VPS 服务、页面与数据库迁移；目前尚未实现 |
+| `apps/extension` | Chrome 内翻译；优先实现登录、点数、订阅和托管模式入口 | Chrome 商店扩展 ZIP |
 
 扩展中的 `src/manage` 是现有“区域翻译规则管理”界面，属于扩展本身，不是收费后台管理系统。
 
@@ -26,6 +26,28 @@ flowchart LR
 ```
 
 此图描述后续收费功能的边界；当前可用的翻译链路仍是扩展直接调用用户选择的服务商。
+
+## 网页与扩展的统一账号（规划）
+
+扩展是收费功能的主要使用入口。它需要登录与退出、昵称/头像、试用及剩余点数、套餐及订阅状态、托管与自带 Key 模式选择、订阅升级及管理入口。余额与权益以 VPS API 为准；点数用尽后后端拒绝托管请求，自带 Key 模式继续按用户配置运行。
+
+建议的域名划分如下，尚未配置 DNS 或服务：
+
+| 域名 | 部署位置 | 用途 |
+| --- | --- | --- |
+| `huaci.app` | Vercel | 官网、登录入口、登录状态及简要权益展示 |
+| `app.huaci.app` | VPS | 注册、登录、用户中心、订阅与账单页面；管理页面单独验证管理权限 |
+| `api.huaci.app` | VPS | 两端共用的认证、用户、额度、翻译及支付 API |
+
+`app` 和 `api` 可以由同一台 VPS 和同一个 `apps/backend` 应用提供服务。
+
+网页使用 HTTPS 与后端 HttpOnly、Secure Cookie 会话；调用跨子域 API 时携带 credentials。Cookie 可只绑定 API 主机，官网通过用户状态接口读取公开账户信息，无需 JavaScript 读取登录 Cookie。跨子域仍是跨来源请求，需要服务端 CORS 来源白名单，修改状态的请求还需 CSRF 防护；网站 CSP 需允许具体 API 来源。
+
+扩展使用 `chrome.identity.launchWebAuthFlow` 发起用户主动登录，身份验证在 VPS 完成，经 Chrome 的扩展回调返回一次性授权码，再用 PKCE 校验交换短期会话令牌。会话支持刷新与撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，manifest 在接入时加入 `identity` 权限和 API 主机权限。
+
+网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。当前尚未实现以上账号功能。
+
+参考：[Chrome 登录 API](https://developer.chrome.com/docs/extensions/reference/api/identity)、[扩展跨域请求](https://developer.chrome.com/docs/extensions/develop/concepts/network-requests)、[网页携带会话凭据](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials)。
 
 ## 旧目录到新目录
 

@@ -4,9 +4,9 @@
 
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
-| 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面 |
-| 后端 | [apps/backend](apps/backend/README.md) | VPS | 已确定职责边界；注册、托管翻译、订阅与管理系统待实现 |
-| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有划词、区域、图片、翻译面板及实验性视频字幕；24 种语言，使用用户自己的 API Key |
+| 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面；登录入口及状态展示待实现 |
+| 后端 | [apps/backend](apps/backend/README.md) | VPS | 注册、托管翻译、订阅、完整账户页面与管理系统待实现 |
+| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有 24 语言翻译；优先实现登录、点数与订阅入口，保留自带 Key |
 
 ## 目录
 
