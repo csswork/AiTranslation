@@ -1,10 +1,10 @@
 /**
  * 宣传站的语言选择逻辑（public/lang.js）：
- *   - localStorage 里选过 → 一切以选择为准
+ *   - 选过（lang Cookie，与用户端共用）→ 一切以选择为准；旧的 localStorage 选择迁移一次
  *   - 没选过 → 按 navigator.languages 判断，认不出就落到 fallback
  *   - 爬虫 / 无头浏览器不跳转（否则 Googlebot 会把中文原文跳没）
  *   - 切换器列出所有启用语言 + 「自动」，选择后记住并跳转
- * lang.js 是生成产物，这里用打桩的 document/navigator/localStorage/location 直接跑它。
+ * lang.js 是生成产物，这里用打桩的 document（含 cookie）/navigator/localStorage/location 直接跑它。
  */
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
@@ -21,8 +21,9 @@ const pathOf = (code) => {
 };
 const FALLBACK = pathOf(CONFIG.fallback);
 
-function boot({ pathname = '/', langs = ['en-US'], stored = null, attrs = {}, crawler = false, webdriver = false } = {}) {
-  const state = { replaced: [], store: stored, href: '' };
+function boot({ pathname = '/', langs = ['en-US'], stored = null, legacy = null, attrs = {}, crawler = false, webdriver = false, hostname = 'localhost', protocol = 'http:' } = {}) {
+  // stored = lang Cookie 的值；legacy = 旧版存在 localStorage 里的值；writes 记录每次写 Cookie 的原文
+  const state = { replaced: [], store: stored, legacy, writes: [], href: '' };
   const makeEl = (tag) => {
     const el = { tagName: tag, children: [], attrs: {}, value: '', textContent: '', selected: false, listeners: {} };
     el.appendChild = (c) => el.children.push(c);
@@ -37,6 +38,13 @@ function boot({ pathname = '/', langs = ['en-US'], stored = null, attrs = {}, cr
     querySelector: (sel) => (sel === '[data-lang-switcher]' ? box : null),
     createElement: makeEl,
     addEventListener: () => {},
+    get cookie() { return state.store ? 'other=1; lang=' + encodeURIComponent(state.store) : 'other=1'; },
+    set cookie(raw) {
+      state.writes.push(raw);
+      const m = raw.match(/^lang=([^;]*)/);
+      if (!m) return;
+      state.store = /Max-Age=0/.test(raw) || !m[1] ? null : decodeURIComponent(m[1]);
+    },
   };
   const navigator = {
     languages: langs,
@@ -45,12 +53,12 @@ function boot({ pathname = '/', langs = ['en-US'], stored = null, attrs = {}, cr
     webdriver: webdriver,
   };
   const localStorage = {
-    getItem: () => state.store,
-    setItem: (k, v) => { state.store = v; },
-    removeItem: () => { state.store = null; },
+    getItem: () => state.legacy,
+    setItem: (k, v) => { state.legacy = v; },
+    removeItem: () => { state.legacy = null; },
   };
   const location = {
-    pathname, search: '', hash: '', href: '',
+    pathname, search: '', hash: '', href: '', hostname, protocol,
     replace: (u) => state.replaced.push(u),
   };
   new Function('document', 'navigator', 'localStorage', 'location', CODE)(document, navigator, localStorage, location);
@@ -111,7 +119,7 @@ const target = (t) => (t.state.replaced[0] || null);
   assert.equal(t.select.children.find((o) => o.value === 'auto').selected, true, '没选过时显示「自动」');
   assert.ok(t.select.attrs['aria-label'], '下拉要有 aria-label');
 
-  // 手动选英文：写进 localStorage 并跳转
+  // 手动选英文：写进 lang Cookie 并跳转
   const t2 = boot({ pathname: '/changelog.html', langs: ['zh-CN'] });
   t2.select.value = 'en';
   t2.select.listeners.change();
@@ -125,6 +133,28 @@ const target = (t) => (t.state.replaced[0] || null);
   assert.equal(t3.state.store, null, '「自动」应清掉记录');
   assert.equal(t3.location.href, '/', '回到浏览器语言对应的页面');
   console.log('✓ 切换器：列全语言、记住选择、支持回到「自动」');
+}
+
+/* ---- 6. 与用户端共用的 lang Cookie ---- */
+{
+  // 旧版 localStorage 里的选择迁移到 Cookie，并清掉旧记录
+  const t = boot({ pathname: '/', langs: ['zh-CN'], legacy: 'en' });
+  assert.equal(target(t), '/en/', '迁移后的选择照样生效');
+  assert.equal(t.state.store, 'en', '旧选择写进 Cookie');
+  assert.equal(t.state.legacy, null, '旧记录清掉');
+  // Cookie 已有选择时，以 Cookie 为准（例如刚在用户端切换过语言）
+  const t2 = boot({ pathname: '/', langs: ['zh-CN'], stored: 'ja', legacy: 'en' });
+  assert.equal(target(t2), '/ja/', 'Cookie 优先于旧记录');
+  // huaci.app 上写到父域，两个站点共用；其他主机只写本主机
+  const prod = boot({ pathname: '/', langs: ['zh-CN'], hostname: 'huaci.app', protocol: 'https:' });
+  prod.select.value = 'de';
+  prod.select.listeners.change();
+  assert.match(prod.state.writes.at(-1), /^lang=de; Max-Age=31536000; Path=\/; SameSite=Lax; Domain=huaci\.app; Secure$/);
+  const local = boot({ pathname: '/', langs: ['zh-CN'] });
+  local.select.value = 'de';
+  local.select.listeners.change();
+  assert.doesNotMatch(local.state.writes.at(-1), /Domain=|Secure/);
+  console.log('✓ lang Cookie：迁移旧选择、优先于旧记录、在 huaci.app 上共用父域');
 }
 
 console.log('\n全部通过');

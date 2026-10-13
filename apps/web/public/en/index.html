@@ -39,7 +39,7 @@
 <script src="/lang.js"></script>
 <!-- 首次绘制前读回手动选的配色，避免先闪一下另一套。
      改这段脚本（哪怕一个空格）都要同步 vercel.json 里 CSP 的 sha256，test/csp.mjs 会检查 -->
-<script>(function(d){d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}})(document.documentElement);</script>
+<script>(function(d){d.classList.add('js');try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)(?:;|$)/),t=m?m[1]:localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}})(document.documentElement);</script>
 </head>
 <body>
 
@@ -65,7 +65,7 @@
         <svg class="i-moon only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
       </button>
       <!-- 账户入口：main.js 读取用户端登录状态后显示「登录」或用户名；读不到状态时保持隐藏 -->
-      <a class="account-link" href="https://app.huaci.app/login" data-account hidden>Log in</a>
+      <a class="account-link is-login" href="https://app.huaci.app/login" data-account hidden>Log in</a>
     </nav>
   </div>
 </header>

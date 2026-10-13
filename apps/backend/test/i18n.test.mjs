@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { checkCatalogs } from '../scripts/i18n.mjs';
 import { createI18n, negotiateLocale } from '../src/i18n/index.js';
-import { browser, buildApp, createTestPool, resetData, signInWithEmail } from './helpers.mjs';
+import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
 let pool;
 before(async () => { pool = await createTestPool(); });
@@ -101,13 +101,28 @@ test('配色偏好：服务端输出 data-theme，Cookie 可被页面脚本改�
   assert.doesNotMatch(await b.text('/login'), /data-theme=/);
 });
 
-test('从官网带 ?lang= 进入时沿用官网语言并记住', async () => {
+test('语言与配色偏好写在与官网共用的 Cookie 里：脚本可读，配置父域时写到父域', async () => {
+  const { app, config } = buildApp({ pool });
+  let res = await browser(app, config).post('/preferences/lang', { lang: 'de', next: '/' });
+  let cookie = res.headers.getSetCookie().find((c) => c.startsWith('lang='));
+  assert.doesNotMatch(cookie, /HttpOnly|Domain=/i);
+
+  const shared = buildApp({ pool, config: testConfig({ APP_ORIGIN: 'https://app.huaci.app', WEB_ORIGINS: 'https://huaci.app', SHARED_COOKIE_DOMAIN: 'huaci.app' }) });
+  const b = browser(shared.app, shared.config);
+  res = await b.request('/preferences/theme', { method: 'POST', form: { theme: 'dark', next: '/' }, headers: { origin: 'https://app.huaci.app' } });
+  cookie = res.headers.getSetCookie().find((c) => c.startsWith('theme='));
+  assert.match(cookie, /Domain=huaci\.app/);
+  assert.match(cookie, /Secure/);
+  assert.doesNotMatch(cookie, /HttpOnly/i);
+  assert.match(await b.text('/login'), /data-cookie-domain="huaci\.app"/);
+  // 会话 Cookie 不受影响，仍只属于用户端主机
+  const session = (await b.request('/login', { headers: { origin: 'https://app.huaci.app' } })).headers.getSetCookie().join('\n');
+  assert.doesNotMatch(session, /__Host-huaci_session=[^\n]*Domain=/);
+});
+
+test('官网选择的语言（共用 lang Cookie）在用户端生效', async () => {
   const { app, config } = buildApp({ pool });
   const b = browser(app, config);
-  const page = await (await b.get('/login?lang=ko')).text();
-  assert.match(page, /<html lang="ko"/);
-  assert.equal(b.jar.get('lang'), 'ko');
+  b.jar.set('lang', 'ko');
   assert.match(await b.text('/login'), /<html lang="ko"/);
-  await b.get('/login?lang=xx');
-  assert.equal(b.jar.get('lang'), 'ko', '无效语言被忽略');
 });

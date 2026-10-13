@@ -48,12 +48,24 @@
     fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
       .then((state) => {
-        // 用户端沿用官网当前语言（两边语言代码相同）。
-        const target = new URL(state.signedIn ? state.accountUrl : state.loginUrl);
-        target.searchParams.set('lang', document.documentElement.lang);
-        if (state.signedIn) accountLink.textContent = state.username;
-        else target.searchParams.set('return', location.href);
-        accountLink.href = target.href;
+        if (state.signedIn) {
+          // 首字母圆标 + 用户名（与用户端页头相同的结构）；用 textContent，不拼接 HTML
+          const avatar = document.createElement('span');
+          avatar.className = 'account-avatar';
+          avatar.setAttribute('aria-hidden', 'true');
+          avatar.textContent = (state.username[0] || '?').toUpperCase();
+          const name = document.createElement('span');
+          name.className = 'account-name';
+          name.textContent = state.username;
+          accountLink.replaceChildren(avatar, name);
+          accountLink.classList.replace('is-login', 'is-user');
+          accountLink.title = state.username;
+          accountLink.href = state.accountUrl;
+        } else {
+          const login = new URL(state.loginUrl);
+          login.searchParams.set('return', location.href);
+          accountLink.href = login.href;
+        }
         accountLink.hidden = false;
       })
       .catch(() => {
@@ -65,8 +77,8 @@
 
   /*
    * 默认跟随系统，纯 CSS 完成（color-scheme: light dark + light-dark()）。
-   * 手动切换后把选择写进 localStorage，<head> 里的内联脚本在首次绘制前读回来，
-   * 所以刷新、换页都不会先闪一下另一套配色。
+   * 手动切换后把选择写进 theme Cookie，<head> 里的内联脚本在首次绘制前读回来，
+   * 所以刷新、换页都不会先闪一下另一套配色。偏好存在与用户端共用的 theme Cookie 里。
    * 切到和系统一致的那一套时清掉记录：等于回到「跟随系统」，以后系统怎么变就怎么变。
    */
   const root = document.documentElement;
@@ -81,6 +93,23 @@
     meta.dataset.auto = meta.content;
     metaColor[meta.media.includes('light') ? 'light' : 'dark'] = meta.content;
   });
+
+  // 配色偏好与用户端（app.huaci.app）共用 theme Cookie：在 huaci.app 上写到父域，两个站点看到同一份；
+  // 其他主机（本地、预览部署）只写本主机。以前存在 localStorage 的选择迁移过来一次。
+  const cookieDomain = /(^|\.)huaci\.app$/.test(location.hostname) ? '; Domain=huaci.app' : '';
+  const cookieAttrs = `; Path=/; SameSite=Lax${cookieDomain}${location.protocol === 'https:' ? '; Secure' : ''}`;
+  const writeThemeCookie = (theme) => {
+    document.cookie = theme ? `theme=${theme}; Max-Age=31536000${cookieAttrs}` : `theme=; Max-Age=0${cookieAttrs}`;
+  };
+  try {
+    const legacy = localStorage.getItem('theme');
+    if (legacy) {
+      if (!/(?:^|; )theme=/.test(document.cookie) && (legacy === 'light' || legacy === 'dark')) writeThemeCookie(legacy);
+      localStorage.removeItem('theme');
+    }
+  } catch {
+    /* 存储不可用：只用 Cookie */
+  }
 
   const systemTheme = () => (systemDark && systemDark.matches ? 'dark' : 'light');
   const currentTheme = () => root.dataset.theme || systemTheme();
@@ -100,12 +129,7 @@
   const setTheme = (theme) => {
     if (theme === systemTheme()) delete root.dataset.theme;
     else root.dataset.theme = theme;
-    try {
-      if (root.dataset.theme) localStorage.setItem('theme', theme);
-      else localStorage.removeItem('theme');
-    } catch {
-      /* 隐私模式等存不了：这一页里照样生效，只是不记住 */
-    }
+    writeThemeCookie(root.dataset.theme || null);
     syncThemeUi();
   };
 

@@ -28,6 +28,9 @@ const globe = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const sun = html`<svg class="i-sun only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>`;
 const moon = html`<svg class="i-moon only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>`;
 
+/** 账户入口里的圆形首字母：用户名第一个字符（不使用头像）；官网 main.js 用同样的规则。 */
+const initial = (username) => (username[0] || '?').toUpperCase();
+
 function header(ui, user) {
   const { t } = ui;
   // 没有脚本时，配色按钮提交到服务端：已手动选择则切到另一套，否则切到深色。
@@ -47,15 +50,15 @@ function header(ui, user) {
         <select name="lang" aria-label="${ui.locale.switchLabel}">${ui.locales.map((l) => html`<option value="${l.code}"${l.code === ui.locale.code ? html` selected` : ''} lang="${l.htmlLang}">${l.label}</option>`)}</select>
         <button class="lang-go" type="submit" data-lang-submit>${t('切换')}</button>
       </form>
-      <form class="theme-form" method="post" action="/preferences/theme" data-theme-form>
+      <form class="theme-form" method="post" action="/preferences/theme" data-theme-form data-cookie-domain="${ui.cookieDomain || ''}">
         <input type="hidden" name="theme" value="${nextTheme}">
         <input type="hidden" name="next" value="${ui.path}">
         <button class="theme-toggle" type="submit" aria-label="${t('切换配色')}" title="${t('切换配色')}"
           data-to-light="${t('切换到浅色')}" data-to-dark="${t('切换到深色')}">${sun}${moon}</button>
       </form>
       ${user
-        ? html`<a class="account-link" href="/" title="${t('账户总览')}">${user.username}</a>`
-        : html`<a class="account-link" href="/login">${t('登录')}</a>`}
+        ? html`<a class="account-link is-user" href="/" title="${t('账户总览')}"><span class="account-avatar" aria-hidden="true">${initial(user.username)}</span><span class="account-name">${user.username}</span></a>`
+        : html`<a class="account-link is-login" href="/login">${t('登录')}</a>`}
     </nav>
   </div>
 </header>`;

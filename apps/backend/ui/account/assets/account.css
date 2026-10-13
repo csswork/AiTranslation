@@ -15,6 +15,7 @@
   --text-3:      light-dark(#666b82, #626c80);
   --accent:       light-dark(#5b5eea, #6d70f5);
   --accent-hover: light-dark(#4d50de, #7b7ef7);
+  --accent-2:     light-dark(#9747ec, #a855f7);
   --accent-ink:   light-dark(#4649cf, #c7c9ff);
   --ok:           light-dark(#1d7a46, #6fd69b);
   --ok-bg:        light-dark(#e8f6ee, #11261a);
@@ -32,7 +33,7 @@
     --bg: #0a0c11; --surface: #0e1117; --surface-2: #141821;
     --line: #232936; --line-strong: #2e3547; --btn-line: #2e3547;
     --text: #e8eaf0; --text-2: #9aa3b5; --text-3: #626c80;
-    --accent: #6d70f5; --accent-hover: #7b7ef7; --accent-ink: #c7c9ff;
+    --accent: #6d70f5; --accent-hover: #7b7ef7; --accent-2: #a855f7; --accent-ink: #c7c9ff;
     --ok: #6fd69b; --ok-bg: #11261a; --error: #ff8a80; --error-bg: #2a1414;
     color-scheme: dark;
   }
@@ -74,10 +75,6 @@ p { margin: 0 0 var(--s2); }
 .nav-links a:hover { color: var(--text); }
 .brand, .nav-links a { white-space: nowrap; }
 .nav-links form { margin: 0; }
-.nav-links .account-link {
-  color: var(--text); font-weight: 600;
-  max-width: 12em; overflow: hidden; text-overflow: ellipsis;
-}
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
 @media (max-width: 480px) {
   .nav-in { gap: .75rem; }
@@ -112,6 +109,39 @@ p { margin: 0 0 var(--s2); }
 .lang select option { color: var(--text); background: var(--surface); }
 .lang-go { font: inherit; font-size: .78rem; border: 0; background: none; color: var(--accent-ink); cursor: pointer; padding: 0 2px; }
 @media (max-width: 640px) { .lang select { max-width: 5em; } }
+
+/* 账户入口：官网（apps/web/public/styles.css）与用户端（apps/backend/ui/account/assets/account.css）相同。
+   未登录是实心的「登录」按钮；已登录是首字母圆标 + 用户名的胶囊，首字母由用户名生成，不是头像。 */
+.nav-links .account-link {
+  display: inline-flex; align-items: center; gap: .5rem;
+  height: 34px; max-width: 14em;
+  border-radius: 9px; font-size: .88rem; text-decoration: none;
+  transition: color .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.nav-links .account-link.is-login {
+  padding-inline: 14px;
+  background: var(--accent); color: #fff; font-weight: 600;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .12) inset, 0 4px 14px -6px var(--accent);
+}
+.nav-links .account-link.is-login:hover { background: var(--accent-hover); color: #fff; }
+.nav-links .account-link.is-user {
+  padding-inline: 4px 11px;
+  border: 1px solid var(--line); color: var(--text-2);
+}
+.nav-links .account-link.is-user:hover { color: var(--text); background: var(--surface-2); border-color: var(--line-strong); }
+.account-avatar {
+  flex: none; display: inline-grid; place-items: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff; font-size: .74rem; font-weight: 700; line-height: 1;
+}
+.account-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+@media (max-width: 620px) {
+  /* 窄屏只留首字母圆标，用户名交给 title 与读屏 */
+  .nav-links .account-link.is-user { padding-inline: 4px; }
+  .account-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .nav-links .account-link.is-login { padding-inline: 11px; }
+}
 
 /* 图标表示「点了会变成什么」：深色时是太阳（.only-dark），浅色时是月亮（.only-light） */
 :root[data-theme="dark"] .only-light,

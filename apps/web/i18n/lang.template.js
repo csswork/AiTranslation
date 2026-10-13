@@ -5,8 +5,10 @@
  * 别直接改 public/lang.js —— 下次 build 会被覆盖。
  *
  * 两件事：
- *   1. 在 <head> 里同步加载、尽早跳转：localStorage 里选过就听用户的，没选过按浏览器语言猜；
+ *   1. 在 <head> 里同步加载、尽早跳转：选过就听用户的，没选过按浏览器语言猜；
  *      「自动」= 清掉记录，回到跟随浏览器。
+ *      选择存在 lang Cookie 里，与用户端（app.huaci.app）共用：在 huaci.app 上写到父域，
+ *      两个站点任一处切换语言，另一处下次打开就跟着变。以前存在 localStorage 的选择迁移过来一次。
  *   2. 渲染导航里的 [data-lang-switcher]。
  *
  * 搜索引擎与无头浏览器不做跳转：Googlebot 的 Accept-Language 是 en-US，跟着跳会让中文原文
@@ -20,8 +22,24 @@
   var html = document.documentElement;
   var CRAWLER = /bot|crawler|spider|slurp|bingpreview|headlesschrome|lighthouse|google-inspectiontool/i.test(navigator.userAgent || '');
 
-  function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function write(v) { try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch (e) { /* 隐私模式：这一页照样切，只是不记住 */ } }
+  var COOKIE_ATTRS = '; Path=/; SameSite=Lax'
+    + (/(^|\.)huaci\.app$/.test(location.hostname) ? '; Domain=huaci.app' : '')
+    + (location.protocol === 'https:' ? '; Secure' : '');
+  function readCookie() { var m = document.cookie.match(/(?:^|; )lang=([^;]*)/); return m ? decodeURIComponent(m[1]) : null; }
+  function write(v) {
+    document.cookie = v ? KEY + '=' + encodeURIComponent(v) + '; Max-Age=31536000' + COOKIE_ATTRS : KEY + '=; Max-Age=0' + COOKIE_ATTRS;
+  }
+  function read() {
+    var v = readCookie();
+    try {
+      var legacy = localStorage.getItem(KEY);
+      if (legacy) {
+        if (!v && legacy !== 'auto') { write(legacy); v = legacy; }
+        localStorage.removeItem(KEY);
+      }
+    } catch (e) { /* 存储不可用：只用 Cookie */ }
+    return v;
+  }
   function byCode(code) { for (var i = 0; i < DATA.locales.length; i++) if (DATA.locales[i].code === code) return DATA.locales[i]; return DATA.locales[0]; }
   function prefixOf(loc) { return loc.path ? '/' + loc.path + '/' : '/'; }
 

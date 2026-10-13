@@ -103,12 +103,6 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
 
   app.use('*', async (c, next) => {
     c.set('auth', await validateSession(pool, config, getSessionToken(c, config)));
-    // 从官网跳转过来时带 ?lang=，沿用官网当前语言并记住。
-    const lang = c.req.method === 'GET' ? c.req.query('lang') : null;
-    if (isLocale(lang)) {
-      setPreference(c, config, 'lang', lang);
-      c.set('lang', lang);
-    }
     await next();
   });
 
@@ -128,8 +122,8 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
 
   app.post('/preferences/theme', async (c) => {
     const body = await c.req.parseBody();
-    if (THEMES.includes(body.theme)) setPreference(c, config, 'theme', body.theme, { httpOnly: false });
-    else clearPreference(c, config, 'theme', { httpOnly: false });
+    if (THEMES.includes(body.theme)) setPreference(c, config, 'theme', body.theme);
+    else clearPreference(c, config, 'theme');
     return c.redirect(safePath(body.next), 303);
   });
 

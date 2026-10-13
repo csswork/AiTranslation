@@ -30,3 +30,10 @@ test('生产环境要求 HTTPS、密钥、正式发信和明确的试用点数',
     return true;
   });
 });
+
+test('SHARED_COOKIE_DOMAIN 必须覆盖用户端与官网的主机名', () => {
+  const config = readConfig({ ...base, APP_ORIGIN: 'https://app.huaci.app', WEB_ORIGINS: 'https://huaci.app', SHARED_COOKIE_DOMAIN: '.huaci.app' });
+  assert.equal(config.sharedCookieDomain, 'huaci.app');
+  assert.throws(() => readConfig({ ...base, APP_ORIGIN: 'https://app.huaci.app', WEB_ORIGINS: 'https://other.example', SHARED_COOKIE_DOMAIN: 'huaci.app' }), /SHARED_COOKIE_DOMAIN/);
+  assert.throws(() => readConfig({ ...base, WEB_ORIGINS: 'huaci.app' }), /WEB_ORIGINS/);
+});

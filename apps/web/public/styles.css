@@ -128,11 +128,6 @@ main, .nav, .foot { position: relative; z-index: 1; }
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
 /* 导航里塞进了配色切换按钮，窄屏上会挤：任何一项都不许折行，间距收紧 */
 .brand, .nav-links a { white-space: nowrap; }
-/* 账户入口（main.js 读到用户端登录状态后才显示）：与用户端页头的 .account-link 相同 */
-.nav-links .account-link {
-  color: var(--text); font-weight: 600;
-  max-width: 12em; overflow: hidden; text-overflow: ellipsis;
-}
 @media (max-width: 480px) {
   .nav-in { gap: .75rem; }
   .nav-links { gap: .9rem; }
@@ -607,6 +602,41 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* 顶部那句「最后更新」 */
 .policy .updated { margin-top: var(--s2); color: var(--text-3); font-size: .9rem; }
+
+/* ------------------------------------------------------------- 账户入口 */
+
+/* 账户入口：官网（apps/web/public/styles.css）与用户端（apps/backend/ui/account/assets/account.css）相同。
+   未登录是实心的「登录」按钮；已登录是首字母圆标 + 用户名的胶囊，首字母由用户名生成，不是头像。 */
+.nav-links .account-link {
+  display: inline-flex; align-items: center; gap: .5rem;
+  height: 34px; max-width: 14em;
+  border-radius: 9px; font-size: .88rem; text-decoration: none;
+  transition: color .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.nav-links .account-link.is-login {
+  padding-inline: 14px;
+  background: var(--accent); color: #fff; font-weight: 600;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .12) inset, 0 4px 14px -6px var(--accent);
+}
+.nav-links .account-link.is-login:hover { background: var(--accent-hover); color: #fff; }
+.nav-links .account-link.is-user {
+  padding-inline: 4px 11px;
+  border: 1px solid var(--line); color: var(--text-2);
+}
+.nav-links .account-link.is-user:hover { color: var(--text); background: var(--surface-2); border-color: var(--line-strong); }
+.account-avatar {
+  flex: none; display: inline-grid; place-items: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff; font-size: .74rem; font-weight: 700; line-height: 1;
+}
+.account-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+@media (max-width: 620px) {
+  /* 窄屏只留首字母圆标，用户名交给 title 与读屏 */
+  .nav-links .account-link.is-user { padding-inline: 4px; }
+  .account-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .nav-links .account-link.is-login { padding-inline: 11px; }
+}
 
 /* ------------------------------------------------------------- 配色切换 */
 

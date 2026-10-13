@@ -61,13 +61,14 @@ test('页头与页脚的链接与官网首页一致', async () => {
   const section = (html, open, close) => html.slice(html.indexOf(open), html.indexOf(close, html.indexOf(open)));
   // 账户入口（class="account-link"）两边都有但地址不同，单独测试，这里不比较。
   const hrefs = (html) => [...html.matchAll(/<a ([^>]*)>/g)]
-    .filter((m) => !/class="account-link"/.test(m[1]))
+    .filter((m) => !/class="account-link[ "]/.test(m[1]))
     .map((m) => m[1].match(/href="([^"]+)"/)[1]);
   const absolute = (href) => (/^https?:/.test(href) ? href : `https://huaci.app/${href}`);
 
   const webNav = hrefs(section(web, '<nav class="nav-links">', '</nav>')).map(absolute);
   const ourNav = hrefs(section(page, '<nav class="nav-links">', '</nav>'));
-  assert.match(web, /<a class="account-link" href="[^"]+" data-account hidden>/, '官网页头有账户入口');
+  assert.match(web, /<a class="account-link is-login" href="[^"]+" data-account hidden>/, '官网页头有账户入口（未登录样式）');
+  assert.match(page, /<a class="account-link is-login" href="\/login">/, '用户端未登录时同样是登录按钮');
   assert.deepEqual(ourNav, webNav);
 
   const webFoot = hrefs(section(web, '<nav class="foot-links">', '</nav>')).map(absolute);

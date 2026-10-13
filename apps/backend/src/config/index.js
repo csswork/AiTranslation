@@ -51,6 +51,14 @@ export function readConfig(env = process.env) {
     else if (production && !origin.startsWith('https://')) problems.push(`生产环境 WEB_ORIGINS 必须使用 HTTPS：${origin}`);
   }
 
+  // 与官网共用 lang / theme 偏好 Cookie 的父域（如 huaci.app）；必须同时包含用户端与官网的主机名。
+  const sharedCookieDomain = (env.SHARED_COOKIE_DOMAIN || '').replace(/^\./, '').toLowerCase();
+  if (sharedCookieDomain) {
+    const covers = (host) => host === sharedCookieDomain || host.endsWith(`.${sharedCookieDomain}`);
+    const hosts = [appOrigin, ...webOrigins].map((o) => { try { return new URL(o).hostname; } catch { return ''; } });
+    if (!hosts.every(covers)) problems.push(`SHARED_COOKIE_DOMAIN（${sharedCookieDomain}）必须覆盖 APP_ORIGIN 与 WEB_ORIGINS 的主机名`);
+  }
+
   const mailTransport = env.MAIL_TRANSPORT || 'console';
   if (mailTransport !== 'console') problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
 
@@ -71,6 +79,7 @@ export function readConfig(env = process.env) {
     trustProxy: env.TRUST_PROXY === '1',
     appOrigin,
     webOrigins,
+    sharedCookieDomain,
     secureCookies: appOrigin.startsWith('https://'),
     databaseUrl,
     authSecret,
