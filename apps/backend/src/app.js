@@ -12,7 +12,7 @@ import { uiContext } from '../ui/account/context.js';
 import { accountRoutes } from '../ui/account/routes.js';
 import { errorPage } from '../ui/account/views.js';
 
-export function createApp({ config, pool, mailer, google = null, log = console }) {
+export function createApp({ config, pool, mailer, google = null, googleIdToken = null, log = console }) {
   const app = new Hono();
 
   app.use('*', securityHeaders(config));
@@ -31,7 +31,7 @@ export function createApp({ config, pool, mailer, google = null, log = console }
   app.use('*', bodyLimit({ maxSize: 16 * 1024, onError: (c) => c.text('请求内容过大', 413) }));
 
   app.route('/api/web', webApi({ config, pool }));
-  app.route('/', accountRoutes({ config, pool, mailer, google, log }));
+  app.route('/', accountRoutes({ config, pool, mailer, google, googleIdToken, log }));
 
   app.notFound((c) => c.html(errorPage(uiContext(c, config), { status: 404, user: c.get('auth')?.user }), 404));
   app.onError((err, c) => {

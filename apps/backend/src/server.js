@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import * as undici from 'undici';
 import { createApp } from './app.js';
 import { createGoogleClient } from './auth/google.js';
+import { googleJwks, verifyGoogleIdToken } from './auth/google-id-token.js';
 import { loadLocalEnv, readConfig } from './config/index.js';
 import { createPool } from './db/index.js';
 import { pendingMigrations } from './db/migrate.js';
@@ -37,7 +38,11 @@ if (pending.length) {
   process.exit(1);
 }
 
-const app = createApp({ config, pool, mailer: createMailer(config), google: createGoogleClient(config) });
+const getKey = config.google ? googleJwks() : null;
+const googleIdToken = config.google
+  ? (token, nonce) => verifyGoogleIdToken(token, { clientId: config.google.clientId, nonce, getKey })
+  : null;
+const app = createApp({ config, pool, mailer: createMailer(config), google: createGoogleClient(config), googleIdToken });
 // 启用代理时不让 @hono/node-server 替换全局 Request，否则又会与 undici 的 fetch 混用。
 const server = serve({ fetch: app.fetch, hostname: config.host, port: config.port, overrideGlobalObjects: !proxy }, (info) => {
   console.log(`用户管理界面：${config.appOrigin}（监听 ${info.address}:${info.port}）`);

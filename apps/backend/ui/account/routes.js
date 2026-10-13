@@ -2,6 +2,7 @@
  * 用户管理界面（用户端，规划 app.huaci.app）的路由：U1–U8，以及界面语言与配色偏好。
  * 每个页面只读写当前登录用户自己的数据；权限在这里由服务端判断。
  */
+import { randomBytes } from 'node:crypto';
 import { Hono } from 'hono';
 import { finishGoogleAuth, startGoogleAuth } from '../../src/auth/google.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
@@ -67,7 +68,7 @@ export function safeReturnUrl(value, config) {
   }
 }
 
-export function accountRoutes({ config, pool, mailer, google, log = console }) {
+export function accountRoutes({ config, pool, mailer, google, googleIdToken = null, log = console }) {
   const app = new Hono();
   // 每个来源地址每小时最多请求 20 次验证码（另有按邮箱的限制，见 email-codes）。
   const sendLimiter = createRateLimiter({ limit: 20, windowMs: 60 * 60 * 1000 });
@@ -129,11 +130,20 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
 
   /* ---------- U1 邮箱验证码登录 ---------- */
 
+  /** 登录页的 One Tap：每次显示生成一次性 nonce，ID token 里必须带回同一个值。 */
+  const oneTapFor = (c) => {
+    if (!google || !googleIdToken) return null;
+    const nonce = randomBytes(24).toString('base64url');
+    setTemp(c, config, 'onetap_nonce', nonce);
+    c.set('oneTap', true);
+    return { clientId: config.google.clientId, nonce };
+  };
+
   app.get('/login', (c) => {
     const returnTo = safeReturnUrl(c.req.query('return'), config);
     if (c.get('auth')) return c.redirect(returnTo || '/', 303);
     if (returnTo) setTemp(c, config, 'return_to', returnTo, 30 * 60);
-    return render(c, views.loginPage, { googleEnabled: Boolean(google), notice: takeFlash(c) });
+    return render(c, views.loginPage, { googleEnabled: Boolean(google), oneTap: oneTapFor(c), notice: takeFlash(c) });
   });
 
   app.post('/login/email', async (c) => {
@@ -177,6 +187,25 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
   });
 
   /* ---------- U1 / U6 Google 登录与绑定 ---------- */
+
+  /** 授权码流程与 One Tap 共用：按 Google 用户标识找账号，否则按已验证邮箱绑定或新建。 */
+  const googleSignIn = async (c, claims) => {
+    let userId = (await findIdentity(pool, 'google', claims.subject))?.user_id;
+    if (!userId) {
+      if (!claims.emailVerified || !isValidEmail(claims.email)) return back(c, 'google_unverified', '/login');
+      const existing = await findUserByEmail(pool, claims.email);
+      if (existing) {
+        // Google 已验证该邮箱，视为同一人，绑定到已有账户；不会重复发放试用点数。
+        const result = await linkIdentity(pool, existing.id, 'google', claims.subject);
+        if (result !== 'ok') return back(c, 'google_conflict', '/login');
+        userId = existing.id;
+      } else {
+        const created = await findOrCreateUserByEmail(pool, config, claims.email, { provider: 'google', subject: claims.subject });
+        userId = created.user.id;
+      }
+    }
+    return signIn(c, userId);
+  };
 
   const startGoogle = (c, intent) => {
     const { state, codeVerifier, url } = startGoogleAuth(google);
@@ -225,21 +254,25 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
       return back(c, { ok: 'google_linked', taken: 'google_taken', already: 'google_already' }[result], '/account');
     }
 
-    let userId = (await findIdentity(pool, 'google', claims.subject))?.user_id;
-    if (!userId) {
-      if (!claims.emailVerified || !isValidEmail(claims.email)) return back(c, 'google_unverified', '/login');
-      const existing = await findUserByEmail(pool, claims.email);
-      if (existing) {
-        // Google 已验证该邮箱，视为同一人，绑定到已有账户；不会重复发放试用点数。
-        const result = await linkIdentity(pool, existing.id, 'google', claims.subject);
-        if (result !== 'ok') return back(c, 'google_conflict', '/login');
-        userId = existing.id;
-      } else {
-        const created = await findOrCreateUserByEmail(pool, config, claims.email, { provider: 'google', subject: claims.subject });
-        userId = created.user.id;
-      }
+    return googleSignIn(c, claims);
+  });
+
+  /* ---------- U1 Google One Tap：页面直接收到 Google 签名的 ID token ---------- */
+
+  app.post('/auth/google/one-tap', async (c) => {
+    if (!google || !googleIdToken) return c.notFound();
+    const body = await c.req.parseBody();
+    const nonce = getTemp(c, 'onetap_nonce');
+    clearTemp(c, config, 'onetap_nonce');
+    let claims;
+    try {
+      claims = await googleIdToken(body.credential, nonce);
+    } catch (err) {
+      log.warn(`Google One Tap 令牌校验失败：${err.message}`);
+      return back(c, 'google_failed', '/login');
     }
-    return signIn(c, userId);
+    if (!claims.subject) return back(c, 'google_failed', '/login');
+    return googleSignIn(c, claims);
   });
 
   app.post('/logout', async (c) => {

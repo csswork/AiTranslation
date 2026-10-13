@@ -89,7 +89,7 @@ const noticeBlock = (ui, notice) => (notice
   ? html`<p class="notice notice-${notice.kind}" role="${notice.kind === 'error' ? 'alert' : 'status'}">${ui.t(notice.key, notice.params)}</p>`
   : '');
 
-export function layout(ui, { title, user = null, active = '', notice = null, body }) {
+export function layout(ui, { title, user = null, active = '', notice = null, body, head = '' }) {
   const { t } = ui;
   return html`<!doctype html>
 <html lang="${ui.locale.htmlLang}" dir="${ui.locale.dir}"${ui.theme ? html` data-theme="${ui.theme}"` : ''}>
@@ -101,6 +101,7 @@ export function layout(ui, { title, user = null, active = '', notice = null, bod
 <link rel="icon" href="${assetUrl('icon.png')}">
 <link rel="stylesheet" href="${assetUrl('account.css')}">
 <script src="${assetUrl('account.js')}" defer></script>
+${head}
 </head>
 <body class="${user ? 'signed-in' : 'signed-out'}">
 ${header(ui, user)}
@@ -119,11 +120,23 @@ ${footer(ui)}
 
 /* ---------- U1 注册与登录 ---------- */
 
-export function loginPage(ui, { googleEnabled, email = '', notice = null }) {
+// Google 登录组件的界面语言代码（与本站语言代码大多相同，中文需要地区）。
+const GSI_LANGUAGES = { 'zh-Hans': 'zh-CN', 'zh-Hant': 'zh-TW' };
+
+/**
+ * Google One Tap：浏览器里已登录 Google 时自动弹出“以某账号继续”。
+ * 组件把签名的 ID token 交给 one-tap.js，再由这个隐藏表单提交到服务端校验；nonce 由服务端为本次页面生成。
+ */
+const oneTapHead = (ui) => html`<script src="https://accounts.google.com/gsi/client?hl=${GSI_LANGUAGES[ui.locale.code] || ui.locale.code}" async defer></script>
+<script src="${assetUrl('one-tap.js')}" defer></script>`;
+const oneTapForm = (oneTap) => html`<form method="post" action="/auth/google/one-tap" data-one-tap data-client-id="${oneTap.clientId}" data-nonce="${oneTap.nonce}" hidden><input type="hidden" name="credential"></form>`;
+
+export function loginPage(ui, { googleEnabled, oneTap = null, email = '', notice = null }) {
   const { t } = ui;
   return layout(ui, {
     title: t('登录'),
     notice,
+    head: oneTap ? oneTapHead(ui) : '',
     body: html`<section class="card auth">
   <h1>${t('登录或注册')}</h1>
   <p class="muted">${t('输入邮箱获取验证码。未注册的邮箱验证后会自动创建账户并获得试用点数。')}</p>
@@ -135,6 +148,7 @@ export function loginPage(ui, { googleEnabled, email = '', notice = null }) {
   ${googleEnabled ? html`<div class="divider"><span>${t('或')}</span></div>
   <a class="button google-button" href="/auth/google">${googleLogo}<span>${t('使用 Google 登录')}</span></a>` : ''}
   <p class="fine">${t('账户只保存邮箱和用户名，不保存姓名、头像等资料。')}</p>
+  ${oneTap ? oneTapForm(oneTap) : ''}
 </section>`,
   });
 }

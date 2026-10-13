@@ -2,21 +2,29 @@
 
 const SAFE_METHODS = /^(GET|HEAD|OPTIONS)$/;
 
+// Google One Tap 组件要求放开的来源（https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid#content_security_policy）。
+const GSI = 'https://accounts.google.com/gsi/';
+
 export function securityHeaders(config) {
   // 只允许本站脚本（配色切换与语言下拉的增强）；表单提交到 Google 登录会经过重定向，form-action 需要放行。
-  const csp = [
+  // 显示 One Tap 的页面（路由里 c.set('oneTap', true)）额外放开 Google 组件，其他页面保持严格策略。
+  const policy = (oneTap) => [
     "default-src 'none'",
-    "style-src 'self'",
+    // Google 组件在不支持 FedCM 的浏览器里会向页面注入定位弹窗的内联样式，只在 One Tap 页放开样式（脚本仍严格限制）。
+    `style-src 'self'${oneTap ? ` ${GSI}style 'unsafe-inline'` : ''}`,
     "img-src 'self'",
-    "script-src 'self'",
+    `script-src 'self'${oneTap ? ` ${GSI}client` : ''}`,
+    ...(oneTap ? [`frame-src ${GSI}`, `connect-src ${GSI}`] : []),
     `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}`,
     "base-uri 'none'",
     "frame-ancestors 'none'",
   ].join('; ');
+  const strict = policy(false);
+  const withOneTap = policy(true);
   return async (c, next) => {
     await next();
     const headers = c.res.headers;
-    headers.set('Content-Security-Policy', csp);
+    headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : strict);
     headers.set('X-Content-Type-Options', 'nosniff');
     headers.set('Referrer-Policy', 'same-origin');
     headers.set('X-Frame-Options', 'DENY');

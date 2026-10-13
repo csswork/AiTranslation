@@ -16,7 +16,7 @@
 
 | 编号 | 已实现 | 尚未实现 |
 | --- | --- | --- |
-| U1 注册与登录 | 邮箱验证码注册/登录（新邮箱验证后自动建号）、Google 登录、退出 | X 登录；正式发信服务（目前验证码只打印到开发日志） |
+| U1 注册与登录 | 邮箱验证码注册/登录（新邮箱验证后自动建号）、Google 登录、Google One Tap 自动弹出、退出 | X 登录；正式发信服务（目前验证码只打印到开发日志） |
 | U2 账户总览 | 用户名、邮箱、点数余额、试用状态与到期时间 | 套餐与续费信息（等支付接入） |
 | U3 套餐与订阅 | 说明页 | 全部功能（等支付服务商确定） |
 | U4 订单与账单 | 说明页 | 全部功能（等支付服务商确定） |
@@ -24,6 +24,13 @@
 | U6 邮箱、用户名与登录方式 | 修改用户名、验证码更换邮箱、绑定/解除 Google | X 绑定 |
 | U7 登录会话 | 列出有效会话、退出指定会话、退出其他全部会话 | 扩展会话（等扩展登录接入） |
 | U8 扩展与帮助 | 两种模式说明、安装/说明/反馈链接 | 商店链接需配置 `EXTENSION_URL` |
+
+### Google One Tap
+
+- 登录页在浏览器已登录 Google 时自动弹出“以某账号继续”（Chrome 走 FedCM），选中后组件把 Google 签名的 ID token 交给页面，隐藏表单提交到 `POST /auth/google/one-tap`。
+- 服务端用 Google 公钥（JWKS，按 Cache-Control 缓存）验证 RS256 签名，并检查 `iss`、`aud`（本应用客户端 ID）、有效期，以及登录页为本次显示生成、存在短期 Cookie 里的一次性 nonce；同一凭证不能重放。只读取 `sub`、`email`、`email_verified`。账号判断与授权码流程共用（`googleSignIn`），从官网进入时同样返回官网。
+- CSP 只在登录页放开 Google 组件需要的 `https://accounts.google.com/gsi/`（script、frame、connect、style，样式另含 `'unsafe-inline'` 供不支持 FedCM 的浏览器定位弹窗）；其他页面保持严格策略。
+- 需要 Google OAuth 客户端的“已获授权的 JavaScript 来源”包含用户端地址（本地 `http://localhost:8787`，生产 `https://app.huaci.app`）。
 
 ### 多语言、配色与页头页脚
 

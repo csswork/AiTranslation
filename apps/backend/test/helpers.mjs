@@ -66,10 +66,10 @@ export function fakeGoogle(accounts) {
   };
 }
 
-export function buildApp({ pool, config = testConfig(), google = null } = {}) {
+export function buildApp({ pool, config = testConfig(), google = null, googleIdToken = null } = {}) {
   const mailbox = createMailbox();
   const silent = { log() {}, warn() {}, error() {} };
-  const app = createApp({ config, pool, mailer: mailbox.mailer, google, log: silent });
+  const app = createApp({ config, pool, mailer: mailbox.mailer, google, googleIdToken, log: silent });
   return { app, config, mailbox };
 }
 

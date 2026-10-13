@@ -20,7 +20,7 @@
 | `SHARED_COOKIE_DOMAIN` | `huaci.app` | 与官网共用语言、配色偏好 Cookie 的父域；必须覆盖 `APP_ORIGIN` 与 `WEB_ORIGINS` 的主机名 |
 | `DATABASE_URL` | 必填 | PostgreSQL 连接串 |
 | `AUTH_SECRET` | 必填，≥32 字符 | 验证码 HMAC 密钥；更换后未完成的验证码失效 |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback` |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
 | `TRIAL_CREDITS` / `TRIAL_DAYS` | `TRIAL_CREDITS` 必填 | 实测托管成本后确定 |
 | `SESSION_DAYS` | 默认 30 | 会话有效天数 |
