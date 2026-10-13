@@ -250,9 +250,11 @@ export function billingPage(ui, { user }) {
 
 /* ---------- U5 用量与点数记录 ---------- */
 
-const ENTRY_LABELS = { trial_grant: k('注册试用赠送') };
+const ENTRY_LABELS = { trial_grant: k('注册试用赠送'), usage: k('托管翻译扣点'), refund: k('失败返还') };
+const KIND_LABELS = { text: k('文字') };
+const STATUS_LABELS = { ok: k('成功'), failed: k('失败（已返还）'), pending: k('处理中') };
 
-export function usagePage(ui, { user, entries }) {
+export function usagePage(ui, { user, entries, events = [] }) {
   const { t } = ui;
   return layout(ui, {
     title: t('用量与点数'),
@@ -271,9 +273,19 @@ export function usagePage(ui, { user, entries }) {
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('暂无点数记录。')}</p>`}
 </section>
-<section class="card empty">
+<section class="card">
   <h2>${t('翻译请求')}</h2>
-  <p class="muted">${t('托管翻译尚未开放，暂无请求记录。开放后按文字、图片、视频分别显示请求数量、成功或失败状态与扣点，默认只保留计费元数据。')}</p>
+  ${events.length ? html`<div class="table-wrap"><table>
+    <thead><tr><th>${t('时间')}</th><th>${t('类型')}</th><th class="num">${t('字数')}</th><th class="num">${t('点数')}</th><th>${t('结果')}</th></tr></thead>
+    <tbody>${events.map((e) => html`<tr data-status="${e.status}">
+      <td>${ui.dateTime(e.created_at)}</td>
+      <td>${KIND_LABELS[e.kind] ? t(KIND_LABELS[e.kind]) : e.kind}</td>
+      <td class="num">${e.chars}</td>
+      <td class="num" dir="ltr">${e.status === 'failed' ? 0 : -e.cost}</td>
+      <td>${STATUS_LABELS[e.status] ? t(STATUS_LABELS[e.status]) : e.status}</td>
+    </tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
+  <p class="fine">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
 </section>`,
   });
 }
@@ -377,10 +389,30 @@ export function helpPage(ui, { user }) {
   });
 }
 
-export function errorPage(ui, { status, user = null }) {
+/* ---------- 扩展登录授权 ---------- */
+
+export function extensionConsentPage(ui, { user }) {
+  const { t } = ui;
+  return layout(ui, {
+    title: t('允许扩展登录'),
+    user,
+    body: html`<section class="card auth consent">
+  <img class="consent-mark" src="${assetUrl('icon.png')}" alt="" width="48" height="48">
+  <h1>${t('允许 AI 划词翻译扩展登录？')}</h1>
+  <p>${t('扩展将以 {username} 的身份查看点数、试用与订阅状态，并在你选择「点数翻译」时使用点数。', { username: html`<strong>${user.username}</strong>` })}</p>
+  <p class="fine">${t('扩展只获得自己的登录会话，不会读取你的网站登录状态；随时可以在「登录会话」里退出。')}</p>
+  <form method="post" action="/extension/authorize/confirm" class="stack">
+    <button class="button primary" type="submit" name="decision" value="approve">${t('允许并返回扩展')}</button>
+    <button class="button" type="submit" name="decision" value="deny">${t('取消')}</button>
+  </form>
+</section>`,
+  });
+}
+
+export function errorPage(ui, { status, user = null, message: messageKey = null }) {
   const { t } = ui;
   const title = status === 404 ? t('页面不存在') : t('出错了');
-  const message = status === 404 ? t('找不到这个页面。') : t('服务暂时不可用，请稍后再试。');
+  const message = messageKey ? t(messageKey) : status === 404 ? t('找不到这个页面。') : t('服务暂时不可用，请稍后再试。');
   return layout(ui, {
     title,
     user,

@@ -59,6 +59,10 @@ export function readConfig(env = process.env) {
     if (!hosts.every(covers)) problems.push(`SHARED_COOKIE_DOMAIN（${sharedCookieDomain}）必须覆盖 APP_ORIGIN 与 WEB_ORIGINS 的主机名`);
   }
 
+  // 允许登录的 Chrome 扩展 ID（逗号分隔）。生产环境未配置时扩展无法登录；开发环境未配置时接受任意扩展。
+  const extensionIds = (env.EXTENSION_IDS || '').split(',').map((s) => s.trim()).filter(Boolean);
+  for (const id of extensionIds) if (!/^[a-p]{32}$/.test(id)) problems.push(`EXTENSION_IDS 中的扩展 ID 无效：${id}`);
+
   const mailTransport = env.MAIL_TRANSPORT || 'console';
   if (mailTransport !== 'console') problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
 
@@ -88,6 +92,16 @@ export function readConfig(env = process.env) {
     // 试用点数和有效期是占位值，实测托管成本后再定；以后改由管理员界面（A4）配置。
     trialCredits: int(env.TRIAL_CREDITS, 100, 'TRIAL_CREDITS'),
     trialDays: int(env.TRIAL_DAYS, 30, 'TRIAL_DAYS'),
+    extensionIds,
+    // 托管文字翻译：模型 Key 只在服务端。未配置 HOSTED_DEEPSEEK_API_KEY 时托管翻译不可用。
+    hosted: {
+      apiKey: env.HOSTED_DEEPSEEK_API_KEY || '',
+      model: env.HOSTED_MODEL || 'deepseek-v4-flash',
+      baseUrl: (env.HOSTED_BASE_URL || 'https://api.deepseek.com').replace(/\/+$/, ''),
+    },
+    // 扣点规则是占位值（每 N 个字符 1 点，不足 N 按 1 点），实测成本后再定。
+    charsPerCredit: Math.max(1, int(env.CHARS_PER_CREDIT, 500, 'CHARS_PER_CREDIT')),
+    hostedMaxChars: Math.max(1, int(env.HOSTED_MAX_CHARS, 6000, 'HOSTED_MAX_CHARS')),
     sessionDays: int(env.SESSION_DAYS, 30, 'SESSION_DAYS'),
     links: {
       website: env.WEBSITE_URL || 'https://huaci.app/',

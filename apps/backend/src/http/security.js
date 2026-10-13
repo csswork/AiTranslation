@@ -8,23 +8,25 @@ const GSI = 'https://accounts.google.com/gsi/';
 export function securityHeaders(config) {
   // 只允许本站脚本（配色切换与语言下拉的增强）；表单提交到 Google 登录会经过重定向，form-action 需要放行。
   // 显示 One Tap 的页面（路由里 c.set('oneTap', true)）额外放开 Google 组件，其他页面保持严格策略。
-  const policy = (oneTap) => [
+  const policy = (oneTap, extensionAuth) => [
     "default-src 'none'",
     // Google 组件在不支持 FedCM 的浏览器里会向页面注入定位弹窗的内联样式，只在 One Tap 页放开样式（脚本仍严格限制）。
     `style-src 'self'${oneTap ? ` ${GSI}style 'unsafe-inline'` : ''}`,
     "img-src 'self'",
     `script-src 'self'${oneTap ? ` ${GSI}client` : ''}`,
     ...(oneTap ? [`frame-src ${GSI}`, `connect-src ${GSI}`] : []),
-    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}`,
+    // 扩展授权页确认后重定向回 https://<扩展 ID>.chromiumapp.org/（由 launchWebAuthFlow 接住）。
+    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}${extensionAuth ? ' https://*.chromiumapp.org' : ''}`,
     "base-uri 'none'",
     "frame-ancestors 'none'",
   ].join('; ');
-  const strict = policy(false);
-  const withOneTap = policy(true);
+  const strict = policy(false, false);
+  const withOneTap = policy(true, false);
+  const forExtensionAuth = policy(false, true);
   return async (c, next) => {
     await next();
     const headers = c.res.headers;
-    headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : strict);
+    headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : c.get('extensionAuth') ? forExtensionAuth : strict);
     headers.set('X-Content-Type-Options', 'nosniff');
     headers.set('Referrer-Policy', 'same-origin');
     headers.set('X-Frame-Options', 'DENY');

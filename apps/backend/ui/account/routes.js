@@ -4,6 +4,7 @@
  */
 import { randomBytes } from 'node:crypto';
 import { Hono } from 'hono';
+import { createAuthCode, extensionIdFromRedirect, isValidChallenge } from '../../src/auth/extension.js';
 import { finishGoogleAuth, startGoogleAuth } from '../../src/auth/google.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import {
@@ -13,7 +14,7 @@ import {
   findIdentity, findOrCreateUserByEmail, findUserByEmail, isValidEmail, linkIdentity, listIdentities,
   normalizeEmail, unlinkIdentity, updateEmail, updateUsername,
 } from '../../src/auth/users.js';
-import { creditSummary, ledgerEntries } from '../../src/credits/ledger.js';
+import { creditSummary, ledgerEntries, usageEvents } from '../../src/credits/ledger.js';
 import {
   clearPreference, clearSessionCookie, clearTemp, getSessionToken, getTemp, setPreference, setSessionCookie, setTemp,
 } from '../../src/http/cookies.js';
@@ -58,8 +59,9 @@ const verifyError = (result) => {
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-/** 登录后可返回的官网地址：只接受 WEB_ORIGINS 白名单里的来源。 */
+/** 登录后可返回的地址：站内路径（如扩展授权页），或 WEB_ORIGINS 白名单里的官网地址。 */
 export function safeReturnUrl(value, config) {
+  if (typeof value === 'string' && value.startsWith('/')) return safePath(value) === value ? value : null;
   try {
     const url = new URL(String(value || ''));
     return config.webOrigins.includes(url.origin) ? url.href : null;
@@ -275,6 +277,55 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     return googleSignIn(c, claims);
   });
 
+  /* ---------- 扩展登录授权：launchWebAuthFlow → 确认 → 一次性授权码回到扩展 ---------- */
+
+  const readExtensionRequest = (c) => {
+    try {
+      const pending = JSON.parse(getTemp(c, 'ext_auth') || 'null');
+      return pending && extensionIdFromRedirect(pending.redirectUri, config) && isValidChallenge(pending.codeChallenge) ? pending : null;
+    } catch {
+      return null;
+    }
+  };
+  const invalidExtensionRequest = (c) => render(c, views.errorPage, {
+    status: 400, user: c.get('auth')?.user, message: k('扩展登录请求无效或已过期，请回到扩展重新登录。'),
+  }, 400);
+
+  app.get('/extension/authorize', (c) => {
+    const { redirect_uri: redirectUri, code_challenge: codeChallenge, code_challenge_method: method, state = '' } = c.req.query();
+    if (!extensionIdFromRedirect(redirectUri, config) || !isValidChallenge(codeChallenge) || method !== 'S256' || state.length > 200) {
+      return invalidExtensionRequest(c);
+    }
+    setTemp(c, config, 'ext_auth', JSON.stringify({ redirectUri, codeChallenge, state }));
+    if (!c.get('auth')) {
+      setTemp(c, config, 'return_to', '/extension/authorize/confirm', 30 * 60);
+      return c.redirect('/login', 303);
+    }
+    return c.redirect('/extension/authorize/confirm', 303);
+  });
+
+  app.get('/extension/authorize/confirm', requireUser, (c) => {
+    if (!readExtensionRequest(c)) return invalidExtensionRequest(c);
+    c.set('extensionAuth', true);
+    return render(c, views.extensionConsentPage, { user: user(c) });
+  });
+
+  app.post('/extension/authorize/confirm', requireUser, async (c) => {
+    const pending = readExtensionRequest(c);
+    clearTemp(c, config, 'ext_auth');
+    if (!pending) return invalidExtensionRequest(c);
+    const body = await c.req.parseBody();
+    const target = new URL(pending.redirectUri);
+    if (body.decision === 'approve') {
+      target.searchParams.set('code', await createAuthCode(pool, { userId: user(c).id, redirectUri: pending.redirectUri, codeChallenge: pending.codeChallenge }));
+    } else {
+      target.searchParams.set('error', 'access_denied');
+    }
+    if (pending.state) target.searchParams.set('state', pending.state);
+    c.set('extensionAuth', true);
+    return c.redirect(target.href, 303);
+  });
+
   app.post('/logout', async (c) => {
     const auth = c.get('auth');
     if (auth) await revokeSession(pool, auth.user.id, auth.session.id);
@@ -290,7 +341,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   app.get('/plans', requireUser, (c) => render(c, views.plansPage, { user: user(c) }));
   app.get('/billing', requireUser, (c) => render(c, views.billingPage, { user: user(c) }));
   app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
-    user: user(c), entries: await ledgerEntries(pool, user(c).id),
+    user: user(c), entries: await ledgerEntries(pool, user(c).id), events: await usageEvents(pool, user(c).id),
   }));
   app.get('/help', requireUser, (c) => render(c, views.helpPage, { user: user(c) }));
 

@@ -5,6 +5,7 @@
 import { Hono } from 'hono';
 import { bodyLimit } from 'hono/body-limit';
 import { HTTPException } from 'hono/http-exception';
+import { extensionApi } from './api/extension.js';
 import { webApi } from './api/web.js';
 import { sameOriginWrites, securityHeaders } from './http/security.js';
 import { assets } from '../ui/account/assets.js';
@@ -12,7 +13,7 @@ import { uiContext } from '../ui/account/context.js';
 import { accountRoutes } from '../ui/account/routes.js';
 import { errorPage } from '../ui/account/views.js';
 
-export function createApp({ config, pool, mailer, google = null, googleIdToken = null, log = console }) {
+export function createApp({ config, pool, mailer, google = null, googleIdToken = null, hosted = null, log = console }) {
   const app = new Hono();
 
   app.use('*', securityHeaders(config));
@@ -26,6 +27,9 @@ export function createApp({ config, pool, mailer, google = null, googleIdToken =
   });
 
   app.get('/healthz', (c) => c.text('ok'));
+
+  // 扩展接口用 Bearer 令牌而不是 Cookie，挂在站内同源校验之前（它对扩展来源的请求一律拒绝）。
+  app.route('/api/extension', extensionApi({ config, pool, hosted, log }));
 
   app.use('*', sameOriginWrites(config));
   app.use('*', bodyLimit({ maxSize: 16 * 1024, onError: (c) => c.text('请求内容过大', 413) }));

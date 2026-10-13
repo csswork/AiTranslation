@@ -263,6 +263,9 @@ input {
 }
 .google-button:active { background: color-mix(in srgb, light-dark(#1f1f1f, #e3e3e3) 12%, light-dark(#ffffff, #131314)); }
 .google-logo { width: 18px; height: 18px; flex: none; }
+.consent { text-align: center; }
+.consent .stack { margin-top: var(--s3); }
+.consent-mark { display: block; margin: 0 auto var(--s2); border-radius: 12px; }
 .google-button.compact { min-height: 38px; padding-block: .4rem; font-size: .92rem; }
 .link-button {
   font: inherit; color: var(--accent-ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline;
