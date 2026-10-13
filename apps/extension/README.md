@@ -27,8 +27,9 @@ Pick a provider on the options page and paste in an API key:
 | --- | --- | --- | --- |
 | ChatGPT | <https://platform.openai.com/api-keys> | `gpt-5.6-luna` | `https://api.openai.com/v1` |
 | DeepSeek | <https://platform.deepseek.com/api_keys> | `deepseek-v4-flash` | `https://api.deepseek.com` |
+| DeepL | <https://www.deepl.com/pro-api> | — (no model choice) | Chosen from the key: `https://api-free.deepl.com` for Free keys ending in `:fx`, otherwise `https://api.deepl.com` |
 
-Both default to the cheapest tier available, since translation is a high-frequency, short-input task. The model field also suggests `gpt-5.6-terra` / `gpt-5.6-sol` / `gpt-6-astra` and `deepseek-v4-pro`, and accepts any model name the provider supports. Hit **测试连接** ("Test connection") to verify.
+ChatGPT and DeepSeek default to the cheapest tier available, since translation is a high-frequency, short-input task. The model field also suggests `gpt-5.6-terra` / `gpt-5.6-sol` / `gpt-6-astra` and `deepseek-v4-pro`, and accepts any model name the provider supports. Hit **测试连接** ("Test connection") to verify.
 
 Choose your interface language and default translation target independently, then configure streaming and source-text visibility. Video speech recognition has its own source-language setting and checks device support; the experimental feature remains off by default.
 
@@ -41,16 +42,33 @@ Select text → right-click → **Translate to your target language**. You can a
 ```
 manifest.json              Manifest V3 declaration
 src/
-  background.js            Service worker: menu visibility, translation requests, streaming to the page
+  background.js            Service worker: menus, translation requests, streaming to the page, video captions
+  content/
+    content.js             Selection reporting + the Shadow DOM popup
+    elements.js            Region (element) translation buttons from saved rules
+    image.js               In-page image translation overlay
+    video.js               Experimental video caption overlay, injected on demand
   lib/
-    lang.js                Language heuristics (does this text need translating?)
+    providers.js           OpenAI-compatible and DeepL requests, SSE parsing, error mapping
     settings.js            Provider definitions and settings storage
-    providers.js           OpenAI-compatible requests, SSE parsing, error mapping
-  content/content.js       Selection reporting + the Shadow DOM popup
+    languages.js           Shared 24-language registry (generated from i18n/)
+    i18n.js, messages.js   Extension UI localization (messages.js is generated)
+    lang.js                Language heuristics (does this text need translating?)
+    requests.js            Cancels provider fetches when a request port disconnects
+    rules.js, selector.js  Region translation rules and reusable CSS selectors
+    tiles.js               Long-image tiling for vision models
+    captions.js, speech.js Caption segmentation and on-device speech language packs
   options/                 Options page
   popup/                   Toolbar popup (status at a glance + quick provider switch)
+  translate/               Standalone text translation panel
+  image/                   Image translation page
+  manage/                  Region translation rule management (not the VPS admin interface)
+  offscreen/               Offscreen document for tab audio capture and speech recognition
 icons/                     Icons
+_locales/                  Generated Chrome native locale catalogs
 ```
+
+Development-only files live beside the runtime: `i18n/` (UI catalogs and language registry), `scripts/` (catalog extraction, translation and build), `test/`, `store-assets/` and `package.sh`. They are not included in the extension ZIP.
 
 ## Design notes
 

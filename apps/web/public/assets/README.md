@@ -1,4 +1,4 @@
-# docs/assets —— 需要你自己放进来的东西
+# apps/web/public/assets —— 需要你自己放进来的东西
 
 站点已经能正常打开，下面这些是「放进来就自动生效」的素材。
 **不需要改 HTML**：`main.js` 会在对应的展示框滚到视口附近时去找同名文件，
@@ -32,7 +32,7 @@ node record-demos.mjs                    # 录 4 段（可只录某几段：node
 for c in selection element image panel; do
   node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i out/demo-frames/$c/frame_%06d.png \
     -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -an -movflags +faststart \
-    ../../docs/assets/demo-$c.mp4
+    ../../apps/web/public/assets/demo-$c.mp4
 done
 ```
 
@@ -46,9 +46,9 @@ done
 | 文件名 | 用途 | 现在是什么 |
 | --- | --- | --- |
 | `og.png` | 分享到社交媒体 / IM 时的预览图（1200×630） | 已生成 |
-| `icon128.png` | favicon 和导航栏图标 | 从仓库根目录 `icons/` 复制来的 |
+| `icon128.png` | favicon 和导航栏图标 | 从 `apps/extension/icons/` 复制来的 |
 
-首屏右侧大框的正式配图**不是文件**，是 `docs/index.html` 里内联的 SVG（`<div class="pv">`），
+首屏右侧大框的正式配图**不是文件**，是 `apps/web/public/index.html` 里内联的 SVG（`<div class="pv">`），
 拆成「背后的网页」和「译文弹窗」两层：鼠标移上去两层反向错开，颜色随深浅配色切换。
 
 想换成真实截图：把整个 `<div class="pv">…</div>` 换成 `<img src="assets/preview.png" alt="…">`
@@ -64,8 +64,8 @@ done
 
 ## 换掉图标
 
-根目录的 `icons/icon128.png` 若有更新，记得同步过来：
+扩展的 `apps/extension/icons/icon128.png` 若有更新，在仓库根目录运行以下命令同步过来：
 
 ```
-cp icons/icon128.png docs/assets/icon128.png
+cp apps/extension/icons/icon128.png apps/web/public/assets/icon128.png
 ```

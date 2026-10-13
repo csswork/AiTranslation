@@ -248,6 +248,8 @@ P0 已经实现为设置页的「改用云端识别」开关，默认关闭。�
 
 ## 六、需要动的地方（路线 A，对照现有代码）
 
+扩展文件路径相对于 `apps/extension/`。
+
 | 位置 | 改动 |
 | --- | --- |
 | `manifest.json` | `permissions` 加 `tabCapture`、`offscreen`（实测不新增安装警告） |
@@ -260,7 +262,7 @@ P0 已经实现为设置页的「改用云端识别」开关，默认关闭。�
 | `src/options/` | 视频语言选择、「改用云端识别」开关、语言包状态与安装按钮 |
 | `src/popup/` | 「视频实时字幕」按钮：播放器拦掉右键时的兜底入口 |
 | `src/lib/providers.js` | 新增 `translateCaption`：字幕专用提示词，前文只作上下文；DeepL 走 `context` 参数 |
-| `docs/privacy.html`、`PRIVACY.md` | 上线时补：视频语音默认在本机识别；打开云端识别时声音会发给 Google |
+| `apps/web/public/privacy.html`、`PRIVACY.md` | 上线时补：视频语音默认在本机识别；打开云端识别时声音会发给 Google |
 
 ---
 

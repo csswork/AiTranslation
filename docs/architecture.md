@@ -5,10 +5,10 @@
 | 应用 | 负责什么 | 发布什么 |
 | --- | --- | --- |
 | `apps/web` | 宣传、语言页面；后续登录入口和登录状态展示 | Vercel 静态 HTML、CSS、JS 与资源 |
-| `apps/backend` | 身份、试用额度、托管翻译、支付订阅、完整账户和管理页面与数据 | VPS 服务、页面与数据库迁移；目前尚未实现 |
+| `apps/backend` | 身份、试用额度、托管翻译、支付订阅与 API；用户管理界面和管理员界面 | VPS 服务、两套界面与数据库迁移；目前尚未实现 |
 | `apps/extension` | Chrome 内翻译；优先实现登录、点数、订阅和托管模式入口 | Chrome 商店扩展 ZIP |
 
-扩展中的 `src/manage` 是现有“区域翻译规则管理”界面，属于扩展本身，不是收费后台管理系统。
+扩展中的 `src/manage` 是现有“区域翻译规则管理”界面，属于扩展本身，不属于 VPS 的用户管理界面或管理员界面。
 
 网站目前启用 11 种语言，扩展支持 24 种语言；两套目录独立维护，发布和翻译更新互不依赖。当前源码中没有注册、订阅、试用额度或托管服务。
 
@@ -16,16 +16,22 @@
 
 ```mermaid
 flowchart LR
-  Web[HTML 网站 · Vercel] -->|账户与订阅请求| Backend[VPS 后端]
-  Extension[Chrome 扩展] -->|托管模式：登录与额度| Backend
+  Web[HTML 网站 · Vercel] -->|登录状态与权益| API
+  Web -.->|登录、订阅链接| UserUI
+  Extension[Chrome 扩展] -->|托管模式：登录、额度与翻译| API
+  Extension -.->|订阅升级与管理| UserUI
   Extension -->|自带 Key 模式| Provider[模型服务商]
-  Backend -->|托管翻译| Provider
-  Backend --> Database[数据库与额度账本]
-  Backend -->|创建结账| Payment[支付服务商]
-  Payment -->|已验签的 Webhook| Backend
+  subgraph VPS[VPS · apps/backend]
+    UserUI[用户管理界面 · app] -->|本人数据| API[API · api]
+    AdminUI[管理员界面 · admin] -->|管理员权限| API
+    API --> Database[数据库与额度账本]
+  end
+  API -->|托管翻译| Provider
+  API -->|创建结账| Payment[支付服务商]
+  Payment -->|已验签的 Webhook| API
 ```
 
-此图描述后续收费功能的边界；当前可用的翻译链路仍是扩展直接调用用户选择的服务商。
+此图描述后续收费功能的边界；用户管理界面面向注册用户，管理员界面面向运营者，两者共用 API 和数据但分别验证权限。当前可用的翻译链路仍是扩展直接调用用户选择的服务商。
 
 ## 网页与扩展的统一账号（规划）
 
@@ -38,7 +44,7 @@ flowchart LR
 | `huaci.app` | Vercel | 官网、登录入口、登录状态及简要权益展示 |
 | `app.huaci.app` | VPS | 用户管理界面：注册、登录、账户、订阅与账单 |
 | `admin.huaci.app` | VPS | 独立管理员界面；管理接口由服务端验证管理员权限 |
-| `api.huaci.app` | VPS | 两端共用的认证、用户、额度、翻译及支付 API |
+| `api.huaci.app` | VPS | 扩展、官网和两套界面共用的认证、用户、额度、翻译、支付及管理 API |
 
 `app`、`admin` 和 `api` 可以由同一台 VPS 和同一个 `apps/backend` 应用提供服务。两套界面的基础功能见 [功能审核稿](backend/ui-scope.md)。
 

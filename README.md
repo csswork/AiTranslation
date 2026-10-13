@@ -5,7 +5,7 @@
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
 | 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面；登录入口及状态展示待实现 |
-| 后端 | [apps/backend](apps/backend/README.md) | VPS | 注册、托管翻译、订阅、完整账户页面与管理系统待实现 |
+| 后端 | [apps/backend](apps/backend/README.md) | VPS | API、用户管理界面与管理员界面均待实现；两套界面的首版范围待审核 |
 | 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有 24 语言翻译；优先实现登录、点数与订阅入口，保留自带 Key |
 
 ## 目录
@@ -16,7 +16,7 @@ apps/
     public/          HTML、CSS、JS、静态资源和生成的各语言页面
     i18n/            网站语言目录与页面构建工具
     test/            网站、语言切换与 CSP 检查
-  backend/           VPS 后端；目前是边界与实施说明
+  backend/           VPS 后端：API、用户管理界面、管理员界面；目前只有实施说明
   extension/
     manifest.json    Chrome 扩展声明
     src/             扩展运行代码与界面
@@ -27,7 +27,7 @@ apps/
     test/            扩展测试
     store-assets/    商店文案、截图和宣传素材
     package.sh       扩展专用打包工具
-docs/                架构、开发说明与技术研究
+docs/                架构、后端界面审核稿与技术研究
 test/run.sh          全项目测试入口
 package.sh           扩展打包入口
 vercel.json          Vercel 部署与安全响应头配置
@@ -62,7 +62,7 @@ Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`
 ## 部署
 
 - **Vercel 网站**：保留仓库根目录作为 Vercel 项目根目录，`vercel.json` 构建 `apps/web`，仅发布 `apps/web/public`。GitHub 工作流在网站、Vercel 配置或相关构建入口发生变化时触发。
-- **VPS 后端**：后续在 `apps/backend` 实现认证、额度、托管翻译、支付 Webhook 与管理接口，独立部署；当前没有可启动的后端服务。
+- **VPS 后端**：后续在 `apps/backend` 实现认证、额度、托管翻译、支付 Webhook 等 API，以及用户管理界面和管理员界面，独立部署；当前没有可启动的后端服务。
 - **Chrome 扩展**：单独打包发布到 Chrome 商店。ZIP 白名单为扩展 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。
 
 职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。
