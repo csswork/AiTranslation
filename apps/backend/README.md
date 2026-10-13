@@ -63,6 +63,8 @@ npm run dev                        # http://localhost:8787，修改 src/、ui/ �
 
 在 Google Cloud Console 创建“Web 应用”类型的 OAuth 客户端，授权回调地址填 `http://localhost:8787/auth/google/callback`（生产环境为 `<APP_ORIGIN>/auth/google/callback`），把客户端 ID 和密钥写入 `.env.local` 的 `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`。未配置时登录页和账户页不显示 Google 入口。
 
+服务端要直接请求 Google 令牌端点。本机如需经代理访问 Google，在 `.env.local` 设置 `HTTPS_PROXY`（支持 `http://` 与 `socks5://`，如 `socks5://127.0.0.1:7898`）：Node 自带的 `fetch` 不读系统代理，否则浏览器能打开 Google、回调时却会提示“Google 登录没有完成”。
+
 ### 测试
 
 ```sh

@@ -183,7 +183,8 @@ export function accountRoutes({ config, pool, mailer, google, log = console }) {
     try {
       claims = await finishGoogleAuth(google, code, verifier);
     } catch (err) {
-      log.warn(`Google 授权码交换失败：${err.name}`);
+      // 只记录错误类别与 OAuth 错误码，不记录授权码、令牌或响应内容。
+      log.warn(`Google 授权码交换失败：${err.constructor?.name || err.name} ${err.code || err.cause?.code || ''}`.trim());
       return back(c, 'google_failed', failPath);
     }
     if (!claims.subject) return back(c, 'google_failed', failPath);

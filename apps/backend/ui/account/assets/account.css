@@ -118,7 +118,7 @@ input:focus-visible, .button:focus-visible, .link-button:focus-visible, a:focus-
 .button:hover { background: var(--surface-2); color: var(--text); }
 .button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .button.primary:hover { background: var(--accent-hover); }
-.auth > .button { width: 100%; }
+.auth > .button { width: 100%; margin-bottom: var(--s2); }
 .link-button {
   font: inherit; color: var(--accent-ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline;
 }

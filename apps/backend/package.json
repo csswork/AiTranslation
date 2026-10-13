@@ -4,7 +4,7 @@
   "description": "Huaci VPS backend: API, user account interface and admin interface",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.19"
   },
   "scripts": {
     "start": "node src/server.js",
@@ -16,6 +16,7 @@
     "@hono/node-server": "2.1.5",
     "arctic": "3.7.0",
     "hono": "4.13.13",
-    "pg": "8.23.1"
+    "pg": "8.23.1",
+    "undici": "8.11.2"
   }
 }
