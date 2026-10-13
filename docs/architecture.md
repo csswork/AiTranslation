@@ -36,10 +36,11 @@ flowchart LR
 | 域名 | 部署位置 | 用途 |
 | --- | --- | --- |
 | `huaci.app` | Vercel | 官网、登录入口、登录状态及简要权益展示 |
-| `app.huaci.app` | VPS | 注册、登录、用户中心、订阅与账单页面；管理页面单独验证管理权限 |
+| `app.huaci.app` | VPS | 用户管理界面：注册、登录、账户、订阅与账单 |
+| `admin.huaci.app` | VPS | 独立管理员界面；管理接口由服务端验证管理员权限 |
 | `api.huaci.app` | VPS | 两端共用的认证、用户、额度、翻译及支付 API |
 
-`app` 和 `api` 可以由同一台 VPS 和同一个 `apps/backend` 应用提供服务。
+`app`、`admin` 和 `api` 可以由同一台 VPS 和同一个 `apps/backend` 应用提供服务。两套界面的基础功能见 [功能审核稿](backend/ui-scope.md)。
 
 网页使用 HTTPS 与后端 HttpOnly、Secure Cookie 会话；调用跨子域 API 时携带 credentials。Cookie 可只绑定 API 主机，官网通过用户状态接口读取公开账户信息，无需 JavaScript 读取登录 Cookie。跨子域仍是跨来源请求，需要服务端 CORS 来源白名单，修改状态的请求还需 CSRF 防护；网站 CSP 需允许具体 API 来源。
 
