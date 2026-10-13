@@ -29,7 +29,7 @@ flowchart LR
 
 ## 网页与扩展的统一账号（规划）
 
-扩展是收费功能的主要使用入口。它需要登录与退出、昵称/头像、试用及剩余点数、套餐及订阅状态、托管与自带 Key 模式选择、订阅升级及管理入口。余额与权益以 VPS API 为准；点数用尽后后端拒绝托管请求，自带 Key 模式继续按用户配置运行。
+扩展是收费功能的主要使用入口。它需要登录与退出、用户名与必要的账号状态、试用及剩余点数、套餐及订阅状态、托管与自带 Key 模式选择、订阅升级及管理入口。账号资料只保留必要的 email 和 username，第三方头像、昵称、真实姓名等额外资料不保存或展示。余额与权益以 VPS API 为准；点数用尽后后端拒绝托管请求，自带 Key 模式继续按用户配置运行。
 
 建议的域名划分如下，尚未配置 DNS 或服务：
 
@@ -42,7 +42,7 @@ flowchart LR
 
 `app`、`admin` 和 `api` 可以由同一台 VPS 和同一个 `apps/backend` 应用提供服务。两套界面的基础功能见 [功能审核稿](backend/ui-scope.md)。
 
-网页使用 HTTPS 与后端 HttpOnly、Secure Cookie 会话；调用跨子域 API 时携带 credentials。Cookie 可只绑定 API 主机，官网通过用户状态接口读取公开账户信息，无需 JavaScript 读取登录 Cookie。跨子域仍是跨来源请求，需要服务端 CORS 来源白名单，修改状态的请求还需 CSRF 防护；网站 CSP 需允许具体 API 来源。
+网页使用 HTTPS 与后端 HttpOnly、Secure Cookie 会话；调用跨子域 API 时携带 credentials。Cookie 可只绑定 API 主机，官网通过状态接口读取用户名、登录状态和必要的点数与订阅权益，无需 JavaScript 读取登录 Cookie。跨子域仍是跨来源请求，需要服务端 CORS 来源白名单，修改状态的请求还需 CSRF 防护；网站 CSP 需允许具体 API 来源。
 
 扩展使用 `chrome.identity.launchWebAuthFlow` 发起用户主动登录，身份验证在 VPS 完成，经 Chrome 的扩展回调返回一次性授权码，再用 PKCE 校验交换短期会话令牌。会话支持刷新与撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，manifest 在接入时加入 `identity` 权限和 API 主机权限。
 
