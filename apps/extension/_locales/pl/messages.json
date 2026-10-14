@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Najpierw zaloguj się na swoje konto"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Nie można połączyć się z usługą konta. Sprawdź sieć i spróbuj ponownie."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Sesja wygasła. Zaloguj się ponownie."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Nie udało się odczytać stanu konta ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Okno logowania zostało zamknięte"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Nieprawidłowe żądanie logowania. Spróbuj ponownie."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Logowanie anulowane"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Logowanie nie powiodło się. Spróbuj ponownie."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Za mało punktów: potrzeba $arg1$ punktów, pozostało $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Tekst jest za długi. Tłumaczenie za punkty obsługuje maksymalnie $arg1$ znaków na żądanie.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Zbyt wiele żądań. Spróbuj ponownie później."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Tłumaczenie hostowane tymczasowo nie powiodło się. Nie pobrano punktów. Spróbuj ponownie."
+  },
+  "m_929259172e4d6742": {
+    "message": "Tłumaczenie za punkty nie jest jeszcze dostępne"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Tłumaczenie za punkty nie powiodło się ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Tłumaczenie za punkty nie powiodło się"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Tłumaczenie za punkty obsługuje obecnie tylko tekst. Aby tłumaczyć obrazy, przełącz się na ChatGPT lub DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Tłumaczenie za punkty nie wymaga testu połączenia. Wystarczy się zalogować."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Tłumaczenie za punkty"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Korzystaj z punktów konta po zalogowaniu. Klucz API nie jest wymagany."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Rozpocznij"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Wybierz jedną z dwóch metod. Możesz przełączyć się w dowolnym momencie."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Zalecane"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Bezpłatny okres próbny"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Zaloguj się lub zarejestruj, aby otrzymać punkty próbne. Klucz API nie jest wymagany — zainstaluj i tłumacz."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Zaloguj się / Zarejestruj się"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Użyj własnego klucza API"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Wybierz ChatGPT, DeepSeek lub DeepL, wpisz klucz i połącz się bezpośrednio. Opłaty są pobierane przez platformę na podstawie zużycia."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Skonfiguruj"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Konto"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Zaloguj się, aby korzystać z tłumaczenia za punkty i sprawdzić stan okresu próbnego oraz subskrypcji."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Pozostałe punkty"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Zarządzaj kontem"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Plany i subskrypcje"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Wyloguj się"
+  },
+  "m_f45134adb4717545": {
+    "message": "Tłumaczenie jest wykonywane przez usługę tłumaczenia zaznaczonego tekstu AI, a punkty są pobierane z konta. Klucz API nie jest wymagany."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Obsługuje tłumaczenie tekstu dla zaznaczenia, tłumaczenie obszaru i panelu tłumaczenia. Tłumaczenie obrazów wymaga obecnie przełączenia na ChatGPT lub DeepSeek i wpisania własnego klucza."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Tekst źródłowy jest wysyłany przez nasze serwery do dostawcy modelu (obecnie DeepSeek) w celu tłumaczenia. Nie przechowujemy tekstu źródłowego ani tłumaczenia; konto rejestruje tylko liczbę znaków i potrącenia punktów."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Okres próbny · wygasa $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Okres próbny aktywny"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Okres próbny zakończony"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Brak okresu próbnego"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Brak subskrypcji"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Zaktualizowano $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "1 punkt jest odejmowany za każde $arg1$ znaków; mniej niż $arg1$ znaków liczy się jako 1 punkt. Punkty nie są odejmowane za nieudane tłumaczenia.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Zaloguj się, aby korzystać z tłumaczenia za punkty. Nowe konta otrzymują punkty próbne."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Tłumaczenie za punkty nie jest jeszcze dostępne. Na razie użyj własnego klucza API."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Punkty wyczerpane: zasubskrybuj plan lub przełącz się na własny klucz API."
+  },
+  "m_84378de635f8c238": {
+    "message": "Pozostało $arg1$ punktów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Zobacz użycie"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● Pozostało $arg1$ punktów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Wymagane zalogowanie"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Zaloguj się, aby odebrać punkty próbne"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ punktów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Punkty"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Wymagane zalogowanie"
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

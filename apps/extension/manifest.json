@@ -10,7 +10,8 @@
     "scripting",
     "activeTab",
     "tabCapture",
-    "offscreen"
+    "offscreen",
+    "identity"
   ],
   "host_permissions": [
     "https://api.openai.com/*",

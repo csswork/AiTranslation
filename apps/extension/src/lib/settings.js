@@ -3,18 +3,33 @@
  */
 (() => {
   const t = (...args) => AITrI18n.t(...args);
+  /** 标记稍后用 t() 翻译的文案，供提取脚本识别；运行时原样返回中文。 */
+  const k = (key) => key;
   /**
    * 平台分两种形态：
    *   llm —— OpenAI 兼容的对话接口。能流式、能识图、能用提示词控制译文风格。
    *   mt  —— 传统机器翻译接口。文本进文本出，上面这些都没有。
+   *   hosted —— 托管翻译：登录账户后用点数，由我们的服务完成翻译，不需要 API Key。
+   *            目前只支持文字（不流式、不识图）。
    * 请求形态完全不同，不少功能要按形态决定可用与否。
    */
   const PROVIDERS = {
+    hosted: {
+      id: 'hosted',
+      label: k("点数翻译"),
+      kind: 'hosted',
+      hint: k("登录后用账户点数，不需要 API Key"),
+      defaultBaseUrl: '',
+      defaultModel: '',
+      models: [],
+      keyUrl: '',
+      keyPrefix: '',
+    },
     openai: {
       id: 'openai',
       label: 'ChatGPT',
       kind: 'llm',
-      hint: "OpenAI 官方接口",
+      hint: k("OpenAI 官方接口"),
       defaultBaseUrl: 'https://api.openai.com/v1',
       // 翻译是高频短任务，默认用最便宜的 luna
       defaultModel: 'gpt-5.6-luna',
@@ -26,7 +41,7 @@
       id: 'deepseek',
       label: 'DeepSeek',
       kind: 'llm',
-      hint: "国内直连，价格更低",
+      hint: k("国内直连，价格更低"),
       // 官方文档给的 OpenAI 格式地址不带 /v1
       defaultBaseUrl: 'https://api.deepseek.com',
       defaultModel: 'deepseek-v4-flash',
@@ -38,7 +53,7 @@
       id: 'deepl',
       label: 'DeepL',
       kind: 'mt',
-      hint: "译文质量好，不用选模型",
+      hint: k("译文质量好，不用选模型"),
       // 免费版和付费版域名不同，但免费 key 以 :fx 结尾，
       // 所以不让用户填地址，运行时按 key 判断（见 resolveProvider）。
       defaultBaseUrl: 'https://api-free.deepl.com',
@@ -50,7 +65,9 @@
     },
   };
 
-  const PROVIDER_ORDER = ['openai', 'deepseek', 'deepl'];
+  const PROVIDER_ORDER = ['hosted', 'openai', 'deepseek', 'deepl'];
+  /** 需要用户自带 API Key 的平台（各自保存一份 Key / 模型 / 地址配置）。 */
+  const KEY_PROVIDERS = PROVIDER_ORDER.filter((id) => PROVIDERS[id].kind !== 'hosted');
 
   /**
    * 语言 id → DeepL 的 target_lang 代码。
@@ -128,7 +145,7 @@
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,
     };
-    for (const id of PROVIDER_ORDER) {
+    for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};
       out[id] = {
         apiKey: str(conf.apiKey),
@@ -169,7 +186,8 @@
     const conf = settings[def.id] || {};
     return {
       id: def.id,
-      label: def.label,
+      // 品牌名（ChatGPT、DeepSeek、DeepL）原样显示；「点数翻译」是界面文案，要翻译
+      label: def.kind === 'hosted' ? t(def.label) : def.label,
       keyUrl: def.keyUrl,
       apiKey: str(conf.apiKey),
       kind: def.kind || 'llm',
@@ -197,8 +215,14 @@
   const needsModel = (id) => providerKind(id) === 'llm';
   const deeplCode = (languageId) => DEEPL_CODES[languageId] || '';
 
-  const providerList = () =>
-    PROVIDER_ORDER.map((id) => ({ id, label: PROVIDERS[id].label, hint: t(PROVIDERS[id].hint) }));
+  const isHosted = (id) => providerKind(id) === 'hosted';
+
+  const providerList = () => PROVIDER_ORDER.map((id) => ({
+    id,
+    kind: PROVIDERS[id].kind,
+    label: isHosted(id) ? t(PROVIDERS[id].label) : PROVIDERS[id].label,
+    hint: t(PROVIDERS[id].hint),
+  }));
   const targetList = () => AITrLanguages.list();
   const videoLang = (settings) => {
     const value = VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
@@ -209,6 +233,8 @@
   globalThis.AITrSettings = {
     PROVIDERS,
     PROVIDER_ORDER,
+    KEY_PROVIDERS,
+    isHosted,
     VISION_MODELS,
     visionModel,
     DEEPL_CODES,

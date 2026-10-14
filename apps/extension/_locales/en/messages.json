@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Please log in to your account first"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Unable to connect to the account service. Check your network and try again."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Your session has expired. Please log in again."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Failed to read account status ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Login window closed"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Invalid login request. Please try again."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Login canceled"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Login failed. Please try again."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Not enough credits: $arg1$ credits needed, $arg2$ remaining",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Text too long. Credit-based translation supports up to $arg1$ characters per request.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Too many requests. Please try again later."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Hosted translation temporarily failed. No credits were deducted. Please try again."
+  },
+  "m_929259172e4d6742": {
+    "message": "Credit-based translation is not yet available"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Credit-based translation failed ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Credit-based translation failed"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Credit-based translation currently supports text only. For image translation, switch to ChatGPT or DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Credit-based translation doesn't require a connection test. Just log in to use it."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Credit-based translation"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Use your account credits after logging in. No API Key required."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Get started"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Choose either method. You can switch anytime."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Recommended"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Free trial"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Log in or sign up to get trial credits. No API Key required—just install and translate."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Log in / Sign up"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Use your own API Key"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Choose ChatGPT, DeepSeek, or DeepL, enter your Key, and connect directly. Fees are charged by the platform based on usage."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Configure"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Account"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Log in to use credit-based translation and view your trial and subscription status."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Remaining credits"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Manage account"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Plans and subscriptions"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Log out"
+  },
+  "m_f45134adb4717545": {
+    "message": "Translation is completed by the AI selection translation service and credits are deducted from your account. No API Key required."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Supports text translation for selection, area translation, and the translation panel. Image translation currently requires switching to ChatGPT or DeepSeek and entering your own Key."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Trial · expires $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Trial active"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Trial ended"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "No trial available"
+  },
+  "m_67721ec2d8463717": {
+    "message": "No subscription"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Updated $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "1 credit is deducted per $arg1$ characters; fewer than $arg1$ characters counts as 1 credit. No credits are deducted for failed translations.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Log in to use credit-based translation. New accounts receive trial credits."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Credit-based translation is not yet available. Please use your own API Key for now."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Credits used up: subscribe to a plan, or switch to your own API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "$arg1$ credits remaining",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "View usage"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● $arg1$ credits remaining",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Sign-in required"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Sign in to claim trial credits"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Credits"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Sign-in required"
+  },
   "extensionName": {
     "message": "AI Translator"
   },

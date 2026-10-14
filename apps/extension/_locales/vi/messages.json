@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Vui lòng đăng nhập tài khoản trước"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Không thể kết nối dịch vụ tài khoản. Vui lòng kiểm tra mạng và thử lại."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Không đọc được trạng thái tài khoản ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Cửa sổ đăng nhập đã đóng"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Yêu cầu đăng nhập không hợp lệ. Vui lòng thử lại."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Đã hủy đăng nhập"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Đăng nhập thất bại. Vui lòng thử lại."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Không đủ điểm: cần $arg1$ điểm, còn lại $arg2$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Văn bản quá dài. Dịch bằng điểm hỗ trợ tối đa $arg1$ ký tự mỗi lần.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Quá nhiều yêu cầu. Vui lòng thử lại sau."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Dịch qua máy chủ tạm thời thất bại. Không bị trừ điểm. Vui lòng thử lại."
+  },
+  "m_929259172e4d6742": {
+    "message": "Dịch bằng điểm chưa khả dụng"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Dịch bằng điểm thất bại ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Dịch bằng điểm thất bại"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Dịch bằng điểm hiện chỉ hỗ trợ văn bản. Để dịch hình ảnh, hãy chuyển sang ChatGPT hoặc DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Dịch bằng điểm không cần kiểm tra kết nối. Chỉ cần đăng nhập là dùng được."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Dịch bằng điểm"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Dùng điểm tài khoản sau khi đăng nhập. Không cần API Key."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Bắt đầu sử dụng"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Chọn một trong hai cách. Bạn có thể chuyển đổi bất cứ lúc nào."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Đề xuất"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Dùng thử miễn phí"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Đăng nhập hoặc đăng ký để nhận điểm dùng thử. Không cần API Key—cài đặt là dịch được ngay."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Đăng nhập / Đăng ký"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Dùng API Key của riêng bạn"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Chọn ChatGPT, DeepSeek hoặc DeepL, nhập Key và kết nối trực tiếp. Phí do nền tảng thu theo mức sử dụng."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Cấu hình"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Tài khoản"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Đăng nhập để dùng dịch bằng điểm và xem trạng thái dùng thử và đăng ký."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Điểm còn lại"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Quản lý tài khoản"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Gói và đăng ký"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Đăng xuất"
+  },
+  "m_f45134adb4717545": {
+    "message": "Bản dịch được thực hiện bởi dịch vụ dịch bằng chọn văn bản AI và trừ điểm tài khoản. Không cần API Key."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Hỗ trợ dịch văn bản cho chọn văn bản, dịch vùng và bảng dịch. Dịch hình ảnh hiện cần chuyển sang ChatGPT hoặc DeepSeek và nhập Key của riêng bạn."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Văn bản gốc được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch. Chúng tôi không lưu văn bản gốc và bản dịch; tài khoản chỉ ghi số ký tự và điểm đã trừ."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Đang dùng thử · hết hạn $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Đang dùng thử"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Dùng thử đã kết thúc"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Không có bản dùng thử"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Không có đăng ký"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Cập nhật $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "Mỗi $arg1$ ký tự trừ 1 điểm; dưới $arg1$ ký tự tính 1 điểm. Dịch thất bại không trừ điểm.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Đăng nhập để dùng dịch bằng điểm. Tài khoản mới được tặng điểm dùng thử."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Dịch bằng điểm chưa khả dụng, vui lòng sử dụng API Key của bạn."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Đã hết điểm: hãy đăng ký gói hoặc chuyển sang API Key của bạn."
+  },
+  "m_84378de635f8c238": {
+    "message": "Còn $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Xem mức sử dụng"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● Còn $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Cần đăng nhập"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Đăng nhập để nhận điểm dùng thử"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Điểm"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Cần đăng nhập"
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

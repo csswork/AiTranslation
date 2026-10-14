@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Silakan masuk ke akun Anda terlebih dahulu"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Tidak dapat terhubung ke layanan akun. Periksa jaringan Anda dan coba lagi."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Sesi Anda telah berakhir. Silakan masuk lagi."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Gagal membaca status akun ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Jendela masuk ditutup"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Permintaan masuk tidak valid. Silakan coba lagi."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Masuk dibatalkan"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Gagal masuk. Silakan coba lagi."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Poin tidak cukup: diperlukan $arg1$ poin, tersisa $arg2$ poin",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Teks terlalu panjang. Terjemahan poin mendukung hingga $arg1$ karakter per permintaan.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Terlalu banyak permintaan. Silakan coba lagi nanti."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Terjemahan terkelola sementara gagal. Tidak ada poin yang dikurangi. Silakan coba lagi."
+  },
+  "m_929259172e4d6742": {
+    "message": "Terjemahan poin belum tersedia"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Terjemahan poin gagal ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Terjemahan poin gagal"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Terjemahan poin saat ini hanya mendukung teks. Untuk terjemahan gambar, beralihlah ke ChatGPT atau DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Terjemahan poin tidak memerlukan uji koneksi. Cukup masuk untuk menggunakannya."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Terjemahan poin"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Gunakan poin akun setelah masuk. Tidak perlu API Key."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Mulai"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Pilih salah satu metode. Anda dapat beralih kapan saja."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Direkomendasikan"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Uji coba gratis"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Masuk atau daftar untuk mendapatkan poin uji coba. Tidak perlu API Key—cukup pasang dan terjemahkan."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Masuk / Daftar"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Gunakan API Key Anda sendiri"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Pilih ChatGPT, DeepSeek, atau DeepL, masukkan Key Anda, dan hubungkan langsung. Biaya ditagih oleh platform berdasarkan penggunaan."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Konfigurasi"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Akun"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Masuk untuk menggunakan terjemahan poin dan melihat status uji coba serta langganan Anda."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Poin tersisa"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Kelola akun"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Paket dan langganan"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Keluar"
+  },
+  "m_f45134adb4717545": {
+    "message": "Terjemahan diselesaikan oleh layanan terjemahan pilihan AI dan poin dikurangi dari akun Anda. Tidak perlu API Key."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Mendukung terjemahan teks untuk pemilihan, terjemahan area, dan panel terjemahan. Terjemahan gambar saat ini memerlukan beralih ke ChatGPT atau DeepSeek dan memasukkan Key Anda sendiri."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Teks sumber dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan. Kami tidak menyimpan teks sumber atau terjemahan; akun Anda hanya mencatat jumlah karakter dan pengurangan poin."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Uji coba · berakhir $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Uji coba aktif"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Uji coba berakhir"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Tidak ada uji coba"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Tidak ada langganan"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Diperbarui $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "1 poin dikurangi per $arg1$ karakter; kurang dari $arg1$ karakter dihitung 1 poin. Tidak ada poin yang dikurangi untuk terjemahan yang gagal.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Masuk untuk menggunakan terjemahan poin. Akun baru mendapatkan poin uji coba."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Terjemahan berbasis kredit belum tersedia. Untuk saat ini, gunakan API Key Anda sendiri."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Kredit habis: berlangganan paket, atau beralih ke API Key Anda sendiri."
+  },
+  "m_84378de635f8c238": {
+    "message": "Sisa $arg1$ kredit",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Lihat penggunaan"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● Sisa $arg1$ kredit",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Perlu masuk"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Masuk untuk klaim kredit uji coba"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ kredit",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Kredit"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Perlu masuk"
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

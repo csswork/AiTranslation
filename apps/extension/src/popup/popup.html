@@ -60,6 +60,30 @@
       }
       button.btn.ghost:hover { background: var(--accent-soft); filter: none; }
       .hint { margin: 9px 0 0; font-size: 11px; color: var(--faint); text-align: center; }
+      [hidden] { display: none !important; }
+      /* 账户：已登录显示首字母圆标、用户名、试用 / 订阅与剩余点数；未登录显示注册引导按钮 */
+      :root { --gradient: linear-gradient(135deg, #5b5eea, #9747ec); }
+      @media (prefers-color-scheme: dark) { :root { --gradient: linear-gradient(135deg, #6d70f5, #a855f7); } }
+      .account { margin-top: 12px; }
+      .account-in {
+        display: flex; align-items: center; gap: 9px; padding: 9px 10px;
+        border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
+        background: transparent; width: 100%; font: inherit; color: inherit; text-align: start;
+      }
+      .account-in:hover { background: var(--accent-soft); }
+      .avatar {
+        flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+        background: var(--gradient); color: #fff; font-size: 12px; font-weight: 700;
+      }
+      .who { display: grid; min-width: 0; flex: 1; }
+      .who b { font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .who span { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .credits {
+        font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
+        background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .credits.empty { background: none; color: var(--warn); }
+      button.btn.gradient { background: var(--gradient); margin-top: 0; }
     </style>
   </head>
   <body>
@@ -68,18 +92,27 @@
       <div class="name">AI 划词翻译</div>
     </div>
 
+    <div class="account">
+      <button class="account-in" id="accountIn" type="button" hidden>
+        <span class="avatar" id="avatar" aria-hidden="true"></span>
+        <span class="who"><b id="username"></b><span id="accountMeta"></span></span>
+        <b class="credits" id="credits"></b>
+      </button>
+      <button id="login" class="btn gradient" type="button" hidden>登录领取试用点数</button>
+    </div>
+
     <p class="steps" id="targetName"></p>
 
     <div class="row">
       <span class="label">翻译平台</span>
       <select id="provider"></select>
     </div>
-    <div class="row">
+    <div class="row" id="modelRow">
       <span class="label">当前模型</span>
       <span class="state" id="model">—</span>
     </div>
     <div class="row">
-      <span class="label">API Key</span>
+      <span class="label" id="keyLabel">API Key</span>
       <span class="state" id="keyState">—</span>
     </div>
 

@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Bitte melden Sie sich zuerst an"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Verbindung zum Kontodienst nicht möglich. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Kontostatus konnte nicht gelesen werden ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Anmeldefenster geschlossen"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Ungültige Anmeldeanfrage. Bitte versuchen Sie es erneut."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Anmeldung abgebrochen"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Nicht genügend Punkte: $arg1$ Punkte benötigt, $arg2$ verbleibend",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Text zu lang. Punktebasierte Übersetzung unterstützt bis zu $arg1$ Zeichen pro Anfrage.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Zu viele Anfragen. Bitte versuchen Sie es später erneut."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Gehostete Übersetzung vorübergehend fehlgeschlagen. Es wurden keine Punkte abgezogen. Bitte versuchen Sie es erneut."
+  },
+  "m_929259172e4d6742": {
+    "message": "Punktebasierte Übersetzung ist noch nicht verfügbar"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Punktebasierte Übersetzung fehlgeschlagen ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Punktebasierte Übersetzung fehlgeschlagen"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Punktebasierte Übersetzung unterstützt derzeit nur Text. Für Bildübersetzung wechseln Sie zu ChatGPT oder DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Punktebasierte Übersetzung erfordert keinen Verbindungstest. Melden Sie sich einfach an, um sie zu nutzen."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Punktebasierte Übersetzung"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Nutzen Sie Ihre Kontopunkte nach der Anmeldung. Kein API Key erforderlich."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Erste Schritte"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Wählen Sie eine der beiden Methoden. Sie können jederzeit wechseln."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Empfohlen"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Kostenlos testen"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Melden Sie sich an oder registrieren Sie sich, um Testpunkte zu erhalten. Kein API Key erforderlich – einfach installieren und übersetzen."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Anmelden / Registrieren"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Eigenen API Key verwenden"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Wählen Sie ChatGPT, DeepSeek oder DeepL, geben Sie Ihren Key ein und verbinden Sie sich direkt. Die Kosten werden von der Plattform nach Nutzung berechnet."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Konfigurieren"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Konto"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Melden Sie sich an, um die punktebasierte Übersetzung zu nutzen und Ihren Test- und Abostatus einzusehen."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Verbleibende Punkte"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Konto verwalten"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Tarife und Abonnements"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Abmelden"
+  },
+  "m_f45134adb4717545": {
+    "message": "Die Übersetzung erfolgt durch den KI-Textauswahl-Übersetzungsdienst und Punkte werden von Ihrem Konto abgezogen. Kein API Key erforderlich."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Unterstützt Textübersetzung für Textauswahl, Bereichsübersetzung und das Übersetzungsfenster. Bildübersetzung erfordert derzeit den Wechsel zu ChatGPT oder DeepSeek und die Eingabe Ihres eigenen Keys."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Der Ausgangstext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet. Wir speichern weder Ausgangstext noch Übersetzung; Ihr Konto zeichnet nur Zeichenzahlen und Punkteabzüge auf."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Testphase · läuft ab am $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Testphase aktiv"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Testphase beendet"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Keine Testphase verfügbar"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Kein Abonnement"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Aktualisiert am $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "Pro $arg1$ Zeichen wird 1 Punkt abgezogen; weniger als $arg1$ Zeichen zählt als 1 Punkt. Bei fehlgeschlagenen Übersetzungen werden keine Punkte abgezogen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Melden Sie sich an, um die punktebasierte Übersetzung zu nutzen. Neue Konten erhalten Testpunkte."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Übersetzung mit Guthaben ist noch nicht verfügbar. Bitte verwenden Sie vorerst Ihren eigenen API Key."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Guthaben aufgebraucht: Abonnieren Sie einen Tarif oder wechseln Sie zu Ihrem eigenen API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "Noch $arg1$ Guthaben",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Nutzung ansehen"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● Noch $arg1$ Guthaben",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Anmeldung erforderlich"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Anmelden und Testguthaben erhalten"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ Guthaben",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Guthaben"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Anmeldung erforderlich"
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

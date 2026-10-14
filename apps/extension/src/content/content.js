@@ -500,7 +500,7 @@
       dom.originalText.dir = 'auto';
       dom.error.hidden = true;
       dom.skeleton.hidden = false;
-      dom.meta.textContent = `${providerLabel} · ${providerModel}`;
+      dom.meta.textContent = [providerLabel, providerModel].filter(Boolean).join(' · ');
       dom.copy.textContent = t("复制译文");
 
       dom.note.hidden = !message.truncated;
@@ -550,7 +550,7 @@
       dom.skeleton.hidden = true;
       setBusy(false);
       const seconds = elapsed ? ` · ${(elapsed / 1000).toFixed(1)}s` : '';
-      dom.meta.textContent = `${providerLabel} · ${providerModel}${seconds}`;
+      dom.meta.textContent = `${[providerLabel, providerModel].filter(Boolean).join(' · ')}${seconds}`;
       releasePort();
     }
 

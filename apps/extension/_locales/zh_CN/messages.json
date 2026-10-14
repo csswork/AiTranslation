@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "请先登录账户"
+  },
+  "m_bcb4baf673381988": {
+    "message": "无法连接账户服务，请检查网络后重试"
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "登录已失效，请重新登录"
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "读取账户状态失败（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "登录窗口已关闭"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "登录请求无效，请重试"
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "已取消登录"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "登录失败，请重试"
+  },
+  "m_5a966ae485d2c996": {
+    "message": "点数不足：本次需要 $arg1$ 点，剩余 $arg2$ 点",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "文字太长，点数翻译单次最多 $arg1$ 字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "请求太频繁，稍后再试"
+  },
+  "m_366f2896bd872b21": {
+    "message": "托管翻译暂时失败，本次没有扣点，请重试"
+  },
+  "m_929259172e4d6742": {
+    "message": "点数翻译暂未开放"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "点数翻译失败（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "点数翻译失败"
+  },
+  "m_4103a84ace27803a": {
+    "message": "点数翻译暂时只支持文字，图片翻译请切换到 ChatGPT 或 DeepSeek"
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "点数翻译不需要测试连接，登录后即可使用"
+  },
+  "m_ece94e82993f620d": {
+    "message": "点数翻译"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "登录后用账户点数，不需要 API Key"
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "开始使用"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "两种方式任选其一，之后随时可以切换。"
+  },
+  "m_1452deafc6d96546": {
+    "message": "推荐"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "免费试用"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "登录或注册账户即可获得试用点数，不需要 API Key，装好就能翻译。"
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "登录 / 注册"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "使用自己的 API Key"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "选择 ChatGPT、DeepSeek 或 DeepL，填入 Key 后直接连接，费用由平台按用量收取。"
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "去配置"
+  },
+  "m_061246bd31e084a7": {
+    "message": "账户"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "登录后可以使用点数翻译，并查看试用与订阅状态。"
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "剩余点数"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "管理账户"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "套餐与订阅"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "退出登录"
+  },
+  "m_f45134adb4717545": {
+    "message": "由 AI 划词翻译的服务完成翻译并扣除账户点数，不需要 API Key。"
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "支持划词、区域翻译和翻译面板的文字翻译；图片翻译暂时需要切换到 ChatGPT 或 DeepSeek 并填写自己的 Key。"
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。"
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "试用中 · $arg1$ 到期",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "试用中"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "试用已结束"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "未获得试用"
+  },
+  "m_67721ec2d8463717": {
+    "message": "暂无订阅"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "更新于 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "每 $arg1$ 字扣 1 点，不足 $arg1$ 字按 1 点计；翻译失败不扣点。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "登录后即可使用点数翻译，新账户赠送试用点数。"
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "点数翻译暂未开放，请先使用自己的 API Key。"
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "点数已用完：可以订阅套餐，或切换到自己的 API Key。"
+  },
+  "m_84378de635f8c238": {
+    "message": "剩余 $arg1$ 点",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "查看用量"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● 剩余 $arg1$ 点",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ 需要登录"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "登录领取试用点数"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ 点",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "点数"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "需要登录"
+  },
   "extensionName": {
     "message": "AI 划词翻译"
   },

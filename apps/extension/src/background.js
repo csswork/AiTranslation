@@ -1,5 +1,6 @@
 /**
- * Service worker：管右键菜单的显隐、发起翻译、把结果流式推给页面，以及开关视频字幕。
+ * Service worker：管右键菜单的显隐、发起翻译、把结果流式推给页面、开关视频字幕，
+ * 以及账户登录、状态与托管翻译（只有这里会请求账户服务）。
  */
 import './lib/languages.js';
 import './lib/messages.js';
@@ -7,6 +8,7 @@ import './lib/i18n.js';
 import './lib/lang.js';
 import './lib/settings.js';
 import './lib/providers.js';
+import './lib/account.js';
 
 const t = (...args) => AITrI18n.t(...args);
 
@@ -119,7 +121,10 @@ function createMenu() {
 
 chrome.runtime.onInstalled.addListener((details) => {
   createMenu();
-  if (details.reason === 'install') chrome.runtime.openOptionsPage();
+  // 新安装：设置页顶部显示注册引导（登录领取试用点数，或使用自己的 API Key），完成任一项后收起
+  if (details.reason === 'install') {
+    chrome.storage.local.set({ onboarding: 'pending' }).finally(() => chrome.runtime.openOptionsPage());
+  }
 });
 chrome.runtime.onStartup.addListener(createMenu);
 AITrI18n.onChange(createMenu);
@@ -589,6 +594,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'video-toggle') {
     if (message.tabId != null) toggleVideoCaptions({ tabId: message.tabId });
     return false;
+  }
+
+  /* ---------------------------------------------------------- 账户与托管翻译 */
+
+  // 账户操作只接受扩展自己的页面（设置页、弹窗、翻译面板）发来的消息，网页内容脚本不能调用。
+  const fromExtensionPage = sender.id === chrome.runtime.id && String(sender.url || '').startsWith(chrome.runtime.getURL(''));
+  const accountReply = (task) => {
+    task.then((status) => sendResponse({ ok: true, status }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), code: err?.code || null }));
+    return true;
+  };
+  if (type === 'account-login' && fromExtensionPage) return accountReply(AITrAccount.login());
+  if (type === 'account-logout' && fromExtensionPage) return accountReply(AITrAccount.logout());
+  if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
+  if (type === 'hosted-translate' && fromExtensionPage) {
+    AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source })
+      .then((texts) => sendResponse({ ok: true, texts }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
+    return true;
   }
 
   if (type === 'test-provider') {

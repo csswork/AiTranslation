@@ -146,7 +146,7 @@
     el.out.textContent = '';
     el.out.dir = S.TARGETS[targetId].dir;
     el.error.hidden = true;
-    el.meta.textContent = `${provider.label} · ${provider.model} · ${label(targetId)}`;
+    el.meta.textContent = [provider.label, provider.model, label(targetId)].filter(Boolean).join(' · ');
     setBusy(true);
     renderStatus();
 
@@ -172,8 +172,7 @@
         return;
       }
       const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
-      el.meta.textContent =
-        `${provider.label} · ${provider.model} · ${label(targetId)} · ${seconds}s`;
+      el.meta.textContent = [provider.label, provider.model, label(targetId), `${seconds}s`].filter(Boolean).join(' · ');
     } catch (err) {
       if (signal.aborted || err?.name === 'AbortError') return;
       showError(String(err?.message || err), err?.action);

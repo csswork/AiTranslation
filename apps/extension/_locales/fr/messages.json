@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Veuillez d'abord vous connecter à votre compte"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Impossible de se connecter au service de compte. Vérifiez votre réseau et réessayez."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Votre session a expiré. Veuillez vous reconnecter."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Échec de la lecture de l'état du compte ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Fenêtre de connexion fermée"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Demande de connexion invalide. Veuillez réessayer."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Connexion annulée"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Échec de la connexion. Veuillez réessayer."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Points insuffisants : $arg1$ points nécessaires, $arg2$ restants",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Texte trop long. La traduction par points prend en charge jusqu'à $arg1$ caractères par requête.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Trop de requêtes. Veuillez réessayer plus tard."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Échec temporaire de la traduction hébergée. Aucun point n'a été déduit. Veuillez réessayer."
+  },
+  "m_929259172e4d6742": {
+    "message": "La traduction par points n'est pas encore disponible"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Échec de la traduction par points ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Échec de la traduction par points"
+  },
+  "m_4103a84ace27803a": {
+    "message": "La traduction par points prend actuellement en charge le texte uniquement. Pour la traduction d'images, passez à ChatGPT ou DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "La traduction par points ne nécessite pas de test de connexion. Connectez-vous simplement pour l'utiliser."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Traduction par points"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Utilisez les points de votre compte après connexion. Aucune clé API requise."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Commencer"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Choisissez l'une des deux méthodes. Vous pouvez changer à tout moment."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Recommandé"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Essai gratuit"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Connectez-vous ou inscrivez-vous pour obtenir des points d'essai. Aucune clé API requise : installez et traduisez."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Connexion / Inscription"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Utiliser votre propre clé API"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Choisissez ChatGPT, DeepSeek ou DeepL, saisissez votre clé et connectez-vous directement. Les frais sont facturés par la plateforme selon l'utilisation."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Configurer"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Compte"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Connectez-vous pour utiliser la traduction par points et consulter l'état de votre essai et de votre abonnement."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Points restants"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Gérer le compte"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Forfaits et abonnements"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Se déconnecter"
+  },
+  "m_f45134adb4717545": {
+    "message": "La traduction est effectuée par le service de traduction par sélection IA et les points sont déduits de votre compte. Aucune clé API requise."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Prend en charge la traduction de texte pour la sélection, la traduction de zone et le panneau de traduction. La traduction d'images nécessite actuellement de passer à ChatGPT ou DeepSeek et de saisir votre propre clé."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Le texte source est envoyé via nos serveurs au fournisseur de modèle (actuellement DeepSeek) pour la traduction. Nous ne conservons ni le texte source ni la traduction ; votre compte enregistre uniquement le nombre de caractères et les points déduits."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Essai · expire le $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Essai en cours"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Essai terminé"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Aucun essai disponible"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Aucun abonnement"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Mis à jour le $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "1 point est déduit par $arg1$ caractères ; moins de $arg1$ caractères compte pour 1 point. Aucun point n'est déduit en cas d'échec de traduction.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Connectez-vous pour utiliser la traduction par points. Les nouveaux comptes reçoivent des points d'essai."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "La traduction par crédits n'est pas encore disponible. Veuillez utiliser votre propre API Key pour le moment."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Crédits épuisés : abonnez-vous à un forfait ou passez à votre propre API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "$arg1$ crédits restants",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Voir l'utilisation"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● $arg1$ crédits restants",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Connexion requise"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Connectez-vous pour obtenir des crédits d'essai"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ crédits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Crédits"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Connexion requise"
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

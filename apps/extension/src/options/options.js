@@ -2,6 +2,7 @@
   await AITrI18n.ready;
   const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
+  const ACCOUNT_KEY = 'accountStatus'; // 与 lib/account.js 的 STATUS_KEY 一致
   const $ = (id) => document.getElementById(id);
   const el = {
     cards: $('providerCards'),
@@ -40,10 +41,35 @@
     videoCloud: $('videoCloud'),
     videoTranslate: $('videoTranslate'),
     videoTarget: $('videoTarget'),
+    welcome: $('welcome'),
+    useOwnKey: $('useOwnKey'),
+    accountOut: $('accountOut'),
+    accountIn: $('accountIn'),
+    accountActions: $('accountActions'),
+    accountAvatar: $('accountAvatar'),
+    accountName: $('accountName'),
+    accountCredits: $('accountCredits'),
+    trialBadge: $('trialBadge'),
+    planBadge: $('planBadge'),
+    accountUpdated: $('accountUpdated'),
+    accountError: $('accountError'),
+    manageAccount: $('manageAccount'),
+    viewPlans: $('viewPlans'),
+    logout: $('logout'),
+    providerSection: $('providerSection'),
+    providerConfig: $('providerConfig'),
+    hostedConfig: $('hostedConfig'),
+    hostedState: $('hostedState'),
+    hostedRate: $('hostedRate'),
+    hostedActions: $('hostedActions'),
   };
 
   let settings = S.normalize(null);
   let statusTimer = 0;
+  // 账户状态由 service worker 写进 storage（accountStatus），这里只读和监听，不直接请求账户服务
+  let account = { signedIn: false };
+  let onboarding = null;
+  let lastRefresh = 0;
 
   function flash(text) {
     el.status.textContent = text;
@@ -64,20 +90,130 @@
     return save({ [id]: { ...settings[id], [field]: value } });
   }
 
+  /* ------------------------------------------------------------- 账户 */
+
+  const balanceOf = () => account.credits?.balance ?? 0;
+  const hasOwnKey = () => S.KEY_PROVIDERS.some((id) => settings[id]?.apiKey);
+
+  async function finishOnboarding() {
+    if (onboarding === 'done') return;
+    onboarding = 'done';
+    await chrome.storage.local.set({ onboarding: 'done' });
+    renderAccount();
+  }
+
+  function showAccountError(text) {
+    el.accountError.hidden = !text;
+    el.accountError.textContent = text || '';
+  }
+
+  function renderAccount() {
+    const welcome = !account.signedIn && onboarding === 'pending' && !hasOwnKey();
+    el.welcome.hidden = !welcome;
+    el.accountOut.hidden = account.signedIn || welcome;
+    el.accountIn.hidden = !account.signedIn;
+    el.accountActions.hidden = !account.signedIn;
+    if (!account.signedIn) return;
+
+    const name = account.username || '';
+    el.accountAvatar.textContent = (name[0] || '?').toUpperCase();
+    el.accountName.textContent = name;
+    el.accountCredits.textContent = String(balanceOf());
+    el.accountCredits.className = balanceOf() > 0 ? '' : 'empty';
+
+    const credits = account.credits || {};
+    const expires = credits.trialExpiresAt ? new Date(credits.trialExpiresAt).toLocaleDateString(AITrI18n.locale?.() || undefined) : '';
+    el.trialBadge.textContent = credits.trialActive
+      ? (expires ? t('试用中 · $1 到期', [expires]) : t('试用中'))
+      : credits.trialExpiresAt ? t('试用已结束') : t('未获得试用');
+    el.trialBadge.className = `badge ${credits.trialActive ? 'ok' : ''}`;
+    el.planBadge.textContent = account.subscription?.name || t('暂无订阅');
+    el.planBadge.className = `badge ${account.subscription ? 'ok' : ''}`;
+    el.accountUpdated.textContent = account.updatedAt
+      ? t('更新于 $1', [new Date(account.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })])
+      : '';
+  }
+
+  /** 选中「点数翻译」时显示的说明与状态。 */
+  function renderHosted() {
+    const rate = account.hosted?.charsPerCredit || 500;
+    el.hostedRate.textContent = t('每 $1 字扣 1 点，不足 $1 字按 1 点计；翻译失败不扣点。', [rate]);
+    const state = document.createElement('p');
+    const actions = [];
+    const button = (label, onClick, ghost = false) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = ghost ? 'btn ghost' : 'btn';
+      b.textContent = label;
+      b.addEventListener('click', onClick);
+      return b;
+    };
+    if (!account.signedIn) {
+      state.className = 'hosted-line';
+      state.textContent = t('登录后即可使用点数翻译，新账户赠送试用点数。');
+      actions.push(button(t('登录 / 注册'), login));
+    } else if (account.hosted && !account.hosted.available) {
+      state.className = 'hosted-line warn';
+      state.textContent = t('点数翻译暂未开放，请先使用自己的 API Key。');
+    } else if (balanceOf() <= 0) {
+      state.className = 'hosted-line warn';
+      state.textContent = t('点数已用完：可以订阅套餐，或切换到自己的 API Key。');
+      actions.push(button(t('套餐与订阅'), () => openLink('plans')));
+    } else {
+      state.className = 'hosted-line big';
+      state.textContent = t('剩余 $1 点', [balanceOf()]);
+      actions.push(button(t('查看用量'), () => openLink('usage'), true));
+    }
+    el.hostedState.replaceChildren(state);
+    el.hostedActions.replaceChildren(...actions);
+  }
+
+  function openLink(name) {
+    const url = account.links?.[name];
+    if (url) chrome.tabs.create({ url });
+  }
+
+  async function refreshAccount() {
+    lastRefresh = Date.now();
+    const reply = await chrome.runtime.sendMessage({ type: 'account-refresh' }).catch(() => null);
+    // 网络失败时保留上次的状态，只在设置页提示一下
+    showAccountError(reply && !reply.ok && reply.code === 'network' ? reply.error : '');
+  }
+
+  async function login() {
+    showAccountError('');
+    document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = true; });
+    const reply = await chrome.runtime.sendMessage({ type: 'account-login' }).catch((err) => ({ ok: false, error: String(err?.message || err) }));
+    document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = false; });
+    if (!reply?.ok) {
+      if (reply?.code !== 'cancelled') showAccountError(reply?.error || t('登录失败，请重试'));
+      return;
+    }
+    await finishOnboarding();
+    // 还没配置任何 Key 时，登录后直接用点数翻译
+    if (!hasOwnKey() && settings.provider !== 'hosted') {
+      await save({ provider: 'hosted' });
+      renderProviderConfig();
+    }
+  }
+
   function renderCards() {
     const current = settings.provider;
     el.cards.replaceChildren(
       ...S.providerList().map((item) => {
-        const configured = Boolean(settings[item.id]?.apiKey);
+        const hosted = item.kind === 'hosted';
+        const configured = hosted ? account.signedIn && balanceOf() > 0 : Boolean(settings[item.id]?.apiKey);
         const card = document.createElement('button');
         card.type = 'button';
-        card.className = 'provider-card';
+        card.className = hosted ? 'provider-card hosted' : 'provider-card';
         card.setAttribute('aria-pressed', String(item.id === current));
         card.innerHTML =
           `<b></b><i></i><em class="${configured ? 'ready' : ''}"></em>`;
         card.querySelector('b').textContent = item.label;
         card.querySelector('i').textContent = item.hint;
-        card.querySelector('em').textContent = configured ? t("● 已配置 Key") : t("○ 未配置 Key");
+        card.querySelector('em').textContent = hosted
+          ? (account.signedIn ? t('● 剩余 $1 点', [balanceOf()]) : t('○ 需要登录'))
+          : configured ? t("● 已配置 Key") : t("○ 未配置 Key");
         card.addEventListener('click', () => {
           if (settings.provider === item.id) return;
           save({ provider: item.id }).then(renderProviderConfig);
@@ -89,6 +225,15 @@
 
   function renderProviderConfig() {
     const def = S.PROVIDERS[settings.provider];
+    const hosted = S.isHosted(settings.provider);
+    el.providerConfig.hidden = hosted;
+    el.hostedConfig.hidden = !hosted;
+    el.stream.disabled = !S.supportsStreaming(settings.provider);
+    if (hosted) {
+      renderHosted();
+      el.streamHelp.textContent = t("$1 一次性返回全部译文，没有逐字显示。", [S.resolveProvider(settings).label]);
+      return;
+    }
     const conf = settings[settings.provider];
 
     // 传统翻译接口没有「模型」这个概念，地址也由 key 自动判断，
@@ -298,7 +443,45 @@
 
   /* ------------------------------------------------------------- 事件 */
 
-  el.apiKey.addEventListener('change', () => saveProviderField('apiKey', el.apiKey.value.trim()));
+  el.apiKey.addEventListener('change', async () => {
+    await saveProviderField('apiKey', el.apiKey.value.trim());
+    if (el.apiKey.value.trim()) finishOnboarding();
+  });
+
+  document.querySelectorAll('[data-login]').forEach((button) => button.addEventListener('click', login));
+  el.logout.addEventListener('click', async () => {
+    el.logout.disabled = true;
+    await chrome.runtime.sendMessage({ type: 'account-logout' }).catch(() => {});
+    el.logout.disabled = false;
+  });
+  el.manageAccount.addEventListener('click', () => openLink('account'));
+  el.viewPlans.addEventListener('click', () => openLink('plans'));
+  el.useOwnKey.addEventListener('click', async () => {
+    await finishOnboarding();
+    if (S.isHosted(settings.provider)) {
+      await save({ provider: S.KEY_PROVIDERS[0] });
+      renderProviderConfig();
+    }
+    el.providerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.apiKey.focus({ preventScroll: true });
+  });
+
+  // 实时更新：账户状态（登录、退出、每次点数翻译后的余额）由 service worker 写入，这里跟着刷新；
+  // 弹窗里切换了平台也同步过来。
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') return;
+    if (changes[ACCOUNT_KEY]) {
+      account = changes[ACCOUNT_KEY].newValue || { signedIn: false };
+      renderAccount();
+      renderCards();
+      if (S.isHosted(settings.provider)) renderHosted();
+    }
+    if (changes.settings?.newValue && changes.settings.newValue.provider !== settings.provider) {
+      settings = S.normalize(changes.settings.newValue);
+      renderCards();
+      renderProviderConfig();
+    }
+  });
   el.model.addEventListener('change', () => saveProviderField('model', el.model.value.trim()));
 
   el.baseUrl.addEventListener('change', async () => {
@@ -327,7 +510,7 @@
     await AITrI18n.reload();
   });
   AITrI18n.onChange(() => {
-    renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang();
+    renderAccount(); renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang();
     renderShortcutKey(); renderRuleCount(); renderLangState();
   });
 
@@ -400,7 +583,10 @@
 
   // 设置完切回这个标签页时，自动刷新显示，省得手动刷新
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) renderShortcutKey();
+    if (document.hidden) return;
+    renderShortcutKey();
+    // 切回设置页时更新账户状态（例如刚在网页端订阅或退出），30 秒内不重复请求
+    if (Date.now() - lastRefresh > 30_000) refreshAccount();
   });
 
   el.test.addEventListener('click', async () => {
@@ -448,6 +634,11 @@
 
   (async () => {
     settings = await S.loadSettings();
+    const stored = await chrome.storage.local.get([ACCOUNT_KEY, 'onboarding']);
+    account = stored[ACCOUNT_KEY] || { signedIn: false };
+    onboarding = stored.onboarding || null;
+    renderAccount();
+    refreshAccount();
     renderCards();
     renderProviderConfig();
     renderBehavior();

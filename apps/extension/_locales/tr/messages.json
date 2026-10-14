@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Lütfen önce hesabınıza giriş yapın"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Hesap hizmetine bağlanılamıyor. Ağınızı kontrol edip tekrar deneyin."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Hesap durumu okunamadı ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Giriş penceresi kapatıldı"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Geçersiz giriş isteği. Lütfen tekrar deneyin."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Giriş iptal edildi"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Giriş başarısız. Lütfen tekrar deneyin."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Yetersiz kredi: bu işlem için $arg1$ kredi gerekiyor, $arg2$ kaldı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Metin çok uzun. Krediyle çeviri tek seferde en fazla $arg1$ karakter destekler.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Çok fazla istek. Lütfen daha sonra tekrar deneyin."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Barındırılan çeviri geçici olarak başarısız oldu. Kredi düşülmedi. Lütfen tekrar deneyin."
+  },
+  "m_929259172e4d6742": {
+    "message": "Krediyle çeviri henüz kullanılamıyor"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Krediyle çeviri başarısız oldu ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Krediyle çeviri başarısız oldu"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Krediyle çeviri şu anda yalnızca metni destekler. Görsel çevirisi için ChatGPT veya DeepSeek'e geçin."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Krediyle çeviri bağlantı testi gerektirmez. Kullanmak için giriş yapmanız yeterli."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Krediyle çeviri"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Giriş yaptıktan sonra hesap kredilerinizi kullanın. API Key gerekmez."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Başlayın"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "İki yöntemden birini seçin. Dilediğiniz zaman geçiş yapabilirsiniz."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Önerilen"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Ücretsiz deneme"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Deneme kredisi almak için giriş yapın veya kaydolun. API Key gerekmez—kurun ve çeviri yapın."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Giriş yap / Kaydol"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Kendi API Key'inizi kullanın"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "ChatGPT, DeepSeek veya DeepL'i seçin, Key'inizi girin ve doğrudan bağlanın. Ücretler platform tarafından kullanıma göre alınır."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Yapılandır"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Hesap"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Krediyle çeviri kullanmak ve deneme ile abonelik durumunuzu görmek için giriş yapın."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Kalan krediler"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Hesabı yönet"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Planlar ve abonelikler"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Çıkış yap"
+  },
+  "m_f45134adb4717545": {
+    "message": "Çeviri, AI seçim çevirisi hizmeti tarafından tamamlanır ve hesabınızdan kredi düşülür. API Key gerekmez."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Seçim, alan çevirisi ve çeviri paneli için metin çevirisini destekler. Görsel çevirisi şu anda ChatGPT veya DeepSeek'e geçmeyi ve kendi Key'inizi girmeyi gerektirir."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "Kaynak metin, çeviri için sunucularımız üzerinden model sağlayıcısına (şu anda DeepSeek) gönderilir. Kaynak veya çevrilmiş metni saklamayız; hesabınız yalnızca karakter sayılarını ve kredi düşümlerini kaydeder."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Deneme · $arg1$ tarihinde sona erer",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Deneme etkin"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Deneme sona erdi"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Deneme yok"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Abonelik yok"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "$arg1$ tarihinde güncellendi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "Her $arg1$ karakter için 1 kredi düşülür; $arg1$ karakterden az metin 1 kredi sayılır. Başarısız çevirilerde kredi düşülmez.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Krediyle çeviri kullanmak için giriş yapın. Yeni hesaplara deneme kredisi verilir."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Puanla çeviri henüz kullanılamıyor. Şimdilik kendi API Key'inizi kullanın."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Puanlar tükendi: bir plana abone olun veya kendi API Key'inize geçin."
+  },
+  "m_84378de635f8c238": {
+    "message": "$arg1$ puan kaldı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Kullanımı görüntüle"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● $arg1$ puan kaldı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Giriş gerekli"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Deneme puanlarını almak için giriş yapın"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ puan",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Puanlar"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Giriş gerekli"
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

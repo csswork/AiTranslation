@@ -16,10 +16,70 @@
         </div>
       </header>
 
-      <section class="card">
+      <!-- 账户：注册引导 / 未登录 / 已登录三种状态由 options.js 按账户状态切换 -->
+      <section class="card account" id="account">
+        <div class="welcome" id="welcome" hidden>
+          <h2>开始使用</h2>
+          <p class="desc">两种方式任选其一，之后随时可以切换。</p>
+          <div class="paths">
+            <div class="path primary">
+              <span class="path-badge">推荐</span>
+              <b>免费试用</b>
+              <p>登录或注册账户即可获得试用点数，不需要 API Key，装好就能翻译。</p>
+              <button class="btn" type="button" data-login>登录 / 注册</button>
+            </div>
+            <div class="path">
+              <b>使用自己的 API Key</b>
+              <p>选择 ChatGPT、DeepSeek 或 DeepL，填入 Key 后直接连接，费用由平台按用量收取。</p>
+              <button class="btn ghost" type="button" id="useOwnKey">去配置</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="account-out" id="accountOut" hidden>
+          <div>
+            <h2>账户</h2>
+            <p class="desc">登录后可以使用点数翻译，并查看试用与订阅状态。</p>
+          </div>
+          <button class="btn" type="button" data-login>登录 / 注册</button>
+        </div>
+
+        <div class="account-in" id="accountIn" hidden>
+          <span class="avatar" id="accountAvatar" aria-hidden="true"></span>
+          <div class="who">
+            <b id="accountName"></b>
+            <span class="badges"><span class="badge" id="trialBadge"></span><span class="badge" id="planBadge"></span></span>
+          </div>
+          <div class="balance">
+            <b id="accountCredits"></b>
+            <span id="accountCreditsLabel">剩余点数</span>
+          </div>
+        </div>
+        <div class="account-actions" id="accountActions" hidden>
+          <button class="btn ghost small" type="button" id="manageAccount">管理账户</button>
+          <button class="btn ghost small" type="button" id="viewPlans">套餐与订阅</button>
+          <button class="btn ghost small" type="button" id="logout">退出登录</button>
+          <span class="help" id="accountUpdated"></span>
+        </div>
+        <p class="test-result err account-error" id="accountError" role="alert" hidden></p>
+      </section>
+
+      <section class="card" id="providerSection">
         <h2>翻译平台</h2>
         <p class="desc">选一个作为默认平台，弹窗里也能随时切换。</p>
         <div class="providers" id="providerCards"></div>
+      </section>
+
+      <section class="card hosted-config" id="hostedConfig" hidden>
+        <h2>点数翻译</h2>
+        <p class="desc">由 AI 划词翻译的服务完成翻译并扣除账户点数，不需要 API Key。</p>
+        <div class="hosted-state" id="hostedState"></div>
+        <ul class="hosted-notes">
+          <li id="hostedRate"></li>
+          <li>支持划词、区域翻译和翻译面板的文字翻译；图片翻译暂时需要切换到 ChatGPT 或 DeepSeek 并填写自己的 Key。</li>
+          <li>原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。</li>
+        </ul>
+        <div class="actions" id="hostedActions"></div>
       </section>
 
       <section class="card" id="providerConfig">

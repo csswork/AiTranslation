@@ -1,4 +1,4 @@
-/** Extract only extension UI templates and explicit t('…') calls, never provider prompts. */
+/** Extract only extension UI templates, explicit t('…') calls and k('…') markers, never provider prompts. */
 import fs from 'node:fs';
 import path from 'node:path';
 export function sourceMessages(root) {
@@ -16,7 +16,8 @@ export function sourceMessages(root) {
       if (!/\.(html|js)$/.test(file) || ['messages.js', 'languages.js'].includes(item.name)) continue;
       const source = fs.readFileSync(file, 'utf8');
       if (file.endsWith('.html')) { html(source); continue; }
-      for (const m of source.matchAll(/\bt\(\s*(?:"((?:\\.|[^"\\])*)"|'((?:\\.|[^'\\])*)')/g)) {
+      // t('…') 是翻译调用；k('…') 只标记「这里的文案稍后用 t() 翻译」（例如平台说明），同样要进目录
+      for (const m of source.matchAll(/\b[tk]\(\s*(?:"((?:\\.|[^"\\])*)"|'((?:\\.|[^'\\])*)')/g)) {
         const raw = m[1] ?? m[2];
         add(raw.replace(/\\([\\'"nrt])/g, (_, c) => ({ n: '\n', r: '\r', t: '\t' })[c] || c));
       }

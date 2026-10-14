@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Log eerst in op je account"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Kan geen verbinding maken met de accountservice. Controleer je netwerk en probeer het opnieuw."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Je sessie is verlopen. Log opnieuw in."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Kan accountstatus niet lezen ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Inlogvenster gesloten"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Ongeldig inlogverzoek. Probeer het opnieuw."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Inloggen geannuleerd"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Inloggen mislukt. Probeer het opnieuw."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Niet genoeg credits: $arg1$ credits nodig, $arg2$ resterend",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Tekst te lang. Vertaling met credits ondersteunt maximaal $arg1$ tekens per aanvraag.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Te veel aanvragen. Probeer het later opnieuw."
+  },
+  "m_366f2896bd872b21": {
+    "message": "Hosted vertaling is tijdelijk mislukt. Er zijn geen credits afgeschreven. Probeer het opnieuw."
+  },
+  "m_929259172e4d6742": {
+    "message": "Vertaling met credits is nog niet beschikbaar"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Vertaling met credits mislukt ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Vertaling met credits mislukt"
+  },
+  "m_4103a84ace27803a": {
+    "message": "Vertaling met credits ondersteunt momenteel alleen tekst. Schakel voor afbeeldingsvertaling over naar ChatGPT of DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "Vertaling met credits vereist geen verbindingstest. Log in om het te gebruiken."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Vertaling met credits"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Gebruik je accountcredits na het inloggen. Geen API Key nodig."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Aan de slag"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Kies een van de twee methoden. Je kunt op elk moment wisselen."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Aanbevolen"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Gratis proberen"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Log in of meld je aan om proefcredits te ontvangen. Geen API Key nodig: installeren en vertalen."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Inloggen / Registreren"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Je eigen API Key gebruiken"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Kies ChatGPT, DeepSeek of DeepL, voer je Key in en maak direct verbinding. De kosten worden door het platform op basis van gebruik in rekening gebracht."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Configureren"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Account"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Log in om vertaling met credits te gebruiken en je proef- en abonnementsstatus te bekijken."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Resterende credits"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Account beheren"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Abonnementen"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Uitloggen"
+  },
+  "m_f45134adb4717545": {
+    "message": "De vertaling wordt uitgevoerd door de AI-selectievertaalservice en er worden credits van je account afgeschreven. Geen API Key nodig."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Ondersteunt tekstvertaling voor selectie, gebiedsvertaling en het vertaalpaneel. Voor afbeeldingsvertaling moet je momenteel overschakelen naar ChatGPT of DeepSeek en je eigen Key invoeren."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "De brontekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd voor vertaling. We slaan de bron- en vertaalde tekst niet op; je account registreert alleen tekentellingen en creditafschrijvingen."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Proefperiode · verloopt $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Proefperiode actief"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Proefperiode afgelopen"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Geen proefperiode beschikbaar"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Geen abonnement"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Bijgewerkt $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "Per $arg1$ tekens wordt 1 credit afgeschreven; minder dan $arg1$ tekens telt als 1 credit. Bij mislukte vertalingen worden geen credits afgeschreven.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Log in om vertaling met credits te gebruiken. Nieuwe accounts ontvangen proefcredits."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "Vertaling met credits is nog niet beschikbaar. Gebruik voorlopig je eigen API Key."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Credits opgebruikt: neem een abonnement, of schakel over naar je eigen API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "Nog $arg1$ credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Gebruik bekijken"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● Nog $arg1$ credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Inloggen vereist"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Log in om proefcredits te ontvangen"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Credits"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Inloggen vereist"
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

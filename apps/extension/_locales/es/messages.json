@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Inicia sesión en tu cuenta primero"
+  },
+  "m_bcb4baf673381988": {
+    "message": "No se pudo conectar con el servicio de cuentas. Comprueba tu red e inténtalo de nuevo."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Tu sesión ha caducado. Inicia sesión de nuevo."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "No se pudo leer el estado de la cuenta ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Ventana de inicio de sesión cerrada"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Solicitud de inicio de sesión no válida. Inténtalo de nuevo."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Inicio de sesión cancelado"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Error al iniciar sesión. Inténtalo de nuevo."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Puntos insuficientes: se necesitan $arg1$ puntos, quedan $arg2$ puntos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Texto demasiado largo. La traducción con puntos admite hasta $arg1$ caracteres por solicitud.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Demasiadas solicitudes. Inténtalo de nuevo más tarde."
+  },
+  "m_366f2896bd872b21": {
+    "message": "La traducción alojada falló temporalmente. No se descontaron puntos. Inténtalo de nuevo."
+  },
+  "m_929259172e4d6742": {
+    "message": "La traducción con puntos aún no está disponible"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Error en la traducción con puntos ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Error en la traducción con puntos"
+  },
+  "m_4103a84ace27803a": {
+    "message": "La traducción con puntos actualmente solo admite texto. Para traducir imágenes, cambia a ChatGPT o DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "La traducción con puntos no requiere probar la conexión. Solo inicia sesión para usarla."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Traducción con puntos"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Usa los puntos de tu cuenta tras iniciar sesión. No se requiere API Key."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Empezar"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Elige cualquiera de los dos métodos. Puedes cambiar cuando quieras."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Recomendado"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Prueba gratuita"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Inicia sesión o regístrate para obtener puntos de prueba. No se requiere API Key: instala y traduce."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Iniciar sesión / Registrarse"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Usar tu propia API Key"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Elige ChatGPT, DeepSeek o DeepL, introduce tu Key y conéctate directamente. La plataforma cobra las tarifas según el uso."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Configurar"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Cuenta"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Inicia sesión para usar la traducción con puntos y consultar el estado de tu prueba y suscripción."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Puntos restantes"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Gestionar cuenta"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Planes y suscripciones"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Cerrar sesión"
+  },
+  "m_f45134adb4717545": {
+    "message": "La traducción se realiza mediante el servicio de traducción por selección con IA y se descuentan puntos de tu cuenta. No se requiere API Key."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Admite traducción de texto por selección, traducción por área y el panel de traducción. La traducción de imágenes actualmente requiere cambiar a ChatGPT o DeepSeek e introducir tu propia Key."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción. No almacenamos el texto original ni la traducción; tu cuenta solo registra el recuento de caracteres y los puntos descontados."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "En prueba · caduca el $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Prueba activa"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Prueba finalizada"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Sin prueba disponible"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Sin suscripción"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Actualizado el $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "Se descuenta 1 punto por cada $arg1$ caracteres; menos de $arg1$ caracteres cuenta como 1 punto. No se descuentan puntos por traducciones fallidas.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Inicia sesión para usar la traducción con puntos. Las cuentas nuevas reciben puntos de prueba."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "La traducción con créditos aún no está disponible. Por ahora, usa tu propia API Key."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Créditos agotados: suscríbete a un plan o cambia a tu propia API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "$arg1$ créditos restantes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Ver uso"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● $arg1$ créditos restantes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Se requiere iniciar sesión"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Inicia sesión para obtener créditos de prueba"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ créditos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Créditos"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Se requiere iniciar sesión"
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

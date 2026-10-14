@@ -39,6 +39,29 @@
     },
   };
 
+  /**
+   * 托管翻译（点数）。账户请求只由 service worker 发出：在 service worker 里直接调用 AITrAccount，
+   * 在扩展页面（翻译面板）里交给 service worker 代发。
+   * @returns {Promise<string[]>}
+   */
+  async function hostedTranslate({ texts, target, source, signal }) {
+    if (globalThis.AITrAccount) {
+      try {
+        return await globalThis.AITrAccount.translate({ texts, target, source, signal });
+      } catch (err) {
+        if (err?.name === 'AbortError') throw err;
+        throw new TranslateError(err.message, err.action);
+      }
+    }
+    const reply = await chrome.runtime.sendMessage({ type: 'hosted-translate', texts, target, source });
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+    if (reply?.ok) return reply.texts;
+    throw new TranslateError(reply?.error || t("点数翻译失败"), reply?.action);
+  }
+
+  const hostedOnlyText = () => new TranslateError(
+    t("点数翻译暂时只支持文字，图片翻译请切换到 ChatGPT 或 DeepSeek"), 'open-options');
+
   /** 400 报的是「参数不支持」时，退回最小请求体重试一次。 */
   const PARAM_COMPLAINT =
     /param|unsupported|unrecognized|unknown field|not support|invalid_request/i;
@@ -218,6 +241,13 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
 
+    // 托管翻译：一次性返回整段译文
+    if (provider.kind === 'hosted') {
+      const [out] = await hostedTranslate({ texts: [text], target: targetId || settings.target, source: sourceId, signal });
+      if (out) yield out;
+      return;
+    }
+
     // 传统翻译接口：一次性返回，没有流式可言
     if (provider.kind === 'mt') {
       const [out] = await deeplTranslate({
@@ -331,6 +361,10 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
 
+    if (provider.kind === 'hosted') {
+      return hostedTranslate({ texts, target: targetId || settings.target, signal });
+    }
+
     // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
     if (provider.kind === 'mt') {
       return deeplTranslate({
@@ -383,6 +417,11 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings);
     const before = context.filter(Boolean).join('\n');
+
+    if (provider.kind === 'hosted') {
+      const [out] = await hostedTranslate({ texts: [text], target: settings.target, signal });
+      return String(out || '').trim();
+    }
 
     if (provider.kind === 'mt') {
       const [out] = await deeplTranslate({
@@ -493,6 +532,7 @@
   async function readImageText({ image, settings, providerId, model, imageSize, order, signal }) {
     const S = globalThis.AITrSettings;
     const base = S.resolveProvider(settings, providerId);
+    if (base.kind === 'hosted') throw hostedOnlyText();
     if (base.kind === 'mt') {
       throw new TranslateError(
         t("$1 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek", [base.label]),
@@ -636,6 +676,7 @@
   async function testConnection({ settings, providerId }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
+    if (provider.kind === 'hosted') throw new TranslateError(t("点数翻译不需要测试连接，登录后即可使用"));
     if (!provider.apiKey) {
       throw new TranslateError(t("请先填写 $1 的 API Key", [provider.label]));
     }
@@ -662,6 +703,7 @@
 
   globalThis.AITrProviders = {
     translate,
+    hostedTranslate,
     deeplTranslate,
     translateBatch,
     translateCaption,

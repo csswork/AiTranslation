@@ -1265,6 +1265,224 @@
       }
     }
   },
+  "m_849698d183197f20": {
+    "message": "Faça login na sua conta primeiro"
+  },
+  "m_bcb4baf673381988": {
+    "message": "Não foi possível conectar ao serviço de conta. Verifique sua rede e tente novamente."
+  },
+  "m_9b9681c3f5c65fd8": {
+    "message": "Sua sessão expirou. Faça login novamente."
+  },
+  "m_0e1f00e9c09352a1": {
+    "message": "Falha ao ler o status da conta ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_bc2456e35b336d31": {
+    "message": "Janela de login fechada"
+  },
+  "m_927407ede0c1dc74": {
+    "message": "Solicitação de login inválida. Tente novamente."
+  },
+  "m_f1656e95e1a4d15b": {
+    "message": "Login cancelado"
+  },
+  "m_673c98e7a0d8ceb5": {
+    "message": "Falha no login. Tente novamente."
+  },
+  "m_5a966ae485d2c996": {
+    "message": "Créditos insuficientes: $arg1$ créditos necessários, $arg2$ restantes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_558fa82780470f46": {
+    "message": "Texto muito longo. A tradução por créditos suporta até $arg1$ caracteres por solicitação.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08cd60ef46bb5160": {
+    "message": "Muitas solicitações. Tente novamente mais tarde."
+  },
+  "m_366f2896bd872b21": {
+    "message": "A tradução hospedada falhou temporariamente. Nenhum crédito foi descontado. Tente novamente."
+  },
+  "m_929259172e4d6742": {
+    "message": "A tradução por créditos ainda não está disponível"
+  },
+  "m_5ea6e62b78247f32": {
+    "message": "Falha na tradução por créditos ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_26c9827f33df5036": {
+    "message": "Falha na tradução por créditos"
+  },
+  "m_4103a84ace27803a": {
+    "message": "A tradução por créditos atualmente suporta apenas texto. Para tradução de imagens, mude para ChatGPT ou DeepSeek."
+  },
+  "m_e675111ecc7e0a28": {
+    "message": "A tradução por créditos não exige teste de conexão. Basta fazer login para usá-la."
+  },
+  "m_ece94e82993f620d": {
+    "message": "Tradução por créditos"
+  },
+  "m_51c99fc2e14a9b84": {
+    "message": "Use os créditos da sua conta após fazer login. Nenhuma API Key necessária."
+  },
+  "m_715ee9dc842f34e4": {
+    "message": "Começar"
+  },
+  "m_320cc22dc56594eb": {
+    "message": "Escolha um dos dois métodos. Você pode alternar a qualquer momento."
+  },
+  "m_1452deafc6d96546": {
+    "message": "Recomendado"
+  },
+  "m_e22c6e525f1fceb0": {
+    "message": "Teste gratuito"
+  },
+  "m_65206074d0c5b6e4": {
+    "message": "Faça login ou cadastre-se para ganhar créditos de teste. Nenhuma API Key necessária—basta instalar e traduzir."
+  },
+  "m_e5533fd28356f3ec": {
+    "message": "Entrar / Cadastrar"
+  },
+  "m_e05f29d79c0997bd": {
+    "message": "Usar sua própria API Key"
+  },
+  "m_0a6da85c73277c95": {
+    "message": "Escolha ChatGPT, DeepSeek ou DeepL, insira sua Key e conecte diretamente. As taxas são cobradas pela plataforma com base no uso."
+  },
+  "m_c4791f28d54f8acb": {
+    "message": "Configurar"
+  },
+  "m_061246bd31e084a7": {
+    "message": "Conta"
+  },
+  "m_96ed5259ff23cb65": {
+    "message": "Faça login para usar a tradução por créditos e ver o status do teste e da assinatura."
+  },
+  "m_283ba7d1fae5b0f0": {
+    "message": "Créditos restantes"
+  },
+  "m_fb9399fb6acf3bf6": {
+    "message": "Gerenciar conta"
+  },
+  "m_b82a1659f2733f96": {
+    "message": "Planos e assinaturas"
+  },
+  "m_3ab8cc15939f3b5c": {
+    "message": "Sair"
+  },
+  "m_f45134adb4717545": {
+    "message": "A tradução é feita pelo serviço de tradução por seleção de IA e os créditos são descontados da sua conta. Nenhuma API Key necessária."
+  },
+  "m_d2ffae2f0a159a66": {
+    "message": "Suporta tradução de texto por seleção, tradução de área e painel de tradução. A tradução de imagens atualmente exige mudar para ChatGPT ou DeepSeek e inserir sua própria Key."
+  },
+  "m_918b7761e2f3dd27": {
+    "message": "O texto original é enviado pelos nossos servidores ao provedor do modelo (atualmente DeepSeek) para tradução. Não armazenamos o texto original nem a tradução; sua conta registra apenas a contagem de caracteres e os descontos de créditos."
+  },
+  "m_afc7902ffd7f4930": {
+    "message": "Teste · expira em $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2671b480cb935c31": {
+    "message": "Teste ativo"
+  },
+  "m_83617d7e464a76e3": {
+    "message": "Teste encerrado"
+  },
+  "m_0960dcc947a86e64": {
+    "message": "Nenhum teste disponível"
+  },
+  "m_67721ec2d8463717": {
+    "message": "Sem assinatura"
+  },
+  "m_7db8e65b6b3a03bc": {
+    "message": "Atualizado em $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3a2ce41bf2c6a3bf": {
+    "message": "1 crédito é descontado a cada $arg1$ caracteres; menos de $arg1$ caracteres conta como 1 crédito. Nenhum crédito é descontado em traduções com falha.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_51b9ef61f3f29017": {
+    "message": "Faça login para usar a tradução por créditos. Novas contas recebem créditos de teste."
+  },
+  "m_d3853afcfd2df4d7": {
+    "message": "A tradução por créditos ainda não está disponível. Por enquanto, use sua própria API Key."
+  },
+  "m_4a02e4081c8e45cf": {
+    "message": "Créditos esgotados: assine um plano ou mude para sua própria API Key."
+  },
+  "m_84378de635f8c238": {
+    "message": "$arg1$ créditos restantes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5073e9f5eddc2996": {
+    "message": "Ver uso"
+  },
+  "m_fadb4d6410d0508c": {
+    "message": "● $arg1$ créditos restantes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5ceb0a617c45f719": {
+    "message": "○ Login necessário"
+  },
+  "m_4b17737d47e0c31b": {
+    "message": "Faça login para resgatar créditos de teste"
+  },
+  "m_0da4a44867acdc1e": {
+    "message": "$arg1$ créditos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_685b08782b5ef1e2": {
+    "message": "Créditos"
+  },
+  "m_6eb1b64e260a2dd3": {
+    "message": "Login necessário"
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },
