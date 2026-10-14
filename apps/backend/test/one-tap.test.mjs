@@ -117,7 +117,7 @@ test('One Tap 登录：nonce 不符、未登录页面直接提交都会被拒；
   assert.equal((await pool.query('SELECT 1 FROM users')).rowCount, 0);
 
   const web = browser(app, config);
-  await web.get(`/login?return=${encodeURIComponent('http://localhost:8080/en/')}`);
+  await web.get(`/login?return=${encodeURIComponent('http://localhost:8788/en/')}`);
   res = await web.post('/auth/google/one-tap', { credential: idToken({ nonce: web.jar.get('onetap_nonce') }) });
-  assert.equal(res.headers.get('location'), 'http://localhost:8080/en/');
+  assert.equal(res.headers.get('location'), 'http://localhost:8788/en/');
 });

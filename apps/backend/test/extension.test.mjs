@@ -11,8 +11,8 @@ after(async () => { await pool?.end(); });
 beforeEach(async () => { await resetData(pool); });
 
 const EXT_ID = 'abcdefghijklmnopabcdefghijklmnop';
-const REDIRECT = `https://${EXT_ID}.chromiumapp.org/`;
 const ORIGIN = `chrome-extension://${EXT_ID}`;
+const REDIRECT = `${ORIGIN}/src/auth/callback.html`;
 const pkce = () => {
   const verifier = randomBytes(32).toString('base64url');
   return { verifier, challenge: createHash('sha256').update(verifier).digest('base64url') };
@@ -53,11 +53,11 @@ test('扩展登录：未登录先去登录页，确认后带一次性授权码�
   res = await b.get('/extension/authorize/confirm');
   const page = await res.text();
   assert.match(page, /允许 AI 划词翻译扩展登录/);
-  assert.match(res.headers.get('content-security-policy'), /form-action 'self' https:\/\/\*\.chromiumapp\.org/);
+  assert.match(res.headers.get('content-security-policy'), new RegExp(`form-action 'self' ${ORIGIN}(;|$)`));
 
   res = await b.post('/extension/authorize/confirm', { decision: 'approve' });
   const back = new URL(res.headers.get('location'));
-  assert.equal(`${back.origin}/`, REDIRECT);
+  assert.equal(`${back.protocol}//${back.host}${back.pathname}`, REDIRECT);
   assert.equal(back.searchParams.get('state'), 's-1');
   const code = back.searchParams.get('code');
   assert.ok(code && !back.searchParams.has('token'), '回调里只有授权码');
@@ -92,7 +92,7 @@ test('扩展登录：拒绝、无效回调地址、未列入名单的扩展都�
   assert.equal(back.searchParams.get('error'), 'access_denied');
   assert.equal(back.searchParams.has('code'), false);
 
-  for (const redirect of ['https://evil.example/', 'http://abcdefghijklmnopabcdefghijklmnop.chromiumapp.org/', `https://${EXT_ID}.chromiumapp.org/?x=1`]) {
+  for (const redirect of ['https://evil.example/', `https://${EXT_ID}.chromiumapp.org/`, `${ORIGIN}/src/options/options.html`, `${REDIRECT}?x=1`, `chrome-extension://not-an-id/src/auth/callback.html`]) {
     res = await b.get(authorizeUrl(pkce().challenge, redirect));
     assert.equal(res.status, 400, redirect);
   }

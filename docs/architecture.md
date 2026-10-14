@@ -5,12 +5,12 @@
 | 应用 | 负责什么 | 发布什么 |
 | --- | --- | --- |
 | `apps/web` | 宣传、语言页面；后续登录入口和登录状态展示 | Vercel 静态 HTML、CSS、JS 与资源 |
-| `apps/backend` | 身份、试用额度、托管翻译、支付订阅与 API；用户管理界面和管理员界面 | VPS 服务、两套界面与数据库迁移；用户管理界面第一批已实现，尚未部署 |
+| `apps/backend` | 身份、试用额度、托管翻译、支付订阅与 API；用户管理界面和管理员界面 | VPS 服务、两套界面与数据库迁移；用户管理界面第一批、扩展接口与托管文字翻译已实现，尚未部署 |
 | `apps/extension` | Chrome 内翻译；优先实现登录、点数、订阅和托管模式入口 | Chrome 商店扩展 ZIP |
 
 扩展中的 `src/manage` 是现有“区域翻译规则管理”界面，属于扩展本身，不属于 VPS 的用户管理界面或管理员界面。
 
-网站目前启用 11 种语言，扩展支持 24 种语言；两套目录独立维护，发布和翻译更新互不依赖。后端目前实现了用户管理界面第一批（邮箱验证码与 Google 登录、账户、会话和注册试用点数），尚未部署；订阅、托管服务、扩展 API 与管理员界面尚未实现。
+网站目前启用 11 种语言，扩展支持 24 种语言；两套目录独立维护，发布和翻译更新互不依赖。后端目前实现了用户管理界面第一批（邮箱验证码与 Google 登录、账户、会话和注册试用点数）、扩展登录与扩展 API、按点数计费的托管文字翻译，尚未部署；托管图片和视频、订阅支付与管理员界面尚未实现。
 
 ## 后续服务关系
 
@@ -50,9 +50,9 @@ flowchart LR
 
 网页使用 HTTPS 与后端 HttpOnly、Secure Cookie 会话；调用跨子域 API 时携带 credentials。Cookie 可只绑定 API 主机，官网通过状态接口读取用户名、登录状态和必要的点数与订阅权益，无需 JavaScript 读取登录 Cookie。跨子域仍是跨来源请求，需要服务端 CORS 来源白名单，修改状态的请求还需 CSRF 防护；网站 CSP 需允许具体 API 来源。
 
-扩展使用 `chrome.identity.launchWebAuthFlow` 发起用户主动登录，身份验证在 VPS 完成，经 Chrome 的扩展回调返回一次性授权码，再用 PKCE 校验交换短期会话令牌。会话支持刷新与撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，manifest 在接入时加入 `identity` 权限和 API 主机权限。
+扩展在当前窗口的标签页打开用户端授权页，由用户主动登录，身份验证在 VPS 完成，确认后回到扩展自己的回调页（web_accessible_resources，只对用户端来源开放）返回一次性授权码，再用 PKCE 校验交换会话令牌。会话可撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，不需要 `identity` 权限；API 主机不申请 host 权限，靠服务端对扩展来源的 CORS 白名单放行。
 
-网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前已实现用户管理界面的网页登录与官网状态接口：接口暂由用户端主机提供（`/api/web/session`，CORS 白名单 + credentials），会话 Cookie 只绑定用户端主机；拆分出独立的 `api.huaci.app` 时再调整 Cookie 归属。官网入口在生产用户端上线前保持隐藏。扩展登录与扩展会话尚未实现。
+网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前已实现用户管理界面的网页登录与官网状态接口：接口暂由用户端主机提供（`/api/web/session`，CORS 白名单 + credentials），会话 Cookie 只绑定用户端主机；拆分出独立的 `api.huaci.app` 时再调整 Cookie 归属。官网入口在生产用户端上线前保持隐藏。扩展登录与扩展会话已实现（本地），接口同样暂由用户端主机提供（`/api/extension`），扩展令牌不刷新，过期或被撤销后回到未登录、由用户重新登录。
 
 参考：[Chrome 登录 API](https://developer.chrome.com/docs/extensions/reference/api/identity)、[扩展跨域请求](https://developer.chrome.com/docs/extensions/develop/concepts/network-requests)、[网页携带会话凭据](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials)。
 

@@ -23,7 +23,11 @@
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
 | `TRIAL_CREDITS` / `TRIAL_DAYS` | `TRIAL_CREDITS` 必填 | 实测托管成本后确定 |
-| `SESSION_DAYS` | 默认 30 | 会话有效天数 |
+| `SESSION_DAYS` | 默认 30 | 会话有效天数（网页与扩展会话相同） |
+| `EXTENSION_IDS` | 生产必填 | 允许登录和调用扩展接口的 Chrome 扩展 ID，逗号分隔；生产环境为空时拒绝所有扩展，开发环境为空时接受任意扩展 |
+| `HOSTED_DEEPSEEK_API_KEY` | 托管翻译必填 | 托管文字翻译的模型 Key，只在服务端；不设则托管翻译返回 503 |
+| `HOSTED_MODEL` / `HOSTED_BASE_URL` | 默认 `deepseek-v4-flash` / `https://api.deepseek.com` | 托管翻译模型与接口地址 |
+| `CHARS_PER_CREDIT` / `HOSTED_MAX_CHARS` | 默认 500 / 6000 | 每点对应字数、单次最多字数；实测成本后确定 |
 | `WEBSITE_URL` / `EXTENSION_URL` / `FEEDBACK_URL` | 可选 | 官网地址（页头页脚链接）、扩展商店与反馈链接 |
 | `HTTPS_PROXY` | 通常不设 | 出站请求（如 Google 令牌交换）需经代理时使用，支持 `http://` 与 `socks5://` |
 
@@ -54,6 +58,7 @@ NoNewPrivileges=true
 1. 选定并接入发信服务，替换 `console` 发信。
 2. 配置 `app.huaci.app` 的 DNS 与 HTTPS 证书。
 3. 数据库备份与恢复演练。
-4. 按实际处理的账号数据更新隐私政策（`PRIVACY.md` 与官网隐私页）。
-5. 确定试用点数与有效期。
-6. 官网启用账户入口：在 `apps/web/public/main.js` 的 `ACCOUNT_ORIGIN` 填入 `https://app.huaci.app`，并把它加入 `vercel.json` CSP 的 `connect-src`。
+4. 按实际处理的数据更新隐私政策（`PRIVACY.md` 与官网隐私页）：账号数据，以及托管翻译把文字发给 VPS 和模型服务商（服务端不保存原文译文，只记字数与点数）。
+5. 设置 `EXTENSION_IDS` 为商店扩展 ID，并实测托管成本后确定 `CHARS_PER_CREDIT`。
+6. 确定试用点数与有效期。
+7. 官网启用账户入口：在 `apps/web/public/main.js` 的 `ACCOUNT_ORIGIN` 填入 `https://app.huaci.app`，并把它加入 `vercel.json` CSP 的 `connect-src`。

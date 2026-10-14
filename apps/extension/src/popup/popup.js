@@ -96,12 +96,13 @@
     window.close();
   });
 
-  // 登录窗口打开后弹窗会关闭，登录在 service worker 里继续完成
-  el.login.addEventListener('click', () => {
-    chrome.runtime.sendMessage({ type: 'account-login' }).catch(() => {});
+  // 授权页在当前窗口的新标签页打开，弹窗随之关闭；登录完成后回调页换成设置页
+  el.login.addEventListener('click', async () => {
+    await chrome.runtime.sendMessage({ type: 'account-login' }).catch(() => {});
+    window.close();
   });
   el.accountIn.addEventListener('click', () => {
-    if (account.links?.account) chrome.tabs.create({ url: account.links.account });
+    chrome.tabs.create({ url: AITrEnv.links.account });
     window.close();
   });
 

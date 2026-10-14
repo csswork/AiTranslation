@@ -15,18 +15,18 @@ export function securityHeaders(config) {
     "img-src 'self'",
     `script-src 'self'${oneTap ? ` ${GSI}client` : ''}`,
     ...(oneTap ? [`frame-src ${GSI}`, `connect-src ${GSI}`] : []),
-    // 扩展授权页确认后重定向回 https://<扩展 ID>.chromiumapp.org/（由 launchWebAuthFlow 接住）。
-    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}${extensionAuth ? ' https://*.chromiumapp.org' : ''}`,
+    // 扩展授权页确认后重定向回扩展的回调页，只放行这一次请求的扩展来源（chrome-extension://<扩展 ID>）。
+    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}${extensionAuth ? ` ${extensionAuth}` : ''}`,
     "base-uri 'none'",
     "frame-ancestors 'none'",
   ].join('; ');
   const strict = policy(false, false);
   const withOneTap = policy(true, false);
-  const forExtensionAuth = policy(false, true);
+
   return async (c, next) => {
     await next();
     const headers = c.res.headers;
-    headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : c.get('extensionAuth') ? forExtensionAuth : strict);
+    headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : c.get('extensionAuth') ? policy(false, c.get('extensionAuth')) : strict);
     headers.set('X-Content-Type-Options', 'nosniff');
     headers.set('Referrer-Policy', 'same-origin');
     headers.set('X-Frame-Options', 'DENY');

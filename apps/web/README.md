@@ -17,7 +17,7 @@ npm run test:web
 也可以在本目录运行：
 
 ```sh
-python3 -m http.server 8080 --directory public
+python3 -m http.server 8788 --directory public
 node i18n/build.mjs
 bash test/run.sh
 ```

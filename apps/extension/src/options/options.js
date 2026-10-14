@@ -4,6 +4,13 @@
   const S = globalThis.AITrSettings;
   const ACCOUNT_KEY = 'accountStatus'; // 与 lib/account.js 的 STATUS_KEY 一致
   const $ = (id) => document.getElementById(id);
+  // 外部链接按运行环境取；未打包的开发版本在页脚标出连接的本机用户端
+  $('privacyLink').href = AITrEnv.links.privacy;
+  if (AITrEnv.dev) {
+    $('envBadge').textContent = `DEV · ${new URL(AITrEnv.accountOrigin).host}`;
+    $('envBadge').title = AITrEnv.accountOrigin;
+    $('envBadge').hidden = false;
+  }
   const el = {
     cards: $('providerCards'),
     apiKey: $('apiKey'),
@@ -169,7 +176,7 @@
   }
 
   function openLink(name) {
-    const url = account.links?.[name];
+    const url = AITrEnv.links[name];
     if (url) chrome.tabs.create({ url });
   }
 
@@ -185,16 +192,9 @@
     document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = true; });
     const reply = await chrome.runtime.sendMessage({ type: 'account-login' }).catch((err) => ({ ok: false, error: String(err?.message || err) }));
     document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = false; });
-    if (!reply?.ok) {
-      if (reply?.code !== 'cancelled') showAccountError(reply?.error || t('登录失败，请重试'));
-      return;
-    }
-    await finishOnboarding();
-    // 还没配置任何 Key 时，登录后直接用点数翻译
-    if (!hasOwnKey() && settings.provider !== 'hosted') {
-      await save({ provider: 'hosted' });
-      renderProviderConfig();
-    }
+    // 授权页在新标签页打开；登录完成后 service worker 结束引导、按需切到点数翻译并切回本页，
+    // 这里通过 storage 变化更新
+    if (!reply?.ok) showAccountError(reply?.error || t('登录失败，请重试'));
   }
 
   function renderCards() {
@@ -475,6 +475,10 @@
       renderAccount();
       renderCards();
       if (S.isHosted(settings.provider)) renderHosted();
+    }
+    if (changes.onboarding?.newValue === 'done' && onboarding !== 'done') {
+      onboarding = 'done';
+      renderAccount();
     }
     if (changes.settings?.newValue && changes.settings.newValue.provider !== settings.provider) {
       settings = S.normalize(changes.settings.newValue);

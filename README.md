@@ -49,7 +49,7 @@ PRIVACY.md           保留既有公开隐私政策路径
 npm test                      # 网站与扩展全部测试
 npm run test:web              # 只检查网站
 npm run test:extension        # 只检查扩展
-npm run dev:web               # http://localhost:8080
+npm run dev:web               # http://localhost:8788
 npm run build:web             # 生成网站各语言页面
 npm run check:web             # 检查网站多语言产物
 npm run i18n:extension        # 本地刷新扩展文案

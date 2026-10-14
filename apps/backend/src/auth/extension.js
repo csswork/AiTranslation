@@ -1,7 +1,7 @@
 /**
- * Chrome 扩展登录：chrome.identity.launchWebAuthFlow 打开用户端的授权页，用户确认后
- * 回调到 https://<扩展 ID>.chromiumapp.org/ 并带上一次性授权码；扩展再用 PKCE 的 code_verifier
- * 换取扩展会话令牌。回调地址里只有授权码，不出现会话令牌。
+ * Chrome 扩展登录：扩展在当前窗口的标签页里打开用户端的授权页，用户确认后回到扩展自己的回调页
+ * chrome-extension://<扩展 ID>/src/auth/callback.html 并带上一次性授权码；扩展再用 PKCE 的
+ * code_verifier 换取扩展会话令牌。回调地址里只有授权码，不出现会话令牌。
  */
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 
@@ -9,7 +9,9 @@ const CODE_TTL_SECONDS = 120;
 const sha256 = (value) => createHash('sha256').update(value).digest();
 const hashCode = (code) => sha256(code).toString('hex');
 
-/** 回调地址必须是 chromiumapp.org 的扩展地址；配置了 EXTENSION_IDS 时只接受名单里的扩展。 */
+export const EXTENSION_CALLBACK_PATH = '/src/auth/callback.html';
+
+/** 回调地址必须是扩展的回调页；配置了 EXTENSION_IDS 时只接受名单里的扩展。 */
 export function extensionIdFromRedirect(redirectUri, config) {
   let url;
   try {
@@ -17,8 +19,8 @@ export function extensionIdFromRedirect(redirectUri, config) {
   } catch {
     return null;
   }
-  const match = url.protocol === 'https:' && !url.port && !url.search && !url.hash
-    && url.hostname.match(/^([a-p]{32})\.chromiumapp\.org$/);
+  const match = url.protocol === 'chrome-extension:' && !url.port && !url.search && !url.hash
+    && url.pathname === EXTENSION_CALLBACK_PATH && url.hostname.match(/^([a-p]{32})$/);
   if (!match) return null;
   return isAllowedExtension(match[1], config) ? match[1] : null;
 }

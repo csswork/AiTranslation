@@ -277,7 +277,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     return googleSignIn(c, claims);
   });
 
-  /* ---------- 扩展登录授权：launchWebAuthFlow → 确认 → 一次性授权码回到扩展 ---------- */
+  /* ---------- 扩展登录授权：扩展打开授权页 → 确认 → 一次性授权码回到扩展的回调页 ---------- */
 
   const readExtensionRequest = (c) => {
     try {
@@ -287,6 +287,8 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
       return null;
     }
   };
+  // 授权页的 CSP 只放行这次请求的扩展来源（Node 的 URL 不给 chrome-extension: 计算 origin，按扩展 ID 拼）。
+  const extensionOrigin = (pending) => `chrome-extension://${extensionIdFromRedirect(pending.redirectUri, config)}`;
   const invalidExtensionRequest = (c) => render(c, views.errorPage, {
     status: 400, user: c.get('auth')?.user, message: k('扩展登录请求无效或已过期，请回到扩展重新登录。'),
   }, 400);
@@ -305,8 +307,9 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   });
 
   app.get('/extension/authorize/confirm', requireUser, (c) => {
-    if (!readExtensionRequest(c)) return invalidExtensionRequest(c);
-    c.set('extensionAuth', true);
+    const pending = readExtensionRequest(c);
+    if (!pending) return invalidExtensionRequest(c);
+    c.set('extensionAuth', extensionOrigin(pending));
     return render(c, views.extensionConsentPage, { user: user(c) });
   });
 
@@ -322,7 +325,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
       target.searchParams.set('error', 'access_denied');
     }
     if (pending.state) target.searchParams.set('state', pending.state);
-    c.set('extensionAuth', true);
+    c.set('extensionAuth', extensionOrigin(pending));
     return c.redirect(target.href, 303);
   });
 

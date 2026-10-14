@@ -2,8 +2,9 @@
  * 账户与托管翻译。只在 service worker 里加载：所有账户请求都从这里发出，
  * 只发往固定的用户端地址（API_ORIGIN），网页内容脚本不能借它代请求任意地址。
  *
- * 登录：chrome.identity.launchWebAuthFlow 打开用户端授权页 → 回调带一次性授权码 →
- *       用 PKCE 的 code_verifier 换取扩展会话令牌。令牌只存在 chrome.storage.local，不同步。
+ * 登录：在当前窗口的新标签页打开用户端授权页 → 确认后回到扩展自己的回调页（src/auth/callback.html），
+ *       带一次性授权码 → 用 PKCE 的 code_verifier 换取扩展会话令牌。code_verifier 与 state 存在
+ *       chrome.storage.session（只有扩展页面和 service worker 能读）。令牌只存在 chrome.storage.local，不同步。
  * 状态：用户名、点数、试用、订阅保存为 accountStatus，设置页和弹窗监听它的变化即时更新；
  *       令牌失效（过期或在网页端被退出）时自动回到未登录。
  * 与 lang.js 一样，不能使用 import / export。
@@ -11,10 +12,13 @@
 (() => {
   const t = (...args) => AITrI18n.t(...args);
 
-  // 商店安装的扩展带 update_url；开发者模式加载的没有，连本机的用户端。
-  const API_ORIGIN = chrome.runtime.getManifest().update_url ? 'https://app.huaci.app' : 'http://localhost:8787';
+  // 未打包的开发版本连本机用户端，见 env.js。
+  const API_ORIGIN = AITrEnv.accountOrigin;
   const SESSION_KEY = 'accountSession';
   const STATUS_KEY = 'accountStatus';
+  const PENDING_KEY = 'accountLoginPending';
+  const PENDING_TTL = 30 * 60 * 1000; // 授权页上可能还要先注册、收验证码
+  const CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
 
   class AccountError extends Error {
     constructor(message, code, action) {
@@ -56,7 +60,6 @@
       credits: data.credits ?? previous.credits ?? null,
       subscription: data.subscription !== undefined ? data.subscription : previous.subscription ?? null,
       hosted: data.hosted ?? previous.hosted ?? null,
-      links: data.links ?? previous.links ?? null,
     };
   }
 
@@ -93,34 +96,46 @@
     return writeStatus(statusFrom(data, await readStatus()));
   }
 
-  async function login() {
-    const redirectUri = chrome.identity.getRedirectURL();
+  /**
+   * 开始登录：在发起页所在的窗口打开授权页，登录在回调页里完成（completeLogin）。
+   * @param {{windowId?: number, tabId?: number}} from 发起登录的页面，完成后回到这里
+   */
+  async function login(from = {}) {
     const verifier = randomString(32);
     const challenge = base64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
     const state = randomString(16);
+    await chrome.storage.session.set({
+      [PENDING_KEY]: { verifier, state, returnTabId: from.tabId ?? null, createdAt: Date.now() },
+    });
     const url = new URL(`${API_ORIGIN}/extension/authorize`);
     url.search = new URLSearchParams({
-      redirect_uri: redirectUri, code_challenge: challenge, code_challenge_method: 'S256', state,
+      redirect_uri: CALLBACK_URL, code_challenge: challenge, code_challenge_method: 'S256', state,
     }).toString();
+    await chrome.tabs.create({ url: url.href, windowId: from.windowId, openerTabId: from.tabId });
+    return { started: true };
+  }
 
-    let result;
-    try {
-      result = await chrome.identity.launchWebAuthFlow({ url: url.href, interactive: true });
-    } catch {
-      throw new AccountError(t('登录窗口已关闭'), 'cancelled');
+  /**
+   * 回调页把自己的地址交过来：核对 state，用授权码和 code_verifier 换取令牌。
+   * 每次登录请求只能完成一次。返回最新状态和发起登录的标签页。
+   */
+  async function completeLogin(callbackUrl) {
+    const back = new URL(callbackUrl);
+    const pending = (await chrome.storage.session.get(PENDING_KEY))[PENDING_KEY];
+    if (!pending || Date.now() - pending.createdAt > PENDING_TTL || back.searchParams.get('state') !== pending.state) {
+      throw new AccountError(t('登录请求无效，请重试'), 'state');
     }
-    const back = new URL(result);
-    if (back.searchParams.get('state') !== state) throw new AccountError(t('登录请求无效，请重试'), 'state');
+    await chrome.storage.session.remove(PENDING_KEY);
     if (back.searchParams.get('error')) throw new AccountError(t('已取消登录'), 'cancelled');
     const code = back.searchParams.get('code');
     if (!code) throw new AccountError(t('登录请求无效，请重试'), 'code');
 
     const { response, data } = await call('/token', {
-      method: 'POST', auth: false, body: { code, code_verifier: verifier, redirect_uri: redirectUri },
+      method: 'POST', auth: false, body: { code, code_verifier: pending.verifier, redirect_uri: CALLBACK_URL },
     });
     if (!response.ok || !data.token) throw new AccountError(t('登录失败，请重试'), 'token');
     await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token } });
-    return refresh();
+    return { status: await refresh(), returnTabId: pending.returnTabId };
   }
 
   async function logout() {
@@ -154,5 +169,5 @@
     throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, logout, refresh, readStatus, translate };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, logout, refresh, readStatus, translate };
 })();

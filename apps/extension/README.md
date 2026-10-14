@@ -33,6 +33,16 @@ ChatGPT and DeepSeek default to the cheapest tier available, since translation i
 
 Choose your interface language and default translation target independently, then configure streaming and source-text visibility. Video speech recognition has its own source-language setting and checks device support; the experimental feature remains off by default.
 
+### Account and credits (hosted mode)
+
+Besides bring-your-own-key, the first provider is **点数翻译** (credit translation): sign in to a Huaci account and translate text with account credits, no API key needed. A new installation opens the options page with a short welcome that offers both paths.
+
+- **Environment**: `src/lib/env.js` decides it from the manifest. Store builds have `update_url` and use `https://app.huaci.app` and `https://huaci.app`. Unpacked builds use the local dev servers, `http://localhost:8787` (`npm run dev:backend`) and `http://localhost:8788` (`npm run dev:web`), for the API, account links and privacy link. The options footer then shows a `DEV · localhost:8787` badge. All external addresses come from this file.
+- **Sign-in** opens the account site's authorization page in a new tab in the current window. It does not use `launchWebAuthFlow`, which opens a separate window. After approval the site redirects to the extension's own `src/auth/callback.html` with a one-time code. That page is the only web-accessible resource, and only for the account origins. It hands its URL to the service worker. The worker checks `state` and exchanges the code with the PKCE verifier for an extension session token, stored in `chrome.storage.local` only. The verifier waits in `chrome.storage.session`. The worker then switches back to the tab that started sign-in and closes the callback tab; started from the popup, the callback tab becomes the options page.
+- **Status**: username, credit balance, trial expiry and subscription are cached as `accountStatus`. The options page and toolbar popup listen for storage changes, so balance updates after every hosted translation; the options page also refreshes when it is opened or becomes visible. An expired or revoked session returns to signed-out.
+- **Billing** is enforced by the server: 1 credit per 500 characters (minimum 1), refunded if translation fails. The client only displays the balance. Hosted mode currently covers text (selection, text panel, regions, captions); image translation still needs a vision provider with your own key.
+- All account and hosted requests are sent by the service worker to the fixed account origin. Page translations reach it through the usual translation port; the account messages (login, logout, refresh, hosted translate) are accepted only from extension pages.
+
 ## Usage
 
 Select text → right-click → **Translate to your target language**. You can also use the floating selection button or keyboard shortcut.
@@ -43,13 +53,16 @@ Select text → right-click → **Translate to your target language**. You can a
 manifest.json              Manifest V3 declaration
 src/
   background.js            Service worker: menus, translation requests, streaming to the page, video captions
+  auth/callback.*           Sign-in callback: hands the one-time code to the service worker
   content/
     content.js             Selection reporting + the Shadow DOM popup
     elements.js            Region (element) translation buttons from saved rules
     image.js               In-page image translation overlay
     video.js               Experimental video caption overlay, injected on demand
   lib/
-    providers.js           OpenAI-compatible and DeepL requests, SSE parsing, error mapping
+    providers.js           OpenAI-compatible, DeepL and hosted requests, SSE parsing, error mapping
+    env.js                 Store vs. unpacked build: account, API and website origins
+    account.js             Account login (PKCE), status cache and hosted translation; service worker only
     settings.js            Provider definitions and settings storage
     languages.js           Shared 24-language registry (generated from i18n/)
     i18n.js, messages.js   Extension UI localization (messages.js is generated)

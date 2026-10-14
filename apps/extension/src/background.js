@@ -5,6 +5,7 @@
 import './lib/languages.js';
 import './lib/messages.js';
 import './lib/i18n.js';
+import './lib/env.js';
 import './lib/lang.js';
 import './lib/settings.js';
 import './lib/providers.js';
@@ -486,6 +487,26 @@ chrome.runtime.onConnect.addListener((port) => {
   });
 });
 
+/**
+ * 扩展登录完成后的收尾：引导结束；还没配置任何 API Key 时直接切到点数翻译。
+ * 然后回到发起登录的页面并关掉回调页；发起页已关闭（或从弹窗发起）时把回调页换成设置页。
+ */
+async function finishLogin(callbackUrl, callbackTab) {
+  const { returnTabId } = await AITrAccount.completeLogin(callbackUrl);
+  await chrome.storage.local.set({ onboarding: 'done' });
+  const settings = await AITrSettings.loadSettings();
+  if (!AITrSettings.isHosted(settings.provider) && !AITrSettings.KEY_PROVIDERS.some((id) => settings[id]?.apiKey)) {
+    await AITrSettings.patchSettings({ provider: 'hosted' });
+  }
+  const returnTab = returnTabId != null ? await chrome.tabs.get(returnTabId).catch(() => null) : null;
+  if (returnTab) {
+    await chrome.tabs.update(returnTab.id, { active: true });
+    await chrome.tabs.remove(callbackTab.id).catch(() => {});
+  } else {
+    await chrome.tabs.update(callbackTab.id, { url: chrome.runtime.getURL('src/options/options.html') });
+  }
+}
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const type = message?.type;
   if (type === 'get-ui-messages') {
@@ -605,7 +626,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), code: err?.code || null }));
     return true;
   };
-  if (type === 'account-login' && fromExtensionPage) return accountReply(AITrAccount.login());
+  // 授权页开在发起页所在的窗口；弹窗没有标签页，落到当前窗口
+  if (type === 'account-login' && fromExtensionPage) {
+    return accountReply(AITrAccount.login({ windowId: sender.tab?.windowId, tabId: sender.tab?.id }));
+  }
+  // 回调页（src/auth/callback.html）交回授权结果：换取令牌后回到发起登录的页面
+  if (type === 'account-callback' && fromExtensionPage && sender.tab) {
+    finishLogin(String(message.url || ''), sender.tab)
+      .then(() => sendResponse({ ok: true }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), code: err?.code || null }));
+    return true;
+  }
   if (type === 'account-logout' && fromExtensionPage) return accountReply(AITrAccount.logout());
   if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
   if (type === 'hosted-translate' && fromExtensionPage) {

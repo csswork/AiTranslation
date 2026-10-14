@@ -8,7 +8,7 @@ before(async () => { pool = await createTestPool(); });
 after(async () => { await pool?.end(); });
 beforeEach(async () => { await resetData(pool); });
 
-const WEB = 'http://localhost:8080';
+const WEB = 'http://localhost:8788';
 
 test('官网状态接口：未登录只返回登录地址，带 CORS 白名单头', async () => {
   const { app, config } = buildApp({ pool });
