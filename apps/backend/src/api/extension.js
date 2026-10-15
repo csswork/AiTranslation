@@ -76,15 +76,16 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
 
   app.post('/token', async (c) => {
     const body = await readJson(c);
-    const userId = await redeemAuthCode(pool, { code: body.code, codeVerifier: body.code_verifier, redirectUri: body.redirect_uri });
-    if (!userId) return c.json({ error: 'invalid_grant' }, 400);
+    const grant = await redeemAuthCode(pool, { code: body.code, codeVerifier: body.code_verifier, redirectUri: body.redirect_uri });
+    if (!grant) return c.json({ error: 'invalid_grant' }, 400);
+    const { userId, webSessionId } = grant;
     // 扩展原来是访客：合并进刚登录的正式账户（剩余点数转入），访客会话随访客账户删除。
     const guest = typeof body.guest_token === 'string' && await validateSession(pool, config, body.guest_token);
     let transferred = 0;
     if (guest && guest.user.kind === 'guest' && guest.session.client === 'extension') {
       transferred = await transaction(pool, (client) => mergeGuest(client, guest.user.id, userId));
     }
-    const token = await createSession(pool, config, userId, 'extension');
+    const token = await createSession(pool, config, userId, 'extension', { webSessionId });
     return c.json({ token, tokenType: 'Bearer', transferred });
   });
 

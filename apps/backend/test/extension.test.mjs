@@ -129,6 +129,46 @@ test('扩展接口：只接受扩展会话；CORS 只给扩展来源；退出或
   const second = await extensionLogin(app, config, mailbox, 'cors@example.com');
   assert.equal((await api(app, config, '/logout', { method: 'POST', token: second.token })).status, 200);
   assert.equal((await api(app, config, '/me', { token: second.token })).status, 401);
+  assert.equal((await second.browser.get('/')).status, 200, '单独退出扩展不会退出网页');
+});
+
+for (const production of [false, true]) {
+  test(`网页登出同步撤销本次授权的扩展，保留其他浏览器登录（${production ? '生产 HTTPS' : '本地 localhost'}）`, async () => {
+    const config = testConfig(production ? {
+      NODE_ENV: 'production', APP_ORIGIN: 'https://app.huaci.app', EXTENSION_IDS: EXT_ID,
+      MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'test', MAIL_FROM: 'no-reply@huaci.app',
+    } : {});
+    const { app, mailbox } = buildApp({ pool, config });
+    const first = await extensionLogin(app, config, mailbox, 'sync@example.com');
+    const otherBrowser = await extensionLogin(app, config, mailbox, 'sync@example.com');
+    const otherUser = await extensionLogin(app, config, mailbox, 'else@example.com');
+
+    const invalid = await first.browser.post('/logout', {}, { origin: 'https://evil.example' });
+    assert.equal(invalid.status, 403);
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 200);
+
+    assert.equal((await first.browser.post('/logout')).status, 303);
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 401);
+    assert.equal((await api(app, config, '/translate', { method: 'POST', token: first.token,
+      body: { texts: ['Hello'], target: 'fr' } })).status, 401, '已退出的扩展不能继续托管翻译');
+    assert.equal((await (await first.browser.get('/api/web/session')).json()).signedIn, false);
+    assert.equal((await api(app, config, '/me', { token: otherBrowser.token })).status, 200);
+    assert.equal((await otherBrowser.browser.get('/')).status, 200);
+    assert.equal((await api(app, config, '/me', { token: otherUser.token })).status, 200);
+  });
+}
+
+test('网页登出后，尚未兑换的扩展授权码也不能建立新会话', async () => {
+  const { app, config, mailbox } = buildApp({ pool });
+  const b = await signInWithEmail(app, config, mailbox, 'pending@example.com');
+  const { verifier, challenge } = pkce();
+  await b.get(authorizeUrl(challenge));
+  const approved = await b.post('/extension/authorize/confirm', { decision: 'approve' });
+  const code = new URL(approved.headers.get('location')).searchParams.get('code');
+  await b.post('/logout');
+  const res = await api(app, config, '/token', { method: 'POST', body: { code, code_verifier: verifier, redirect_uri: REDIRECT } });
+  assert.equal(res.status, 400);
+  assert.equal((await res.json()).error, 'invalid_grant');
 });
 
 function fakeHosted({ fail = false } = {}) {

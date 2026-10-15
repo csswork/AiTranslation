@@ -34,29 +34,32 @@ export function isAllowedExtension(id, config) {
 export const isValidChallenge = (value) => typeof value === 'string' && /^[A-Za-z0-9_-]{43}$/.test(value);
 const isValidVerifier = (value) => typeof value === 'string' && /^[A-Za-z0-9._~-]{43,128}$/.test(value);
 
-export async function createAuthCode(db, { userId, redirectUri, codeChallenge }) {
+export async function createAuthCode(db, { userId, redirectUri, codeChallenge, webSessionId }) {
   const code = randomBytes(32).toString('base64url');
   await db.query('DELETE FROM extension_auth_codes WHERE expires_at < now() - interval \'1 day\'');
   await db.query(
-    `INSERT INTO extension_auth_codes (code_hash, user_id, redirect_uri, code_challenge, expires_at)
-     VALUES ($1, $2, $3, $4, now() + make_interval(secs => $5))`,
-    [hashCode(code), userId, redirectUri, codeChallenge, CODE_TTL_SECONDS],
+    `INSERT INTO extension_auth_codes (code_hash, user_id, redirect_uri, code_challenge, expires_at, web_session_id)
+     VALUES ($1, $2, $3, $4, now() + make_interval(secs => $5), $6)`,
+    [hashCode(code), userId, redirectUri, codeChallenge, CODE_TTL_SECONDS, webSessionId],
   );
   return code;
 }
 
-/** 兑换授权码：只能用一次、未过期、回调地址一致、PKCE 校验通过时返回用户 ID，否则返回 null。 */
+/** 兑换授权码：同时验证授权网页会话仍有效，返回用户和网页会话 ID，否则返回 null。 */
 export async function redeemAuthCode(db, { code, codeVerifier, redirectUri }) {
   if (typeof code !== 'string' || !code || !isValidVerifier(codeVerifier)) return null;
   const { rows: [row] } = await db.query(
-    `UPDATE extension_auth_codes SET used_at = now()
-     WHERE code_hash = $1 AND used_at IS NULL AND expires_at > now()
-     RETURNING user_id, redirect_uri, code_challenge`,
+    `UPDATE extension_auth_codes c SET used_at = now()
+     FROM sessions w
+     WHERE c.code_hash = $1 AND c.used_at IS NULL AND c.expires_at > now()
+       AND w.id = c.web_session_id AND w.user_id = c.user_id AND w.client = 'web'
+       AND w.revoked_at IS NULL AND w.expires_at > now()
+     RETURNING c.user_id, c.redirect_uri, c.code_challenge, c.web_session_id`,
     [hashCode(code)],
   );
   if (!row || row.redirect_uri !== redirectUri) return null;
   const expected = Buffer.from(row.code_challenge);
   const actual = Buffer.from(sha256(codeVerifier).toString('base64url'));
   if (expected.length !== actual.length || !timingSafeEqual(expected, actual)) return null;
-  return row.user_id;
+  return { userId: row.user_id, webSessionId: row.web_session_id };
 }

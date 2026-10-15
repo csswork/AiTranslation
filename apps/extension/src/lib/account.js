@@ -22,6 +22,13 @@
   const GUEST_CLAIMED_KEY = 'guestClaimed';
   const PENDING_TTL = 30 * 60 * 1000; // 授权页上可能还要先注册、收验证码
   const CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
+  // 网络请求可以并发；令牌与状态的检查、写入必须串行，避免旧响应覆盖新登录。
+  let stateTask = Promise.resolve();
+  const updateState = (task) => {
+    const next = stateTask.catch(() => {}).then(task);
+    stateTask = next;
+    return next;
+  };
 
   class AccountError extends Error {
     constructor(message, code, action) {
@@ -54,9 +61,12 @@
     return next;
   }
 
-  async function signOutLocally() {
-    await chrome.storage.local.remove(SESSION_KEY);
-    return writeStatus({ signedIn: false });
+  function signOutLocally(expectedToken) {
+    return updateState(async () => {
+      if (await readToken() !== expectedToken) return readStatus();
+      await chrome.storage.local.remove(SESSION_KEY);
+      return writeStatus({ signedIn: false });
+    });
   }
 
   /**
@@ -77,11 +87,11 @@
     };
   }
 
-  async function call(path, { method = 'GET', body, auth = true, signal } = {}) {
+  async function call(path, { method = 'GET', body, auth = true, authToken, signal } = {}) {
     const headers = {};
+    const token = auth ? authToken ?? await readToken() : '';
     if (body) headers['content-type'] = 'application/json';
     if (auth) {
-      const token = await readToken();
       if (!token) throw new AccountError(t('请先登录账户'), 'signed_out', 'open-options');
       headers.authorization = `Bearer ${token}`;
     }
@@ -95,19 +105,23 @@
       throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'network');
     }
     if (response.status === 401 && auth) {
-      await signOutLocally();
+      await signOutLocally(token);
       throw new AccountError(t('登录已失效，请重新登录'), 'unauthorized', 'open-options');
     }
     const data = await response.json().catch(() => ({}));
-    return { response, data };
+    return { response, data, token };
   }
 
   /** 读取最新状态；未登录时不发请求。网络失败时保留上次的状态。 */
   async function refresh() {
-    if (!(await readToken())) return writeStatus({ signedIn: false });
-    const { response, data } = await call('/me');
+    if (!(await readToken())) return updateState(async () => await readToken() ? readStatus() : writeStatus({ signedIn: false }));
+    const { response, data, token } = await call('/me');
     if (!response.ok) throw new AccountError(t('读取账户状态失败（$1）', [response.status]), 'status');
-    return writeStatus(statusFrom(data, await readStatus()));
+    // 并发刷新可能在退出或另一轮登录后才完成；旧响应不能恢复已退出的缓存。
+    return updateState(async () => {
+      if (await readToken() !== token) return readStatus();
+      return writeStatus(statusFrom(data, await readStatus()));
+    });
   }
 
   /**
@@ -152,7 +166,7 @@
       body: { code, code_verifier: pending.verifier, redirect_uri: CALLBACK_URL, guest_token: session?.guest ? session.token : undefined },
     });
     if (!response.ok || !data.token) throw new AccountError(t('登录失败，请重试'), 'token');
-    await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token } });
+    await updateState(() => chrome.storage.local.set({ [SESSION_KEY]: { token: data.token } }));
     return { status: await refresh(), returnTabId: pending.returnTabId };
   }
 
@@ -166,18 +180,24 @@
     // 带上扩展界面语言（24 种语言 ID 之一），只用于运营报表的语言统计。
     const { response, data } = await call('/guest', { method: 'POST', auth: false, body: { uiLanguage: AITrI18n.locale?.() || undefined } });
     if (!response.ok || !data.token) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'guest');
-    await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token, guest: true }, [GUEST_CLAIMED_KEY]: true });
+    const accepted = await updateState(async () => {
+      if (await readToken()) return false;
+      await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token, guest: true }, [GUEST_CLAIMED_KEY]: true });
+      return true;
+    });
+    if (!accepted) return null;
     await refresh();
     return data.welcomeUrl || null;
   }
 
   async function logout() {
+    const token = await readToken();
     try {
-      await call('/logout', { method: 'POST' });
+      await call('/logout', { method: 'POST', authToken: token });
     } catch {
       /* 服务端不可达也照样退出本机登录；会话会自然过期，也可在网页端退出 */
     }
-    return signOutLocally();
+    return signOutLocally(token);
   }
 
   const FAILURES = {
@@ -200,10 +220,13 @@
   async function translate({ texts, target, source, signal }) {
     // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
     if (!(await readToken())) await claimGuest().catch(() => null);
-    const { response, data } = await call('/translate', { method: 'POST', body: { texts, target, source: source || undefined }, signal });
+    const { response, data, token } = await call('/translate', { method: 'POST', body: { texts, target, source: source || undefined }, signal });
     if (data.credits) {
-      const previous = await readStatus();
-      if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
+      await updateState(async () => {
+        if (await readToken() !== token) return;
+        const previous = await readStatus();
+        if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
+      });
     }
     if (response.ok && Array.isArray(data.translations)) return data.translations;
     throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);

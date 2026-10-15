@@ -118,8 +118,9 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
    * 这个浏览器的扩展如果还是访客，把访客合并进刚登录的账户（剩余点数转入，扩展随之登录）。
    */
   const signIn = async (c, userId) => {
-    await mergeBrowserGuest(pool, getBrowserMark(c, config), userId);
-    const token = await createSession(pool, config, userId, 'web');
+    const webSessionId = randomUUID();
+    const token = await createSession(pool, config, userId, 'web', { id: webSessionId });
+    await mergeBrowserGuest(pool, getBrowserMark(c, config), userId, webSessionId);
     setSessionCookie(c, config, token);
     const returnTo = safeReturnUrl(getTemp(c, 'return_to'), config);
     clearTemp(c, config, 'return_to');
@@ -342,7 +343,10 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     const body = await c.req.parseBody();
     const target = new URL(pending.redirectUri);
     if (body.decision === 'approve') {
-      target.searchParams.set('code', await createAuthCode(pool, { userId: user(c).id, redirectUri: pending.redirectUri, codeChallenge: pending.codeChallenge }));
+      target.searchParams.set('code', await createAuthCode(pool, {
+        userId: user(c).id, redirectUri: pending.redirectUri, codeChallenge: pending.codeChallenge,
+        webSessionId: c.get('auth').session.id,
+      }));
     } else {
       target.searchParams.set('error', 'access_denied');
     }

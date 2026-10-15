@@ -56,6 +56,8 @@ flowchart LR
 
 参考：[Chrome 登录 API](https://developer.chrome.com/docs/extensions/reference/api/identity)、[扩展跨域请求](https://developer.chrome.com/docs/extensions/develop/concepts/network-requests)、[网页携带会话凭据](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials)。
 
+扩展正式会话关联授权网页会话；网页登出撤销这次登录关联的扩展，其他浏览器保持登录。用户端专用内容脚本只通知扩展核对服务端状态，不读取 Cookie、不传递凭据。通知在脚本与 service worker 两端都按 `AITrEnv.accountOrigin` 校验完整来源；开发环境只接受 `http://localhost:8787`，生产只接受 `https://app.huaci.app`。旧版未关联的正式扩展会话在迁移 `007` 后重新授权一次。
+
 ## 旧目录到新目录
 
 | 原路径 | 当前路径 |

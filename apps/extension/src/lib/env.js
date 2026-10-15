@@ -12,6 +12,10 @@
     dev,
     accountOrigin,
     websiteOrigin,
+    // 内容脚本匹配范围可覆盖其他端口；同步时仍按完整 origin 检查。
+    isAccountPage(url) {
+      try { return new URL(url).origin === accountOrigin; } catch { return false; }
+    },
     links: Object.freeze({
       account: `${accountOrigin}/`,
       plans: `${accountOrigin}/plans`,

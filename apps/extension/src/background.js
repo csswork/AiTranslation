@@ -637,6 +637,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   /* ---------------------------------------------------------- 账户与托管翻译 */
 
+  // 用户端页面只能通知核对状态；完整来源（含本地端口）与顶层框架均由后台核验。
+  // 页面不能直接设置登录状态，也拿不到刷新返回的账户数据。
+  if (type === 'account-web-changed') {
+    if (sender.id !== chrome.runtime.id || sender.frameId !== 0 || !sender.tab || !AITrEnv.isAccountPage(sender.url)) return false;
+    AITrAccount.refresh()
+      .then(() => sendResponse({ ok: true }))
+      .catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+
   // 账户操作只接受扩展自己的页面（设置页、弹窗、翻译面板）发来的消息，网页内容脚本不能调用。
   const fromExtensionPage = sender.id === chrome.runtime.id && String(sender.url || '').startsWith(chrome.runtime.getURL(''));
   const accountReply = (task) => {

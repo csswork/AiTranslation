@@ -78,7 +78,7 @@ export async function createGuest(pool, config, settings, address, { country = n
  * moveSessions 为真时访客的扩展会话也改到正式账户（同一浏览器在网页上登录后，扩展随之登录）。
  * 访客账户随后删除。返回转入的点数。
  */
-export async function mergeGuest(client, guestId, memberId, { moveSessions = false } = {}) {
+export async function mergeGuest(client, guestId, memberId, { moveSessions = false, webSessionId = null } = {}) {
   const { rows: [guest] } = await client.query(`SELECT id FROM users WHERE id = $1 AND kind = 'guest' FOR UPDATE`, [guestId]);
   if (!guest || guestId === memberId) return 0;
   const transferred = await transferGuestCredits(client, guestId, memberId);
@@ -86,7 +86,10 @@ export async function mergeGuest(client, guestId, memberId, { moveSessions = fal
   await client.query('UPDATE usage_rejections SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE guest_claims SET merged_user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE browser_marks SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
-  if (moveSessions) await client.query(`UPDATE sessions SET user_id = $2 WHERE user_id = $1 AND client = 'extension'`, [guestId, memberId]);
+  if (moveSessions) await client.query(
+    `UPDATE sessions SET user_id = $2, web_session_id = $3 WHERE user_id = $1 AND client = 'extension'`,
+    [guestId, memberId, webSessionId],
+  );
   await client.query('DELETE FROM users WHERE id = $1', [guestId]);
   return transferred;
 }
@@ -143,7 +146,7 @@ export async function linkBrowser(pool, { linkCode, markValue }) {
 }
 
 /** 网页登录后：这个浏览器的标记如果属于访客，把访客合并进刚登录的正式账户（扩展也随之登录）。 */
-export async function mergeBrowserGuest(pool, markValue, memberId) {
+export async function mergeBrowserGuest(pool, markValue, memberId, webSessionId) {
   if (!markValue) return 0;
   return transaction(pool, async (client) => {
     const { rows: [mark] } = await client.query(
@@ -151,6 +154,6 @@ export async function mergeBrowserGuest(pool, markValue, memberId) {
       [sha256(markValue)],
     );
     if (!mark || mark.kind !== 'guest') return 0;
-    return mergeGuest(client, mark.user_id, memberId, { moveSessions: true });
+    return mergeGuest(client, mark.user_id, memberId, { moveSessions: true, webSessionId });
   });
 }

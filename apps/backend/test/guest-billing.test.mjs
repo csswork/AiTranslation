@@ -166,6 +166,9 @@ test('注册：扩展登录时访客剩余点数转入正式账户；网页登�
   const page = await b.text(`/welcome${linkOf(g3.welcomeUrl)}`);
   assert.match(page, /data-outcome="already_member"/);
   assert.equal((await (await api(app, '/me', { token: g3.token })).json()).credits.balance, 0);
+  await b.post('/logout');
+  assert.equal((await api(app, '/me', { token: g2.token })).status, 401, '网页登录合并的访客扩展也随网页登出');
+  assert.equal((await api(app, '/me', { token: g3.token })).status, 200, '没有登录的访客会话保持独立');
 });
 
 test('访客令牌不能当网页会话用；访客不能在用户端登录', async () => {
