@@ -128,6 +128,7 @@
   "点击出现的翻译按钮，或右键选择「翻译」": "Click the translate button that appears, or right-click and select \"Translate\"",
   "点数": "Credits",
   "点数作废": "Credits voided",
+  "点数按实际用量扣减，显示保留两位小数，实际余额以服务端精确记录为准。": "Service credits are deducted based on actual usage, displayed to two decimal places. The actual balance is subject to the precise record on the server.",
   "点数用完后注册即送 {n} 点，订阅可无限使用": "When credits run out, sign up to get {n} credits; subscribe for unlimited use",
   "点数记录": "Credit records",
   "状态": "Status",

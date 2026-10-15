@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "Per $arg1$ tekens wordt 1 credit afgeschreven; minder dan $arg1$ tekens telt als 1 credit. Bij mislukte vertalingen worden geen credits afgeschreven.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Vertaling met credits is nog niet beschikbaar. Gebruik voorlopig je eigen API Key."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Inloggen vereist"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Gratis credits opgebruikt. Registreer een account om meer credits te krijgen."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Credits opgebruikt. Neem een abonnement voor onbeperkt gebruik."
   },
   "m_6952a6494b02bef0": {
     "message": "Creditvertaling is gepauzeerd. Neem contact met ons op."

@@ -16,6 +16,16 @@ test('缺少数据库地址时拒绝启动', () => {
   assert.throws(() => readConfig({}), /缺少 DATABASE_URL/);
 });
 
+test('赠送点数接受十进制小数；旧换算环境变量不能改变精确计量', () => {
+  const config = readConfig({ ...base, GUEST_CREDITS: '0.29', TRIAL_CREDITS: '200.01', CHARS_PER_CREDIT: '1000' });
+  assert.equal(config.guestCredits, '0.29');
+  assert.equal(config.trialCredits, '200.01');
+  assert.equal(Object.hasOwn(config, 'charsPerCredit'), false);
+  for (const value of ['-1', '0.001', 'NaN', '1e3']) {
+    assert.throws(() => readConfig({ ...base, GUEST_CREDITS: value }), /最多两位小数/);
+  }
+});
+
 test('Google 客户端 ID 与密钥必须成对配置', () => {
   assert.throws(() => readConfig({ ...base, GOOGLE_CLIENT_ID: 'id' }), /缺少 GOOGLE_CLIENT_SECRET/);
   assert.deepEqual(readConfig({ ...base, GOOGLE_CLIENT_ID: 'id', GOOGLE_CLIENT_SECRET: 's' }).google,

@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "Viene detratto 1 credito ogni $arg1$ caratteri; meno di $arg1$ caratteri conta come 1 credito. Nessun credito viene detratto per le traduzioni non riuscite.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "La traduzione a crediti non è ancora disponibile. Per ora usa la tua API Key."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Accesso richiesto"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Crediti gratuiti esauriti. Registra un account per ottenere più crediti."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Crediti esauriti. Abbonati per un utilizzo illimitato."
   },
   "m_6952a6494b02bef0": {
     "message": "La traduzione a crediti è sospesa. Contattaci."

@@ -91,12 +91,16 @@ test('管理端：修改规则写审计并立即生效；补发点数、冻结�
   assert.match(await a.text(`/users/${newUser.id}`), /250\.00<span class="unit">点/);
   await a.post(`/users/${newUser.id}/credits`, { amount: '30' });
   assert.equal((await pool.query(`SELECT COUNT(*)::int AS n FROM credit_ledger WHERE entry_type = 'adjust'`)).rows[0].n, 0, '没有原因不补发');
-  await a.post(`/users/${newUser.id}/credits`, { amount: '30', reason: '补偿故障' });
+  await a.post(`/users/${newUser.id}/credits`, { amount: '30.29', reason: '补偿故障' });
+  const adjustment = (await pool.query("SELECT amount_units FROM credit_ledger WHERE user_id = $1 AND entry_type = 'adjust'", [newUser.id])).rows[0];
+  assert.equal(adjustment.amount_units, '15145', '小数点数按整数额度补发，无浮点误差');
+  await a.post(`/users/${newUser.id}/credits`, { amount: '0.001', reason: '无效精度' });
+  assert.equal((await pool.query("SELECT COUNT(*)::int AS n FROM credit_ledger WHERE entry_type = 'adjust'")).rows[0].n, 1);
   await a.post(`/users/${newUser.id}/freeze`, { reason: '异常用量' });
   await a.post(`/users/${newUser.id}/revoke-sessions`, { reason: '排查' });
   const { rows: [u] } = await pool.query('SELECT hosted_frozen_at FROM users WHERE id = $1', [newUser.id]);
   assert.ok(u.hosted_frozen_at);
-  assert.match(await a.text(`/users/${newUser.id}`), /管理员补发[\s\S]*\+30[\s\S]*补偿故障/);
+  assert.match(await a.text(`/users/${newUser.id}`), /管理员补发[\s\S]*\+30\.29[\s\S]*补偿故障/);
 
   const audit = await a.text('/audit');
   for (const action of ['settings.update', 'credits.adjust', 'user.freeze_hosted', 'user.revoke_sessions', 'admin.totp_enabled']) {

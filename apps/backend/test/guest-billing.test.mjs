@@ -3,6 +3,7 @@ import { createHash, createHmac, randomBytes } from 'node:crypto';
 import { after, before, beforeEach, test } from 'node:test';
 import { handleCreemEvent } from '../src/billing/creem.js';
 import { networkOf } from '../src/guest/index.js';
+import { creditBalance } from '../src/credits/ledger.js';
 import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
 let pool;
@@ -169,6 +170,38 @@ test('注册：扩展登录时访客剩余点数转入正式账户；网页登�
   await b.post('/logout');
   assert.equal((await api(app, '/me', { token: g2.token })).status, 401, '网页登录合并的访客扩展也随网页登出');
   assert.equal((await api(app, '/me', { token: g3.token })).status, 200, '没有登录的访客会话保持独立');
+});
+
+test('不足展示精度的访客余额，经扩展或网页登录均完整转入并可继续使用', async () => {
+  const { app, settings, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
+  await settings.set('guest_credits', '0.01');
+  await settings.set('signup_credits', '0');
+  for (const method of ['extension', 'web']) {
+    const g = await guest(app, method === 'web' ? '198.51.100.50' : '198.51.100.51');
+    assert.equal(g.granted, '0.01');
+    const translated = await api(app, '/translate', { method: 'POST', token: g.token, body: { texts: ['abcd'], target: 'en' } });
+    assert.deepEqual((await translated.json()).credits, { balance: '0.00', available: true });
+    let token = g.token;
+    const email = `${method}@precision.example`;
+    if (method === 'extension') {
+      const login = await extensionLogin(app, mailbox, email, g.token);
+      token = login.token;
+      assert.equal(login.transferred, '0.00');
+    } else {
+      const b = browser(app, config);
+      await b.get(`/welcome${linkOf(g.welcomeUrl)}`);
+      await b.post('/login/email', { email });
+      await b.post('/login/verify', { code: mailbox.last(email) });
+    }
+    const { rows: [user] } = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    assert.equal(await creditBalance(pool, user.id), 1n);
+    const { rows: [transfer] } = await pool.query("SELECT amount_units FROM credit_ledger WHERE user_id = $1 AND entry_type = 'transfer'", [user.id]);
+    assert.equal(transfer.amount_units, '1', '0.002 点不因展示为 0.00 而丢弃');
+    const last = await api(app, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'en' } });
+    assert.equal(last.status, 200);
+    assert.deepEqual((await last.json()).credits, { balance: '0.00', available: false });
+    assert.equal(await creditBalance(pool, user.id), 0n);
+  }
 });
 
 test('访客令牌不能当网页会话用；访客不能在用户端登录', async () => {

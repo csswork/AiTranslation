@@ -362,6 +362,7 @@ export function usagePage(ui, { user, entries, events = [] }) {
     body: html`<h1>${t('用量与点数')}</h1>
 <section class="card">
   <h2>${t('点数记录')}</h2>
+  <p class="fine">${t('点数按实际用量扣减，显示保留两位小数，实际余额以服务端精确记录为准。')}</p>
   ${entries.length ? html`<div class="table-wrap"><table>
     <thead><tr><th>${t('时间')}</th><th>${t('类型')}</th><th class="num">${t('点数')}</th><th>${t('到期')}</th></tr></thead>
     <tbody>${entries.map((e) => html`<tr>

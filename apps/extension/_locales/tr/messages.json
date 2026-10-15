@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "Her $arg1$ karakter için 1 kredi düşülür; $arg1$ karakterden az metin 1 kredi sayılır. Başarısız çevirilerde kredi düşülmez.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Puanla çeviri henüz kullanılamıyor. Şimdilik kendi API Key'inizi kullanın."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Giriş gerekli"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Ücretsiz krediler tükendi. Daha fazla kredi almak için bir hesap kaydedin."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Krediler tükendi. Sınırsız kullanım için abone olun."
   },
   "m_6952a6494b02bef0": {
     "message": "Kredi çevirisi duraklatıldı. Lütfen bizimle iletişime geçin."

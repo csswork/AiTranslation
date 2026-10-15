@@ -78,7 +78,7 @@ export async function createGuest(pool, config, settings, address, { country = n
 /**
  * 访客合并进正式账户（在调用方的事务里）：剩余点数转入、用量记录与浏览器标记改到正式账户，
  * moveSessions 为真时访客的扩展会话也改到正式账户（同一浏览器在网页上登录后，扩展随之登录）。
- * 访客账户随后删除。返回转入的点数。
+ * 访客账户随后删除。返回转入的精确整数额度（BigInt），不经过展示点数。
  */
 export async function mergeGuest(client, guestId, memberId, { moveSessions = false, webSessionId = null } = {}) {
   const { rows: [guest] } = await client.query(`SELECT id FROM users WHERE id = $1 AND kind = 'guest' FOR UPDATE`, [guestId]);
@@ -149,13 +149,13 @@ export async function linkBrowser(pool, { linkCode, markValue }) {
 
 /** 网页登录后：这个浏览器的标记如果属于访客，把访客合并进刚登录的正式账户（扩展也随之登录）。 */
 export async function mergeBrowserGuest(pool, markValue, memberId, webSessionId) {
-  if (!markValue) return 0;
+  if (!markValue) return 0n;
   return transaction(pool, async (client) => {
     const { rows: [mark] } = await client.query(
       `SELECT m.user_id, u.kind FROM browser_marks m JOIN users u ON u.id = m.user_id WHERE m.mark_hash = $1`,
       [sha256(markValue)],
     );
-    if (!mark || mark.kind !== 'guest') return 0;
+    if (!mark || mark.kind !== 'guest') return 0n;
     return mergeGuest(client, mark.user_id, memberId, { moveSessions: true, webSessionId });
   });
 }

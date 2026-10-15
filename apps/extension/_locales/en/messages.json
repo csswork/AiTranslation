@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "1 credit is deducted per $arg1$ characters; fewer than $arg1$ characters counts as 1 credit. No credits are deducted for failed translations.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Credit-based translation is not yet available. Please use your own API Key for now."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Sign-in required"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Free credits used up. Register an account to get more credits."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Credits used up. Subscribe for unlimited use."
   },
   "m_6952a6494b02bef0": {
     "message": "Credit translation is paused. Please contact us."

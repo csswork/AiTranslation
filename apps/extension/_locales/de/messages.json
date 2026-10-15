@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "Pro $arg1$ Zeichen wird 1 Punkt abgezogen; weniger als $arg1$ Zeichen zählt als 1 Punkt. Bei fehlgeschlagenen Übersetzungen werden keine Punkte abgezogen.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Übersetzung mit Guthaben ist noch nicht verfügbar. Bitte verwenden Sie vorerst Ihren eigenen API Key."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Anmeldung erforderlich"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Gratis-Guthaben aufgebraucht. Registriere ein Konto, um mehr Guthaben zu erhalten."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Guthaben aufgebraucht. Abonniere für unbegrenzte Nutzung."
   },
   "m_6952a6494b02bef0": {
     "message": "Guthaben-Übersetzung ist pausiert. Bitte kontaktiere uns."

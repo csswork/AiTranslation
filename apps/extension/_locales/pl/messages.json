@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "1 punkt jest odejmowany za każde $arg1$ znaków; mniej niż $arg1$ znaków liczy się jako 1 punkt. Punkty nie są odejmowane za nieudane tłumaczenia.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Tłumaczenie za punkty nie jest jeszcze dostępne. Na razie użyj własnego klucza API."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Wymagane zalogowanie"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Darmowe kredyty zostały wykorzystane. Zarejestruj konto, aby otrzymać więcej kredytów."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Kredyty zostały wykorzystane. Zasubskrybuj, aby korzystać bez ograniczeń."
   },
   "m_6952a6494b02bef0": {
     "message": "Tłumaczenie za kredyty jest wstrzymane. Skontaktuj się z nami."

@@ -1378,14 +1378,6 @@
       }
     }
   },
-  "m_3a2ce41bf2c6a3bf": {
-    "message": "1 poin dikurangi per $arg1$ karakter; kurang dari $arg1$ karakter dihitung 1 poin. Tidak ada poin yang dikurangi untuk terjemahan yang gagal.",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Terjemahan berbasis kredit belum tersedia. Untuk saat ini, gunakan API Key Anda sendiri."
   },
@@ -1424,12 +1416,6 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Perlu masuk"
-  },
-  "m_bb9dd3fb27ee5ff8": {
-    "message": "Kredit gratis telah habis. Daftar akun untuk mendapatkan lebih banyak kredit."
-  },
-  "m_585646b0c9382bf1": {
-    "message": "Kredit telah habis. Berlangganan untuk penggunaan tanpa batas."
   },
   "m_6952a6494b02bef0": {
     "message": "Terjemahan kredit dijeda. Silakan hubungi kami."
