@@ -16,6 +16,7 @@ import { isIPv4, isIPv6 } from 'node:net';
 import { createSession } from '../auth/sessions.js';
 import { createGuestUser } from '../auth/users.js';
 import { grantGuest, transferGuestCredits, voidRemaining } from '../credits/ledger.js';
+import { creditsToUnits } from '../credits/units.js';
 import { transaction } from '../db/index.js';
 
 const LINK_TTL_MINUTES = 30;
@@ -56,12 +57,13 @@ export async function createGuest(pool, config, settings, address, { country = n
     if (counts.same_network >= settings.guest_ip_limit) outcome = 'ip_limited';
     else if (counts.last_day >= settings.guest_daily_cap) outcome = 'daily_cap';
     const granted = outcome === 'granted' ? settings.guest_credits : 0;
+    const grantedUnits = creditsToUnits(granted);
 
     const user = await createGuestUser(client);
     await grantGuest(client, granted, user.id);
     await client.query(
-      'INSERT INTO guest_claims (user_id, ip_hash, granted, outcome, country, ui_lang) VALUES ($1, $2, $3, $4, $5, $6)',
-      [user.id, hash, granted, outcome, country, uiLang],
+      'INSERT INTO guest_claims (user_id, ip_hash, granted_units, outcome, country, ui_lang) VALUES ($1, $2, $3, $4, $5, $6)',
+      [user.id, hash, grantedUnits, outcome, country, uiLang],
     );
     const token = await createSession(client, config, user.id, 'extension');
     const linkCode = randomBytes(24).toString('base64url');
@@ -69,7 +71,7 @@ export async function createGuest(pool, config, settings, address, { country = n
       `INSERT INTO guest_link_codes (code_hash, user_id, expires_at) VALUES ($1, $2, now() + make_interval(mins => $3))`,
       [sha256(linkCode), user.id, LINK_TTL_MINUTES],
     );
-    return { token, linkCode, outcome, granted, userId: user.id };
+    return { token, linkCode, outcome, grantedUnits, userId: user.id };
   });
 }
 
@@ -80,7 +82,7 @@ export async function createGuest(pool, config, settings, address, { country = n
  */
 export async function mergeGuest(client, guestId, memberId, { moveSessions = false, webSessionId = null } = {}) {
   const { rows: [guest] } = await client.query(`SELECT id FROM users WHERE id = $1 AND kind = 'guest' FOR UPDATE`, [guestId]);
-  if (!guest || guestId === memberId) return 0;
+  if (!guest || guestId === memberId) return 0n;
   const transferred = await transferGuestCredits(client, guestId, memberId);
   await client.query('UPDATE usage_events SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE usage_rejections SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
@@ -110,7 +112,7 @@ export async function linkBrowser(pool, { linkCode, markValue }) {
     if (!link) return { outcome: 'invalid' };
     const guestId = link.user_id;
     const { rows: [claim] } = await client.query(
-      'SELECT id, granted, outcome FROM guest_claims WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1',
+      'SELECT id, granted_units, outcome FROM guest_claims WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1',
       [guestId],
     );
 
@@ -132,14 +134,14 @@ export async function linkBrowser(pool, { linkCode, markValue }) {
     if (mark.kind === 'guest') {
       // 同一浏览器重装：扩展会话接回旧访客，这次新建的访客与它的点数作废（删除），不计入领取次数。
       await client.query(`UPDATE sessions SET user_id = $2 WHERE user_id = $1 AND client = 'extension'`, [guestId, mark.user_id]);
-      await client.query(`UPDATE guest_claims SET outcome = 'reinstall', granted = 0 WHERE user_id = $1`, [guestId]);
+      await client.query(`UPDATE guest_claims SET outcome = 'reinstall', granted_units = 0 WHERE user_id = $1`, [guestId]);
       await client.query('DELETE FROM users WHERE id = $1', [guestId]);
       return { outcome: 'restored', claim, userId: mark.user_id };
     }
 
     // 这个浏览器已经注册过（或旧账户已删除）：新访客的点数作废，提示登录；不凭 Cookie 自动登录正式账户。
     await voidRemaining(client, guestId, 'browser_already_claimed');
-    await client.query(`UPDATE guest_claims SET outcome = 'claimed_member', granted = 0 WHERE user_id = $1`, [guestId]);
+    await client.query(`UPDATE guest_claims SET outcome = 'claimed_member', granted_units = 0 WHERE user_id = $1`, [guestId]);
     if (!mark.user_id) await client.query('UPDATE browser_marks SET user_id = $2 WHERE id = $1', [mark.id, guestId]);
     return { outcome: 'already_member', claim, userId: guestId };
   });

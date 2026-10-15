@@ -28,7 +28,7 @@ test('官网状态接口：已登录返回用户名和点数，不返回邮箱�
   const body = await res.json();
   assert.equal(body.signedIn, true);
   assert.match(body.username, /^user_/);
-  assert.deepEqual(body.credits, { balance: 100 });
+  assert.deepEqual(body.credits, { balance: '100.00', available: true });
   assert.equal(body.accountUrl, 'http://localhost:8787/');
   assert.doesNotMatch(JSON.stringify(body), /web@example\.com|"id"/);
 

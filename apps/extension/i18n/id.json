@@ -355,5 +355,8 @@
   "注册再送 $1 点": "Daftar untuk mendapatkan $1 kredit lagi",
   "免费试用，或订阅后无限使用，不需要 API Key": "Uji coba gratis, atau berlangganan untuk penggunaan tanpa batas, tidak perlu API Key",
   "● 无限使用": "● Penggunaan tanpa batas",
-  "○ 点数已用完": "○ Poin telah habis"
+  "○ 点数已用完": "○ Poin telah habis",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Daftarkan akun untuk mendapatkan lebih banyak poin.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Berlangganan untuk penggunaan tanpa batas.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Poin dipotong berdasarkan penggunaan aktual, dan saldo poin ditampilkan hingga dua angka desimal; poin tidak dipotong jika terjemahan gagal."
 }

@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Punkte aufgebraucht"
   },
+  "m_f33636f01f7df180": {
+    "message": "Nicht genügend Credits für diese Übersetzung. Registriere ein Konto, um mehr Credits zu erhalten."
+  },
+  "m_44356d8470993c67": {
+    "message": "Nicht genügend Credits für diese Übersetzung. Abonniere, um unbegrenzt zu nutzen."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Credits werden nach tatsächlichem Verbrauch abgezogen, Guthaben wird mit zwei Dezimalstellen angezeigt; bei fehlgeschlagener Übersetzung werden keine Credits abgezogen."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

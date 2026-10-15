@@ -3,6 +3,7 @@
  * 订阅用户托管翻译不扣点（界面显示「无限使用」），用量照常记录；管理员可设隐藏的每月字数上限。
  */
 import { creditSummary } from '../credits/ledger.js';
+import { creditView } from '../credits/units.js';
 
 // 可以使用的订阅状态。scheduled_cancel 在本期结束前仍有效；past_due 在扣款重试期间、本期结束前保留权益。
 const ENTITLED = ['active', 'trialing', 'paid', 'scheduled_cancel', 'past_due'];
@@ -49,7 +50,7 @@ export async function accountState(db, user) {
   ]);
   return {
     kind: user.kind,
-    credits: { balance: credits.balance },
+    credits: creditView(credits.balance),
     subscription: subscriptionView(sub),
     frozen: Boolean(user.hosted_frozen_at),
   };

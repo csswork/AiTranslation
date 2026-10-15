@@ -108,7 +108,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
          COUNT(*) FILTER (WHERE chars > 500 AND chars <= 2000)::int AS b4,
          COUNT(*) FILTER (WHERE chars > 2000)::int AS b5
        FROM usage_events WHERE status = 'ok' AND created_at >= $1 AND created_at < $2`, window),
-    q(`SELECT outcome AS key, COUNT(*)::int AS n, COALESCE(SUM(granted), 0)::int AS credits
+    q(`SELECT outcome AS key, COUNT(*)::int AS n, COALESCE(SUM(granted_units), 0)::text AS credit_units
        FROM guest_claims WHERE created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY n DESC`, window),
     q(`SELECT error AS key, COUNT(*)::int AS n FROM usage_events
        WHERE error IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY n DESC LIMIT 8`, window),
@@ -188,7 +188,7 @@ export async function apiUsageByUser(db, { days = 30, q = '', sort = 'cost', lim
          COALESCE(SUM(cached_tokens), 0)::bigint AS cached_tokens,
          COALESCE(SUM(output_tokens), 0)::bigint AS output_tokens,
          COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros,
-         COALESCE(SUM(cost) FILTER (WHERE status = 'ok'), 0)::bigint AS credits,
+         COALESCE(SUM(cost_units) FILTER (WHERE status = 'ok'), 0)::text AS credit_units,
          MAX(created_at) AS last_event,
          (ARRAY_AGG(audience ORDER BY created_at DESC))[1] AS audience
        FROM usage_events WHERE $1::int IS NULL OR created_at > now() - make_interval(days => $1::int) GROUP BY user_id
@@ -199,7 +199,7 @@ export async function apiUsageByUser(db, { days = 30, q = '', sort = 'cost', lim
        SELECT COALESCE(ev.user_id, rj.user_id) AS user_id,
          COALESCE(ev.ok, 0) AS ok, COALESCE(ev.failed, 0) AS failed, COALESCE(rj.rejected, 0) AS rejected,
          COALESCE(ev.chars, 0) AS chars, COALESCE(ev.input_tokens, 0) AS input_tokens, COALESCE(ev.cached_tokens, 0) AS cached_tokens,
-         COALESCE(ev.output_tokens, 0) AS output_tokens, COALESCE(ev.cost_micros, 0) AS cost_micros, COALESCE(ev.credits, 0) AS credits,
+         COALESCE(ev.output_tokens, 0) AS output_tokens, COALESCE(ev.cost_micros, 0) AS cost_micros, COALESCE(ev.credit_units, '0') AS credit_units,
          GREATEST(ev.last_event, rj.last_rejection) AS last_used, ev.audience
        FROM ev FULL OUTER JOIN rj ON rj.user_id = ev.user_id
      )
@@ -209,7 +209,7 @@ export async function apiUsageByUser(db, { days = 30, q = '', sort = 'cost', lim
      ORDER BY ${order} NULLS LAST, m.user_id LIMIT $4`,
     [days, term, `%${term.replace(/[%_\\]/g, '\\$&')}%`, limit],
   );
-  const users = rows.map((r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, typeof v === 'string' && /^\d+$/.test(v) && k !== 'username' ? Number(v) : v])));
+  const users = rows.map((r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, typeof v === 'string' && /^\d+$/.test(v) && !['username', 'credit_units'].includes(k) ? Number(v) : v])));
   const totals = users.reduce((t, u) => {
     for (const k of ['ok', 'failed', 'rejected', 'chars', 'input_tokens', 'cached_tokens', 'output_tokens', 'cost_micros']) t[k] = (t[k] || 0) + u[k];
     return t;
@@ -236,7 +236,7 @@ export async function apiUsageForUser(db, userId, days = 30) {
     q(`SELECT provider, model, COUNT(*)::int AS requests, COALESCE(SUM(input_tokens), 0)::bigint AS input_tokens,
               COALESCE(SUM(output_tokens), 0)::bigint AS output_tokens, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
        FROM usage_events WHERE user_id = $1 AND provider IS NOT NULL GROUP BY provider, model ORDER BY requests DESC`, [userId]),
-    q(`SELECT reason, chars, cost, target_lang, created_at FROM usage_rejections WHERE user_id = $1 ORDER BY created_at DESC LIMIT 20`, [userId]),
+    q(`SELECT reason, chars, cost_units, target_lang, created_at FROM usage_rejections WHERE user_id = $1 ORDER BY created_at DESC LIMIT 20`, [userId]),
   ]);
   const numbers = (r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, typeof v === 'string' && /^\d+$/.test(v) ? Number(v) : v]));
   return { days, recent: numbers(recent), all: numbers(all), models: models.map(numbers), rejections };

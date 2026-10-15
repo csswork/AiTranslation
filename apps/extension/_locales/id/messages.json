@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Poin telah habis"
   },
+  "m_f33636f01f7df180": {
+    "message": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Daftarkan akun untuk mendapatkan lebih banyak poin."
+  },
+  "m_44356d8470993c67": {
+    "message": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Berlangganan untuk penggunaan tanpa batas."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Poin dipotong berdasarkan penggunaan aktual, dan saldo poin ditampilkan hingga dua angka desimal; poin tidak dipotong jika terjemahan gagal."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

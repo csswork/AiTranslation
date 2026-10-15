@@ -355,5 +355,8 @@
   "注册再送 $1 点": "Đăng ký nhận thêm $1 điểm",
   "免费试用，或订阅后无限使用，不需要 API Key": "Dùng thử miễn phí, hoặc đăng ký để sử dụng không giới hạn, không cần API Key",
   "● 无限使用": "● Sử dụng không giới hạn",
-  "○ 点数已用完": "○ Đã hết điểm"
+  "○ 点数已用完": "○ Đã hết điểm",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký tài khoản để nhận thêm điểm.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký để sử dụng không giới hạn.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Điểm được trừ theo mức sử dụng thực tế, số điểm hiển thị giữ hai chữ số thập phân; không trừ điểm nếu dịch thất bại."
 }

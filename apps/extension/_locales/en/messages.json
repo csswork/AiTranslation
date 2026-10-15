@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Points used up"
   },
+  "m_f33636f01f7df180": {
+    "message": "Not enough credits remaining to complete this translation. Register an account to get more credits."
+  },
+  "m_44356d8470993c67": {
+    "message": "Not enough credits remaining to complete this translation. Subscribe for unlimited use."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Credits are deducted based on actual usage, and credit balances are displayed to two decimal places; no credits are deducted if translation fails."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

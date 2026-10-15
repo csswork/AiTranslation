@@ -355,5 +355,8 @@
   "注册再送 $1 点": "Registreer en ontvang $1 extra credits",
   "免费试用，或订阅后无限使用，不需要 API Key": "Gratis proberen, of abonneren voor onbeperkt gebruik, geen API Key vereist",
   "● 无限使用": "● Onbeperkt gebruik",
-  "○ 点数已用完": "○ Punten opgebruikt"
+  "○ 点数已用完": "○ Punten opgebruikt",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Niet genoeg credits over om deze vertaling te voltooien. Registreer een account om meer credits te krijgen.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Niet genoeg credits over om deze vertaling te voltooien. Neem een abonnement voor onbeperkt gebruik.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Credits worden afgetrokken op basis van werkelijk gebruik en het creditsaldo wordt weergegeven met twee decimalen; bij een mislukte vertaling worden geen credits afgetrokken."
 }

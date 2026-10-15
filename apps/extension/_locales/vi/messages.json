@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Đã hết điểm"
   },
+  "m_f33636f01f7df180": {
+    "message": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký tài khoản để nhận thêm điểm."
+  },
+  "m_44356d8470993c67": {
+    "message": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký để sử dụng không giới hạn."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Điểm được trừ theo mức sử dụng thực tế, số điểm hiển thị giữ hai chữ số thập phân; không trừ điểm nếu dịch thất bại."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

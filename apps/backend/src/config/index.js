@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { creditsToUnits, displayCredits } from '../credits/units.js';
 
 export const APP_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -18,6 +19,11 @@ const int = (value, fallback, name) => {
   const n = Number(value);
   if (!Number.isInteger(n) || n < 0) throw new Error(`${name} 必须是非负整数`);
   return n;
+};
+
+const credits = (value, fallback, name) => {
+  try { return displayCredits(creditsToUnits(value === undefined || value === '' ? fallback : value)); }
+  catch { throw new Error(`${name} 必须是非负点数，最多两位小数`); }
 };
 
 export function readConfig(env = process.env) {
@@ -136,8 +142,8 @@ export function readConfig(env = process.env) {
     // 管理端二步验证：生产环境始终开启；本地开发默认跳过，设 ADMIN_REQUIRE_2FA=1 可在本地测试完整流程。
     adminRequire2fa: production || env.ADMIN_REQUIRE_2FA === '1',
     // 以下点数与限额是默认值，管理员界面（A4、A7）里的设置优先，见 src/settings。试用点数不过期。
-    trialCredits: int(env.TRIAL_CREDITS, 200, 'TRIAL_CREDITS'),
-    guestCredits: int(env.GUEST_CREDITS, 50, 'GUEST_CREDITS'),
+    trialCredits: credits(env.TRIAL_CREDITS, 200, 'TRIAL_CREDITS'),
+    guestCredits: credits(env.GUEST_CREDITS, 50, 'GUEST_CREDITS'),
     extensionIds,
     // 托管文字翻译：模型 Key 只在服务端。未配置 HOSTED_DEEPSEEK_API_KEY 时托管翻译不可用。
     hosted: {
@@ -153,7 +159,6 @@ export function readConfig(env = process.env) {
         : null,
     },
     creem,
-    charsPerCredit: Math.max(1, int(env.CHARS_PER_CREDIT, 500, 'CHARS_PER_CREDIT')),
     hostedMaxChars: Math.max(1, int(env.HOSTED_MAX_CHARS, 6000, 'HOSTED_MAX_CHARS')),
     sessionDays: int(env.SESSION_DAYS, 30, 'SESSION_DAYS'),
     links: {

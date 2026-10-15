@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Puanlar tükendi"
   },
+  "m_f33636f01f7df180": {
+    "message": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Daha fazla kredi almak için bir hesap kaydedin."
+  },
+  "m_44356d8470993c67": {
+    "message": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Sınırsız kullanım için abone olun."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Krediler gerçek kullanıma göre düşülür ve kredi bakiyesi iki ondalık basamakla gösterilir; çeviri başarısız olursa kredi düşülmez."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

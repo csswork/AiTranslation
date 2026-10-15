@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Punkty wyczerpane"
   },
+  "m_f33636f01f7df180": {
+    "message": "Za mało pozostałych kredytów, aby ukończyć to tłumaczenie. Zarejestruj konto, aby otrzymać więcej kredytów."
+  },
+  "m_44356d8470993c67": {
+    "message": "Za mało pozostałych kredytów, aby ukończyć to tłumaczenie. Subskrybuj, aby korzystać bez ograniczeń."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Kredyty są odejmowane na podstawie rzeczywistego zużycia, a saldo kredytów jest wyświetlane z dokładnością do dwóch miejsc po przecinku; w przypadku niepowodzenia tłumaczenia kredyty nie są odejmowane."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

@@ -16,6 +16,7 @@ import { isValidEmail, normalizeEmail } from '../../src/auth/users.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import { accountState } from '../../src/billing/entitlements.js';
 import { adjustCredits } from '../../src/credits/ledger.js';
+import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
 import { clearPreference, setPreference } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter, limitBody } from '../../src/http/security.js';
 import { SETTINGS } from '../../src/settings/index.js';
@@ -239,9 +240,9 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const { rows: users } = await pool.query(
       `SELECT u.id, u.kind, u.email, u.username, u.created_at, u.hosted_frozen_at,
               (SELECT status FROM subscriptions s WHERE s.user_id = u.id ORDER BY updated_at DESC LIMIT 1) AS sub_status,
-              (SELECT COALESCE(SUM(g.amount + COALESCE((SELECT SUM(x.amount) FROM credit_ledger x WHERE x.grant_id = g.id), 0)), 0)
-                 FROM credit_ledger g WHERE g.user_id = u.id AND g.grant_id IS NULL AND g.amount > 0
-                   AND (g.expires_at IS NULL OR g.expires_at > now()))::int AS balance
+              (SELECT COALESCE(SUM(g.amount_units + COALESCE((SELECT SUM(x.amount_units) FROM credit_ledger x WHERE x.grant_id = g.id), 0)), 0)
+                 FROM credit_ledger g WHERE g.user_id = u.id AND g.grant_id IS NULL AND g.amount_units > 0
+                   AND (g.expires_at IS NULL OR g.expires_at > now()))::text AS balance_units
        FROM users u
        WHERE ($1 = '' AND u.kind = 'member') OR u.email = $1 OR u.username LIKE $2 OR u.id::text = $1
        ORDER BY u.created_at DESC LIMIT 100`,
@@ -260,8 +261,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const [state, subs, ledger, events, sessions, api] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
-      pool.query('SELECT entry_type, amount, reason, created_at FROM credit_ledger WHERE user_id = $1 ORDER BY created_at DESC LIMIT 100', [u.id]),
-      pool.query('SELECT audience, chars, cost, model, input_tokens, output_tokens, cost_micros, latency_ms, target_lang, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
+      pool.query('SELECT entry_type, amount_units, reason, created_at FROM credit_ledger WHERE user_id = $1 ORDER BY created_at DESC LIMIT 100', [u.id]),
+      pool.query('SELECT audience, chars, cost_units, model, input_tokens, output_tokens, cost_micros, latency_ms, target_lang, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
       apiUsageForUser(pool, u.id, 30),
     ]);
@@ -284,10 +285,12 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   });
 
   userAction('credits', 'credits.adjust', async (u, body, reason) => {
-    const amount = Number(body.amount);
-    if (!Number.isInteger(amount) || amount <= 0 || amount > 100_000) return false;
+    let units;
+    try { units = creditsToUnits(body.amount); } catch { return false; }
+    if (units <= 0n || units > creditsToUnits('100000')) return false;
+    const amount = displayCredits(units);
     await adjustCredits(pool, { userId: u.id, amount, reason, requestId: randomUUID() });
-    return { amount };
+    return { amount, units: units.toString() };
   });
   userAction('freeze', 'user.freeze_hosted', async (u) => {
     await pool.query('UPDATE users SET hosted_frozen_at = COALESCE(hosted_frozen_at, now()) WHERE id = $1', [u.id]);
@@ -321,7 +324,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const types = ['trial_grant', 'guest_grant', 'transfer', 'adjust', 'usage', 'refund', 'void'];
     const type = types.includes(c.req.query('type')) ? c.req.query('type') : '';
     const { rows } = await pool.query(
-      `SELECT l.user_id, u.username, l.entry_type, l.amount, l.reason, l.created_at
+      `SELECT l.user_id, u.username, l.entry_type, l.amount_units, l.reason, l.created_at
        FROM credit_ledger l JOIN users u ON u.id = l.user_id
        WHERE $1 = '' OR l.entry_type = $1 ORDER BY l.created_at DESC LIMIT 300`,
       [type],

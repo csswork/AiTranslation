@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Puntos agotados"
   },
+  "m_f33636f01f7df180": {
+    "message": "No quedan suficientes créditos para completar esta traducción. Regístrate para obtener más créditos."
+  },
+  "m_44356d8470993c67": {
+    "message": "No quedan suficientes créditos para completar esta traducción. Suscríbete para usarlo sin límites."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Los créditos se descuentan según el uso real y el saldo se muestra con dos decimales; si la traducción falla, no se descuentan créditos."
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

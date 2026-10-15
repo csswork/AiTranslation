@@ -5,18 +5,19 @@
  * 金额（价格、模型单价）用字符串保存的十进制数，避免浮点误差；模型单价单位是「美元 / 每百万 token」。
  */
 
+import { creditsToUnits, displayCredits } from '../credits/units.js';
+
 const MONEY = /^\d{1,7}(\.\d{1,4})?$/;
 
 /** 设置项定义：key、类型、分组、说明（管理员界面只用中文）、默认值（可取自 config）。 */
 export const SETTINGS = [
-  { key: 'guest_credits', type: 'int', group: 'trial', label: '访客赠送点数', help: '扩展安装后不注册即可使用的点数，不过期', def: (c) => c.guestCredits },
-  { key: 'signup_credits', type: 'int', group: 'trial', label: '注册赠送点数', help: '新注册账户获得的点数，不过期；访客剩余点数另外转入', def: (c) => c.trialCredits },
+  { key: 'guest_credits', type: 'credits', group: 'trial', label: '访客赠送点数', help: '支持两位小数，后台换算为精确额度；不过期', def: (c) => displayCredits(creditsToUnits(c.guestCredits)) },
+  { key: 'signup_credits', type: 'credits', group: 'trial', label: '注册赠送点数', help: '支持两位小数；访客的精确剩余额度另外转入', def: (c) => displayCredits(creditsToUnits(c.trialCredits)) },
   { key: 'guest_ip_limit', type: 'int', group: 'trial', label: '同一网络领取次数上限', help: '同一 IP（IPv6 按 /64）在统计周期内最多领取访客点数的次数', def: () => 3 },
   { key: 'guest_ip_window_days', type: 'int', group: 'trial', label: '同一网络统计周期（天）', def: () => 30 },
   { key: 'guest_daily_cap', type: 'int', group: 'trial', label: '每日访客领取总量', help: '最近 24 小时内全站最多发放访客点数的次数；0 表示暂停发放', def: () => 2000 },
 
   { key: 'hosted_enabled', type: 'bool', group: 'hosted', label: '启用托管文字翻译', def: () => true },
-  { key: 'chars_per_credit', type: 'int', group: 'hosted', label: '每点字数', help: '不足按 1 点；每次请求最少 1 点', def: (c) => c.charsPerCredit, min: 1 },
   { key: 'hosted_max_chars', type: 'int', group: 'hosted', label: '单次请求最多字数', def: (c) => c.hostedMaxChars, min: 1 },
   { key: 'subscriber_monthly_chars', type: 'int', group: 'hosted', label: '订阅用户每月字数上限（隐藏）', help: '界面显示无限使用；超过后返回「本月用量较高，请稍后再试」。0 表示不限制', def: () => 0 },
 
@@ -58,6 +59,8 @@ export function parseSetting(key, raw) {
   if (!def) return undefined;
   const text = String(raw ?? '').trim();
   switch (def.type) {
+    case 'credits':
+      return /^\d{1,9}(\.\d{1,2})?$/.test(text) ? displayCredits(creditsToUnits(text)) : undefined;
     case 'int': {
       if (!/^\d{1,9}$/.test(text)) return undefined;
       const n = Number(text);

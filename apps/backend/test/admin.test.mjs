@@ -76,19 +76,19 @@ test('管理端：修改规则写审计并立即生效；补发点数、冻结�
   assert.match(decodeURIComponent(a.jar.get('admin_flash') || ''), /请填写修改原因/);
   res = await a.post('/settings', { guest_credits: '60', signup_credits: '250', guest_ip_limit: '3', guest_ip_window_days: '30', guest_daily_cap: '2000', reason: '活动' });
   assert.equal(res.status, 303);
-  assert.equal((await settings.all()).guest_credits, 60);
-  assert.equal((await settings.all()).signup_credits, 250);
+  assert.equal((await settings.all()).guest_credits, '60.00');
+  assert.equal((await settings.all()).signup_credits, '250.00');
   await a.post('/settings', { price_monthly: 'abc', reason: 'x' });
   assert.equal((await settings.all()).price_monthly, '3.99', '无效值不保存');
 
   // 新注册用户按新的赠送点数
   await signInWithEmail(app, config, mailbox, 'new@example.com');
   const { rows: [newUser] } = await pool.query(`SELECT id FROM users WHERE email = 'new@example.com'`);
-  const { rows: [grant] } = await pool.query(`SELECT amount FROM credit_ledger WHERE user_id = $1`, [newUser.id]);
-  assert.equal(grant.amount, 250);
+  const { rows: [grant] } = await pool.query(`SELECT amount_units FROM credit_ledger WHERE user_id = $1`, [newUser.id]);
+  assert.equal(grant.amount_units, '125000');
 
   assert.match(await a.text(`/users?q=new@example.com`), /new@example\.com/);
-  assert.match(await a.text(`/users/${newUser.id}`), /250<span class="unit">点/);
+  assert.match(await a.text(`/users/${newUser.id}`), /250\.00<span class="unit">点/);
   await a.post(`/users/${newUser.id}/credits`, { amount: '30' });
   assert.equal((await pool.query(`SELECT COUNT(*)::int AS n FROM credit_ledger WHERE entry_type = 'adjust'`)).rows[0].n, 0, '没有原因不补发');
   await a.post(`/users/${newUser.id}/credits`, { amount: '30', reason: '补偿故障' });
@@ -198,7 +198,7 @@ test('运营概览：收入、支出、利润与 API 消耗；录入支出写审
      VALUES ($1, 'creem', 'tran_a', 'sub_x', 'yearly', 2999, 'USD', 'paid', now() - interval '2 days'),
             ($1, 'creem', 'tran_b', 'sub_x', 'yearly', 2999, 'USD', 'paid', now() - interval '1 hour')`, [owner.id]);
   await pool.query(
-    `INSERT INTO usage_events (user_id, kind, chars, cost, status, audience, provider, model, input_tokens, cached_tokens, output_tokens, cost_micros, latency_ms)
+    `INSERT INTO usage_events (user_id, kind, chars, cost_units, status, audience, provider, model, input_tokens, cached_tokens, output_tokens, cost_micros, latency_ms)
      VALUES ($1, 'text', 1000, 2, 'ok', 'member', 'deepseek', 'deepseek-flash', 400, 100, 300, 1000000, 1200)`, [owner.id]);
 
   let res = await a.post('/expenses', { category: 'domain', amount: '12.00', recurring: 'none', start_date: new Date().toISOString().slice(0, 10), note: 'huaci.app' });
@@ -247,14 +247,14 @@ test('每位用户的 API 使用都有记录：成功、失败与被拒（点数
   assert.equal((await ext('/translate', { token, body: { texts: ['Hello'], target: 'fr' } })).status, 502);
   fail = false;
   assert.equal((await ext('/translate', { token, body: { texts: ['x'.repeat(7000)], target: 'fr' } })).status, 413);
-  await pool.query(`UPDATE credit_ledger SET amount = 1 WHERE entry_type = 'guest_grant'`);
+  await pool.query(`UPDATE credit_ledger SET amount_units = 500 WHERE entry_type = 'guest_grant'`);
   assert.equal((await ext('/translate', { token, body: { texts: ['x'.repeat(2000)], target: 'ja' } })).status, 402);
   assert.equal((await ext('/translate', { token, body: { texts: [] } })).status, 400, '格式错误的请求不记录');
 
-  const { rows: rejections } = await pool.query('SELECT reason, audience, chars, cost, target_lang FROM usage_rejections ORDER BY created_at');
+  const { rows: rejections } = await pool.query('SELECT reason, audience, chars, cost_units, target_lang FROM usage_rejections ORDER BY created_at');
   assert.deepEqual(rejections, [
-    { reason: 'too_long', audience: 'guest', chars: 7000, cost: null, target_lang: 'fr' },
-    { reason: 'insufficient_credits', audience: 'guest', chars: 2000, cost: 4, target_lang: 'ja' },
+    { reason: 'too_long', audience: 'guest', chars: 7000, cost_units: null, target_lang: 'fr' },
+    { reason: 'insufficient_credits', audience: 'guest', chars: 2000, cost_units: '2000', target_lang: 'ja' },
   ]);
   assert.equal((await pool.query('SELECT 1 FROM usage_events')).rowCount, 2, '成功与失败各一条');
 

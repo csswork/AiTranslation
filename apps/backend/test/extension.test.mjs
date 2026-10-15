@@ -73,11 +73,11 @@ test('扩展登录：未登录先去登录页，确认后带一次性授权码�
   assert.equal(me.status, 200);
   const body = await me.json();
   assert.match(body.username, /^user_/);
-  assert.deepEqual(body.credits.balance, 100);
+  assert.deepEqual(body.credits, { balance: '100.00', available: true });
   assert.equal(body.kind, 'member');
   assert.equal(body.subscription, null);
   assert.equal(body.hosted.available, false);
-  assert.equal(body.hosted.charsPerCredit, 500);
+  assert.equal(Object.hasOwn(body.hosted, 'charsPerCredit'), false, '公开接口不暴露点数换算规则');
   assert.doesNotMatch(JSON.stringify(body), /ext@example\.com/);
   const { rows } = await pool.query("SELECT client FROM sessions WHERE client = 'extension'");
   assert.equal(rows.length, 1);
@@ -194,27 +194,27 @@ test('托管翻译：按每 500 字 1 点扣费，记录用量；余额不足拒
   assert.equal(res.status, 200);
   let body = await res.json();
   assert.deepEqual(body.translations, ['[zh-Hans] Hello world']);
-  assert.equal(body.cost, 1);
-  assert.equal(body.credits.balance, 99);
+  assert.equal(body.cost, '0.02');
+  assert.equal(body.credits.balance, '99.98');
 
   res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['a'.repeat(600), 'b'.repeat(500)], target: 'ja' } });
   body = await res.json();
-  assert.equal(body.cost, 3, '1100 字 = 3 点');
-  assert.equal(body.credits.balance, 96);
+  assert.equal(body.cost, '2.20', '1100 字精确扣 2.2 点');
+  assert.equal(body.credits.balance, '97.78');
   assert.equal(calls.length, 2);
 
   const usage = await web.text('/usage');
   assert.match(usage, /托管翻译扣点/);
   assert.match(usage, /<tr data-status="ok">[\s\S]*1100/);
-  const { rows: events } = await pool.query("SELECT status, chars, cost FROM usage_events ORDER BY created_at");
-  assert.deepEqual(events.map((e) => [e.status, e.chars, e.cost]), [['ok', 11, 1], ['ok', 1100, 3]]);
+  const { rows: events } = await pool.query("SELECT status, chars, cost_units FROM usage_events ORDER BY created_at");
+  assert.deepEqual(events.map((e) => [e.status, e.chars, e.cost_units]), [['ok', 11, '11'], ['ok', 1100, '1100']]);
 
-  await pool.query("UPDATE credit_ledger SET amount = 4 WHERE entry_type = 'trial_grant'");
+  await pool.query("UPDATE credit_ledger SET amount_units = 2000 WHERE entry_type = 'trial_grant'");
   res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['x'.repeat(3000)], target: 'en' } });
   assert.equal(res.status, 402);
   body = await res.json();
   assert.equal(body.error, 'insufficient_credits');
-  assert.equal(body.credits.balance, 0, '4 - 4 = 0');
+  assert.equal(body.credits.balance, '1.78', '余额精确保留 889 单位，不足时不继续扣款');
   assert.equal(calls.length, 2, '余额不足时不调用模型');
   assert.equal((await pool.query('SELECT 1 FROM usage_events')).rowCount, 2);
 });
@@ -225,11 +225,11 @@ test('托管翻译：模型失败时返还点数并记为失败；参数校验�
   const { token } = await extensionLogin(app, config, mailbox, 'fail@example.com');
   let res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'fr' } });
   assert.equal(res.status, 502);
-  assert.equal((await res.json()).credits.balance, 100, '失败不扣点');
+  assert.equal((await res.json()).credits.balance, '100.00', '失败不扣点');
   const { rows: [event] } = await pool.query('SELECT status FROM usage_events');
   assert.equal(event.status, 'failed');
-  const { rows: ledger } = await pool.query("SELECT entry_type, amount FROM credit_ledger WHERE entry_type <> 'trial_grant' ORDER BY entry_type DESC");
-  assert.deepEqual(ledger.map((r) => [r.entry_type, r.amount]), [['usage', -1], ['refund', 1]]);
+  const { rows: ledger } = await pool.query("SELECT entry_type, amount_units FROM credit_ledger WHERE entry_type <> 'trial_grant' ORDER BY entry_type DESC");
+  assert.deepEqual(ledger.map((r) => [r.entry_type, r.amount_units]), [['usage', '-5'], ['refund', '5']]);
 
   const bad = [
     [{ texts: [], target: 'fr' }, 400],
@@ -256,7 +256,7 @@ test('试用点数默认不过期；带到期时间的发放过期后剩余点�
   assert.equal(trial.expires_at, null, '注册赠送不过期');
   await pool.query("UPDATE credit_ledger SET expires_at = now() - interval '1 second' WHERE entry_type = 'trial_grant'");
   const body = await (await api(app, config, '/me', { token })).json();
-  assert.equal(body.credits.balance, 0);
+  assert.equal(body.credits.balance, '0.00');
   assert.equal((await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'de' } })).status, 402);
 });
 

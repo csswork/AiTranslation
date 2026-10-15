@@ -356,7 +356,10 @@ globalThis.AITrMessageIds = {
   "注册再送 $1 点": "m_30be0bf062a7750f",
   "免费试用，或订阅后无限使用，不需要 API Key": "m_174f93a129a0c68c",
   "● 无限使用": "m_a16866652a54b352",
-  "○ 点数已用完": "m_adc068b8279a3d7d"
+  "○ 点数已用完": "m_adc068b8279a3d7d",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "m_f33636f01f7df180",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "m_44356d8470993c67",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "m_d6e236529dbb9211"
 };
 globalThis.AITrEnglish = {
   "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
@@ -715,5 +718,8 @@ globalThis.AITrEnglish = {
   "注册再送 $1 点": "Register to get $1 more credits",
   "免费试用，或订阅后无限使用，不需要 API Key": "Free trial, or subscribe for unlimited use, no API Key required",
   "● 无限使用": "● Unlimited use",
-  "○ 点数已用完": "○ Points used up"
+  "○ 点数已用完": "○ Points used up",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Not enough credits remaining to complete this translation. Register an account to get more credits.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Not enough credits remaining to complete this translation. Subscribe for unlimited use.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Credits are deducted based on actual usage, and credit balances are displayed to two decimal places; no credits are deducted if translation fails."
 };

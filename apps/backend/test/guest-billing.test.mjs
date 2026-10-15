@@ -76,18 +76,18 @@ test('访客：安装即得点数，可直接托管翻译；同一网络超过�
   const { app, settings } = buildApp({ pool, config, hosted: fakeHosted() });
   const first = await guest(app, '198.51.100.1');
   assert.equal(first.outcome, 'granted');
-  assert.equal(first.granted, 50);
+  assert.equal(first.granted, '50.00');
   assert.match(first.welcomeUrl, /^http:\/\/localhost:8787\/welcome\?link=/);
 
   let me = await (await api(app, '/me', { token: first.token })).json();
   assert.equal(me.kind, 'guest');
   assert.equal(me.username, '', '访客不显示自动生成的用户名');
-  assert.equal(me.credits.balance, 50);
+  assert.equal(me.credits.balance, '50.00');
 
   const res = await api(app, '/translate', { method: 'POST', token: first.token, body: { texts: ['Hello'], target: 'fr' } });
   assert.equal(res.status, 200);
   me = await res.json();
-  assert.equal(me.credits.balance, 49);
+  assert.equal(me.credits.balance, '49.99');
   const { rows: [event] } = await pool.query('SELECT audience, provider, model, input_tokens, output_tokens, cost_micros, latency_ms FROM usage_events');
   assert.deepEqual(event, { audience: 'guest', provider: 'deepseek', model: 'deepseek-flash', input_tokens: 1_000_000, output_tokens: 1_000_000, cost_micros: '1500000', latency_ms: 9 });
 
@@ -96,15 +96,15 @@ test('访客：安装即得点数，可直接托管翻译；同一网络超过�
   await guest(app, '198.51.100.1');
   const fourth = await guest(app, '198.51.100.1');
   assert.equal(fourth.outcome, 'ip_limited');
-  assert.equal(fourth.granted, 0);
-  assert.equal((await (await api(app, '/me', { token: fourth.token })).json()).credits.balance, 0);
+  assert.equal(fourth.granted, '0.00');
+  assert.equal((await (await api(app, '/me', { token: fourth.token })).json()).credits.balance, '0.00');
 
   await settings.set('guest_daily_cap', '3');
   const capped = await guest(app, '198.51.100.99');
   assert.equal(capped.outcome, 'daily_cap');
   await settings.set('guest_daily_cap', '100');
   await settings.set('guest_credits', '80');
-  assert.equal((await guest(app, '198.51.100.99')).granted, 80, '管理员调整后立即生效');
+  assert.equal((await guest(app, '198.51.100.99')).granted, '80.00', '管理员调整后立即生效');
 
   const { rows: claims } = await pool.query('SELECT ip_hash FROM guest_claims');
   assert.ok(claims.every((c) => /^[0-9a-f]{64}$/.test(c.ip_hash) && !c.ip_hash.includes('198')), 'IP 只存哈希');
@@ -117,22 +117,22 @@ test('欢迎页：第一次写入浏览器标记；同一浏览器重装接回�
   await api(app, '/translate', { method: 'POST', token: first.token, body: { texts: ['x'.repeat(1200)], target: 'fr' } });
   let page = await b.text(`/welcome${linkOf(first.welcomeUrl)}`);
   assert.match(page, /data-outcome="new"/);
-  assert.match(page, /已送你 47 点免费点数/);
+  assert.match(page, /已送你 47\.60 点免费点数/);
   assert.ok(b.jar.get('huaci_browser'), '写入浏览器标记');
   assert.match((await b.text(`/welcome${linkOf(first.welcomeUrl)}`)), /data-outcome="invalid"/, '关联码只能用一次');
 
   // 卸载重装：新访客（换了 IP，照样发放），打开欢迎页时被识别
   const second = await guest(app, '198.51.100.3');
-  assert.equal(second.granted, 50);
+  assert.equal(second.granted, '50.00');
   page = await b.text(`/welcome${linkOf(second.welcomeUrl)}`);
   assert.match(page, /data-outcome="restored"/);
-  assert.match(page, /剩余 47 点/);
+  assert.match(page, /剩余 47\.60 点/);
   const me = await (await api(app, '/me', { token: second.token })).json();
-  assert.equal(me.credits.balance, 47, '扩展会话接回旧访客，不多发 50 点');
+  assert.equal(me.credits.balance, '47.60', '扩展会话接回旧访客，不多发点数');
   const { rows: guests } = await pool.query(`SELECT COUNT(*)::int AS n FROM users WHERE kind = 'guest'`);
   assert.equal(guests[0].n, 1, '新访客已删除');
-  const { rows: outcomes } = await pool.query('SELECT outcome, granted FROM guest_claims ORDER BY created_at');
-  assert.deepEqual(outcomes.map((o) => [o.outcome, o.granted]), [['granted', 50], ['reinstall', 0]]);
+  const { rows: outcomes } = await pool.query('SELECT outcome, granted_units FROM guest_claims ORDER BY created_at');
+  assert.deepEqual(outcomes.map((o) => [o.outcome, o.granted_units]), [['granted', '25000'], ['reinstall', '0']]);
 });
 
 test('注册：扩展登录时访客剩余点数转入正式账户；网页登录时同一浏览器的访客自动合并，扩展随之登录', async () => {
@@ -141,10 +141,10 @@ test('注册：扩展登录时访客剩余点数转入正式账户；网页登�
   const g1 = await guest(app, '198.51.100.4');
   await api(app, '/translate', { method: 'POST', token: g1.token, body: { texts: ['Hello'], target: 'fr' } });
   const login = await extensionLogin(app, mailbox, 'convert@example.com', g1.token);
-  assert.equal(login.transferred, 49);
+  assert.equal(login.transferred, '49.99');
   const me = await (await api(app, '/me', { token: login.token })).json();
   assert.equal(me.kind, 'member');
-  assert.equal(me.credits.balance, 100 + 49);
+  assert.equal(me.credits.balance, '149.99');
   assert.equal((await api(app, '/me', { token: g1.token })).status, 401, '访客会话随访客账户删除');
   const { rows: [usage] } = await pool.query('SELECT u.kind FROM usage_events e JOIN users u ON u.id = e.user_id');
   assert.equal(usage.kind, 'member', '用量记录转到正式账户');
@@ -159,13 +159,13 @@ test('注册：扩展登录时访客剩余点数转入正式账户；网页登�
   await b.post('/login/verify', { code: mailbox.last('web@example.com') });
   const after = await (await api(app, '/me', { token: g2.token })).json();
   assert.equal(after.kind, 'member');
-  assert.equal(after.credits.balance, 100 + 50);
+  assert.equal(after.credits.balance, '150.00');
 
   // 这个浏览器已注册：再装一次扩展，欢迎页作废新访客的点数，不自动登录
   const g3 = await guest(app, '198.51.100.6');
   const page = await b.text(`/welcome${linkOf(g3.welcomeUrl)}`);
   assert.match(page, /data-outcome="already_member"/);
-  assert.equal((await (await api(app, '/me', { token: g3.token })).json()).credits.balance, 0);
+  assert.equal((await (await api(app, '/me', { token: g3.token })).json()).credits.balance, '0.00');
   await b.post('/logout');
   assert.equal((await api(app, '/me', { token: g2.token })).status, 401, '网页登录合并的访客扩展也随网页登出');
   assert.equal((await api(app, '/me', { token: g3.token })).status, 200, '没有登录的访客会话保持独立');
@@ -217,11 +217,11 @@ test('订阅：验签的回调开通订阅，托管翻译不扣点并显示无�
   assert.equal(me.subscription.unlimited, true);
   res = await api(app, '/translate', { method: 'POST', token, body: { texts: ['x'.repeat(3000)], target: 'de' } });
   assert.equal(res.status, 200);
-  assert.equal((await res.json()).cost, 0);
+  assert.equal((await res.json()).cost, '0.00');
   me = await (await api(app, '/me', { token })).json();
-  assert.equal(me.credits.balance, 100, '订阅期间不扣点');
-  const { rows: [usage] } = await pool.query('SELECT audience, cost FROM usage_events');
-  assert.deepEqual(usage, { audience: 'subscriber', cost: 0 });
+  assert.equal(me.credits.balance, '100.00', '订阅期间不扣点');
+  const { rows: [usage] } = await pool.query('SELECT audience, cost_units FROM usage_events');
+  assert.deepEqual(usage, { audience: 'subscriber', cost_units: '0' });
   assert.match(await web.text('/'), /data-unlimited/);
   assert.match(await web.text('/billing'), /年付[\s\S]*管理订阅、付款方式与发票/);
   res = await web.post('/billing/portal');
@@ -236,7 +236,7 @@ test('订阅：验签的回调开通订阅，托管翻译不扣点并显示无�
   assert.deepEqual(refunded, { refunded_amount: 2999, status: 'refunded' }, '退款按税前折算');
   me = await (await api(app, '/me', { token })).json();
   assert.equal(me.subscription, null);
-  assert.equal((await (await api(app, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'de' } })).json()).cost, 1);
+  assert.equal((await (await api(app, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'de' } })).json()).cost, '0.00');
 
   // 较早的事件不会覆盖较新的状态
   await handleCreemEvent(pool, creem, { id: 'evt_old', eventType: 'subscription.active', created_at: Date.now() - 86400_000, object: subscription });

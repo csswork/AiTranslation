@@ -202,8 +202,8 @@
 
   const FAILURES = {
     402: (data) => (data.kind === 'guest'
-      ? new AccountError(t('免费点数已用完，注册账户即可获得更多点数'), 'insufficient_credits', 'open-options')
-      : new AccountError(t('点数已用完，订阅后可无限使用'), 'insufficient_credits', 'open-options')),
+      ? new AccountError(t('剩余点数不足以完成本次翻译，注册账户可获得更多点数'), 'insufficient_credits', 'open-options')
+      : new AccountError(t('剩余点数不足以完成本次翻译，订阅后可无限使用'), 'insufficient_credits', 'open-options')),
     403: () => new AccountError(t('点数翻译已暂停使用，请联系我们'), 'frozen'),
     413: (data) => new AccountError(t('文字太长，点数翻译单次最多 $1 字', [data.maxChars ?? 6000]), 'too_long'),
     429: (data) => (data.error === 'fair_use'

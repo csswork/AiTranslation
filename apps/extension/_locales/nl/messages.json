@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Punten opgebruikt"
   },
+  "m_f33636f01f7df180": {
+    "message": "Niet genoeg credits over om deze vertaling te voltooien. Registreer een account om meer credits te krijgen."
+  },
+  "m_44356d8470993c67": {
+    "message": "Niet genoeg credits over om deze vertaling te voltooien. Neem een abonnement voor onbeperkt gebruik."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "Credits worden afgetrokken op basis van werkelijk gebruik en het creditsaldo wordt weergegeven met twee decimalen; bij een mislukte vertaling worden geen credits afgetrokken."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

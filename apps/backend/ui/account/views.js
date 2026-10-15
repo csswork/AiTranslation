@@ -8,6 +8,7 @@
 import { html } from 'hono/html';
 import { k } from '../../src/i18n/index.js';
 import { assetUrl } from './assets.js';
+import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
 
 const GITHUB = 'https://github.com/csswork/AiTranslation';
 
@@ -366,7 +367,7 @@ export function usagePage(ui, { user, entries, events = [] }) {
     <tbody>${entries.map((e) => html`<tr>
       <td>${ui.dateTime(e.created_at)}</td>
       <td>${ENTRY_LABELS[e.entry_type] ? t(ENTRY_LABELS[e.entry_type]) : e.entry_type}</td>
-      <td class="num" dir="ltr">${e.amount > 0 ? `+${e.amount}` : e.amount}</td>
+      <td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td>
       <td>${e.expires_at ? ui.dateTime(e.expires_at) : t('不过期')}</td>
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('暂无点数记录。')}</p>`}
@@ -379,7 +380,7 @@ export function usagePage(ui, { user, entries, events = [] }) {
       <td>${ui.dateTime(e.created_at)}</td>
       <td>${KIND_LABELS[e.kind] ? t(KIND_LABELS[e.kind]) : e.kind}</td>
       <td class="num">${e.chars}</td>
-      <td class="num" dir="ltr">${e.audience === 'subscriber' ? t('订阅') : e.status === 'failed' ? 0 : -e.cost}</td>
+      <td class="num" dir="ltr">${e.audience === 'subscriber' ? t('订阅') : displayCredits(e.status === 'failed' ? 0n : -BigInt(e.cost_units))}</td>
       <td>${STATUS_LABELS[e.status] ? t(STATUS_LABELS[e.status]) : e.status}</td>
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
@@ -491,11 +492,13 @@ export function helpPage(ui, { user }) {
 
 export function welcomePage(ui, { user, outcome, claimOutcome, balance, signupCredits }) {
   const { t } = ui;
+  const balanceDisplay = displayCredits(balance ?? 0n);
+  signupCredits = displayCredits(creditsToUnits(signupCredits));
   let heading = t('欢迎使用 AI 划词翻译');
   let message;
   if (outcome === 'restored') {
     heading = t('欢迎回来');
-    message = t('已恢复你之前的免费点数，剩余 {n} 点。', { n: balance ?? 0 });
+    message = t('已恢复你之前的免费点数，剩余 {n} 点。', { n: balanceDisplay });
   } else if (outcome === 'already_member') {
     message = t('这个浏览器已经领取过免费点数。登录你的账户即可继续使用。');
   } else if (outcome === 'invalid') {
@@ -503,7 +506,7 @@ export function welcomePage(ui, { user, outcome, claimOutcome, balance, signupCr
   } else if (claimOutcome === 'ip_limited' || claimOutcome === 'daily_cap') {
     message = t('这次没有领到免费点数（同一网络领取次数已满或今日名额已发完）。注册即送 {n} 点。', { n: signupCredits });
   } else {
-    message = t('已送你 {n} 点免费点数，不用注册，选中网页上的文字即可翻译。', { n: balance ?? 0 });
+    message = t('已送你 {n} 点免费点数，不用注册，选中网页上的文字即可翻译。', { n: balanceDisplay });
   }
   return layout(ui, {
     title: heading,

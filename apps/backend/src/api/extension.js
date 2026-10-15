@@ -15,6 +15,7 @@ import { isAllowedExtension, redeemAuthCode } from '../auth/extension.js';
 import { createSession, revokeSession, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { refundCredits, reserveCredits } from '../credits/ledger.js';
+import { countCharacters, creditsToUnits, displayCredits } from '../credits/units.js';
 import { transaction } from '../db/index.js';
 import { createGuest, mergeGuest } from '../guest/index.js';
 import { clientAddress, createRateLimiter, limitBody, requestCountry } from '../http/security.js';
@@ -69,7 +70,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       token: result.token,
       tokenType: 'Bearer',
       outcome: result.outcome,
-      granted: result.granted,
+      granted: displayCredits(result.grantedUnits),
       welcomeUrl: `${config.appOrigin}/welcome?link=${encodeURIComponent(result.linkCode)}`,
     });
   });
@@ -81,12 +82,12 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const { userId, webSessionId } = grant;
     // 扩展原来是访客：合并进刚登录的正式账户（剩余点数转入），访客会话随访客账户删除。
     const guest = typeof body.guest_token === 'string' && await validateSession(pool, config, body.guest_token);
-    let transferred = 0;
+    let transferred = 0n;
     if (guest && guest.user.kind === 'guest' && guest.session.client === 'extension') {
       transferred = await transaction(pool, (client) => mergeGuest(client, guest.user.id, userId));
     }
     const token = await createSession(pool, config, userId, 'extension', { webSessionId });
-    return c.json({ token, tokenType: 'Bearer', transferred });
+    return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred) });
   });
 
   /** 只接受扩展会话；令牌无效、过期或已在用户端被退出时返回 401，扩展据此回到未登录状态。 */
@@ -111,11 +112,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       ...(await status(user)),
       hosted: {
         available: Boolean(hosted) && s.hosted_enabled && !user.hosted_frozen_at,
-        charsPerCredit: s.chars_per_credit,
         maxChars: s.hosted_max_chars,
       },
       // 引导文案用：注册可得的点数（访客显示「注册再送 N 点」）。
-      offers: { signupCredits: s.signup_credits },
+      offers: { signupCredits: displayCredits(creditsToUnits(s.signup_credits)) },
     });
   });
 
@@ -142,7 +142,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const texts = Array.isArray(body.texts) ? body.texts : [];
     if (!texts.length || texts.length > MAX_ITEMS || texts.some((t) => typeof t !== 'string')) return c.json({ error: 'invalid_texts' }, 400);
     if (!LANGUAGES[body.target] || (body.source && !LANGUAGES[body.source])) return c.json({ error: 'invalid_language' }, 400);
-    const chars = texts.reduce((sum, text) => sum + text.length, 0);
+    const chars = countCharacters(texts);
     if (!chars) return c.json({ error: 'invalid_texts' }, 400);
 
     const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
@@ -151,7 +151,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const reject = async (reason, status, extra = {}, cost = null) => {
       if (rejectionLogLimiter(`${user.id}:${reason}`)) {
         await pool.query(
-          `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost, target_lang, country) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost_units, target_lang, country) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
           [user.id, reason, audience, chars, cost, body.target, requestCountry(c, config)],
         );
       }
@@ -165,11 +165,11 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     if (subscribed && s.subscriber_monthly_chars && (await monthChars(user.id)) + chars > s.subscriber_monthly_chars) {
       return reject('fair_use', 429);
     }
-    const cost = subscribed ? 0 : Math.max(1, Math.ceil(chars / s.chars_per_credit));
+    const cost = subscribed ? 0n : BigInt(chars);
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost, status, audience, country, target_lang, source_lang)
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang)
          VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8)`,
         [eventId, user.id, chars, cost, audience, requestCountry(c, config), body.target, body.source || null],
       );
@@ -177,7 +177,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);
       return false;
     });
-    if (!reserved) return reject('insufficient_credits', 402, { cost, ...(await status(user)) }, cost);
+    if (!reserved) return reject('insufficient_credits', 402, { cost: displayCredits(cost), ...(await status(user)) }, cost);
 
     const record = (meta, fields) => pool.query(
       `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,
@@ -197,7 +197,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
     }
     await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
-    return c.json({ translations: result.translations, cost, ...(await status(user)) });
+    return c.json({ translations: result.translations, cost: displayCredits(cost), ...(await status(user)) });
   });
 
   return app;

@@ -1518,6 +1518,15 @@
   "m_adc068b8279a3d7d": {
     "message": "○ Punti esauriti"
   },
+  "m_f33636f01f7df180": {
+    "message": "Crediti rimanenti insufficienti per completare questa traduzione. Registra un account per ottenere più crediti."
+  },
+  "m_44356d8470993c67": {
+    "message": "Crediti rimanenti insufficienti per completare questa traduzione. Abbonati per un utilizzo illimitato."
+  },
+  "m_d6e236529dbb9211": {
+    "message": "I crediti vengono detratti in base all'utilizzo effettivo e il saldo dei crediti è visualizzato con due decimali; in caso di traduzione non riuscita non vengono detratti crediti."
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

@@ -355,5 +355,8 @@
   "注册再送 $1 点": "Kaydolun ve $1 daha kredi alın",
   "免费试用，或订阅后无限使用，不需要 API Key": "Ücretsiz deneme veya sınırsız kullanım için abone olun, API Key gerekmez",
   "● 无限使用": "● Sınırsız kullanım",
-  "○ 点数已用完": "○ Puanlar tükendi"
+  "○ 点数已用完": "○ Puanlar tükendi",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Daha fazla kredi almak için bir hesap kaydedin.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Sınırsız kullanım için abone olun.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Krediler gerçek kullanıma göre düşülür ve kredi bakiyesi iki ondalık basamakla gösterilir; çeviri başarısız olursa kredi düşülmez."
 }

@@ -2,6 +2,7 @@
   await AITrI18n.ready;
   const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
+  const C = globalThis.AITrCredits;
   const el = {
     provider: document.getElementById('provider'),
     model: document.getElementById('model'),
@@ -36,7 +37,7 @@
     if (account.guest) {
       el.avatar.textContent = '✦';
       el.username.textContent = t('免费试用');
-      el.accountMeta.textContent = t('注册再送 $1 点', [account.offers?.signupCredits ?? 200]);
+      el.accountMeta.textContent = t('注册再送 $1 点', [C.format(account.offers?.signupCredits ?? 200)]);
     } else {
       const name = account.username || '';
       el.avatar.textContent = (name[0] || '?').toUpperCase();
@@ -44,8 +45,8 @@
       el.accountMeta.textContent = sub ? t('订阅中') : t('未订阅');
     }
     el.avatar.classList.toggle('guest', Boolean(account.guest));
-    el.credits.textContent = sub ? t('无限使用') : t('$1 点', [balance]);
-    el.credits.className = `credits ${sub || balance > 0 ? '' : 'empty'}`;
+    el.credits.textContent = sub ? t('无限使用') : t('$1 点', [C.format(balance)]);
+    el.credits.className = `credits ${sub || C.available(account.credits) ? '' : 'empty'}`;
   }
 
   function render() {
@@ -67,9 +68,9 @@
       // 点数翻译：显示剩余点数或需要登录，而不是 API Key
       const balance = account.credits?.balance ?? 0;
       const active = account.signedIn || account.guest;
-      const usable = active && (account.subscription || balance > 0);
+      const usable = active && (account.subscription || C.available(account.credits));
       el.keyLabel.textContent = t('点数');
-      el.keyState.textContent = !active ? t('需要登录') : account.subscription ? t('无限使用') : t('剩余 $1 点', [balance]);
+      el.keyState.textContent = !active ? t('需要登录') : account.subscription ? t('无限使用') : t('剩余 $1 点', [C.format(balance)]);
       el.keyState.className = `state ${usable ? 'ok' : 'warn'}`;
     } else {
       const configured = Boolean(provider.apiKey);

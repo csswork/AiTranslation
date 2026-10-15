@@ -3,6 +3,7 @@
  * 样式沿用用户端的 account.css，另加 admin.css（报表与表格）。
  */
 import { html } from 'hono/html';
+import { displayCredits } from '../../src/credits/units.js';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
@@ -272,7 +273,7 @@ ${money.expenses}
   ${panel('使用时段', hasUsage ? heatmap(r.heat, { timeZone: r.timeZone }) : '', { wide: true, note: r.timeZone })}
   ${panel('响应耗时', latencyBuckets.length ? html`<dl class="stats"><div><dt>P50</dt><dd>${num(r.latency.p50)} ms</dd></div><div><dt>P90</dt><dd>${num(r.latency.p90)} ms</dd></div><div><dt>P95</dt><dd>${num(r.latency.p95)} ms</dd></div><div><dt>P99</dt><dd>${num(r.latency.p99)} ms</dd></div></dl>${histogram(latencyBuckets, { cls: 'c4' })}` : '')}
   ${panel('请求字数', hasUsage ? histogram(sizeBuckets, { cls: 'c1' }) : '', { note: '每次请求的字符数' })}
-  ${panel('访客领取', r.outcomes.length ? barList(r.outcomes.map((o) => ({ label: OUTCOME[o.key] || o.key, value: o.n, note: o.credits ? `${num(o.credits)} 点` : '' })), { cls: 'c3' }) : '')}
+  ${panel('访客领取', r.outcomes.length ? barList(r.outcomes.map((o) => ({ label: OUTCOME[o.key] || o.key, value: o.n, note: `${displayCredits(o.credit_units)} 点` })), { cls: 'c3' }) : '')}
   ${panel('异常与降级', r.errors.length ? barList(r.errors.map((e) => ({ label: ERRORS[e.key] || e.key, value: e.n })), { cls: 'c5' }) : '')}
   ${panel('用量最高的用户', r.topUsers.length ? html`<div class="table-wrap"><table>
     <thead><tr><th>用户</th><th>类型</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本</th></tr></thead>
@@ -461,7 +462,7 @@ ${data.users.length ? html`<section class="kpis">
     <td><a href="/users/${u.user_id}">${u.kind === 'guest' ? '访客' : u.username}</a>${u.kind === 'member' ? html` <span class="muted" dir="ltr">${u.email}</span>` : ''}${u.hosted_frozen_at ? html` <span class="tag warn">已冻结</span>` : ''}</td>
     <td>${KIND[u.audience] || KIND[u.kind]}</td>
     <td class="num">${num(u.ok + u.failed)}</td><td class="num">${u.failed ? num(u.failed) : '—'}</td><td class="num">${u.rejected ? num(u.rejected) : '—'}</td>
-    <td class="num">${num(u.chars)}</td><td class="num">${num(u.input_tokens)} / ${num(u.output_tokens)}</td><td class="num">${u.audience === 'subscriber' ? '订阅' : num(u.credits)}</td>
+    <td class="num">${num(u.chars)}</td><td class="num">${num(u.input_tokens)} / ${num(u.output_tokens)}</td><td class="num">${u.audience === 'subscriber' ? '订阅' : displayCredits(u.credit_units)}</td>
     <td class="num">${usd(u.cost_micros)}</td><td class="num">${dt(u.last_used)}</td>
   </tr>`)}</tbody>
 </table></div></section>` : html`<section class="card empty-state"><h2>${q ? '没有匹配的用户' : '这段时间没有用户使用托管翻译'}</h2></section>`}`,
@@ -522,7 +523,7 @@ export function usersPage({ admin, q, users }) {
   <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
   <tbody>${users.map((u) => html`<tr>
     <td><a href="/users/${u.id}">${u.username}</a></td><td dir="ltr">${u.email || '—'}</td><td>${KIND[u.kind]}</td>
-    <td class="num">${num(u.balance)}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
+    <td class="num">${displayCredits(u.balance_units)}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
   </tr>`)}</tbody>
 </table></div>
 ${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}`,
@@ -553,7 +554,7 @@ export function userPage({ admin, u, state, subs, ledger, events, sessions, api,
   </section>
   <section class="card">
     <h2>点数与订阅</h2>
-    <p class="big">${num(state.credits.balance)}<span class="unit">点</span></p>
+    <p class="big">${state.credits.balance}<span class="unit">点</span></p>
     <p>${state.subscription ? html`订阅中：${state.subscription.plan === 'yearly' ? '年付' : '月付'}（${state.subscription.status}），至 ${d(state.subscription.periodEnd)}` : '没有有效订阅'}</p>
   </section>
 </div>
@@ -562,7 +563,7 @@ export function userPage({ admin, u, state, subs, ledger, events, sessions, api,
   <h2>操作</h2>
   <div class="actions">
     <form method="post" action="/users/${u.id}/credits" class="inline">
-      <input name="amount" type="number" min="1" max="100000" required placeholder="补发点数">${reasonField}
+      <input name="amount" type="number" min="0.01" step="0.01" max="100000" required placeholder="补发点数">${reasonField}
       <button class="button" type="submit">补发点数</button>
     </form>
     <form method="post" action="/users/${u.id}/${u.hosted_frozen_at ? 'unfreeze' : 'freeze'}" class="inline">
@@ -583,7 +584,7 @@ export function userPage({ admin, u, state, subs, ledger, events, sessions, api,
 <section class="card">
   <h2>点数账本</h2>
   <div class="table-wrap"><table><thead><tr><th>时间</th><th>类型</th><th class="num">点数</th><th>原因</th></tr></thead>
-  <tbody>${ledger.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${e.amount > 0 ? `+${e.amount}` : e.amount}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>
+  <tbody>${ledger.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>
 </section>
 
 ${api.all.ok || api.all.failed || api.all.rejected ? html`<h2 class="section-title">API 消耗 <span class="muted section-link">首次 ${dt(api.all.first_used)} · 最近 ${dt(api.all.last_used)}</span></h2>
@@ -602,7 +603,7 @@ ${api.models.length ? html`<section class="card"><h2>用过的模型</h2><div cl
 ${events.length ? html`<section class="card">
   <h2>最近托管请求</h2>
   <div class="table-wrap"><table><thead><tr><th>时间</th><th>类型</th><th class="num">字数</th><th class="num">点数</th><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">成本</th><th class="num">耗时</th><th>语言</th><th>结果</th></tr></thead>
-  <tbody>${events.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${e.cost}</td><td>${e.model || '—'}</td>
+  <tbody>${events.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${displayCredits(e.cost_units)}</td><td>${e.model || '—'}</td>
     <td class="num">${e.input_tokens != null ? num(e.input_tokens) : '—'}</td><td class="num">${e.output_tokens != null ? num(e.output_tokens) : '—'}</td>
     <td class="num">${e.cost_micros != null ? usd(e.cost_micros) : '—'}</td><td class="num">${e.latency_ms ?? '—'}</td><td>${e.target_lang ? language(e.target_lang) : '—'}</td>
     <td>${e.status === 'ok' ? '成功' : e.status === 'failed' ? '失败（已返还）' : e.status}${e.error ? html` <span class="muted">${ERRORS[e.error] || e.error}</span>` : ''}</td></tr>`)}</tbody></table></div>
@@ -611,7 +612,7 @@ ${events.length ? html`<section class="card">
 ${api.rejections.length ? html`<section class="card">
   <h2>被拒绝的请求</h2>
   <div class="table-wrap"><table><thead><tr><th>时间</th><th>原因</th><th class="num">字数</th><th class="num">需要点数</th><th>目标语言</th></tr></thead>
-  <tbody>${api.rejections.map((x) => html`<tr><td>${dt(x.created_at)}</td><td>${REJECTIONS[x.reason] || x.reason}</td><td class="num">${num(x.chars)}</td><td class="num">${x.cost ?? '—'}</td><td>${x.target_lang ? language(x.target_lang) : '—'}</td></tr>`)}</tbody></table></div>
+  <tbody>${api.rejections.map((x) => html`<tr><td>${dt(x.created_at)}</td><td>${REJECTIONS[x.reason] || x.reason}</td><td class="num">${num(x.chars)}</td><td class="num">${x.cost_units == null ? '—' : displayCredits(x.cost_units)}</td><td>${x.target_lang ? language(x.target_lang) : '—'}</td></tr>`)}</tbody></table></div>
 </section>` : ''}</section>`,
   });
 }
@@ -650,7 +651,7 @@ export function ledgerPage({ admin, entries, type }) {
     body: html`<h1>点数账本</h1>
 <nav class="seg">${['', ...Object.keys(ENTRY)].map((k) => html`<a href="/ledger${k ? `?type=${k}` : ''}"${k === type ? html` aria-current="page"` : ''}>${k ? ENTRY[k] : '全部'}</a>`)}</nav>
 <div class="table-wrap"><table><thead><tr><th>时间</th><th>用户</th><th>类型</th><th class="num">点数</th><th>原因</th></tr></thead>
-<tbody>${entries.map((e) => html`<tr><td>${dt(e.created_at)}</td><td><a href="/users/${e.user_id}">${e.username}</a></td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${e.amount > 0 ? `+${e.amount}` : e.amount}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>`,
+<tbody>${entries.map((e) => html`<tr><td>${dt(e.created_at)}</td><td><a href="/users/${e.user_id}">${e.username}</a></td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>`,
   });
 }
 

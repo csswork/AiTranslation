@@ -355,5 +355,8 @@
   "注册再送 $1 点": "Registre-se e ganhe $1 em créditos",
   "免费试用，或订阅后无限使用，不需要 API Key": "Teste gratuito, ou assine para uso ilimitado, sem necessidade de API Key",
   "● 无限使用": "● Uso ilimitado",
-  "○ 点数已用完": "○ Pontos esgotados"
+  "○ 点数已用完": "○ Pontos esgotados",
+  "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Créditos restantes insuficientes para concluir esta tradução. Registre uma conta para obter mais créditos.",
+  "剩余点数不足以完成本次翻译，订阅后可无限使用": "Créditos restantes insuficientes para concluir esta tradução. Assine para uso ilimitado.",
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Os créditos são descontados com base no uso real, e o saldo é exibido com duas casas decimais; nenhum crédito é descontado se a tradução falhar."
 }

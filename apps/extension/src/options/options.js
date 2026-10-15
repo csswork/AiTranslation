@@ -2,6 +2,7 @@
   await AITrI18n.ready;
   const t = (...args) => AITrI18n.t(...args);
   const S = globalThis.AITrSettings;
+  const C = globalThis.AITrCredits;
   const ACCOUNT_KEY = 'accountStatus'; // 与 lib/account.js 的 STATUS_KEY 一致
   const $ = (id) => document.getElementById(id);
   // 外部链接按运行环境取；未打包的开发版本在页脚标出连接的本机用户端
@@ -102,6 +103,7 @@
   /* ------------------------------------------------------------- 账户 */
 
   const balanceOf = () => account.credits?.balance ?? 0;
+  const hasCredits = () => C.available(account.credits);
   const hasOwnKey = () => S.KEY_PROVIDERS.some((id) => settings[id]?.apiKey);
 
   async function finishOnboarding() {
@@ -116,7 +118,7 @@
     el.accountError.textContent = text || '';
   }
 
-  const signupCredits = () => account.offers?.signupCredits ?? 200;
+  const signupCredits = () => C.format(account.offers?.signupCredits ?? 200);
   const subscribed = () => Boolean(account.subscription);
 
   /** 账户卡片：正式账户、访客试用、未登录与新安装引导四种状态。 */
@@ -148,8 +150,8 @@
     }
     el.accountAvatar.classList.toggle('guest', Boolean(account.guest));
     // 订阅用户不显示点数，只显示无限使用
-    el.accountCredits.textContent = sub ? t('无限') : String(balanceOf());
-    el.accountCredits.className = sub || balanceOf() > 0 ? '' : 'empty';
+    el.accountCredits.textContent = sub ? t('无限') : C.format(balanceOf());
+    el.accountCredits.className = sub || hasCredits() ? '' : 'empty';
     el.accountCreditsLabel.textContent = sub ? t('点数翻译') : t('剩余点数');
 
     el.register.hidden = !account.guest;
@@ -165,10 +167,9 @@
 
   /** 选中「点数翻译」时显示的说明与状态。 */
   function renderHosted() {
-    const rate = account.hosted?.charsPerCredit || 500;
     el.hostedRate.textContent = subscribed()
       ? t('订阅期间不限次数，不消耗点数。')
-      : t('每 $1 字扣 1 点，不足 $1 字按 1 点计；翻译失败不扣点。', [rate]);
+      : t('按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。');
     const state = document.createElement('p');
     const actions = [];
     const button = (label, onClick, ghost = false) => {
@@ -190,7 +191,7 @@
       state.className = 'hosted-line big';
       state.textContent = t('无限使用');
       actions.push(button(t('管理订阅'), () => openLink('billing'), true));
-    } else if (balanceOf() <= 0) {
+    } else if (!hasCredits()) {
       state.className = 'hosted-line warn';
       if (account.guest) {
         state.textContent = t('免费点数已用完。注册即送 $1 点，或切换到自己的 API Key。', [signupCredits()]);
@@ -201,7 +202,7 @@
       }
     } else {
       state.className = 'hosted-line big';
-      state.textContent = t('剩余 $1 点', [balanceOf()]);
+      state.textContent = t('剩余 $1 点', [C.format(balanceOf())]);
       actions.push(account.guest
         ? button(t('注册 / 登录，再送 $1 点', [signupCredits()]), login, true)
         : button(t('查看用量'), () => openLink('usage'), true));
@@ -238,7 +239,7 @@
       ...S.providerList().map((item) => {
         const hosted = item.kind === 'hosted';
         const active = account.signedIn || account.guest;
-        const configured = hosted ? active && (subscribed() || balanceOf() > 0) : Boolean(settings[item.id]?.apiKey);
+        const configured = hosted ? active && (subscribed() || hasCredits()) : Boolean(settings[item.id]?.apiKey);
         const card = document.createElement('button');
         card.type = 'button';
         card.className = hosted ? 'provider-card hosted' : 'provider-card';
@@ -248,7 +249,7 @@
         card.querySelector('b').textContent = item.label;
         card.querySelector('i').textContent = item.hint;
         card.querySelector('em').textContent = hosted
-          ? (!active ? t('○ 需要登录') : subscribed() ? t('● 无限使用') : balanceOf() > 0 ? t('● 剩余 $1 点', [balanceOf()]) : t('○ 点数已用完'))
+          ? (!active ? t('○ 需要登录') : subscribed() ? t('● 无限使用') : hasCredits() ? t('● 剩余 $1 点', [C.format(balanceOf())]) : t('○ 点数已用完'))
           : configured ? t("● 已配置 Key") : t("○ 未配置 Key");
         card.addEventListener('click', () => {
           if (settings.provider === item.id) return;
