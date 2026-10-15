@@ -55,9 +55,9 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
 
   const { a } = await adminLogin(app, config, mailbox);
   const overview = await a.text('/');
-  // 只有两个注册账户（普通用户和管理员）：只显示「新注册」，其余没有数据的指标与图表都不显示
-  assert.match(overview, /运营概览[\s\S]*新注册[\s\S]*增长趋势/);
-  assert.doesNotMatch(overview, /托管请求|模型成本|有效订阅|转化漏斗|使用时段/);
+  // 核心指标始终显示（没有数据时为 0）；没有数据的图表与排行不显示
+  assert.match(overview, /API 消耗[\s\S]*输入 token[\s\S]*经营[\s\S]*净收入[\s\S]*US\$0\.00[\s\S]*收入[\s\S]*支出[\s\S]*用户与使用[\s\S]*托管请求[\s\S]*有效订阅[\s\S]*增长趋势/);
+  assert.doesNotMatch(overview, /转化漏斗|使用时段|每日 token|每日收入|每日支出|按服务商与模型|累计收入、支出与利润/);
   const { rows: [adminRow] } = await pool.query('SELECT totp_secret, totp_enabled_at FROM admins');
   assert.ok(adminRow.totp_enabled_at);
   assert.doesNotMatch(adminRow.totp_secret, /^[A-Z2-7]+$/, 'TOTP 密钥加密存储');
@@ -153,7 +153,8 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   const { a } = await adminLogin(app, config, mailbox);
   const page = await a.text('/?days=7');
   assert.match(page, /class="kpi"[\s\S]*扩展安装[\s\S]*托管请求/);
-  assert.doesNotMatch(page, /有效订阅|收入（USD/, '没有订阅和收入时不显示这两项');
+  assert.doesNotMatch(page, /每日收入|收入按方案/, '没有收入时不显示收入图表');
+  assert.match(page, /毛收入[\s\S]*US\$0\.00/, '收入指标显示为 0');
   assert.match(page, /增长趋势[\s\S]*<svg class="chart"/);
   assert.match(page, /转化漏斗/);
   assert.match(page, /目标语言[\s\S]*简体中文[\s\S]*日语/);

@@ -186,17 +186,17 @@ export function overviewPage({ admin, r, geoConfigured }) {
   const failRate = cur.requests ? cur.failed / cur.requests : 0;
   const hasUsage = cur.requests > 0;
 
-  // 只显示有数据的指标：本期和上期都为 0 的不显示。
+  // 核心指标始终显示（没有数据时为 0）；图表与排行只在有数据时显示。
   const cards = [
-    (cur.installs || prev.installs) && kpiCard({ label: '扩展安装', value: num(cur.installs), cur: cur.installs, prev: prev.installs, spark: col('installs'), cls: 'c3' }),
-    (cur.members || prev.members) && kpiCard({ label: '新注册', value: num(cur.members), cur: cur.members, prev: prev.members, spark: col('members'), cls: 'c1',
+    kpiCard({ label: '扩展安装', value: num(cur.installs), cur: cur.installs, prev: prev.installs, spark: col('installs'), cls: 'c3' }),
+    kpiCard({ label: '新注册', value: num(cur.members), cur: cur.members, prev: prev.members, spark: col('members'), cls: 'c1',
       sub: r.funnel.installs ? `安装转注册 ${pct(r.funnel.registered, r.funnel.installs)}` : '' }),
-    (cur.active_users || prev.active_users) && kpiCard({ label: '活跃用户', value: num(cur.active_users), cur: cur.active_users, prev: prev.active_users, spark: col('active_users'), cls: 'c2', sub: '这段时间用过托管翻译' }),
-    (cur.requests || prev.requests) && kpiCard({ label: '托管请求', value: num(cur.requests), cur: cur.requests, prev: prev.requests, spark: col('requests'), cls: 'c1',
+    kpiCard({ label: '活跃用户', value: num(cur.active_users), cur: cur.active_users, prev: prev.active_users, spark: col('active_users'), cls: 'c2', sub: '这段时间用过托管翻译' }),
+    kpiCard({ label: '托管请求', value: num(cur.requests), cur: cur.requests, prev: prev.requests, spark: col('requests'), cls: 'c1',
       sub: cur.failed ? `失败 ${(failRate * 100).toFixed(1)}%` : '' }),
-    (cur.chars || prev.chars) && kpiCard({ label: '翻译字数', value: num(cur.chars), cur: cur.chars, prev: prev.chars, spark: col('chars'), cls: 'c4' }),
-    r.subs.active && kpiCard({ label: '有效订阅', value: num(r.subs.active), sub: `MRR 约 ${minor(r.subs.mrrCents, 'USD')} · 月付 ${num(r.subs.plans.monthly || 0)} · 年付 ${num(r.subs.plans.yearly || 0)}` }),
-  ].filter(Boolean);
+    kpiCard({ label: '翻译字数', value: num(cur.chars), cur: cur.chars, prev: prev.chars, spark: col('chars'), cls: 'c4' }),
+    kpiCard({ label: '有效订阅', value: num(r.subs.active), sub: r.subs.active ? `月付 ${num(r.subs.plans.monthly || 0)} · 年付 ${num(r.subs.plans.yearly || 0)}` : '' }),
+  ];
 
   const growth = ['installs', 'members', 'active_users', 'subs'].some((k) => col(k).some((v) => v > 0))
     ? timeChart({ labels, series: [
@@ -247,7 +247,6 @@ export function overviewPage({ admin, r, geoConfigured }) {
     { label: '≤2000', value: r.sizes.b4 }, { label: '>2000', value: r.sizes.b5 },
   ] : [];
 
-  const empty = !cards.length && !money.any;
   return layout({
     title: '运营概览',
     admin,
@@ -255,13 +254,12 @@ export function overviewPage({ admin, r, geoConfigured }) {
     body: html`<div class="head-row"><div><h1>运营概览</h1><p class="muted">最近 ${r.days} 天 · 与之前 ${r.days} 天对比 · 时区 ${r.timeZone}</p></div>
   <nav class="seg">${[7, 30, 90].map((n) => html`<a href="/?days=${n}"${n === r.days ? html` aria-current="page"` : ''}>${n} 天</a>`)}</nav></div>
 
-${empty ? html`<section class="card empty-state"><h2>这段时间还没有数据</h2><p class="muted">有用户安装扩展、注册、付费或使用托管翻译后，这里会显示趋势与分布。支出可以在 <a href="/expenses">收支</a> 里录入。</p></section>` : html`
 ${money.api}
 ${money.profit}
 ${money.revenue}
 ${money.expenses}
 
-${cards.length ? html`<h2 class="section-title">用户与使用</h2><section class="kpis">${cards}</section>` : ''}
+<h2 class="section-title">用户与使用</h2><section class="kpis">${cards}</section>
 <div class="panels">
   ${panel('增长趋势', growth, { wide: true })}
   ${panel('托管请求', usage, { wide: true })}
@@ -281,7 +279,7 @@ ${cards.length ? html`<h2 class="section-title">用户与使用</h2><section cla
     <tbody>${r.topUsers.map((u) => html`<tr><td><a href="/users/${u.user_id}">${u.kind === 'guest' ? '访客' : u.username}</a></td><td>${KIND[u.audience] || KIND[u.kind]}</td><td class="num">${num(u.requests)}</td><td class="num">${num(u.chars)}</td><td class="num">${usd(u.cost_micros)}</td></tr>`)}</tbody>
   </table></div>` : '', { wide: true })}
 </div>
-`}`,
+`,
   });
 }
 
@@ -310,19 +308,17 @@ function financeSections(r) {
   const labels = f.daily.map((d) => d.day);
   const col = (key) => f.daily.map((d) => d[key]);
   const money = (v) => `$${(Number(v) / 100).toFixed(2)}`;
-  const hasRevenue = cur.gross > 0 || prev.gross > 0;
-  const hasExpenses = cur.expenses > 0 || prev.expenses > 0;
   const models = f.api.models;
   const tokens = f.api.tokens;
   const hasApi = models.length > 0;
 
   // 经营：净收入 − 支出 = 利润
-  const profit = hasRevenue || hasExpenses ? html`<h2 class="section-title">经营</h2>
+  const profit = html`<h2 class="section-title">经营</h2>
 <section class="kpis">
   ${kpiCard({ label: '净收入', value: cents(cur.net), cur: cur.net, prev: prev.net, spark: col('net'), cls: 'c2', sub: cur.refunded ? `毛收入 ${cents(cur.gross)} · 退款 ${cents(cur.refunded)}` : '' })}
   ${kpiCard({ label: '总支出', value: cents(cur.expenses), cur: cur.expenses, prev: prev.expenses, inverse: true, spark: col('expenses'), cls: 'c5', sub: f.useBills ? '模型成本按账单' : '模型成本按估算' })}
   ${kpiCard({ label: cur.profit >= 0 ? '利润' : '亏损', value: cents(cur.profit), cur: Math.max(cur.profit, 0), prev: Math.max(prev.profit, 0), spark: col('net').map((v, i) => v - f.daily[i].expenses), cls: cur.profit >= 0 ? 'c2' : 'c5' })}
-  ${cur.margin != null ? kpiCard({ label: '利润率', value: `${(cur.margin * 100).toFixed(1)}%`, sub: prev.margin != null ? `上期 ${(prev.margin * 100).toFixed(1)}%` : '' }) : ''}
+  ${kpiCard({ label: '利润率', value: cur.margin != null ? `${(cur.margin * 100).toFixed(1)}%` : '—', sub: cur.margin == null ? '还没有收入' : prev.margin != null ? `上期 ${(prev.margin * 100).toFixed(1)}%` : '' })}
 </section>
 <div class="panels">
   ${panel('累计收入、支出与利润', timeChart({
@@ -335,18 +331,18 @@ function financeSections(r) {
     format: (v) => `$${Number(v).toFixed(2)}`,
     axisFormat: (v) => `$${Math.abs(v) >= 1000 ? `${Math.round(v / 100) / 10}k` : Math.round(v * 100) / 100}`,
   }), { wide: true, note: '收入为 USD 税前；支出含模型、支付手续费与录入的固定支出' })}
-</div>` : '';
+</div>`;
 
   // 收入
   const revenueCountries = r.countries.revenue;
   const revenueOther = r.revenue.filter((x) => x.currency !== 'USD');
-  const revenue = hasRevenue ? html`<h2 class="section-title">收入</h2>
+  const revenue = html`<h2 class="section-title">收入</h2>
 <section class="kpis">
   ${kpiCard({ label: '毛收入', value: cents(cur.gross), cur: cur.gross, prev: prev.gross, spark: col('gross'), cls: 'c2', sub: `${num(cur.orders)} 笔订单` })}
-  ${cur.refunded || prev.refunded ? kpiCard({ label: '退款', value: cents(cur.refunded), cur: cur.refunded, prev: prev.refunded, inverse: true, sub: cur.gross ? `退款率 ${pct(cur.refunded, cur.gross)}` : '' }) : ''}
-  ${cur.renewalNet || prev.renewalNet ? kpiCard({ label: '续费收入', value: cents(cur.renewalNet), cur: cur.renewalNet, prev: prev.renewalNet, cls: 'c4', sub: cur.net ? `占净收入 ${pct(cur.renewalNet, cur.net)}` : '' }) : ''}
-  ${f.payers ? kpiCard({ label: '付费用户人均（ARPPU）', value: cents(cur.net / f.payers), sub: `${num(f.payers)} 位付费用户` }) : ''}
-  ${r.subs.active ? kpiCard({ label: '月经常性收入（MRR）', value: cents(r.subs.mrrCents), sub: `年化 ${cents(r.subs.mrrCents * 12)} · 按价格展示估算` }) : ''}
+  ${kpiCard({ label: '退款', value: cents(cur.refunded), cur: cur.refunded, prev: prev.refunded, inverse: true, sub: cur.gross ? `退款率 ${pct(cur.refunded, cur.gross)}` : '' })}
+  ${kpiCard({ label: '续费收入', value: cents(cur.renewalNet), cur: cur.renewalNet, prev: prev.renewalNet, cls: 'c4', sub: cur.net ? `占净收入 ${pct(cur.renewalNet, cur.net)}` : '' })}
+  ${kpiCard({ label: '付费用户人均（ARPPU）', value: cents(f.payers ? cur.net / f.payers : 0), sub: `${num(f.payers)} 位付费用户` })}
+  ${kpiCard({ label: '月经常性收入（MRR）', value: cents(r.subs.mrrCents), sub: r.subs.active ? `年化 ${cents(r.subs.mrrCents * 12)} · 按价格展示估算` : '' })}
 </section>
 <div class="panels">
   ${panel('每日收入', timeChart({
@@ -361,7 +357,7 @@ function financeSections(r) {
   ${panel('收入按方案', f.byPlan.length ? donut(f.byPlan.map((p) => ({ label: p.plan === 'yearly' ? `年付 · ${p.orders} 笔` : `月付 · ${p.orders} 笔`, value: Math.round(p.net), cls: p.plan === 'yearly' ? 'c2' : 'c1' })), { format: money, center: cents(sumBy(f.byPlan, (p) => p.net)).replace('US', '') }) : '')}
   ${panel('收入地区', revenueCountries.length ? barList(revenueCountries.map((c) => ({ label: country(c.key), value: Number(c.revenue), note: `${c.orders} 笔` })), { format: (v) => minor(v, 'USD'), cls: 'c2' }) : '', { note: 'Creem 账单国家' })}
   ${panel('其他币种收入', revenueOther.length ? html`<ul class="plain">${revenueOther.map((x) => html`<li dir="ltr">${minor(x.gross - x.refunded, x.currency)} <span class="muted">（${x.orders} 笔，不计入上面的 USD 合计）</span></li>`)}</ul>` : '')}
-</div>` : '';
+</div>`;
 
   // 支出
   const parts = [
@@ -369,13 +365,13 @@ function financeSections(r) {
     { label: '支付手续费（估算）', value: cur.fees, cls: 'c3' },
     ...Object.entries(f.byCategory).map(([k, v], i) => ({ label: EXPENSE_CATEGORIES[k] || k, value: v, cls: ['c1', 'c4', 'c6', 'c2'][i % 4] })),
   ].filter((p) => p.value > 0.5);
-  const expenses = hasExpenses ? html`<h2 class="section-title">支出 <a class="section-link" href="/expenses">录入支出</a></h2>
+  const expenses = html`<h2 class="section-title">支出 <a class="section-link" href="/expenses">录入支出</a></h2>
 <section class="kpis">
   ${kpiCard({ label: '总支出', value: cents(cur.expenses), cur: cur.expenses, prev: prev.expenses, inverse: true, spark: col('expenses'), cls: 'c5' })}
-  ${cur.api || prev.api ? kpiCard({ label: f.useBills ? '模型 API（账单）' : '模型 API（估算）', value: cents(cur.api), cur: cur.api, prev: prev.api, inverse: true, spark: col('api'), cls: 'c5',
-    sub: cur.net ? `占收入 ${pct(cur.api, cur.net)}` : '' }) : ''}
-  ${cur.fees || prev.fees ? kpiCard({ label: '手续费（估算）', value: cents(cur.fees), cur: cur.fees, prev: prev.fees, inverse: true, cls: 'c3' }) : ''}
-  ${cur.other || prev.other ? kpiCard({ label: '其他支出', value: cents(cur.other), cur: cur.other, prev: prev.other, inverse: true, cls: 'c1', sub: '服务器、域名等，按天分摊' }) : ''}
+  ${kpiCard({ label: f.useBills ? '模型 API（账单）' : '模型 API（估算）', value: cents(cur.api), cur: cur.api, prev: prev.api, inverse: true, spark: col('api'), cls: 'c5',
+    sub: cur.net ? `占收入 ${pct(cur.api, cur.net)}` : '' })}
+  ${kpiCard({ label: '手续费（估算）', value: cents(cur.fees), cur: cur.fees, prev: prev.fees, inverse: true, cls: 'c3' })}
+  ${kpiCard({ label: '其他支出', value: cents(cur.other), cur: cur.other, prev: prev.other, inverse: true, cls: 'c1', sub: '服务器、域名等，按天分摊' })}
 </section>
 <div class="panels">
   ${panel('每日支出', timeChart({
@@ -390,7 +386,7 @@ function financeSections(r) {
   }), { wide: true })}
   ${panel('支出构成', donut(parts.map((p) => ({ ...p, value: Math.round(p.value) })), { format: money, center: cents(cur.expenses).replace('US', '') }))}
   ${Object.keys(f.byCategory).length ? '' : html`<section class="card panel hint"><h2>固定支出</h2><p class="muted">服务器、域名、发信等固定支出还没有录入，利润只扣除了模型与支付手续费。<a href="/expenses">去录入</a></p></section>`}
-</div>` : '';
+</div>`;
 
   // API 消耗
   const totalInput = sumBy(models, (m) => m.input_tokens);
@@ -400,14 +396,14 @@ function financeSections(r) {
   const totalChars = sumBy(models, (m) => m.chars);
   const totalRequests = sumBy(models, (m) => m.requests);
   const rejected = r.rejections.reduce((n, x) => n + x.n, 0);
-  const api = hasApi || rejected ? html`<h2 class="section-title">API 消耗 <a class="section-link" href="/api-usage?days=${r.days}">查看每位用户</a></h2>
+  const api = html`<h2 class="section-title">API 消耗 <a class="section-link" href="/api-usage?days=${r.days}">查看每位用户</a></h2>
 <section class="kpis">
   ${kpiCard({ label: '输入 token', value: num(totalInput), sub: totalCached ? `缓存命中 ${pct(totalCached, totalInput)}` : '', spark: tokens.map((t) => t.input + t.cached), cls: 'c1' })}
   ${kpiCard({ label: '输出 token', value: num(totalOutput), spark: tokens.map((t) => t.output), cls: 'c4' })}
   ${kpiCard({ label: '模型成本（估算）', value: usd(totalCost), sub: totalChars ? `每万字 ${usd((totalCost / totalChars) * 10000)}` : '', cls: 'c5' })}
   ${kpiCard({ label: '每次请求平均', value: `${num(Math.round((totalInput + totalOutput) / Math.max(totalRequests, 1)))} token`, sub: `输入 ${num(Math.round(totalInput / Math.max(totalRequests, 1)))} · 输出 ${num(Math.round(totalOutput / Math.max(totalRequests, 1)))}` })}
-  ${rejected || r.prevRejectionCount ? kpiCard({ label: '被拒绝的请求', value: num(rejected), cur: rejected, prev: r.prevRejectionCount, inverse: true, cls: 'c5',
-    sub: rejected ? `${num(new Set(r.rejections.map((x) => x.key)).size)} 种原因 · 最多：${REJECTIONS[r.rejections[0].key] || r.rejections[0].key}` : '' }) : ''}
+  ${kpiCard({ label: '被拒绝的请求', value: num(rejected), cur: rejected, prev: r.prevRejectionCount, inverse: true, cls: 'c5',
+    sub: rejected ? `${num(new Set(r.rejections.map((x) => x.key)).size)} 种原因 · 最多：${REJECTIONS[r.rejections[0].key] || r.rejections[0].key}` : '' })}
   ${cur.apiBills ? kpiCard({ label: '模型 API 账单（录入）', value: cents(cur.apiBills), sub: `估算 ${cents(cur.apiEstimate)} · 相差 ${pct(Math.abs(cur.apiBills - cur.apiEstimate), cur.apiBills)}` }) : ''}
 </section>
 <div class="panels">
@@ -420,7 +416,7 @@ function financeSections(r) {
       { name: '输出', values: tokens.map((t) => t.output), cls: 'c4', kind: 'bar' },
     ].filter((s) => s.values.some((v) => v > 0)),
   }), { wide: true })}
-  ${panel('按服务商与模型', html`<div class="table-wrap"><table>
+  ${panel('按服务商与模型', hasApi && html`<div class="table-wrap"><table>
     <thead><tr><th>服务商</th><th>模型</th><th class="num">请求</th><th class="num">失败</th><th class="num">输入 token</th><th class="num">缓存命中</th><th class="num">输出 token</th><th class="num">平均耗时</th><th class="num">成本（估算）</th><th class="num">每万字</th></tr></thead>
     <tbody>${models.map((m) => html`<tr>
       <td>${PROVIDER_NAMES[m.provider] || m.provider}</td><td dir="ltr"><code>${m.model}</code></td>
@@ -435,9 +431,9 @@ function financeSections(r) {
   ${panel('成本按用户类型', r.audiences.some((a) => Number(a.cost_micros) > 0)
     ? barList(r.audiences.filter((a) => Number(a.cost_micros) > 0).map((a) => ({ label: AUDIENCE[a.key]?.[0] || a.key, value: Number(a.cost_micros), cls: AUDIENCE[a.key]?.[1], note: `${num(a.users)} 人` })), { format: usd })
     : '', { note: r.costPerSubscriberMicros != null ? `每位订阅用户 ${usd(r.costPerSubscriberMicros)}` : '' })}
-</div>` : '';
+</div>`;
 
-  return { any: Boolean(profit || revenue || expenses || api), profit, revenue, expenses, api };
+  return { profit, revenue, expenses, api };
 }
 
 /* ---------- API 用量：每位用户 ---------- */

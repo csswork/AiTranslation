@@ -60,7 +60,8 @@ body.admin {
 .panels { margin-bottom: var(--s3); }
 
 /* 指标卡片 */
-.kpis { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); margin-bottom: var(--s3); }
+/* 卡片按实际数量平分整行（auto-fit 会收起空列），不在右侧留空位 */
+.kpis { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: var(--s3); }
 .kpi {
   position: relative; display: grid; gap: .2rem; align-content: start; overflow: hidden;
   padding: var(--s2) var(--s2) calc(var(--s2) + 14px); min-height: 104px;
@@ -77,10 +78,11 @@ body.admin {
 .delta.flat { color: var(--text-2); background: var(--surface-2); }
 
 /* 面板网格：宽面板占满一行，其余两列（窄屏一列） */
-.panels { display: grid; gap: var(--s2); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* 面板弹性换行：两个一行，落单的自动撑满整行；宽面板始终独占一行 */
+.panels { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.panels > * { flex: 1 1 380px; min-width: 0; }
 .panels .card { margin-bottom: 0; }
-.panel.wide { grid-column: 1 / -1; }
-@media (max-width: 900px) { .panels { grid-template-columns: minmax(0, 1fr); } }
+.panels > .panel.wide { flex-basis: 100%; }
 .panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2); margin-bottom: var(--s2); }
 .panel-head h2 { margin: 0; }
 .panel-head .muted { font-size: .76rem; }

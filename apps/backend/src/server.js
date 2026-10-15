@@ -52,7 +52,8 @@ const server = serve({ fetch: app.fetch, hostname: config.host, port: config.por
   console.log(`用户管理界面：${config.appOrigin}（监听 ${info.address}:${info.port}）`);
   if (!config.google) console.log('未配置 GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET，Google 登录不显示。');
   if (!hosted) console.log('未配置 HOSTED_DEEPSEEK_API_KEY，托管翻译不可用。');
-  if (!creem) console.log('未配置 CREEM_API_KEY，订阅结账不可用。');
+  for (const warning of config.warnings) console.log(warning);
+  if (!creem && !config.warnings.length) console.log('未配置 Creem，订阅结账不可用。');
   if (config.adminOrigin) console.log(`管理员界面：${config.adminOrigin}`);
 });
 

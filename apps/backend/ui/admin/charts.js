@@ -54,6 +54,8 @@ function rangeTicks(lo, hi, count = 4) {
  * 数值可以为负（例如利润），纵轴自动包含 0。series: [{ name, values, cls, kind }]。
  */
 export function timeChart({ labels, series, format = fmt, height = 220, stacked = false, axisFormat = shortNumber }) {
+  // 没有任何数据的序列时不画图，所在面板随之隐藏。
+  if (!series.length || !series.some((s) => s.values.some((v) => v))) return '';
   const w = 760;
   const h = height;
   const pad = { l: 48, r: 12, t: 12, b: 26 };

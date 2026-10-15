@@ -74,15 +74,24 @@ export function readConfig(env = process.env) {
   // 托管翻译的备用模型（OpenAI 兼容接口，默认 Fireworks 美国节点上的 DeepSeek V4.1 Flash）：主力失败或超时时改用它。
   const fallbackKey = env.HOSTED_FALLBACK_API_KEY || '';
 
-  // Creem 收款与订阅：设置 CREEM_API_KEY 后，Webhook 密钥和两个商品 ID 都必须配置。
-  const creem = env.CREEM_API_KEY
-    ? {
+  // Creem 收款与订阅：API Key、Webhook 密钥和两个商品 ID 都配置后才开放结账。
+  // 生产环境配了一部分视为配置错误；开发环境只提示（warnings），照常启动、暂不开放结账。
+  const warnings = [];
+  const creemKeys = ['CREEM_API_KEY', 'CREEM_WEBHOOK_SECRET', 'CREEM_PRODUCT_MONTHLY', 'CREEM_PRODUCT_YEARLY'];
+  const creemMissing = creemKeys.filter((name) => !env[name]);
+  let creem = null;
+  if (!creemMissing.length) {
+    creem = {
       apiKey: env.CREEM_API_KEY,
-      webhookSecret: need('CREEM_WEBHOOK_SECRET'),
+      webhookSecret: env.CREEM_WEBHOOK_SECRET,
       testMode: env.CREEM_TEST_MODE === '1',
-      products: { monthly: need('CREEM_PRODUCT_MONTHLY'), yearly: need('CREEM_PRODUCT_YEARLY') },
-    }
-    : null;
+      products: { monthly: env.CREEM_PRODUCT_MONTHLY, yearly: env.CREEM_PRODUCT_YEARLY },
+    };
+  } else if (creemMissing.length < creemKeys.length) {
+    const message = `Creem 配置不完整，缺少 ${creemMissing.join('、')}，订阅结账暂不开放`;
+    if (production) problems.push(message);
+    else warnings.push(message);
+  }
   if (creem && production && creem.testMode) problems.push('生产环境不能启用 CREEM_TEST_MODE');
 
   // 运营报表按这个时区切分天和小时。
@@ -105,6 +114,7 @@ export function readConfig(env = process.env) {
   if (problems.length) throw new Error(`配置无效：\n- ${problems.join('\n- ')}`);
 
   return {
+    warnings,
     production,
     host: env.HOST || '127.0.0.1',
     port: int(env.PORT, 8787, 'PORT'),

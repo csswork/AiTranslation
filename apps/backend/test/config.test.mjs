@@ -29,7 +29,13 @@ test('生产环境要求 HTTPS、密钥和正式发信；Creem 需成对配置�
     for (const text of ['HTTPS', 'AUTH_SECRET', 'console']) assert.match(e.message, new RegExp(text));
     return true;
   });
-  assert.throws(() => readConfig({ ...base, CREEM_API_KEY: 'k' }), /CREEM_WEBHOOK_SECRET[\s\S]*CREEM_PRODUCT_MONTHLY[\s\S]*CREEM_PRODUCT_YEARLY/);
+  // 开发环境：只配了一部分时照常启动，提示缺什么，暂不开放结账；生产环境视为配置错误。
+  const partial = readConfig({ ...base, CREEM_API_KEY: 'k' });
+  assert.equal(partial.creem, null);
+  assert.match(partial.warnings[0], /CREEM_WEBHOOK_SECRET、CREEM_PRODUCT_MONTHLY、CREEM_PRODUCT_YEARLY/);
+  assert.throws(() => readConfig({
+    ...base, NODE_ENV: 'production', APP_ORIGIN: 'https://app.example', MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'r', MAIL_FROM: 'a@b.c', CREEM_API_KEY: 'k',
+  }), /Creem 配置不完整/);
   const creem = readConfig({ ...base, CREEM_API_KEY: 'k', CREEM_WEBHOOK_SECRET: 'w', CREEM_PRODUCT_MONTHLY: 'pm', CREEM_PRODUCT_YEARLY: 'py', CREEM_TEST_MODE: '1' }).creem;
   assert.deepEqual(creem.products, { monthly: 'pm', yearly: 'py' });
   assert.equal(creem.testMode, true);
