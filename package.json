@@ -4,6 +4,7 @@
   "description": "Huaci website, backend services, and Chrome extension",
   "engines": { "node": ">=22" },
   "scripts": {
+    "dev": "node scripts/dev.mjs",
     "test": "bash test/run.sh",
     "test:extension": "bash apps/extension/test/run.sh",
     "test:web": "bash apps/web/test/run.sh",

@@ -46,6 +46,7 @@ PRIVACY.md           保留既有公开隐私政策路径
 开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。网站与扩展的构建和测试使用标准库，不需要安装 npm 依赖；后端有自己的依赖（`cd apps/backend && npm ci`）并需要本机 PostgreSQL，未安装依赖时 `npm test` 会跳过后端。
 
 ```sh
+npm run dev                   # 启动全部本地服务并列出地址，Ctrl+C 一起停止（见下）
 npm test                      # 网站与扩展全部测试
 npm run test:web              # 只检查网站
 npm run test:extension        # 只检查扩展
@@ -59,6 +60,17 @@ npm run test:backend          # 后端测试（需要 PostgreSQL 的 huaci_test 
 npm run migrate:backend       # 执行后端数据库迁移
 npm run dev:backend           # http://localhost:8787 用户管理界面
 ```
+
+`npm run dev` 同时启动：
+
+| 服务 | 地址 |
+| --- | --- |
+| 后端：用户端、扩展 API、Creem 回调（启动前自动执行未完成的数据库迁移） | `http://localhost:8787` |
+| 管理端（同一后端进程，按主机名区分） | `http://admin.localhost:8787` |
+| 官网静态预览 | `http://localhost:8788` |
+| 扩展界面文案监听（修改后在本地刷新译文） | 在 Chrome 加载已解压的 `apps/extension` |
+
+端口已被占用的服务会跳过并说明；后端需要先在 `apps/backend` 运行 `npm ci`，并配置好本机 PostgreSQL 与 `apps/backend/.env.local`。
 
 原来的 `bash test/run.sh`、`bash package.sh` 仍可从仓库根目录运行。各应用的脚本也可以进入应用目录单独运行。
 
