@@ -4,6 +4,7 @@
  *   后端      http://localhost:8787        用户端、扩展 API、支付回调（先自动执行未完成的迁移）
  *   管理端    http://admin.localhost:8787  同一后端进程，按主机名区分
  *   官网      http://localhost:8788        apps/web/public 静态预览
+ *   官网生成  监听中文页面与译文目录，修改后重新生成各语言页面、lang.js 与站点地图
  *   扩展文案  监听 apps/extension 的界面文案，修改后在本地刷新译文
  *
  * 端口已被占用的服务会跳过并说明；后端缺少依赖时提示先运行 npm ci。只用 Node 标准库。
@@ -32,6 +33,10 @@ const SERVICES = [
     links: [['官网预览', 'http://localhost:8788']],
   },
   {
+    name: '官网生成', code: 32, watch: 'web',
+    links: [['监听', 'apps/web/public/*.html、apps/web/i18n/<语言>.json → 重新生成']],
+  },
+  {
     name: '扩展文案', code: 33, cmd: process.execPath, args: ['apps/extension/scripts/sync-extension-i18n.mjs', '--watch'],
     links: [['加载扩展', 'chrome://extensions → 加载已解压的扩展 → apps/extension']],
   },
@@ -52,6 +57,43 @@ function pipe(stream, label) {
     for (const line of lines) process.stdout.write(`${label} ${line}\n`);
   });
   stream.on('end', () => { if (buffer) process.stdout.write(`${label} ${buffer}\n`); });
+}
+
+/**
+ * 官网多语言产物的监听：中文源页面（public/*.html）或某语言译文（i18n/<code>.json）变化后运行一次构建。
+ * 构建本身会改写 public/*.html 的语言链接与 i18n/zh-Hans.json、_index.json，构建期间和刚结束时的变化忽略，避免循环。
+ * 只生成页面，不调用翻译接口：未译的段落在页面上退回中文，用 node apps/web/i18n/build.mjs --translate <语言> 补译。
+ */
+function watchWeb(label) {
+  const web = path.join(root, 'apps/web');
+  let timer = null;
+  let building = false;
+  let quietUntil = 0;
+  const build = () => {
+    building = true;
+    const child = spawn(process.execPath, ['apps/web/i18n/build.mjs'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+    pipe(child.stdout, label);
+    pipe(child.stderr, label);
+    child.on('exit', () => { building = false; quietUntil = Date.now() + 800; });
+    return child;
+  };
+  const schedule = (file) => {
+    if (building || Date.now() < quietUntil) return;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      process.stdout.write(`${label} ${file} 已修改，重新生成\n`);
+      build();
+    }, 400);
+  };
+  const watchers = [
+    fs.watch(path.join(web, 'public'), (_event, name) => { if (/^[\w-]+\.html$/.test(String(name || ''))) schedule(`public/${name}`); }),
+    fs.watch(path.join(web, 'i18n'), (_event, name) => {
+      const file = String(name || '');
+      if (/\.json$/.test(file) && !['zh-Hans.json', '_index.json', 'locales.json'].includes(file)) schedule(`i18n/${file}`);
+    }),
+  ];
+  process.stdout.write(`${label} 监听官网中文页面与译文，修改后自动重新生成。\n`);
+  return { exitCode: null, kill: () => watchers.forEach((w) => w.close()), on() {} };
 }
 
 const width = Math.max(...SERVICES.map((s) => displayWidth(s.name)));
@@ -75,6 +117,11 @@ for (const service of SERVICES) {
       summary.push({ service, status: color(31, '数据库迁移失败，未启动（检查 PostgreSQL 与 apps/backend/.env.local）') });
       continue;
     }
+  }
+  if (service.watch === 'web') {
+    children.push(watchWeb(label));
+    summary.push({ service, status: color(32, '已启动') });
+    continue;
   }
   const child = spawn(service.cmd, service.args, { cwd: root, env: { ...process.env, FORCE_COLOR: '1' }, stdio: ['ignore', 'pipe', 'pipe'] });
   pipe(child.stdout, label);

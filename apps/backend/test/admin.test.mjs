@@ -27,6 +27,9 @@ async function adminLogin(app, config, mailbox, email = 'boss@example.com') {
   await pool.query(`INSERT INTO admins (user_id) SELECT id FROM users WHERE email = $1`, [email]);
   const a = browser(app, config, ADMIN);
   await a.post('/login', { email });
+  // 开发环境（console 发信）验证页直接给出验证码
+  const verify = await a.text('/login/verify');
+  assert.match(verify, new RegExp(`data-dev-code="${mailbox.last(email)}"[\\s\\S]*dev-code\\.js|dev-code\\.js[\\s\\S]*data-dev-code="${mailbox.last(email)}"`));
   let res = await a.post('/login/verify', { code: mailbox.last(email) });
   assert.equal(res.headers.get('location'), '/2fa');
   assert.equal((await a.get('/')).headers.get('location'), '/2fa', '二步验证前不能进入');

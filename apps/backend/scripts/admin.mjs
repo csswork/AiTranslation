@@ -1,11 +1,12 @@
 /**
  * 指定或撤销管理员（A1）。只能在 VPS 上通过命令行操作，网页上无法给自己授权。
  *
- *   npm run admin -- grant <email>       把已注册的账户设为管理员（首次登录管理端时绑定二步验证）
+ *   npm run admin -- grant <email>       设为管理员；账户不存在时直接建立（首次登录管理端时绑定二步验证）
  *   npm run admin -- revoke <email>      撤销管理员并退出其管理端会话
  *   npm run admin -- reset-2fa <email>   清除二步验证，下次登录重新绑定
  *   npm run admin -- list
  */
+import { findOrCreateUserByEmail, isValidEmail } from '../src/auth/users.js';
 import { loadLocalEnv, readConfig } from '../src/config/index.js';
 import { createPool } from '../src/db/index.js';
 
@@ -24,7 +25,10 @@ const log = (action, id) => pool.query(`INSERT INTO admin_audit (action, target_
 
 try {
   if (command === 'grant') {
-    const id = await userId();
+    if (!isValidEmail(email)) throw new Error(`邮箱无效：${rawEmail || ''}`);
+    const { user, created } = await findOrCreateUserByEmail(pool, config.trialCredits, email);
+    if (created) console.log(`已建立账户：${email}`);
+    const id = user.id;
     await pool.query('INSERT INTO admins (user_id) VALUES ($1) ON CONFLICT DO NOTHING', [id]);
     await log('admin.grant', id);
     console.log(`已设为管理员：${email}。在 ${config.adminOrigin || 'ADMIN_ORIGIN'} 登录并绑定二步验证。`);

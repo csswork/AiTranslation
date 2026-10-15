@@ -41,6 +41,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   });
 
   const tempOpts = { ...cookieBase, maxAge: 600 };
+  // 开发环境没有发信服务（console）时，验证码直接显示在验证页上；生产环境不允许 console 发信，不会走到这里。
+  const devCodes = !config.production && config.mailTransport === 'console';
   const flashNote = (c, note) => setCookie(c, 'admin_flash', JSON.stringify(note), { ...cookieBase, maxAge: 60 });
   const takeNote = (c) => {
     const raw = getCookie(c, 'admin_flash');
@@ -82,6 +84,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     if (found) {
       const result = await issueCode(pool, config, { email, purpose: 'admin_login' });
       if (result.ok) await mailer.sendCode({ to: email, code: result.code, purpose: 'admin_login' });
+      if (result.ok && devCodes) setCookie(c, 'admin_dev_code', result.code, tempOpts);
     }
     setCookie(c, 'admin_pending', email, tempOpts);
     return c.redirect('/login/verify', 303);
@@ -89,7 +92,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
 
   app.get('/login/verify', (c) => {
     const email = getCookie(c, 'admin_pending');
-    return email ? c.html(views.verifyPage({ email, note: takeNote(c) })) : c.redirect('/login', 303);
+    if (!email) return c.redirect('/login', 303);
+    return c.html(views.verifyPage({ email, note: takeNote(c), devCode: devCodes ? getCookie(c, 'admin_dev_code') : null }));
   });
 
   app.post('/login/verify', async (c) => {
@@ -100,6 +104,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const result = found ? await verifyCode(pool, config, { email, purpose: 'admin_login', code: body.code }) : { ok: false };
     if (!result.ok) return c.html(views.verifyPage({ email, note: fail('验证码不正确或已失效。') }), 400);
     deleteCookie(c, 'admin_pending', cookieBase);
+    deleteCookie(c, 'admin_dev_code', cookieBase);
     const token = await createAdminSession(pool, found.id);
     setCookie(c, cookieName, token, { ...cookieBase, maxAge: 12 * 3600 });
     return c.redirect('/2fa', 303);

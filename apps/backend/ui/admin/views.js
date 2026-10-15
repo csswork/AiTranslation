@@ -33,7 +33,7 @@ const OUTCOME = { granted: '已发放', ip_limited: '同网络超限', daily_cap
 
 const notice = (n) => (n ? html`<p class="notice notice-${n.kind}" role="${n.kind === 'error' ? 'alert' : 'status'}">${n.text}</p>` : '');
 
-export function layout({ title, admin = null, active = '', note = null, body }) {
+export function layout({ title, admin = null, active = '', note = null, body, head = '' }) {
   return html`<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -44,6 +44,7 @@ export function layout({ title, admin = null, active = '', note = null, body }) 
 <link rel="icon" href="${assetUrl('icon.png')}">
 <link rel="stylesheet" href="${assetUrl('account.css')}">
 <link rel="stylesheet" href="${assetUrl('admin.css')}">
+${head}
 </head>
 <body class="admin ${admin ? 'signed-in' : 'signed-out'}">
 <header class="admin-bar">
@@ -77,11 +78,13 @@ export const loginPage = ({ note = null, email = '' } = {}) => layout({
 </section>`,
 });
 
-export const verifyPage = ({ email, note = null }) => layout({
+export const verifyPage = ({ email, note = null, devCode = null }) => layout({
   title: '输入验证码',
   note,
+  head: devCode ? html`<script src="${assetUrl('dev-code.js')}" defer></script>` : '',
   body: html`<section class="card auth">
   <h1>输入邮箱验证码</h1>
+  ${devCode ? html`<p class="notice notice-ok" role="alert" data-dev-code="${devCode}">开发环境没有发信服务，验证码：<strong dir="ltr">${devCode}</strong></p>` : ''}
   <p class="muted">如果 ${email} 是管理员账户，验证码已发送。</p>
   <form method="post" action="/login/verify" class="stack">
     <label for="code">6 位验证码</label>
