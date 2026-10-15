@@ -120,4 +120,9 @@ test('本地开发默认跳过二步验证：邮箱验证码通过后直接进�
   assert.match(await a.text('/'), /运营概览/);
   const { rows: [adminRow] } = await pool.query('SELECT totp_enabled_at FROM admins');
   assert.equal(adminRow.totp_enabled_at, null, '没有绑定 TOTP');
+
+  // 打开二步验证时登录到一半留下的会话：本地关闭后直接可用，不再跳到 /2fa
+  await pool.query('UPDATE admin_sessions SET verified_at = NULL');
+  assert.equal((await a.get('/')).status, 200);
+  assert.equal((await a.get('/2fa')).headers.get('location'), '/');
 });

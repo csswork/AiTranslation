@@ -56,7 +56,13 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   };
 
   app.use('*', async (c, next) => {
-    c.set('adminAuth', await validateAdminSession(pool, getCookie(c, cookieName)));
+    const auth = await validateAdminSession(pool, getCookie(c, cookieName));
+    // 本地开发不要求二步验证：之前（例如打开二步验证时）留下的未验证会话直接视为已验证。
+    if (auth && !auth.session.verified && !config.adminRequire2fa) {
+      await markVerified(pool, auth.session.id);
+      auth.session.verified = true;
+    }
+    c.set('adminAuth', auth);
     await next();
   });
 
