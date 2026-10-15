@@ -15,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 const ROOT = new URL('..', import.meta.url).pathname;
 const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'i18n/locales.json', 'utf8'));
 const enabled = CONFIG.locales.filter((l) => l.enabled);
-const PAGES = ['index.html', 'privacy.html', 'changelog.html'];
+const PAGES = ['index.html', 'privacy.html', 'terms.html', 'changelog.html'];
 
 /* ---- 1. 工具自检：缺译、过期产物、hreflang 失配都在这里报 ---- */
 try {
