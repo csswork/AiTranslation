@@ -89,8 +89,11 @@ export function readConfig(env = process.env) {
   const reportTimeZone = env.REPORT_TIMEZONE || 'Asia/Shanghai';
   try { new Intl.DateTimeFormat('en', { timeZone: reportTimeZone }); } catch { problems.push(`REPORT_TIMEZONE 无效：${reportTimeZone}`); }
 
+  // 发信：开发环境用 console（验证码打印在日志里）；生产环境用 Resend。
   const mailTransport = env.MAIL_TRANSPORT || 'console';
-  if (mailTransport !== 'console') problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
+  if (!['console', 'resend'].includes(mailTransport)) problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
+  const resend = mailTransport === 'resend' ? { apiKey: need('RESEND_API_KEY'), from: need('MAIL_FROM') } : null;
+  const supportEmail = env.SUPPORT_EMAIL || 'support@huaci.app';
 
   if (production) {
     if (!appOrigin.startsWith('https://')) problems.push('生产环境 APP_ORIGIN 必须使用 HTTPS');
@@ -115,6 +118,7 @@ export function readConfig(env = process.env) {
     authSecret,
     google,
     mailTransport,
+    resend,
     adminOrigin,
     // 反向代理提供的两位国家代码请求头（如 Cloudflare 的 cf-ipcountry），用于运营报表按国家统计；不设则不记录国家。
     reportTimeZone,
@@ -146,6 +150,8 @@ export function readConfig(env = process.env) {
       website: env.WEBSITE_URL || 'https://huaci.app/',
       extension: env.EXTENSION_URL || '',
       feedback: env.FEEDBACK_URL || 'https://github.com/csswork/AiTranslation/issues',
+      // 客服邮箱：显示在页脚、套餐页与验证码邮件里，需与 Creem 后台填写的一致。
+      support: supportEmail,
     },
   };
 }

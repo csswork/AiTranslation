@@ -44,6 +44,7 @@ function header(ui, user) {
     <nav class="nav-links">
       <a href="${site(ui, '#features')}">${t('功能')}</a>
       <a href="${site(ui, '#privacy')}">${t('隐私')}</a>
+      <a href="${site(ui, '#pricing')}">${t('价格')}</a>
       <a href="${site(ui, '#install')}" class="hide-sm">${t('安装')}</a>
       <a href="${site(ui, 'changelog.html')}" class="hide-sm">${t('更新日志')}</a>
       <a href="${GITHUB}" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -76,8 +77,10 @@ function footer(ui) {
       <nav class="foot-links">
         <a href="${GITHUB}" target="_blank" rel="noopener">GitHub</a>
         <a href="${site(ui, 'privacy.html')}">${t('隐私政策')}</a>
+        <a href="${site(ui, 'terms.html')}">${t('服务条款')}</a>
         <a href="${site(ui, 'changelog.html')}">${t('更新日志')}</a>
         <a href="${GITHUB}/issues" target="_blank" rel="noopener">${t('反馈问题')}</a>
+        <a href="mailto:${ui.links.support}">${ui.links.support}</a>
       </nav>
     </div>
     <p class="foot-note">${t('本项目为独立的开源作品，与 OpenAI、DeepSeek、DeepL 及其关联公司无任何隶属、授权或合作关系。 ChatGPT、DeepSeek、DeepL 等名称为其各自权利人的商标，此处仅用于说明本扩展可以接入的 API。')}</p>
@@ -254,12 +257,15 @@ const planCard = (ui, { plan, price, original, currency, period, note, featured,
   ${featured ? html`<span class="plan-flag">${t('更划算')}</span>` : ''}
   <h2>${t(PLAN_LABELS[plan])}</h2>
   <p class="price"><span class="now" dir="ltr">${money(ui, price, currency)}</span><span class="per">${period}</span></p>
-  <p class="was"><s dir="ltr">${money(ui, original, currency)}</s> ${note ? html`<span class="tag">${note}</span>` : ''}</p>
+  ${(original && Number(original) > Number(price)) || note
+    ? html`<p class="was">${original && Number(original) > Number(price) ? html`<s dir="ltr">${money(ui, original, currency)}</s> ` : ''}${note ? html`<span class="tag">${note}</span>` : ''}</p>`
+    : ''}
   <ul class="perks">
     <li>${t('托管翻译无限使用')}</li>
     <li>${t('无需自己的 API Key')}</li>
     <li>${t('划词、整段、网页区域和字幕翻译')}</li>
     <li>${t('随时取消，本期结束前仍可使用')}</li>
+    <li>${t('首次付款 7 天内可申请全额退款')}</li>
   </ul>
   ${checkoutEnabled
     ? html`<form method="post" action="/billing/checkout"><input type="hidden" name="plan" value="${plan}"><button class="button primary wide" type="submit">${t('立即订阅')}</button></form>`
@@ -288,7 +294,8 @@ ${sub
   ${planCard(ui, { plan: 'monthly', ...pricing.monthly, currency: pricing.currency, period: t('每月'), checkoutEnabled })}
   ${planCard(ui, { plan: 'yearly', ...pricing.yearly, currency: pricing.currency, period: t('每年'), note: save > 0 ? t('比月付省 {n}%', { n: save }) : '', featured: true, checkoutEnabled })}
 </div>
-<p class="fine">${t('付款由 Creem 处理并开具收据，价格可能另加所在地区的税费。本站不接触你的银行卡信息。')}</p>`}`,
+<p class="fine">${t('付款由 Creem 处理并开具收据，价格可能另加所在地区的税费。本站不接触你的银行卡信息。')}</p>
+<p class="fine">${t('「无限使用」指个人日常使用，按合理使用原则不限次数。订阅自动续订，可随时取消。')} <a href="${site(ui, 'terms.html')}">${t('服务条款')}</a> · <a href="mailto:${ui.links.support}">${ui.links.support}</a></p>`}`,
   });
 }
 

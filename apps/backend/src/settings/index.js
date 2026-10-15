@@ -22,9 +22,9 @@ export const SETTINGS = [
 
   { key: 'price_currency', type: 'text', group: 'pricing', label: '展示币种', def: () => 'USD' },
   { key: 'price_monthly', type: 'money', group: 'pricing', label: '月付现价', help: '只用于展示；实际扣款以 Creem 商品价格为准，两边需保持一致', def: () => '3.99' },
-  { key: 'price_monthly_original', type: 'money', group: 'pricing', label: '月付原价（划线价）', def: () => '5.99' },
+  { key: 'price_monthly_original', type: 'money', group: 'pricing', label: '月付原价（划线价）', help: '留空不显示。只有过去确实按这个价格卖过才能填，否则可能被认定为虚假信息', def: () => '', optional: true },
   { key: 'price_yearly', type: 'money', group: 'pricing', label: '年付现价', def: () => '29.99' },
-  { key: 'price_yearly_original', type: 'money', group: 'pricing', label: '年付原价（划线价）', def: () => '71.88' },
+  { key: 'price_yearly_original', type: 'money', group: 'pricing', label: '年付原价（划线价）', help: '留空不显示', def: () => '', optional: true },
 
   { key: 'cost_primary_input', type: 'money', group: 'cost', label: '主力模型输入单价', help: '美元 / 百万 token，用于成本估算', def: () => '0.30' },
   { key: 'cost_primary_cached', type: 'money', group: 'cost', label: '主力模型缓存命中输入单价', def: () => '0.006' },
@@ -66,6 +66,7 @@ export function parseSetting(key, raw) {
     case 'bool':
       return raw === true || text === 'true' || text === 'on' || text === '1';
     case 'money':
+      if (!text && def.optional) return '';
       return MONEY.test(text) ? text : undefined;
     case 'text':
       return /^[A-Z]{3}$/.test(text) ? text : undefined;

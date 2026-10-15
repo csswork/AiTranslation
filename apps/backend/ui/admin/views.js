@@ -681,7 +681,7 @@ ${SETTING_GROUPS.map((group) => html`<section class="card">
         ? html`<select id="${s.key}" name="${s.key}"><option value="true"${values[s.key] ? html` selected` : ''}>启用</option><option value="false"${values[s.key] ? '' : html` selected`}>停用</option></select>`
         : s.type === 'choice'
           ? html`<select id="${s.key}" name="${s.key}">${s.options.map(([value, label]) => html`<option value="${value}"${values[s.key] === value ? html` selected` : ''}>${label}</option>`)}</select>`
-          : html`<input id="${s.key}" name="${s.key}" value="${values[s.key]}" dir="ltr" required>`}
+          : html`<input id="${s.key}" name="${s.key}" value="${values[s.key]}" dir="ltr"${s.optional ? '' : html` required`}>`}
       <span class="fine">${s.help || ''}${String(values[s.key]) !== String(defaults[s.key]) ? html` 默认 ${String(defaults[s.key])}` : ''}</span>
     </div>`)}
     <div class="setting"><label>修改原因</label>${reasonField}<span></span></div>
