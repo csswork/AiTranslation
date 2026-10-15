@@ -78,25 +78,33 @@ async function translate(items, locale, { key, model }) {
   const product = PRODUCT_NAMES[locale.code] || DEFAULT_PRODUCT_NAME;
   const prompt = [
     `Translate the UI strings of a web account center from Simplified Chinese into ${locale.label} (${locale.htmlLang}).`,
-    'Return only a JSON object mapping each original string to its translation.',
+    'Return only JSON {"translations":[{"id":0,"text":"translation"}]}, with exactly one item for each input id.',
     'Keep {placeholders} exactly unchanged. Keep "Google", "Chrome", "API Key", "OpenAI", "DeepSeek", "DeepL", "Creem", "UTC" unchanged.',
     `The product name "AI 划词翻译" must be rendered as "${product}". "点" / "点数" means service credits.`,
     'Use a concise, neutral tone suitable for buttons, labels and short notices.',
   ].join('\n');
-  const response = await fetch('https://api.deepseek.com/chat/completions', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model,
-      temperature: 1.3,
-      thinking: { type: 'disabled' },
-      response_format: { type: 'json_object' },
-      messages: [{ role: 'system', content: prompt }, { role: 'user', content: JSON.stringify(items) }],
-    }),
-  });
-  if (!response.ok) throw new Error(`${locale.code}: 翻译接口返回 ${response.status}`);
-  const result = JSON.parse((await response.json()).choices[0].message.content);
-  return Object.fromEntries(items.map((item) => [item, result[item]]));
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST', signal: AbortSignal.timeout(180_000),
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model, temperature: 0.2,
+        thinking: { type: 'disabled' }, response_format: { type: 'json_object' },
+        messages: [{ role: 'system', content: prompt }, { role: 'user', content: JSON.stringify(items.map((source, id) => ({ id, source }))) }],
+      }),
+    });
+    if (!response.ok) throw new Error(`${locale.code}: 翻译接口返回 ${response.status}`);
+    const data = await response.json();
+    // 用数字 id 对齐，避免模型复制长中文键时破坏 JSON；无效响应不写入目录。
+    try {
+      const result = JSON.parse(data.choices?.[0]?.message?.content || '');
+      const byId = new Map(result.translations.map(({ id, text }) => [id, text]));
+      const entries = items.map((item, id) => [item, byId.get(id)]);
+      if (entries.every(([item, text]) => typeof text === 'string' && text.trim()
+        && placeholders(text) === placeholders(item) && !strayLatin(locale.code, text))) return Object.fromEntries(entries);
+    } catch { /* 下次重试，无效译文不会覆盖已有目录。 */ }
+  }
+  throw new Error(`${locale.code}: 翻译响应格式或占位符无效（已重试 3 次）`);
 }
 
 /** 官网已有的同一句中文（页头、页脚等）直接沿用官网译文，保证两边一致。 */

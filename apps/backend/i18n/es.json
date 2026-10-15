@@ -128,6 +128,7 @@
   "点击出现的翻译按钮，或右键选择「翻译」": "Haz clic en el botón de traducción que aparece o haz clic derecho y selecciona «Traducir»",
   "点数": "Puntos",
   "点数作废": "Puntos anulados",
+  "点数按实际用量扣减，显示保留两位小数，实际余额以服务端精确记录为准。": "Los créditos se deducen según el uso real, se muestran con dos decimales; el saldo real se basa en el registro preciso del servidor.",
   "点数用完后注册即送 {n} 点，订阅可无限使用": "Cuando se agoten los puntos, regístrate y obtén {n} puntos. La suscripción te da uso ilimitado.",
   "点数记录": "Registros de puntos",
   "状态": "Estado",
