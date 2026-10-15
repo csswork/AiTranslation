@@ -23,6 +23,8 @@
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200 / 50 | 注册与访客赠送点数的默认值（不过期）；管理员界面里的设置优先 |
+| `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 运营报表切分天和小时的时区 |
+| `GEO_COUNTRY_HEADER` | 建议 `cf-ipcountry` | 反向代理提供的两位国家代码请求头；用于报表按国家统计，不保存 IP 或更细位置。不经 Cloudflare 时可用 nginx GeoIP2 模块设置类似请求头 |
 | `ADMIN_REQUIRE_2FA` | 无需设置 | 生产环境始终要求管理端二步验证；只在本地开发用来打开 |
 | `ADMIN_ORIGIN` | 建议 `https://admin.huaci.app` | 管理员界面地址，必须与 `APP_ORIGIN` 主机名不同；不设则不提供管理端。反向代理需把该主机名也转发到本服务 |
 | `SESSION_DAYS` | 默认 30 | 会话有效天数（网页与扩展会话相同） |
@@ -66,7 +68,7 @@ NoNewPrivileges=true
 1. 选定并接入发信服务，替换 `console` 发信。
 2. 配置 `app.huaci.app` 与 `admin.huaci.app` 的 DNS 与 HTTPS 证书，反向代理把两个主机名都转发到本服务。
 3. 数据库备份与恢复演练。
-4. 按实际处理的数据更新隐私政策（`PRIVACY.md` 与官网隐私页）与 Chrome 商店的数据披露：账号数据；访客领取时的 IP 哈希与浏览器标记 Cookie；托管翻译把文字发给 VPS 和模型服务商（DeepSeek、Fireworks），服务端不保存原文译文，只记字数、token 与点数；Creem 处理付款。
+4. 按实际处理的数据更新隐私政策（`PRIVACY.md` 与官网隐私页）与 Chrome 商店的数据披露：账号数据；访客领取时的 IP 哈希与浏览器标记 Cookie；报表用的国家代码（安装、使用、账单国家）与语言；托管翻译把文字发给 VPS 和模型服务商（DeepSeek、Fireworks），服务端不保存原文译文，只记字数、token 与点数；Creem 处理付款。
 5. 设置 `EXTENSION_IDS` 为商店扩展 ID。
 6. 在 Creem 后台建立月付、年付商品（价格与管理员界面的价格展示一致）并注册 Webhook；先用测试模式走完结账、续费、取消与退款。
 7. 指定管理员：`npm run admin -- grant <email>`（先在用户端注册该邮箱），首次登录管理端时绑定二步验证。

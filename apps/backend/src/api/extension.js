@@ -17,7 +17,7 @@ import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { refundCredits, reserveCredits } from '../credits/ledger.js';
 import { transaction } from '../db/index.js';
 import { createGuest, mergeGuest } from '../guest/index.js';
-import { clientAddress, createRateLimiter, limitBody } from '../http/security.js';
+import { clientAddress, createRateLimiter, limitBody, requestCountry } from '../http/security.js';
 import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
 
@@ -61,7 +61,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
   app.post('/guest', async (c) => {
     const address = clientAddress(c, config);
     if (!guestLimiter(address)) return c.json({ error: 'rate_limited' }, 429);
-    const result = await createGuest(pool, config, await settings.all(), address);
+    // 扩展可以带上自己的界面语言（24 种语言 ID 之一），只用于报表。
+    const body = await readJson(c);
+    const uiLang = LANGUAGES[body.uiLanguage] ? body.uiLanguage : null;
+    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang });
     return c.json({
       token: result.token,
       tokenType: 'Bearer',
@@ -151,8 +154,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost, status, audience) VALUES ($1, $2, 'text', $3, $4, 'pending', $5)`,
-        [eventId, user.id, chars, cost, audience],
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost, status, audience, country, target_lang, source_lang)
+         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8)`,
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), body.target, body.source || null],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);

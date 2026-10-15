@@ -55,7 +55,9 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
 
   const { a } = await adminLogin(app, config, mailbox);
   const overview = await a.text('/');
-  assert.match(overview, /运营概览[\s\S]*扩展安装（访客）[\s\S]*有效订阅[\s\S]*模型成本（估算）/);
+  // 只有两个注册账户（普通用户和管理员）：只显示「新注册」，其余没有数据的指标与图表都不显示
+  assert.match(overview, /运营概览[\s\S]*新注册[\s\S]*增长趋势/);
+  assert.doesNotMatch(overview, /托管请求|模型成本|有效订阅|转化漏斗|使用时段/);
   const { rows: [adminRow] } = await pool.query('SELECT totp_secret, totp_enabled_at FROM admins');
   assert.ok(adminRow.totp_enabled_at);
   assert.doesNotMatch(adminRow.totp_secret, /^[A-Z2-7]+$/, 'TOTP 密钥加密存储');
@@ -125,4 +127,42 @@ test('本地开发默认跳过二步验证：邮箱验证码通过后直接进�
   await pool.query('UPDATE admin_sessions SET verified_at = NULL');
   assert.equal((await a.get('/')).status, 200);
   assert.equal((await a.get('/2fa')).headers.get('location'), '/');
+});
+
+test('运营概览：有数据的指标与图表才显示；按国家、语言、时段统计', async () => {
+  const config = testConfig({ GEO_COUNTRY_HEADER: 'cf-ipcountry', TRUST_PROXY: '1', ADMIN_REQUIRE_2FA: '1' });
+  const hosted = async ({ texts, target }) => ({
+    translations: texts.map((t) => `[${target}] ${t}`),
+    meta: { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', inputTokens: 1000, cachedTokens: 0, outputTokens: 800, latencyMs: 1500, fellBack: false },
+  });
+  const { app, mailbox } = buildApp({ pool, config, hosted });
+  const ext = (path, { body, token, ip, country }) => app.request(new URL(`/api/extension${path}`, config.appOrigin), {
+    method: 'POST',
+    headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop', 'content-type': 'application/json', 'x-forwarded-for': ip, 'cf-ipcountry': country, ...(token ? { authorization: `Bearer ${token}` } : {}) },
+    body: JSON.stringify(body || {}),
+  });
+  for (const [ip, country, uiLanguage, target] of [['1.1.1.1', 'JP', 'ja', 'zh-Hans'], ['1.1.1.2', 'US', 'en', 'zh-Hans'], ['1.1.1.3', 'US', 'en', 'ja'], ['1.1.1.4', 'XX', 'de', 'en']]) {
+    const { token } = await (await ext('/guest', { body: { uiLanguage }, ip, country })).json();
+    assert.equal((await ext('/translate', { token, ip, country, body: { texts: ['Hello world'], target } })).status, 200);
+  }
+  const { rows: claims } = await pool.query('SELECT country, ui_lang FROM guest_claims ORDER BY created_at');
+  assert.deepEqual(claims.map((c) => [c.country, c.ui_lang]), [['JP', 'ja'], ['US', 'en'], ['US', 'en'], [null, 'de']], 'XX 视为未知');
+  const { rows: events } = await pool.query('SELECT country, target_lang FROM usage_events ORDER BY created_at');
+  assert.deepEqual(events.map((e) => e.target_lang), ['zh-Hans', 'zh-Hans', 'ja', 'en']);
+
+  const { a } = await adminLogin(app, config, mailbox);
+  const page = await a.text('/?days=7');
+  assert.match(page, /class="kpi"[\s\S]*扩展安装[\s\S]*托管请求/);
+  assert.doesNotMatch(page, /有效订阅|收入（USD/, '没有订阅和收入时不显示这两项');
+  assert.match(page, /增长趋势[\s\S]*<svg class="chart"/);
+  assert.match(page, /转化漏斗/);
+  assert.match(page, /目标语言[\s\S]*简体中文[\s\S]*日语/);
+  assert.match(page, /安装地区[\s\S]*美国[\s\S]*日本/);
+  assert.match(page, /使用时段[\s\S]*class="chart heat"/);
+  assert.match(page, /响应耗时[\s\S]*P50/);
+  assert.match(page, /data-theme-form/, '页头有配色切换');
+
+  // 配色与用户端共用 theme Cookie
+  await a.post('/preferences/theme', { theme: 'dark', next: '/' });
+  assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });

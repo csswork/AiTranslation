@@ -5,6 +5,7 @@
 import { html } from 'hono/html';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
+import { barList, donut, funnel, heatmap, histogram, sparkline, timeChart } from './charts.js';
 
 const NAV = [
   { href: '/', label: '运营概览', key: 'overview' },
@@ -31,11 +32,30 @@ const KIND = { guest: '访客', member: '注册', subscriber: '订阅' };
 const ENTRY = { trial_grant: '注册赠送', guest_grant: '访客赠送', transfer: '访客转入', adjust: '管理员补发', usage: '托管扣点', refund: '失败返还', void: '作废' };
 const OUTCOME = { granted: '已发放', ip_limited: '同网络超限', daily_cap: '当日总量已满', reinstall: '重装接回', claimed_member: '浏览器已注册' };
 
+// 配色切换与用户端相同：图标表示「点了会变成什么」，脚本（account.js）负责不刷新切换，没有脚本时提交给服务端。
+const sun = html`<svg class="i-sun only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>`;
+const moon = html`<svg class="i-moon only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>`;
+
+/**
+ * 当前请求的配色与路径，由路由在渲染前设置（withPage）。渲染是同步的，不会与其他请求交错。
+ */
+let pageContext = { theme: null, cookieDomain: '', path: '/' };
+export function withPage(context, render) {
+  pageContext = context;
+  try {
+    return render();
+  } finally {
+    pageContext = { theme: null, cookieDomain: '', path: '/' };
+  }
+}
+
 const notice = (n) => (n ? html`<p class="notice notice-${n.kind}" role="${n.kind === 'error' ? 'alert' : 'status'}">${n.text}</p>` : '');
 
+/** theme 来自与用户端、官网共用的 theme Cookie（light / dark，未设置时跟随系统）。 */
 export function layout({ title, admin = null, active = '', note = null, body, head = '' }) {
+  const { theme, cookieDomain, path } = pageContext;
   return html`<!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN"${theme ? html` data-theme="${theme}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,12 +64,18 @@ export function layout({ title, admin = null, active = '', note = null, body, he
 <link rel="icon" href="${assetUrl('icon.png')}">
 <link rel="stylesheet" href="${assetUrl('account.css')}">
 <link rel="stylesheet" href="${assetUrl('admin.css')}">
+<script src="${assetUrl('account.js')}" defer></script>
 ${head}
 </head>
 <body class="admin ${admin ? 'signed-in' : 'signed-out'}">
 <header class="admin-bar">
   <strong><img src="${assetUrl('icon.png')}" alt="" width="22" height="22"> AI 划词翻译 · 管理端</strong>
-  ${admin ? html`<span class="muted">${admin.email}</span><form method="post" action="/logout"><button class="link-button" type="submit">退出</button></form>` : ''}
+  <form class="theme-form" method="post" action="/preferences/theme" data-theme-form data-cookie-domain="${cookieDomain || ''}">
+    <input type="hidden" name="theme" value="${theme === 'dark' ? 'light' : 'dark'}">
+    <input type="hidden" name="next" value="${path}">
+    <button class="theme-toggle" type="submit" aria-label="切换配色" title="切换配色" data-to-light="切换到浅色" data-to-dark="切换到深色">${sun}${moon}</button>
+  </form>
+  ${admin ? html`<span class="muted admin-email">${admin.email}</span><form method="post" action="/logout"><button class="link-button" type="submit">退出</button></form>` : ''}
 </header>
 <div class="shell">
   ${admin ? html`<nav class="side" aria-label="管理导航"><ul>${NAV.map((item) => html`<li><a href="${item.href}"${item.key === active ? html` aria-current="page"` : ''}>${item.label}</a></li>`)}</ul></nav>` : ''}
@@ -115,76 +141,164 @@ export const totpPage = ({ setup = null, note = null }) => layout({
 
 /* ---------- A2 运营概览 ---------- */
 
-const kpi = (label, value, sub = '') => html`<div class="kpi"><span class="kpi-label">${label}</span><strong>${value}</strong>${sub ? html`<span class="kpi-sub">${sub}</span>` : ''}</div>`;
+const regionNames = new Intl.DisplayNames(['zh-CN'], { type: 'region' });
+const languageNames = new Intl.DisplayNames(['zh-CN'], { type: 'language' });
+// 不用旗帜表情：不同系统的显示不一致，有的地区没有对应字形。
+const country = (code) => `${regionNames.of(code) || code} · ${code}`;
+const language = (code) => (code === 'auto' ? '自动检测' : (() => { try { return languageNames.of(code); } catch { return code; } })());
 
-export function overviewPage({ admin, r }) {
-  const maxChars = Math.max(1, ...r.daily.map((row) => Number(row.chars)));
-  const revenueLines = r.revenue.length
-    ? r.revenue.map((x) => html`<li dir="ltr">${minor(x.gross - x.refunded, x.currency)} <span class="muted">（毛 ${minor(x.gross, x.currency)}，退 ${minor(x.refunded, x.currency)}，${x.orders} 笔）</span></li>`)
-    : html`<li class="muted">暂无</li>`;
+const AUDIENCE = { guest: ['访客', 'c3'], member: ['注册用户', 'c1'], subscriber: ['订阅用户', 'c2'] };
+const PROVIDER = { primary: ['主力模型', 'c1'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
+const ERRORS = { primary_failed: '主力失败、备用成功', timeout: '超时', network: '网络错误', empty: '模型无内容', batch_parse: '批量结果解析失败', batch_shape: '批量条数不符' };
+
+/** 环比：上一周期为 0 时只在有增长时显示「新」。 */
+function delta(cur, prev, { inverse = false } = {}) {
+  if (!cur && !prev) return '';
+  if (!prev) return html`<span class="delta up">新增</span>`;
+  const change = (cur - prev) / prev;
+  if (Math.abs(change) < 0.005) return html`<span class="delta flat">持平</span>`;
+  const good = inverse ? change < 0 : change > 0;
+  return html`<span class="delta ${good ? 'up' : 'down'}">${change > 0 ? '▲' : '▼'} ${Math.abs(Math.round(change * 100))}%</span>`;
+}
+
+function kpiCard({ label, value, sub = '', cur, prev, inverse = false, spark = [], cls = 'c1' }) {
+  return html`<section class="kpi">
+  <div class="kpi-head"><span class="kpi-label">${label}</span>${cur != null ? delta(cur, prev, { inverse }) : ''}</div>
+  <strong>${value}</strong>
+  ${sub ? html`<span class="kpi-sub">${sub}</span>` : ''}
+  ${sparkline(spark, cls)}
+</section>`;
+}
+
+const panel = (title, body, { note = '', wide = false } = {}) => (body
+  ? html`<section class="card panel${wide ? ' wide' : ''}"><div class="panel-head"><h2>${title}</h2>${note ? html`<span class="muted">${note}</span>` : ''}</div>${body}</section>`
+  : '');
+
+export function overviewPage({ admin, r, geoConfigured }) {
+  const cur = r.current;
+  const prev = r.previous;
+  const col = (key) => r.daily.map((d) => d[key]);
+  const labels = r.daily.map((d) => d.day);
+  const failRate = cur.requests ? cur.failed / cur.requests : 0;
+  const revenueOther = r.revenue.filter((x) => x.currency !== 'USD');
+  const hasUsage = cur.requests > 0;
+
+  // 只显示有数据的指标：本期和上期都为 0 的不显示。
+  const cards = [
+    (cur.installs || prev.installs) && kpiCard({ label: '扩展安装', value: num(cur.installs), cur: cur.installs, prev: prev.installs, spark: col('installs'), cls: 'c3' }),
+    (cur.members || prev.members) && kpiCard({ label: '新注册', value: num(cur.members), cur: cur.members, prev: prev.members, spark: col('members'), cls: 'c1',
+      sub: r.funnel.installs ? `安装转注册 ${pct(r.funnel.registered, r.funnel.installs)}` : '' }),
+    (cur.active_users || prev.active_users) && kpiCard({ label: '活跃用户', value: num(cur.active_users), cur: cur.active_users, prev: prev.active_users, spark: col('active_users'), cls: 'c2', sub: '这段时间用过托管翻译' }),
+    (cur.requests || prev.requests) && kpiCard({ label: '托管请求', value: num(cur.requests), cur: cur.requests, prev: prev.requests, spark: col('requests'), cls: 'c1',
+      sub: cur.failed ? `失败 ${(failRate * 100).toFixed(1)}%` : '' }),
+    (cur.chars || prev.chars) && kpiCard({ label: '翻译字数', value: num(cur.chars), cur: cur.chars, prev: prev.chars, spark: col('chars'), cls: 'c4' }),
+    (cur.cost_micros || prev.cost_micros) && kpiCard({ label: '模型成本（估算）', value: usd(cur.cost_micros), cur: cur.cost_micros, prev: prev.cost_micros, inverse: true, spark: col('cost_micros'), cls: 'c5',
+      sub: cur.chars ? `每万字 ${usd((cur.cost_micros / cur.chars) * 10000)}` : '' }),
+    (cur.revenue_usd || prev.revenue_usd) && kpiCard({ label: '收入（USD 税前）', value: minor(cur.revenue_usd, 'USD'), cur: cur.revenue_usd, prev: prev.revenue_usd, spark: col('revenue_usd'), cls: 'c2',
+      sub: cur.cost_micros ? `毛利 ${minor(cur.revenue_usd - cur.cost_micros / 10000, 'USD')}` : '' }),
+    r.subs.active && kpiCard({ label: '有效订阅', value: num(r.subs.active), sub: `MRR 约 ${minor(r.subs.mrrCents, 'USD')} · 月付 ${num(r.subs.plans.monthly || 0)} · 年付 ${num(r.subs.plans.yearly || 0)}` }),
+  ].filter(Boolean);
+
+  const growth = ['installs', 'members', 'active_users', 'subs'].some((k) => col(k).some((v) => v > 0))
+    ? timeChart({ labels, series: [
+      { name: '扩展安装', values: col('installs'), cls: 'c3' },
+      { name: '新注册', values: col('members'), cls: 'c1' },
+      { name: '活跃用户', values: col('active_users'), cls: 'c2' },
+      { name: '新订阅', values: col('subs'), cls: 'c4' },
+    ].filter((s) => s.values.some((v) => v > 0)) })
+    : '';
+  const usage = hasUsage
+    ? timeChart({ labels, series: [
+      { name: '成功请求', values: r.daily.map((d) => d.requests - d.failed), cls: 'c1', kind: 'bar' },
+      ...(cur.failed ? [{ name: '失败', values: col('failed'), cls: 'c5', kind: 'bar' }] : []),
+    ] })
+    : '';
+  // 订阅收入按笔到账，逐日波动大；用累计值对比收入与成本，更容易看出是否盈利。
+  const cumulative = (values) => values.reduce((out, v) => [...out, (out[out.length - 1] || 0) + v], []);
+  const money = col('revenue_usd').some((v) => v > 0) || col('cost_micros').some((v) => v > 0)
+    ? timeChart({
+      labels,
+      series: [
+        { name: '累计收入', values: cumulative(col('revenue_usd').map((c) => c / 100)), cls: 'c2' },
+        { name: '累计模型成本（估算）', values: cumulative(col('cost_micros').map((m) => m / 1_000_000)), cls: 'c5' },
+      ].filter((s) => s.values.some((v) => v > 0)),
+      format: (v) => `$${Number(v).toFixed(v > 0 && v < 1 ? 4 : 2)}`,
+    })
+    : '';
+
+  const funnelSteps = [
+    { label: '安装', value: r.funnel.installs },
+    { label: '用过翻译', value: r.funnel.used },
+    { label: '注册', value: r.funnel.registered },
+    { label: '订阅', value: r.funnel.subscribed },
+  ];
+
+  const audienceDonut = donut(r.audiences.map((a) => ({ label: AUDIENCE[a.key]?.[0] || a.key, value: a.requests, cls: AUDIENCE[a.key]?.[1] || 'c6' })));
+  const providerDonut = donut(r.providers.map((p) => ({ label: PROVIDER[p.key][0], value: p.requests, cls: PROVIDER[p.key][1] })));
+  const planDonut = r.subs.active ? donut([
+    { label: '月付', value: r.subs.plans.monthly || 0, cls: 'c1' },
+    { label: '年付', value: r.subs.plans.yearly || 0, cls: 'c2' },
+  ]) : '';
+  const costByAudience = r.audiences.some((a) => Number(a.cost_micros) > 0)
+    ? barList(r.audiences.filter((a) => Number(a.cost_micros) > 0).map((a) => ({ label: AUDIENCE[a.key]?.[0] || a.key, value: Number(a.cost_micros), cls: AUDIENCE[a.key]?.[1], note: `${num(a.users)} 人` })), { format: usd })
+    : '';
+
+  const geo = [
+    panel('安装地区', r.countries.installs.length ? barList(r.countries.installs.map((c) => ({ label: country(c.key), value: c.installs, note: c.registered ? `注册 ${num(c.registered)}` : '' })), { cls: 'c3' }) : ''),
+    panel('使用地区', r.countries.usage.length ? barList(r.countries.usage.map((c) => ({ label: country(c.key), value: c.requests, note: `${num(c.users)} 人` })), { cls: 'c1' }) : ''),
+    panel('收入地区（USD）', r.countries.revenue.length ? barList(r.countries.revenue.map((c) => ({ label: country(c.key), value: Number(c.revenue), note: `${c.orders} 笔` })), { format: (v) => minor(v, 'USD'), cls: 'c2' }) : ''),
+  ].filter(Boolean);
+
+  const langs = [
+    panel('目标语言', r.targetLangs.length ? barList(r.targetLangs.map((l) => ({ label: language(l.key), value: l.requests, note: `${num(l.users)} 人` })), { cls: 'c1' }) : '', { note: '翻译成什么语言' }),
+    panel('源语言', r.sourceLangs.length ? barList(r.sourceLangs.map((l) => ({ label: language(l.key), value: l.requests })), { cls: 'c4' }) : '', { note: '用户指定的原文语言' }),
+    panel('扩展界面语言', r.uiLangs.length ? barList(r.uiLangs.map((l) => ({ label: language(l.key), value: l.installs })), { cls: 'c3' }) : '', { note: '安装时' }),
+  ].filter(Boolean);
+
+  const latencyBuckets = r.latency && r.latency.p50 != null ? [
+    { label: '<1s', value: r.latency.b1 }, { label: '1–2s', value: r.latency.b2 }, { label: '2–4s', value: r.latency.b3 },
+    { label: '4–8s', value: r.latency.b4 }, { label: '≥8s', value: r.latency.b5 },
+  ] : [];
+  const sizeBuckets = r.sizes ? [
+    { label: '≤50', value: r.sizes.b1 }, { label: '≤200', value: r.sizes.b2 }, { label: '≤500', value: r.sizes.b3 },
+    { label: '≤2000', value: r.sizes.b4 }, { label: '>2000', value: r.sizes.b5 },
+  ] : [];
+
+  const empty = !cards.length;
   return layout({
     title: '运营概览',
     admin,
     active: 'overview',
-    body: html`<div class="head-row"><h1>运营概览</h1>
+    body: html`<div class="head-row"><div><h1>运营概览</h1><p class="muted">最近 ${r.days} 天 · 与之前 ${r.days} 天对比 · 时区 ${r.timeZone}</p></div>
   <nav class="seg">${[7, 30, 90].map((n) => html`<a href="/?days=${n}"${n === r.days ? html` aria-current="page"` : ''}>${n} 天</a>`)}</nav></div>
 
-<section class="kpis">
-  ${kpi('扩展安装（访客）', num(r.guests.installs), `发放 ${num(r.guests.granted)} · 转注册 ${num(r.guests.converted)}（${pct(r.guests.converted, r.guests.granted)}）`)}
-  ${kpi('新注册', num(r.users.new_members), `累计注册 ${num(r.totals.members)}`)}
-  ${kpi('有效订阅', num(r.subs.active), `月付 ${num(r.subs.active_monthly)} · 年付 ${num(r.subs.active_yearly)}`)}
-  ${kpi('新订阅 / 流失', `${num(r.subs.new_subs)} / ${num(r.subs.churned)}`, r.subs.payment_issues ? `扣款异常 ${num(r.subs.payment_issues)}` : '')}
-  ${kpi('托管请求', num(r.usage.requests), `失败 ${pct(r.usage.failed, r.usage.requests)} · 走备用 ${pct(r.usage.fallback, r.usage.requests)}`)}
-  ${kpi('翻译字数', num(r.usage.chars), `扣点 ${num(r.usage.credits_used)}`)}
-  ${kpi('模型成本（估算）', usd(r.usage.cost_micros), `输入 ${num(r.usage.input_tokens)} · 输出 ${num(r.usage.output_tokens)} token`)}
-  ${kpi('响应耗时', r.usage.avg_latency != null ? `${num(r.usage.avg_latency)} ms` : '—', r.usage.p95_latency != null ? `P95 ${num(r.usage.p95_latency)} ms` : '')}
-</section>
+${empty ? html`<section class="card empty-state"><h2>这段时间还没有数据</h2><p class="muted">有用户安装扩展、注册或使用托管翻译后，这里会显示趋势与分布。</p></section>` : html`
+<section class="kpis">${cards}</section>
 
-<div class="grid">
-  <section class="card">
-    <h2>收入（税前）</h2>
-    <ul class="plain">${revenueLines}</ul>
-    <p class="fine">按订单税前金额统计，未扣 Creem 费用、未计折扣；退款按税前比例折算。</p>
-  </section>
-  <section class="card">
-    <h2>成本按用户类型</h2>
-    <table><thead><tr><th>类型</th><th class="num">用户</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本（估算）</th></tr></thead>
-    <tbody>${r.audiences.map((a) => html`<tr><td>${KIND[a.audience] || a.audience}</td><td class="num">${num(a.users)}</td><td class="num">${num(a.requests)}</td><td class="num">${num(a.chars)}</td><td class="num">${usd(a.cost_micros)}</td></tr>`)}</tbody></table>
-    ${r.costPerSubscriberMicros != null ? html`<p class="fine">每位有效订阅用户这段时间的平均成本：<strong>${usd(r.costPerSubscriberMicros)}</strong></p>` : ''}
-  </section>
-  <section class="card">
-    <h2>访客领取</h2>
-    <dl class="facts">
-      <dt>已发放</dt><dd>${num(r.guests.granted)}（共 ${num(r.guests.credits_granted)} 点）</dd>
-      <dt>同网络超限</dt><dd>${num(r.guests.ip_limited)}</dd>
-      <dt>当日总量已满</dt><dd>${num(r.guests.daily_cap)}</dd>
-      <dt>重装接回</dt><dd>${num(r.guests.reinstall)}</dd>
-      <dt>浏览器已注册</dt><dd>${num(r.guests.claimed_member)}</dd>
-    </dl>
-  </section>
+<div class="panels">
+  ${panel('增长趋势', growth, { wide: true })}
+  ${panel('托管请求', usage, { wide: true })}
+  ${panel('收入与成本（累计）', money, { wide: true, note: '收入为 USD 税前；成本为估算' })}
+  ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
+  ${panel('请求来自', audienceDonut)}
+  ${panel('模型路由', providerDonut)}
+  ${panel('订阅方案', planDonut)}
+  ${panel('成本按用户类型', costByAudience, { note: r.costPerSubscriberMicros != null ? `每位订阅用户 ${usd(r.costPerSubscriberMicros)}` : '' })}
+  ${langs}
+  ${geo}
+  ${!geo.length && !geoConfigured && hasUsage ? html`<section class="card panel hint"><h2>地区分布</h2><p class="muted">设置 GEO_COUNTRY_HEADER（例如 Cloudflare 的 cf-ipcountry）后按国家统计安装与使用；付费订单的国家来自 Creem。</p></section>` : ''}
+  ${panel('使用时段', hasUsage ? heatmap(r.heat, { timeZone: r.timeZone }) : '', { wide: true, note: r.timeZone })}
+  ${panel('响应耗时', latencyBuckets.length ? html`<dl class="stats"><div><dt>P50</dt><dd>${num(r.latency.p50)} ms</dd></div><div><dt>P90</dt><dd>${num(r.latency.p90)} ms</dd></div><div><dt>P95</dt><dd>${num(r.latency.p95)} ms</dd></div><div><dt>P99</dt><dd>${num(r.latency.p99)} ms</dd></div></dl>${histogram(latencyBuckets, { cls: 'c4' })}` : '')}
+  ${panel('请求字数', hasUsage ? histogram(sizeBuckets, { cls: 'c1' }) : '', { note: '每次请求的字符数' })}
+  ${panel('访客领取', r.outcomes.length ? barList(r.outcomes.map((o) => ({ label: OUTCOME[o.key] || o.key, value: o.n, note: o.credits ? `${num(o.credits)} 点` : '' })), { cls: 'c3' }) : '')}
+  ${panel('异常与降级', r.errors.length ? barList(r.errors.map((e) => ({ label: ERRORS[e.key] || e.key, value: e.n })), { cls: 'c5' }) : '')}
+  ${panel('其他币种收入', revenueOther.length ? html`<ul class="plain">${revenueOther.map((x) => html`<li dir="ltr">${minor(x.gross - x.refunded, x.currency)} <span class="muted">（${x.orders} 笔）</span></li>`)}</ul>` : '')}
+  ${panel('用量最高的用户', r.topUsers.length ? html`<div class="table-wrap"><table>
+    <thead><tr><th>用户</th><th>类型</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本</th></tr></thead>
+    <tbody>${r.topUsers.map((u) => html`<tr><td><a href="/users/${u.user_id}">${u.kind === 'guest' ? '访客' : u.username}</a></td><td>${KIND[u.audience] || KIND[u.kind]}</td><td class="num">${num(u.requests)}</td><td class="num">${num(u.chars)}</td><td class="num">${usd(u.cost_micros)}</td></tr>`)}</tbody>
+  </table></div>` : '', { wide: true })}
 </div>
-
-<section class="card">
-  <h2>每日明细</h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th>日期</th><th class="num">安装</th><th class="num">注册</th><th class="num">订阅</th><th class="num">收入 USD</th><th class="num">请求</th><th>字数</th><th class="num">成本</th><th class="num">失败</th></tr></thead>
-    <tbody>${r.daily.map((row) => html`<tr>
-      <td>${d(row.day)}</td><td class="num">${num(row.installs)}</td><td class="num">${num(row.members)}</td><td class="num">${num(row.subs)}</td>
-      <td class="num">${minor(row.revenue_usd, 'USD')}</td><td class="num">${num(row.requests)}</td>
-      <td class="bar-cell"><progress max="${maxChars}" value="${Number(row.chars)}"></progress> <span>${num(row.chars)}</span></td>
-      <td class="num">${usd(row.cost_micros)}</td><td class="num">${num(row.failed)}</td>
-    </tr>`)}</tbody>
-  </table></div>
-</section>
-
-<section class="card">
-  <h2>用量最高的用户</h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th>用户</th><th>类型</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本（估算）</th></tr></thead>
-    <tbody>${r.topUsers.map((u) => html`<tr><td><a href="/users/${u.user_id}">${u.username}</a></td><td>${KIND[u.audience] || u.kind}</td><td class="num">${num(u.requests)}</td><td class="num">${num(u.chars)}</td><td class="num">${usd(u.cost_micros)}</td></tr>`)}</tbody>
-  </table></div>
-  <p class="fine">订阅用户界面显示无限使用；如需限制个别高用量账户，可在「规则与服务配置」设置每月隐藏上限，或在用户详情里冻结托管服务。</p>
-</section>`,
+`}`,
   });
 }
 

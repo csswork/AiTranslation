@@ -51,12 +51,13 @@ export function readConfig(env = process.env) {
     else if (production && !origin.startsWith('https://')) problems.push(`生产环境 WEB_ORIGINS 必须使用 HTTPS：${origin}`);
   }
 
-  // 与官网共用 lang / theme 偏好 Cookie 的父域（如 huaci.app）；必须同时包含用户端与官网的主机名。
+  const adminOriginEnv = env.ADMIN_ORIGIN ? new URL(env.ADMIN_ORIGIN).origin : '';
+  // 与官网共用 lang / theme 偏好 Cookie 的父域（如 huaci.app）；必须同时包含用户端、官网与管理端的主机名。
   const sharedCookieDomain = (env.SHARED_COOKIE_DOMAIN || '').replace(/^\./, '').toLowerCase();
   if (sharedCookieDomain) {
     const covers = (host) => host === sharedCookieDomain || host.endsWith(`.${sharedCookieDomain}`);
-    const hosts = [appOrigin, ...webOrigins].map((o) => { try { return new URL(o).hostname; } catch { return ''; } });
-    if (!hosts.every(covers)) problems.push(`SHARED_COOKIE_DOMAIN（${sharedCookieDomain}）必须覆盖 APP_ORIGIN 与 WEB_ORIGINS 的主机名`);
+    const hosts = [appOrigin, ...webOrigins, ...(adminOriginEnv ? [adminOriginEnv] : [])].map((o) => { try { return new URL(o).hostname; } catch { return ''; } });
+    if (!hosts.every(covers)) problems.push(`SHARED_COOKIE_DOMAIN（${sharedCookieDomain}）必须覆盖 APP_ORIGIN、WEB_ORIGINS 与 ADMIN_ORIGIN 的主机名`);
   }
 
   // 允许登录的 Chrome 扩展 ID（逗号分隔）。生产环境未配置时扩展无法登录；开发环境未配置时接受任意扩展。
@@ -83,6 +84,10 @@ export function readConfig(env = process.env) {
     }
     : null;
   if (creem && production && creem.testMode) problems.push('生产环境不能启用 CREEM_TEST_MODE');
+
+  // 运营报表按这个时区切分天和小时。
+  const reportTimeZone = env.REPORT_TIMEZONE || 'Asia/Shanghai';
+  try { new Intl.DateTimeFormat('en', { timeZone: reportTimeZone }); } catch { problems.push(`REPORT_TIMEZONE 无效：${reportTimeZone}`); }
 
   const mailTransport = env.MAIL_TRANSPORT || 'console';
   if (mailTransport !== 'console') problems.push(`不支持的 MAIL_TRANSPORT：${mailTransport}`);
@@ -111,6 +116,9 @@ export function readConfig(env = process.env) {
     google,
     mailTransport,
     adminOrigin,
+    // 反向代理提供的两位国家代码请求头（如 Cloudflare 的 cf-ipcountry），用于运营报表按国家统计；不设则不记录国家。
+    reportTimeZone,
+    geoCountryHeader: (env.GEO_COUNTRY_HEADER || '').trim().toLowerCase(),
     // 管理端二步验证：生产环境始终开启；本地开发默认跳过，设 ADMIN_REQUIRE_2FA=1 可在本地测试完整流程。
     adminRequire2fa: production || env.ADMIN_REQUIRE_2FA === '1',
     // 以下点数与限额是默认值，管理员界面（A4、A7）里的设置优先，见 src/settings。试用点数不过期。

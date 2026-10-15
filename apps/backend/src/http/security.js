@@ -87,3 +87,13 @@ export function limitBody(maxSize, onError) {
   const limit = bodyLimit({ maxSize, onError });
   return (c, next) => (c.req.header('content-length') || c.req.header('transfer-encoding') ? limit(c, next) : next());
 }
+
+/**
+ * 请求所在国家（两位代码），来自反向代理的地理请求头（GEO_COUNTRY_HEADER，如 Cloudflare 的 cf-ipcountry）。
+ * 只用于运营报表；未配置或无法识别（XX、T1 等）时返回 null。不读取也不保存 IP 对应的更细位置。
+ */
+export function requestCountry(c, config) {
+  if (!config.geoCountryHeader) return null;
+  const value = String(c.req.header(config.geoCountryHeader) || '').trim().toUpperCase();
+  return /^[A-Z]{2}$/.test(value) && !['XX', 'T1', 'ZZ'].includes(value) ? value : null;
+}

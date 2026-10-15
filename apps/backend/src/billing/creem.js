@@ -4,8 +4,8 @@
  *   customerPortal(customerId) → 客户门户地址（取消订阅、更换卡、下载发票）
  *   verifyWebhook(rawBody, signature) / handleWebhook(pool, event)
  *
- * 订阅权益只由已验签的 Webhook 写入。回调里的姓名、邮箱、国家等资料不入库，只保存平台对象 ID、
- * 状态、金额与币种。事件按平台事件 ID 去重；同一订阅只接受不早于已处理事件的状态。
+ * 订阅权益只由已验签的 Webhook 写入。回调里的姓名、邮箱等资料不入库，只保存平台对象 ID、
+ * 状态、金额与币种；订单另存账单国家（两位代码）用于按国家统计收入。事件按平台事件 ID 去重；同一订阅只接受不早于已处理事件的状态。
  */
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { transaction } from '../db/index.js';
@@ -97,13 +97,15 @@ async function upsertSubscription(client, creem, sub, eventAt, fallbackUserId = 
 }
 
 /** 记录一笔付款（金额按税前，最小货币单位）。同一交易只记一次。 */
-async function recordPayment(client, creem, { orderId, subscriptionId, productId, amount, currency, userId, createdAt }) {
+const countryOf = (value) => (/^[A-Z]{2}$/.test(String(value || '').toUpperCase()) ? String(value).toUpperCase() : null);
+
+async function recordPayment(client, creem, { orderId, subscriptionId, productId, amount, currency, userId, createdAt, country = null }) {
   if (!orderId || !Number.isInteger(amount)) return;
   await client.query(
-    `INSERT INTO orders (user_id, provider, provider_order_id, provider_subscription_id, product_id, plan, amount, currency, status, created_at)
-     VALUES ($1, 'creem', $2, $3, $4, $5, $6, $7, 'paid', $8)
+    `INSERT INTO orders (user_id, provider, provider_order_id, provider_subscription_id, product_id, plan, amount, currency, status, created_at, country)
+     VALUES ($1, 'creem', $2, $3, $4, $5, $6, $7, 'paid', $8, $9)
      ON CONFLICT (provider, provider_order_id) DO NOTHING`,
-    [userId, orderId, subscriptionId, productId, creem.planOf(productId), amount, String(currency || '').toUpperCase(), createdAt],
+    [userId, orderId, subscriptionId, productId, creem.planOf(productId), amount, String(currency || '').toUpperCase(), createdAt, countryOf(country)],
   );
 }
 
@@ -138,7 +140,7 @@ export async function handleCreemEvent(pool, creem, event) {
         if (obj.order && obj.order.type !== 'recurring') {
           await recordPayment(client, creem, {
             orderId: obj.order.id, productId: idOf(obj.order.product), amount: obj.order.amount,
-            currency: obj.order.currency, userId, createdAt: dateOf(obj.order.created_at) || eventAt,
+            currency: obj.order.currency, userId, createdAt: dateOf(obj.order.created_at) || eventAt, country: obj.customer?.country,
           });
         }
         if (obj.subscription) await upsertSubscription(client, creem, { ...obj.subscription, metadata: obj.subscription.metadata || obj.metadata }, eventAt, userId);
@@ -150,7 +152,7 @@ export async function handleCreemEvent(pool, creem, event) {
             orderId: obj.last_transaction_id, subscriptionId: obj.id, productId: idOf(obj.product),
             amount: product.price, currency: product.currency,
             userId: (await userFromMetadata(client, obj.metadata)) || await subscriptionUser(client, obj.id),
-            createdAt: dateOf(obj.last_transaction_date) || eventAt,
+            createdAt: dateOf(obj.last_transaction_date) || eventAt, country: obj.customer?.country,
           });
         }
       } else if (type === 'refund.created') {
@@ -162,6 +164,7 @@ export async function handleCreemEvent(pool, creem, event) {
         await recordPayment(client, creem, {
           orderId: tx.id, subscriptionId, productId: idOf(obj.subscription?.product) || idOf(obj.order?.product),
           amount: Number(tx.amount), currency: tx.currency, userId: await subscriptionUser(client, subscriptionId), createdAt: dateOf(tx.created_at) || eventAt,
+          country: tx.tax_country || obj.customer?.country,
         });
         await client.query(
           `UPDATE orders SET refunded_amount = LEAST(amount, $2),

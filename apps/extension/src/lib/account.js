@@ -163,7 +163,8 @@
   async function claimGuest() {
     if (await readToken()) return null;
     if ((await chrome.storage.local.get(GUEST_CLAIMED_KEY))[GUEST_CLAIMED_KEY]) return null;
-    const { response, data } = await call('/guest', { method: 'POST', auth: false });
+    // 带上扩展界面语言（24 种语言 ID 之一），只用于运营报表的语言统计。
+    const { response, data } = await call('/guest', { method: 'POST', auth: false, body: { uiLanguage: AITrI18n.locale?.() || undefined } });
     if (!response.ok || !data.token) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'guest');
     await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token, guest: true }, [GUEST_CLAIMED_KEY]: true });
     await refresh();

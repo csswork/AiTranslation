@@ -15,8 +15,10 @@ import { isValidEmail, normalizeEmail } from '../../src/auth/users.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import { accountState } from '../../src/billing/entitlements.js';
 import { adjustCredits } from '../../src/credits/ledger.js';
+import { clearPreference, setPreference } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter, limitBody } from '../../src/http/security.js';
 import { SETTINGS } from '../../src/settings/index.js';
+import { THEMES, safePath } from '../account/context.js';
 import * as views from './views.js';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -76,15 +78,31 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   const admin = (c) => c.get('adminAuth').admin;
   const reasonOf = (body) => String(body.reason || '').trim().slice(0, 200);
 
+  /** 渲染管理端页面：带上与用户端共用的配色（theme Cookie）和当前路径。 */
+  const page = (c, render, status = 200) => {
+    const theme = THEMES.includes(getCookie(c, 'theme')) ? getCookie(c, 'theme') : null;
+    const path = c.req.method === 'GET' ? c.req.path : '/';
+    return c.html(views.withPage({ theme, cookieDomain: config.sharedCookieDomain, path }, render), status);
+  };
+
+  /* ---------- 配色：与用户端、官网共用 theme Cookie ---------- */
+
+  app.post('/preferences/theme', async (c) => {
+    const body = await c.req.parseBody();
+    if (THEMES.includes(body.theme)) setPreference(c, config, 'theme', body.theme);
+    else clearPreference(c, config, 'theme');
+    return c.redirect(safePath(body.next), 303);
+  });
+
   /* ---------- A1 登录：邮箱验证码 + TOTP ---------- */
 
-  app.get('/login', (c) => (c.get('adminAuth')?.session.verified ? c.redirect('/', 303) : c.html(views.loginPage({ note: takeNote(c) }))));
+  app.get('/login', (c) => (c.get('adminAuth')?.session.verified ? c.redirect('/', 303) : page(c, () => views.loginPage({ note: takeNote(c) }))));
 
   app.post('/login', async (c) => {
     const body = await c.req.parseBody();
     const email = normalizeEmail(body.email);
-    if (!isValidEmail(email)) return c.html(views.loginPage({ email, note: fail('请输入有效的邮箱地址。') }), 400);
-    if (!sendLimiter(clientAddress(c, config))) return c.html(views.loginPage({ email, note: fail('请求过于频繁，请稍后再试。') }), 429);
+    if (!isValidEmail(email)) return page(c, () => views.loginPage({ email, note: fail('请输入有效的邮箱地址。') }), 400);
+    if (!sendLimiter(clientAddress(c, config))) return page(c, () => views.loginPage({ email, note: fail('请求过于频繁，请稍后再试。') }), 429);
     // 不论是否是管理员都显示同样的下一步，避免借此判断哪些邮箱是管理员。
     const found = await findAdminByEmail(pool, email);
     if (found) {
@@ -99,7 +117,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/login/verify', (c) => {
     const email = getCookie(c, 'admin_pending');
     if (!email) return c.redirect('/login', 303);
-    return c.html(views.verifyPage({ email, note: takeNote(c), devCode: devCodes ? getCookie(c, 'admin_dev_code') : null }));
+    return page(c, () => views.verifyPage({ email, note: takeNote(c), devCode: devCodes ? getCookie(c, 'admin_dev_code') : null }));
   });
 
   app.post('/login/verify', async (c) => {
@@ -108,7 +126,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const body = await c.req.parseBody();
     const found = await findAdminByEmail(pool, email);
     const result = found ? await verifyCode(pool, config, { email, purpose: 'admin_login', code: body.code }) : { ok: false };
-    if (!result.ok) return c.html(views.verifyPage({ email, note: fail('验证码不正确或已失效。') }), 400);
+    if (!result.ok) return page(c, () => views.verifyPage({ email, note: fail('验证码不正确或已失效。') }), 400);
     deleteCookie(c, 'admin_pending', cookieBase);
     deleteCookie(c, 'admin_dev_code', cookieBase);
     const token = await createAdminSession(pool, found.id);
@@ -127,14 +145,14 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const auth = c.get('adminAuth');
     if (!auth) return c.redirect('/login', 303);
     if (auth.session.verified) return c.redirect('/', 303);
-    if (auth.admin.totp_enabled_at) return c.html(views.totpPage({ note: takeNote(c) }));
+    if (auth.admin.totp_enabled_at) return page(c, () => views.totpPage({ note: takeNote(c) }));
     // 首次登录：生成新密钥（加密保存，完成验证后才启用）。
     let secret = auth.admin.totp_secret ? openSecret(config.authSecret, auth.admin.totp_secret) : null;
     if (!secret) {
       secret = newTotpSecret();
       await pool.query('UPDATE admins SET totp_secret = $2 WHERE user_id = $1', [auth.admin.id, sealSecret(config.authSecret, secret)]);
     }
-    return c.html(views.totpPage({ setup: { secret, url: otpauthUrl(secret, auth.admin.email) }, note: takeNote(c) }));
+    return page(c, () => views.totpPage({ setup: { secret, url: otpauthUrl(secret, auth.admin.email) }, note: takeNote(c) }));
   });
 
   app.post('/2fa', async (c) => {
@@ -165,7 +183,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
 
   app.get('/', requireAdmin, async (c) => {
     const days = [7, 30, 90].includes(Number(c.req.query('days'))) ? Number(c.req.query('days')) : 30;
-    return c.html(views.overviewPage({ admin: admin(c), r: await overview(pool, days) }));
+    const r = await overview(pool, days, { settings: await settings.all(), timeZone: config.reportTimeZone });
+    return page(c, () => views.overviewPage({ admin: admin(c), r, geoConfigured: Boolean(config.geoCountryHeader) }));
   });
 
   /* ---------- A3 用户 ---------- */
@@ -183,7 +202,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
        ORDER BY u.created_at DESC LIMIT 100`,
       [q, `%${q.replace(/[%_\\]/g, '\\$&')}%`],
     );
-    return c.html(views.usersPage({ admin: admin(c), q, users }));
+    return page(c, () => views.usersPage({ admin: admin(c), q, users }));
   });
 
   const loadUser = async (id) => (UUID.test(id)
@@ -192,7 +211,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
-    if (!u) return c.html(views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
+    if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
     const [state, subs, ledger, events, sessions] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
@@ -200,7 +219,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       pool.query('SELECT audience, chars, cost, model, cost_micros, latency_ms, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
     ]);
-    return c.html(views.userPage({
+    return page(c, () => views.userPage({
       admin: admin(c), u, state, subs: subs.rows, ledger: ledger.rows, events: events.rows, sessions: sessions.rows[0].n, note: takeNote(c),
     }));
   });
@@ -247,7 +266,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       ),
       pool.query('SELECT o.*, u.username FROM orders o LEFT JOIN users u ON u.id = o.user_id ORDER BY o.created_at DESC LIMIT 200'),
     ]);
-    return c.html(views.subscriptionsPage({ admin: admin(c), subs: subs.rows, orders: orders.rows, status }));
+    return page(c, () => views.subscriptionsPage({ admin: admin(c), subs: subs.rows, orders: orders.rows, status }));
   });
 
   /* ---------- A6 点数账本 ---------- */
@@ -261,7 +280,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
        WHERE $1 = '' OR l.entry_type = $1 ORDER BY l.created_at DESC LIMIT 300`,
       [type],
     );
-    return c.html(views.ledgerPage({ admin: admin(c), entries: rows, type }));
+    return page(c, () => views.ledgerPage({ admin: admin(c), entries: rows, type }));
   });
 
   /* ---------- A4 / A7 规则与服务配置 ---------- */
@@ -273,9 +292,10 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     { label: '发信服务', ok: config.mailTransport !== 'console', value: config.mailTransport },
   ];
 
-  app.get('/settings', requireAdmin, async (c) => c.html(views.settingsPage({
-    admin: admin(c), values: await settings.all(), defaults: settings.defaults(), services: services(), note: takeNote(c),
-  })));
+  app.get('/settings', requireAdmin, async (c) => {
+    const values = await settings.all();
+    return page(c, () => views.settingsPage({ admin: admin(c), values, defaults: settings.defaults(), services: services(), note: takeNote(c) }));
+  });
 
   app.post('/settings', requireAdmin, async (c) => {
     const body = await c.req.parseBody();
@@ -309,7 +329,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       ),
       pool.query('SELECT event_type, object_id, received_at, processed_at, error FROM payment_events ORDER BY received_at DESC LIMIT 100'),
     ]);
-    return c.html(views.eventsPage({ admin: admin(c), failures: failures.rows, errorCounts: errorCounts.rows, payments: payments.rows }));
+    return page(c, () => views.eventsPage({ admin: admin(c), failures: failures.rows, errorCounts: errorCounts.rows, payments: payments.rows }));
   });
 
   /* ---------- A9 操作审计 ---------- */
@@ -318,14 +338,14 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const { rows } = await pool.query(
       `SELECT a.*, u.email AS admin_email FROM admin_audit a LEFT JOIN users u ON u.id = a.admin_id ORDER BY a.created_at DESC LIMIT 300`,
     );
-    return c.html(views.auditPage({ admin: admin(c), rows }));
+    return page(c, () => views.auditPage({ admin: admin(c), rows }));
   });
 
-  app.notFound((c) => c.html(views.errorPage({ admin: c.get('adminAuth')?.session.verified ? admin(c) : null, status: 404, message: '找不到这个页面。' }), 404));
+  app.notFound((c) => page(c, () => views.errorPage({ admin: c.get('adminAuth')?.session.verified ? admin(c) : null, status: 404, message: '找不到这个页面。' }), 404));
   app.onError((err, c) => {
     if (err instanceof HTTPException) return err.getResponse();
     log.error(err);
-    return c.html(views.errorPage({ status: 500, message: '服务暂时不可用。' }), 500);
+    return page(c, () => views.errorPage({ status: 500, message: '服务暂时不可用。' }), 500);
   });
 
   return app;

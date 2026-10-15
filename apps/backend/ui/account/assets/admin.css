@@ -1,25 +1,119 @@
-/* 管理端：沿用 account.css 的变量与组件，只补充报表与表格布局。 */
+/* 管理端：沿用 account.css 的变量、明暗模式（theme Cookie + light-dark()）与组件，补充报表布局和图表配色。 */
+:root {
+  /* 图表配色：浅色模式偏深、深色模式偏亮，两套都保证与背景有足够对比。 */
+  --c1: light-dark(#5b5eea, #8b8ef9);
+  --c2: light-dark(#0f9d6b, #43d39e);
+  --c3: light-dark(#d97706, #fbbf24);
+  --c4: light-dark(#0891b2, #38bdf8);
+  --c5: light-dark(#dc2626, #f87171);
+  --c6: light-dark(#9333ea, #c084fc);
+  --grid: light-dark(#e6e7f0, #1f2430);
+  --heat-empty: light-dark(#f0f1f7, #151a24);
+}
+
 .admin-bar {
   display: flex; align-items: center; gap: var(--s2);
-  padding: .75rem max(1.5rem, (100% - 1180px) / 2);
+  padding: .65rem max(1.5rem, (100% - 1180px) / 2);
   border-bottom: 1px solid var(--line); background: var(--surface);
 }
 .admin-bar strong { display: inline-flex; align-items: center; gap: .5rem; margin-inline-end: auto; }
 .admin-bar form { margin: 0; }
 .admin .shell { margin-top: var(--s3); }
-.head-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); flex-wrap: wrap; }
-.seg { display: inline-flex; flex-wrap: wrap; gap: .25rem; margin-bottom: var(--s2); }
-.seg a { padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--line); color: var(--text-2); text-decoration: none; font-size: .9rem; }
-.seg a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
-.kpis { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: var(--s3); }
-.kpi { display: grid; gap: .15rem; padding: var(--s2); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+@media (max-width: 620px) { .admin-email { display: none; } }
+
+.head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s3); }
+.head-row h1 { margin-bottom: .25rem; }
+.head-row p { margin: 0; font-size: .88rem; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: .25rem; margin-bottom: var(--s2); padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.head-row .seg { margin-bottom: 0; }
+.seg a { padding: .3rem .85rem; border-radius: 999px; color: var(--text-2); text-decoration: none; font-size: .88rem; }
+.seg a:hover { color: var(--text); }
+.seg a[aria-current="page"] { background: var(--accent); color: #fff; }
+
+/* 指标卡片 */
+.kpis { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); margin-bottom: var(--s3); }
+.kpi {
+  position: relative; display: grid; gap: .2rem; align-content: start; overflow: hidden;
+  padding: var(--s2) var(--s2) calc(var(--s2) + 18px); min-height: 128px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+}
+.kpi-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .kpi-label { color: var(--text-2); font-size: .85rem; }
-.kpi strong { font-size: 1.6rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.kpi-sub { color: var(--text-3); font-size: .8rem; }
+.kpi strong { font-size: 1.75rem; line-height: 1.15; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.kpi-sub { color: var(--text-3); font-size: .78rem; position: relative; z-index: 1; }
+.kpi .spark { position: absolute; inset-inline: 0; bottom: 0; width: 100%; height: 34px; }
+.delta { font-size: .75rem; font-weight: 600; padding: .05rem .45rem; border-radius: 999px; white-space: nowrap; }
+.delta.up { color: var(--ok); background: var(--ok-bg); }
+.delta.down { color: var(--error); background: var(--error-bg); }
+.delta.flat { color: var(--text-2); background: var(--surface-2); }
+
+/* 面板网格：宽面板占满一行，其余两列（窄屏一列） */
+.panels { display: grid; gap: var(--s2); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.panels .card { margin-bottom: 0; }
+.panel.wide { grid-column: 1 / -1; }
+@media (max-width: 900px) { .panels { grid-template-columns: minmax(0, 1fr); } }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2); margin-bottom: var(--s2); }
+.panel-head h2 { margin: 0; }
+.panel-head .muted { font-size: .8rem; }
+.empty-state { text-align: center; padding: var(--s5) var(--s3); }
+
+/* 图表通用 */
+.chart { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .grid { stroke: var(--grid); stroke-width: 1; }
+.chart .tick { fill: var(--text-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart .line { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .area { stroke: none; opacity: .12; }
+.chart .dot { stroke: var(--surface); stroke-width: 1.5; }
+.chart .hover { fill: transparent; }
+.chart .hover:hover { fill: var(--text); fill-opacity: .04; }
+.chart .bar-num { fill: var(--text-2); font-size: 11px; font-variant-numeric: tabular-nums; }
+.c1 { --c: var(--c1); } .c2 { --c: var(--c2); } .c3 { --c: var(--c3); }
+.c4 { --c: var(--c4); } .c5 { --c: var(--c5); } .c6 { --c: var(--c6); }
+.chart .line, .spark .line { stroke: var(--c); }
+.chart .area, .chart .dot, .chart .bar, .spark .area, .bars .fill, .donut .arc { fill: var(--c); }
+.spark .line { fill: none; stroke-width: 1.6; opacity: .9; }
+.spark .area { opacity: .1; stroke: none; }
+.legend { display: flex; flex-wrap: wrap; gap: .35rem 1rem; list-style: none; padding: 0; margin: .6rem 0 0; font-size: .82rem; color: var(--text-2); }
+.legend li { display: inline-flex; align-items: center; gap: .4rem; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+
+/* 横向排行 */
+.bars { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
+.bars li { display: grid; grid-template-columns: minmax(6rem, 34%) 1fr auto; align-items: center; gap: .75rem; font-size: .9rem; }
+.bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { width: 100%; height: 8px; display: block; }
+.bar-track .track { fill: var(--surface-2); }
+.bar-value { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bar-value small { color: var(--text-3); margin-inline-start: .4rem; }
+
+/* 环形图 */
+.donut { display: grid; grid-template-columns: 140px 1fr; gap: var(--s3); align-items: center; }
+.donut svg { width: 140px; height: 140px; }
+.donut .arc, .donut .arc-track { fill: none; stroke-width: 16; }
+.donut .arc { stroke: var(--c); }
+.donut .arc-track { stroke: var(--surface-2); }
+.donut-total { fill: var(--text); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.donut-sub { fill: var(--text-3); font-size: 10px; }
+.legend.vertical { flex-direction: column; gap: .5rem; margin: 0; font-size: .88rem; }
+.legend.vertical li { display: grid; grid-template-columns: 10px 1fr auto 3rem; gap: .5rem; }
+.legend.vertical b { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.legend.vertical small { color: var(--text-3); text-align: end; }
+@media (max-width: 480px) { .donut { grid-template-columns: 1fr; justify-items: center; } }
+
+/* 漏斗、热力图、直方图 */
+.funnel .funnel-label { fill: var(--text-2); font-size: 14px; }
+.funnel .funnel-value { fill: var(--text); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.funnel .muted { fill: var(--text-3); font-weight: 400; }
+.heat .cell { fill: var(--heat-empty); }
+.heat .cell.on { fill: var(--c1); }
+.hist { max-height: 190px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: 0 0 var(--s2); }
+.stats div { padding: .5rem .6rem; border-radius: 10px; background: var(--surface-2); }
+.stats dt { color: var(--text-3); font-size: .75rem; }
+.stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
 .plain { list-style: none; padding: 0; margin: 0 0 var(--s2); display: grid; gap: .35rem; }
-.bar-cell { display: flex; align-items: center; gap: .5rem; min-width: 180px; }
-.bar-cell progress { flex: 1; height: .5rem; accent-color: var(--accent); }
-.bar-cell span { font-variant-numeric: tabular-nums; min-width: 4rem; text-align: end; }
+
+/* 列表页与表单 */
 .search { display: flex; gap: .5rem; max-width: 520px; margin-bottom: var(--s2); }
 .actions { display: grid; gap: var(--s2); }
 form.inline { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; }
