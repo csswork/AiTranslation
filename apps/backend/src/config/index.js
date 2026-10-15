@@ -111,6 +111,8 @@ export function readConfig(env = process.env) {
     google,
     mailTransport,
     adminOrigin,
+    // 管理端二步验证：生产环境始终开启；本地开发默认跳过，设 ADMIN_REQUIRE_2FA=1 可在本地测试完整流程。
+    adminRequire2fa: production || env.ADMIN_REQUIRE_2FA === '1',
     // 以下点数与限额是默认值，管理员界面（A4、A7）里的设置优先，见 src/settings。试用点数不过期。
     trialCredits: int(env.TRIAL_CREDITS, 200, 'TRIAL_CREDITS'),
     guestCredits: int(env.GUEST_CREDITS, 50, 'GUEST_CREDITS'),

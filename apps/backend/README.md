@@ -75,6 +75,7 @@ Creem 作为 Merchant of Record 处理付款、税费与收据，适配器在 `s
 - **A1 登录**：
   - 管理员只能用命令行指定：`npm run admin -- grant <email>`，另有 `revoke`、`reset-2fa`、`list`。
   - 登录用管理端专用的邮箱验证码，再做 TOTP 二步验证，首次登录时绑定。密钥加密存储，同一验证码不能重放。
+  - 本地开发默认跳过二步验证（设 `ADMIN_REQUIRE_2FA=1` 可测试完整流程）；没有发信服务时，验证页直接弹出验证码。生产环境两者都不会发生。
   - 管理端会话 12 小时有效。
 - **A2 运营概览**（7、30、90 天）：
   - 用户：访客安装、发放与转注册率，新注册。
@@ -144,7 +145,7 @@ npm run dev                        # http://localhost:8787，修改 src/、ui/ �
 
 登录时验证码打印在服务日志里，形如 `[开发发信] 登录验证码 → you@example.com：123456`。
 
-管理端：先在用户端用某个邮箱登录一次，再运行 `npm run admin -- grant you@example.com`，然后打开 `http://admin.localhost:8787`。管理端验证码同样打印在服务日志里，首次登录时用身份验证器 App 绑定二步验证。
+管理端：先在用户端用某个邮箱登录一次，再运行 `npm run admin -- grant you@example.com`，然后打开 `http://admin.localhost:8787`。验证页会直接弹出验证码（也打印在服务日志里），本地不需要二步验证。
 
 模拟扩展安装（访客领取）：`curl -X POST -H 'origin: chrome-extension://abcdefghijklmnopabcdefghijklmnop' http://localhost:8787/api/extension/guest`，返回的 `welcomeUrl` 就是欢迎页。
 

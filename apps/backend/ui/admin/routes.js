@@ -107,6 +107,13 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     deleteCookie(c, 'admin_dev_code', cookieBase);
     const token = await createAdminSession(pool, found.id);
     setCookie(c, cookieName, token, { ...cookieBase, maxAge: 12 * 3600 });
+    if (!config.adminRequire2fa) {
+      // 本地开发不做二步验证（生产环境始终要求）。
+      const auth = await validateAdminSession(pool, token);
+      await markVerified(pool, auth.session.id);
+      await audit(pool, { adminId: found.id, action: 'admin.login', detail: { twoFactor: 'skipped_dev' } });
+      return c.redirect('/', 303);
+    }
     return c.redirect('/2fa', 303);
   });
 

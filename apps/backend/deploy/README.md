@@ -23,6 +23,7 @@
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200 / 50 | 注册与访客赠送点数的默认值（不过期）；管理员界面里的设置优先 |
+| `ADMIN_REQUIRE_2FA` | 无需设置 | 生产环境始终要求管理端二步验证；只在本地开发用来打开 |
 | `ADMIN_ORIGIN` | 建议 `https://admin.huaci.app` | 管理员界面地址，必须与 `APP_ORIGIN` 主机名不同；不设则不提供管理端。反向代理需把该主机名也转发到本服务 |
 | `SESSION_DAYS` | 默认 30 | 会话有效天数（网页与扩展会话相同） |
 | `EXTENSION_IDS` | 生产必填 | 允许登录和调用扩展接口的 Chrome 扩展 ID，逗号分隔；生产环境为空时拒绝所有扩展，开发环境为空时接受任意扩展 |

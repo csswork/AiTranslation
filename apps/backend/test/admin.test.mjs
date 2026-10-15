@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { base32Decode, base32Encode, currentStep, totpCode, verifyTotp } from '../src/admin/totp.js';
-import { browser, buildApp, createTestPool, resetData, signInWithEmail } from './helpers.mjs';
+import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
 let pool;
 before(async () => { pool = await createTestPool(); });
@@ -42,7 +42,7 @@ async function adminLogin(app, config, mailbox, email = 'boss@example.com') {
 }
 
 test('管理端：独立入口，只有指定的管理员能登录，必须二步验证；用户端会话无效', async () => {
-  const { app, config, mailbox } = buildApp({ pool });
+  const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   // 普通用户：用户端已登录，在管理端仍是未登录；也收不到管理端验证码
   const user = await signInWithEmail(app, config, mailbox, 'user@example.com');
   const sent = mailbox.sent.length;
@@ -67,7 +67,7 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
 });
 
 test('管理端：修改规则写审计并立即生效；补发点数、冻结与撤销会话需要原因', async () => {
-  const { app, config, mailbox, settings } = buildApp({ pool });
+  const { app, config, mailbox, settings } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
 
   let res = await a.post('/settings', { guest_credits: '60', signup_credits: '200', guest_ip_limit: '3', guest_ip_window_days: '30', guest_daily_cap: '2000' });
@@ -106,4 +106,18 @@ test('管理端：修改规则写审计并立即生效；补发点数、冻结�
 
   await a.post('/logout');
   assert.equal((await a.get('/')).headers.get('location'), '/login');
+});
+
+test('本地开发默认跳过二步验证：邮箱验证码通过后直接进入管理端', async () => {
+  const { app, config, mailbox } = buildApp({ pool });
+  assert.equal(config.adminRequire2fa, false);
+  await signInWithEmail(app, config, mailbox, 'dev@example.com');
+  await pool.query(`INSERT INTO admins (user_id) SELECT id FROM users WHERE email = 'dev@example.com'`);
+  const a = browser(app, config, ADMIN);
+  await a.post('/login', { email: 'dev@example.com' });
+  const res = await a.post('/login/verify', { code: mailbox.last('dev@example.com') });
+  assert.equal(res.headers.get('location'), '/');
+  assert.match(await a.text('/'), /运营概览/);
+  const { rows: [adminRow] } = await pool.query('SELECT totp_enabled_at FROM admins');
+  assert.equal(adminRow.totp_enabled_at, null, '没有绑定 TOTP');
 });
