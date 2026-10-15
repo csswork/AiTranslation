@@ -98,7 +98,7 @@ export function readConfig(env = process.env) {
   if (production) {
     if (!appOrigin.startsWith('https://')) problems.push('生产环境 APP_ORIGIN 必须使用 HTTPS');
     // 正式发信服务尚未接入；控制台输出验证码只能用于本地开发。
-    if (mailTransport === 'console') problems.push('生产环境不能使用 console 发信，需先接入发信服务');
+    if (mailTransport === 'console') problems.push('生产环境不能使用 console 发信，需设置 MAIL_TRANSPORT=resend 并配置 RESEND_API_KEY 与 MAIL_FROM');
     if (adminOrigin && !adminOrigin.startsWith('https://')) problems.push('生产环境 ADMIN_ORIGIN 必须使用 HTTPS');
   }
 

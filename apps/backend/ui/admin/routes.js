@@ -108,7 +108,10 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const found = await findAdminByEmail(pool, email);
     if (found) {
       const result = await issueCode(pool, config, { email, purpose: 'admin_login' });
-      if (result.ok) await mailer.sendCode({ to: email, code: result.code, purpose: 'admin_login' });
+      if (result.ok) {
+        await mailer.sendCode({ to: email, code: result.code, purpose: 'admin_login', locale: 'zh-Hans' })
+          .catch((err) => log.warn(`管理端验证码邮件发送失败：${err.message}`));
+      }
       if (result.ok && devCodes) setCookie(c, 'admin_dev_code', result.code, tempOpts);
     }
     setCookie(c, 'admin_pending', email, tempOpts);

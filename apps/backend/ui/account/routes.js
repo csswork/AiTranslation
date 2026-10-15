@@ -48,6 +48,7 @@ const FLASH = {
   too_soon: fail(k('验证码发送太频繁，请 60 秒后再试。')),
   too_many: fail(k('该邮箱 1 小时内请求验证码次数过多，请稍后再试。')),
   rate: fail(k('请求过于频繁，请稍后再试。')),
+  mail_failed: fail(k('验证码邮件暂时发不出去，请稍后再试，或改用 Google 登录。')),
   checkout_failed: fail(k('暂时无法打开结账页面，请稍后再试。')),
   portal_failed: fail(k('暂时无法打开订阅管理页面，请稍后再试。')),
   already_subscribed: ok(k('你已经订阅，可以直接无限使用。')),
@@ -98,7 +99,14 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   const sendCode = async (c, { email, purpose, userId = null }) => {
     if (!sendLimiter(clientAddress(c, config))) return { ok: false, reason: 'rate' };
     const result = await issueCode(pool, config, { email, purpose, userId });
-    if (result.ok) await mailer.sendCode({ to: email, code: result.code, purpose });
+    if (result.ok) {
+      try {
+        await mailer.sendCode({ to: email, code: result.code, purpose, locale: uiContext(c, config).locale.code });
+      } catch (err) {
+        log.warn(`验证码邮件发送失败：${err.message}`);
+        return { ok: false, reason: 'mail_failed' };
+      }
+    }
     return result;
   };
 

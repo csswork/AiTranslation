@@ -43,3 +43,26 @@ test('SHARED_COOKIE_DOMAIN 必须覆盖用户端与官网的主机名', () => {
   assert.throws(() => readConfig({ ...base, APP_ORIGIN: 'https://app.huaci.app', WEB_ORIGINS: 'https://other.example', SHARED_COOKIE_DOMAIN: 'huaci.app' }), /SHARED_COOKIE_DOMAIN/);
   assert.throws(() => readConfig({ ...base, WEB_ORIGINS: 'huaci.app' }), /WEB_ORIGINS/);
 });
+
+test('发信：生产环境用 Resend，需要 API Key 与发件地址', async () => {
+  assert.throws(() => readConfig({ ...base, MAIL_TRANSPORT: 'resend' }), /缺少 RESEND_API_KEY[\s\S]*缺少 MAIL_FROM/);
+  const config = readConfig({ ...base, MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 're_x', MAIL_FROM: 'AI 划词翻译 <no-reply@huaci.app>' });
+  assert.equal(config.links.support, 'support@huaci.app');
+  const { createMailer, codeEmail } = await import('../src/mail/index.js');
+  const calls = [];
+  const mailer = createMailer(config, { fetchImpl: async (url, init) => { calls.push([url, init]); return new Response('{}', { status: 200 }); } });
+  await mailer.sendCode({ to: 'a@example.com', code: '123456', purpose: 'login', locale: 'en' });
+  const [url, init] = calls[0];
+  assert.equal(url, 'https://api.resend.com/emails');
+  assert.equal(init.headers.authorization, 'Bearer re_x');
+  const body = JSON.parse(init.body);
+  assert.deepEqual(body.to, ['a@example.com']);
+  assert.equal(body.reply_to, 'support@huaci.app');
+  assert.match(body.subject, /123456/);
+  assert.match(body.text, /123456/);
+  const zh = codeEmail({ code: '654321', purpose: 'change_email', locale: 'zh-Hans', support: 'support@huaci.app' });
+  assert.match(zh.subject, /654321 是你的 AI 划词翻译验证码/);
+  assert.match(zh.html, /更换为这个地址[\s\S]*654321[\s\S]*10 分钟/);
+  const failing = createMailer(config, { fetchImpl: async () => new Response('{}', { status: 422 }) });
+  await assert.rejects(failing.sendCode({ to: 'a@example.com', code: '1', purpose: 'login' }), /resend_422/);
+});

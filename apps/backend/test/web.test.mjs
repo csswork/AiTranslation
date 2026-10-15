@@ -63,7 +63,7 @@ test('页头与页脚的链接与官网首页一致', async () => {
   const hrefs = (html) => [...html.matchAll(/<a ([^>]*)>/g)]
     .filter((m) => !/class="account-link[ "]/.test(m[1]))
     .map((m) => m[1].match(/href="([^"]+)"/)[1]);
-  const absolute = (href) => (/^https?:/.test(href) ? href : `https://huaci.app/${href}`);
+  const absolute = (href) => (/^(https?|mailto):/.test(href) ? href : `https://huaci.app/${href}`);
 
   const webNav = hrefs(section(web, '<nav class="nav-links">', '</nav>')).map(absolute);
   const ourNav = hrefs(section(page, '<nav class="nav-links">', '</nav>'));

@@ -1,6 +1,6 @@
 # VPS 部署说明（草案）
 
-状态：尚未部署。正式发信服务接入前，生产配置校验会拒绝启动（见下文“上线前必须完成”）。
+状态：尚未部署。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
 
 ## 运行方式
 
@@ -21,7 +21,9 @@
 | `DATABASE_URL` | 必填 | PostgreSQL 连接串 |
 | `AUTH_SECRET` | 必填，≥32 字符 | 验证码 HMAC 密钥；更换后未完成的验证码失效 |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
-| `MAIL_TRANSPORT` | 待定 | 目前只有 `console`，生产环境不允许 |
+| `MAIL_TRANSPORT` | `resend` | 开发用 `console`（验证码打印在日志里），生产环境不允许 |
+| `RESEND_API_KEY` / `MAIL_FROM` | 必填 | Resend API Key 与已验证的发件地址（如 `AI 划词翻译 <no-reply@huaci.app>`）；需在 Resend 为 huaci.app 配置 SPF / DKIM |
+| `SUPPORT_EMAIL` | 默认 `support@huaci.app` | 客服邮箱：页脚、套餐页、验证码邮件的回复地址；须能收信，并与 Creem 后台一致 |
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200 / 50 | 注册与访客赠送点数的默认值（不过期）；管理员界面里的设置优先 |
 | `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 运营报表切分天和小时的时区 |
 | `GEO_COUNTRY_HEADER` | 建议 `cf-ipcountry` | 反向代理提供的两位国家代码请求头；用于报表按国家统计，不保存 IP 或更细位置。不经 Cloudflare 时可用 nginx GeoIP2 模块设置类似请求头 |
@@ -65,11 +67,29 @@ NoNewPrivileges=true
 
 ## 上线前必须完成
 
-1. 选定并接入发信服务，替换 `console` 发信。
+1. 开通 `support@huaci.app` 收信（例如 Cloudflare Email Routing 转发到个人邮箱），在 Resend 验证 huaci.app 并设置 `MAIL_TRANSPORT=resend`、`RESEND_API_KEY`、`MAIL_FROM`。
 2. 配置 `app.huaci.app` 与 `admin.huaci.app` 的 DNS 与 HTTPS 证书，反向代理把两个主机名都转发到本服务。
 3. 数据库备份与恢复演练。
-4. 按实际处理的数据更新隐私政策（`PRIVACY.md` 与官网隐私页）与 Chrome 商店的数据披露：账号数据；访客领取时的 IP 哈希与浏览器标记 Cookie；报表用的国家代码（安装、使用、账单国家）与语言；托管翻译把文字发给 VPS 和模型服务商（DeepSeek、Fireworks），服务端不保存原文译文，只记字数、token 与点数；Creem 处理付款。
-5. 设置 `EXTENSION_IDS` 为商店扩展 ID。
-6. 在 Creem 后台建立月付、年付商品（价格与管理员界面的价格展示一致）并注册 Webhook；先用测试模式走完结账、续费、取消与退款。
-7. 指定管理员：`npm run admin -- grant <email>`（先在用户端注册该邮箱），首次登录管理端时绑定二步验证。
-8. 官网启用账户入口：在 `apps/web/public/main.js` 的 `ACCOUNT_ORIGIN` 填入 `https://app.huaci.app`，并把它加入 `vercel.json` CSP 的 `connect-src`。
+4. 隐私政策与服务条款已按托管翻译、账户、付款与统计数据更新（官网 `privacy.html`、`terms.html`）；同步更新根目录 `PRIVACY.md` 与 Chrome 商店的数据披露。
+5. 设置 `EXTENSION_IDS` 为商店扩展 ID，并把带账户功能的扩展发布到 Chrome 商店（官网安装说明随之改为商店链接）。
+6. 指定管理员：`npm run admin -- grant <email>`，首次登录管理端时绑定二步验证。
+7. 官网启用账户入口：在 `apps/web/public/main.js` 的 `ACCOUNT_ORIGIN` 填入 `https://app.huaci.app`，并把它加入 `vercel.json` CSP 的 `connect-src`。
+
+## Creem 审核
+
+Creem 在审核通过前不会真正收款，所以不需要「假收费」：把正式模式（live）完整接好并上线，审核员能看到价格、走通结账即可。审核员可能用 100% 折扣码下一笔 0 元订单来验证购买流程和产品功能。
+
+提交前确认：
+
+1. **产品已上线**：官网可访问；`app.huaci.app` 已部署，能注册登录；扩展可安装并能用免费点数翻译。
+2. **价格公开可见**：官网首页「价格」板块（`huaci.app/#pricing`）与用户端套餐页的价格一致，并与 Creem 商品价格一致（月付 $3.99、年付 $29.99）。
+3. **法律页面不需登录即可访问**：`huaci.app/privacy.html` 与 `huaci.app/terms.html`（含退款政策：首次付款 7 天内全额退款）。
+4. **客服邮箱**：网站页脚显示 `support@huaci.app`，能正常收信；Creem 后台 Business Details 填写同一个地址（收据上会显示）。
+5. **没有虚假信息**：不放编造的评价、用户数；划线原价默认关闭，只有确实按原价卖过才能在管理员界面打开。
+6. **Creem 后台**：
+   - 切到 live 模式，建立月付、年付两个订阅商品，把商品 ID 填入 `CREEM_PRODUCT_MONTHLY`、`CREEM_PRODUCT_YEARLY`。
+   - 创建 live API Key 填入 `CREEM_API_KEY`（不设 `CREEM_TEST_MODE`）。
+   - 注册 Webhook `https://app.huaci.app/webhooks/creem`，签名密钥填入 `CREEM_WEBHOOK_SECRET`。
+7. **提交审核**：Creem 后台 Balance → Payout Account → Set up Payout Account，填写姓名或主体、产品名、产品网址 `https://huaci.app`、业务与产品说明、税务居住国家。通常 1–2 个工作日出结果；要求修改时改完点 Request re-review。
+
+审核通过前用户点「立即订阅」时 Creem 可能拒绝创建结账，用户端会提示「暂时无法打开结账页面」，不会出错或扣款。

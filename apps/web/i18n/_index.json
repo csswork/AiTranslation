@@ -264,7 +264,7 @@
       "index.html"
     ]
   },
-  "@meta:description|一个开源的 Chrome 扩展：把选中文字、整块区域和图片里的文字翻译成你选择的语言。24 种目标语言，自备 API Key，无统计、无埋点。": {
+  "@meta:description|一个开源的 Chrome 扩展：把选中文字、整块区域和图片里的文字翻译成你选择的语言。24 种目标语言，可用免费点数或自己的 API Key，无广告、无第三方统计。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -278,7 +278,7 @@
       "index.html"
     ]
   },
-  "@meta:og:description|选中文字，右键，然后接着读。网页文字、整块区域、图片里的字都能翻译成你选择的语言。开源，自备 API Key。": {
+  "@meta:og:description|选中文字，右键，然后接着读。网页文字、整块区域、图片里的字都能翻译成你选择的语言。开源，免费点数或自带 API Key 都能用。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -292,7 +292,7 @@
       "index.html"
     ]
   },
-  "<b>开源</b> GPL-3.0 · 自备 API Key": {
+  "<b>开源</b> GPL-3.0 · 免费试用": {
     "kind": "text",
     "tag": "span",
     "pages": [
@@ -320,7 +320,7 @@
       "index.html"
     ]
   },
-  "<span><i class=\"dot\"></i>Chrome 116+</span> <span><i class=\"dot\"></i>无服务器 · 无统计</span> <span><i class=\"dot\"></i>四种翻译方式</span>": {
+  "<span><i class=\"dot\"></i>Chrome 116+</span> <span><i class=\"dot\"></i>不存译文 · 无第三方统计</span> <span><i class=\"dot\"></i>四种翻译方式</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
