@@ -83,6 +83,7 @@ export async function mergeGuest(client, guestId, memberId, { moveSessions = fal
   if (!guest || guestId === memberId) return 0;
   const transferred = await transferGuestCredits(client, guestId, memberId);
   await client.query('UPDATE usage_events SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
+  await client.query('UPDATE usage_rejections SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE guest_claims SET merged_user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE browser_marks SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   if (moveSessions) await client.query(`UPDATE sessions SET user_id = $2 WHERE user_id = $1 AND client = 'extension'`, [guestId, memberId]);

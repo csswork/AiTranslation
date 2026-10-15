@@ -131,25 +131,39 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     [userId],
   )).rows[0].chars;
 
+  // 被拒绝的请求也记录（usage_rejections），但每个用户每种原因每分钟最多记 10 条，避免被刷写库。
+  const rejectionLogLimiter = createRateLimiter({ limit: 10, windowMs: 60_000 });
+
   app.post('/translate', requireExtension, async (c) => {
     const s = await settings.all();
-    if (!hosted || !s.hosted_enabled) return c.json({ error: 'hosted_unavailable' }, 503);
     const { user } = c.get('auth');
-    if (user.hosted_frozen_at) return c.json({ error: 'frozen' }, 403);
     const body = await readJson(c);
     const texts = Array.isArray(body.texts) ? body.texts : [];
     if (!texts.length || texts.length > MAX_ITEMS || texts.some((t) => typeof t !== 'string')) return c.json({ error: 'invalid_texts' }, 400);
     if (!LANGUAGES[body.target] || (body.source && !LANGUAGES[body.source])) return c.json({ error: 'invalid_language' }, 400);
     const chars = texts.reduce((sum, text) => sum + text.length, 0);
     if (!chars) return c.json({ error: 'invalid_texts' }, 400);
-    if (chars > s.hosted_max_chars) return c.json({ error: 'too_long', maxChars: s.hosted_max_chars }, 413);
-    if (!translateLimiter(user.id)) return c.json({ error: 'rate_limited' }, 429);
 
     const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
-    if (subscribed && s.subscriber_monthly_chars && (await monthChars(user.id)) + chars > s.subscriber_monthly_chars) {
-      return c.json({ error: 'fair_use' }, 429);
-    }
     const audience = subscribed ? 'subscriber' : user.kind;
+    /** 记录一次被拒绝的请求并返回对应的响应（不调用模型、不扣点、不保存原文）。 */
+    const reject = async (reason, status, extra = {}, cost = null) => {
+      if (rejectionLogLimiter(`${user.id}:${reason}`)) {
+        await pool.query(
+          `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost, target_lang, country) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [user.id, reason, audience, chars, cost, body.target, requestCountry(c, config)],
+        );
+      }
+      return c.json({ error: reason, ...extra }, status);
+    };
+
+    if (!hosted || !s.hosted_enabled) return reject('hosted_unavailable', 503);
+    if (user.hosted_frozen_at) return reject('frozen', 403);
+    if (chars > s.hosted_max_chars) return reject('too_long', 413, { maxChars: s.hosted_max_chars });
+    if (!translateLimiter(user.id)) return reject('rate_limited', 429);
+    if (subscribed && s.subscriber_monthly_chars && (await monthChars(user.id)) + chars > s.subscriber_monthly_chars) {
+      return reject('fair_use', 429);
+    }
     const cost = subscribed ? 0 : Math.max(1, Math.ceil(chars / s.chars_per_credit));
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
@@ -162,7 +176,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);
       return false;
     });
-    if (!reserved) return c.json({ error: 'insufficient_credits', cost, ...(await status(user)) }, 402);
+    if (!reserved) return reject('insufficient_credits', 402, { cost, ...(await status(user)) }, cost);
 
     const record = (meta, fields) => pool.query(
       `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,

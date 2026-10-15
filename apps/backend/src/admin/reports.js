@@ -8,6 +8,8 @@
  * - 国家只有两位代码（反向代理地理请求头或账单国家），语言是语言代码；不涉及原文译文。
  */
 
+import { dayLabels, financeReport } from './finance.js';
+
 const ENTITLED = ['active', 'trialing', 'paid', 'scheduled_cancel', 'past_due'];
 const ACTIVE_SUB = `status = ANY($1) AND (current_period_end IS NULL OR current_period_end > now())`;
 
@@ -118,6 +120,12 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
        GROUP BY e.user_id, u.username, u.kind ORDER BY chars DESC LIMIT 10`, window),
   ]);
 
+  const rejectionQuery = (a, b) => q(
+    `SELECT reason AS key, COUNT(*)::int AS n, COUNT(DISTINCT user_id)::int AS users
+     FROM usage_rejections WHERE created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY n DESC`, [a, b],
+  );
+  const [rejections, prevRejections] = await Promise.all([rejectionQuery(from, now), rejectionQuery(prevFrom, from)]);
+
   const plans = Object.fromEntries(subsNow.map((r) => [r.plan || 'unknown', r.n]));
   const activeSubs = subsNow.reduce((n, r) => n + r.n, 0);
   const monthly = Number(settings.price_monthly || 0);
@@ -125,6 +133,12 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
   // MRR（月经常性收入）按价格展示估算：月付按月价，年付折成月均。
   const mrrCents = Math.round(((plans.monthly || 0) * monthly + (plans.yearly || 0) * yearly / 12) * 100);
   const subscriberCost = Number(audiences.find((a) => a.key === 'subscriber')?.cost_micros || 0);
+  const finance = await financeReport(db, {
+    labels: dayLabels(days, timeZone, 0, now),
+    prevLabels: dayLabels(days, timeZone, days, now),
+    timeZone,
+    settings,
+  });
 
   return {
     days,
@@ -147,6 +161,83 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     outcomes,
     errors,
     topUsers,
+    finance,
+    rejections,
+    prevRejectionCount: prevRejections.reduce((n, r) => n + r.n, 0),
     costPerSubscriberMicros: activeSubs && subscriberCost ? Math.round(subscriberCost / activeSubs) : null,
   };
+}
+
+/**
+ * 每位用户的 API 用量（托管翻译）：成功、失败、被拒次数，字数、token、估算成本与最近使用时间。
+ * days 为 null 时统计全部时间。sort: cost | requests | chars | tokens | rejected | last。
+ */
+export async function apiUsageByUser(db, { days = 30, q = '', sort = 'cost', limit = 200 } = {}) {
+  const order = {
+    cost: 'cost_micros DESC', requests: 'ok + failed DESC', chars: 'chars DESC', tokens: 'input_tokens + output_tokens DESC',
+    rejected: 'rejected DESC', last: 'last_used DESC',
+  }[sort] || 'cost_micros DESC';
+  const term = String(q || '').trim().toLowerCase().slice(0, 254);
+  const { rows } = await db.query(
+    `WITH ev AS (
+       SELECT user_id,
+         COUNT(*) FILTER (WHERE status = 'ok')::int AS ok,
+         COUNT(*) FILTER (WHERE status = 'failed')::int AS failed,
+         COALESCE(SUM(chars) FILTER (WHERE status = 'ok'), 0)::bigint AS chars,
+         COALESCE(SUM(input_tokens), 0)::bigint AS input_tokens,
+         COALESCE(SUM(cached_tokens), 0)::bigint AS cached_tokens,
+         COALESCE(SUM(output_tokens), 0)::bigint AS output_tokens,
+         COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros,
+         COALESCE(SUM(cost) FILTER (WHERE status = 'ok'), 0)::bigint AS credits,
+         MAX(created_at) AS last_event,
+         (ARRAY_AGG(audience ORDER BY created_at DESC))[1] AS audience
+       FROM usage_events WHERE $1::int IS NULL OR created_at > now() - make_interval(days => $1::int) GROUP BY user_id
+     ), rj AS (
+       SELECT user_id, COUNT(*)::int AS rejected, MAX(created_at) AS last_rejection
+       FROM usage_rejections WHERE $1::int IS NULL OR created_at > now() - make_interval(days => $1::int) GROUP BY user_id
+     ), merged AS (
+       SELECT COALESCE(ev.user_id, rj.user_id) AS user_id,
+         COALESCE(ev.ok, 0) AS ok, COALESCE(ev.failed, 0) AS failed, COALESCE(rj.rejected, 0) AS rejected,
+         COALESCE(ev.chars, 0) AS chars, COALESCE(ev.input_tokens, 0) AS input_tokens, COALESCE(ev.cached_tokens, 0) AS cached_tokens,
+         COALESCE(ev.output_tokens, 0) AS output_tokens, COALESCE(ev.cost_micros, 0) AS cost_micros, COALESCE(ev.credits, 0) AS credits,
+         GREATEST(ev.last_event, rj.last_rejection) AS last_used, ev.audience
+       FROM ev FULL OUTER JOIN rj ON rj.user_id = ev.user_id
+     )
+     SELECT m.*, u.username, u.kind, u.email, u.hosted_frozen_at
+     FROM merged m JOIN users u ON u.id = m.user_id
+     WHERE $2 = '' OR u.email = $2 OR u.username LIKE $3 OR u.id::text = $2
+     ORDER BY ${order} NULLS LAST, m.user_id LIMIT $4`,
+    [days, term, `%${term.replace(/[%_\\]/g, '\\$&')}%`, limit],
+  );
+  const users = rows.map((r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, typeof v === 'string' && /^\d+$/.test(v) && k !== 'username' ? Number(v) : v])));
+  const totals = users.reduce((t, u) => {
+    for (const k of ['ok', 'failed', 'rejected', 'chars', 'input_tokens', 'cached_tokens', 'output_tokens', 'cost_micros']) t[k] = (t[k] || 0) + u[k];
+    return t;
+  }, { users: users.length });
+  return { users, totals };
+}
+
+/** 单个用户的 API 消耗汇总：近 days 天与全部时间，按模型拆分，以及最近的被拒记录。 */
+export async function apiUsageForUser(db, userId, days = 30) {
+  const q = async (sql, params) => (await db.query(sql, params)).rows;
+  const summary = (since) => q(
+    `SELECT COUNT(*) FILTER (WHERE status = 'ok')::int AS ok, COUNT(*) FILTER (WHERE status = 'failed')::int AS failed,
+            COALESCE(SUM(chars) FILTER (WHERE status = 'ok'), 0)::bigint AS chars,
+            COALESCE(SUM(input_tokens), 0)::bigint AS input_tokens, COALESCE(SUM(cached_tokens), 0)::bigint AS cached_tokens,
+            COALESCE(SUM(output_tokens), 0)::bigint AS output_tokens, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros,
+            (SELECT COUNT(*) FROM usage_rejections r WHERE r.user_id = $1 AND ($2::int IS NULL OR r.created_at > now() - make_interval(days => $2::int)))::int AS rejected,
+            MIN(created_at) AS first_used, MAX(created_at) AS last_used
+     FROM usage_events WHERE user_id = $1 AND ($2::int IS NULL OR created_at > now() - make_interval(days => $2::int))`,
+    [userId, since],
+  );
+  const [[recent], [all], models, rejections] = await Promise.all([
+    summary(days),
+    summary(null),
+    q(`SELECT provider, model, COUNT(*)::int AS requests, COALESCE(SUM(input_tokens), 0)::bigint AS input_tokens,
+              COALESCE(SUM(output_tokens), 0)::bigint AS output_tokens, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
+       FROM usage_events WHERE user_id = $1 AND provider IS NOT NULL GROUP BY provider, model ORDER BY requests DESC`, [userId]),
+    q(`SELECT reason, chars, cost, target_lang, created_at FROM usage_rejections WHERE user_id = $1 ORDER BY created_at DESC LIMIT 20`, [userId]),
+  ]);
+  const numbers = (r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, typeof v === 'string' && /^\d+$/.test(v) ? Number(v) : v]));
+  return { days, recent: numbers(recent), all: numbers(all), models: models.map(numbers), rejections };
 }

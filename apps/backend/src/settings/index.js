@@ -32,6 +32,14 @@ export const SETTINGS = [
   { key: 'cost_fallback_input', type: 'money', group: 'cost', label: '备用模型输入单价', def: () => '0.45' },
   { key: 'cost_fallback_cached', type: 'money', group: 'cost', label: '备用模型缓存命中输入单价', def: () => '0.009' },
   { key: 'cost_fallback_output', type: 'money', group: 'cost', label: '备用模型输出单价', def: () => '1.80' },
+
+  { key: 'payment_fee_percent', type: 'money', group: 'finance', label: '支付手续费比例（%）', help: '按每笔订单估算支付平台费用；请按 Creem 账户的实际费率填写', def: () => '3.9' },
+  { key: 'payment_fee_fixed', type: 'money', group: 'finance', label: '支付手续费每笔固定（USD）', def: () => '0.40' },
+  {
+    key: 'api_cost_source', type: 'choice', group: 'finance', label: '利润表的模型成本', def: () => 'estimate',
+    options: [['estimate', '按用量估算'], ['bills', '按录入的模型 API 账单']],
+    help: '选「账单」时，利润表用「收支」里录入的模型 API 支出，估算值只作参考',
+  },
 ];
 
 export const SETTING_GROUPS = [
@@ -39,6 +47,7 @@ export const SETTING_GROUPS = [
   { key: 'hosted', label: '托管翻译' },
   { key: 'pricing', label: '价格展示' },
   { key: 'cost', label: '模型成本单价' },
+  { key: 'finance', label: '收支口径' },
 ];
 
 const BY_KEY = new Map(SETTINGS.map((s) => [s.key, s]));
@@ -60,6 +69,8 @@ export function parseSetting(key, raw) {
       return MONEY.test(text) ? text : undefined;
     case 'text':
       return /^[A-Z]{3}$/.test(text) ? text : undefined;
+    case 'choice':
+      return def.options.some(([value]) => value === text) ? text : undefined;
     default:
       return undefined;
   }

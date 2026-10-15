@@ -166,3 +166,62 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   await a.post('/preferences/theme', { theme: 'dark', next: '/' });
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
+
+test('支出分摊：一次性记在当天，每月按年 / 365 天分摊，结束日之后不再计入', async () => {
+  const { allocateExpenses, dayLabels, parseExpense } = await import('../src/admin/finance.js');
+  const labels = ['2026-10-01', '2026-10-02', '2026-10-03'];
+  const byDay = allocateExpenses([
+    { category: 'domain', amount_cents: 1200, recurring: 'none', start_date: '2026-10-02', end_date: null },
+    { category: 'server', amount_cents: 3650, recurring: 'monthly', start_date: '2026-09-01', end_date: '2026-10-02' },
+    { category: 'tools', amount_cents: 36500, recurring: 'yearly', start_date: '2026-10-03', end_date: null },
+  ], labels);
+  assert.deepEqual(byDay['2026-10-01'], { server: 120 });
+  assert.deepEqual(byDay['2026-10-02'], { domain: 1200, server: 120 });
+  assert.deepEqual(byDay['2026-10-03'], { tools: 100 });
+  assert.equal(dayLabels(3, 'UTC', 0, new Date('2026-10-15T12:00:00Z')).join(), '2026-10-13,2026-10-14,2026-10-15');
+  assert.equal(dayLabels(2, 'UTC', 2, new Date('2026-10-15T12:00:00Z')).join(), '2026-10-12,2026-10-13');
+  assert.equal(parseExpense({ category: 'server', amount: '-1', start_date: '2026-10-01' }), null);
+  assert.equal(parseExpense({ category: 'server', amount: '9.99', recurring: 'monthly', start_date: '2026-10-02', end_date: '2026-10-01' }), null);
+  assert.deepEqual(parseExpense({ category: 'server', amount: '9.99', recurring: 'monthly', start_date: '2026-10-01', note: ' VPS ' }),
+    { category: 'server', recurring: 'monthly', amountCents: 999, startDate: '2026-10-01', endDate: null, note: 'VPS' });
+});
+
+test('运营概览：收入、支出、利润与 API 消耗；录入支出写审计；模型成本可改按账单', async () => {
+  const config = testConfig({ ADMIN_REQUIRE_2FA: '1' });
+  const { app, mailbox, settings } = buildApp({ pool, config });
+  const { a } = await adminLogin(app, config, mailbox);
+  const { rows: [owner] } = await pool.query(`SELECT id FROM users WHERE email = 'boss@example.com'`);
+  // 两笔订单：同一订阅的首期与续费，各 $29.99；一个请求的模型成本 $1.00
+  await pool.query(
+    `INSERT INTO orders (user_id, provider, provider_order_id, provider_subscription_id, plan, amount, currency, status, created_at)
+     VALUES ($1, 'creem', 'tran_a', 'sub_x', 'yearly', 2999, 'USD', 'paid', now() - interval '2 days'),
+            ($1, 'creem', 'tran_b', 'sub_x', 'yearly', 2999, 'USD', 'paid', now() - interval '1 hour')`, [owner.id]);
+  await pool.query(
+    `INSERT INTO usage_events (user_id, kind, chars, cost, status, audience, provider, model, input_tokens, cached_tokens, output_tokens, cost_micros, latency_ms)
+     VALUES ($1, 'text', 1000, 2, 'ok', 'member', 'deepseek', 'deepseek-flash', 400, 100, 300, 1000000, 1200)`, [owner.id]);
+
+  let res = await a.post('/expenses', { category: 'domain', amount: '12.00', recurring: 'none', start_date: new Date().toISOString().slice(0, 10), note: 'huaci.app' });
+  assert.equal(res.headers.get('location'), '/expenses');
+  await a.post('/expenses', { category: 'server', amount: 'abc', recurring: 'monthly', start_date: '2026-01-01' });
+  const { rows: expenseRows } = await pool.query('SELECT category, amount_cents FROM expenses');
+  assert.deepEqual(expenseRows, [{ category: 'domain', amount_cents: 1200 }], '无效金额不保存');
+  assert.match(await a.text('/expenses'), /域名[\s\S]*US\$12\.00[\s\S]*huaci\.app/);
+
+  const page = await a.text('/?days=7');
+  assert.match(page, /经营[\s\S]*净收入[\s\S]*US\$59\.98/);
+  // 支出 = 模型 $1.00 + 手续费 2 × $0.40 + 3.9% × $59.98（$2.34）+ 域名 $12.00 = $16.14；利润 = $43.84
+  assert.match(page, /总支出[\s\S]*US\$16\.14/);
+  assert.match(page, /利润[\s\S]*US\$43\.84/);
+  assert.match(page, /收入[\s\S]*续费收入[\s\S]*US\$29\.99/);
+  assert.match(page, /API 消耗[\s\S]*输入 token[\s\S]*400[\s\S]*缓存命中 25\.0%/);
+  assert.match(page, /按服务商与模型[\s\S]*DeepSeek 官方[\s\S]*deepseek-flash/);
+
+  // 改按账单：没有录入模型 API 账单时，利润表的模型成本为 0
+  await settings.set('api_cost_source', 'bills');
+  assert.match(await a.text('/?days=7'), /总支出[\s\S]*US\$15\.14[\s\S]*模型成本按账单/);
+
+  const { rows: [expense] } = await pool.query('SELECT id FROM expenses');
+  await a.post(`/expenses/${expense.id}/delete`, { reason: '录错' });
+  assert.equal((await pool.query('SELECT 1 FROM expenses WHERE deleted_at IS NULL')).rowCount, 0);
+  assert.match(await a.text('/audit'), /expense\.delete[\s\S]*录错[\s\S]*expense\.create/);
+});

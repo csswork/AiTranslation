@@ -9,7 +9,8 @@ import { HTTPException } from 'hono/http-exception';
 import {
   audit, createAdminSession, findAdminByEmail, markVerified, revokeAdminSession, validateAdminSession,
 } from '../../src/admin/auth.js';
-import { overview } from '../../src/admin/reports.js';
+import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.js';
+import { apiUsageByUser, apiUsageForUser, overview } from '../../src/admin/reports.js';
 import { newTotpSecret, openSecret, otpauthUrl, sealSecret, verifyTotp } from '../../src/admin/totp.js';
 import { isValidEmail, normalizeEmail } from '../../src/auth/users.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
@@ -187,6 +188,47 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     return page(c, () => views.overviewPage({ admin: admin(c), r, geoConfigured: Boolean(config.geoCountryHeader) }));
   });
 
+  /* ---------- API 用量：每位用户 ---------- */
+
+  app.get('/api-usage', requireAdmin, async (c) => {
+    const raw = c.req.query('days');
+    const days = raw === 'all' ? null : [7, 30, 90].includes(Number(raw)) ? Number(raw) : 30;
+    const sort = ['cost', 'requests', 'chars', 'tokens', 'rejected', 'last'].includes(c.req.query('sort')) ? c.req.query('sort') : 'cost';
+    const q = String(c.req.query('q') || '').trim().slice(0, 254);
+    const data = await apiUsageByUser(pool, { days, q, sort });
+    return page(c, () => views.apiUsagePage({ admin: admin(c), days, q, sort, data }));
+  });
+
+  /* ---------- 收支：录入支出（写审计） ---------- */
+
+  app.get('/expenses', requireAdmin, async (c) => {
+    const expenses = await listExpenses(pool);
+    const today = dayLabels(1, config.reportTimeZone)[0];
+    return page(c, () => views.expensesPage({ admin: admin(c), expenses, today, note: takeNote(c) }));
+  });
+
+  app.post('/expenses', requireAdmin, async (c) => {
+    const expense = parseExpense(await c.req.parseBody());
+    if (!expense) return back(c, '/expenses', fail('请检查类别、金额和日期。'));
+    const { rows: [row] } = await pool.query(
+      `INSERT INTO expenses (category, amount_cents, recurring, start_date, end_date, note, created_by)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+      [expense.category, expense.amountCents, expense.recurring, expense.startDate, expense.endDate, expense.note, admin(c).id],
+    );
+    await audit(pool, { adminId: admin(c).id, action: 'expense.create', targetType: 'expense', targetId: row.id, detail: expense });
+    return back(c, '/expenses', ok('已添加。'));
+  });
+
+  app.post('/expenses/:id/delete', requireAdmin, async (c) => {
+    const id = c.req.param('id');
+    if (!UUID.test(id)) return c.notFound();
+    const reason = reasonOf(await c.req.parseBody());
+    if (!reason) return back(c, '/expenses', fail('请填写删除原因。'));
+    const { rowCount } = await pool.query('UPDATE expenses SET deleted_at = now() WHERE id = $1 AND deleted_at IS NULL', [id]);
+    if (rowCount) await audit(pool, { adminId: admin(c).id, action: 'expense.delete', targetType: 'expense', targetId: id, reason });
+    return back(c, '/expenses', ok('已删除。'));
+  });
+
   /* ---------- A3 用户 ---------- */
 
   app.get('/users', requireAdmin, async (c) => {
@@ -212,15 +254,16 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
     if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, ledger, events, sessions] = await Promise.all([
+    const [state, subs, ledger, events, sessions, api] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       pool.query('SELECT entry_type, amount, reason, created_at FROM credit_ledger WHERE user_id = $1 ORDER BY created_at DESC LIMIT 100', [u.id]),
-      pool.query('SELECT audience, chars, cost, model, cost_micros, latency_ms, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
+      pool.query('SELECT audience, chars, cost, model, input_tokens, output_tokens, cost_micros, latency_ms, target_lang, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
+      apiUsageForUser(pool, u.id, 30),
     ]);
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, ledger: ledger.rows, events: events.rows, sessions: sessions.rows[0].n, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, ledger: ledger.rows, events: events.rows, sessions: sessions.rows[0].n, api, note: takeNote(c),
     }));
   });
 
