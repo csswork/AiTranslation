@@ -355,5 +355,7 @@
   "○ 点数已用完": "○ Poin telah habis",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Daftarkan akun untuk mendapatkan lebih banyak poin.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Poin tersisa tidak cukup untuk menyelesaikan terjemahan ini. Berlangganan untuk penggunaan tanpa batas.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Poin dipotong berdasarkan penggunaan aktual, dan saldo poin ditampilkan hingga dua angka desimal; poin tidak dipotong jika terjemahan gagal."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Poin dipotong berdasarkan penggunaan aktual, dan saldo poin ditampilkan hingga dua angka desimal; poin tidak dipotong jika terjemahan gagal.",
+  "图片过大，请缩小后重试": "Gambar terlalu besar, silakan perkecil lalu coba lagi",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Mendukung terjemahan teks yang dipilih, area, panel terjemahan, dan gambar, tanpa perlu mengisi API Key."
 }

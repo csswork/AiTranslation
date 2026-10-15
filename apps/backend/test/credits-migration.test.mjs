@@ -24,7 +24,7 @@ test('升级旧整数点数数据：余额、历史预扣、访客发放与拒�
     await pool.query("INSERT INTO guest_claims (user_id, ip_hash, granted, outcome) VALUES ($1, 'hash', 50, 'granted')", [user.id]);
     await pool.query("INSERT INTO usage_rejections (user_id, reason, chars, cost) VALUES ($1, 'insufficient_credits', 2000, 4)", [user.id]);
     await pool.query("INSERT INTO app_settings (key, value) VALUES ('chars_per_credit', '1000')");
-    assert.deepEqual(await migrate(pool), ['008_exact_credit_units.sql']);
+    assert.deepEqual(await migrate(pool), ['008_exact_credit_units.sql', '009_hosted_image_recognition.sql']);
     assert.equal(await creditBalance(pool, user.id), 48500n, '旧余额 97 点原样保留，不重新按字数计算旧账');
     assert.equal((await pool.query('SELECT cost_units FROM usage_events')).rows[0].cost_units, '1500');
     assert.equal((await pool.query('SELECT granted_units FROM guest_claims')).rows[0].granted_units, '25000');

@@ -95,12 +95,12 @@
                 <tr><td>지정한 영역 안의 텍스트</td><td>클릭 영역의 번역 버튼을 누를 때</td><td>위와 같음</td><td>위와 같음</td></tr>
                 <tr><td>번역 패널에 입력한 텍스트</td><td>번역을 클릭할 때</td><td>위와 같음</td><td>위와 같음</td></tr>
                 <tr><td>동영상 자막의 인식 텍스트</td><td>동영상 자막 번역을 켰을 때</td><td>위와 같음</td><td>위와 같음</td></tr>
-                <tr><td>마우스 오른쪽 버튼을 누른 이미지</td><td>이미지 번역 사용 시</td><td>선택한 플랫폼</td><td>지원하지 않음(이미지는 자체 Key만 사용)</td></tr>
+                <tr><td>번역할 이미지 선택</td><td>이미지 번역 사용 시</td><td>선택한 비전 플랫폼</td><td>당사 서버에서 DeepSeek로 전달</td></tr>
               </tbody>
             </table>
           </div>
           <p>자체 Key는 <b>OpenAI(ChatGPT)</b>, <b>DeepSeek</b>, <b>DeepL</b>을 선택할 수 있으며, 요청은 각각 <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, 그리고 DeepL의 <code>https://api-free.deepl.com</code>(유료 Key는 <code>https://api.deepl.com</code>)으로 전송됩니다.</p>
-          <p>포인트 번역 요청은 <code>https://app.huaci.app</code>으로 전송되며, 서버에서 <b>DeepSeek</b>으로 전달합니다. DeepSeek을 일시적으로 사용할 수 없을 때는 <b>Fireworks AI</b>(미국 노드)의 동일 모델로 대체합니다. 텍스트는 요청 처리 중에만 메모리에 일시적으로 머무르며, 데이터베이스나 로그에 기록되지 않습니다.</p>
+          <p>포인트 번역 요청은 <code>https://app.huaci.app</code>로 전송되며, 서버에서 <b>DeepSeek</b>로 전달됩니다. DeepSeek을 일시적으로 사용할 수 없을 때는 텍스트 번역이 <b>Fireworks AI</b>(미국 노드)의 동일 모델로 전환됩니다. 이미지 인식은 DeepSeek Flash를 사용합니다. 이미지, 인식된 텍스트 및 번역문은 요청 처리 중에만 메모리에 일시적으로 남으며 데이터베이스나 로그에 기록되지 않습니다.</p>
           <p>이 플랫폼들이 수신한 내용을 처리하는 방식에는 각 플랫폼의 개인정보 처리방침이 적용됩니다:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

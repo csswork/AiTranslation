@@ -355,5 +355,7 @@
   "○ 点数已用完": "○ Đã hết điểm",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký tài khoản để nhận thêm điểm.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Không đủ điểm còn lại để hoàn thành bản dịch này. Đăng ký để sử dụng không giới hạn.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Điểm được trừ theo mức sử dụng thực tế, số điểm hiển thị giữ hai chữ số thập phân; không trừ điểm nếu dịch thất bại."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Điểm được trừ theo mức sử dụng thực tế, số điểm hiển thị giữ hai chữ số thập phân; không trừ điểm nếu dịch thất bại.",
+  "图片过大，请缩小后重试": "Hình ảnh quá lớn, vui lòng thu nhỏ và thử lại.",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Hỗ trợ dịch bằng chọn văn bản, dịch vùng, bảng dịch và dịch hình ảnh, không cần nhập API Key."
 }

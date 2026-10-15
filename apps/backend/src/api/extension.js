@@ -5,6 +5,7 @@
  *   GET  /me         当前用户名、用户类型、点数与订阅状态、托管翻译是否可用
  *   POST /logout     撤销当前扩展会话
  *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据
+ *   POST /read-image 托管图片识别；文字随后走 /translate，按实际文字扣点
  *
  * 认证用 Authorization: Bearer <扩展会话令牌>，不用 Cookie，所以不受站内表单的同源校验约束；
  * 只接受扩展会话（网页会话不能调用）。跨源请求头只发给允许的扩展来源（chrome-extension://<ID>）。
@@ -14,7 +15,7 @@ import { Hono } from 'hono';
 import { isAllowedExtension, redeemAuthCode } from '../auth/extension.js';
 import { createSession, revokeSession, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
-import { refundCredits, reserveCredits } from '../credits/ledger.js';
+import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
 import { countCharacters, creditsToUnits, displayCredits } from '../credits/units.js';
 import { transaction } from '../db/index.js';
 import { createGuest, ipHash, mergeGuest } from '../guest/index.js';
@@ -23,6 +24,22 @@ import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
 
 const MAX_ITEMS = 100;
+const MAX_IMAGE_BODY = 8 * 1024 * 1024;
+
+/** 只把图片输入交给模型，不在 VPS 上抓取用户提供的 URL。拒绝本地文件、SVG 与非图片数据。 */
+function validImage(image) {
+  if (typeof image !== 'string') return false;
+  if (/^data:image\/(?:png|jpeg|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$/.test(image)) {
+    const data = image.slice(image.indexOf(',') + 1);
+    return data.length % 4 === 0 && image.length < MAX_IMAGE_BODY;
+  }
+  if (image.length > 8192) return false;
+  try {
+    const url = new URL(image);
+    return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password
+      && !/^(?:localhost|127\.|0\.|10\.|192\.168\.|169\.254\.|172\.(?:1[6-9]|2\d|3[01])\.|\[|.*\.localhost$)/i.test(url.hostname);
+  } catch { return false; }
+}
 
 export function extensionApi({ config, pool, settings, hosted = null, log = console }) {
   const app = new Hono();
@@ -49,7 +66,8 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     c.res.headers.set('Vary', 'Origin');
     if (allowed) c.res.headers.set('Access-Control-Allow-Origin', origin);
   });
-  app.use('*', limitBody(64 * 1024, (c) => c.json({ error: 'too_large' }, 413)));
+  app.use('*', (c, next) => limitBody(c.req.path === '/api/extension/read-image' ? MAX_IMAGE_BODY : 64 * 1024,
+    (c) => c.json({ error: 'too_large' }, 413))(c, next));
 
   const readJson = async (c) => {
     try {
@@ -136,6 +154,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       hosted: {
         available: Boolean(hosted) && s.hosted_enabled && !user.hosted_frozen_at,
         maxChars: s.hosted_max_chars,
+        images: Boolean(hosted?.readImageText) && s.hosted_enabled && s.hosted_image_hourly_requests > 0 && !user.hosted_frozen_at,
       },
       // 引导文案用：注册可得的点数（访客显示「注册再送 N 点」）。
       offers: { signupCredits: displayCredits(creditsToUnits(s.signup_credits)) },
@@ -157,6 +176,53 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
 
   // 被拒绝的请求也记录（usage_rejections），但每个用户每种原因每分钟最多记 10 条，避免被刷写库。
   const rejectionLogLimiter = createRateLimiter({ limit: 10, windowMs: 60_000 });
+
+  app.post('/read-image', requireExtension, async (c) => {
+    const s = await settings.all();
+    const { user } = c.get('auth');
+    if (!hosted?.readImageText || !s.hosted_enabled || !s.hosted_image_hourly_requests) return c.json({ error: 'hosted_unavailable' }, 503);
+    if (user.hosted_frozen_at) return c.json({ error: 'frozen' }, 403);
+    const body = await readJson(c);
+    if (!validImage(body.image)) return c.json({ error: 'invalid_image' }, 400);
+    const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
+    if (!subscribed && (await creditBalance(pool, user.id)) <= 0n) {
+      return c.json({ error: 'insufficient_credits', ...(await status(user)) }, 402);
+    }
+    if (subscribed && s.subscriber_monthly_chars && (await monthChars(user.id)) >= s.subscriber_monthly_chars) {
+      return c.json({ error: 'fair_use' }, 429);
+    }
+    if (!translateLimiter(user.id)) return c.json({ error: 'rate_limited' }, 429);
+    const eventId = randomUUID();
+    const accepted = await transaction(pool, async (client) => {
+      // 包括 pending 与 failed；并发与连续失败不能绕过图片次数上限。
+      await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [`images:${user.id}`]);
+      const { rows: [row] } = await client.query(
+        "SELECT COUNT(*)::int AS requests FROM usage_events WHERE user_id = $1 AND kind = 'image' AND created_at >= now() - interval '1 hour'", [user.id]);
+      if (row.requests >= s.hosted_image_hourly_requests) return false;
+      await client.query(
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country)
+         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4)`,
+        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config)]);
+      return true;
+    });
+    if (!accepted) return c.json({ error: 'rate_limited' }, 429);
+    const record = (meta, state, error = null) => pool.query(
+      `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,
+       output_tokens = $7, cost_micros = $8, latency_ms = $9, error = $10 WHERE id = $1`,
+      [eventId, state, meta?.provider ?? null, meta?.model ?? null, meta?.inputTokens ?? null, meta?.cachedTokens ?? null,
+        meta?.outputTokens ?? null, meta?.inputTokens != null ? estimateCostMicros(s, meta.providerKey, meta) : null,
+        meta?.latencyMs ?? null, error]);
+    let result;
+    try {
+      result = await hosted.readImageText({ image: body.image });
+    } catch (err) {
+      // 不把模型响应或请求内容写进日志；识别没有扣点，不需要写返还流水。
+      await record(err.meta, 'failed', /^[a-z_\d]{1,60}$/.test(err.code) ? err.code : 'image_failed');
+      return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
+    }
+    await record(result.meta, 'ok');
+    return c.json({ raw: result.raw, ...(await status(user)) });
+  });
 
   app.post('/translate', requireExtension, async (c) => {
     const s = await settings.all();

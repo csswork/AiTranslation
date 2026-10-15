@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Điểm được trừ theo mức sử dụng thực tế, số điểm hiển thị giữ hai chữ số thập phân; không trừ điểm nếu dịch thất bại."
   },
+  "m_11a3460254fd304d": {
+    "message": "Hình ảnh quá lớn, vui lòng thu nhỏ và thử lại."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Hỗ trợ dịch bằng chọn văn bản, dịch vùng, bảng dịch và dịch hình ảnh, không cần nhập API Key."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

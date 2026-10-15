@@ -95,12 +95,12 @@
                 <tr><td>El texto de la zona que señalas</td><td>Al hacer clic en el botón de traducir en el área</td><td>Ídem</td><td>Ídem</td></tr>
                 <tr><td>El texto que escribes en el panel de traducción</td><td>Al pulsar Traducir</td><td>Ídem</td><td>Ídem</td></tr>
                 <tr><td>Texto reconocido de los subtítulos del video</td><td>Al activar la traducción de subtítulos de video</td><td>Ídem</td><td>Ídem</td></tr>
-                <tr><td>La imagen en la que hiciste clic derecho</td><td>Al usar la traducción de imágenes</td><td>La plataforma que elijas</td><td>No compatible (las imágenes solo usan clave propia)</td></tr>
+                <tr><td>La imagen que eliges traducir</td><td>Al usar la traducción de imágenes</td><td>La plataforma visual que eliges</td><td>Nuestro servidor, que la reenvía a DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
           <p>Con clave propia se puede elegir <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> y <b>DeepL</b>; las solicitudes se envían respectivamente a <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, y a <code>https://api-free.deepl.com</code> de DeepL (con clave de pago, <code>https://api.deepl.com</code>).</p>
-          <p>Las solicitudes de traducción por créditos se envían a <code>https://app.huaci.app</code> y el servidor las transmite a <b>DeepSeek</b>; cuando DeepSeek no está disponible temporalmente, se utiliza el mismo modelo en <b>Fireworks AI</b> (nodo en Estados Unidos). El texto solo permanece brevemente en memoria durante el procesamiento de la solicitud; no se escribe en bases de datos ni registros.</p>
+          <p>Las solicitudes de traducción por puntos se envían a <code>https://app.huaci.app</code> y el servidor las reenvía a <b>DeepSeek</b>; cuando DeepSeek no está disponible temporalmente, la traducción de texto utiliza el mismo modelo en <b>Fireworks AI</b> (nodo de EE. UU.). El reconocimiento de imágenes usa DeepSeek Flash. Las imágenes, el texto reconocido y las traducciones solo permanecen brevemente en memoria durante el procesamiento de la solicitud, sin escribirse en bases de datos ni registros.</p>
           <p>El tratamiento que estas plataformas dan al contenido recibido se rige por sus respectivas políticas de privacidad:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

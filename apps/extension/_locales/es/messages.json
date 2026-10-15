@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Los créditos se descuentan según el uso real y el saldo se muestra con dos decimales; si la traducción falla, no se descuentan créditos."
   },
+  "m_11a3460254fd304d": {
+    "message": "La imagen es demasiado grande. Reduce su tamaño e inténtalo de nuevo."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Admite traducción de texto seleccionado, por área, panel de traducción y traducción de imágenes, sin necesidad de introducir una API Key."
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

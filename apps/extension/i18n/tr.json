@@ -355,5 +355,7 @@
   "○ 点数已用完": "○ Puanlar tükendi",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Daha fazla kredi almak için bir hesap kaydedin.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Bu çeviriyi tamamlamak için kalan krediniz yetersiz. Sınırsız kullanım için abone olun.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Krediler gerçek kullanıma göre düşülür ve kredi bakiyesi iki ondalık basamakla gösterilir; çeviri başarısız olursa kredi düşülmez."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Krediler gerçek kullanıma göre düşülür ve kredi bakiyesi iki ondalık basamakla gösterilir; çeviri başarısız olursa kredi düşülmez.",
+  "图片过大，请缩小后重试": "Görsel çok büyük. Lütfen boyutunu küçültüp tekrar deneyin.",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Metin seçimi, alan çevirisi, çeviri paneli ve görsel çevirisini destekler; API Key gerekmez."
 }

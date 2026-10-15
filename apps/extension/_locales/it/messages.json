@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "I crediti vengono detratti in base all'utilizzo effettivo e il saldo dei crediti è visualizzato con due decimali; in caso di traduzione non riuscita non vengono detratti crediti."
   },
+  "m_11a3460254fd304d": {
+    "message": "L'immagine è troppo grande. Riducine le dimensioni e riprova."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Supporta traduzione di testo selezionato, traduzione di aree, pannello di traduzione e traduzione di immagini, senza bisogno di inserire una API Key."
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

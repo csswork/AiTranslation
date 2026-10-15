@@ -350,7 +350,7 @@ const ENTRY_LABELS = {
   refund: k('失败返还'),
   void: k('点数作废'),
 };
-const KIND_LABELS = { text: k('文字') };
+const KIND_LABELS = { text: k('文字'), image: k('图片识别') };
 const STATUS_LABELS = { ok: k('成功'), failed: k('失败（已返还）'), pending: k('处理中') };
 
 export function usagePage(ui, { user, entries, events = [] }) {

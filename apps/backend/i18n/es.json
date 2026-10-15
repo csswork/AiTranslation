@@ -42,6 +42,7 @@
   "发送验证码到新邮箱": "Enviar código de verificación al nuevo correo",
   "取消": "Cancelar",
   "只记录类型、字数、扣点和结果，不保存原文或译文。": "Solo se registran el tipo, el recuento de caracteres, los créditos descontados y el resultado; no se guarda el texto original ni la traducción.",
+  "图片识别": "Reconocimiento de imágenes",
   "在任意网页选中文字": "Selecciona texto en cualquier página web",
   "在扩展设置里填写 OpenAI、DeepSeek 或 DeepL 的 API Key，请求直接发给你选择的服务商。Key 只保存在你的浏览器里，本网站不接收也无法读取。": "Introduce la API Key de OpenAI, DeepSeek o DeepL en los ajustes de la extensión; las solicitudes se envían directamente al proveedor que elijas. La Key solo se guarda en tu navegador; este sitio no la recibe ni puede leerla.",
   "在这个浏览器登录后，扩展会自动切换到你的账户，剩余的免费点数一并转入。": "Al iniciar sesión en este navegador, la extensión cambiará automáticamente a tu cuenta y los puntos gratis restantes se transferirán.",

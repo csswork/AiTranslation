@@ -264,3 +264,80 @@ test('托管翻译的语言表与扩展的 24 种语言注册表一致', () => {
   const registry = JSON.parse(fs.readFileSync(new URL('../../extension/i18n/locales.json', import.meta.url), 'utf8'));
   assert.deepEqual(LANGUAGES, Object.fromEntries(registry.map((l) => [l.id, l.prompt])));
 });
+
+const IMAGE = 'data:image/png;base64,' + 'A'.repeat(100_000);
+function fakeVision() {
+  const { hosted } = fakeHosted();
+  const images = [];
+  hosted.readImageText = async ({ image }) => {
+    images.push(image);
+    return { raw: '[{"text":"Hello 🌍","box":[100,200,800,400]}]',
+      meta: { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', inputTokens: 100, cachedTokens: 0, outputTokens: 20, latencyMs: 5 } };
+  };
+  return { hosted, images };
+}
+
+test('图片托管：识图后按识别文字精确扣点，记录识图成本且不保存图片、原文或译文', async () => {
+  const { hosted, images } = fakeVision();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token, browser: web } = await extensionLogin(app, config, mailbox, 'vision@example.com');
+  const me = await (await api(app, config, '/me', { token })).json();
+  assert.equal(me.hosted.images, true);
+  let res = await api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE, model: 'ignored', url: 'https://ignored.example' } });
+  assert.equal(res.status, 200, '>64KB 图片可用');
+  const recognized = await res.json();
+  assert.equal(recognized.credits.balance, '100.00', '识图不重复扣点');
+  assert.deepEqual(images, [IMAGE]);
+  const texts = JSON.parse(recognized.raw).map(b => b.text);
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts, target: 'ja' } });
+  assert.equal(res.status, 200);
+  assert.equal((await res.json()).credits.balance, '99.99');
+  const { rows } = await pool.query('SELECT * FROM usage_events ORDER BY created_at');
+  assert.deepEqual(rows.map(e => [e.kind, e.status, e.chars, e.cost_units]), [['image', 'ok', 0, '0'], ['text', 'ok', 7, '7']]);
+  assert.equal(rows[0].input_tokens, 100);
+  assert.ok(rows[0].cost_micros > 0);
+  assert.doesNotMatch(JSON.stringify(rows), /Hello|data:image|こんにちは/);
+  assert.match(await web.text('/usage'), /图片识别/);
+});
+
+test('图片托管：未登录、网页凭据、空余额、冻结、暂停与非法图片均不调用模型', async () => {
+  const { hosted, images } = fakeVision();
+  const { app, config, mailbox, settings } = buildApp({ pool, hosted });
+  const { token, browser: web } = await extensionLogin(app, config, mailbox, 'vision-gates@example.com');
+  const read = (body = { image: IMAGE }, auth = token) => api(app, config, '/read-image', { method: 'POST', token: auth, body });
+  assert.equal((await read({}, '')).status, 401);
+  assert.equal((await read({}, web.jar.get('huaci_session'))).status, 401);
+  for (const image of ['file:///etc/passwd', 'https://user:password@example.com/a.png', 'http://127.0.0.1/a.png', 'data:image/svg+xml;base64,AAAA', {}, null]) {
+    assert.equal((await read({ image })).status, 400);
+  }
+  const large = JSON.stringify({ image: 'data:image/png;base64,' + 'A'.repeat(8 * 1024 * 1024) });
+  assert.equal((await app.request(`${config.appOrigin}/api/extension/read-image`, { method: 'POST', headers: {
+    authorization: `Bearer ${token}`, 'content-type': 'application/json', 'content-length': String(Buffer.byteLength(large)) }, body: large })).status, 413);
+  await pool.query('DELETE FROM credit_ledger');
+  assert.equal((await read()).status, 402);
+  await pool.query('UPDATE users SET hosted_frozen_at = now()');
+  assert.equal((await read()).status, 403);
+  await settings.set('hosted_enabled', false);
+  assert.equal((await read()).status, 503);
+  assert.equal(images.length, 0);
+});
+
+test('图片托管：模型失败不扣点，失败及并发请求也受可配置的小时上限约束', async () => {
+  const { hosted, images } = fakeVision();
+  const original = hosted.readImageText;
+  hosted.readImageText = async (request) => {
+    await original(request);
+    throw Object.assign(new Error('sensitive model output'), { code: 'http_500' });
+  };
+  const { app, config, mailbox, settings } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'vision-fail@example.com');
+  await settings.set('hosted_image_hourly_requests', 1);
+  const results = await Promise.all([1, 2].map(() => api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE } })));
+  assert.deepEqual(results.map(r => r.status).sort(), [429, 502]);
+  assert.equal(images.length, 1);
+  const failed = await results.find(r => r.status === 502).json();
+  assert.equal(failed.credits.balance, '100.00');
+  assert.doesNotMatch(JSON.stringify(failed), /sensitive/);
+  assert.equal((await pool.query("SELECT status FROM usage_events WHERE kind = 'image'")).rows[0].status, 'failed');
+  assert.equal((await pool.query("SELECT 1 FROM credit_ledger WHERE entry_type IN ('usage', 'refund')")).rowCount, 0);
+});

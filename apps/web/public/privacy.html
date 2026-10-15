@@ -105,7 +105,7 @@
                 <tr><td>你指定区域内的文字</td><td>点击区域上的翻译按钮时</td><td>同上</td><td>同上</td></tr>
                 <tr><td>你在翻译面板输入的文字</td><td>点击翻译时</td><td>同上</td><td>同上</td></tr>
                 <tr><td>视频字幕的识别文字</td><td>开启视频字幕翻译时</td><td>同上</td><td>同上</td></tr>
-                <tr><td>你右键的那张图片</td><td>使用图片翻译时</td><td>你选择的平台</td><td>不支持（图片只走自带 Key）</td></tr>
+                <tr><td>你选择翻译的图片</td><td>使用图片翻译时</td><td>你选择的视觉平台</td><td>我们的服务器，再转给 DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
@@ -115,8 +115,8 @@
             以及 DeepL 的 <code>https://api-free.deepl.com</code>（付费 Key 为 <code>https://api.deepl.com</code>）。
           </p>
           <p>
-            点数翻译的请求发往 <code>https://app.huaci.app</code>，由服务器转给 <b>DeepSeek</b>；DeepSeek 暂时不可用时改用 <b>Fireworks AI</b>（美国节点）上的同款模型。
-            文字只在处理请求时短暂停留在内存里，不写入数据库或日志。
+            点数翻译的请求发往 <code>https://app.huaci.app</code>，由服务器转给 <b>DeepSeek</b>；DeepSeek 暂时不可用时，文字翻译改用 <b>Fireworks AI</b>（美国节点）上的同款模型。图片识别使用 DeepSeek Flash。
+            图片、识别文字与译文只在处理请求时短暂停留在内存里，不写入数据库或日志。
           </p>
           <p>这些平台如何处理收到的内容，适用它们各自的隐私政策：</p>
           <ul>

@@ -395,7 +395,7 @@
         controller = null;
         el.target.disabled = false;
         el.provider.disabled = false;
-        el.model.disabled = false;
+        el.model.disabled = S.isHosted(settings.provider);
         el.run.disabled = !image;
       }
     }
@@ -507,6 +507,9 @@
   el.settings.addEventListener('click', () => chrome.runtime.openOptionsPage());
 
   function renderModelOptions() {
+    const hosted = S.isHosted(el.provider.value);
+    $('modelPicker').hidden = hosted;
+    el.model.disabled = hosted;
     const list = S.VISION_MODELS[el.provider.value] || [];
     el.models.replaceChildren(
       ...list.map((name) => {

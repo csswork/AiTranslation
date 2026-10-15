@@ -355,5 +355,7 @@
   "○ 点数已用完": "○ Pontos esgotados",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Créditos restantes insuficientes para concluir esta tradução. Registre uma conta para obter mais créditos.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Créditos restantes insuficientes para concluir esta tradução. Assine para uso ilimitado.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Os créditos são descontados com base no uso real, e o saldo é exibido com duas casas decimais; nenhum crédito é descontado se a tradução falhar."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Os créditos são descontados com base no uso real, e o saldo é exibido com duas casas decimais; nenhum crédito é descontado se a tradução falhar.",
+  "图片过大，请缩小后重试": "A imagem é muito grande. Reduza o tamanho e tente novamente.",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Compatível com tradução por seleção de texto, por área, painel de tradução e tradução de imagens, sem necessidade de API Key."
 }

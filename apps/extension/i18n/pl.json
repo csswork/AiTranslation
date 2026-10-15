@@ -355,5 +355,7 @@
   "○ 点数已用完": "○ Punkty wyczerpane",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Za mało pozostałych kredytów, aby ukończyć to tłumaczenie. Zarejestruj konto, aby otrzymać więcej kredytów.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Za mało pozostałych kredytów, aby ukończyć to tłumaczenie. Subskrybuj, aby korzystać bez ograniczeń.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Kredyty są odejmowane na podstawie rzeczywistego zużycia, a saldo kredytów jest wyświetlane z dokładnością do dwóch miejsc po przecinku; w przypadku niepowodzenia tłumaczenia kredyty nie są odejmowane."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Kredyty są odejmowane na podstawie rzeczywistego zużycia, a saldo kredytów jest wyświetlane z dokładnością do dwóch miejsc po przecinku; w przypadku niepowodzenia tłumaczenia kredyty nie są odejmowane.",
+  "图片过大，请缩小后重试": "Obraz jest za duży. Zmniejsz jego rozmiar i spróbuj ponownie.",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Obsługuje tłumaczenie zaznaczonego tekstu, obszarów, panel tłumaczeń i tłumaczenie obrazów, bez konieczności podawania klucza API."
 }

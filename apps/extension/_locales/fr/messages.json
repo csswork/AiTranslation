@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Les crédits sont déduits selon l'utilisation réelle, et le solde de crédits est affiché avec deux décimales ; aucun crédit n'est déduit en cas d'échec de la traduction."
   },
+  "m_11a3460254fd304d": {
+    "message": "L'image est trop volumineuse. Veuillez réduire sa taille et réessayer."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Prend en charge la sélection de texte, la traduction de zone, le panneau de traduction et la traduction d'images, sans clé API requise."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

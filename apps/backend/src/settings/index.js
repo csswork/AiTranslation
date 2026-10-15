@@ -17,8 +17,9 @@ export const SETTINGS = [
   { key: 'guest_ip_window_days', type: 'int', group: 'trial', label: '同一网络统计周期（天）', def: () => 30 },
   { key: 'guest_daily_cap', type: 'int', group: 'trial', label: '每日访客领取总量', help: '最近 24 小时内全站最多发放访客点数的次数；0 表示暂停发放', def: () => 2000 },
 
-  { key: 'hosted_enabled', type: 'bool', group: 'hosted', label: '启用托管文字翻译', def: () => true },
+  { key: 'hosted_enabled', type: 'bool', group: 'hosted', label: '启用托管翻译', def: () => true },
   { key: 'hosted_max_chars', type: 'int', group: 'hosted', label: '单次请求最多字数', def: (c) => c.hostedMaxChars, min: 1 },
+  { key: 'hosted_image_hourly_requests', type: 'int', group: 'hosted', label: '每个用户每小时图片识别次数上限', help: '包含长图的每个切片及失败请求；0 表示暂停图片识别。识别本身不额外扣点，翻译识别文字时扣点', def: () => 60 },
   { key: 'subscriber_monthly_chars', type: 'int', group: 'hosted', label: '订阅用户每月字数上限（隐藏）', help: '界面显示无限使用；超过后返回「本月用量较高，请稍后再试」。0 表示不限制', def: () => 0 },
 
   { key: 'price_currency', type: 'text', group: 'pricing', label: '展示币种', def: () => 'USD' },

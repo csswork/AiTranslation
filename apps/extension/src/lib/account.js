@@ -229,10 +229,10 @@
    * 托管文字翻译：一次传一段或多段。每次返回都带最新余额，顺手更新状态，界面上的点数随之变化。
    * @returns {Promise<string[]>}
    */
-  async function translate({ texts, target, source, signal }) {
+  async function hostedRequest(path, body, signal) {
     // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
     if (!(await readToken())) await claimGuest().catch(() => null);
-    const { response, data, token } = await call('/translate', { method: 'POST', body: { texts, target, source: source || undefined }, signal });
+    const { response, data, token } = await call(path, { method: 'POST', body, signal });
     if (data.credits) {
       await updateState(async () => {
         if (await readToken() !== token) return;
@@ -240,9 +240,23 @@
         if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
       });
     }
-    if (response.ok && Array.isArray(data.translations)) return data.translations;
+    if (response.ok) return data;
+    if (path === '/read-image' && response.status === 413) throw new AccountError(t('图片过大，请缩小后重试'), 'too_large');
+    if (path === '/read-image' && response.status === 400) throw new AccountError(t('图片加载失败'), 'invalid_image');
     throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate };
+  async function translate({ texts, target, source, signal }) {
+    const data = await hostedRequest('/translate', { texts, target, source: source || undefined }, signal);
+    if (!Array.isArray(data.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
+    return data.translations;
+  }
+
+  async function readImageText({ image, signal }) {
+    const data = await hostedRequest('/read-image', { image }, signal);
+    if (typeof data.raw !== 'string') throw new AccountError(t('识别失败'), 'invalid_response');
+    return data.raw;
+  }
+
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, readImageText };
 })();

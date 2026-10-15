@@ -95,12 +95,12 @@
                 <tr><td>你指定區域內的文字</td><td>點擊區域上的翻譯按鈕時</td><td>同上</td><td>同上</td></tr>
                 <tr><td>你在翻譯面板輸入的文字</td><td>點擊翻譯時</td><td>同上</td><td>同上</td></tr>
                 <tr><td>影片字幕的辨識文字</td><td>開啟影片字幕翻譯時</td><td>同上</td><td>同上</td></tr>
-                <tr><td>你按右鍵的那張圖片</td><td>使用圖片翻譯時</td><td>你選擇的平台</td><td>不支援（圖片僅走自帶 Key）</td></tr>
+                <tr><td>你選擇翻譯的圖片</td><td>使用圖片翻譯時</td><td>你選擇的視覺平台</td><td>我們的伺服器，再轉給 DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
           <p>自帶 Key 可選 <b>OpenAI（ChatGPT）</b>、<b>DeepSeek</b> 與 <b>DeepL</b>，請求分別傳往 <code>https://api.openai.com</code>、<code>https://api.deepseek.com</code>，以及 DeepL 的 <code>https://api-free.deepl.com</code>（付費 Key 為 <code>https://api.deepl.com</code>）。</p>
-          <p>點數翻譯的請求傳往 <code>https://app.huaci.app</code>，由伺服器轉給 <b>DeepSeek</b>；DeepSeek 暫時無法使用時改用 <b>Fireworks AI</b>（美國節點）上的同款模型。文字僅在處理請求時短暫停留於記憶體，不寫入資料庫或日誌。</p>
+          <p>點數翻譯的請求發往 <code>https://app.huaci.app</code>，由伺服器轉給 <b>DeepSeek</b>；DeepSeek 暫時不可用時，文字翻譯改用 <b>Fireworks AI</b>（美國節點）上的同款模型。圖片識別使用 DeepSeek Flash。 圖片、識別文字與譯文只在處理請求時短暫停留在記憶體裡，不寫入資料庫或日誌。</p>
           <p>這些平台如何處理收到的內容，適用其各自的隱私政策：</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

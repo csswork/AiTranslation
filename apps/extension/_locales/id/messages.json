@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Poin dipotong berdasarkan penggunaan aktual, dan saldo poin ditampilkan hingga dua angka desimal; poin tidak dipotong jika terjemahan gagal."
   },
+  "m_11a3460254fd304d": {
+    "message": "Gambar terlalu besar, silakan perkecil lalu coba lagi"
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Mendukung terjemahan teks yang dipilih, area, panel terjemahan, dan gambar, tanpa perlu mengisi API Key."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

@@ -95,12 +95,12 @@
                 <tr><td>Der Text innerhalb des von Ihnen festgelegten Bereichs</td><td>beim Klick auf die Übersetzen-Schaltfläche im Bereich</td><td>Wie oben</td><td>Wie oben</td></tr>
                 <tr><td>Der Text, den Sie im Übersetzungsbereich eingeben</td><td>Beim Klick auf Übersetzen</td><td>Wie oben</td><td>Wie oben</td></tr>
                 <tr><td>den erkannten Text von Video-Untertiteln</td><td>wenn die Video-Untertitelübersetzung aktiviert ist</td><td>Wie oben</td><td>Wie oben</td></tr>
-                <tr><td>Das Bild, das Sie per Rechtsklick ausgewählt haben</td><td>Bei der Bildübersetzung</td><td>Der von Ihnen gewählte Anbieter</td><td>nicht unterstützt (Bilder nur mit eigenem Key)</td></tr>
+                <tr><td>Das von Ihnen zum Übersetzen ausgewählte Bild</td><td>Bei der Bildübersetzung</td><td>Die von Ihnen gewählte visuelle Plattform</td><td>Unser Server, der es an DeepSeek weiterleitet</td></tr>
               </tbody>
             </table>
           </div>
           <p>Für den eigenen Key stehen <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> und <b>DeepL</b> zur Verfügung; Anfragen gehen an <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code> sowie an DeepLs <code>https://api-free.deepl.com</code> (bei bezahltem Key <code>https://api.deepl.com</code>).</p>
-          <p>Anfragen der Punkte-Übersetzung gehen an <code>https://app.huaci.app</code> und werden vom Server an <b>DeepSeek</b> weitergeleitet; ist DeepSeek vorübergehend nicht verfügbar, wird dasselbe Modell auf <b>Fireworks AI</b> (US-Knoten) verwendet. Der Text verbleibt nur während der Anfragebearbeitung kurzzeitig im Arbeitsspeicher und wird nicht in Datenbanken oder Logs geschrieben.</p>
+          <p>Anfragen für die Punkte-Übersetzung gehen an <code>https://app.huaci.app</code> und werden vom Server an <b>DeepSeek</b> weitergeleitet; ist DeepSeek vorübergehend nicht verfügbar, wird für die Textübersetzung dasselbe Modell auf <b>Fireworks AI</b> (US-Knoten) verwendet. Die Bilderkennung nutzt DeepSeek Flash. Bilder, erkannter Text und Übersetzungen verbleiben nur während der Anfragebearbeitung kurzzeitig im Speicher und werden nicht in Datenbanken oder Logs geschrieben.</p>
           <p>Wie diese Plattformen die empfangenen Inhalte verarbeiten, richtet sich nach ihren jeweiligen Datenschutzrichtlinien:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

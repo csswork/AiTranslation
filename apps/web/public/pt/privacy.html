@@ -95,12 +95,12 @@
                 <tr><td>O texto dentro da área que você marcou</td><td>Ao clicar no botão de tradução sobre a área</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>O texto que você digita no painel de tradução</td><td>Ao clicar em traduzir</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Texto reconhecido das legendas de vídeo</td><td>Ao ativar a tradução de legendas de vídeo</td><td>Idem</td><td>Idem</td></tr>
-                <tr><td>A imagem em que você clicou com o botão direito</td><td>Ao usar a tradução de imagens</td><td>O provedor que você escolheu</td><td>Não suportado (imagens usam apenas chave própria)</td></tr>
+                <tr><td>A imagem que você escolheu traduzir</td><td>Ao usar a tradução de imagens</td><td>A plataforma visual que você escolheu</td><td>Nosso servidor, que encaminha para o DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
           <p>Com chave própria, é possível escolher <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> e <b>DeepL</b>; as requisições são enviadas respectivamente para <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code> e <code>https://api-free.deepl.com</code> da DeepL (para chave paga, <code>https://api.deepl.com</code>).</p>
-          <p>As requisições da tradução por pontos são enviadas para <code>https://app.huaci.app</code> e encaminhadas pelo servidor ao <b>DeepSeek</b>; quando o DeepSeek estiver temporariamente indisponível, usa-se o mesmo modelo no <b>Fireworks AI</b> (nó nos Estados Unidos). O texto permanece brevemente na memória apenas durante o processamento da requisição, sem ser gravado em banco de dados ou logs.</p>
+          <p>As solicitações de tradução por pontos são enviadas para <code>https://app.huaci.app</code> e o servidor as encaminha para o <b>DeepSeek</b>; quando o DeepSeek estiver temporariamente indisponível, a tradução de texto passa a usar o mesmo modelo no <b>Fireworks AI</b> (nó nos Estados Unidos). O reconhecimento de imagens usa o DeepSeek Flash. Imagens, texto reconhecido e traduções permanecem apenas brevemente na memória durante o processamento da solicitação, sem serem gravados em banco de dados ou logs.</p>
           <p>Como essas plataformas tratam o conteúdo recebido está sujeito às respectivas políticas de privacidade:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

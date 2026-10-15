@@ -95,12 +95,12 @@
                 <tr><td>Le texte contenu dans la zone que vous avez désignée</td><td>Lors d'un clic sur le bouton de traduction dans la zone concernée</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte que vous saisissez dans le panneau de traduction</td><td>Lorsque vous cliquez sur Traduire</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte reconnu des sous-titres vidéo</td><td>Lorsque la traduction des sous-titres vidéo est activée</td><td>Idem</td><td>Idem</td></tr>
-                <tr><td>L’image sur laquelle vous avez fait un clic droit</td><td>Lors d’une traduction d’image</td><td>La plateforme que vous avez choisie</td><td>Non pris en charge (les images passent uniquement par la clé personnelle)</td></tr>
+                <tr><td>L'image que vous choisissez de traduire</td><td>Lors d’une traduction d’image</td><td>La plateforme visuelle que vous sélectionnez</td><td>Notre serveur, puis transmis à DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
           <p>Avec une clé personnelle, vous pouvez choisir <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> et <b>DeepL</b> ; les requêtes sont envoyées respectivement à <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, ainsi qu'à <code>https://api-free.deepl.com</code> pour DeepL (clé payante : <code>https://api.deepl.com</code>).</p>
-          <p>Les requêtes de traduction par crédits sont envoyées à <code>https://app.huaci.app</code>, puis transmises par le serveur à <b>DeepSeek</b> ; si DeepSeek est temporairement indisponible, le même modèle sur <b>Fireworks AI</b> (nœud aux États-Unis) est utilisé. Le texte ne reste que brièvement en mémoire pendant le traitement de la requête, sans être écrit dans une base de données ni dans des journaux.</p>
+          <p>Les requêtes de traduction par points sont envoyées à <code>https://app.huaci.app</code>, puis transmises par le serveur à <b>DeepSeek</b> ; lorsque DeepSeek est temporairement indisponible, la traduction de texte utilise le même modèle sur <b>Fireworks AI</b> (nœud aux États-Unis). La reconnaissance d'images utilise DeepSeek Flash. Les images, le texte reconnu et les traductions ne restent brièvement en mémoire que pendant le traitement de la requête, sans être écrits dans une base de données ni dans des journaux.</p>
           <p>Le traitement des contenus reçus par ces plateformes relève de leurs propres politiques de confidentialité :</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

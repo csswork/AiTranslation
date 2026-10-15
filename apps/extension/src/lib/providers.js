@@ -59,8 +59,20 @@
     throw new TranslateError(reply?.error || t("点数翻译失败"), reply?.action);
   }
 
-  const hostedOnlyText = () => new TranslateError(
-    t("点数翻译暂时只支持文字，图片翻译请切换到 ChatGPT 或 DeepSeek"), 'open-options');
+  async function hostedReadImage({ image, signal }) {
+    if (globalThis.AITrAccount) {
+      try { return await globalThis.AITrAccount.readImageText({ image, signal }); }
+      catch (err) {
+        if (err?.name === 'AbortError') throw err;
+        throw new TranslateError(err.message, err.action);
+      }
+    }
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+    const reply = await chrome.runtime.sendMessage({ type: 'hosted-read-image', image });
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+    if (reply?.ok) return reply.raw;
+    throw new TranslateError(reply?.error || t('识别失败'), reply?.action);
+  }
 
   /** 400 报的是「参数不支持」时，退回最小请求体重试一次。 */
   const PARAM_COMPLAINT =
@@ -532,7 +544,6 @@
   async function readImageText({ image, settings, providerId, model, imageSize, order, signal }) {
     const S = globalThis.AITrSettings;
     const base = S.resolveProvider(settings, providerId);
-    if (base.kind === 'hosted') throw hostedOnlyText();
     if (base.kind === 'mt') {
       throw new TranslateError(
         t("$1 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek", [base.label]),
@@ -541,20 +552,24 @@
     }
     // 识图需要指定支持视觉的模型，允许调用方覆盖配置里的模型
     const provider = model ? { ...base, model } : base;
-    if (!provider.apiKey) {
+    if (base.kind !== 'hosted' && !provider.apiKey) {
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
 
-    const response = await request({
-      provider,
-      text: 'Recognize all text in this image and return a JSON array following the rules above.',
-      image,
-      system: imageSystemPrompt(),
-      stream: false,
-      signal,
-    });
-    const data = await response.json();
-    const raw = String(data?.choices?.[0]?.message?.content ?? '');
+    let raw;
+    if (base.kind === 'hosted') raw = await hostedReadImage({ image, signal });
+    else {
+      const response = await request({
+        provider,
+        text: 'Recognize all text in this image and return a JSON array following the rules above.',
+        image,
+        system: imageSystemPrompt(),
+        stream: false,
+        signal,
+      });
+      const data = await response.json();
+      raw = String(data?.choices?.[0]?.message?.content ?? '');
+    }
 
     let parsed;
     try {

@@ -142,4 +142,25 @@ od = await P.readImageText({ image: 'x', settings, model: 'm' });
 ok(od.blocks[0].box, 0.1, 0.2, 0.6, 0.03);
 console.log('✓ readImageText 默认 xyxy，可显式指定 yxyx');
 
+// 点数模式同样支持识图：后台直接使用账户服务，扩展页面只能通过后台固定消息调用。
+assert.equal(S.supportsVision('hosted'), true);
+const hostedSettings = S.normalize({ ...settings, provider: 'hosted' });
+const raw = '[{"text":"こんにちは","box":[100,200,700,230]}]';
+globalThis.fetch = () => { throw new Error('点数模式不能从扩展直接调用模型'); };
+let sent;
+globalThis.AITrAccount = { readImageText: async (request) => { sent = request; return raw; } };
+out = await P.readImageText({ image: 'test-image', settings: hostedSettings, model: 'untrusted-client-model' });
+assert.equal(sent.image, 'test-image');
+assert.equal(Object.hasOwn(sent, 'model'), false);
+assert.equal(out.blocks[0].text, 'こんにちは');
+ok(out.blocks[0].box, 0.1, 0.2, 0.6, 0.03);
+delete globalThis.AITrAccount;
+chrome.runtime = { sendMessage: async (message) => { sent = message; return { ok: true, raw }; } };
+out = await P.readImageText({ image: 'page-image', settings: hostedSettings, order: 'yxyx' });
+assert.deepEqual(sent, { type: 'hosted-read-image', image: 'page-image' });
+ok(out.blocks[0].box, 0.2, 0.1, 0.03, 0.6);
+chrome.runtime.sendMessage = async () => ({ ok: false, error: 'insufficient credits', action: 'open-options' });
+await assert.rejects(P.readImageText({ image: 'x', settings: hostedSettings }), err => err.action === 'open-options');
+console.log('✓ 点数模式无需自带 Key，识图在后台调用，坐标和错误处理完整保留');
+
 console.log('\n全部通过');

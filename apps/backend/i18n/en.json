@@ -42,6 +42,7 @@
   "发送验证码到新邮箱": "Send verification code to new email",
   "取消": "Cancel",
   "只记录类型、字数、扣点和结果，不保存原文或译文。": "Only the type, word count, credits deducted, and result are recorded; the source text and translation are not saved.",
+  "图片识别": "Image Recognition",
   "在任意网页选中文字": "Select text on any webpage",
   "在扩展设置里填写 OpenAI、DeepSeek 或 DeepL 的 API Key，请求直接发给你选择的服务商。Key 只保存在你的浏览器里，本网站不接收也无法读取。": "Enter the API Key for OpenAI, DeepSeek or DeepL in the extension settings; requests go directly to the selected provider. The key is only stored in your browser; this website neither receives nor can read it.",
   "在这个浏览器登录后，扩展会自动切换到你的账户，剩余的免费点数一并转入。": "After you log in on this browser, the extension will automatically switch to your account and transfer your remaining free credits.",

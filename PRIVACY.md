@@ -23,11 +23,11 @@ Only when **you actively trigger a translation** (context menu, keyboard shortcu
 | Text in a region you marked | Clicking that region's translate button | Same | Same |
 | Text typed into the translation panel | Clicking Translate | Same | Same |
 | Recognized video caption text | With video caption translation on | Same | Same |
-| The image you right-clicked | Image translation | Your chosen provider | Not supported (images use your own key only) |
+| The image you choose to translate | Image translation | Your chosen vision provider | Our server, then DeepSeek |
 
 With your own key you can use **OpenAI (ChatGPT)**, **DeepSeek**, or **DeepL**; requests go to `https://api.openai.com`, `https://api.deepseek.com`, and `https://api-free.deepl.com` (or `https://api.deepl.com` for a paid DeepL key).
 
-Credit translation requests go to `https://app.huaci.app`, which forwards them to **DeepSeek**; when DeepSeek is unavailable, the same model on **Fireworks AI** (US region) is used instead. The text stays in memory only while the request is processed and is never written to a database or log.
+Credit translation requests go to `https://app.huaci.app`, which forwards them to **DeepSeek**; when DeepSeek is unavailable, text translation uses the same model on **Fireworks AI** (US region) instead. Image recognition uses DeepSeek Flash. Images, recognized text and translations stay in memory only while the request is processed and are never written to a database or log.
 
 How these providers handle what they receive is governed by their own privacy policies:
 
@@ -126,11 +126,11 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | 你指定区域内的文字 | 点击区域上的翻译按钮时 | 同上 | 同上 |
 | 你在翻译面板输入的文字 | 点击翻译时 | 同上 | 同上 |
 | 视频字幕的识别文字 | 开启视频字幕翻译时 | 同上 | 同上 |
-| 你右键的那张图片 | 使用图片翻译时 | 你选择的平台 | 不支持（图片只走自带 Key） |
+| 你选择翻译的图片 | 使用图片翻译时 | 你选择的视觉平台 | 我们的服务器，再转给 DeepSeek |
 
 自带 Key 可选 **OpenAI（ChatGPT）**、**DeepSeek** 与 **DeepL**，请求分别发往 `https://api.openai.com`、`https://api.deepseek.com`， 以及 DeepL 的 `https://api-free.deepl.com`（付费 Key 为 `https://api.deepl.com`）。
 
-点数翻译的请求发往 `https://app.huaci.app`，由服务器转给 **DeepSeek**；DeepSeek 暂时不可用时改用 **Fireworks AI**（美国节点）上的同款模型。 文字只在处理请求时短暂停留在内存里，不写入数据库或日志。
+点数翻译的请求发往 `https://app.huaci.app`，由服务器转给 **DeepSeek**；DeepSeek 暂时不可用时，文字翻译改用 **Fireworks AI**（美国节点）上的同款模型。图片识别使用 DeepSeek Flash。图片、识别文字与译文只在处理请求时短暂停留在内存里，不写入数据库或日志。
 
 这些平台如何处理收到的内容，适用它们各自的隐私政策：
 

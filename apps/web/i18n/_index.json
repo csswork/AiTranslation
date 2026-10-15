@@ -1027,7 +1027,7 @@
       "privacy.html"
     ]
   },
-  "你右键的那张图片": {
+  "你选择翻译的图片": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1041,7 +1041,14 @@
       "privacy.html"
     ]
   },
-  "不支持（图片只走自带 Key）": {
+  "你选择的视觉平台": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "我们的服务器，再转给 DeepSeek": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1055,7 +1062,7 @@
       "privacy.html"
     ]
   },
-  "点数翻译的请求发往 <code>https://app.huaci.app</code>，由服务器转给 <b>DeepSeek</b>；DeepSeek 暂时不可用时改用 <b>Fireworks AI</b>（美国节点）上的同款模型。 文字只在处理请求时短暂停留在内存里，不写入数据库或日志。": {
+  "点数翻译的请求发往 <code>https://app.huaci.app</code>，由服务器转给 <b>DeepSeek</b>；DeepSeek 暂时不可用时，文字翻译改用 <b>Fireworks AI</b>（美国节点）上的同款模型。图片识别使用 DeepSeek Flash。 图片、识别文字与译文只在处理请求时短暂停留在内存里，不写入数据库或日志。": {
     "kind": "text",
     "tag": "p",
     "pages": [

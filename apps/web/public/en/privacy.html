@@ -95,12 +95,12 @@
                 <tr><td>The text inside a region you marked</td><td>When you click the translate button on the selected area</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Text you type into the translation panel</td><td>Clicking Translate</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Recognized text from video subtitles</td><td>When video subtitle translation is enabled</td><td>Same</td><td>Same</td></tr>
-                <tr><td>The image you right-clicked</td><td>Using image translation</td><td>Your chosen provider</td><td>Not supported (images only use your own key)</td></tr>
+                <tr><td>The image you choose to translate</td><td>Using image translation</td><td>The vision platform you choose</td><td>Our server, then forwarded to DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
           <p>For your own key, you can choose <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b>, and <b>DeepL</b>. Requests are sent to <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, and DeepL's <code>https://api-free.deepl.com</code> (for paid keys, <code>https://api.deepl.com</code>), respectively.</p>
-          <p>Credit-based translation requests are sent to <code>https://app.huaci.app</code> and forwarded by the server to <b>DeepSeek</b>; if DeepSeek is temporarily unavailable, the same model on <b>Fireworks AI</b> (US node) is used instead. Text remains briefly in memory only while the request is being processed and is not written to databases or logs.</p>
+          <p>Credit-based translation requests are sent to <code>https://app.huaci.app</code> and forwarded by the server to <b>DeepSeek</b>; when DeepSeek is temporarily unavailable, text translation switches to the same model on <b>Fireworks AI</b> (US node). Image recognition uses DeepSeek Flash. Images, recognized text, and translations remain in memory only briefly during request processing and are not written to any database or logs.</p>
           <p>How these platforms handle the content they receive is governed by their respective privacy policies:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

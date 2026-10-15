@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Krediler gerçek kullanıma göre düşülür ve kredi bakiyesi iki ondalık basamakla gösterilir; çeviri başarısız olursa kredi düşülmez."
   },
+  "m_11a3460254fd304d": {
+    "message": "Görsel çok büyük. Lütfen boyutunu küçültüp tekrar deneyin."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Metin seçimi, alan çevirisi, çeviri paneli ve görsel çevirisini destekler; API Key gerekmez."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

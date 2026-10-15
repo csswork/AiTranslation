@@ -95,12 +95,12 @@
                 <tr><td>指定した領域内のテキスト</td><td>クリック領域の翻訳ボタンを押したとき</td><td>同上</td><td>同上</td></tr>
                 <tr><td>翻訳パネルに入力したテキスト</td><td>翻訳をクリックしたとき</td><td>同上</td><td>同上</td></tr>
                 <tr><td>動画字幕の認識テキスト</td><td>動画字幕翻訳を有効にしたとき</td><td>同上</td><td>同上</td></tr>
-                <tr><td>右クリックした画像</td><td>画像翻訳の使用時</td><td>選択したプロバイダ</td><td>非対応（画像は自分の Key 使用時のみ）</td></tr>
+                <tr><td>あなたが翻訳対象として選択した画像</td><td>画像翻訳の使用時</td><td>あなたが選択したビジョンプラットフォーム</td><td>当社のサーバーを経由して DeepSeek に転送</td></tr>
               </tbody>
             </table>
           </div>
           <p>自分の Key では <b>OpenAI（ChatGPT）</b>、<b>DeepSeek</b>、<b>DeepL</b> を選択でき、リクエストはそれぞれ <code>https://api.openai.com</code>、<code>https://api.deepseek.com</code>、および DeepL の <code>https://api-free.deepl.com</code>（有料 Key は <code>https://api.deepl.com</code>）へ送信されます。</p>
-          <p>ポイント翻訳のリクエストは <code>https://app.huaci.app</code> へ送信され、サーバーから <b>DeepSeek</b> へ転送されます。DeepSeek が一時的に利用できない場合は、<b>Fireworks AI</b>（米国ノード）上の同モデルに切り替えます。テキストはリクエスト処理中のみメモリ上に一時的に保持され、データベースやログには書き込みません。</p>
+          <p>ポイント翻訳のリクエストは <code>https://app.huaci.app</code> に送信され、サーバーから <b>DeepSeek</b> に転送されます。DeepSeek が一時的に利用できない場合、テキスト翻訳は <b>Fireworks AI</b>（米国ノード）上の同一モデルに切り替わります。画像認識には DeepSeek Flash を使用します。画像、認識テキスト、訳文はリクエスト処理時に一時的にメモリ上に留まるのみで、データベースやログには書き込まれません。</p>
           <p>これらのプラットフォームにおける受信内容の取り扱いには、各社のプライバシーポリシーが適用されます：</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>

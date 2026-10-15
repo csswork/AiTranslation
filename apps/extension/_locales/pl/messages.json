@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Kredyty są odejmowane na podstawie rzeczywistego zużycia, a saldo kredytów jest wyświetlane z dokładnością do dwóch miejsc po przecinku; w przypadku niepowodzenia tłumaczenia kredyty nie są odejmowane."
   },
+  "m_11a3460254fd304d": {
+    "message": "Obraz jest za duży. Zmniejsz jego rozmiar i spróbuj ponownie."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Obsługuje tłumaczenie zaznaczonego tekstu, obszarów, panel tłumaczeń i tłumaczenie obrazów, bez konieczności podawania klucza API."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

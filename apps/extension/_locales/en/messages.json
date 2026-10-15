@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Credits are deducted based on actual usage, and credit balances are displayed to two decimal places; no credits are deducted if translation fails."
   },
+  "m_11a3460254fd304d": {
+    "message": "Image is too large. Please reduce its size and try again."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Supports text selection, area translation, translation panel, and image translation, with no API Key required."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

@@ -356,7 +356,9 @@ globalThis.AITrMessageIds = {
   "○ 点数已用完": "m_adc068b8279a3d7d",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "m_f33636f01f7df180",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "m_44356d8470993c67",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "m_d6e236529dbb9211"
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "m_d6e236529dbb9211",
+  "图片过大，请缩小后重试": "m_11a3460254fd304d",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "m_36d07a204c5bc7cf"
 };
 globalThis.AITrEnglish = {
   "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
@@ -715,5 +717,7 @@ globalThis.AITrEnglish = {
   "○ 点数已用完": "○ Points used up",
   "剩余点数不足以完成本次翻译，注册账户可获得更多点数": "Not enough credits remaining to complete this translation. Register an account to get more credits.",
   "剩余点数不足以完成本次翻译，订阅后可无限使用": "Not enough credits remaining to complete this translation. Subscribe for unlimited use.",
-  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Credits are deducted based on actual usage, and credit balances are displayed to two decimal places; no credits are deducted if translation fails."
+  "按实际用量扣点，点数显示保留两位小数；翻译失败不扣点。": "Credits are deducted based on actual usage, and credit balances are displayed to two decimal places; no credits are deducted if translation fails.",
+  "图片过大，请缩小后重试": "Image is too large. Please reduce its size and try again.",
+  "支持划词、区域翻译、翻译面板和图片翻译，无需填写 API Key。": "Supports text selection, area translation, translation panel, and image translation, with no API Key required."
 };

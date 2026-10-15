@@ -10,7 +10,7 @@
    *   llm —— OpenAI 兼容的对话接口。能流式、能识图、能用提示词控制译文风格。
    *   mt  —— 传统机器翻译接口。文本进文本出，上面这些都没有。
    *   hosted —— 托管翻译：登录账户后用点数，由我们的服务完成翻译，不需要 API Key。
-   *            目前只支持文字（不流式、不识图）。
+   *            支持文字和图片；模型及 Key 由服务端管理。
    * 请求形态完全不同，不少功能要按形态决定可用与否。
    */
   const PROVIDERS = {
@@ -208,7 +208,7 @@
   const targetMenu = (settings) => AITrLanguages.label(target(settings).id);
   const providerKind = (id) => PROVIDERS[id]?.kind || 'llm';
   /** 只有 LLM 平台能识图；传统翻译接口只能文本进文本出。 */
-  const supportsVision = (id) => providerKind(id) === 'llm';
+  const supportsVision = (id) => ['llm', 'hosted'].includes(providerKind(id));
   /** 只有 LLM 平台能流式输出。 */
   const supportsStreaming = (id) => providerKind(id) === 'llm';
   /** 传统翻译接口不需要选模型。 */

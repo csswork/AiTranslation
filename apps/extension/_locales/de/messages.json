@@ -1513,6 +1513,12 @@
   "m_d6e236529dbb9211": {
     "message": "Credits werden nach tatsächlichem Verbrauch abgezogen, Guthaben wird mit zwei Dezimalstellen angezeigt; bei fehlgeschlagener Übersetzung werden keine Credits abgezogen."
   },
+  "m_11a3460254fd304d": {
+    "message": "Das Bild ist zu groß. Bitte verkleinern Sie es und versuchen Sie es erneut."
+  },
+  "m_36d07a204c5bc7cf": {
+    "message": "Unterstützt Textauswahl, Bereichsübersetzung, Übersetzungsbereich und Bildübersetzung, ohne dass ein API Key erforderlich ist."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },
