@@ -2,21 +2,24 @@
  * 用户管理界面（用户端，规划 app.huaci.app）的路由：U1–U8，以及界面语言与配色偏好。
  * 每个页面只读写当前登录用户自己的数据；权限在这里由服务端判断。
  */
-import { randomBytes } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
 import { createAuthCode, extensionIdFromRedirect, isValidChallenge } from '../../src/auth/extension.js';
 import { finishGoogleAuth, startGoogleAuth } from '../../src/auth/google.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import {
-  createSession, listSessions, revokeOtherSessions, revokeSession, validateSession,
+  createSession, listSessions, revokeOtherSessions, revokeSession, validateWebSession,
 } from '../../src/auth/sessions.js';
 import {
   findIdentity, findOrCreateUserByEmail, findUserByEmail, isValidEmail, linkIdentity, listIdentities,
   normalizeEmail, unlinkIdentity, updateEmail, updateUsername,
 } from '../../src/auth/users.js';
-import { creditSummary, ledgerEntries, usageEvents } from '../../src/credits/ledger.js';
+import { accountState, latestSubscription } from '../../src/billing/entitlements.js';
+import { creditBalance, ledgerEntries, usageEvents } from '../../src/credits/ledger.js';
+import { linkBrowser, mergeBrowserGuest } from '../../src/guest/index.js';
 import {
-  clearPreference, clearSessionCookie, clearTemp, getSessionToken, getTemp, setPreference, setSessionCookie, setTemp,
+  clearPreference, clearSessionCookie, clearTemp, getBrowserMark, getSessionToken, getTemp, setBrowserMark,
+  setPreference, setSessionCookie, setTemp,
 } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter } from '../../src/http/security.js';
 import { isLocale, k } from '../../src/i18n/index.js';
@@ -45,6 +48,10 @@ const FLASH = {
   too_soon: fail(k('验证码发送太频繁，请 60 秒后再试。')),
   too_many: fail(k('该邮箱 1 小时内请求验证码次数过多，请稍后再试。')),
   rate: fail(k('请求过于频繁，请稍后再试。')),
+  checkout_failed: fail(k('暂时无法打开结账页面，请稍后再试。')),
+  portal_failed: fail(k('暂时无法打开订阅管理页面，请稍后再试。')),
+  already_subscribed: ok(k('你已经订阅，可以直接无限使用。')),
+  checkout_done: ok(k('付款完成。订阅确认后会自动生效，通常只需几秒；刷新页面即可看到。')),
 };
 
 const verifyError = (result) => {
@@ -70,7 +77,7 @@ export function safeReturnUrl(value, config) {
   }
 }
 
-export function accountRoutes({ config, pool, mailer, google, googleIdToken = null, log = console }) {
+export function accountRoutes({ config, pool, mailer, google, googleIdToken = null, settings, creem = null, log = console }) {
   const app = new Hono();
   // 每个来源地址每小时最多请求 20 次验证码（另有按邮箱的限制，见 email-codes）。
   const sendLimiter = createRateLimiter({ limit: 20, windowMs: 60 * 60 * 1000 });
@@ -95,8 +102,15 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     return result;
   };
 
-  /** 建立网页会话；如果是从官网进入的登录，完成后回到官网原页面。 */
+  /** 注册赠送点数（管理员界面可调，不过期）。 */
+  const signupCredits = async () => (await settings.all()).signup_credits;
+
+  /**
+   * 建立网页会话；如果是从官网进入的登录，完成后回到官网原页面。
+   * 这个浏览器的扩展如果还是访客，把访客合并进刚登录的账户（剩余点数转入，扩展随之登录）。
+   */
   const signIn = async (c, userId) => {
+    await mergeBrowserGuest(pool, getBrowserMark(c, config), userId);
     const token = await createSession(pool, config, userId, 'web');
     setSessionCookie(c, config, token);
     const returnTo = safeReturnUrl(getTemp(c, 'return_to'), config);
@@ -105,7 +119,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   };
 
   app.use('*', async (c, next) => {
-    c.set('auth', await validateSession(pool, config, getSessionToken(c, config)));
+    c.set('auth', await validateWebSession(pool, config, getSessionToken(c, config)));
     await next();
   });
 
@@ -183,7 +197,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     const body = await c.req.parseBody();
     const result = await verifyCode(pool, config, { email, purpose: 'login', code: body.code });
     if (!result.ok) return c.html(loginVerifyView(c, email, verifyError(result)), 400);
-    const { user: account } = await findOrCreateUserByEmail(pool, config, email);
+    const { user: account } = await findOrCreateUserByEmail(pool, await signupCredits(), email);
     clearTemp(c, config, 'pending_login');
     return signIn(c, account.id);
   });
@@ -202,7 +216,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
         if (result !== 'ok') return back(c, 'google_conflict', '/login');
         userId = existing.id;
       } else {
-        const created = await findOrCreateUserByEmail(pool, config, claims.email, { provider: 'google', subject: claims.subject });
+        const created = await findOrCreateUserByEmail(pool, await signupCredits(), claims.email, { provider: 'google', subject: claims.subject });
         userId = created.user.id;
       }
     }
@@ -336,13 +350,83 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     return back(c, 'signed_out', '/login');
   });
 
+  /* ---------- 扩展安装后的欢迎页：识别同一浏览器重复领取访客点数（见 src/guest） ---------- */
+
+  app.get('/welcome', async (c) => {
+    const result = await linkBrowser(pool, { linkCode: c.req.query('link'), markValue: getBrowserMark(c, config) });
+    if (result.newMark) setBrowserMark(c, config, result.newMark);
+    else if (getBrowserMark(c, config)) setBrowserMark(c, config, getBrowserMark(c, config));
+    const balance = result.userId ? await creditBalance(pool, result.userId) : null;
+    const s = await settings.all();
+    return render(c, views.welcomePage, {
+      user: c.get('auth')?.user || null,
+      outcome: result.outcome,
+      claimOutcome: result.claim?.outcome || null,
+      balance,
+      signupCredits: s.signup_credits,
+    });
+  });
+
   /* ---------- U2–U5、U8 ---------- */
 
   app.get('/', requireUser, async (c) => render(c, views.overviewPage, {
-    user: user(c), credits: await creditSummary(pool, user(c).id), notice: takeFlash(c),
+    user: user(c), state: await accountState(pool, user(c)), notice: takeFlash(c),
   }));
-  app.get('/plans', requireUser, (c) => render(c, views.plansPage, { user: user(c) }));
-  app.get('/billing', requireUser, (c) => render(c, views.billingPage, { user: user(c) }));
+
+  const pricing = async () => {
+    const s = await settings.all();
+    return {
+      currency: s.price_currency,
+      monthly: { price: s.price_monthly, original: s.price_monthly_original },
+      yearly: { price: s.price_yearly, original: s.price_yearly_original },
+    };
+  };
+
+  app.get('/plans', requireUser, async (c) => render(c, views.plansPage, {
+    user: user(c), state: await accountState(pool, user(c)), pricing: await pricing(), checkoutEnabled: Boolean(creem), notice: takeFlash(c),
+  }));
+
+  // 结账：在 Creem 的结账页付款，订阅由已验签的回调开通；这里只负责创建结账会话并跳转。
+  app.post('/billing/checkout', requireUser, async (c) => {
+    if (!creem) return c.notFound();
+    const body = await c.req.parseBody();
+    const plan = body.plan === 'yearly' ? 'yearly' : 'monthly';
+    if ((await accountState(pool, user(c))).subscription) return back(c, 'already_subscribed', '/plans');
+    try {
+      const url = await creem.createCheckout({
+        plan, userId: user(c).id, email: user(c).email, requestId: randomUUID(), successUrl: `${config.appOrigin}/billing/success`,
+      });
+      return c.redirect(url, 303);
+    } catch (err) {
+      log.warn(`创建 Creem 结账失败：${err.message}`);
+      return back(c, 'checkout_failed', '/plans');
+    }
+  });
+
+  // 付款后 Creem 跳回这里。订阅以回调为准，不信任这个地址上的参数。
+  app.get('/billing/success', requireUser, (c) => back(c, 'checkout_done', '/billing'));
+
+  // Creem 客户门户：取消订阅、更换付款方式、下载发票。
+  app.post('/billing/portal', requireUser, async (c) => {
+    const sub = await latestSubscription(pool, user(c).id);
+    if (!creem || !sub?.provider_customer_id) return c.redirect('/billing', 303);
+    try {
+      return c.redirect(await creem.customerPortal(sub.provider_customer_id), 303);
+    } catch (err) {
+      log.warn(`打开 Creem 客户门户失败：${err.message}`);
+      return back(c, 'portal_failed', '/billing');
+    }
+  });
+
+  app.get('/billing', requireUser, async (c) => {
+    const { rows: orders } = await pool.query(
+      `SELECT plan, amount, currency, refunded_amount, status, created_at FROM orders WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50`,
+      [user(c).id],
+    );
+    return render(c, views.billingPage, {
+      user: user(c), subscription: await latestSubscription(pool, user(c).id), orders, portalEnabled: Boolean(creem), notice: takeFlash(c),
+    });
+  });
   app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
     user: user(c), entries: await ledgerEntries(pool, user(c).id), events: await usageEvents(pool, user(c).id),
   }));

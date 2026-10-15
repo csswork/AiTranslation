@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Cửa sổ đăng nhập đã đóng"
-  },
   "m_927407ede0c1dc74": {
     "message": "Yêu cầu đăng nhập không hợp lệ. Vui lòng thử lại."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Đăng nhập thất bại. Vui lòng thử lại."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Không đủ điểm: cần $arg1$ điểm, còn lại $arg2$ điểm",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Văn bản quá dài. Dịch bằng điểm hỗ trợ tối đa $arg1$ ký tự mỗi lần.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Dịch bằng điểm"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Dùng điểm tài khoản sau khi đăng nhập. Không cần API Key."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Bắt đầu sử dụng"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Dùng thử miễn phí"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Đăng nhập hoặc đăng ký để nhận điểm dùng thử. Không cần API Key—cài đặt là dịch được ngay."
   },
   "m_e5533fd28356f3ec": {
     "message": "Đăng nhập / Đăng ký"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Tài khoản"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Đăng nhập để dùng dịch bằng điểm và xem trạng thái dùng thử và đăng ký."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Điểm còn lại"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Quản lý tài khoản"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Gói và đăng ký"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Đăng xuất"
-  },
-  "m_f45134adb4717545": {
-    "message": "Bản dịch được thực hiện bởi dịch vụ dịch bằng chọn văn bản AI và trừ điểm tài khoản. Không cần API Key."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Hỗ trợ dịch văn bản cho chọn văn bản, dịch vùng và bảng dịch. Dịch hình ảnh hiện cần chuyển sang ChatGPT hoặc DeepSeek và nhập Key của riêng bạn."
   },
   "m_918b7761e2f3dd27": {
     "message": "Văn bản gốc được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch. Chúng tôi không lưu văn bản gốc và bản dịch; tài khoản chỉ ghi số ký tự và điểm đã trừ."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "Đang dùng thử · hết hạn $arg1$",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Đang dùng thử"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Dùng thử đã kết thúc"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "Không có bản dùng thử"
-  },
-  "m_67721ec2d8463717": {
-    "message": "Không có đăng ký"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "Cập nhật $arg1$",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Đăng nhập để dùng dịch bằng điểm. Tài khoản mới được tặng điểm dùng thử."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Dịch bằng điểm chưa khả dụng, vui lòng sử dụng API Key của bạn."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Đã hết điểm: hãy đăng ký gói hoặc chuyển sang API Key của bạn."
   },
   "m_84378de635f8c238": {
     "message": "Còn $arg1$ điểm",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Cần đăng nhập"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Đăng nhập để nhận điểm dùng thử"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ điểm",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Cần đăng nhập"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Đã hết điểm miễn phí. Đăng ký tài khoản để nhận thêm điểm."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Đã hết điểm. Đăng ký để sử dụng không giới hạn."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "Dịch bằng điểm đã tạm dừng. Vui lòng liên hệ với chúng tôi."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "Mức sử dụng tháng này cao. Vui lòng thử lại sau."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "Không cần đăng ký. Nhận điểm miễn phí để dịch, không cần API Key. Sau khi hết điểm, đăng ký để nhận thêm."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Bắt đầu dùng thử miễn phí"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "Đã có tài khoản? Đăng nhập"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "Sau khi đăng nhập, bạn có thể dùng dịch bằng điểm và xem điểm cùng trạng thái đăng ký."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "Dịch được thực hiện bởi dịch vụ dịch chọn văn bản bằng AI, không cần API Key: dùng điểm tặng hoặc đăng ký để sử dụng không giới hạn."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Đã đăng ký"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Đang đăng ký"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Chưa đăng ký"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Không giới hạn"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Đăng ký / Đăng nhập, nhận thêm $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Quản lý đăng ký"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Đăng ký sử dụng không giới hạn"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Không giới hạn số lần trong thời gian đăng ký, không tiêu tốn điểm."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Đăng nhập để sử dụng dịch bằng điểm."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Sử dụng không giới hạn"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Đã hết điểm miễn phí. Đăng ký để nhận $arg1$ điểm, hoặc chuyển sang API Key của riêng bạn.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Đăng ký / Đăng nhập"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Đã hết điểm. Đăng ký để sử dụng không giới hạn, hoặc chuyển sang API Key của riêng bạn."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Đăng ký nhận thêm $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Dùng thử miễn phí, hoặc đăng ký để sử dụng không giới hạn, không cần API Key"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Sử dụng không giới hạn"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Đã hết điểm"
   },
   "extensionName": {
     "message": "Trình dịch AI"

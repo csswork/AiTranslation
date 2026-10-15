@@ -8,6 +8,7 @@ import { loadLocalEnv, readConfig } from './config/index.js';
 import { createPool } from './db/index.js';
 import { pendingMigrations } from './db/migrate.js';
 import { createMailer } from './mail/index.js';
+import { createCreemClient } from './billing/creem.js';
 import { createHostedTranslator } from './translation/hosted.js';
 
 loadLocalEnv();
@@ -44,12 +45,15 @@ const googleIdToken = config.google
   ? (token, nonce) => verifyGoogleIdToken(token, { clientId: config.google.clientId, nonce, getKey })
   : null;
 const hosted = createHostedTranslator(config);
-const app = createApp({ config, pool, mailer: createMailer(config), google: createGoogleClient(config), googleIdToken, hosted });
+const creem = createCreemClient(config);
+const app = createApp({ config, pool, mailer: createMailer(config), google: createGoogleClient(config), googleIdToken, hosted, creem });
 // 启用代理时不让 @hono/node-server 替换全局 Request，否则又会与 undici 的 fetch 混用。
 const server = serve({ fetch: app.fetch, hostname: config.host, port: config.port, overrideGlobalObjects: !proxy }, (info) => {
   console.log(`用户管理界面：${config.appOrigin}（监听 ${info.address}:${info.port}）`);
   if (!config.google) console.log('未配置 GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET，Google 登录不显示。');
   if (!hosted) console.log('未配置 HOSTED_DEEPSEEK_API_KEY，托管翻译不可用。');
+  if (!creem) console.log('未配置 CREEM_API_KEY，订阅结账不可用。');
+  if (config.adminOrigin) console.log(`管理员界面：${config.adminOrigin}`);
 });
 
 const shutdown = () => {

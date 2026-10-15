@@ -26,7 +26,7 @@ Pick a provider on the options page and paste in an API key:
 | Provider | Get a key | Default model | Base URL |
 | --- | --- | --- | --- |
 | ChatGPT | <https://platform.openai.com/api-keys> | `gpt-5.6-luna` | `https://api.openai.com/v1` |
-| DeepSeek | <https://platform.deepseek.com/api_keys> | `deepseek-v4-flash` | `https://api.deepseek.com` |
+| DeepSeek | <https://platform.deepseek.com/api_keys> | `deepseek-flash` | `https://api.deepseek.com` |
 | DeepL | <https://www.deepl.com/pro-api> | — (no model choice) | Chosen from the key: `https://api-free.deepl.com` for Free keys ending in `:fx`, otherwise `https://api.deepl.com` |
 
 ChatGPT and DeepSeek default to the cheapest tier available, since translation is a high-frequency, short-input task. The model field also suggests `gpt-5.6-terra` / `gpt-5.6-sol` / `gpt-6-astra` and `deepseek-v4-pro`, and accepts any model name the provider supports. Hit **测试连接** ("Test connection") to verify.
@@ -35,13 +35,16 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Besides bring-your-own-key, the first provider is **点数翻译** (credit translation): sign in to a Huaci account and translate text with account credits, no API key needed. A new installation opens the options page with a short welcome that offers both paths.
+Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
+
+- **Guest trial**: right after install, the service worker silently claims a guest session with free credits (`POST /api/extension/guest`). It then opens the account site's welcome page, which recognizes a reinstall in the same browser. Translation works immediately, with no sign-up. If the account service is unreachable at install time, the options page shows the old welcome with both paths, and the first credit translation claims the guest session later.
+- **Credits and subscription**: when the free credits run out, guests are asked to register, which gives more credits and moves the remaining guest credits over. Registered users are asked to subscribe. Subscribers see **Unlimited** instead of a balance.
 
 - **Environment**: `src/lib/env.js` decides it from the manifest. Store builds have `update_url` and use `https://app.huaci.app` and `https://huaci.app`. Unpacked builds use the local dev servers, `http://localhost:8787` (`npm run dev:backend`) and `http://localhost:8788` (`npm run dev:web`), for the API, account links and privacy link. The options footer then shows a `DEV · localhost:8787` badge. All external addresses come from this file.
 - **Sign-in** opens the account site's authorization page in a new tab in the current window. It does not use `launchWebAuthFlow`, which opens a separate window. After approval the site redirects to the extension's own `src/auth/callback.html` with a one-time code. That page is the only web-accessible resource, and only for the account origins. It hands its URL to the service worker. The worker checks `state` and exchanges the code with the PKCE verifier for an extension session token, stored in `chrome.storage.local` only. The verifier waits in `chrome.storage.session`. The worker then switches back to the tab that started sign-in and closes the callback tab; started from the popup, the callback tab becomes the options page.
-- **Status**: username, credit balance, trial expiry and subscription are cached as `accountStatus`. The options page and toolbar popup listen for storage changes, so balance updates after every hosted translation; the options page also refreshes when it is opened or becomes visible. An expired or revoked session returns to signed-out.
-- **Billing** is enforced by the server: 1 credit per 500 characters (minimum 1), refunded if translation fails. The client only displays the balance. Hosted mode currently covers text (selection, text panel, regions, captions); image translation still needs a vision provider with your own key.
-- All account and hosted requests are sent by the service worker to the fixed account origin. Page translations reach it through the usual translation port; the account messages (login, logout, refresh, hosted translate) are accepted only from extension pages.
+- **Status**: account type (guest or registered), username, credit balance, subscription and the sign-up bonus are cached as `accountStatus`. The options page and toolbar popup listen for storage changes, so balance updates after every hosted translation; the options page also refreshes when it is opened or becomes visible. An expired or revoked session returns to signed-out.
+- **Billing** is enforced by the server: 1 credit per 500 characters (minimum 1, adjustable in the admin interface), refunded if translation fails; subscribers are not charged. The client only displays the state. Hosted mode currently covers text (selection, text panel, regions, captions); image translation still needs a vision provider with your own key.
+- All account and hosted requests are sent by the service worker to the fixed account origin. Page translations reach it through the usual translation port; the account messages (guest claim, login, logout, refresh, hosted translate) are accepted only from extension pages. Signing in while a guest sends the guest token along, so the server merges the guest into the account.
 
 ## Usage
 

@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Ventana de inicio de sesión cerrada"
-  },
   "m_927407ede0c1dc74": {
     "message": "Solicitud de inicio de sesión no válida. Inténtalo de nuevo."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Error al iniciar sesión. Inténtalo de nuevo."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Puntos insuficientes: se necesitan $arg1$ puntos, quedan $arg2$ puntos",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Texto demasiado largo. La traducción con puntos admite hasta $arg1$ caracteres por solicitud.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Traducción con puntos"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Usa los puntos de tu cuenta tras iniciar sesión. No se requiere API Key."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Empezar"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Prueba gratuita"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Inicia sesión o regístrate para obtener puntos de prueba. No se requiere API Key: instala y traduce."
   },
   "m_e5533fd28356f3ec": {
     "message": "Iniciar sesión / Registrarse"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Cuenta"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Inicia sesión para usar la traducción con puntos y consultar el estado de tu prueba y suscripción."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Puntos restantes"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Gestionar cuenta"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Planes y suscripciones"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Cerrar sesión"
-  },
-  "m_f45134adb4717545": {
-    "message": "La traducción se realiza mediante el servicio de traducción por selección con IA y se descuentan puntos de tu cuenta. No se requiere API Key."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Admite traducción de texto por selección, traducción por área y el panel de traducción. La traducción de imágenes actualmente requiere cambiar a ChatGPT o DeepSeek e introducir tu propia Key."
   },
   "m_918b7761e2f3dd27": {
     "message": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción. No almacenamos el texto original ni la traducción; tu cuenta solo registra el recuento de caracteres y los puntos descontados."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "En prueba · caduca el $arg1$",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Prueba activa"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Prueba finalizada"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "Sin prueba disponible"
-  },
-  "m_67721ec2d8463717": {
-    "message": "Sin suscripción"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "Actualizado el $arg1$",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Inicia sesión para usar la traducción con puntos. Las cuentas nuevas reciben puntos de prueba."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "La traducción con créditos aún no está disponible. Por ahora, usa tu propia API Key."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Créditos agotados: suscríbete a un plan o cambia a tu propia API Key."
   },
   "m_84378de635f8c238": {
     "message": "$arg1$ créditos restantes",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Se requiere iniciar sesión"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Inicia sesión para obtener créditos de prueba"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ créditos",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Se requiere iniciar sesión"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Puntos gratuitos agotados. Regístrate para obtener más puntos."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Puntos agotados. Suscríbete para uso ilimitado."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "La traducción con puntos está en pausa. Contáctanos."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "El uso este mes es alto. Inténtalo de nuevo más tarde."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "No necesitas registrarte. Reclama puntos gratuitos para traducir, sin API Key. Cuando se agoten, regístrate para obtener más."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Comenzar prueba gratuita"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "¿Ya tienes una cuenta? Inicia sesión"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "Tras iniciar sesión, puedes usar la traducción con puntos y ver tus puntos y estado de suscripción."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "La traducción la realiza el servicio de traducción por selección con IA, sin API Key: usa los puntos gratuitos o suscríbete para uso ilimitado."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Registrado"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Suscrito"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Sin suscripción"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Ilimitado"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Regístrate / Inicia sesión y obtén $arg1$ más en puntos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Gestionar suscripción"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Suscríbete para uso ilimitado"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Ilimitado durante la suscripción, sin consumir puntos."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Inicia sesión para usar la traducción con puntos."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Uso ilimitado"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Puntos gratuitos agotados. Regístrate y obtén $arg1$ en puntos, o cambia a tu propia API Key.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Registrarse / Iniciar sesión"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Puntos agotados. Suscríbete para uso ilimitado, o cambia a tu propia API Key."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Regístrate y obtén $arg1$ más en puntos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Prueba gratuita, o suscríbete para uso ilimitado, sin necesidad de API Key"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Uso ilimitado"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Puntos agotados"
   },
   "extensionName": {
     "message": "Traductor IA"

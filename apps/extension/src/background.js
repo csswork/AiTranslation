@@ -122,11 +122,29 @@ function createMenu() {
 
 chrome.runtime.onInstalled.addListener((details) => {
   createMenu();
-  // 新安装：设置页顶部显示注册引导（登录领取试用点数，或使用自己的 API Key），完成任一项后收起
-  if (details.reason === 'install') {
-    chrome.storage.local.set({ onboarding: 'pending' }).finally(() => chrome.runtime.openOptionsPage());
-  }
+  if (details.reason === 'install') onFirstInstall();
 });
+
+/**
+ * 新安装：默认使用点数翻译，静默领取访客试用，然后打开用户端欢迎页（由它识别同一浏览器重装后的重复领取）。
+ * 账户服务连不上时退回设置页的注册引导（免费试用或使用自己的 API Key）。
+ */
+async function onFirstInstall() {
+  await AITrSettings.patchSettings({ provider: 'hosted' });
+  let welcomeUrl = null;
+  try {
+    welcomeUrl = await AITrAccount.claimGuest();
+  } catch {
+    /* 离线或服务不可用：下面打开设置页的引导，首次使用点数翻译时还会补领 */
+  }
+  if (welcomeUrl) {
+    await chrome.storage.local.set({ onboarding: 'done' });
+    chrome.tabs.create({ url: welcomeUrl });
+  } else {
+    await chrome.storage.local.set({ onboarding: 'pending' });
+    chrome.runtime.openOptionsPage();
+  }
+}
 chrome.runtime.onStartup.addListener(createMenu);
 AITrI18n.onChange(createMenu);
 
@@ -638,6 +656,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (type === 'account-logout' && fromExtensionPage) return accountReply(AITrAccount.logout());
+  // 设置页引导里的「免费试用」：安装时没领到（离线）时手动领取，并打开欢迎页
+  if (type === 'account-guest' && fromExtensionPage) {
+    return accountReply(AITrAccount.claimGuest().then((url) => {
+      if (url) chrome.tabs.create({ url, windowId: sender.tab?.windowId });
+      return AITrAccount.refresh();
+    }));
+  }
   if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
   if (type === 'hosted-translate' && fromExtensionPage) {
     AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source })

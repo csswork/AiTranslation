@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Anmeldefenster geschlossen"
-  },
   "m_927407ede0c1dc74": {
     "message": "Ungültige Anmeldeanfrage. Bitte versuchen Sie es erneut."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Nicht genügend Punkte: $arg1$ Punkte benötigt, $arg2$ verbleibend",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Text zu lang. Punktebasierte Übersetzung unterstützt bis zu $arg1$ Zeichen pro Anfrage.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Punktebasierte Übersetzung"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Nutzen Sie Ihre Kontopunkte nach der Anmeldung. Kein API Key erforderlich."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Erste Schritte"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Kostenlos testen"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Melden Sie sich an oder registrieren Sie sich, um Testpunkte zu erhalten. Kein API Key erforderlich – einfach installieren und übersetzen."
   },
   "m_e5533fd28356f3ec": {
     "message": "Anmelden / Registrieren"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Konto"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Melden Sie sich an, um die punktebasierte Übersetzung zu nutzen und Ihren Test- und Abostatus einzusehen."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Verbleibende Punkte"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Konto verwalten"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Tarife und Abonnements"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Abmelden"
-  },
-  "m_f45134adb4717545": {
-    "message": "Die Übersetzung erfolgt durch den KI-Textauswahl-Übersetzungsdienst und Punkte werden von Ihrem Konto abgezogen. Kein API Key erforderlich."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Unterstützt Textübersetzung für Textauswahl, Bereichsübersetzung und das Übersetzungsfenster. Bildübersetzung erfordert derzeit den Wechsel zu ChatGPT oder DeepSeek und die Eingabe Ihres eigenen Keys."
   },
   "m_918b7761e2f3dd27": {
     "message": "Der Ausgangstext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet. Wir speichern weder Ausgangstext noch Übersetzung; Ihr Konto zeichnet nur Zeichenzahlen und Punkteabzüge auf."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "Testphase · läuft ab am $arg1$",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Testphase aktiv"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Testphase beendet"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "Keine Testphase verfügbar"
-  },
-  "m_67721ec2d8463717": {
-    "message": "Kein Abonnement"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "Aktualisiert am $arg1$",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Melden Sie sich an, um die punktebasierte Übersetzung zu nutzen. Neue Konten erhalten Testpunkte."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Übersetzung mit Guthaben ist noch nicht verfügbar. Bitte verwenden Sie vorerst Ihren eigenen API Key."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Guthaben aufgebraucht: Abonnieren Sie einen Tarif oder wechseln Sie zu Ihrem eigenen API Key."
   },
   "m_84378de635f8c238": {
     "message": "Noch $arg1$ Guthaben",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Anmeldung erforderlich"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Anmelden und Testguthaben erhalten"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ Guthaben",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Anmeldung erforderlich"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Gratis-Guthaben aufgebraucht. Registriere ein Konto, um mehr Guthaben zu erhalten."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Guthaben aufgebraucht. Abonniere für unbegrenzte Nutzung."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "Guthaben-Übersetzung ist pausiert. Bitte kontaktiere uns."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "Die Nutzung ist diesen Monat hoch. Bitte versuche es später erneut."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "Keine Registrierung nötig. Hole dir Gratis-Guthaben zum Übersetzen, kein API Key erforderlich. Wenn das Guthaben aufgebraucht ist, registriere dich für mehr Guthaben."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Kostenlos testen"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "Bereits ein Konto? Anmelden"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "Nach der Anmeldung kannst du die Guthaben-Übersetzung nutzen und dein Guthaben sowie deinen Abo-Status einsehen."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "Die Übersetzung erfolgt durch den KI-Übersetzungsdienst für markierten Text, kein API Key erforderlich: Nutze das Gratis-Guthaben oder abonniere für unbegrenzte Nutzung."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Registriert"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Abonniert"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Nicht abonniert"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Unbegrenzt"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Registrieren / Anmelden, erhalte $arg1$ mehr Guthaben",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Abo verwalten"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Abonnieren für unbegrenzte Nutzung"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Unbegrenzt während des Abos, kein Guthaben wird verbraucht."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Melde dich an, um die Guthaben-Übersetzung zu nutzen."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Unbegrenzte Nutzung"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Gratis-Guthaben aufgebraucht. Registriere dich und erhalte $arg1$ Guthaben oder wechsle zu deinem eigenen API Key.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Registrieren / Anmelden"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Guthaben aufgebraucht. Abonniere für unbegrenzte Nutzung oder wechsle zu deinem eigenen API Key."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Registriere dich und erhalte $arg1$ mehr Guthaben",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Kostenlos testen oder abonnieren für unbegrenzte Nutzung, kein API Key erforderlich"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Unbegrenzte Nutzung"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Punkte aufgebraucht"
   },
   "extensionName": {
     "message": "KI-Übersetzer"

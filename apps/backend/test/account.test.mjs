@@ -15,9 +15,9 @@ test('U2–U5、U8 页面需要登录并显示当前用户的数据', async () =
   const { app, config, mailbox } = buildApp({ pool });
   const b = await signInWithEmail(app, config, mailbox, 'ivy@example.com');
   const pages = {
-    '/plans': /付费套餐尚未开放/,
-    '/billing': /暂无订单/,
-    '/usage': /注册试用赠送[\s\S]*\+100/,
+    '/plans': /data-plan="monthly"[\s\S]*\$3\.99[\s\S]*\$5\.99[\s\S]*data-plan="yearly"[\s\S]*即将开放/,
+    '/billing': /暂无订阅[\s\S]*还没有付款记录/,
+    '/usage': /注册赠送[\s\S]*\+100[\s\S]*不过期/,
     '/help': /自带 Key/,
   };
   for (const [path, pattern] of Object.entries(pages)) {

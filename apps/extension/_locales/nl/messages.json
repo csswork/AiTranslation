@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Inlogvenster gesloten"
-  },
   "m_927407ede0c1dc74": {
     "message": "Ongeldig inlogverzoek. Probeer het opnieuw."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Inloggen mislukt. Probeer het opnieuw."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Niet genoeg credits: $arg1$ credits nodig, $arg2$ resterend",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Tekst te lang. Vertaling met credits ondersteunt maximaal $arg1$ tekens per aanvraag.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Vertaling met credits"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Gebruik je accountcredits na het inloggen. Geen API Key nodig."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Aan de slag"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Gratis proberen"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Log in of meld je aan om proefcredits te ontvangen. Geen API Key nodig: installeren en vertalen."
   },
   "m_e5533fd28356f3ec": {
     "message": "Inloggen / Registreren"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Account"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Log in om vertaling met credits te gebruiken en je proef- en abonnementsstatus te bekijken."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Resterende credits"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Account beheren"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Abonnementen"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Uitloggen"
-  },
-  "m_f45134adb4717545": {
-    "message": "De vertaling wordt uitgevoerd door de AI-selectievertaalservice en er worden credits van je account afgeschreven. Geen API Key nodig."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Ondersteunt tekstvertaling voor selectie, gebiedsvertaling en het vertaalpaneel. Voor afbeeldingsvertaling moet je momenteel overschakelen naar ChatGPT of DeepSeek en je eigen Key invoeren."
   },
   "m_918b7761e2f3dd27": {
     "message": "De brontekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd voor vertaling. We slaan de bron- en vertaalde tekst niet op; je account registreert alleen tekentellingen en creditafschrijvingen."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "Proefperiode · verloopt $arg1$",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Proefperiode actief"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Proefperiode afgelopen"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "Geen proefperiode beschikbaar"
-  },
-  "m_67721ec2d8463717": {
-    "message": "Geen abonnement"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "Bijgewerkt $arg1$",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Log in om vertaling met credits te gebruiken. Nieuwe accounts ontvangen proefcredits."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Vertaling met credits is nog niet beschikbaar. Gebruik voorlopig je eigen API Key."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Credits opgebruikt: neem een abonnement, of schakel over naar je eigen API Key."
   },
   "m_84378de635f8c238": {
     "message": "Nog $arg1$ credits",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Inloggen vereist"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Log in om proefcredits te ontvangen"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ credits",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Inloggen vereist"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Gratis credits opgebruikt. Registreer een account om meer credits te krijgen."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Credits opgebruikt. Neem een abonnement voor onbeperkt gebruik."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "Creditvertaling is gepauzeerd. Neem contact met ons op."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "Het gebruik is deze maand hoog. Probeer het later opnieuw."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "Geen registratie nodig. Claim gratis credits om te vertalen, geen API Key vereist. Nadat de credits op zijn, kun je je registreren voor meer credits."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Start gratis proefperiode"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "Heb je al een account? Log in"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "Na inloggen kun je creditvertaling gebruiken en je credits en abonnementsstatus bekijken."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "De vertaling wordt verzorgd door de AI select-to-translate-service, geen API Key vereist: gebruik de gratis credits of neem een abonnement voor onbeperkt gebruik."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Geregistreerd"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Geabonneerd"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Niet geabonneerd"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Onbeperkt"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Registreer / Log in, ontvang $arg1$ extra credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Abonnement beheren"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Abonneer voor onbeperkt gebruik"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Onbeperkt tijdens abonnement, geen credits verbruikt."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Log in om creditvertaling te gebruiken."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Onbeperkt gebruik"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Gratis credits opgebruikt. Registreer en ontvang $arg1$ aan credits, of schakel over naar je eigen API Key.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Registreer / Log in"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Credits opgebruikt. Neem een abonnement voor onbeperkt gebruik, of schakel over naar je eigen API Key."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Registreer en ontvang $arg1$ extra credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Gratis proberen, of abonneren voor onbeperkt gebruik, geen API Key vereist"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Onbeperkt gebruik"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Punten opgebruikt"
   },
   "extensionName": {
     "message": "AI-vertaler"

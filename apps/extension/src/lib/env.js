@@ -16,6 +16,7 @@
       account: `${accountOrigin}/`,
       plans: `${accountOrigin}/plans`,
       usage: `${accountOrigin}/usage`,
+      billing: `${accountOrigin}/billing`,
       website: `${websiteOrigin}/`,
       privacy: `${websiteOrigin}/privacy.html`,
     }),

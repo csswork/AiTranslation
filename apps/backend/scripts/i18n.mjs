@@ -42,7 +42,7 @@ const placeholders = (text) => [...new Set(text.match(/\{\w+\}/g) || [])].sort()
 
 // 非拉丁文字的语言里，拉丁字母只应出现在专有名词与占位符中；用来发现「الحسAB」这类模型输出错乱。
 const NON_LATIN = new Set(['zh-Hant', 'ja', 'ko', 'ar']);
-const LATIN_ALLOWED = /AI Selection Translator|ChatGPT|OpenAI|DeepSeek|DeepL|Google|Chrome|GitHub|Haibo|GPL-3\.0|API|Key|UTC|AI|\{\w+\}/g;
+const LATIN_ALLOWED = /AI Selection Translator|ChatGPT|OpenAI|DeepSeek|DeepL|Google|Chrome|GitHub|Haibo|GPL-3\.0|API|Key|UTC|AI|Creem|\{\w+\}/g;
 const strayLatin = (code, text) => NON_LATIN.has(code) && /[A-Za-z]/.test(text.replace(LATIN_ALLOWED, ''));
 
 /** 返回问题列表；空数组表示所有语言完整。 */
@@ -79,7 +79,7 @@ async function translate(items, locale, { key, model }) {
   const prompt = [
     `Translate the UI strings of a web account center from Simplified Chinese into ${locale.label} (${locale.htmlLang}).`,
     'Return only a JSON object mapping each original string to its translation.',
-    'Keep {placeholders} exactly unchanged. Keep "Google", "Chrome", "API Key", "OpenAI", "DeepSeek", "DeepL", "UTC" unchanged.',
+    'Keep {placeholders} exactly unchanged. Keep "Google", "Chrome", "API Key", "OpenAI", "DeepSeek", "DeepL", "Creem", "UTC" unchanged.',
     `The product name "AI 划词翻译" must be rendered as "${product}". "点" / "点数" means service credits.`,
     'Use a concise, neutral tone suitable for buttons, labels and short notices.',
   ].join('\n');

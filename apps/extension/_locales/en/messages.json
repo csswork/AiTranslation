@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Login window closed"
-  },
   "m_927407ede0c1dc74": {
     "message": "Invalid login request. Please try again."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Login failed. Please try again."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Not enough credits: $arg1$ credits needed, $arg2$ remaining",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Text too long. Credit-based translation supports up to $arg1$ characters per request.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Credit-based translation"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Use your account credits after logging in. No API Key required."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Get started"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Free trial"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Log in or sign up to get trial credits. No API Key required—just install and translate."
   },
   "m_e5533fd28356f3ec": {
     "message": "Log in / Sign up"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Account"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Log in to use credit-based translation and view your trial and subscription status."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Remaining credits"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Manage account"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Plans and subscriptions"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Log out"
-  },
-  "m_f45134adb4717545": {
-    "message": "Translation is completed by the AI selection translation service and credits are deducted from your account. No API Key required."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Supports text translation for selection, area translation, and the translation panel. Image translation currently requires switching to ChatGPT or DeepSeek and entering your own Key."
   },
   "m_918b7761e2f3dd27": {
     "message": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "Trial · expires $arg1$",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Trial active"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Trial ended"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "No trial available"
-  },
-  "m_67721ec2d8463717": {
-    "message": "No subscription"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "Updated $arg1$",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Log in to use credit-based translation. New accounts receive trial credits."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Credit-based translation is not yet available. Please use your own API Key for now."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Credits used up: subscribe to a plan, or switch to your own API Key."
   },
   "m_84378de635f8c238": {
     "message": "$arg1$ credits remaining",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Sign-in required"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Sign in to claim trial credits"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ credits",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Sign-in required"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Free credits used up. Register an account to get more credits."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Credits used up. Subscribe for unlimited use."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "Credit translation is paused. Please contact us."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "Usage is high this month. Please try again later."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "No registration needed. Claim free credits to translate, no API Key required. After credits run out, register to get more."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Start free trial"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "Already have an account? Log in"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "After logging in, you can use credit translation and view your credits and subscription status."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "Translation is handled by AI select-to-translate service, no API Key required: use the free credits, or subscribe for unlimited use."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Registered"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Subscribed"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Not subscribed"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Unlimited"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Register / Log in, get $arg1$ more credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Manage subscription"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Subscribe for unlimited use"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Unlimited during subscription, no credits consumed."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Log in to use credit translation."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Unlimited use"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Free credits used up. Register to get $arg1$ in credits, or switch to your own API Key.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Register / Log in"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Credits used up. Subscribe for unlimited use, or switch to your own API Key."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Register to get $arg1$ more credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Free trial, or subscribe for unlimited use, no API Key required"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Unlimited use"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Points used up"
   },
   "extensionName": {
     "message": "AI Translator"

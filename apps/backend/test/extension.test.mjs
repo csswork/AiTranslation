@@ -74,7 +74,7 @@ test('扩展登录：未登录先去登录页，确认后带一次性授权码�
   const body = await me.json();
   assert.match(body.username, /^user_/);
   assert.deepEqual(body.credits.balance, 100);
-  assert.equal(body.credits.trialActive, true);
+  assert.equal(body.kind, 'member');
   assert.equal(body.subscription, null);
   assert.equal(body.hosted.available, false);
   assert.equal(body.hosted.charsPerCredit, 500);
@@ -135,8 +135,12 @@ function fakeHosted({ fail = false } = {}) {
   const calls = [];
   const hosted = async ({ texts, target }) => {
     calls.push({ texts, target });
-    if (fail) throw new Error('model_500');
-    return texts.map((text) => `[${target}] ${text}`);
+    const meta = { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', latencyMs: 5 };
+    if (fail) throw Object.assign(new Error('model_500'), { code: 'http_500', meta });
+    return {
+      translations: texts.map((text) => `[${target}] ${text}`),
+      meta: { ...meta, inputTokens: 1_000_000, cachedTokens: 0, outputTokens: 1_000_000, fellBack: false },
+    };
   };
   return { hosted, calls };
 }
@@ -203,15 +207,16 @@ test('托管翻译：模型失败时返还点数并记为失败；参数校验�
   assert.equal((await api(plain.app, plain.config, '/translate', { method: 'POST', token: other.token, body: { texts: ['x'], target: 'fr' } })).status, 503);
 });
 
-test('试用过期后剩余点数失效，余额不会因扣点变成负数', async () => {
+test('试用点数默认不过期；带到期时间的发放过期后剩余点数失效，余额不会因扣点变成负数', async () => {
   const { hosted } = fakeHosted();
   const { app, config, mailbox } = buildApp({ pool, hosted });
   const { token } = await extensionLogin(app, config, mailbox, 'expire@example.com');
   await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'de' } });
+  const { rows: [trial] } = await pool.query("SELECT expires_at FROM credit_ledger WHERE entry_type = 'trial_grant'");
+  assert.equal(trial.expires_at, null, '注册赠送不过期');
   await pool.query("UPDATE credit_ledger SET expires_at = now() - interval '1 second' WHERE entry_type = 'trial_grant'");
   const body = await (await api(app, config, '/me', { token })).json();
   assert.equal(body.credits.balance, 0);
-  assert.equal(body.credits.trialActive, false);
   assert.equal((await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'de' } })).status, 402);
 });
 

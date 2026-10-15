@@ -25,8 +25,9 @@
             <div class="path primary">
               <span class="path-badge">推荐</span>
               <b>免费试用</b>
-              <p>登录或注册账户即可获得试用点数，不需要 API Key，装好就能翻译。</p>
-              <button class="btn" type="button" data-login>登录 / 注册</button>
+              <p>不用注册，领取免费点数就能翻译，不需要 API Key。点数用完后注册可再得更多点数。</p>
+              <button class="btn" type="button" data-guest>开始免费试用</button>
+              <button class="link" type="button" data-login>已有账户？登录</button>
             </div>
             <div class="path">
               <b>使用自己的 API Key</b>
@@ -39,7 +40,7 @@
         <div class="account-out" id="accountOut" hidden>
           <div>
             <h2>账户</h2>
-            <p class="desc">登录后可以使用点数翻译，并查看试用与订阅状态。</p>
+            <p class="desc">登录后可以使用点数翻译，并查看点数与订阅状态。</p>
           </div>
           <button class="btn" type="button" data-login>登录 / 注册</button>
         </div>
@@ -56,8 +57,9 @@
           </div>
         </div>
         <div class="account-actions" id="accountActions" hidden>
+          <button class="btn small" type="button" id="register" data-login></button>
           <button class="btn ghost small" type="button" id="manageAccount">管理账户</button>
-          <button class="btn ghost small" type="button" id="viewPlans">套餐与订阅</button>
+          <button class="btn ghost small" type="button" id="viewPlans"></button>
           <button class="btn ghost small" type="button" id="logout">退出登录</button>
           <span class="help" id="accountUpdated"></span>
         </div>
@@ -72,7 +74,7 @@
 
       <section class="card hosted-config" id="hostedConfig" hidden>
         <h2>点数翻译</h2>
-        <p class="desc">由 AI 划词翻译的服务完成翻译并扣除账户点数，不需要 API Key。</p>
+        <p class="desc">由 AI 划词翻译的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。</p>
         <div class="hosted-state" id="hostedState"></div>
         <ul class="hosted-notes">
           <li id="hostedRate"></li>

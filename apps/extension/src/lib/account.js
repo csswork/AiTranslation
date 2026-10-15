@@ -5,7 +5,9 @@
  * 登录：在当前窗口的新标签页打开用户端授权页 → 确认后回到扩展自己的回调页（src/auth/callback.html），
  *       带一次性授权码 → 用 PKCE 的 code_verifier 换取扩展会话令牌。code_verifier 与 state 存在
  *       chrome.storage.session（只有扩展页面和 service worker 能读）。令牌只存在 chrome.storage.local，不同步。
- * 状态：用户名、点数、试用、订阅保存为 accountStatus，设置页和弹窗监听它的变化即时更新；
+ * 访客：安装后静默领取访客试用（claimGuest），不注册就能用点数翻译；同一浏览器重装由用户端欢迎页识别。
+ *       登录时带上访客令牌，服务端把访客剩余点数并入正式账户。退出登录后不再自动领取。
+ * 状态：用户类型、用户名、点数、订阅保存为 accountStatus，设置页和弹窗监听它的变化即时更新；
  *       令牌失效（过期或在网页端被退出）时自动回到未登录。
  * 与 lang.js 一样，不能使用 import / export。
  */
@@ -17,6 +19,7 @@
   const SESSION_KEY = 'accountSession';
   const STATUS_KEY = 'accountStatus';
   const PENDING_KEY = 'accountLoginPending';
+  const GUEST_CLAIMED_KEY = 'guestClaimed';
   const PENDING_TTL = 30 * 60 * 1000; // 授权页上可能还要先注册、收验证码
   const CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
 
@@ -33,8 +36,12 @@
     .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   const randomString = (size = 32) => base64url(crypto.getRandomValues(new Uint8Array(size)));
 
+  async function readSession() {
+    return (await chrome.storage.local.get(SESSION_KEY))[SESSION_KEY] || null;
+  }
+
   async function readToken() {
-    return (await chrome.storage.local.get(SESSION_KEY))[SESSION_KEY]?.token || '';
+    return (await readSession())?.token || '';
   }
 
   async function readStatus() {
@@ -52,14 +59,21 @@
     return writeStatus({ signedIn: false });
   }
 
-  /** 服务端返回的状态里只保留界面需要的字段。 */
+  /**
+   * 服务端返回的状态里只保留界面需要的字段。signedIn 只表示正式账户；访客另有 guest 标记，
+   * 两者都能使用点数翻译。subscription 有值时托管翻译无限使用（界面不显示点数）。
+   */
   function statusFrom(data, previous = {}) {
+    const kind = data.kind ?? previous.kind ?? 'member';
     return {
-      signedIn: true,
+      kind,
+      signedIn: kind === 'member',
+      guest: kind === 'guest',
       username: data.username ?? previous.username ?? '',
       credits: data.credits ?? previous.credits ?? null,
       subscription: data.subscription !== undefined ? data.subscription : previous.subscription ?? null,
       hosted: data.hosted ?? previous.hosted ?? null,
+      offers: data.offers ?? previous.offers ?? null,
     };
   }
 
@@ -130,12 +144,30 @@
     const code = back.searchParams.get('code');
     if (!code) throw new AccountError(t('登录请求无效，请重试'), 'code');
 
+    // 原来是访客：带上访客令牌，服务端把访客剩余点数并入这个账户。
+    const session = await readSession();
     const { response, data } = await call('/token', {
-      method: 'POST', auth: false, body: { code, code_verifier: pending.verifier, redirect_uri: CALLBACK_URL },
+      method: 'POST',
+      auth: false,
+      body: { code, code_verifier: pending.verifier, redirect_uri: CALLBACK_URL, guest_token: session?.guest ? session.token : undefined },
     });
     if (!response.ok || !data.token) throw new AccountError(t('登录失败，请重试'), 'token');
     await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token } });
     return { status: await refresh(), returnTabId: pending.returnTabId };
+  }
+
+  /**
+   * 领取访客试用：只在这台浏览器从未领取、且当前没有任何登录时进行（退出登录后不会再领）。
+   * 返回欢迎页地址（新安装时打开它，由用户端识别同一浏览器的重复领取）；不需要或失败时返回 null。
+   */
+  async function claimGuest() {
+    if (await readToken()) return null;
+    if ((await chrome.storage.local.get(GUEST_CLAIMED_KEY))[GUEST_CLAIMED_KEY]) return null;
+    const { response, data } = await call('/guest', { method: 'POST', auth: false });
+    if (!response.ok || !data.token) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'guest');
+    await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token, guest: true }, [GUEST_CLAIMED_KEY]: true });
+    await refresh();
+    return data.welcomeUrl || null;
   }
 
   async function logout() {
@@ -148,9 +180,14 @@
   }
 
   const FAILURES = {
-    402: (data) => new AccountError(t('点数不足：本次需要 $1 点，剩余 $2 点', [data.cost ?? '?', data.credits?.balance ?? 0]), 'insufficient_credits', 'open-options'),
+    402: (data) => (data.kind === 'guest'
+      ? new AccountError(t('免费点数已用完，注册账户即可获得更多点数'), 'insufficient_credits', 'open-options')
+      : new AccountError(t('点数已用完，订阅后可无限使用'), 'insufficient_credits', 'open-options')),
+    403: () => new AccountError(t('点数翻译已暂停使用，请联系我们'), 'frozen'),
     413: (data) => new AccountError(t('文字太长，点数翻译单次最多 $1 字', [data.maxChars ?? 6000]), 'too_long'),
-    429: () => new AccountError(t('请求太频繁，稍后再试'), 'rate_limited'),
+    429: (data) => (data.error === 'fair_use'
+      ? new AccountError(t('本月用量较高，请稍后再试'), 'fair_use')
+      : new AccountError(t('请求太频繁，稍后再试'), 'rate_limited')),
     502: () => new AccountError(t('托管翻译暂时失败，本次没有扣点，请重试'), 'translation_failed'),
     503: () => new AccountError(t('点数翻译暂未开放'), 'hosted_unavailable', 'open-options'),
   };
@@ -160,14 +197,16 @@
    * @returns {Promise<string[]>}
    */
   async function translate({ texts, target, source, signal }) {
+    // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
+    if (!(await readToken())) await claimGuest().catch(() => null);
     const { response, data } = await call('/translate', { method: 'POST', body: { texts, target, source: source || undefined }, signal });
     if (data.credits) {
       const previous = await readStatus();
-      if (previous.signedIn) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
+      if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
     }
     if (response.ok && Array.isArray(data.translations)) return data.translations;
     throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, logout, refresh, readStatus, translate };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, logout, refresh, readStatus, translate };
 })();

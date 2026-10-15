@@ -46,3 +46,15 @@ export function setTemp(c, config, name, value, maxAgeSeconds = 600) {
 export function clearTemp(c, config, name) {
   deleteCookie(c, name, base(config));
 }
+
+/**
+ * 浏览器标记：欢迎页写入的随机值（库里只存哈希），用来识别同一浏览器重装扩展后重复领取访客点数。
+ * 只属于用户端主机；有效期按 Chrome 上限 400 天，每次在欢迎页或登录时续期。
+ */
+const markName = (config) => (config.secureCookies ? '__Host-huaci_browser' : 'huaci_browser');
+
+export const getBrowserMark = (c, config) => getCookie(c, markName(config));
+
+export function setBrowserMark(c, config, value) {
+  setCookie(c, markName(config), value, { ...base(config), maxAge: 400 * 86400 });
+}

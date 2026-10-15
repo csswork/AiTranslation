@@ -44,18 +44,18 @@ test('邮箱验证码注册：创建账号、发放一次试用点数、只保�
   assert.match(overview, /alice@example\.com/);
   assert.match(overview, /user_[a-z0-9]{8}/);
   assert.match(overview, /100<span class="unit">点/);
-  assert.match(overview, /试用中/);
+  assert.match(overview, /暂无订阅/);
 
   const { rows: users } = await pool.query('SELECT * FROM users');
   assert.equal(users.length, 1);
-  assert.deepEqual(Object.keys(users[0]).sort(), ['created_at', 'email', 'email_verified_at', 'id', 'updated_at', 'username']);
+  assert.deepEqual(Object.keys(users[0]).sort(), ['created_at', 'email', 'email_verified_at', 'hosted_frozen_at', 'id', 'kind', 'updated_at', 'username']);
   assert.ok(users[0].email_verified_at);
 
   const { rows: ledger } = await pool.query('SELECT entry_type, amount, expires_at FROM credit_ledger');
   assert.equal(ledger.length, 1);
   assert.equal(ledger[0].entry_type, 'trial_grant');
   assert.equal(ledger[0].amount, 100);
-  assert.ok(ledger[0].expires_at > new Date());
+  assert.equal(ledger[0].expires_at, null, '注册赠送不过期');
 
   const token = b.jar.get('huaci_session');
   const { rows: sessions } = await pool.query('SELECT token_hash, client FROM sessions');

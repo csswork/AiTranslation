@@ -1,23 +1,33 @@
 /**
  * 点数账本。只追加记录，余额由服务端按账本汇总，客户端显示的数字不作为授权依据。
  *
- * 发放（trial_grant，以后还有购买）是正数，可带到期时间；扣点（usage）和返还（refund）
- * 都记在某一笔发放上（grant_id）。余额 = 未过期发放各自的「发放额 + 其扣点与返还」之和，
+ * 发放（trial_grant 注册、guest_grant 访客、transfer 访客转入、adjust 管理员补发）是正数，
+ * 目前都不过期（字段保留到期时间）；扣点（usage）、返还（refund）和作废（void）都记在某一笔发放上（grant_id）。余额 = 未过期发放各自的「发放额 + 其扣点与返还」之和，
  * 所以发放过期后剩下的点数一起失效，不会出现负余额。
  */
 
-/** 每个账号只发一次试用点数；重复调用由 idempotency_key 去重。 */
-export async function grantTrial(db, config, userId) {
-  if (!config.trialCredits) return;
+/** 发放一笔不过期的点数；同一 idempotency_key 只入账一次。 */
+async function grant(db, userId, entryType, amount, key, reason = null) {
+  if (!amount) return;
   await db.query(
-    `INSERT INTO credit_ledger (user_id, entry_type, amount, expires_at, idempotency_key)
-     VALUES ($1, 'trial_grant', $2,
-             CASE WHEN $3::int > 0 THEN now() + make_interval(days => $3::int) END,
-             $4)
+    `INSERT INTO credit_ledger (user_id, entry_type, amount, idempotency_key, reason)
+     VALUES ($1, $2, $3, $4, $5)
      ON CONFLICT (idempotency_key) DO NOTHING`,
-    [userId, config.trialCredits, config.trialDays, `trial:${userId}`],
+    [userId, entryType, amount, key, reason],
   );
 }
+
+/** 注册赠送：每个账号只发一次，绑定新的登录方式不会再领。 */
+export const grantTrial = (db, amount, userId) => grant(db, userId, 'trial_grant', amount, `trial:${userId}`);
+
+/** 访客赠送：每个访客账户只发一次。 */
+export const grantGuest = (db, amount, userId) => grant(db, userId, 'guest_grant', amount, `guest:${userId}`);
+
+/** 管理员补发（A6）：必须填写原因；requestId 防止重复提交。 */
+export const adjustCredits = (db, { userId, amount, reason, requestId }) => {
+  if (!Number.isInteger(amount) || amount <= 0 || !reason) throw new Error('invalid_adjustment');
+  return grant(db, userId, 'adjust', amount, `adjust:${requestId}`, reason);
+};
 
 /** 未过期的发放及各自剩余点数，按到期时间先后（先用快到期的）。 */
 async function activeGrants(db, userId) {
@@ -34,17 +44,35 @@ async function activeGrants(db, userId) {
   return rows;
 }
 
+export async function creditBalance(db, userId) {
+  return (await activeGrants(db, userId)).reduce((sum, g) => sum + Math.max(0, g.remaining), 0);
+}
+
 export async function creditSummary(db, userId) {
-  const grants = await activeGrants(db, userId);
   const { rows: [trial] } = await db.query(
-    `SELECT expires_at FROM credit_ledger WHERE user_id = $1 AND entry_type = 'trial_grant'`,
+    `SELECT 1 FROM credit_ledger WHERE user_id = $1 AND entry_type IN ('trial_grant', 'guest_grant') LIMIT 1`,
     [userId],
   );
-  return {
-    balance: grants.reduce((sum, g) => sum + Math.max(0, g.remaining), 0),
-    trialGranted: Boolean(trial),
-    trialExpiresAt: trial?.expires_at || null,
-  };
+  return { balance: await creditBalance(db, userId), trialGranted: Boolean(trial) };
+}
+
+/** 作废一个账户全部发放的剩余点数（例如同一浏览器重复领取的访客点数），写入 void 记录。 */
+export async function voidRemaining(db, userId, reason) {
+  for (const g of await activeGrants(db, userId)) {
+    if (g.remaining <= 0) continue;
+    await db.query(
+      `INSERT INTO credit_ledger (user_id, entry_type, amount, grant_id, idempotency_key, reason)
+       VALUES ($1, 'void', $2, $3, $4, $5)`,
+      [userId, -g.remaining, g.id, `void:${g.id}:${Date.now()}`, reason],
+    );
+  }
+}
+
+/** 访客合并进正式账户：把访客剩余点数作为一笔 transfer 转入，每个访客只转一次。 */
+export async function transferGuestCredits(db, guestId, memberId) {
+  const remaining = await creditBalance(db, guestId);
+  await grant(db, memberId, 'transfer', remaining, `transfer:${guestId}`);
+  return remaining;
 }
 
 /**
@@ -83,7 +111,7 @@ export async function refundCredits(db, usageEventId) {
 
 export async function ledgerEntries(db, userId, limit = 100) {
   const { rows } = await db.query(
-    `SELECT entry_type, amount, expires_at, created_at
+    `SELECT entry_type, amount, expires_at, reason, created_at
      FROM credit_ledger WHERE user_id = $1 ORDER BY created_at DESC, entry_type LIMIT $2`,
     [userId, limit],
   );

@@ -25,17 +25,27 @@
   let settings = S.normalize(null);
   let account = { signedIn: false };
 
+  /** 账户入口：正式账户显示用户名与订阅，访客显示免费试用与注册引导；订阅用户不显示点数。 */
   function renderAccount() {
-    el.accountIn.hidden = !account.signedIn;
-    el.login.hidden = account.signedIn;
-    if (!account.signedIn) return;
-    const name = account.username || '';
+    const active = account.signedIn || account.guest;
+    el.accountIn.hidden = !active;
+    el.login.hidden = active;
+    if (!active) return;
     const balance = account.credits?.balance ?? 0;
-    el.avatar.textContent = (name[0] || '?').toUpperCase();
-    el.username.textContent = name;
-    el.accountMeta.textContent = account.subscription?.name || (account.credits?.trialActive ? t('试用中') : t('暂无订阅'));
-    el.credits.textContent = t('$1 点', [balance]);
-    el.credits.className = `credits ${balance > 0 ? '' : 'empty'}`;
+    const sub = account.subscription;
+    if (account.guest) {
+      el.avatar.textContent = '✦';
+      el.username.textContent = t('免费试用');
+      el.accountMeta.textContent = t('注册再送 $1 点', [account.offers?.signupCredits ?? 200]);
+    } else {
+      const name = account.username || '';
+      el.avatar.textContent = (name[0] || '?').toUpperCase();
+      el.username.textContent = name;
+      el.accountMeta.textContent = sub ? t('订阅中') : t('未订阅');
+    }
+    el.avatar.classList.toggle('guest', Boolean(account.guest));
+    el.credits.textContent = sub ? t('无限使用') : t('$1 点', [balance]);
+    el.credits.className = `credits ${sub || balance > 0 ? '' : 'empty'}`;
   }
 
   function render() {
@@ -56,9 +66,11 @@
     if (hosted) {
       // 点数翻译：显示剩余点数或需要登录，而不是 API Key
       const balance = account.credits?.balance ?? 0;
+      const active = account.signedIn || account.guest;
+      const usable = active && (account.subscription || balance > 0);
       el.keyLabel.textContent = t('点数');
-      el.keyState.textContent = account.signedIn ? t('剩余 $1 点', [balance]) : t('需要登录');
-      el.keyState.className = `state ${account.signedIn && balance > 0 ? 'ok' : 'warn'}`;
+      el.keyState.textContent = !active ? t('需要登录') : account.subscription ? t('无限使用') : t('剩余 $1 点', [balance]);
+      el.keyState.className = `state ${usable ? 'ok' : 'warn'}`;
     } else {
       const configured = Boolean(provider.apiKey);
       el.keyLabel.textContent = 'API Key';
@@ -101,8 +113,10 @@
     await chrome.runtime.sendMessage({ type: 'account-login' }).catch(() => {});
     window.close();
   });
-  el.accountIn.addEventListener('click', () => {
-    chrome.tabs.create({ url: AITrEnv.links.account });
+  el.accountIn.addEventListener('click', async () => {
+    // 访客点这里去注册 / 登录（剩余点数一并转入）；正式账户打开用户端
+    if (account.guest) await chrome.runtime.sendMessage({ type: 'account-login' }).catch(() => {});
+    else chrome.tabs.create({ url: AITrEnv.links.account });
     window.close();
   });
 

@@ -58,6 +58,8 @@
     accountCredits: $('accountCredits'),
     trialBadge: $('trialBadge'),
     planBadge: $('planBadge'),
+    register: $('register'),
+    accountCreditsLabel: $('accountCreditsLabel'),
     accountUpdated: $('accountUpdated'),
     accountError: $('accountError'),
     manageAccount: $('manageAccount'),
@@ -114,28 +116,48 @@
     el.accountError.textContent = text || '';
   }
 
+  const signupCredits = () => account.offers?.signupCredits ?? 200;
+  const subscribed = () => Boolean(account.subscription);
+
+  /** 账户卡片：正式账户、访客试用、未登录与新安装引导四种状态。 */
   function renderAccount() {
-    const welcome = !account.signedIn && onboarding === 'pending' && !hasOwnKey();
+    const active = account.signedIn || account.guest;
+    const welcome = !active && onboarding === 'pending' && !hasOwnKey();
     el.welcome.hidden = !welcome;
-    el.accountOut.hidden = account.signedIn || welcome;
-    el.accountIn.hidden = !account.signedIn;
-    el.accountActions.hidden = !account.signedIn;
-    if (!account.signedIn) return;
+    el.accountOut.hidden = active || welcome;
+    el.accountIn.hidden = !active;
+    el.accountActions.hidden = !active;
+    if (!active) return;
 
-    const name = account.username || '';
-    el.accountAvatar.textContent = (name[0] || '?').toUpperCase();
-    el.accountName.textContent = name;
-    el.accountCredits.textContent = String(balanceOf());
-    el.accountCredits.className = balanceOf() > 0 ? '' : 'empty';
+    const sub = account.subscription;
+    if (account.guest) {
+      el.accountAvatar.textContent = '✦';
+      el.accountName.textContent = t('免费试用');
+      el.trialBadge.textContent = t('未注册');
+      el.trialBadge.className = 'badge';
+      el.planBadge.hidden = true;
+    } else {
+      const name = account.username || '';
+      el.accountAvatar.textContent = (name[0] || '?').toUpperCase();
+      el.accountName.textContent = name;
+      el.trialBadge.textContent = t('已注册');
+      el.trialBadge.className = 'badge';
+      el.planBadge.hidden = false;
+      el.planBadge.textContent = sub ? t('订阅中') : t('未订阅');
+      el.planBadge.className = `badge ${sub ? 'ok' : ''}`;
+    }
+    el.accountAvatar.classList.toggle('guest', Boolean(account.guest));
+    // 订阅用户不显示点数，只显示无限使用
+    el.accountCredits.textContent = sub ? t('无限') : String(balanceOf());
+    el.accountCredits.className = sub || balanceOf() > 0 ? '' : 'empty';
+    el.accountCreditsLabel.textContent = sub ? t('点数翻译') : t('剩余点数');
 
-    const credits = account.credits || {};
-    const expires = credits.trialExpiresAt ? new Date(credits.trialExpiresAt).toLocaleDateString(AITrI18n.locale?.() || undefined) : '';
-    el.trialBadge.textContent = credits.trialActive
-      ? (expires ? t('试用中 · $1 到期', [expires]) : t('试用中'))
-      : credits.trialExpiresAt ? t('试用已结束') : t('未获得试用');
-    el.trialBadge.className = `badge ${credits.trialActive ? 'ok' : ''}`;
-    el.planBadge.textContent = account.subscription?.name || t('暂无订阅');
-    el.planBadge.className = `badge ${account.subscription ? 'ok' : ''}`;
+    el.register.hidden = !account.guest;
+    el.register.textContent = t('注册 / 登录，再送 $1 点', [signupCredits()]);
+    el.manageAccount.hidden = Boolean(account.guest);
+    el.logout.hidden = Boolean(account.guest);
+    el.viewPlans.hidden = Boolean(account.guest);
+    el.viewPlans.textContent = sub ? t('管理订阅') : t('订阅无限使用');
     el.accountUpdated.textContent = account.updatedAt
       ? t('更新于 $1', [new Date(account.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })])
       : '';
@@ -144,7 +166,9 @@
   /** 选中「点数翻译」时显示的说明与状态。 */
   function renderHosted() {
     const rate = account.hosted?.charsPerCredit || 500;
-    el.hostedRate.textContent = t('每 $1 字扣 1 点，不足 $1 字按 1 点计；翻译失败不扣点。', [rate]);
+    el.hostedRate.textContent = subscribed()
+      ? t('订阅期间不限次数，不消耗点数。')
+      : t('每 $1 字扣 1 点，不足 $1 字按 1 点计；翻译失败不扣点。', [rate]);
     const state = document.createElement('p');
     const actions = [];
     const button = (label, onClick, ghost = false) => {
@@ -155,21 +179,32 @@
       b.addEventListener('click', onClick);
       return b;
     };
-    if (!account.signedIn) {
+    if (!account.signedIn && !account.guest) {
       state.className = 'hosted-line';
-      state.textContent = t('登录后即可使用点数翻译，新账户赠送试用点数。');
+      state.textContent = t('登录后即可使用点数翻译。');
       actions.push(button(t('登录 / 注册'), login));
     } else if (account.hosted && !account.hosted.available) {
       state.className = 'hosted-line warn';
       state.textContent = t('点数翻译暂未开放，请先使用自己的 API Key。');
+    } else if (subscribed()) {
+      state.className = 'hosted-line big';
+      state.textContent = t('无限使用');
+      actions.push(button(t('管理订阅'), () => openLink('billing'), true));
     } else if (balanceOf() <= 0) {
       state.className = 'hosted-line warn';
-      state.textContent = t('点数已用完：可以订阅套餐，或切换到自己的 API Key。');
-      actions.push(button(t('套餐与订阅'), () => openLink('plans')));
+      if (account.guest) {
+        state.textContent = t('免费点数已用完。注册即送 $1 点，或切换到自己的 API Key。', [signupCredits()]);
+        actions.push(button(t('注册 / 登录'), login));
+      } else {
+        state.textContent = t('点数已用完。订阅后无限使用，或切换到自己的 API Key。');
+        actions.push(button(t('订阅无限使用'), () => openLink('plans')));
+      }
     } else {
       state.className = 'hosted-line big';
       state.textContent = t('剩余 $1 点', [balanceOf()]);
-      actions.push(button(t('查看用量'), () => openLink('usage'), true));
+      actions.push(account.guest
+        ? button(t('注册 / 登录，再送 $1 点', [signupCredits()]), login, true)
+        : button(t('查看用量'), () => openLink('usage'), true));
     }
     el.hostedState.replaceChildren(state);
     el.hostedActions.replaceChildren(...actions);
@@ -202,7 +237,8 @@
     el.cards.replaceChildren(
       ...S.providerList().map((item) => {
         const hosted = item.kind === 'hosted';
-        const configured = hosted ? account.signedIn && balanceOf() > 0 : Boolean(settings[item.id]?.apiKey);
+        const active = account.signedIn || account.guest;
+        const configured = hosted ? active && (subscribed() || balanceOf() > 0) : Boolean(settings[item.id]?.apiKey);
         const card = document.createElement('button');
         card.type = 'button';
         card.className = hosted ? 'provider-card hosted' : 'provider-card';
@@ -212,7 +248,7 @@
         card.querySelector('b').textContent = item.label;
         card.querySelector('i').textContent = item.hint;
         card.querySelector('em').textContent = hosted
-          ? (account.signedIn ? t('● 剩余 $1 点', [balanceOf()]) : t('○ 需要登录'))
+          ? (!active ? t('○ 需要登录') : subscribed() ? t('● 无限使用') : balanceOf() > 0 ? t('● 剩余 $1 点', [balanceOf()]) : t('○ 点数已用完'))
           : configured ? t("● 已配置 Key") : t("○ 未配置 Key");
         card.addEventListener('click', () => {
           if (settings.provider === item.id) return;
@@ -455,7 +491,19 @@
     el.logout.disabled = false;
   });
   el.manageAccount.addEventListener('click', () => openLink('account'));
-  el.viewPlans.addEventListener('click', () => openLink('plans'));
+  el.viewPlans.addEventListener('click', () => openLink(subscribed() ? 'billing' : 'plans'));
+  document.querySelectorAll('[data-guest]').forEach((button) => button.addEventListener('click', async () => {
+    showAccountError('');
+    button.disabled = true;
+    const reply = await chrome.runtime.sendMessage({ type: 'account-guest' }).catch((err) => ({ ok: false, error: String(err?.message || err) }));
+    button.disabled = false;
+    if (!reply?.ok) return showAccountError(reply?.error || t('无法连接账户服务，请检查网络后重试'));
+    await finishOnboarding();
+    if (!S.isHosted(settings.provider)) {
+      await save({ provider: 'hosted' });
+      renderProviderConfig();
+    }
+  }));
   el.useOwnKey.addEventListener('click', async () => {
     await finishOnboarding();
     if (S.isHosted(settings.provider)) {

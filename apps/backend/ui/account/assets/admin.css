@@ -1,0 +1,36 @@
+/* 管理端：沿用 account.css 的变量与组件，只补充报表与表格布局。 */
+.admin-bar {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: .75rem max(1.5rem, (100% - 1180px) / 2);
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.admin-bar strong { display: inline-flex; align-items: center; gap: .5rem; margin-inline-end: auto; }
+.admin-bar form { margin: 0; }
+.admin .shell { margin-top: var(--s3); }
+.head-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); flex-wrap: wrap; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: .25rem; margin-bottom: var(--s2); }
+.seg a { padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--line); color: var(--text-2); text-decoration: none; font-size: .9rem; }
+.seg a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.kpis { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: var(--s3); }
+.kpi { display: grid; gap: .15rem; padding: var(--s2); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.kpi-label { color: var(--text-2); font-size: .85rem; }
+.kpi strong { font-size: 1.6rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.kpi-sub { color: var(--text-3); font-size: .8rem; }
+.plain { list-style: none; padding: 0; margin: 0 0 var(--s2); display: grid; gap: .35rem; }
+.bar-cell { display: flex; align-items: center; gap: .5rem; min-width: 180px; }
+.bar-cell progress { flex: 1; height: .5rem; accent-color: var(--accent); }
+.bar-cell span { font-variant-numeric: tabular-nums; min-width: 4rem; text-align: end; }
+.search { display: flex; gap: .5rem; max-width: 520px; margin-bottom: var(--s2); }
+.actions { display: grid; gap: var(--s2); }
+form.inline { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; }
+form.inline input { width: auto; flex: 1 1 160px; }
+.settings-form { display: grid; gap: var(--s2); }
+.setting { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(8rem, 16rem) 1fr; gap: .4rem var(--s2); align-items: center; }
+.setting select { font: inherit; padding: .55rem .6rem; border: 1px solid var(--btn-line); border-radius: 10px; background: var(--bg); color: var(--text); }
+.settings-form > .button { justify-self: start; }
+@media (max-width: 760px) { .setting { grid-template-columns: 1fr; } }
+.secret code { font-size: 1.15rem; letter-spacing: .08em; padding: .4rem .6rem; border-radius: 8px; background: var(--surface-2); }
+.tag.ok { color: var(--ok); background: var(--ok-bg); }
+.tag.warn { color: var(--error); background: var(--error-bg); }
+td.detail code { font-size: .78rem; white-space: pre-wrap; word-break: break-all; }
+td.detail { white-space: normal; max-width: 420px; }

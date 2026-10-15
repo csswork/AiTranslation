@@ -22,13 +22,19 @@ test('Google 客户端 ID 与密钥必须成对配置', () => {
     { clientId: 'id', clientSecret: 's' });
 });
 
-test('生产环境要求 HTTPS、密钥、正式发信和明确的试用点数', () => {
+test('生产环境要求 HTTPS、密钥和正式发信；Creem 需成对配置且不能用测试模式', () => {
   assert.throws(() => readConfig({
     NODE_ENV: 'production', DATABASE_URL: 'postgres://db/x', APP_ORIGIN: 'http://app.example',
   }), (e) => {
-    for (const text of ['HTTPS', 'AUTH_SECRET', 'console', 'TRIAL_CREDITS']) assert.match(e.message, new RegExp(text));
+    for (const text of ['HTTPS', 'AUTH_SECRET', 'console']) assert.match(e.message, new RegExp(text));
     return true;
   });
+  assert.throws(() => readConfig({ ...base, CREEM_API_KEY: 'k' }), /CREEM_WEBHOOK_SECRET[\s\S]*CREEM_PRODUCT_MONTHLY[\s\S]*CREEM_PRODUCT_YEARLY/);
+  const creem = readConfig({ ...base, CREEM_API_KEY: 'k', CREEM_WEBHOOK_SECRET: 'w', CREEM_PRODUCT_MONTHLY: 'pm', CREEM_PRODUCT_YEARLY: 'py', CREEM_TEST_MODE: '1' }).creem;
+  assert.deepEqual(creem.products, { monthly: 'pm', yearly: 'py' });
+  assert.equal(creem.testMode, true);
+  assert.equal(readConfig(base).adminOrigin, 'http://admin.localhost:8787', '开发环境默认的管理端地址');
+  assert.equal(readConfig({ ...base, HOSTED_FALLBACK_API_KEY: 'f' }).hosted.fallback.model, 'accounts/fireworks/routers/deepseek-v4p1-flash-us');
 });
 
 test('SHARED_COOKIE_DOMAIN 必须覆盖用户端与官网的主机名', () => {

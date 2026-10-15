@@ -25,7 +25,7 @@ export async function validateSession(db, config, token) {
   if (!token || token.length > 100) return null;
   const { rows: [row] } = await db.query(
     `SELECT s.id AS session_id, s.client, s.last_used_at,
-            u.id, u.email, u.username, u.email_verified_at, u.created_at
+            u.id, u.kind, u.email, u.username, u.email_verified_at, u.hosted_frozen_at, u.created_at
      FROM sessions s JOIN users u ON u.id = s.user_id
      WHERE s.token_hash = $1 AND s.revoked_at IS NULL AND s.expires_at > now()`,
     [hashToken(token)],
@@ -39,6 +39,12 @@ export async function validateSession(db, config, token) {
   }
   const { session_id: id, client, last_used_at: _lastUsed, ...user } = row;
   return { session: { id, client }, user };
+}
+
+/** 网页会话：只接受 client = 'web' 且是正式账户的会话（扩展令牌或访客不能当网页会话用）。 */
+export async function validateWebSession(db, config, token) {
+  const auth = await validateSession(db, config, token);
+  return auth && auth.session.client === 'web' && auth.user.kind === 'member' ? auth : null;
 }
 
 export async function listSessions(db, userId) {

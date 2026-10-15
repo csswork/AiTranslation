@@ -1282,9 +1282,6 @@
       }
     }
   },
-  "m_bc2456e35b336d31": {
-    "message": "Giriş penceresi kapatıldı"
-  },
   "m_927407ede0c1dc74": {
     "message": "Geçersiz giriş isteği. Lütfen tekrar deneyin."
   },
@@ -1293,17 +1290,6 @@
   },
   "m_673c98e7a0d8ceb5": {
     "message": "Giriş başarısız. Lütfen tekrar deneyin."
-  },
-  "m_5a966ae485d2c996": {
-    "message": "Yetersiz kredi: bu işlem için $arg1$ kredi gerekiyor, $arg2$ kaldı",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      },
-      "arg2": {
-        "content": "$2"
-      }
-    }
   },
   "m_558fa82780470f46": {
     "message": "Metin çok uzun. Krediyle çeviri tek seferde en fazla $arg1$ karakter destekler.",
@@ -1342,9 +1328,6 @@
   "m_ece94e82993f620d": {
     "message": "Krediyle çeviri"
   },
-  "m_51c99fc2e14a9b84": {
-    "message": "Giriş yaptıktan sonra hesap kredilerinizi kullanın. API Key gerekmez."
-  },
   "m_715ee9dc842f34e4": {
     "message": "Başlayın"
   },
@@ -1356,9 +1339,6 @@
   },
   "m_e22c6e525f1fceb0": {
     "message": "Ücretsiz deneme"
-  },
-  "m_65206074d0c5b6e4": {
-    "message": "Deneme kredisi almak için giriş yapın veya kaydolun. API Key gerekmez—kurun ve çeviri yapın."
   },
   "m_e5533fd28356f3ec": {
     "message": "Giriş yap / Kaydol"
@@ -1375,49 +1355,20 @@
   "m_061246bd31e084a7": {
     "message": "Hesap"
   },
-  "m_96ed5259ff23cb65": {
-    "message": "Krediyle çeviri kullanmak ve deneme ile abonelik durumunuzu görmek için giriş yapın."
-  },
   "m_283ba7d1fae5b0f0": {
     "message": "Kalan krediler"
   },
   "m_fb9399fb6acf3bf6": {
     "message": "Hesabı yönet"
   },
-  "m_b82a1659f2733f96": {
-    "message": "Planlar ve abonelikler"
-  },
   "m_3ab8cc15939f3b5c": {
     "message": "Çıkış yap"
-  },
-  "m_f45134adb4717545": {
-    "message": "Çeviri, AI seçim çevirisi hizmeti tarafından tamamlanır ve hesabınızdan kredi düşülür. API Key gerekmez."
   },
   "m_d2ffae2f0a159a66": {
     "message": "Seçim, alan çevirisi ve çeviri paneli için metin çevirisini destekler. Görsel çevirisi şu anda ChatGPT veya DeepSeek'e geçmeyi ve kendi Key'inizi girmeyi gerektirir."
   },
   "m_918b7761e2f3dd27": {
     "message": "Kaynak metin, çeviri için sunucularımız üzerinden model sağlayıcısına (şu anda DeepSeek) gönderilir. Kaynak veya çevrilmiş metni saklamayız; hesabınız yalnızca karakter sayılarını ve kredi düşümlerini kaydeder."
-  },
-  "m_afc7902ffd7f4930": {
-    "message": "Deneme · $arg1$ tarihinde sona erer",
-    "placeholders": {
-      "arg1": {
-        "content": "$1"
-      }
-    }
-  },
-  "m_2671b480cb935c31": {
-    "message": "Deneme etkin"
-  },
-  "m_83617d7e464a76e3": {
-    "message": "Deneme sona erdi"
-  },
-  "m_0960dcc947a86e64": {
-    "message": "Deneme yok"
-  },
-  "m_67721ec2d8463717": {
-    "message": "Abonelik yok"
   },
   "m_7db8e65b6b3a03bc": {
     "message": "$arg1$ tarihinde güncellendi",
@@ -1435,14 +1386,8 @@
       }
     }
   },
-  "m_51b9ef61f3f29017": {
-    "message": "Krediyle çeviri kullanmak için giriş yapın. Yeni hesaplara deneme kredisi verilir."
-  },
   "m_d3853afcfd2df4d7": {
     "message": "Puanla çeviri henüz kullanılamıyor. Şimdilik kendi API Key'inizi kullanın."
-  },
-  "m_4a02e4081c8e45cf": {
-    "message": "Puanlar tükendi: bir plana abone olun veya kendi API Key'inize geçin."
   },
   "m_84378de635f8c238": {
     "message": "$arg1$ puan kaldı",
@@ -1466,9 +1411,6 @@
   "m_5ceb0a617c45f719": {
     "message": "○ Giriş gerekli"
   },
-  "m_4b17737d47e0c31b": {
-    "message": "Deneme puanlarını almak için giriş yapın"
-  },
   "m_0da4a44867acdc1e": {
     "message": "$arg1$ puan",
     "placeholders": {
@@ -1482,6 +1424,99 @@
   },
   "m_6eb1b64e260a2dd3": {
     "message": "Giriş gerekli"
+  },
+  "m_bb9dd3fb27ee5ff8": {
+    "message": "Ücretsiz krediler tükendi. Daha fazla kredi almak için bir hesap kaydedin."
+  },
+  "m_585646b0c9382bf1": {
+    "message": "Krediler tükendi. Sınırsız kullanım için abone olun."
+  },
+  "m_6952a6494b02bef0": {
+    "message": "Kredi çevirisi duraklatıldı. Lütfen bizimle iletişime geçin."
+  },
+  "m_eb21476bac8c1b0a": {
+    "message": "Bu ay kullanım yüksek. Lütfen daha sonra tekrar deneyin."
+  },
+  "m_8a9df87e1e78fc92": {
+    "message": "Kayıt gerekmez. Çeviri yapmak için ücretsiz krediler alın, API Key gerekmez. Krediler tükendikten sonra daha fazlasını almak için kaydolun."
+  },
+  "m_7a948008f0e06c53": {
+    "message": "Ücretsiz denemeyi başlat"
+  },
+  "m_180548cc1d8063d5": {
+    "message": "Zaten hesabınız var mı? Giriş yapın"
+  },
+  "m_7b4515d0d1a76305": {
+    "message": "Giriş yaptıktan sonra kredi çevirisini kullanabilir ve kredilerinizi ve abonelik durumunuzu görüntüleyebilirsiniz."
+  },
+  "m_bcc3b5c345305496": {
+    "message": "Çeviri, AI seç-çevir hizmeti tarafından yapılır, API Key gerekmez: ücretsiz kredileri kullanın veya sınırsız kullanım için abone olun."
+  },
+  "m_1f4273cab1517729": {
+    "message": "Kayıtlı"
+  },
+  "m_47d73a5d32b40e8c": {
+    "message": "Abone"
+  },
+  "m_1a57c4f69e1fb420": {
+    "message": "Abone değil"
+  },
+  "m_8651f50cc42532e3": {
+    "message": "Sınırsız"
+  },
+  "m_a09798d11dd286de": {
+    "message": "Kaydolun / Giriş yapın, $arg1$ daha kredi alın",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_fb87f3e65dd5b0d5": {
+    "message": "Aboneliği yönet"
+  },
+  "m_fc4aab6e6f4a7c0a": {
+    "message": "Sınırsız kullanım için abone olun"
+  },
+  "m_700d39f821128d3f": {
+    "message": "Abonelik süresince sınırsız, kredi tüketilmez."
+  },
+  "m_72a9c5e2a27e0fcf": {
+    "message": "Kredi çevirisini kullanmak için giriş yapın."
+  },
+  "m_da06c15c7905a0ee": {
+    "message": "Sınırsız kullanım"
+  },
+  "m_e5b119159b3e0fe4": {
+    "message": "Ücretsiz krediler tükendi. Kaydolun ve $arg1$ kredi alın veya kendi API Key'inize geçin.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f4edb53479362cc0": {
+    "message": "Kaydol / Giriş yap"
+  },
+  "m_274f1ab037bcfd34": {
+    "message": "Krediler tükendi. Sınırsız kullanım için abone olun veya kendi API Key'inize geçin."
+  },
+  "m_30be0bf062a7750f": {
+    "message": "Kaydolun ve $arg1$ daha kredi alın",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_174f93a129a0c68c": {
+    "message": "Ücretsiz deneme veya sınırsız kullanım için abone olun, API Key gerekmez"
+  },
+  "m_a16866652a54b352": {
+    "message": "● Sınırsız kullanım"
+  },
+  "m_adc068b8279a3d7d": {
+    "message": "○ Puanlar tükendi"
   },
   "extensionName": {
     "message": "AI çevirmen"

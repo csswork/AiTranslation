@@ -3,6 +3,7 @@ import { createApp } from '../src/app.js';
 import { readConfig } from '../src/config/index.js';
 import { createPool } from '../src/db/index.js';
 import { migrate } from '../src/db/migrate.js';
+import { createSettings } from '../src/settings/index.js';
 
 export const TEST_DATABASE_URL = process.env.TEST_DATABASE_URL || 'postgres://localhost:5432/huaci_test';
 
@@ -22,7 +23,7 @@ export async function createTestPool() {
   return pool;
 }
 
-export const resetData = (pool) => pool.query('TRUNCATE users, email_codes CASCADE');
+export const resetData = (pool) => pool.query('TRUNCATE users, email_codes, payment_events, app_settings CASCADE');
 
 export function testConfig(overrides = {}) {
   return readConfig({
@@ -30,7 +31,6 @@ export function testConfig(overrides = {}) {
     DATABASE_URL: TEST_DATABASE_URL,
     AUTH_SECRET: 'x'.repeat(64),
     TRIAL_CREDITS: '100',
-    TRIAL_DAYS: '30',
     ...overrides,
   });
 }
@@ -66,15 +66,17 @@ export function fakeGoogle(accounts) {
   };
 }
 
-export function buildApp({ pool, config = testConfig(), google = null, googleIdToken = null, hosted = null } = {}) {
+export function buildApp({ pool, config = testConfig(), google = null, googleIdToken = null, hosted = null, creem = null } = {}) {
   const mailbox = createMailbox();
   const silent = { log() {}, warn() {}, error() {} };
-  const app = createApp({ config, pool, mailer: mailbox.mailer, google, googleIdToken, hosted, log: silent });
-  return { app, config, mailbox };
+  // 测试里设置随改随生效，不缓存。
+  const settings = createSettings(pool, config, { ttlMs: 0 });
+  const app = createApp({ config, pool, mailer: mailbox.mailer, google, googleIdToken, hosted, creem, settings, log: silent });
+  return { app, config, mailbox, settings };
 }
 
-/** 模拟浏览器：保存 Cookie，修改状态的请求默认带本站 Origin。 */
-export function browser(app, config) {
+/** 模拟浏览器：保存 Cookie，修改状态的请求默认带本站 Origin。origin 可换成管理端地址。 */
+export function browser(app, config, origin = config.appOrigin) {
   const jar = new Map();
   async function request(path, { method = 'GET', form, headers = {} } = {}) {
     // 现有断言使用中文界面；需要其他语言的测试自己传 accept-language 或 lang Cookie。
@@ -85,8 +87,8 @@ export function browser(app, config) {
       body = new URLSearchParams(form).toString();
       h.set('content-type', 'application/x-www-form-urlencoded');
     }
-    if (method !== 'GET' && !h.has('origin')) h.set('origin', config.appOrigin);
-    const res = await app.request(new URL(path, config.appOrigin), { method, headers: h, body });
+    if (method !== 'GET' && !h.has('origin')) h.set('origin', origin);
+    const res = await app.request(new URL(path, origin), { method, headers: h, body });
     for (const cookie of res.headers.getSetCookie()) {
       const [pair] = cookie.split(';');
       const index = pair.indexOf('=');

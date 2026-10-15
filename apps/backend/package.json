@@ -12,7 +12,8 @@
     "migrate": "node src/db/migrate.js",
     "test": "bash test/run.sh",
     "i18n": "node scripts/i18n.mjs --translate",
-    "check:i18n": "node scripts/i18n.mjs --check"
+    "check:i18n": "node scripts/i18n.mjs --check",
+    "admin": "node scripts/admin.mjs"
   },
   "dependencies": {
     "@hono/node-server": "2.1.5",

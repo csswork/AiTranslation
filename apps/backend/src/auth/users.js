@@ -1,5 +1,6 @@
 /**
  * 账号与登录方式。账号资料只有 email 和 username；第三方登录只记录平台名与平台用户标识。
+ * 访客账户（kind = 'guest'）没有邮箱，只能通过扩展会话使用，注册或登录时合并进正式账户（见 src/guest）。
  */
 import { randomBytes } from 'node:crypto';
 import { isUniqueViolation, transaction } from '../db/index.js';
@@ -14,7 +15,7 @@ export const isValidUsername = (username) => /^[a-z0-9_-]{3,24}$/.test(username)
 const ALPHABET = 'abcdefghijkmnpqrstuvwxyz23456789';
 const generateUsername = () => `user_${Array.from(randomBytes(8), (b) => ALPHABET[b % ALPHABET.length]).join('')}`;
 
-const USER_COLUMNS = 'id, email, username, email_verified_at, created_at';
+const USER_COLUMNS = 'id, kind, email, username, email_verified_at, hosted_frozen_at, created_at';
 
 export async function findUserById(db, id) {
   const { rows } = await db.query(`SELECT ${USER_COLUMNS} FROM users WHERE id = $1`, [id]);
@@ -27,10 +28,10 @@ export async function findUserByEmail(db, email) {
 }
 
 /**
- * 按已验证的邮箱查找账号，不存在就创建，并在同一事务里发放试用点数。
+ * 按已验证的邮箱查找账号，不存在就创建，并在同一事务里发放注册赠送点数（signupCredits，不过期）。
  * identity 可选：新账号同时绑定的第三方登录。返回 { user, created }。
  */
-export async function findOrCreateUserByEmail(pool, config, email, identity = null) {
+export async function findOrCreateUserByEmail(pool, signupCredits, email, identity = null) {
   const existing = await findUserByEmail(pool, email);
   if (existing) return { user: existing, created: false };
   for (let attempt = 0; attempt < 5; attempt += 1) {
@@ -44,7 +45,7 @@ export async function findOrCreateUserByEmail(pool, config, email, identity = nu
           await client.query('INSERT INTO identities (user_id, provider, subject) VALUES ($1, $2, $3)',
             [row.id, identity.provider, identity.subject]);
         }
-        await grantTrial(client, config, row.id);
+        await grantTrial(client, signupCredits, row.id);
         return row;
       });
       return { user, created: true };
@@ -56,6 +57,19 @@ export async function findOrCreateUserByEmail(pool, config, email, identity = nu
       }
       throw error;
     }
+  }
+  throw new Error('无法生成唯一的用户名');
+}
+
+/** 新建访客账户（在调用方的事务里）。用户名带 guest_ 前缀，不能登录网页。 */
+export async function createGuestUser(client) {
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const username = `guest_${Array.from(randomBytes(10), (b) => ALPHABET[b % ALPHABET.length]).join('')}`;
+    const { rows: [row] } = await client.query(
+      `INSERT INTO users (kind, username) VALUES ('guest', $1) ON CONFLICT (username) DO NOTHING RETURNING ${USER_COLUMNS}`,
+      [username],
+    );
+    if (row) return row;
   }
   throw new Error('无法生成唯一的用户名');
 }

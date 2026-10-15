@@ -178,10 +178,28 @@ export function verifyPage(ui, { title, email, action, resendAction, backHref, n
 
 /* ---------- U2 账户总览 ---------- */
 
-export function overviewPage(ui, { user, credits, notice }) {
+/** 按当前界面语言显示金额，例如 $3.99。amount 是十进制字符串。 */
+const money = (ui, amount, currency) => new Intl.NumberFormat(ui.locale.htmlLang, { style: 'currency', currency }).format(Number(amount));
+/** 订单金额是最小货币单位的整数。 */
+const minorMoney = (ui, minor, currency) => money(ui, (minor / 100).toFixed(2), currency || 'USD');
+
+const PLAN_LABELS = { monthly: k('月付'), yearly: k('年付') };
+const SUB_STATUS_LABELS = {
+  active: k('生效中'),
+  trialing: k('生效中'),
+  paid: k('生效中'),
+  scheduled_cancel: k('已取消续订，本期结束前仍可使用'),
+  past_due: k('扣款失败，正在重试'),
+  unpaid: k('扣款失败'),
+  paused: k('已暂停'),
+  canceled: k('已取消'),
+  expired: k('已到期'),
+};
+const subStatus = (ui, status) => (SUB_STATUS_LABELS[status] ? ui.t(SUB_STATUS_LABELS[status]) : status);
+
+export function overviewPage(ui, { user, state, notice }) {
   const { t } = ui;
-  const trialActive = credits.trialGranted && (!credits.trialExpiresAt || new Date(credits.trialExpiresAt) > new Date());
-  const status = trialActive ? t('试用中') : credits.trialGranted ? t('试用已结束') : t('未获得试用');
+  const sub = state.subscription;
   return layout(ui, {
     title: t('账户总览'),
     user,
@@ -198,59 +216,132 @@ export function overviewPage(ui, { user, credits, notice }) {
     </dl>
     <a href="/account">${t('管理邮箱与登录方式')}</a>
   </section>
-  <section class="card">
+  ${sub
+    ? html`<section class="card">
+    <h2>${t('托管翻译')}</h2>
+    <p class="big small" data-unlimited>${t('无限使用')}</p>
+    <p class="muted">${t('订阅期间托管翻译不限次数，不消耗点数。')}</p>
+    <a href="/usage">${t('查看用量')}</a>
+  </section>`
+    : html`<section class="card">
     <h2>${t('点数')}</h2>
-    <p class="big" data-balance>${credits.balance}<span class="unit">${t('点')}</span></p>
-    <dl class="facts">
-      <dt>${t('状态')}</dt><dd>${status}</dd>
-      ${credits.trialExpiresAt ? html`<dt>${t('试用到期')}</dt><dd>${ui.dateTime(credits.trialExpiresAt)}</dd>` : ''}
-    </dl>
+    <p class="big" data-balance>${state.credits.balance}<span class="unit">${t('点')}</span></p>
+    <p class="muted">${t('赠送点数不会过期。点数用完后可以订阅，无限使用。')}</p>
     <a href="/usage">${t('查看点数记录')}</a>
-  </section>
+  </section>`}
   <section class="card">
-    <h2>${t('套餐')}</h2>
-    <p class="big small">${t('暂无订阅')}</p>
-    <p class="muted">${t('付费套餐尚未开放。点数用尽后托管翻译会停止，扩展里的自带 Key 模式不受影响。')}</p>
-    <a href="/plans">${t('了解套餐')}</a>
+    <h2>${t('订阅')}</h2>
+    ${sub
+      ? html`<p class="big small">${t(PLAN_LABELS[sub.plan] || k('订阅'))}</p>
+    <dl class="facts">
+      <dt>${t('状态')}</dt><dd>${subStatus(ui, sub.status)}</dd>
+      ${sub.periodEnd ? html`<dt>${sub.renews ? t('下次续费') : t('有效期至')}</dt><dd>${ui.date(sub.periodEnd)}</dd>` : ''}
+    </dl>
+    <a href="/billing">${t('管理订阅与账单')}</a>`
+      : html`<p class="big small">${t('暂无订阅')}</p>
+    <p class="muted">${t('订阅后托管翻译无限使用。扩展里的自带 Key 模式始终免费可用。')}</p>
+    <a href="/plans">${t('查看订阅方案')}</a>`}
   </section>
 </div>`,
   });
 }
 
-/* ---------- U3 / U4：支付服务接入前只显示说明 ---------- */
+/* ---------- U3 / U4 订阅与账单（Creem） ---------- */
 
-export function plansPage(ui, { user }) {
+const planCard = (ui, { plan, price, original, currency, period, note, featured, checkoutEnabled }) => {
   const { t } = ui;
+  return html`<section class="card plan${featured ? ' featured' : ''}" data-plan="${plan}">
+  ${featured ? html`<span class="plan-flag">${t('更划算')}</span>` : ''}
+  <h2>${t(PLAN_LABELS[plan])}</h2>
+  <p class="price"><span class="now" dir="ltr">${money(ui, price, currency)}</span><span class="per">${period}</span></p>
+  <p class="was"><s dir="ltr">${money(ui, original, currency)}</s> ${note ? html`<span class="tag">${note}</span>` : ''}</p>
+  <ul class="perks">
+    <li>${t('托管翻译无限使用')}</li>
+    <li>${t('无需自己的 API Key')}</li>
+    <li>${t('划词、整段、网页区域和字幕翻译')}</li>
+    <li>${t('随时取消，本期结束前仍可使用')}</li>
+  </ul>
+  ${checkoutEnabled
+    ? html`<form method="post" action="/billing/checkout"><input type="hidden" name="plan" value="${plan}"><button class="button primary wide" type="submit">${t('立即订阅')}</button></form>`
+    : html`<button class="button primary wide" type="button" disabled>${t('即将开放')}</button>`}
+</section>`;
+};
+
+export function plansPage(ui, { user, state, pricing, checkoutEnabled, notice }) {
+  const { t } = ui;
+  const sub = state.subscription;
+  const save = Math.round((1 - Number(pricing.yearly.price) / (Number(pricing.monthly.price) * 12)) * 100);
   return layout(ui, {
     title: t('套餐与订阅'),
     user,
     active: 'plans',
+    notice,
     body: html`<h1>${t('套餐与订阅')}</h1>
-<section class="card empty">
-  <h2>${t('付费套餐尚未开放')}</h2>
-  <p>${t('支付服务接入后，可以在这里查看套餐权益，开通、升级或取消自动续订。订阅是否生效以服务端核验的支付结果为准。')}</p>
-  <p class="muted">${t('目前可以使用注册赠送的试用点数，或在扩展里继续使用自己的 API Key。')}</p>
-</section>`,
+${sub
+  ? html`<section class="card">
+  <h2>${t('你已订阅')}</h2>
+  <p>${t('当前方案：{plan}，{status}。', { plan: t(PLAN_LABELS[sub.plan] || k('订阅')), status: subStatus(ui, sub.status) })}</p>
+  <a href="/billing">${t('管理订阅与账单')}</a>
+</section>`
+  : html`<p class="lead">${t('一个方案，托管翻译无限使用。赠送点数用完后订阅即可，扩展里的自带 Key 模式始终免费。')}</p>
+<div class="plans">
+  ${planCard(ui, { plan: 'monthly', ...pricing.monthly, currency: pricing.currency, period: t('每月'), checkoutEnabled })}
+  ${planCard(ui, { plan: 'yearly', ...pricing.yearly, currency: pricing.currency, period: t('每年'), note: save > 0 ? t('比月付省 {n}%', { n: save }) : '', featured: true, checkoutEnabled })}
+</div>
+<p class="fine">${t('付款由 Creem 处理并开具收据，价格可能另加所在地区的税费。本站不接触你的银行卡信息。')}</p>`}`,
   });
 }
 
-export function billingPage(ui, { user }) {
+const ORDER_STATUS_LABELS = { paid: k('已付款'), refunded: k('已退款'), partially_refunded: k('部分退款'), disputed: k('争议处理中') };
+
+export function billingPage(ui, { user, subscription, orders, portalEnabled, notice }) {
   const { t } = ui;
   return layout(ui, {
     title: t('订单与账单'),
     user,
     active: 'billing',
+    notice,
     body: html`<h1>${t('订单与账单')}</h1>
-<section class="card empty">
-  <h2>${t('暂无订单')}</h2>
-  <p>${t('开通付费套餐后，支付时间、金额、币种、退款状态和收据会显示在这里。')}</p>
+<section class="card">
+  <h2>${t('订阅')}</h2>
+  ${subscription
+    ? html`<dl class="facts">
+      <dt>${t('方案')}</dt><dd>${t(PLAN_LABELS[subscription.plan] || k('订阅'))}</dd>
+      <dt>${t('状态')}</dt><dd>${subStatus(ui, subscription.status)}</dd>
+      ${subscription.current_period_end ? html`<dt>${t('本期结束')}</dt><dd>${ui.date(subscription.current_period_end)}</dd>` : ''}
+    </dl>
+    ${portalEnabled && subscription.provider_customer_id
+      ? html`<form method="post" action="/billing/portal"><button class="button" type="submit">${t('管理订阅、付款方式与发票')}</button></form>
+    <p class="fine">${t('将打开 Creem 的订阅管理页面，可以取消续订、更换付款方式和下载发票。')}</p>`
+      : ''}`
+    : html`<p class="muted">${t('暂无订阅。')}</p><a href="/plans">${t('查看订阅方案')}</a>`}
+</section>
+<section class="card">
+  <h2>${t('付款记录')}</h2>
+  ${orders.length ? html`<div class="table-wrap"><table>
+    <thead><tr><th>${t('时间')}</th><th>${t('方案')}</th><th class="num">${t('金额（税前）')}</th><th>${t('状态')}</th></tr></thead>
+    <tbody>${orders.map((o) => html`<tr>
+      <td>${ui.dateTime(o.created_at)}</td>
+      <td>${o.plan ? t(PLAN_LABELS[o.plan]) : '—'}</td>
+      <td class="num" dir="ltr">${minorMoney(ui, o.amount, o.currency)}</td>
+      <td>${ORDER_STATUS_LABELS[o.status] ? t(ORDER_STATUS_LABELS[o.status]) : o.status}</td>
+    </tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">${t('还没有付款记录。')}</p>`}
 </section>`,
   });
 }
 
 /* ---------- U5 用量与点数记录 ---------- */
 
-const ENTRY_LABELS = { trial_grant: k('注册试用赠送'), usage: k('托管翻译扣点'), refund: k('失败返还') };
+const ENTRY_LABELS = {
+  trial_grant: k('注册赠送'),
+  guest_grant: k('试用赠送'),
+  transfer: k('试用点数转入'),
+  adjust: k('客服补发'),
+  usage: k('托管翻译扣点'),
+  refund: k('失败返还'),
+  void: k('点数作废'),
+};
 const KIND_LABELS = { text: k('文字') };
 const STATUS_LABELS = { ok: k('成功'), failed: k('失败（已返还）'), pending: k('处理中') };
 
@@ -281,7 +372,7 @@ export function usagePage(ui, { user, entries, events = [] }) {
       <td>${ui.dateTime(e.created_at)}</td>
       <td>${KIND_LABELS[e.kind] ? t(KIND_LABELS[e.kind]) : e.kind}</td>
       <td class="num">${e.chars}</td>
-      <td class="num" dir="ltr">${e.status === 'failed' ? 0 : -e.cost}</td>
+      <td class="num" dir="ltr">${e.audience === 'subscriber' ? t('订阅') : e.status === 'failed' ? 0 : -e.cost}</td>
       <td>${STATUS_LABELS[e.status] ? t(STATUS_LABELS[e.status]) : e.status}</td>
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
@@ -374,7 +465,7 @@ export function helpPage(ui, { user }) {
 <section class="card">
   <h2>${t('两种翻译模式')}</h2>
   <dl class="facts wide">
-    <dt>${t('托管翻译')}</dt><dd>${t('登录后由我们的服务完成翻译并扣除点数，无需自己的 API Key。即将开放。')}</dd>
+    <dt>${t('托管翻译')}</dt><dd>${t('由我们的服务完成翻译，无需自己的 API Key：用赠送点数，或订阅后无限使用。')}</dd>
     <dt>${t('自带 Key')}</dt><dd>${t('在扩展设置里填写 OpenAI、DeepSeek 或 DeepL 的 API Key，请求直接发给你选择的服务商。Key 只保存在你的浏览器里，本网站不接收也无法读取。')}</dd>
   </dl>
 </section>
@@ -385,6 +476,44 @@ export function helpPage(ui, { user }) {
     <li><a href="${site(ui)}">${t('使用说明与产品介绍')}</a></li>
     <li><a href="${ui.links.feedback}">${t('问题反馈')}</a></li>
   </ul>
+</section>`,
+  });
+}
+
+/* ---------- 扩展安装后的欢迎页 ---------- */
+
+export function welcomePage(ui, { user, outcome, claimOutcome, balance, signupCredits }) {
+  const { t } = ui;
+  let heading = t('欢迎使用 AI 划词翻译');
+  let message;
+  if (outcome === 'restored') {
+    heading = t('欢迎回来');
+    message = t('已恢复你之前的免费点数，剩余 {n} 点。', { n: balance ?? 0 });
+  } else if (outcome === 'already_member') {
+    message = t('这个浏览器已经领取过免费点数。登录你的账户即可继续使用。');
+  } else if (outcome === 'invalid') {
+    message = t('选中网页上的文字，点击翻译按钮或右键「翻译」即可使用。');
+  } else if (claimOutcome === 'ip_limited' || claimOutcome === 'daily_cap') {
+    message = t('这次没有领到免费点数（同一网络领取次数已满或今日名额已发完）。注册即送 {n} 点。', { n: signupCredits });
+  } else {
+    message = t('已送你 {n} 点免费点数，不用注册，选中网页上的文字即可翻译。', { n: balance ?? 0 });
+  }
+  return layout(ui, {
+    title: heading,
+    user,
+    body: html`<section class="card auth welcome" data-outcome="${outcome}">
+  <img class="consent-mark" src="${assetUrl('icon.png')}" alt="" width="56" height="56">
+  <h1>${heading}</h1>
+  <p class="lead">${message}</p>
+  <ol class="steps">
+    <li>${t('在任意网页选中文字')}</li>
+    <li>${t('点击出现的翻译按钮，或右键选择「翻译」')}</li>
+    <li>${t('点数用完后注册即送 {n} 点，订阅可无限使用', { n: signupCredits })}</li>
+  </ol>
+  ${user
+    ? html`<a class="button" href="/">${t('查看我的账户')}</a>`
+    : html`<a class="button primary" href="/login">${outcome === 'already_member' ? t('登录') : t('注册 / 登录，再送 {n} 点', { n: signupCredits })}</a>
+  <p class="fine">${t('在这个浏览器登录后，扩展会自动切换到你的账户，剩余的免费点数一并转入。')}</p>`}
 </section>`,
   });
 }

@@ -1,11 +1,12 @@
 /** 通用安全响应头与修改状态请求的来源校验。 */
+import { bodyLimit } from 'hono/body-limit';
 
 const SAFE_METHODS = /^(GET|HEAD|OPTIONS)$/;
 
 // Google One Tap 组件要求放开的来源（https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid#content_security_policy）。
 const GSI = 'https://accounts.google.com/gsi/';
 
-export function securityHeaders(config) {
+export function securityHeaders(config, { checkout = Boolean(config.creem) } = {}) {
   // 只允许本站脚本（配色切换与语言下拉的增强）；表单提交到 Google 登录会经过重定向，form-action 需要放行。
   // 显示 One Tap 的页面（路由里 c.set('oneTap', true)）额外放开 Google 组件，其他页面保持严格策略。
   const policy = (oneTap, extensionAuth) => [
@@ -16,7 +17,8 @@ export function securityHeaders(config) {
     `script-src 'self'${oneTap ? ` ${GSI}client` : ''}`,
     ...(oneTap ? [`frame-src ${GSI}`, `connect-src ${GSI}`] : []),
     // 扩展授权页确认后重定向回扩展的回调页，只放行这一次请求的扩展来源（chrome-extension://<扩展 ID>）。
-    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}${extensionAuth ? ` ${extensionAuth}` : ''}`,
+    // 结账与订阅管理表单提交到本站后重定向到 Creem 的结账页和客户门户。
+    `form-action 'self'${config.google ? ' https://accounts.google.com' : ''}${checkout ? ' https://creem.io https://*.creem.io' : ''}${extensionAuth ? ` ${extensionAuth}` : ''}`,
     "base-uri 'none'",
     "frame-ancestors 'none'",
   ].join('; ');
@@ -75,4 +77,13 @@ export function clientAddress(c, config) {
     if (forwarded) return forwarded.split(',')[0].trim();
   }
   return c.env?.incoming?.socket?.remoteAddress || 'unknown';
+}
+
+/**
+ * 请求体大小限制。没有请求体的请求（既无 Content-Length 也无 Transfer-Encoding）直接放行：
+ * hono 的 bodyLimit 会为它们重新包装 Request，本机经代理运行时（全局 Request 换成 undici 的实现）会因此出错。
+ */
+export function limitBody(maxSize, onError) {
+  const limit = bodyLimit({ maxSize, onError });
+  return (c, next) => (c.req.header('content-length') || c.req.header('transfer-encoding') ? limit(c, next) : next());
 }
