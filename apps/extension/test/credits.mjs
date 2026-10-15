@@ -26,7 +26,7 @@ assert.equal(credits.available({ balance: '1.00', available: false }), false, '�
 assert.equal(credits.available({ balance: 20 }), true, '兼容旧缓存');
 assert.equal(credits.available(undefined), false);
 
-// 执行真实 popup 渲染，验证 storage 更新会影响可用状态而不是按显示余额停用。
+// 执行真实 popup 渲染，账户卡片跟随 storage 更新，托管模式不重复显示余额行。
 locale = 'en';
 const nodes = new Map();
 const node = () => ({ className: '', hidden: false, textContent: '', replaceChildren() {}, addEventListener() {},
@@ -47,17 +47,17 @@ Object.assign(context, {
 });
 vm.runInContext(source('src/popup/popup.js'), context);
 await new Promise(setImmediate);
-assert.match(element('keyState').textContent, /0\.00/);
-assert.match(element('keyState').className, /\bok\b/);
+assert.equal(element('keyRow').hidden, true);
+assert.match(element('credits').textContent, /0\.00/);
 assert.doesNotMatch(element('credits').className, /empty/);
 const update = (account) => changed({ accountStatus: { newValue: account } }, 'local');
 update({ signedIn: true, username: 'member', credits: { balance: '0.00', available: false } });
-assert.match(element('keyState').className, /\bwarn\b/);
+assert.equal(element('keyRow').hidden, true);
 assert.match(element('credits').className, /empty/);
 update({ guest: true, credits: { balance: '0.01', available: true }, offers: { signupCredits: '200.00' } });
 assert.match(element('accountMeta').textContent, /200\.00/);
 assert.match(element('credits').textContent, /0\.01/);
 update({ signedIn: true, username: 'member', subscription: { unlimited: true } });
 assert.equal(element('credits').textContent, '无限使用');
-assert.equal(element('keyState').textContent, '无限使用');
+assert.equal(element('keyRow').hidden, true);
 console.log('✓ 24 种语言两位小数、旧缓存和弹窗精确额度状态更新');

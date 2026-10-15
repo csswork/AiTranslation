@@ -6,6 +6,7 @@
   const el = {
     provider: document.getElementById('provider'),
     model: document.getElementById('model'),
+    keyRow: document.getElementById('keyRow'),
     keyState: document.getElementById('keyState'),
     panel: document.getElementById('panel'),
     image: document.getElementById('image'),
@@ -13,7 +14,6 @@
     targetName: document.getElementById('targetName'),
     open: document.getElementById('open'),
     modelRow: document.getElementById('modelRow'),
-    keyLabel: document.getElementById('keyLabel'),
     accountIn: document.getElementById('accountIn'),
     avatar: document.getElementById('avatar'),
     username: document.getElementById('username'),
@@ -62,19 +62,12 @@
     const provider = S.resolveProvider(settings);
     const hosted = S.isHosted(settings.provider);
     el.modelRow.hidden = hosted;
+    // 托管模式的余额与订阅已在顶部账户卡片展示；这一行只显示自带 Key 的配置状态。
+    el.keyRow.hidden = hosted;
     el.model.textContent = provider.model;
     el.targetName.textContent = t('选中文字，右键 → $1', [t('翻译成$1', [S.targetMenu(settings)])]);
-    if (hosted) {
-      // 点数翻译：显示剩余点数或需要登录，而不是 API Key
-      const balance = account.credits?.balance ?? 0;
-      const active = account.signedIn || account.guest;
-      const usable = active && (account.subscription || C.available(account.credits));
-      el.keyLabel.textContent = t('点数');
-      el.keyState.textContent = !active ? t('需要登录') : account.subscription ? t('无限使用') : t('剩余 $1 点', [C.format(balance)]);
-      el.keyState.className = `state ${usable ? 'ok' : 'warn'}`;
-    } else {
+    if (!hosted) {
       const configured = Boolean(provider.apiKey);
-      el.keyLabel.textContent = 'API Key';
       el.keyState.textContent = configured ? t("已配置") : t("未配置");
       el.keyState.className = `state ${configured ? 'ok' : 'warn'}`;
     }
