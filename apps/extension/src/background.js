@@ -668,10 +668,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'account-logout' && fromExtensionPage) return accountReply(AITrAccount.logout());
   // 设置页引导里的「免费试用」：安装时没领到（离线）时手动领取，并打开欢迎页
   if (type === 'account-guest' && fromExtensionPage) {
-    return accountReply(AITrAccount.claimGuest().then((url) => {
-      if (url) chrome.tabs.create({ url, windowId: sender.tab?.windowId });
-      return AITrAccount.refresh();
-    }));
+    // 开发版的「清除并模拟新安装」（fresh）：先让服务端重置本机网络的领取记录与浏览器标记
+    // （服务端需设置 DEV_TRIAL_RESET=1），再像新安装一样领取并打开欢迎页。
+    const fresh = Boolean(message.fresh) && AITrEnv.dev;
+    return accountReply((fresh ? AITrAccount.devResetTrial() : Promise.resolve())
+      .then(() => AITrAccount.claimGuest())
+      .then((url) => {
+        if (url) chrome.tabs.create({ url, windowId: sender.tab?.windowId });
+        return AITrAccount.refresh();
+      }));
   }
   if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
   if (type === 'hosted-translate' && fromExtensionPage) {

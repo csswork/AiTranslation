@@ -115,6 +115,7 @@ export function readConfig(env = process.env) {
     // 正式发信服务尚未接入；控制台输出验证码只能用于本地开发。
     if (mailTransport === 'console') problems.push('生产环境不能使用 console 发信，需设置 MAIL_TRANSPORT=resend 并配置 RESEND_API_KEY 与 MAIL_FROM');
     if (adminOrigin && !adminOrigin.startsWith('https://')) problems.push('生产环境 ADMIN_ORIGIN 必须使用 HTTPS');
+    if (env.DEV_TRIAL_RESET) problems.push('生产环境不能设置 DEV_TRIAL_RESET');
   }
 
   if (problems.length) throw new Error(`配置无效：\n- ${problems.join('\n- ')}`);
@@ -138,6 +139,8 @@ export function readConfig(env = process.env) {
     adminOrigin,
     // 反向代理提供的两位国家代码请求头（如 Cloudflare 的 cf-ipcountry），用于运营报表按国家统计；不设则不记录国家。
     reportTimeZone,
+    // 本地测试专用：允许扩展开发工具重置本机网络的访客领取记录（见 api/extension.js）。
+    devTrialReset: env.DEV_TRIAL_RESET === '1' && !production,
     geoCountryHeader: (env.GEO_COUNTRY_HEADER || '').trim().toLowerCase(),
     // 管理端二步验证：生产环境始终开启；本地开发默认跳过，设 ADMIN_REQUIRE_2FA=1 可在本地测试完整流程。
     adminRequire2fa: production || env.ADMIN_REQUIRE_2FA === '1',

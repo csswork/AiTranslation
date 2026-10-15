@@ -292,3 +292,34 @@ test('订阅用户的隐藏每月字数上限；冻结托管服务后拒绝请�
   assert.equal((await api(app, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'de' } })).status, 403);
   assert.equal((await (await api(app, '/me', { token })).json()).hosted.available, false);
 });
+
+test('DEV_TRIAL_RESET=1 时可重置本机网络的领取记录与浏览器标记，能再领完整访客点数；默认没有此接口，生产环境不能开启', async () => {
+  const ip = '198.51.100.50';
+  const reset = (app, cfg) => app.request(new URL('/api/extension/dev/reset-trial', cfg.appOrigin), {
+    method: 'POST', headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop', 'x-forwarded-for': ip },
+  });
+
+  // 默认（未设置开关）：没有这个接口
+  const plain = buildApp({ pool, config });
+  assert.equal((await reset(plain.app, config)).status, 404);
+
+  const devConfig = testConfig({ TRUST_PROXY: '1', DEV_TRIAL_RESET: '1' });
+  const { app } = buildApp({ pool, config: devConfig });
+  const b = browser(app, devConfig);
+  const first = await guest(app, ip);
+  await b.get(`/welcome${linkOf(first.welcomeUrl)}`);
+  await guest(app, ip);
+  await guest(app, ip);
+  assert.equal((await guest(app, ip)).outcome, 'ip_limited', '同一网络超过次数');
+
+  const body = await (await reset(app, devConfig)).json();
+  assert.equal(body.removed.claims, 4);
+  assert.ok(body.removed.marks >= 1, '浏览器标记一并删除');
+  const again = await guest(app, ip);
+  assert.equal(again.outcome, 'granted');
+  // 浏览器里还带着旧的标记 Cookie，但库里已没有对应记录：当成新浏览器，发放完整访客点数
+  assert.match(await b.text(`/welcome${linkOf(again.welcomeUrl)}`), /data-outcome="new"[\s\S]*已送你 50\.00 点/);
+
+  assert.throws(() => testConfig({ NODE_ENV: 'production', APP_ORIGIN: 'https://app.example', MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'r', MAIL_FROM: 'a@b.c', DEV_TRIAL_RESET: '1' }),
+    /生产环境不能设置 DEV_TRIAL_RESET/);
+});

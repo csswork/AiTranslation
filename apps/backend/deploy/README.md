@@ -27,6 +27,7 @@
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200.00 / 50.00 | 注册与访客赠送点数的默认值（不过期，最多两位小数）；管理员界面里的设置优先 |
 | `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 运营报表切分天和小时的时区 |
 | `GEO_COUNTRY_HEADER` | 建议 `cf-ipcountry` | 反向代理提供的两位国家代码请求头；用于报表按国家统计，不保存 IP 或更细位置。不经 Cloudflare 时可用 nginx GeoIP2 模块设置类似请求头 |
+| `DEV_TRIAL_RESET` | 不得设置 | 本地测试专用：允许扩展开发工具重置本机网络的访客领取记录与浏览器标记；生产环境设置会拒绝启动 |
 | `ADMIN_REQUIRE_2FA` | 无需设置 | 生产环境始终要求管理端二步验证；只在本地开发用来打开 |
 | `ADMIN_ORIGIN` | 建议 `https://admin.huaci.app` | 管理员界面地址，必须与 `APP_ORIGIN` 主机名不同；不设则不提供管理端。反向代理需把该主机名也转发到本服务 |
 | `SESSION_DAYS` | 默认 30 | 会话有效天数（网页与扩展会话相同） |

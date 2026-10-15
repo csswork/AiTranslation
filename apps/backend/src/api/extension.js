@@ -17,7 +17,7 @@ import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { refundCredits, reserveCredits } from '../credits/ledger.js';
 import { countCharacters, creditsToUnits, displayCredits } from '../credits/units.js';
 import { transaction } from '../db/index.js';
-import { createGuest, mergeGuest } from '../guest/index.js';
+import { createGuest, ipHash, mergeGuest } from '../guest/index.js';
 import { clientAddress, createRateLimiter, limitBody, requestCountry } from '../http/security.js';
 import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
@@ -74,6 +74,29 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       welcomeUrl: `${config.appOrigin}/welcome?link=${encodeURIComponent(result.linkCode)}`,
     });
   });
+
+  // 本地测试专用，必须显式设置 DEV_TRIAL_RESET=1 才挂载（生产环境设置会拒绝启动）。不接受任何参数：
+  // 删除本机这个网络的访客领取记录（领取次数重新计算），以及与这些访客、转成的账户关联的浏览器标记和已无主的标记；
+  // 浏览器里旧的标记 Cookie 在库里找不到对应记录，欢迎页就会当成新浏览器。
+  if (config.devTrialReset) {
+    app.post('/dev/reset-trial', async (c) => {
+      const hash = ipHash(config, clientAddress(c, config));
+      const removed = await transaction(pool, async (client) => {
+        const marks = await client.query(
+          `DELETE FROM browser_marks WHERE user_id IS NULL OR user_id IN (
+             SELECT user_id FROM guest_claims WHERE ip_hash = $1 AND user_id IS NOT NULL
+             UNION SELECT merged_user_id FROM guest_claims WHERE ip_hash = $1 AND merged_user_id IS NOT NULL)`,
+          [hash],
+        );
+        const claims = await client.query('DELETE FROM guest_claims WHERE ip_hash = $1', [hash]);
+        return { claims: claims.rowCount, marks: marks.rowCount };
+      });
+      return c.json({ ok: true, removed });
+    });
+  } else {
+    // 未开启时明确返回 404，不落到站内其他路由（扩展据此提示需要开启 DEV_TRIAL_RESET）。
+    app.post('/dev/reset-trial', (c) => c.json({ error: 'not_found' }, 404));
+  }
 
   app.post('/token', async (c) => {
     const body = await readJson(c);

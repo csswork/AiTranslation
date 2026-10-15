@@ -190,6 +190,18 @@
     return data.welcomeUrl || null;
   }
 
+  /**
+   * 仅开发版：让服务端清除本机网络的访客领取记录与浏览器标记。服务端需设置 DEV_TRIAL_RESET=1，
+   * 否则没有这个接口（生产环境不能开启）。提示文案只用于开发工具，不进入多语言目录。
+   */
+  async function devResetTrial() {
+    if (!AITrEnv.dev) return null;
+    const { response, data } = await call('/dev/reset-trial', { method: 'POST', auth: false });
+    if (response.status === 404) throw new AccountError('服务端没有开启 DEV_TRIAL_RESET=1（apps/backend/.env.local），无法重置领取记录', 'dev_reset_disabled');
+    if (!response.ok) throw new AccountError(`重置领取记录失败（${response.status}）`, 'dev_reset');
+    return data;
+  }
+
   async function logout() {
     const token = await readToken();
     try {
@@ -232,5 +244,5 @@
     throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, logout, refresh, readStatus, translate };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate };
 })();
