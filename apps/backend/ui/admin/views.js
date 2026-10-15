@@ -26,6 +26,7 @@ const num = (value) => Number(value || 0).toLocaleString('zh-CN');
 const minor = (amount, currency) => new Intl.NumberFormat('zh-CN', { style: 'currency', currency: currency || 'USD' }).format(Number(amount || 0) / 100);
 const usd = (micros) => {
   const n = Number(micros || 0);
+  if (n > 0 && n < 50) return '<$0.0001';
   // 单次请求的成本很小，不足 1 美分时多显示两位。
   return `$${(n / 1_000_000).toFixed(n > 0 && n < 10_000 ? 4 : 2)}`;
 };

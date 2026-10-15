@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>隱私權政策 · AI 劃詞翻譯</title>
-<meta name="description" content="AI 劃詞翻譯的隱私權政策：不營運任何伺服器、不收集資料；內容只在你主動觸發翻譯時，透過 HTTPS 傳往你自己設定的 AI 平台。" />
+<meta name="description" content="AI Selection Translator 的隱私政策：自帶 Key 時內容直接傳送至你選擇的平台；點數翻譯經我們的伺服器轉給模型服務商，不保存原文譯文；帳戶與計費只保留必要資料。中英雙語。" />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="canonical" href="https://huaci.app/zh-Hant/privacy.html" />
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/privacy.html" />
 <meta property="og:title" content="隱私權政策 · AI 劃詞翻譯" />
-<meta property="og:description" content="不營運任何伺服器、不收集資料；內容只在你主動觸發翻譯時，透過 HTTPS 傳往你自己設定的 AI 平台。" />
+<meta property="og:description" content="內容只在你主動觸發翻譯時傳送；點數翻譯不保存原文譯文；帳戶與計費只保留必要資料。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -49,6 +49,7 @@
     <nav class="nav-links">
       <a href="/zh-Hant/#features">功能</a>
       <a href="/zh-Hant/#privacy">隱私權</a>
+      <a href="/zh-Hant/#pricing">價格</a>
       <a href="/zh-Hant/#install" class="hide-sm">安裝</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
       <!-- 语言切换：选项由 /lang.js 按 i18n/locales.json 里的启用语言填进来 -->
@@ -72,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>隱私權政策</h2>
-        <p class="updated">最後更新：2026-09-30 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最後更新：2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -80,48 +81,82 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>一句話總結</h3>
-          <p>本擴充功能不會收集、儲存或上傳任何使用者資料到我們的伺服器——<b>我們沒有伺服器</b>。 你要翻譯的內容，只會傳送到<b>你自己設定的那家 AI 平台</b>。</p>
+          <p>AI Selection Translator 有兩種用法。<b>自帶 Key</b>：你要翻譯的內容直接傳送至你自己設定的 AI 平台，不經過我們。<b>點數翻譯</b>：內容經我們的伺服器轉給模型服務商完成翻譯，伺服器<b>不儲存原文與譯文</b>。帳戶、計費與防濫用僅保留運行所必需的資料，不用於廣告，也不出售。</p>
 
-          <h3>會傳送出去的內容</h3>
-          <p>只有在<b>你主動觸發翻譯</b>時（右鍵選單、快速鍵、點擊翻譯按鈕）， 下列內容才會透過 HTTPS 傳送到你在設定中選擇的平台：</p>
+          <h3>翻譯時會傳送的內容</h3>
+          <p>僅在你<b>主動觸發翻譯</b>時（右鍵選單、快速鍵、點擊翻譯按鈕），以下內容才會透過 HTTPS 傳送：</p>
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>內容</th><th>傳送時機</th><th>傳送至</th></tr>
+                <tr><th>內容</th><th>傳送時機</th><th>自帶 Key 時傳往</th><th>點數翻譯時傳往</th></tr>
               </thead>
               <tbody>
-                <tr><td>你選取的文字</td><td>使用劃詞翻譯時</td><td>你選擇的平台</td></tr>
-                <tr><td>你指定區域內的文字</td><td>點擊元素上的翻譯按鈕時</td><td>同上</td></tr>
-                <tr><td>你按右鍵的那張圖片</td><td>使用圖片翻譯時</td><td>同上</td></tr>
-                <tr><td>你在翻譯面板輸入的文字</td><td>點擊翻譯時</td><td>同上</td></tr>
+                <tr><td>你選取的文字</td><td>使用劃詞翻譯時</td><td>你選擇的平台</td><td>我們的伺服器，再轉給模型服務商</td></tr>
+                <tr><td>你指定區域內的文字</td><td>點擊區域上的翻譯按鈕時</td><td>同上</td><td>同上</td></tr>
+                <tr><td>你在翻譯面板輸入的文字</td><td>點擊翻譯時</td><td>同上</td><td>同上</td></tr>
+                <tr><td>影片字幕的辨識文字</td><td>開啟影片字幕翻譯時</td><td>同上</td><td>同上</td></tr>
+                <tr><td>你按右鍵的那張圖片</td><td>使用圖片翻譯時</td><td>你選擇的平台</td><td>不支援（圖片僅走自帶 Key）</td></tr>
               </tbody>
             </table>
           </div>
-          <p>可選的平台為 <b>OpenAI（ChatGPT）</b>、<b>DeepSeek</b> 與 <b>DeepL</b>，請求分別傳往 <code>https://api.openai.com</code>、<code>https://api.deepseek.com</code>， 以及 DeepL 的 <code>https://api-free.deepl.com</code>（付費 Key 為 <code>https://api.deepl.com</code>）。 這些內容如何被處理，適用該平台本身的隱私權政策：</p>
+          <p>自帶 Key 可選 <b>OpenAI（ChatGPT）</b>、<b>DeepSeek</b> 與 <b>DeepL</b>，請求分別傳往 <code>https://api.openai.com</code>、<code>https://api.deepseek.com</code>，以及 DeepL 的 <code>https://api-free.deepl.com</code>（付費 Key 為 <code>https://api.deepl.com</code>）。</p>
+          <p>點數翻譯的請求傳往 <code>https://app.huaci.app</code>，由伺服器轉給 <b>DeepSeek</b>；DeepSeek 暫時無法使用時改用 <b>Fireworks AI</b>（美國節點）上的同款模型。文字僅在處理請求時短暫停留於記憶體，不寫入資料庫或日誌。</p>
+          <p>這些平台如何處理收到的內容，適用其各自的隱私政策：</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>
             <li>DeepSeek：<a class="link" href="https://platform.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html" target="_blank" rel="noopener">platform.deepseek.com/downloads</a></li>
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
+            <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>不會傳送</b>：你沒有主動翻譯的頁面內容、瀏覽記錄、Cookie、表單資料。 擴充功能不會在背景自動掃描或上傳任何東西。</p>
+          <p><b>不會傳送</b>：你未主動翻譯的頁面內容、瀏覽歷史、Cookie、表單資料。擴充功能不會在背景自動掃描或上傳任何東西。</p>
+
+          <h3>帳戶資料</h3>
+          <p>註冊或登入後，我們儲存：</p>
+          <ul>
+            <li><b>電子郵件與使用者名稱</b>——用於登入、找回與聯絡你。不儲存姓名、頭像或其他資料。</li>
+            <li><b>登入方式</b>——使用 Google 登入時僅儲存 Google 帳戶的識別碼與已驗證的電子郵件。</li>
+            <li><b>登入工作階段</b>——僅記錄類型（網站或擴充功能）與時間，不記錄裝置型號、位置或裝置指紋。</li>
+            <li><b>點數與訂閱</b>——點數的發放、扣除與返還記錄，訂閱狀態，以及訂單的金額、幣種、退款狀態與帳單國家。</li>
+          </ul>
+
+          <h3>使用記錄</h3>
+          <p>每次點數翻譯會記錄：字數、扣除的點數、模型與服務商、輸入和輸出的 token 數、目標語言與來源語言、耗時、結果（成功、失敗或被拒絕及原因），以及由網路服務商提供的<b>兩位國家代碼</b>。這些記錄用於計費、防止濫用和服務統計，<b>不包含原文或譯文</b>。你可以在使用者中心的「用量與點數」裡查看自己的記錄。</p>
+
+          <h3>免費試用的防重複領取</h3>
+          <p>安裝擴充功能後會自動領取一次免費點數。為防止同一網路或同一瀏覽器反覆領取，我們保存：網路位址經加密處理後的<b>不可還原摘要</b>（不保存位址本身，IPv6 只取前 64 位），以及歡迎頁在 <code>app.huaci.app</code> 上寫入的一個<b>隨機標記 Cookie</b>（資料庫裡只存它的摘要）。我們不使用裝置指紋。</p>
+
+          <h3>付款</h3>
+          <p>訂閱付款由 <b>Creem</b> 作為經銷商（Merchant of Record）處理，包括收款、稅費與收據。信用卡等付款資訊直接提交給 Creem，<b>我們看不到也不保存</b>。我們只保存 Creem 提供的訂閱與訂單編號、狀態、金額、幣種和帳單國家。Creem 如何處理你的資料，適用其隱私政策（<a class="link" href="https://www.creem.io/privacy" target="_blank" rel="noopener">creem.io/privacy</a>）。</p>
+
+          <h3>Cookie</h3>
+          <ul>
+            <li><b>登入工作階段</b>——<code>app.huaci.app</code> 上的 HttpOnly Cookie，用於保持網頁登入。</li>
+            <li><b>偏好</b>——語言與配色（<code>lang</code>、<code>theme</code>），官網與使用者中心共用。</li>
+            <li><b>瀏覽器標記</b>——見上文「免費試用的防重複領取」。</li>
+          </ul>
+          <p>沒有廣告 Cookie，也沒有第三方統計 Cookie。</p>
 
           <h3>只儲存在你本機的內容</h3>
-          <p>下列資料透過 <code>chrome.storage.local</code> 儲存在<b>你這台裝置上</b>， 不透過 Chrome 帳號同步，不會離開你的瀏覽器：</p>
+          <p>以下資料透過 <code>chrome.storage.local</code> 保存在<b>你這台裝置上</b>，不走 Chrome 帳號同步：</p>
           <ul>
-            <li><b>API Key</b> —— 僅用於在請求標頭中向你選擇的平台驗證</li>
-            <li><b>偏好設定</b> —— 目標語言、使用的模型、各項開關</li>
-            <li><b>元素翻譯規則</b> —— 你手動新增的「網域 + CSS 選擇器」</li>
+            <li><b>API Key</b>——僅用於在請求標頭中向你選擇的平台鑑權，不會發給我們</li>
+            <li><b>擴充功能的登入權杖</b>——僅發給 <code>app.huaci.app</code>，用於點數翻譯與帳戶狀態</li>
+            <li><b>偏好設定</b>——目標語言、使用的模型、各項開關</li>
+            <li><b>區域翻譯規則</b>——你手動新增的「網域 + CSS 選擇器」</li>
           </ul>
           <p>你可以隨時在設定頁面清除這些資料，或直接移除擴充功能（移除時會一併刪除）。</p>
 
+          <h3>保存期限與刪除</h3>
+          <p>帳戶、點數、訂單與使用記錄保存到你刪除帳戶為止；法律要求保留的交易記錄（例如稅務）會按要求保留。如需匯出或刪除你的帳戶及相關資料，請寄電子郵件到 <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>，我們會在 30 天內處理。</p>
+
           <h3>我們不做的事</h3>
           <ul>
-            <li>不架設任何伺服器，不收集任何資料</li>
-            <li>不使用統計、追蹤、廣告或任何第三方 SDK</li>
-            <li>不出售、不出租、不分享任何資料給第三方</li>
-            <li>不用於信用評估或與擴充功能無關的用途</li>
+            <li>不保存你翻譯的原文和譯文</li>
+            <li>不使用廣告、埋點或第三方統計 SDK</li>
+            <li>不出售、不出租你的資料，也不用於廣告</li>
+            <li>不使用你的翻譯內容訓練模型</li>
           </ul>
-          <p>擴充功能的全部原始碼以 GPL-3.0 公開，可自行核實： <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>。</p>
+          <p>擴充功能與伺服器的全部原始碼以 GPL-3.0 公開，可自行核實： <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>。</p>
 
           <h3>權限說明</h3>
           <div class="table-wrap">
@@ -131,12 +166,13 @@
               </thead>
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>在右鍵選單提供翻譯入口</td></tr>
-                <tr><td><code>storage</code></td><td>在本機儲存上述設定</td></tr>
+                <tr><td><code>storage</code></td><td>在本機儲存上述設定與登入權杖</td></tr>
                 <tr><td><code>scripting</code></td><td>在你觸發翻譯時，將所需指令碼注入目前頁面</td></tr>
                 <tr><td><code>activeTab</code></td><td>僅作用於你目前操作的那個分頁</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時，讀取目前分頁的聲音並在本機辨識成文字</td></tr>
                 <tr>
                   <td>存取 <code>api.openai.com</code>、<code>api.deepseek.com</code>、<code>api-free.deepl.com</code>、<code>api.deepl.com</code></td>
-                  <td>向你選定的平台傳送翻譯請求</td>
+                  <td>自帶 Key 時向你選定的平台傳送翻譯請求</td>
                 </tr>
                 <tr>
                   <td>選用：存取你自己的 API 網域</td>
@@ -151,7 +187,7 @@
           </div>
 
           <h3>聯絡方式</h3>
-          <p>有任何疑問，請在 <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a> 提出。</p>
+          <p>有任何疑問或資料請求，請寄信至 <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>， 或在 <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a> 提出。</p>
         </section>
 
         
@@ -165,7 +201,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · 以 GPL-3.0 發布</p>
-      <nav class="foot-links"><a href="/zh-Hant/">首頁</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/zh-Hant/privacy.html">隱私權政策</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">回報問題</a></nav>
+      <nav class="foot-links"><a href="/zh-Hant/">首頁</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/zh-Hant/privacy.html">隱私政策</a> <a href="/zh-Hant/terms.html">服務條款</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">回報問題</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">本專案為獨立的開源作品，與 OpenAI、DeepSeek、DeepL 及其關係企業無任何隸屬、授權或合作關係。 ChatGPT、DeepSeek、DeepL 等名稱為其各自權利人的商標。</p>
   </div>

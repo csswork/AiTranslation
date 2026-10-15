@@ -55,6 +55,7 @@
     <nav class="nav-links">
       <a href="#features">功能</a>
       <a href="#privacy">隐私</a>
+      <a href="#pricing">价格</a>
       <a href="#install" class="hide-sm">安装</a>
       <a href="changelog.html" class="hide-sm">更新日志</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -82,7 +83,7 @@
         <span class="eyebrow"><b>开源</b> GPL-3.0 · 自备 API Key</span>
         <h1>选中，右键，<br /><span class="dim">然后接着读。</span></h1>
         <p class="hero-sub">
-          一个 Chrome 扩展。选中文字、整块区域和图片里的文字，都能翻译成你选择的语言。24 种目标语言，界面语言独立设置，用你自己的 API Key 直接连接所选平台。
+          一个 Chrome 扩展。选中文字、整块区域和图片里的文字，都能翻译成你选择的语言。24 种目标语言，界面语言独立设置；可以用你自己的 API Key 直接连接所选平台，也可以用免费点数，不需要任何 Key。
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#install">安装到 Chrome</a>
@@ -303,36 +304,85 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>没有服务器，就没有可以泄露的地方</h2>
+        <h2>只在你翻译时，文字才离开浏览器</h2>
         <p>
-          只有你主动触发翻译时，内容才会发出去，并且只发往你自己选定的那家平台。这不是一句承诺，是可以照着源码逐行核对的事实。
+          两种用法都只在你主动触发翻译时发送内容：自带 Key 时直接发往你选的平台；用点数翻译时经我们的服务器转给模型服务商，服务器不保存原文和译文。
         </p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>只有一个出口</b>
+          <b>自带 Key：直连平台</b>
           <p>
-            所有发往翻译平台的请求都写在
-            <span class="mono">src/lib/providers.js</span> 这一个文件里，只发往你在设置中选的那家平台。其余代码不会把你的内容发到任何地方。
+            请求从你的浏览器直接发往你在设置里选的那家平台，不经过我们。API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 账号同步。
           </p>
         </div>
         <div class="fact">
-          <b>没有服务端</b>
+          <b>点数翻译：不留存内容</b>
           <p>
-            作者不运营任何服务器，也没有统计、埋点、广告或第三方 SDK。你翻译过什么，这边无从知道。
+            文字经 HTTPS 发到我们的服务器，转给模型服务商完成翻译。服务器只记录字数、token 与扣点，用于计费和防滥用，不保存原文和译文。
           </p>
         </div>
         <div class="fact">
-          <b>Key 留在本机</b>
+          <b>没有广告与第三方统计</b>
           <p>
-            API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 账号同步，只用于向你选的平台鉴权。卸载扩展即一并清除。
+            不使用广告、埋点或第三方统计 SDK，不出售或出租任何数据。扩展与服务端代码都以 GPL-3.0 公开，可以逐行核对。
           </p>
         </div>
       </div>
 
       <p class="after-facts reveal">
-        完整说明见<a class="link" href="privacy.html">隐私政策</a>（中英双语），以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公开的全部源码</a>。
+        完整说明见<a class="link" href="privacy.html">隐私政策</a>与<a class="link" href="terms.html">服务条款</a>，以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公开的全部源码</a>。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 价格 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Pricing</p>
+        <h2>免费可用，需要时再订阅</h2>
+        <p>用自己的 API Key 始终免费；不想申请 Key，就用我们的点数翻译——装好即送免费点数，用完可以订阅，无限使用。</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <b class="plan-name">自带 Key</b>
+          <p class="plan-price">免费</p>
+          <p class="plan-desc">填入你自己的 OpenAI、DeepSeek 或 DeepL Key，请求直接发往对方，费用由平台按用量向你收取。</p>
+          <ul>
+            <li>划词、整段、网页区域、图片与视频字幕翻译</li>
+            <li>Key 只保存在你的浏览器里</li>
+            <li>没有用量限制</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <b class="plan-name">免费试用</b>
+          <p class="plan-price">$0</p>
+          <p class="plan-desc">装好扩展即送 50 点，注册账户再送 200 点。点数不过期，每 500 字扣 1 点。</p>
+          <ul>
+            <li>不需要任何 API Key</li>
+            <li>划词、整段、网页区域与字幕的文字翻译</li>
+            <li>翻译失败不扣点</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <b class="plan-name">订阅</b>
+          <p class="plan-price">$3.99<span>/ 月</span></p>
+          <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
+          <p class="plan-desc">点数翻译无限使用，不再计算点数。随时可以取消，本期结束前仍可使用。</p>
+          <ul>
+            <li>包含免费试用的全部功能</li>
+            <li>按合理使用原则不限次数</li>
+            <li>首次付款 7 天内可申请全额退款</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.huaci.app/plans">订阅</a>
+        </div>
+      </div>
+
+      <p class="after-facts reveal">
+        价格以美元计，可能另加所在地区的税费。付款由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作为经销商（Merchant of Record）处理并开具收据，我们不接触你的银行卡信息。订阅、退款与合理使用的具体规则见<a class="link" href="terms.html">服务条款</a>。
       </p>
     </div>
   </section>
@@ -343,7 +393,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>四步装好</h2>
-        <p>目前以开发者模式加载。需要 Chrome 116 或更高版本，以及一个你自己的 API Key。</p>
+        <p>目前以开发者模式加载，需要 Chrome 116 或更高版本。装好就能用免费点数翻译，也可以填自己的 API Key。</p>
       </div>
 
       <div class="steps reveal">
@@ -368,8 +418,8 @@
         </div>
         <div class="step">
           <div>
-            <b>填入 API Key</b>
-            <span>——首次安装会自动打开设置页。选好平台、粘贴 Key，点「测试连接」确认能通。</span>
+            <b>开始翻译</b>
+            <span>——首次安装会自动领取免费点数并打开欢迎页，选中文字就能翻译。想用自己的 Key，在设置页选好平台、粘贴 Key，点「测试连接」确认能通。</span>
           </div>
         </div>
       </div>
@@ -401,8 +451,10 @@
       <nav class="foot-links">
         <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a>
         <a href="privacy.html">隐私政策</a>
+        <a href="terms.html">服务条款</a>
         <a href="changelog.html">更新日志</a>
         <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">反馈问题</a>
+        <a href="mailto:support@huaci.app">support@huaci.app</a>
       </nav>
     </div>
     <p class="foot-note">

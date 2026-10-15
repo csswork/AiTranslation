@@ -462,4 +462,158 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/privacy.html" />
     <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/privacy.html" />
   </url>
+  <url>
+    <loc>https://huaci.app/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/en/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/zh-Hant/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/ja/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/ko/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/es/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/pt/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/fr/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/de/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/ru/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
+  <url>
+    <loc>https://huaci.app/ar/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/terms.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://huaci.app/en/terms.html" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://huaci.app/zh-Hant/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huaci.app/ja/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://huaci.app/ko/terms.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://huaci.app/es/terms.html" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://huaci.app/pt/terms.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://huaci.app/fr/terms.html" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://huaci.app/de/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://huaci.app/ru/terms.html" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://huaci.app/ar/terms.html" />
+  </url>
 </urlset>

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Política de privacidad · AI Selection Translator</title>
-<meta name="description" content="Política de privacidad de AI Selection Translator: no operamos ningún servidor ni recopilamos datos; el contenido solo se envía por HTTPS a la plataforma de IA que configures, y solo cuando inicias tú la traducción." />
+<meta name="description" content="Política de privacidad de AI Selection Translator: con tu propia Key, el contenido se envía directamente a la plataforma que elijas; con la traducción por créditos, pasa por nuestro servidor hacia el proveedor del modelo y no se guardan el texto original ni la traducción; para la cuenta y la facturación solo se conservan los datos necesarios. Disponible en chino e inglés." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="canonical" href="https://huaci.app/es/privacy.html" />
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://huaci.app/es/privacy.html" />
 <meta property="og:title" content="Política de privacidad · AI Selection Translator" />
-<meta property="og:description" content="No operamos ningún servidor ni recopilamos datos; el contenido solo se envía por HTTPS a la plataforma de IA que configures, y solo cuando inicias tú la traducción." />
+<meta property="og:description" content="El contenido solo se envía cuando inicias la traducción manualmente; la traducción por créditos no guarda el texto original ni la traducción; para la cuenta y la facturación solo se conservan los datos necesarios." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -49,6 +49,7 @@
     <nav class="nav-links">
       <a href="/es/#features">Funciones</a>
       <a href="/es/#privacy">Privacidad</a>
+      <a href="/es/#pricing">Precios</a>
       <a href="/es/#install" class="hide-sm">Instalar</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
       <!-- 语言切换：选项由 /lang.js 按 i18n/locales.json 里的启用语言填进来 -->
@@ -72,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidad</h2>
-        <p class="updated">Última actualización: 2026-09-30 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Texto original en Markdown</a></p>
+        <p class="updated">Última actualización: 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -80,48 +81,82 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>En una frase</h3>
-          <p>Esta extensión no recopila, no almacena ni sube a nuestros servidores ningún dato de usuario: <b>no tenemos servidores</b>. Lo que pides traducir solo se envía a la plataforma de IA <b>que tú mismo configures</b>.</p>
+          <p>AI Selection Translator tiene dos modos de uso. <b>Clave propia</b>: el contenido que deseas traducir se envía directamente a la plataforma de IA que hayas configurado, sin pasar por nosotros. <b>Traducción por créditos</b>: el contenido se transmite a través de nuestro servidor al proveedor del modelo para completar la traducción; el servidor <b>no guarda el texto original ni la traducción</b>. La cuenta, la facturación y la prevención de abuso solo conservan los datos necesarios para su funcionamiento; no se utilizan para publicidad ni se venden.</p>
 
-          <h3>Lo que se envía</h3>
-          <p>Solo cuando <b>tú inicias la traducción</b> (menú contextual, atajo de teclado o clic en un botón de traducción) se envía lo siguiente por HTTPS a la plataforma que hayas seleccionado en los ajustes:</p>
+          <h3>Contenido que se envía al traducir</h3>
+          <p>Solo cuando <b>activas la traducción manualmente</b> (menú contextual, atajo de teclado, clic en el botón de traducir), el siguiente contenido se envía mediante HTTPS:</p>
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>Contenido</th><th>Cuándo se envía</th><th>Enviado a</th></tr>
+                <tr><th>Contenido</th><th>Cuándo se envía</th><th>Con clave propia se envía a</th><th>Con traducción por créditos se envía a</th></tr>
               </thead>
               <tbody>
-                <tr><td>El texto que seleccionas</td><td>Al usar la traducción por selección</td><td>La plataforma que elijas</td></tr>
-                <tr><td>El texto de la zona que señalas</td><td>Al pulsar el botón de traducción de una zona</td><td>Ídem</td></tr>
-                <tr><td>La imagen en la que hiciste clic derecho</td><td>Al usar la traducción de imágenes</td><td>Ídem</td></tr>
-                <tr><td>El texto que escribes en el panel de traducción</td><td>Al pulsar Traducir</td><td>Ídem</td></tr>
+                <tr><td>El texto que seleccionas</td><td>Al usar la traducción por selección</td><td>La plataforma que elijas</td><td>Nuestro servidor, y luego al proveedor del modelo</td></tr>
+                <tr><td>El texto de la zona que señalas</td><td>Al hacer clic en el botón de traducir en el área</td><td>Ídem</td><td>Ídem</td></tr>
+                <tr><td>El texto que escribes en el panel de traducción</td><td>Al pulsar Traducir</td><td>Ídem</td><td>Ídem</td></tr>
+                <tr><td>Texto reconocido de los subtítulos del video</td><td>Al activar la traducción de subtítulos de video</td><td>Ídem</td><td>Ídem</td></tr>
+                <tr><td>La imagen en la que hiciste clic derecho</td><td>Al usar la traducción de imágenes</td><td>La plataforma que elijas</td><td>No compatible (las imágenes solo usan clave propia)</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Las plataformas disponibles son <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> y <b>DeepL</b>; las solicitudes se envían a <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code> y, en el caso de DeepL, a <code>https://api-free.deepl.com</code> (con una clave de pago, <code>https://api.deepl.com</code>). El tratamiento de esos contenidos se rige por la política de privacidad de cada plataforma:</p>
+          <p>Con clave propia se puede elegir <b>OpenAI (ChatGPT)</b>, <b>DeepSeek</b> y <b>DeepL</b>; las solicitudes se envían respectivamente a <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, y a <code>https://api-free.deepl.com</code> de DeepL (con clave de pago, <code>https://api.deepl.com</code>).</p>
+          <p>Las solicitudes de traducción por créditos se envían a <code>https://app.huaci.app</code> y el servidor las transmite a <b>DeepSeek</b>; cuando DeepSeek no está disponible temporalmente, se utiliza el mismo modelo en <b>Fireworks AI</b> (nodo en Estados Unidos). El texto solo permanece brevemente en memoria durante el procesamiento de la solicitud; no se escribe en bases de datos ni registros.</p>
+          <p>El tratamiento que estas plataformas dan al contenido recibido se rige por sus respectivas políticas de privacidad:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>
             <li>DeepSeek：<a class="link" href="https://platform.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html" target="_blank" rel="noopener">platform.deepseek.com/downloads</a></li>
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
+            <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>Nunca se envía</b>: el contenido de las páginas que no pediste traducir, el historial de navegación, las cookies ni los datos de formularios. La extensión no escanea ni sube nada en segundo plano.</p>
+          <p><b>No se envía</b>: contenido de páginas que no hayas traducido manualmente, historial de navegación, cookies ni datos de formularios. La extensión no escanea ni sube nada automáticamente en segundo plano.</p>
+
+          <h3>Datos de la cuenta</h3>
+          <p>Tras registrarte o iniciar sesión, guardamos:</p>
+          <ul>
+            <li><b>Correo electrónico y nombre de usuario</b>: para iniciar sesión, recuperar la cuenta y contactarte. No se guardan nombre real, foto de perfil ni otros datos.</li>
+            <li><b>Método de inicio de sesión</b>: al iniciar sesión con Google solo se guarda el identificador de la cuenta de Google y el correo electrónico verificado.</li>
+            <li><b>Sesión de inicio de sesión</b>: solo se registra el tipo (sitio web o extensión) y la hora; no se registra modelo del dispositivo, ubicación ni huella del dispositivo.</li>
+            <li><b>Créditos y suscripción</b>: registros de asignación, deducción y devolución de créditos, estado de la suscripción, así como importe, moneda, estado de reembolso y país de facturación del pedido.</li>
+          </ul>
+
+          <h3>Registro de uso</h3>
+          <p>Cada traducción con puntos registra: número de caracteres, puntos deducidos, modelo y proveedor, número de tokens de entrada y salida, idioma de destino e idioma de origen, tiempo empleado, resultado (éxito, fallo o rechazo y su motivo), así como el <b>código de país de dos letras</b> proporcionado por el proveedor de red. Estos registros se utilizan para facturación, prevención de abuso y estadísticas del servicio, y <b>no contienen el texto original ni la traducción</b>. Puedes consultar tus registros en «Uso y puntos» del centro de usuario.</p>
+
+          <h3>Prevención de reclamaciones duplicadas en la prueba gratuita</h3>
+          <p>Tras instalar la extensión se reclama automáticamente una vez un crédito gratuito. Para evitar reclamaciones repetidas desde la misma red o el mismo navegador, guardamos: un <b>resumen irreversible</b> de la dirección de red tras cifrado (no se guarda la dirección en sí; en IPv6 solo se toman los primeros 64 bits), así como una <b>cookie de marca aleatoria</b> que la página de bienvenida escribe en <code>app.huaci.app</code> (en la base de datos solo se almacena su resumen). No utilizamos huellas de dispositivo.</p>
+
+          <h3>Pagos</h3>
+          <p>Los pagos de suscripción son procesados por <b>Creem</b> como distribuidor (Merchant of Record), incluidos el cobro, los impuestos y los recibos. Los datos de pago, como tarjetas bancarias, se envían directamente a Creem; <b>no podemos verlos ni los guardamos</b>. Solo guardamos el número de suscripción y de pedido, el estado, el importe, la moneda y el país de facturación proporcionados por Creem. El tratamiento de tus datos por parte de Creem se rige por su política de privacidad (<a class="link" href="https://www.creem.io/privacy" target="_blank" rel="noopener">creem.io/privacy</a>).</p>
+
+          <h3>Cookie</h3>
+          <ul>
+            <li><b>Sesión de inicio de sesión</b>: cookie HttpOnly en <code>app.huaci.app</code>, utilizada para mantener la sesión web iniciada.</li>
+            <li><b>Preferencias</b>: idioma y combinación de colores (<code>lang</code>, <code>theme</code>), compartidos entre el sitio web y el centro de usuario.</li>
+            <li><b>Marca del navegador</b>: véase «Prevención de reclamaciones duplicadas en la prueba gratuita» más arriba.</li>
+          </ul>
+          <p>No hay cookies publicitarias ni cookies de estadísticas de terceros.</p>
 
           <h3>Lo que solo se guarda en tu dispositivo</h3>
-          <p>Los siguientes datos se guardan en <b>tu dispositivo</b> mediante <code>chrome.storage.local</code>, no se sincronizan con tu cuenta de Chrome y nunca salen de tu navegador:</p>
+          <p>Los siguientes datos se guardan mediante <code>chrome.storage.local</code> <b>en este dispositivo</b> y no se sincronizan con la cuenta de Chrome:</p>
           <ul>
-            <li><b>API Key</b> — se usa solo para autenticar tus solicitudes a la plataforma que elijas</li>
-            <li><b>Preferencias</b> — idioma de destino, modelo utilizado y los distintos interruptores</li>
-            <li><b>Reglas de traducción de elementos</b> — los pares «dominio + selector CSS» que añadiste tú mismo</li>
+            <li><b>API Key</b>: se utiliza únicamente para autenticarte ante la plataforma que elijas en el encabezado de la solicitud; no se nos envía</li>
+            <li><b>Token de inicio de sesión de la extensión</b>: se envía únicamente a <code>app.huaci.app</code>, para la traducción con puntos y el estado de la cuenta</li>
+            <li><b>Preferencias</b>: idioma de destino, modelo utilizado, distintos interruptores</li>
+            <li><b>Reglas de traducción por zona</b>: «dominio + selector CSS» que añadas manualmente</li>
           </ul>
           <p>Puedes borrar estos datos cuando quieras desde la página de ajustes, o simplemente desinstalar la extensión (al desinstalarla se eliminan también).</p>
 
+          <h3>Plazos de conservación y eliminación</h3>
+          <p>La cuenta, los puntos, los pedidos y los registros de uso se conservan hasta que elimines tu cuenta; los registros de transacciones que la ley exija conservar (por ejemplo, fiscales) se mantendrán según lo requerido. Para exportar o eliminar tu cuenta y los datos relacionados, envía un correo a <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>; lo tramitaremos en un plazo de 30 días.</p>
+
           <h3>Lo que no hacemos</h3>
           <ul>
-            <li>No tenemos ningún servidor ni recopilamos dato alguno</li>
-            <li>Sin estadísticas, sin telemetría, sin publicidad y sin ningún SDK de terceros</li>
-            <li>No vendemos, alquilamos ni compartimos datos con terceros</li>
-            <li>No se usan para evaluar solvencia ni para fines ajenos a las funciones de la extensión</li>
+            <li>No se guardan el texto original ni la traducción</li>
+            <li>No se utilizan SDK de publicidad, seguimiento ni estadísticas de terceros</li>
+            <li>No vendemos ni alquilamos tus datos, ni los usamos para publicidad</li>
+            <li>No se utilizan tus traducciones para entrenar modelos</li>
           </ul>
-          <p>Todo el código fuente de la extensión es público bajo GPL-3.0, para que puedas comprobarlo: <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>.</p>
+          <p>Todo el código fuente de la extensión y del servidor es público bajo GPL-3.0 y puede verificarse por tu cuenta: <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>.</p>
 
           <h3>Permisos</h3>
           <div class="table-wrap">
@@ -131,12 +166,13 @@
               </thead>
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>Ofrecer las opciones de traducción en el menú contextual</td></tr>
-                <tr><td><code>storage</code></td><td>Guardar los ajustes anteriores en tu dispositivo</td></tr>
+                <tr><td><code>storage</code></td><td>Guarda la configuración anterior y el token de sesión en el dispositivo</td></tr>
                 <tr><td><code>scripting</code></td><td>Inyectar en la página actual los scripts necesarios cuando inicias una traducción</td></tr>
                 <tr><td><code>activeTab</code></td><td>Actúa solo en la pestaña en la que estás trabajando</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Solo cuando activas la traducción de subtítulos de video, lee el audio de la pestaña actual y lo reconoce como texto en el dispositivo</td></tr>
                 <tr>
                   <td>Acceso a <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
-                  <td>Enviar solicitudes de traducción a la plataforma que elijas</td>
+                  <td>Con tu propia API Key, envía solicitudes de traducción a la plataforma que elijas</td>
                 </tr>
                 <tr>
                   <td>Opcional: acceder a tu propio dominio de API</td>
@@ -151,7 +187,7 @@
           </div>
 
           <h3>Contacto</h3>
-          <p>Si tienes alguna duda, publícala en <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a>.</p>
+          <p>Si tienes alguna duda o solicitud de datos, escribe a <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>, o plantéala en <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a>.</p>
         </section>
 
         
@@ -165,7 +201,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · Publicado bajo GPL-3.0</p>
-      <nav class="foot-links"><a href="/es/">Inicio</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/es/privacy.html">Política de privacidad</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">Reportar un problema</a></nav>
+      <nav class="foot-links"><a href="/es/">Inicio</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/es/privacy.html">Política de privacidad</a> <a href="/es/terms.html">Términos del servicio</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">Reportar un problema</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">Este proyecto es una obra de código abierto independiente y no tiene ninguna vinculación, autorización ni colaboración con OpenAI, DeepSeek, DeepL ni sus empresas filiales. ChatGPT, DeepSeek, DeepL y otros nombres son marcas registradas de sus respectivos titulares.</p>
   </div>

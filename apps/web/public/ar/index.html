@@ -52,6 +52,7 @@
     <nav class="nav-links">
       <a href="#features">الميزات</a>
       <a href="#privacy">الخصوصية</a>
+      <a href="#pricing">价格</a>
       <a href="#install" class="hide-sm">التثبيت</a>
       <a href="/ar/changelog.html" class="hide-sm">سجل التحديثات</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -78,7 +79,7 @@
       <div>
         <span class="eyebrow"><b>مفتوح المصدر</b> GPL-3.0 · أحضِر مفتاح API الخاص بك</span>
         <h1>حدِّد، ثم انقر بزر الفأرة الأيمن،<br /><span class="dim">ثم واصل القراءة.</span></h1>
-        <p class="hero-sub">إضافة Chrome. يمكن ترجمة النص المحدد والنص داخل منطقة كاملة والنص في الصور إلى اللغة التي تختارها. 24 لغة هدف، ولغة الواجهة تُضبط بشكل مستقل، مع اتصال مباشر بالمنصة المختارة باستخدام مفتاح API الخاص بك.</p>
+        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块区域和图片里的文字，都能翻译成你选择的语言。24 种目标语言，界面语言独立设置；可以用你自己的 API Key 直接连接所选平台，也可以用免费点数，不需要任何 Key。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">أضِف إلى Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض المصدر</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>بلا خوادم · بلا إحصاءات</span> <span><i class="dot"></i>أربع طرق للترجمة</span></div>
       </div>
@@ -279,26 +280,74 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>لا خوادم، فلا شيء يمكن أن يتسرّب</h2>
-        <p>لا يخرج المحتوى إلا عندما تطلب الترجمة بنفسك، ولا يُرسَل إلا إلى المنصة التي اخترتها أنت. وهذا ليس وعدًا، بل حقيقة يمكنك التحقق منها سطرًا سطرًا في المصدر.</p>
+        <h2>只在你翻译时，文字才离开浏览器</h2>
+        <p>两种用法都只在你主动触发翻译时发送内容：自带 Key 时直接发往你选的平台；用点数翻译时经我们的服务器转给模型服务商，服务器不保存原文和译文。</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>مخرج واحد فقط</b>
-          <p>كل الطلبات المتجهة إلى منصات الترجمة مكتوبة في ملف واحد، <span class="mono">src/lib/providers.js</span>، ولا تُرسَل إلا إلى المنصة التي اخترتها في الإعدادات. ولا يرسل أي كود آخر محتواك إلى أي مكان.</p>
+          <b>自带 Key：直连平台</b>
+          <p>请求从你的浏览器直接发往你在设置里选的那家平台，不经过我们。API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 账号同步。</p>
         </div>
         <div class="fact">
-          <b>بلا خادم</b>
-          <p>لا يشغّل المؤلف أي خوادم، ولا يستخدم أي إحصاءات أو تتبّع أو إعلانات أو حزم SDK من طرف ثالث. وما ترجمته لا سبيل لنا إلى معرفته.</p>
+          <b>点数翻译：不留存内容</b>
+          <p>文字经 HTTPS 发到我们的服务器，转给模型服务商完成翻译。服务器只记录字数、token 与扣点，用于计费和防滥用，不保存原文和译文。</p>
         </div>
         <div class="fact">
-          <b>المفتاح يبقى على جهازك</b>
-          <p>يُخزَّن مفتاح API في <span class="mono">chrome.storage.local</span>، ولا يُزامَن عبر حساب Chrome، ويُستخدم فقط للمصادقة على طلباتك لدى المنصة التي اخترتها. وإزالة الإضافة تحذفه معها.</p>
+          <b>没有广告与第三方统计</b>
+          <p>不使用广告、埋点或第三方统计 SDK，不出售或出租任何数据。扩展与服务端代码都以 GPL-3.0 公开，可以逐行核对。</p>
         </div>
       </div>
 
-      <p class="after-facts reveal">التفاصيل الكاملة في <a class="link" href="/ar/privacy.html">سياسة الخصوصية</a>، وفي <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">كامل الشفرة المصدرية المنشورة بموجب GPL-3.0</a>.</p>
+      <p class="after-facts reveal">完整说明见<a class="link" href="/ar/privacy.html">隐私政策</a>与<a class="link" href="/ar/terms.html">服务条款</a>，以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公开的全部源码</a>。</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 价格 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Pricing</p>
+        <h2>免费可用，需要时再订阅</h2>
+        <p>用自己的 API Key 始终免费；不想申请 Key，就用我们的点数翻译——装好即送免费点数，用完可以订阅，无限使用。</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <b class="plan-name">自带 Key</b>
+          <p class="plan-price">免费</p>
+          <p class="plan-desc">填入你自己的 OpenAI、DeepSeek 或 DeepL Key，请求直接发往对方，费用由平台按用量向你收取。</p>
+          <ul>
+            <li>划词、整段、网页区域、图片与视频字幕翻译</li>
+            <li>Key 只保存在你的浏览器里</li>
+            <li>没有用量限制</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <b class="plan-name">免费试用</b>
+          <p class="plan-price">$0</p>
+          <p class="plan-desc">装好扩展即送 50 点，注册账户再送 200 点。点数不过期，每 500 字扣 1 点。</p>
+          <ul>
+            <li>不需要任何 API Key</li>
+            <li>划词、整段、网页区域与字幕的文字翻译</li>
+            <li>翻译失败不扣点</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <b class="plan-name">订阅</b>
+          <p class="plan-price">$3.99<span>/ 月</span></p>
+          <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
+          <p class="plan-desc">点数翻译无限使用，不再计算点数。随时可以取消，本期结束前仍可使用。</p>
+          <ul>
+            <li>包含免费试用的全部功能</li>
+            <li>按合理使用原则不限次数</li>
+            <li>首次付款 7 天内可申请全额退款</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.huaci.app/plans">订阅</a>
+        </div>
+      </div>
+
+      <p class="after-facts reveal">价格以美元计，可能另加所在地区的税费。付款由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作为经销商（Merchant of Record）处理并开具收据，我们不接触你的银行卡信息。订阅、退款与合理使用的具体规则见<a class="link" href="/ar/terms.html">服务条款</a>。</p>
     </div>
   </section>
 
@@ -308,7 +357,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>التثبيت في أربع خطوات</h2>
-        <p>يُحمَّل حاليًا في وضع المطوِّر. ويلزم Chrome 116 أو أحدث، ومفتاح API خاص بك.</p>
+        <p>目前以开发者模式加载，需要 Chrome 116 或更高版本。装好就能用免费点数翻译，也可以填自己的 API Key。</p>
       </div>
 
       <div class="steps reveal">
@@ -322,7 +371,7 @@
           <div><b>حمِّل الإضافة</b> <span>— انقر على «تحميل إضافة غير مضغوطة»، ثم اختر المجلد الذي استخرجته للتو.</span></div>
         </div>
         <div class="step">
-          <div><b>أدخل مفتاح API</b> <span>— تُفتح صفحة الإعدادات تلقائيًا عند أول تثبيت. اختر المنصة، وألصق المفتاح، ثم انقر على «اختبار الاتصال» للتأكد من عمله.</span></div>
+          <div><b>开始翻译</b> <span>——首次安装会自动领取免费点数并打开欢迎页，选中文字就能翻译。想用自己的 Key，在设置页选好平台、粘贴 Key，点「测试连接」确认能通。</span></div>
         </div>
       </div>
 
@@ -345,7 +394,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · صدر بموجب GPL-3.0</p>
-      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ar/privacy.html">سياسة الخصوصية</a> <a href="/ar/changelog.html">سجل التحديثات</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">الإبلاغ عن مشكلة</a></nav>
+      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ar/privacy.html">隐私政策</a> <a href="/ar/terms.html">服务条款</a> <a href="/ar/changelog.html">更新日志</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">反馈问题</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">هذا المشروع عمل مفتوح المصدر ومستقل، ولا تربطه بأي تبعية أو ترخيص أو شراكة مع OpenAI أو DeepSeek أو DeepL أو الشركات التابعة لها. وأسماء ChatGPT وDeepSeek وDeepL وغيرها علامات تجارية لأصحابها، وترد هنا فقط لبيان واجهات API التي يمكن لهذه الإضافة الاتصال بها.</p>
   </div>

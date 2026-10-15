@@ -52,6 +52,7 @@
     <nav class="nav-links">
       <a href="#features">Fonctionnalités</a>
       <a href="#privacy">Confidentialité</a>
+      <a href="#pricing">Tarifs</a>
       <a href="#install" class="hide-sm">Installation</a>
       <a href="/fr/changelog.html" class="hide-sm">Journal des modifications</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -78,7 +79,7 @@
       <div>
         <span class="eyebrow"><b>Open source</b> GPL-3.0 · Apportez votre propre API Key</span>
         <h1>Sélectionnez, faites un clic droit,<br /><span class="dim">puis continuez à lire.</span></h1>
-        <p class="hero-sub">Une extension Chrome. Le texte sélectionné, des zones entières et le texte contenu dans les images peuvent être traduits vers la langue de votre choix. 24 langues cibles, langue de l'interface configurable indépendamment, connexion directe à la plateforme choisie avec votre propre API Key.</p>
+        <p class="hero-sub">Une extension Chrome. Le texte sélectionné, les blocs entiers et le texte contenu dans les images peuvent être traduits vers la langue de votre choix. 24 langues cibles, langue de l'interface configurable indépendamment ; vous pouvez utiliser votre propre API Key pour vous connecter directement à la plateforme choisie, ou utiliser des points gratuits, sans aucune Key.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Ajouter à Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>Sans serveur · Sans statistiques</span> <span><i class="dot"></i>Quatre modes de traduction</span></div>
       </div>
@@ -279,26 +280,74 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>Pas de serveur, rien à divulguer</h2>
-        <p>Le contenu ne quitte votre navigateur que lorsque vous déclenchez vous-même une traduction, et uniquement vers la plateforme que vous avez choisie. Ce n’est pas une promesse, c’est un fait que vous pouvez vérifier ligne par ligne dans le code source.</p>
+        <h2>Le texte ne quitte le navigateur que lorsque vous traduisez</h2>
+        <p>Les deux modes d'utilisation n'envoient du contenu que lorsque vous déclenchez activement une traduction : avec votre propre Key, la requête part directement vers la plateforme choisie ; avec les points, elle passe par notre serveur pour être transmise au fournisseur de modèles, le serveur ne conservant ni le texte source ni la traduction.</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>Un seul point de sortie</b>
-          <p>Toutes les requêtes vers une plateforme de traduction se trouvent dans un seul fichier, <span class="mono">src/lib/providers.js</span>, et ne partent que vers la plateforme sélectionnée dans vos paramètres. Aucun autre code n’envoie votre contenu où que ce soit.</p>
+          <b>Key personnelle : connexion directe à la plateforme</b>
+          <p>La requête est envoyée directement depuis votre navigateur vers la plateforme sélectionnée dans les paramètres, sans passer par nous. L'API Key est stockée dans <span class="mono">chrome.storage.local</span> et n'est pas synchronisée avec le compte Chrome.</p>
         </div>
         <div class="fact">
-          <b>Aucun serveur</b>
-          <p>L’auteur n’exploite aucun serveur et n’utilise ni statistiques, ni traçage, ni publicité, ni SDK tiers. Ce que vous traduisez nous est inconnu.</p>
+          <b>Traduction par points : aucun contenu conservé</b>
+          <p>Le texte est envoyé à notre serveur via HTTPS, puis transmis au fournisseur de modèles pour la traduction. Le serveur enregistre uniquement le nombre de caractères, les tokens et les points déduits, à des fins de facturation et de prévention des abus ; il ne conserve ni le texte source ni la traduction.</p>
         </div>
         <div class="fact">
-          <b>Votre clé reste sur votre machine</b>
-          <p>L’API Key est stockée dans <span class="mono">chrome.storage.local</span>, elle n’est pas synchronisée avec votre compte Chrome et sert uniquement à vous authentifier auprès de la plateforme que vous avez choisie. La désinstallation de l’extension la supprime également.</p>
+          <b>Aucune publicité ni statistique tierce</b>
+          <p>Aucune publicité, aucun traceur ni SDK de statistiques tiers, aucune vente ou location de données. Le code de l'extension et du serveur est publié sous GPL-3.0 et peut être vérifié ligne par ligne.</p>
         </div>
       </div>
 
-      <p class="after-facts reveal">Tous les détails se trouvent dans la <a class="link" href="/fr/privacy.html">politique de confidentialité</a>, ainsi que dans <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">l’intégralité du code source, public sous GPL-3.0</a>.</p>
+      <p class="after-facts reveal">Description complète dans la <a class="link" href="/fr/privacy.html">politique de confidentialité</a> et les <a class="link" href="/fr/terms.html">conditions d'utilisation</a>, ainsi que dans <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">l'intégralité du code source publié sous GPL-3.0</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 价格 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Pricing</p>
+        <h2>Gratuit, abonnement uniquement si nécessaire</h2>
+        <p>L'utilisation de votre propre API Key est toujours gratuite ; si vous ne souhaitez pas demander de Key, utilisez notre traduction par points — des points gratuits sont offerts à l'installation, et une fois épuisés, vous pouvez vous abonner pour un usage illimité.</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <b class="plan-name">Key personnelle</b>
+          <p class="plan-price">Gratuit</p>
+          <p class="plan-desc">Saisissez votre propre Key OpenAI, DeepSeek ou DeepL ; les requêtes sont envoyées directement au fournisseur, qui vous facture à l'usage.</p>
+          <ul>
+            <li>Traduction de sélections, de paragraphes entiers, de zones de page, d'images et de sous-titres vidéo</li>
+            <li>La Key est stockée uniquement dans votre navigateur</li>
+            <li>Aucune limite d'utilisation</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <b class="plan-name">Essai gratuit</b>
+          <p class="plan-price">$0</p>
+          <p class="plan-desc">50 points offerts dès l'installation de l'extension, 200 points supplémentaires à la création d'un compte. Les points n'expirent pas ; 1 point est déduit tous les 500 caractères.</p>
+          <ul>
+            <li>Aucune API Key requise</li>
+            <li>Traduction de texte par sélection, par paragraphe, par zone de page et de sous-titres</li>
+            <li>Aucun point déduit en cas d'échec de traduction</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <b class="plan-name">Abonnement</b>
+          <p class="plan-price">$3.99<span> / mois</span></p>
+          <p class="plan-alt">Ou $29.99 / an, soit 37 % d'économie par rapport au paiement mensuel</p>
+          <p class="plan-desc">Traduction par points en usage illimité, sans décompte de points. Résiliable à tout moment ; l'accès reste actif jusqu'à la fin de la période en cours.</p>
+          <ul>
+            <li>Inclut toutes les fonctionnalités de l'essai gratuit</li>
+            <li>Sans limite de fréquence, selon le principe d'utilisation raisonnable</li>
+            <li>Remboursement intégral possible dans les 7 jours suivant le premier paiement</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.huaci.app/plans">Abonnement</a>
+        </div>
+      </div>
+
+      <p class="after-facts reveal">Les prix sont indiqués en dollars américains et peuvent être majorés des taxes applicables dans votre région. Le paiement est traité et facturé par <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> en tant que revendeur (Merchant of Record) ; nous n'avons pas accès à vos informations bancaires. Les règles détaillées relatives à l'abonnement, aux remboursements et à l'utilisation raisonnable figurent dans les <a class="link" href="/fr/terms.html">conditions de service</a>.</p>
     </div>
   </section>
 
@@ -308,7 +357,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>Installation en quatre étapes</h2>
-        <p>Actuellement chargée en mode développeur. Nécessite Chrome 116 ou une version ultérieure, ainsi qu’une API Key personnelle.</p>
+        <p>Actuellement chargé en mode développeur, nécessite Chrome 116 ou version ultérieure. Une fois installé, vous pouvez traduire avec les points gratuits ou renseigner votre propre API Key.</p>
       </div>
 
       <div class="steps reveal">
@@ -322,7 +371,7 @@
           <div><b>Chargez l’extension</b> <span>— cliquez sur « Charger l’extension non empaquetée », puis sélectionnez le dossier que vous venez d’extraire.</span></div>
         </div>
         <div class="step">
-          <div><b>Renseignez votre API Key</b> <span>— la page de paramètres s’ouvre automatiquement à la première installation. Choisissez la plateforme, collez la clé, puis cliquez sur « Tester la connexion » pour vérifier que tout fonctionne.</span></div>
+          <div><b>Commencer à traduire</b> <span>— la première installation attribue automatiquement les points gratuits et ouvre la page d'accueil ; il suffit de sélectionner du texte pour traduire. Pour utiliser votre propre Key, choisissez la plateforme dans la page de paramètres, collez la Key, puis cliquez sur « Tester la connexion » pour vérifier qu'elle fonctionne.</span></div>
         </div>
       </div>
 
@@ -345,7 +394,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · Publié sous GPL-3.0</p>
-      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/fr/privacy.html">Politique de confidentialité</a> <a href="/fr/changelog.html">Journal des modifications</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">Signaler un problème</a></nav>
+      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/fr/privacy.html">Politique de confidentialité</a> <a href="/fr/terms.html">Conditions de service</a> <a href="/fr/changelog.html">Journal des modifications</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">Signaler un problème</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">Ce projet est une œuvre open source indépendante, sans aucune affiliation, autorisation ni partenariat avec OpenAI, DeepSeek, DeepL ou leurs sociétés affiliées. ChatGPT, DeepSeek, DeepL et les autres noms cités sont des marques de leurs propriétaires respectifs, mentionnées ici uniquement pour désigner les API auxquelles cette extension peut se connecter.</p>
   </div>

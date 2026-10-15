@@ -143,7 +143,9 @@ body.admin {
 .plain { list-style: none; padding: 0; margin: 0 0 var(--s2); display: grid; gap: .35rem; }
 
 /* 列表页与表单 */
-.search { display: flex; gap: .5rem; max-width: 520px; margin-bottom: var(--s2); }
+.search { display: flex; align-items: center; gap: .5rem; max-width: 520px; margin-bottom: var(--s2); }
+.search input { flex: 1; min-width: 0; }
+.search .button { flex: none; white-space: nowrap; }
 .actions { display: grid; gap: var(--s2); }
 form.inline { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; }
 form.inline input { width: auto; flex: 1 1 160px; }
@@ -165,3 +167,8 @@ td.detail { white-space: normal; max-width: 420px; }
 .expense-form .span { grid-column: span 2; }
 .expense-form .button { justify-self: start; }
 @media (max-width: 520px) { .expense-form .span { grid-column: auto; } }
+
+/* 可排序的表头 */
+th a { color: inherit; text-decoration: none; }
+th a:hover, th a[aria-current] { color: var(--text); }
+.table-wrap.card { padding: var(--s2) var(--s3); }

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>개인정보 처리방침 · AI Selection Translator</title>
-<meta name="description" content="AI Selection Translator의 개인정보 처리방침: 서버를 운영하지 않고 데이터를 수집하지 않습니다. 내용은 직접 번역을 실행할 때만 HTTPS를 통해 직접 설정한 AI 플랫폼으로 전송됩니다." />
+<meta name="description" content="AI Selection Translator의 개인정보 처리방침: 자체 Key 사용 시 콘텐츠는 선택한 플랫폼으로 직접 전송됩니다. 포인트 번역은 저희 서버를 거쳐 모델 서비스 제공업체로 전달되며, 원문과 번역문을 저장하지 않습니다. 계정과 결제에 필요한 최소한의 데이터만 보관합니다. 한국어 및 영어 제공." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="canonical" href="https://huaci.app/ko/privacy.html" />
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="ko_KR" />
 <meta property="og:url" content="https://huaci.app/ko/privacy.html" />
 <meta property="og:title" content="개인정보 처리방침 · AI Selection Translator" />
-<meta property="og:description" content="서버를 운영하지 않고 데이터를 수집하지 않습니다. 내용은 직접 번역을 실행할 때만 HTTPS를 통해 직접 설정한 AI 플랫폼으로 전송됩니다." />
+<meta property="og:description" content="콘텐츠는 사용자가 번역을 직접 실행할 때만 전송됩니다. 포인트 번역은 원문과 번역문을 저장하지 않으며, 계정과 결제에 필요한 최소한의 데이터만 보관합니다." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -49,6 +49,7 @@
     <nav class="nav-links">
       <a href="/ko/#features">기능</a>
       <a href="/ko/#privacy">개인정보</a>
+      <a href="/ko/#pricing">가격</a>
       <a href="/ko/#install" class="hide-sm">설치</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
       <!-- 语言切换：选项由 /lang.js 按 i18n/locales.json 里的启用语言填进来 -->
@@ -72,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>개인정보 처리방침</h2>
-        <p class="updated">최종 업데이트: 2026-09-30 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 원문</a></p>
+        <p class="updated">최종 업데이트: 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 원본</a></p>
       </div>
 
       <div class="policy">
@@ -80,48 +81,82 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>한 문장 요약</h3>
-          <p>이 확장 프로그램은 어떤 사용자 데이터도 수집, 저장, 업로드하지 않습니다——<b>저희는 서버가 없습니다</b>. 번역할 내용은 <b>직접 설정한 AI 플랫폼</b>으로만 전송됩니다.</p>
+          <p>AI Selection Translator는 두 가지 방식으로 사용할 수 있습니다. <b>자체 Key 사용</b>: 번역할 내용을 사용자가 직접 설정한 AI 플랫폼으로 전송하며, 저희를 거치지 않습니다. <b>포인트 번역</b>: 내용이 저희 서버를 통해 모델 제공업체로 전달되어 번역이 완료되며, 서버는 <b>원문과 번역문을 저장하지 않습니다</b>. 계정, 과금, 오남용 방지를 위해 운영에 필요한 최소한의 데이터만 보관하며, 광고에 사용하거나 판매하지 않습니다.</p>
 
-          <h3>전송되는 내용</h3>
-          <p><b>직접 번역을 실행할 때</b>(마우스 오른쪽 버튼 메뉴, 단축키, 번역 버튼 클릭)만 다음 내용이 HTTPS를 통해 설정에서 선택한 플랫폼으로 전송됩니다:</p>
+          <h3>번역 시 전송되는 내용</h3>
+          <p>사용자가 <b>번역을 직접 실행</b>할 때(우클릭 메뉴, 단축키, 번역 버튼 클릭)에만 다음 내용이 HTTPS를 통해 전송됩니다:</p>
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>내용</th><th>전송 시점</th><th>전송 대상</th></tr>
+                <tr><th>내용</th><th>전송 시점</th><th>자체 Key 사용 시 전송 대상</th><th>포인트 번역 시 전송 대상</th></tr>
               </thead>
               <tbody>
-                <tr><td>선택한 텍스트</td><td>선택 번역 사용 시</td><td>선택한 플랫폼</td></tr>
-                <tr><td>지정한 영역 안의 텍스트</td><td>요소의 번역 버튼을 클릭할 때</td><td>위와 같음</td></tr>
-                <tr><td>마우스 오른쪽 버튼을 누른 이미지</td><td>이미지 번역 사용 시</td><td>위와 같음</td></tr>
-                <tr><td>번역 패널에 입력한 텍스트</td><td>번역을 클릭할 때</td><td>위와 같음</td></tr>
+                <tr><td>선택한 텍스트</td><td>선택 번역 사용 시</td><td>선택한 플랫폼</td><td>저희 서버를 거쳐 모델 제공업체로 전달</td></tr>
+                <tr><td>지정한 영역 안의 텍스트</td><td>클릭 영역의 번역 버튼을 누를 때</td><td>위와 같음</td><td>위와 같음</td></tr>
+                <tr><td>번역 패널에 입력한 텍스트</td><td>번역을 클릭할 때</td><td>위와 같음</td><td>위와 같음</td></tr>
+                <tr><td>동영상 자막의 인식 텍스트</td><td>동영상 자막 번역을 켰을 때</td><td>위와 같음</td><td>위와 같음</td></tr>
+                <tr><td>마우스 오른쪽 버튼을 누른 이미지</td><td>이미지 번역 사용 시</td><td>선택한 플랫폼</td><td>지원하지 않음(이미지는 자체 Key만 사용)</td></tr>
               </tbody>
             </table>
           </div>
-          <p>선택할 수 있는 플랫폼은 <b>OpenAI(ChatGPT)</b>, <b>DeepSeek</b>, <b>DeepL</b>이며, 요청은 각각 <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, 그리고 DeepL의 <code>https://api-free.deepl.com</code>(유료 키는 <code>https://api.deepl.com</code>)로 전송됩니다. 이 내용이 어떻게 처리되는지는 해당 플랫폼의 개인정보 처리방침을 따릅니다:</p>
+          <p>자체 Key는 <b>OpenAI(ChatGPT)</b>, <b>DeepSeek</b>, <b>DeepL</b>을 선택할 수 있으며, 요청은 각각 <code>https://api.openai.com</code>, <code>https://api.deepseek.com</code>, 그리고 DeepL의 <code>https://api-free.deepl.com</code>(유료 Key는 <code>https://api.deepl.com</code>)으로 전송됩니다.</p>
+          <p>포인트 번역 요청은 <code>https://app.huaci.app</code>으로 전송되며, 서버에서 <b>DeepSeek</b>으로 전달합니다. DeepSeek을 일시적으로 사용할 수 없을 때는 <b>Fireworks AI</b>(미국 노드)의 동일 모델로 대체합니다. 텍스트는 요청 처리 중에만 메모리에 일시적으로 머무르며, 데이터베이스나 로그에 기록되지 않습니다.</p>
+          <p>이 플랫폼들이 수신한 내용을 처리하는 방식에는 각 플랫폼의 개인정보 처리방침이 적용됩니다:</p>
           <ul>
             <li>OpenAI：<a class="link" href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">openai.com/policies/privacy-policy</a></li>
             <li>DeepSeek：<a class="link" href="https://platform.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html" target="_blank" rel="noopener">platform.deepseek.com/downloads</a></li>
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
+            <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>전송하지 않습니다</b>: 직접 번역을 요청하지 않은 페이지 내용, 방문 기록, 쿠키, 양식 데이터. 확장 프로그램은 백그라운드에서 아무것도 자동으로 검사하거나 업로드하지 않습니다.</p>
+          <p><b>전송하지 않음</b>: 사용자가 직접 번역하지 않은 페이지 내용, 방문 기록, 쿠키, 양식 데이터. 확장 프로그램은 백그라운드에서 아무것도 자동으로 스캔하거나 업로드하지 않습니다.</p>
+
+          <h3>계정 데이터</h3>
+          <p>가입 또는 로그인 후 저희가 저장하는 항목:</p>
+          <ul>
+            <li><b>이메일과 사용자 이름</b>——로그인, 계정 복구, 연락에 사용합니다. 이름, 프로필 사진 또는 기타 정보는 저장하지 않습니다.</li>
+            <li><b>로그인 방식</b>——Google 로그인 시 Google 계정 식별자와 인증된 이메일만 저장합니다.</li>
+            <li><b>로그인 세션</b>——유형(웹사이트 또는 확장 프로그램)과 시간만 기록하며, 기기 모델, 위치, 기기 지문은 기록하지 않습니다.</li>
+            <li><b>포인트와 구독</b>——포인트 지급, 차감, 반환 기록, 구독 상태, 그리고 주문의 금액, 통화, 환불 상태, 청구 국가.</li>
+          </ul>
+
+          <h3>사용 기록</h3>
+          <p>번역을 요청할 때마다 다음 항목이 기록됩니다: 글자 수, 차감된 포인트, 모델과 서비스 제공자, 입력 및 출력 token 수, 대상 언어와 원본 언어, 소요 시간, 결과(성공, 실패 또는 거부 및 사유), 그리고 네트워크 서비스 제공자가 제공하는 <b>두 자리 국가 코드</b>. 이 기록은 과금, 남용 방지 및 서비스 통계에 사용되며, <b>원문이나 번역문은 포함하지 않습니다</b>. 사용자 센터의 「사용량과 포인트」에서 본인의 기록을 확인할 수 있습니다.</p>
+
+          <h3>무료 체험의 중복 수령 방지</h3>
+          <p>확장 프로그램을 설치하면 무료 포인트가 한 번 자동으로 지급됩니다. 동일한 네트워크나 동일한 브라우저에서 반복 수령하는 것을 방지하기 위해 다음을 저장합니다: 네트워크 주소를 암호화 처리한 <b>복원 불가능한 요약값</b>(주소 자체는 저장하지 않으며, IPv6는 앞 64비트만 사용), 그리고 환영 페이지가 <code>app.huaci.app</code>에 기록하는 <b>무작위 표시 Cookie</b>(데이터베이스에는 그 요약값만 저장). 기기 지문은 사용하지 않습니다.</p>
+
+          <h3>결제</h3>
+          <p>구독 결제는 <b>Creem</b>이 판매자(Merchant of Record)로서 처리하며, 대금 수납, 세금 및 영수증을 포함합니다. 카드 등 결제 정보는 Creem에 직접 제출되며, <b>당사는 이를 볼 수 없고 저장하지도 않습니다</b>. 당사는 Creem이 제공하는 구독 및 주문 번호, 상태, 금액, 통화 및 청구 국가만 저장합니다. Creem의 데이터 처리에는 해당 개인정보 처리방침이 적용됩니다(<a class="link" href="https://www.creem.io/privacy" target="_blank" rel="noopener">creem.io/privacy</a>).</p>
+
+          <h3>Cookie</h3>
+          <ul>
+            <li><b>로그인 세션</b>——<code>app.huaci.app</code>의 HttpOnly Cookie로, 웹 로그인 유지에 사용됩니다.</li>
+            <li><b>환경설정</b>——언어와 테마(<code>lang</code>, <code>theme</code>), 공식 사이트와 사용자 센터에서 공유됩니다.</li>
+            <li><b>브라우저 표시</b>——위의 「무료 체험의 중복 수령 방지」를 참조하십시오.</li>
+          </ul>
+          <p>광고 Cookie도, 제3자 통계 Cookie도 없습니다.</p>
 
           <h3>내 기기에만 저장되는 내용</h3>
-          <p>다음 데이터는 <code>chrome.storage.local</code>을 통해 <b>이 기기</b>에 저장되며, Chrome 계정으로 동기화되지 않고 브라우저를 벗어나지 않습니다:</p>
+          <p>다음 데이터는 <code>chrome.storage.local</code>을 통해 <b>이 기기</b>에 저장되며, Chrome 계정 동기화를 거치지 않습니다:</p>
           <ul>
-            <li><b>API 키</b> —— 선택한 플랫폼의 요청 헤더 인증에만 사용합니다</li>
-            <li><b>환경 설정</b> —— 대상 언어, 사용하는 모델, 각종 스위치</li>
-            <li><b>요소 번역 규칙</b> —— 직접 추가한 “도메인 + CSS 선택자”</li>
+            <li><b>API Key</b>——선택한 플랫폼에 요청 헤더로 인증할 때만 사용되며, 당사에 전송되지 않습니다</li>
+            <li><b>확장 프로그램의 로그인 토큰</b>——<code>app.huaci.app</code>에만 전송되며, 포인트 번역과 계정 상태에 사용됩니다</li>
+            <li><b>환경설정</b>——대상 언어, 사용할 모델, 각종 스위치</li>
+            <li><b>영역 번역 규칙</b>——직접 추가한 「도메인 + CSS 선택자」</li>
           </ul>
           <p>설정 페이지에서 언제든지 이 데이터를 지울 수 있으며, 확장 프로그램을 삭제해도 됩니다(삭제하면 함께 지워집니다).</p>
 
+          <h3>보존 기간과 삭제</h3>
+          <p>계정, 포인트, 주문 및 사용 기록은 계정을 삭제할 때까지 보존됩니다. 법률상 보존이 요구되는 거래 기록(예: 세무)은 요구에 따라 보존됩니다. 계정 및 관련 데이터의 내보내기나 삭제가 필요하면 <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>으로 이메일을 보내주십시오. 30일 이내에 처리합니다.</p>
+
           <h3>하지 않는 일</h3>
           <ul>
-            <li>어떤 서버도 운영하지 않고, 어떤 데이터도 수집하지 않습니다</li>
-            <li>통계, 추적, 광고 또는 어떠한 제3자 SDK도 사용하지 않습니다</li>
-            <li>어떠한 데이터도 제3자에게 판매, 대여, 공유하지 않습니다</li>
-            <li>신용 평가나 확장 프로그램 기능과 무관한 용도로 사용하지 않습니다</li>
+            <li>번역한 원문과 번역문을 저장하지 않습니다</li>
+            <li>광고, 트래킹 또는 제3자 통계 SDK를 사용하지 않습니다</li>
+            <li>데이터를 판매하거나 대여하지 않으며, 광고에 사용하지도 않습니다</li>
+            <li>사용자의 번역 내용을 모델 학습에 사용하지 않습니다</li>
           </ul>
-          <p>확장 프로그램의 전체 소스 코드는 GPL-3.0으로 공개되어 있으니 직접 확인할 수 있습니다: <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>.</p>
+          <p>확장 프로그램과 서버의 전체 소스 코드는 GPL-3.0으로 공개되어 있으니 직접 확인할 수 있습니다: <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">github.com/csswork/AiTranslation</a>.</p>
 
           <h3>권한 설명</h3>
           <div class="table-wrap">
@@ -131,12 +166,13 @@
               </thead>
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>마우스 오른쪽 버튼 메뉴에 번역 진입점 제공</td></tr>
-                <tr><td><code>storage</code></td><td>위 설정을 로컬에 저장</td></tr>
+                <tr><td><code>storage</code></td><td>위 설정과 로그인 토큰을 로컬에 저장</td></tr>
                 <tr><td><code>scripting</code></td><td>번역을 실행할 때 현재 페이지에 필요한 스크립트 주입</td></tr>
                 <tr><td><code>activeTab</code></td><td>현재 작업 중인 탭에만 적용됩니다</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>동영상 자막 번역을 활성화한 경우에만 현재 탭의 소리를 읽어 로컬에서 텍스트로 인식</td></tr>
                 <tr>
                   <td>접근: <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
-                  <td>선택한 플랫폼으로 번역 요청 전송</td>
+                  <td>자체 Key 사용 시 선택한 플랫폼으로 번역 요청 전송</td>
                 </tr>
                 <tr>
                   <td>선택 사항: 사용자 API 도메인 접근</td>
@@ -151,7 +187,7 @@
           </div>
 
           <h3>문의</h3>
-          <p>궁금한 점이 있으면 <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a>에 남겨 주세요.</p>
+          <p>문의 사항이나 데이터 요청이 있으면 <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>으로 이메일을 보내거나 <a class="link" href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">GitHub Issues</a>에 남겨 주세요.</p>
         </section>
 
         
@@ -165,7 +201,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · GPL-3.0으로 배포</p>
-      <nav class="foot-links"><a href="/ko/">홈</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ko/privacy.html">개인정보 처리방침</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">문제 신고</a></nav>
+      <nav class="foot-links"><a href="/ko/">홈</a> <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ko/privacy.html">개인정보 처리방침</a> <a href="/ko/terms.html">서비스 약관</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">문제 신고</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">이 프로젝트는 독립적인 오픈 소스 작업물이며, OpenAI, DeepSeek, DeepL 및 그 계열사와 어떠한 제휴, 승인, 협력 관계도 없습니다. ChatGPT, DeepSeek, DeepL 등의 명칭은 각 권리자의 상표입니다.</p>
   </div>

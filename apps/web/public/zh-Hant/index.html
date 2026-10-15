@@ -52,6 +52,7 @@
     <nav class="nav-links">
       <a href="#features">功能</a>
       <a href="#privacy">隱私權</a>
+      <a href="#pricing">價格</a>
       <a href="#install" class="hide-sm">安裝</a>
       <a href="/zh-Hant/changelog.html" class="hide-sm">更新記錄</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -78,7 +79,7 @@
       <div>
         <span class="eyebrow"><b>開源</b> GPL-3.0 · 自備 API Key</span>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊區域和圖片裡的文字，都能翻譯成你選擇的語言。24 種目標語言，介面語言獨立設定，用你自己的 API Key 直接連接所選平台。</p>
+        <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊區域和圖片裡的文字，都能翻譯成你選擇的語言。24 種目標語言，介面語言獨立設定；可以用你自己的 API Key 直接連接所選平台，也可以用免費點數，不需要任何 Key。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">安裝到 Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>無伺服器 · 無統計</span> <span><i class="dot"></i>四種翻譯方式</span></div>
       </div>
@@ -279,26 +280,74 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>沒有伺服器，就沒有可以洩漏的地方</h2>
-        <p>只有你主動觸發翻譯時，內容才會送出，而且只傳往你自己選定的那家平台。這不是一句承諾，而是可以照著原始碼逐行核對的事實。</p>
+        <h2>只在你翻譯時，文字才離開瀏覽器</h2>
+        <p>兩種用法都只在你主動觸發翻譯時傳送內容：自帶 Key 時直接傳往你選的平台；用點數翻譯時經我們的伺服器轉給模型服務商，伺服器不保存原文和譯文。</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>只有一個出口</b>
-          <p>所有傳往翻譯平台的請求都寫在 <span class="mono">src/lib/providers.js</span> 這一個檔案裡，只會傳往你在設定中選擇的那家平台。其餘程式碼不會把你的內容傳到任何地方。</p>
+          <b>自帶 Key：直連平台</b>
+          <p>請求從你的瀏覽器直接傳往你在設定裡選的那家平台，不經過我們。API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 帳號同步。</p>
         </div>
         <div class="fact">
-          <b>沒有伺服器端</b>
-          <p>作者不營運任何伺服器，也沒有統計、追蹤、廣告或第三方 SDK。你翻譯過什麼，我們無從得知。</p>
+          <b>點數翻譯：不留存內容</b>
+          <p>文字經 HTTPS 傳到我們的伺服器，轉給模型服務商完成翻譯。伺服器只記錄字數、token 與扣點，用於計費和防濫用，不保存原文和譯文。</p>
         </div>
         <div class="fact">
-          <b>Key 留在本機</b>
-          <p>API Key 儲存在 <span class="mono">chrome.storage.local</span>，不透過 Chrome 帳號同步，僅用於向你選擇的平台驗證。移除擴充功能時會一併清除。</p>
+          <b>沒有廣告與第三方統計</b>
+          <p>不使用廣告、埋點或第三方統計 SDK，不出售或出租任何資料。擴充功能與服務端程式碼都以 GPL-3.0 公開，可以逐行核對。</p>
         </div>
       </div>
 
-      <p class="after-facts reveal">完整說明請見<a class="link" href="/zh-Hant/privacy.html">隱私權政策</a>，以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公開的全部原始碼</a>。</p>
+      <p class="after-facts reveal">完整說明見<a class="link" href="/zh-Hant/privacy.html">隱私政策</a>與<a class="link" href="/zh-Hant/terms.html">服務條款</a>，以及 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 下公開的全部原始碼</a>。</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 价格 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Pricing</p>
+        <h2>免費可用，需要時再訂閱</h2>
+        <p>用自己的 API Key 始終免費；不想申請 Key，就用我們的點數翻譯——裝好即送免費點數，用完可以訂閱，無限使用。</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <b class="plan-name">自帶 Key</b>
+          <p class="plan-price">免費</p>
+          <p class="plan-desc">填入你自己的 OpenAI、DeepSeek 或 DeepL Key，請求直接傳往對方，費用由平台按用量向你收取。</p>
+          <ul>
+            <li>劃詞、整段、網頁區域、圖片與影片字幕翻譯</li>
+            <li>Key 只保存在你的瀏覽器裡</li>
+            <li>沒有限制用量</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <b class="plan-name">免費試用</b>
+          <p class="plan-price">$0</p>
+          <p class="plan-desc">安裝擴充功能即贈 50 點，註冊帳戶再贈 200 點。點數不會過期，每 500 字扣 1 點。</p>
+          <ul>
+            <li>不需要任何 API Key</li>
+            <li>選取文字、整段、網頁區域與字幕的文字翻譯</li>
+            <li>翻譯失敗不扣點</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <b class="plan-name">訂閱</b>
+          <p class="plan-price">$3.99<span>/ 月</span></p>
+          <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
+          <p class="plan-desc">點數翻譯無限使用，不再計算點數。隨時可以取消，本期結束前仍可使用。</p>
+          <ul>
+            <li>包含免費試用的全部功能</li>
+            <li>依合理使用原則不限次數</li>
+            <li>首次付款 7 天內可申請全額退款</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.huaci.app/plans">訂閱</a>
+        </div>
+      </div>
+
+      <p class="after-facts reveal">價格以美元計，可能另加所在地區的稅費。付款由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商（Merchant of Record）處理並開立收據，我們不接觸你的信用卡資訊。訂閱、退款與合理使用的具體規則見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
     </div>
   </section>
 
@@ -308,7 +357,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>四步裝好</h2>
-        <p>目前以開發人員模式載入。需要 Chrome 116 或以上版本，以及一個你自己的 API Key。</p>
+        <p>目前以開發者模式載入，需要 Chrome 116 或更高版本。安裝後即可用免費點數翻譯，也可以填入自己的 API Key。</p>
       </div>
 
       <div class="steps reveal">
@@ -322,7 +371,7 @@
           <div><b>載入擴充功能</b> <span>——點選「載入未封裝項目」，選取剛才那個資料夾。</span></div>
         </div>
         <div class="step">
-          <div><b>填入 API Key</b> <span>——首次安裝時會自動開啟設定頁面。選好平台、貼上 Key，點選「測試連線」確認可以連線。</span></div>
+          <div><b>開始翻譯</b> <span>——首次安裝會自動領取免費點數並開啟歡迎頁，選取文字就能翻譯。想用自己的 Key，在設定頁選好平台、貼上 Key，點「測試連線」確認能通。</span></div>
         </div>
       </div>
 
@@ -345,7 +394,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · 以 GPL-3.0 發布</p>
-      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/zh-Hant/privacy.html">隱私權政策</a> <a href="/zh-Hant/changelog.html">更新記錄</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">回報問題</a></nav>
+      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/zh-Hant/privacy.html">隱私政策</a> <a href="/zh-Hant/terms.html">服務條款</a> <a href="/zh-Hant/changelog.html">更新日誌</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">回報問題</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">本專案為獨立的開源作品，與 OpenAI、DeepSeek、DeepL 及其關係企業無任何隸屬、授權或合作關係。 ChatGPT、DeepSeek、DeepL 等名稱為其各自權利人的商標，此處僅用於說明本擴充功能可以串接的 API。</p>
   </div>

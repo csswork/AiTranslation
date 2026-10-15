@@ -225,3 +225,48 @@ test('运营概览：收入、支出、利润与 API 消耗；录入支出写审
   assert.equal((await pool.query('SELECT 1 FROM expenses WHERE deleted_at IS NULL')).rowCount, 0);
   assert.match(await a.text('/audit'), /expense\.delete[\s\S]*录错[\s\S]*expense\.create/);
 });
+
+test('每位用户的 API 使用都有记录：成功、失败与被拒（点数不足等），在 API 用量与用户详情里可查', async () => {
+  const config = testConfig({ ADMIN_REQUIRE_2FA: '1' });
+  let fail = false;
+  const hosted = async ({ texts, target }) => {
+    const meta = { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', latencyMs: 900 };
+    if (fail) throw Object.assign(new Error('x'), { code: 'timeout', meta });
+    return { translations: texts.map((t) => `[${target}] ${t}`), meta: { ...meta, inputTokens: 120, cachedTokens: 0, outputTokens: 80, fellBack: false } };
+  };
+  const { app, mailbox } = buildApp({ pool, config, hosted });
+  const ext = (path, { token, body } = {}) => app.request(new URL(`/api/extension${path}`, config.appOrigin), {
+    method: 'POST',
+    headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop', 'content-type': 'application/json', ...(token ? { authorization: `Bearer ${token}` } : {}) },
+    body: JSON.stringify(body || {}),
+  });
+  const { token } = await (await ext('/guest')).json();
+  assert.equal((await ext('/translate', { token, body: { texts: ['Hello'], target: 'fr' } })).status, 200);
+  fail = true;
+  assert.equal((await ext('/translate', { token, body: { texts: ['Hello'], target: 'fr' } })).status, 502);
+  fail = false;
+  assert.equal((await ext('/translate', { token, body: { texts: ['x'.repeat(7000)], target: 'fr' } })).status, 413);
+  await pool.query(`UPDATE credit_ledger SET amount = 1 WHERE entry_type = 'guest_grant'`);
+  assert.equal((await ext('/translate', { token, body: { texts: ['x'.repeat(2000)], target: 'ja' } })).status, 402);
+  assert.equal((await ext('/translate', { token, body: { texts: [] } })).status, 400, '格式错误的请求不记录');
+
+  const { rows: rejections } = await pool.query('SELECT reason, audience, chars, cost, target_lang FROM usage_rejections ORDER BY created_at');
+  assert.deepEqual(rejections, [
+    { reason: 'too_long', audience: 'guest', chars: 7000, cost: null, target_lang: 'fr' },
+    { reason: 'insufficient_credits', audience: 'guest', chars: 2000, cost: 4, target_lang: 'ja' },
+  ]);
+  assert.equal((await pool.query('SELECT 1 FROM usage_events')).rowCount, 2, '成功与失败各一条');
+
+  const { a } = await adminLogin(app, config, mailbox);
+  const list = await a.text('/api-usage?days=7');
+  assert.match(list, /API 用量[\s\S]*访客[\s\S]*<td class="num">2<\/td><td class="num">1<\/td><td class="num">2<\/td>/, '请求 2（含失败 1）、被拒 2');
+  assert.match(await a.text('/api-usage?days=7&sort=rejected'), /被拒 ↓/);
+  const { rows: [g] } = await pool.query(`SELECT id FROM users WHERE kind = 'guest'`);
+  const detail = await a.text(`/users/${g.id}`);
+  assert.match(detail, /API 消耗[\s\S]*近 30 天[\s\S]*全部/);
+  assert.match(detail, /用过的模型[\s\S]*deepseek-flash/);
+  assert.match(detail, /被拒绝的请求[\s\S]*点数不足[\s\S]*超过单次字数上限/);
+  const overview = await a.text('/?days=7');
+  assert.match(overview, /<h2 class="section-title">API 消耗[\s\S]*查看每位用户[\s\S]*被拒绝的请求/);
+  assert.ok(overview.indexOf('API 消耗') < overview.indexOf('用户与使用'), 'API 消耗在首页最前面');
+});

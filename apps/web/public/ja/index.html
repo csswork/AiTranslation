@@ -52,6 +52,7 @@
     <nav class="nav-links">
       <a href="#features">機能</a>
       <a href="#privacy">プライバシー</a>
+      <a href="#pricing">料金</a>
       <a href="#install" class="hide-sm">インストール</a>
       <a href="/ja/changelog.html" class="hide-sm">変更履歴</a>
       <a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener" data-nav-github>GitHub</a>
@@ -78,7 +79,7 @@
       <div>
         <span class="eyebrow"><b>オープンソース</b> GPL-3.0 · API Key はご自身で用意</span>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
-        <p class="hero-sub">Chrome 拡張機能です。選択したテキスト、領域全体、画像内のテキストを、選択した言語に翻訳できます。24 のターゲット言語に対応し、UI 言語は個別に設定でき、ご自身の API Key で選択したプラットフォームに直接接続します。</p>
+        <p class="hero-sub">Chrome 拡張機能です。選択したテキスト、領域全体、画像内の文字を、選択した言語に翻訳できます。24 のターゲット言語に対応し、UI 言語は個別に設定できます。ご自身の API Key で選択したプラットフォームに直接接続する方法と、無料ポイントを使う方法があり、後者では Key は不要です。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Chrome にインストール</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースを見る</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>サーバーなし · 統計なし</span> <span><i class="dot"></i>4 つの翻訳方法</span></div>
       </div>
@@ -279,26 +280,74 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>サーバーがなければ、漏えいする場所もありません</h2>
-        <p>内容が送信されるのは、あなたが翻訳を明示的に実行したときだけであり、送信先も自分で選んだプロバイダに限られます。これは約束ではなく、ソースコードを一行ずつ確認できる事実です。</p>
+        <h2>翻訳するときだけ、テキストがブラウザの外に出ます</h2>
+        <p>どちらの方法も、翻訳を明示的に実行したときのみ内容を送信します。Key を持ち込む場合は選択したプラットフォームへ直接送信され、ポイント翻訳の場合は当社のサーバーを経由してモデルプロバイダーに転送されます。サーバーは原文と訳文を保存しません。</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>出口は 1 つだけ</b>
-          <p>翻訳プロバイダへのリクエストはすべて <span class="mono">src/lib/providers.js</span> という 1 つのファイルに書かれており、設定で選択したプロバイダにのみ送信されます。それ以外のコードがあなたの内容をどこかへ送ることはありません。</p>
+          <b>Key を持ち込む場合：プラットフォームへ直接接続</b>
+          <p>リクエストはブラウザから設定で選択したプラットフォームへ直接送信され、当社を経由しません。API Key は <span class="mono">chrome.storage.local</span> に保存され、Chrome アカウントの同期は使用しません。</p>
         </div>
         <div class="fact">
-          <b>サーバーなし</b>
-          <p>作者はサーバーを一切運営しておらず、統計、トラッキング、広告、サードパーティ SDK もありません。あなたが何を翻訳したかを知る手段はありません。</p>
+          <b>ポイント翻訳：内容を保持しません</b>
+          <p>テキストは HTTPS で当社のサーバーに送信され、モデルプロバイダーに転送されて翻訳が完了します。サーバーは文字数、token、ポイント消費のみを記録し、課金と不正利用防止に使用します。原文と訳文は保存しません。</p>
         </div>
         <div class="fact">
-          <b>Key は端末内に保存</b>
-          <p>API Key は <span class="mono">chrome.storage.local</span> に保存され、Chrome アカウント同期の対象外です。選択したプロバイダの認証にのみ使用します。拡張機能をアンインストールすると同時に削除されます。</p>
+          <b>広告と第三者統計はありません</b>
+          <p>広告、トラッキング、第三者統計 SDK は使用せず、いかなるデータも販売または貸与しません。拡張機能とサーバー側のコードは GPL-3.0 で公開されており、行単位で確認できます。</p>
         </div>
       </div>
 
-      <p class="after-facts reveal">詳細は<a class="link" href="/ja/privacy.html">プライバシーポリシー</a>、および <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 で公開されている全ソースコード</a>をご覧ください。</p>
+      <p class="after-facts reveal">詳細は<a class="link" href="/ja/privacy.html">プライバシーポリシー</a>と<a class="link" href="/ja/terms.html">利用規約</a>、および <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GPL-3.0 で公開されている全ソースコード</a>をご覧ください。</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 价格 -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Pricing</p>
+        <h2>無料で利用でき、必要に応じて購読</h2>
+        <p>ご自身の API Key を使う場合は常に無料です。Key を取得したくない場合は、当社のポイント翻訳を利用できます。インストール時に無料ポイントが付与され、使い切った後は購読により無制限で利用できます。</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <b class="plan-name">Key を持ち込む場合</b>
+          <p class="plan-price">無料</p>
+          <p class="plan-desc">ご自身の OpenAI、DeepSeek、DeepL の Key を入力すると、リクエストは相手先へ直接送信され、費用はプラットフォームから利用量に応じて請求されます。</p>
+          <ul>
+            <li>選択テキスト、段落全体、Web ページ領域、画像、動画字幕の翻訳</li>
+            <li>Key はブラウザ内にのみ保存されます</li>
+            <li>利用回数の制限なし</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <b class="plan-name">無料トライアル</b>
+          <p class="plan-price">$0</p>
+          <p class="plan-desc">拡張機能をインストールすると 50 ポイント、アカウント登録でさらに 200 ポイントを進呈します。ポイントに有効期限はなく、500 文字ごとに 1 ポイントを消費します。</p>
+          <ul>
+            <li>API Key は不要</li>
+            <li>選択テキスト、段落全体、Web ページ領域、字幕のテキスト翻訳</li>
+            <li>翻訳に失敗した場合はポイントを消費しません</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <b class="plan-name">サブスクリプション</b>
+          <p class="plan-price">$3.99<span>/ 月</span></p>
+          <p class="plan-alt">または $29.99 / 年、月払いより 37% お得</p>
+          <p class="plan-desc">ポイント翻訳は無制限に利用でき、ポイント計算は行いません。いつでも解約でき、当期間の終了までは引き続き利用できます。</p>
+          <ul>
+            <li>無料トライアルのすべての機能を含む</li>
+            <li>合理的な使用の原則に基づき回数無制限</li>
+            <li>初回支払いから 7 日以内は全額返金を申請可能</li>
+          </ul>
+          <a class="btn btn-primary" href="https://app.huaci.app/plans">サブスクリプション</a>
+        </div>
+      </div>
+
+      <p class="after-facts reveal">価格は米ドル表示で、お住まいの地域の税金が別途加算される場合があります。支払いは <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> が販売業者（Merchant of Record）として処理し領収書を発行します。当社がお客様のカード情報に触れることはありません。サブスクリプション、返金、合理的な使用の具体的な規則は<a class="link" href="/ja/terms.html">利用規約</a>をご覧ください。</p>
     </div>
   </section>
 
@@ -308,7 +357,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>4 ステップでセットアップ</h2>
-        <p>現在はデベロッパーモードで読み込みます。Chrome 116 以降と、ご自身の API Key が必要です。</p>
+        <p>現在はデベロッパーモードで読み込みます。Chrome 116 以降が必要です。インストール後すぐに無料ポイントで翻訳でき、自分の API Key を入力することもできます。</p>
       </div>
 
       <div class="steps reveal">
@@ -322,7 +371,7 @@
           <div><b>拡張機能を読み込む</b> <span>— 「パッケージ化されていない拡張機能を読み込む」をクリックし、先ほどのディレクトリを選択します。</span></div>
         </div>
         <div class="step">
-          <div><b>API Key を入力</b> <span>— 初回インストール時は設定ページが自動的に開きます。プロバイダを選び、Key を貼り付け、「接続テスト」をクリックして通ることを確認します。</span></div>
+          <div><b>翻訳を開始</b> <span>——初回インストール時に無料ポイントが自動付与されウェルカムページが開きます。テキストを選択するだけで翻訳できます。自分の Key を使う場合は、設定ページでプラットフォームを選択し Key を貼り付け、「接続テスト」で接続を確認してください。</span></div>
         </div>
       </div>
 
@@ -345,7 +394,7 @@
   <div class="wrap">
     <div class="foot-in">
       <p>© 2026 Haibo · GPL-3.0 で公開</p>
-      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ja/privacy.html">プライバシーポリシー</a> <a href="/ja/changelog.html">変更履歴</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">問題を報告</a></nav>
+      <nav class="foot-links"><a href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub</a> <a href="/ja/privacy.html">プライバシーポリシー</a> <a href="/ja/terms.html">利用規約</a> <a href="/ja/changelog.html">更新履歴</a> <a href="https://github.com/csswork/AiTranslation/issues" target="_blank" rel="noopener">問題を報告</a> <a href="mailto:support@huaci.app">support@huaci.app</a></nav>
     </div>
     <p class="foot-note">本プロジェクトは独立したオープンソース作品であり、OpenAI、DeepSeek、DeepL およびその関連会社と提携・許諾・協力関係には一切ありません。ChatGPT、DeepSeek、DeepL などの名称はそれぞれの権利者の商標であり、ここでは本拡張機能が接続できる API を説明する目的でのみ用いています。</p>
   </div>
