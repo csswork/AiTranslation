@@ -41,7 +41,8 @@
      改这段脚本（哪怕一个空格）都要同步 vercel.json 里 CSP 的 sha256，test/csp.mjs 会检查 -->
 <script>(function(d){d.classList.add('js');try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)(?:;|$)/),t=m?m[1]:localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}})(document.documentElement);</script>
 </head>
-<body>
+<body class="fullpage">
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
 
 <span class="nav-sentinel" data-nav-sentinel aria-hidden="true"></span>
 <div class="grid-bg" aria-hidden="true"></div>
@@ -71,119 +72,139 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <!-- ===================================================== 英雄区 -->
-  <section class="hero">
+  <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow"><b>مفتوح المصدر</b> GPL-3.0 · 24 لغة</span>
+      <div class="hero-copy">
+        <a class="release-pill" href="/ar/changelog.html#v2-0-0"><b class="mono" data-extension-version>v2.0.0</b> <span>قريبًا: تجربة بدون مفتاح، وخدمات الحساب والاشتراك قيد الإعداد، وغير متاحة حاليًا.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>حدِّد، ثم انقر بزر الفأرة الأيمن،<br /><span class="dim">ثم واصل القراءة.</span></h1>
         <p class="hero-sub">إضافة Chrome. حدّد نصًا أو منطقة كاملة من صفحة ويب أو صورة، لتُترجم إلى اللغة التي تعرفها. يمكن اختيار 24 لغة للواجهة واللغة الهدف بشكل مستقل، وابدأ باستخدام API Key الخاص بك من OpenAI أو DeepSeek أو DeepL.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="#install">أضِف إلى Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض المصدر</a></div>
-        <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>لا يخزّن الترجمات · بلا إحصاءات من طرف ثالث</span> <span><i class="dot"></i>أربع طرق للترجمة</span></div>
-        <p class="release-note"><a class="link" href="/ar/changelog.html#v2-0-0"><span class="mono" data-extension-version>v2.0.0</span> قريبًا</a>: تجربة بدون Key وخدمات الحساب والاشتراك قيد الإعداد، وغير متاحة حاليًا.</p>
+        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
+             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> التثبيت على Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض الشفرة المصدرية</a></div>
+        <p class="install-note" data-install-note hidden>هذا المتصفح لا يدعم إضافات Chrome: يُرجى فتح هذه الصفحة على الحاسوب باستخدام متصفح مبني على Chromium مثل Chrome أو Edge.</p>
+        <ul class="hero-meta">
+          <li><b>مفتوح المصدر</b> GPL-3.0 · 24 لغة</li>
+          <li>Chrome 116+</li>
+          <li>لا تخزين للترجمات · بلا إحصاءات من أطراف ثالثة</li>
+          <li>أربع طرق للترجمة</li>
+        </ul>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
            也不和下面「01 划词翻译」那段视频重复。 -->
-      <div class="frame parallax-slow">
-        <div class="frame-bar" aria-hidden="true">
-          <i></i><i></i><i></i>
-          <span class="addr"></span>
-        </div>
-        <div class="frame-body">
-          <!-- 示意图拆成两层独立的 <svg>，载入时演示一遍：鼠标拖选两行 → 弹窗淡入 → 译文逐段流出 → 光标闪烁
-               （styles.css「首屏示意图」、main.js「译文逐段流出」）。静止时就是完成后的样子。
-               颜色属性是深色原稿，给不认 light-dark() 的老浏览器兜底；新浏览器由 CSS token 接管、随配色切换。 -->
-          <div class="pv" role="img" aria-label="رسم توضيحي للإضافة: نافذة منبثقة في الوسط تطفو فوق الفقرة الأجنبية المحددة، والترجمة تظهر كلمة كلمة.">
-            <!-- 底层：背后的网页 -->
-            <svg class="pv-layer pv-page" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="pv-fade" x1="0" y1="0" x2="0" y2="1">
-                  <stop class="pv-fade-stop" offset="0" stop-color="#0a0c11" stop-opacity="0"/>
-                  <stop class="pv-fade-stop" offset="1" stop-color="#0a0c11" stop-opacity=".9"/>
-                </linearGradient>
-              </defs>
-              <rect class="pv-bg" width="800" height="500" fill="#0d1016"/>
-              <rect class="pv-t1" x="64" y="56" width="286" height="15" rx="7.5" fill="rgba(255,255,255,.2)"/>
-              <rect class="pv-t2" x="64" y="82" width="150" height="9" rx="4.5" fill="rgba(255,255,255,.09)"/>
-              <rect class="pv-ln" x="64" y="126" width="620" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-ln" x="64" y="150" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <!-- 被选中的那两行。unpick 是选中之前的普通文字，只在演示过程中出现，
-                   选区从左往右长到哪、它就从左往右退到哪 -->
-              <rect class="pv-ln pv-unpick pv-unpick-1" x="64" y="178" width="668" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-ln pv-unpick pv-unpick-2" x="64" y="204" width="370" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-sel pv-sel-1" x="60" y="170" width="676" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
-              <rect class="pv-sel pv-sel-2" x="60" y="196" width="382" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
-              <rect class="pv-pick pv-pick-1" x="64" y="178" width="668" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
-              <rect class="pv-pick pv-pick-2" x="64" y="204" width="370" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
-              <rect class="pv-ln" x="64" y="244" width="640" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-ln" x="64" y="268" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-ln" x="64" y="292" width="470" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
-              <rect class="pv-ln2" x="64" y="332" width="610" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
-              <rect class="pv-ln2" x="64" y="356" width="672" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
-              <rect class="pv-ln2" x="64" y="380" width="300" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
-              <rect x="0" y="300" width="800" height="200" fill="url(#pv-fade)"/>
-              <!-- 弹窗打开时的背景压暗：浅色不画（实际产品已去掉压暗层），深色保留原稿 -->
-              <rect class="pv-dim" width="800" height="500" fill="rgba(5,7,11,.55)"/>
-              <!-- 模拟鼠标拖选，只在演示过程中出现。三层 <g> 各管一段位移（横拖 → 落到第二行 → 往回收），
-                   每段都是简单的起点到终点，时间点全在 styles.css 的 --pv-t-* 里 -->
-              <g class="pv-pointer" transform="translate(62 184)">
-                <g class="pv-ptr-drag"><g class="pv-ptr-drop"><g class="pv-ptr-back">
-                  <path d="M0 0v20.5l4.9-4.6 3.4 7.7 3.3-1.4-3.3-7.6h6.6z" transform="scale(1.25)" fill="#16171f" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"/>
-                </g></g></g>
-              </g>
-            </svg>
-            <!-- 上层：译文弹窗，透明底 -->
-            <svg class="pv-layer pv-popup" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
-              <defs>
-                <filter id="pv-lift" x="-30%" y="-30%" width="160%" height="180%">
-                  <feDropShadow class="pv-shadow" dx="0" dy="18" stdDeviation="26" flood-color="rgba(0,0,0,.6)"/>
-                </filter>
-              </defs>
-              <g filter="url(#pv-lift)">
-                <rect class="pv-card" x="168" y="132" width="464" height="236" rx="14" fill="#151924" stroke="#2a3142"/>
-                <!-- 标题栏（实际可拖动） -->
-                <rect class="pv-head" x="168.5" y="132.5" width="463" height="41.5" rx="13.5" fill="#1b202b"/>
-                <rect class="pv-head" x="168.5" y="158" width="463" height="16" fill="#1b202b"/>
-                <line class="pv-head-line" x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
-                <circle class="pv-accent" cx="192" cy="153" r="4.5" fill="#6d70f5"/>
-                <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">الترجمة إلى الصينية</text>
-                <rect class="pv-chip" x="556" y="147" width="40" height="13" rx="6.5" fill="rgba(255,255,255,.1)"/>
-                <circle class="pv-close" cx="612" cy="153" r="4" fill="rgba(255,255,255,.28)"/>
-                <!-- 译文：载入时由 main.js 逐段放出来 -->
-                <text class="pv-text pv-stream" x="194" y="214" font-size="15.5" fill="#e8eaf0">لا ترسل هذه الإضافة إلا النص</text>
-                <text class="pv-text pv-stream" x="194" y="243" font-size="15.5" fill="#e8eaf0">الذي تطلب ترجمته، وإلى المنصة</text>
-                <text class="pv-text pv-stream" x="194" y="272" font-size="15.5" fill="#e8eaf0">التي اخترتها فقط.</text>
-                <!-- 底部：原文折叠面板 + 操作 -->
-                <line class="pv-foot-line" x1="194" y1="302" x2="606" y2="302" stroke="#242a37"/>
-                <path class="pv-chev" d="M196 319 l5 5 l5 -5" fill="none" stroke="#626c80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <text class="pv-muted" x="214" y="324" font-size="11.5" fill="#9aa3b5">النص الأصلي</text>
-                <rect class="pv-btn" x="516" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
-                <rect class="pv-btn" x="566" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
-              </g>
-              <!-- 光标放在滤镜组外面：它一直在闪，放里面会牵连阴影跟着重画 -->
-              <rect class="pv-accent pv-caret" x="248" y="259" width="2" height="17" fill="#6d70f5"/>
-            </svg>
+      <div class="hero-stage">
+        <div class="frame">
+          <div class="frame-bar" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span class="addr"></span>
+          </div>
+          <div class="frame-body">
+            <!-- 示意图拆成两层独立的 <svg>，载入时演示一遍：鼠标拖选两行 → 右键弹出菜单、点「翻译」 → 弹窗淡入 → 译文逐段流出 → 光标闪烁
+                 （styles.css「首屏示意图」、main.js「译文逐段流出」）。静止时就是完成后的样子。
+                 颜色属性是深色原稿，给不认 light-dark() 的老浏览器兜底；新浏览器由 CSS token 接管、随配色切换。 -->
+            <div class="pv" role="img" aria-label="رسم توضيحي للإضافة: نافذة منبثقة في الوسط تطفو فوق الفقرة الأجنبية المحددة، والترجمة تظهر كلمة كلمة.">
+              <!-- 底层：背后的网页 -->
+              <svg class="pv-layer pv-page" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="pv-fade" x1="0" y1="0" x2="0" y2="1">
+                    <stop class="pv-fade-stop" offset="0" stop-color="#0a0c11" stop-opacity="0"/>
+                    <stop class="pv-fade-stop" offset="1" stop-color="#0a0c11" stop-opacity=".9"/>
+                  </linearGradient>
+                </defs>
+                <rect class="pv-bg" width="800" height="500" fill="#0d1016"/>
+                <rect class="pv-t1" x="64" y="56" width="286" height="15" rx="7.5" fill="rgba(255,255,255,.2)"/>
+                <rect class="pv-t2" x="64" y="82" width="150" height="9" rx="4.5" fill="rgba(255,255,255,.09)"/>
+                <rect class="pv-ln" x="64" y="126" width="620" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-ln" x="64" y="150" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <!-- 被选中的那两行。unpick 是选中之前的普通文字，只在演示过程中出现，
+                     选区从左往右长到哪、它就从左往右退到哪 -->
+                <rect class="pv-ln pv-unpick pv-unpick-1" x="64" y="178" width="668" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-ln pv-unpick pv-unpick-2" x="64" y="204" width="370" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-sel pv-sel-1" x="60" y="170" width="676" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
+                <rect class="pv-sel pv-sel-2" x="60" y="196" width="382" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
+                <rect class="pv-pick pv-pick-1" x="64" y="178" width="668" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
+                <rect class="pv-pick pv-pick-2" x="64" y="204" width="370" height="10" rx="5" fill="rgba(255,255,255,.42)"/>
+                <rect class="pv-ln" x="64" y="244" width="640" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-ln" x="64" y="268" width="672" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-ln" x="64" y="292" width="470" height="10" rx="5" fill="rgba(255,255,255,.12)"/>
+                <rect class="pv-ln2" x="64" y="332" width="610" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+                <rect class="pv-ln2" x="64" y="356" width="672" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+                <rect class="pv-ln2" x="64" y="380" width="300" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+                <rect x="0" y="300" width="800" height="200" fill="url(#pv-fade)"/>
+                <!-- 弹窗打开时的背景压暗：浅色不画（实际产品已去掉压暗层），深色保留原稿 -->
+                <rect class="pv-dim" width="800" height="500" fill="rgba(5,7,11,.55)"/>
+                <!-- 右键菜单：只在演示过程中出现。拖选结束的位置（446, 210）就是右键的位置，菜单从这里向右下展开 -->
+                <g class="pv-menu">
+                  <rect class="pv-menu-shadow" x="455" y="224" width="210" height="136" rx="9" fill="rgba(0,0,0,.35)"/>
+                  <rect class="pv-menu-bg" x="452" y="216" width="210" height="136" rx="9" fill="#1b202b" stroke="#2e3547"/>
+                  <rect class="pv-menu-item" x="470" y="232" width="96" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
+                  <rect class="pv-menu-item" x="470" y="256" width="128" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
+                  <line class="pv-menu-sep" x1="460" y1="278" x2="654" y2="278" stroke="#2e3547"/>
+                  <rect class="pv-menu-hover" x="458" y="286" width="198" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
+                  <circle class="pv-accent" cx="472" cy="299" r="4" fill="#6d70f5"/>
+                  <text class="pv-text" x="484" y="303.5" font-size="12" fill="#e8eaf0">الترجمة إلى الصينية</text>
+                  <rect class="pv-menu-item" x="470" y="327" width="80" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
+                </g>
+                <!-- 模拟鼠标拖选，只在演示过程中出现。四层 <g> 各管一段位移（横拖 → 落到第二行 → 往回收 → 移到菜单项），
+                     每段都是简单的起点到终点，时间点全在 styles.css 的 --pv-t-* 里 -->
+                <g class="pv-pointer" transform="translate(62 184)">
+                  <g class="pv-ptr-drag"><g class="pv-ptr-drop"><g class="pv-ptr-back"><g class="pv-ptr-aim">
+                    <path d="M0 0v20.5l4.9-4.6 3.4 7.7 3.3-1.4-3.3-7.6h6.6z" transform="scale(1.25)" fill="#16171f" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"/>
+                  </g></g></g></g>
+                </g>
+              </svg>
+              <!-- 上层：译文弹窗，透明底 -->
+              <svg class="pv-layer pv-popup" viewBox="0 0 800 500" aria-hidden="true" focusable="false">
+                <defs>
+                  <filter id="pv-lift" x="-30%" y="-30%" width="160%" height="180%">
+                    <feDropShadow class="pv-shadow" dx="0" dy="18" stdDeviation="26" flood-color="rgba(0,0,0,.6)"/>
+                  </filter>
+                </defs>
+                <g filter="url(#pv-lift)">
+                  <rect class="pv-card" x="168" y="132" width="464" height="236" rx="14" fill="#151924" stroke="#2a3142"/>
+                  <!-- 标题栏（实际可拖动） -->
+                  <rect class="pv-head" x="168.5" y="132.5" width="463" height="41.5" rx="13.5" fill="#1b202b"/>
+                  <rect class="pv-head" x="168.5" y="158" width="463" height="16" fill="#1b202b"/>
+                  <line class="pv-head-line" x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
+                  <circle class="pv-accent" cx="192" cy="153" r="4.5" fill="#6d70f5"/>
+                  <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">الترجمة إلى الصينية</text>
+                  <rect class="pv-chip" x="556" y="147" width="40" height="13" rx="6.5" fill="rgba(255,255,255,.1)"/>
+                  <circle class="pv-close" cx="612" cy="153" r="4" fill="rgba(255,255,255,.28)"/>
+                  <!-- 译文：载入时由 main.js 逐段放出来 -->
+                  <text class="pv-text pv-stream" x="194" y="214" font-size="15.5" fill="#e8eaf0">لا ترسل هذه الإضافة إلا النص</text>
+                  <text class="pv-text pv-stream" x="194" y="243" font-size="15.5" fill="#e8eaf0">الذي تطلب ترجمته، وإلى المنصة</text>
+                  <text class="pv-text pv-stream" x="194" y="272" font-size="15.5" fill="#e8eaf0">التي اخترتها فقط.</text>
+                  <!-- 底部：原文折叠面板 + 操作 -->
+                  <line class="pv-foot-line" x1="194" y1="302" x2="606" y2="302" stroke="#242a37"/>
+                  <path class="pv-chev" d="M196 319 l5 5 l5 -5" fill="none" stroke="#626c80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <text class="pv-muted" x="214" y="324" font-size="11.5" fill="#9aa3b5">النص الأصلي</text>
+                  <rect class="pv-btn" x="516" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
+                  <rect class="pv-btn" x="566" y="310" width="42" height="17" rx="5" fill="rgba(255,255,255,.07)"/>
+                </g>
+                <!-- 光标放在滤镜组外面：它一直在闪，放里面会牵连阴影跟着重画 -->
+                <rect class="pv-accent pv-caret" x="248" y="259" width="2" height="17" fill="#6d70f5"/>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <a class="scroll-cue" href="#features" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
   </section>
 
-  <!-- ===================================================== 功能 -->
-  <section class="section" id="features">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Features</p>
-        <h2>أربعة مداخل، كلها في قائمة النقر بزر الفأرة الأيمن</h2>
-        <p>بلا تبديل بين علامات التبويب، وبلا نسخ أو لصق. وحيثما كان المقطع الذي لا تفهمه، تحدث الترجمة هناك.</p>
-      </div>
-
-      <div class="features">
-
-        <article class="feature">
+  <!-- ===================================================== 功能：每个入口一屏 -->
+  <section id="features" class="features">
+    <article class="feature slide" data-slide>
+      <div class="wrap">
+        <div class="section-head wide reveal">
+          <p class="kicker">Features</p>
+          <h2>أربعة مداخل، كلها في قائمة النقر بزر الفأرة الأيمن</h2>
+          <p>بلا تبديل بين علامات التبويب، وبلا نسخ أو لصق. وحيثما كان المقطع الذي لا تفهمه، تحدث الترجمة هناك.</p>
+        </div>
+        <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>ترجمة التحديد</h3>
@@ -204,9 +225,13 @@
               <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-selection.mp4</span></div>
             </div>
           </div>
-        </article>
+        </div>
+      </div>
+    </article>
 
-        <article class="feature">
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>ترجمة العناصر</h3>
@@ -226,9 +251,13 @@
               <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-element.mp4</span></div>
             </div>
           </div>
-        </article>
+        </div>
+      </div>
+    </article>
 
-        <article class="feature">
+    <article class="feature slide" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>ترجمة الصور</h3>
@@ -249,9 +278,13 @@
               <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-image.mp4</span></div>
             </div>
           </div>
-        </article>
+        </div>
+      </div>
+    </article>
 
-        <article class="feature">
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>لوحة الترجمة</h3>
@@ -271,25 +304,25 @@
               <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-panel.mp4</span></div>
             </div>
           </div>
-        </article>
-
+        </div>
+        <aside class="feature-extra reveal">
+          <div>
+            <p class="kicker">Experimental</p>
+            <h3>ترجمة الفيديو الفورية</h3>
+          </div>
+          <div>
+            <p>ميزة تجريبية اختيارية، معطّلة افتراضيًا. تقرأ صوت علامة التبويب الحالية، وتتعرف عليه كترجمة ثم تترجمه؛ وتُضبط لغة التعرف الصوتي واللغة الهدف للترجمة كلٌّ على حدة.</p>
+            <p>يتم التعرف افتراضيًا على هذا الجهاز، ويتطلب دعم المتصفح وتنزيل حزمة اللغة؛ ويمكن أيضًا التبديل يدويًا إلى التعرف السحابي من Google، وفي هذه الحالة يُرسل الصوت إلى Google. لا تزال دقة التعرف والتوافق محدودين، ولا يُنصح بالاعتماد عليه لمعالجة محتوى مهم. الخدمة المستضافة في 2.0.0 تستقبل النص المتعرَّف عليه فقط، ولا توفر رفع الصوت والفيديو أو تفريغهما.</p>
+          </div>
+        </aside>
       </div>
+    </article>
 
-      <aside class="feature-extra reveal">
-        <div>
-          <p class="kicker">Experimental</p>
-          <h3>ترجمة الفيديو الفورية</h3>
-        </div>
-        <div>
-          <p>ميزة تجريبية اختيارية، معطّلة افتراضيًا. تقرأ صوت علامة التبويب الحالية، وتتعرف عليه كترجمة ثم تترجمه؛ وتُضبط لغة التعرف الصوتي واللغة الهدف للترجمة كلٌّ على حدة.</p>
-          <p>يتم التعرف افتراضيًا على هذا الجهاز، ويتطلب دعم المتصفح وتنزيل حزمة اللغة؛ ويمكن أيضًا التبديل يدويًا إلى التعرف السحابي من Google، وفي هذه الحالة يُرسل الصوت إلى Google. لا تزال دقة التعرف والتوافق محدودين، ولا يُنصح بالاعتماد عليه لمعالجة محتوى مهم. الخدمة المستضافة في 2.0.0 تستقبل النص المتعرَّف عليه فقط، ولا توفر رفع الصوت والفيديو أو تفريغهما.</p>
-        </div>
-      </aside>
-    </div>
   </section>
 
-  <section class="section" id="languages">
+  <section class="section slide slide-languages" id="languages" data-slide>
     <div class="wrap">
+      <div class="lang-hero reveal" aria-hidden="true">24</div>
       <div class="section-head reveal">
         <p class="kicker">Languages</p>
         <h2>اقرأ محتوى العالم بلغتك</h2>
@@ -313,7 +346,7 @@
   </section>
 
   <!-- ===================================================== 隐私 -->
-  <section class="section" id="privacy">
+  <section class="section slide slide-split" id="privacy" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
@@ -341,9 +374,9 @@
   </section>
 
   <!-- ===================================================== 价格 -->
-  <section class="section" id="pricing">
+  <section class="section slide" id="pricing" data-slide>
     <div class="wrap">
-      <div class="section-head reveal">
+      <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
         <h2>مفتاحك الخاص متاح للاستخدام، وخدمة بدون مفتاح قريباً</h2>
         <p>الإضافة نفسها مفتوحة المصدر ومجانية، وتتحمل تكاليف المفتاح الخاص بك عبر المنصة التي تختارها. التجربة والاشتراك التاليان هما خطة إطلاق 2.0.0، ولم يتم فتح استلامهما أو شرائهما بعد.</p>
@@ -391,7 +424,7 @@
     </div>
   </section>
 
-  <section class="section" id="account-preview">
+  <section class="section slide slide-steps" id="account-preview" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
@@ -416,9 +449,9 @@
   </section>
 
   <!-- ===================================================== 安装 -->
-  <section class="section" id="install">
+  <section class="section slide" id="install" data-slide>
     <div class="wrap">
-      <div class="section-head reveal">
+      <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>التثبيت في أربع خطوات</h2>
         <p>فيما يلي طريقة التثبيت من المصدر، وتتطلب Chrome 116 أو أحدث. خدمات الحساب وبدون مفتاح لم تُطلق بعد، لذا اختر حالياً في الإعدادات منصة بمفتاح API خاص بك.</p>
@@ -443,8 +476,8 @@
     </div>
   </section>
 
-  <!-- ===================================================== 结尾 CTA -->
-  <section class="wrap">
+  <!-- ===================================================== 结尾 CTA（和页脚一起作为最后一屏） -->
+  <section class="wrap closing" data-slide>
     <div class="cta reveal">
       <h2>ثبِّتها، ثم انسَ أمرها</h2>
       <p>إلى أن تحدِّد في المرة القادمة مقطعًا لا تفهمه.</p>

@@ -404,9 +404,16 @@
       "index.html"
     ]
   },
-  "<b>开源</b> GPL-3.0 · 24 种语言": {
+  "跳到正文": {
     "kind": "text",
-    "tag": "span",
+    "tag": "a",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<b class=\"mono\" data-extension-version>v2.0.0</b> <span>即将发布：免 Key 试用、账户与订阅服务正在准备，当前尚未开放。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+    "kind": "text",
+    "tag": "a",
     "pages": [
       "index.html"
     ]
@@ -425,23 +432,37 @@
       "index.html"
     ]
   },
-  "<a class=\"btn btn-primary\" href=\"#install\">安装到 Chrome</a> <a class=\"btn btn-ghost\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">查看源码</a>": {
+  "<a class=\"btn btn-primary btn-lg\" href=\"#install\" data-install> <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 10.5l5 5 5-5M5 20h14\"/></svg> 安装到 Chrome </a> <a class=\"btn btn-ghost btn-lg\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">查看源码</a>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<span><i class=\"dot\"></i>Chrome 116+</span> <span><i class=\"dot\"></i>不存译文 · 无第三方统计</span> <span><i class=\"dot\"></i>四种翻译方式</span>": {
-    "kind": "text",
-    "tag": "div",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "<a class=\"link\" href=\"changelog.html#v2-0-0\"><span class=\"mono\" data-extension-version>v2.0.0</span> 即将发布</a>：免 Key 试用、账户与订阅服务正在准备，当前尚未开放。": {
+  "这个浏览器装不了 Chrome 扩展：请在电脑上用 Chrome、Edge 等 Chromium 内核浏览器打开本页。": {
     "kind": "text",
     "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<b>开源</b> GPL-3.0 · 24 种语言": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "不存译文 · 无第三方统计": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "四种翻译方式": {
+    "kind": "text",
+    "tag": "li",
     "pages": [
       "index.html"
     ]

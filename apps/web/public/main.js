@@ -2,14 +2,16 @@
  * 宣传站脚本。
  *
  * 一条原则：不监听 scroll。视差交给 CSS 滚动驱动动画（跑在合成器线程上），
- * 这里剩下的三件事全部用 IntersectionObserver，主线程只在状态真正变化时才醒一下。
+ * 翻页是 CSS Scroll Snap。这里剩下的四件事全部用 IntersectionObserver，主线程只在状态真正变化时才醒一下。
  *
  *   1. 导航吸顶状态 —— 顶部一个哨兵离开视口就给 .nav 打标记
  *   2. 演示视频 —— 快进视口时才创建 <video>，进入播放、离开暂停；
  *      文件还没放进来就静默留住占位层，不出现破图
- *   3. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
+ *   3. 全屏分页 —— 右侧圆点与导航高亮跟着当前屏走
+ *   4. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
  *
- * 另外有账户入口：载入时读取一次用户端的登录状态；
+ * 另外有安装按钮：按浏览器决定去商店还是去安装步骤；
+ * 账户入口：载入时读取一次用户端的登录状态；
  * 配色切换：只在点击按钮、或系统切换明暗时才运行；
  * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
  */
@@ -32,6 +34,35 @@
       { threshold: 0 },
     ).observe(sentinel);
   }
+
+  /* ------------------------------------------------------------ 安装按钮 */
+
+  /*
+   * 网页无法替用户安装扩展（Chrome 2018 年起取消了站外内联安装），只能把人送到 Chrome 应用商店详情页，
+   * 由用户自己点「添加至 Chrome」。所以这里只决定按钮去哪：
+   *   · Chromium 内核（Chrome、Edge、Brave、Opera…）且填了商店地址 → 新标签页打开商店详情页；
+   *   · 商店地址还空着 → 保持跳到页面下方的源码安装步骤；
+   *   · Firefox、Safari 等装不了 Chrome 扩展 → 仍指向安装步骤，并在按钮下方提示换浏览器。
+   * 上架后把详情页地址填进 STORE_URL 即可，无需改 HTML 或 CSP（只是普通链接跳转）。
+   */
+  const STORE_URL = '';
+  const isChromium = (() => {
+    const brands = navigator.userAgentData && navigator.userAgentData.brands;
+    if (brands && brands.length) return brands.some((b) => /Chromium|Google Chrome|Microsoft Edge/.test(b.brand));
+    return /\b(Chrome|Chromium|CriOS|Edg)\//.test(navigator.userAgent) && !/\bFirefox\//.test(navigator.userAgent);
+  })();
+  // 手机上的 Chrome 也不支持扩展：只在桌面端送去商店
+  const isMobile = (navigator.userAgentData && navigator.userAgentData.mobile) || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  document.querySelectorAll('[data-install]').forEach((button) => {
+    if (isChromium && !isMobile && STORE_URL) {
+      button.href = STORE_URL;
+      button.target = '_blank';
+      button.rel = 'noopener';
+    }
+  });
+  const installNote = document.querySelector('[data-install-note]');
+  if (installNote && (!isChromium || isMobile)) installNote.hidden = false;
 
   /* ------------------------------------------------------------ 账户入口 */
 
@@ -313,6 +344,70 @@
     );
 
     frames.forEach((frame) => lazy.observe(frame));
+  }
+
+  /* ---------------------------------------------------------- 全屏分页 */
+
+  /*
+   * 翻页本身是 CSS Scroll Snap，这里只做两件辅助的事：
+   *   · 右侧圆点：每屏一个，标签取这屏自己的标题（各语言页面已经译好），点了滚过去；
+   *   · 当前位置：哪一屏占住视口中线，就点亮它的圆点和导航里对应的链接。
+   * 都靠 IntersectionObserver，状态变了才运行。
+   */
+  const slides = [...document.querySelectorAll('[data-slide]')];
+  const foot = document.querySelector('.foot');
+  if (document.body.classList.contains('fullpage') && slides.length && hasIO) {
+    // 导航在窄屏上会折成两行，页脚高度随语言变：实测后写进 CSS 变量，翻页落点和最后一屏才准
+    if ('ResizeObserver' in window) {
+      const root = document.documentElement.style;
+      const measure = new ResizeObserver(() => {
+        if (nav) root.setProperty('--nav-h', `${nav.offsetHeight}px`);
+        if (foot) root.setProperty('--foot-h', `${foot.offsetHeight}px`);
+      });
+      [nav, foot].forEach((el) => el && measure.observe(el));
+    }
+
+    const pager = document.createElement('div');
+    pager.className = 'pager';
+    const dots = slides.map((slide) => {
+      const heading = slide.querySelector('h1, h2, h3');
+      const label = heading ? heading.textContent.replace(/\s+/g, ' ').trim() : '';
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.dataset.label = label;
+      dot.setAttribute('aria-label', label);
+      dot.addEventListener('click', () => {
+        slide.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      });
+      pager.appendChild(dot);
+      return dot;
+    });
+    document.body.appendChild(pager);
+
+    // 屏 → 导航链接：功能的四屏都算「功能」
+    const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+    const linkFor = (slide) => {
+      const section = slide.closest('[id]');
+      return section ? navLinks.find((a) => a.getAttribute('href') === `#${section.id}`) : null;
+    };
+
+    const current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const index = slides.indexOf(entry.target);
+          dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
+          const link = linkFor(entry.target);
+          navLinks.forEach((a) => {
+            if (a === link) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+          });
+        }
+      },
+      // 只看视口中间一条 1% 高的带子：哪屏压在中线上，哪屏就是当前屏（高度为 0 的根区域判不出相交）
+      { rootMargin: '-49% 0px -50% 0px', threshold: 0 },
+    );
+    slides.forEach((slide) => current.observe(slide));
   }
 
   /* ---------------------------------------------------------- 淡入兜底 */
