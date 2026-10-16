@@ -77,7 +77,7 @@
         <p class="kicker">Privacy policy</p>
         <h2>隐私政策</h2>
         <p class="updated">
-          最后更新：2026-10-15 · <a class="link" href="#english">English version below</a> ·
+          最后更新：2026-10-16 · <a class="link" href="#english">English version below</a> ·
           <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a>
         </p>
       </div>
@@ -87,6 +87,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>一句话概括</h3>
+          <p>账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。以下同时说明这些服务开放后的数据处理方式。</p>
           <p>
             AI 划词翻译有两种用法。<b>自带 Key</b>：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。
             <b>点数翻译</b>：内容经我们的服务器转给模型服务商完成翻译，服务器<b>不保存原文和译文</b>。
@@ -128,6 +129,9 @@
           <p>
             <b>不会发送</b>：你没有主动翻译的页面内容、浏览历史、Cookie、表单数据。扩展不会在后台自动扫描或上传任何东西。
           </p>
+
+          <h3>实验视频字幕的声音处理</h3>
+          <p>视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隐私政策</a>。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。</p>
 
           <h3>账户数据</h3>
           <p>注册或登录后，我们保存：</p>
@@ -204,7 +208,7 @@
                 <tr><td><code>storage</code></td><td>在本机保存上述设置与登录令牌</td></tr>
                 <tr><td><code>scripting</code></td><td>在你触发翻译时向当前页面注入所需脚本</td></tr>
                 <tr><td><code>activeTab</code></td><td>仅作用于你当前操作的那个标签页</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>仅在你开启视频字幕翻译时，读取当前标签页的声音并在本机识别成文字</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google</td></tr>
                 <tr>
                   <td>访问 <code>api.openai.com</code>、<code>api.deepseek.com</code>、<code>api-free.deepl.com</code>、<code>api.deepl.com</code></td>
                   <td>自带 Key 时向你选定的平台发送翻译请求</td>
@@ -234,6 +238,7 @@
         <!-- ========================================================== English -->
         <section id="english">
           <h3>In one sentence</h3>
+          <p>Accounts, credits and subscriptions are planned for version 2.0.0 and are not yet publicly available. This policy also describes how those services will process data once launched.</p>
           <p>
             AI Selection Translator works in two ways. <b>Bring your own key</b>: what you translate goes straight to the AI provider you configured, never through us.
             <b>Credit translation</b>: the text passes through our server to a model provider, and our server <b>does not store the original or the translation</b>.
@@ -252,7 +257,7 @@
                 <tr><td>Text in a region you marked</td><td>Clicking that region's translate button</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Text typed into the translation panel</td><td>Clicking Translate</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Recognized video caption text</td><td>With video caption translation on</td><td>Same</td><td>Same</td></tr>
-                <tr><td>The image you right-clicked</td><td>Image translation</td><td>Your chosen provider</td><td>Not supported (images use your own key only)</td></tr>
+                <tr><td>The image you choose to translate</td><td>Image translation</td><td>Your chosen vision provider</td><td>Our server, then DeepSeek</td></tr>
               </tbody>
             </table>
           </div>
@@ -261,8 +266,8 @@
             <code>https://api.deepseek.com</code>, and <code>https://api-free.deepl.com</code> (or <code>https://api.deepl.com</code> for a paid DeepL key).
           </p>
           <p>
-            Credit translation requests go to <code>https://app.huaci.app</code>, which forwards them to <b>DeepSeek</b>; when DeepSeek is unavailable, the same model on
-            <b>Fireworks AI</b> (US region) is used instead. The text stays in memory only while the request is processed and is never written to a database or log.
+            Credit translation requests go to <code>https://app.huaci.app</code>, which forwards them to <b>DeepSeek</b>; when DeepSeek is unavailable, text translation uses the same model on
+            <b>Fireworks AI</b> (US region) instead. Image recognition uses DeepSeek Flash. Images, recognized text and translations stay in memory only while the request is processed and are never written to a database or log.
           </p>
           <p>How these providers handle what they receive is governed by their own privacy policies:</p>
           <ul>
@@ -272,6 +277,9 @@
             <li>Fireworks AI: <a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>Never sent</b>: page content you did not ask to translate, browsing history, cookies, or form data. Nothing is scanned or uploaded in the background.</p>
+
+          <h3>Audio processing for experimental video captions</h3>
+          <p>Video captions are off by default. When enabled, speech from the current tab is recognized on your device by default, which may require a browser language pack. Only if you explicitly select cloud recognition is audio sent to Google's speech recognition service, governed by the <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. Recognized caption text is then sent to your chosen translation provider or our server according to the translation mode. We do not receive or store video or audio, and do not offer hosted audio or video transcription.</p>
 
           <h3>Account data</h3>
           <p>When you sign up or sign in, we keep:</p>
@@ -350,7 +358,7 @@
                 <tr><td><code>storage</code></td><td>Save the settings and sign-in token above on your machine</td></tr>
                 <tr><td><code>scripting</code></td><td>Inject the needed script into the current page when you trigger a translation</td></tr>
                 <tr><td><code>activeTab</code></td><td>Act only on the tab you are working in</td></tr>
-                <tr><td><code>tabCapture</code>, <code>offscreen</code></td><td>Only with video caption translation on: read the current tab's audio and recognize speech on your device</td></tr>
+                <tr><td><code>tabCapture</code>, <code>offscreen</code></td><td>Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to Google if you explicitly select cloud recognition</td></tr>
                 <tr>
                   <td>Access to <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Send translation requests to the provider you selected when using your own key</td>

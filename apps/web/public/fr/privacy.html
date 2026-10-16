@@ -73,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Politique de confidentialité</h2>
-        <p class="updated">Dernière mise à jour : 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown</a></p>
+        <p class="updated">Dernière mise à jour : 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown originale</a></p>
       </div>
 
       <div class="policy">
@@ -81,6 +81,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>En une phrase</h3>
+          <p>Les comptes, les points et le service d'abonnement sont prévus avec la version 2.0.0 et ne sont pas encore ouverts au public. Ce qui suit décrit également le traitement des données une fois ces services disponibles.</p>
           <p>AI Selection Translator propose deux modes d'utilisation. <b>Clé personnelle</b> : le contenu à traduire est envoyé directement à la plateforme d'IA que vous avez configurée, sans passer par nous. <b>Traduction par crédits</b> : le contenu transite par notre serveur vers le fournisseur de modèles pour la traduction, le serveur <b>ne conserve ni le texte source ni la traduction</b>. Le compte, la facturation et la prévention des abus ne conservent que les données nécessaires au fonctionnement ; elles ne servent pas à la publicité et ne sont pas vendues.</p>
 
           <h3>Contenu envoyé lors de la traduction</h3>
@@ -109,6 +110,9 @@
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>Non envoyés</b> : le contenu des pages que vous n'avez pas traduit activement, l'historique de navigation, les cookies, les données de formulaire. L'extension n'analyse ni ne téléverse rien automatiquement en arrière-plan.</p>
+
+          <h3>Traitement audio des sous-titres vidéo expérimentaux</h3>
+          <p>Les sous-titres vidéo sont désactivés par défaut. Une fois activés, le son de l'onglet actif est reconnu par défaut en local, ce qui peut nécessiter le téléchargement du pack linguistique du navigateur ; ce n'est que si vous choisissez explicitement « utiliser la reconnaissance cloud » que le son est envoyé au service de reconnaissance vocale de Google, soumis à la <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a>. Le texte des sous-titres reconnu est ensuite envoyé à la plateforme de traduction ou à nos serveurs selon le mode de traduction choisi. Nous ne recevons ni ne conservons les vidéos et les audios, et nous ne proposons pas d'hébergement pour la transcription audio-vidéo.</p>
 
           <h3>Données de compte</h3>
           <p>Après inscription ou connexion, nous conservons :</p>
@@ -169,7 +173,7 @@
                 <tr><td><code>storage</code></td><td>Enregistre les paramètres ci-dessus et le jeton de connexion en local</td></tr>
                 <tr><td><code>scripting</code></td><td>Injecter le script nécessaire dans la page active lorsque vous déclenchez une traduction</td></tr>
                 <tr><td><code>activeTab</code></td><td>N’agit que sur l’onglet dans lequel vous travaillez</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lit le son de l'onglet actif et le transcrit en texte en local, uniquement lorsque vous activez la traduction des sous-titres vidéo</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lit le son de l'onglet actif uniquement lorsque vous activez la traduction des sous-titres vidéo ; reconnaissance locale par défaut, envoi à Google en cas de choix explicite de la reconnaissance cloud</td></tr>
                 <tr>
                   <td>Accès à <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Envoie les requêtes de traduction à la plateforme que vous avez choisie lorsque vous utilisez votre propre clé</td>

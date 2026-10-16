@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Entiende el texto en otro idioma con solo seleccionarlo y hacer clic derecho</title>
-<meta name="description" content="Una extensión de Chrome de código abierto: traduce el texto seleccionado, regiones completas y el texto de las imágenes al idioma que elijas. 24 idiomas de destino, usa créditos gratuitos o tu propia API Key, sin anuncios ni estadísticas de terceros." />
+<meta name="description" content="Extensión de traducción de código abierto para Chrome, compatible con selección de texto, áreas de la página web, imágenes y panel de traducción independiente; ofrece 24 idiomas de interfaz y de destino. Se puede usar con tu propia API Key; la prueba sin Key, la cuenta y el servicio de suscripción de la 2.0.0 estarán disponibles próximamente." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://huaci.app/es/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Selecciona texto, haz clic derecho y sigue leyendo. Traduce texto de páginas web, regiones completas y texto en imágenes al idioma que elijas. Código abierto, con créditos gratuitos o tu propia API Key." />
+<meta property="og:description" content="Selecciona texto, haz clic derecho y sigue leyendo. 24 idiomas de interfaz y de destino, compatible con traducción de texto, áreas de la página web e imágenes. Se puede usar con tu propia Key; la cuenta y el servicio sin Key de la 2.0.0 estarán disponibles próximamente." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -77,11 +77,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow"><b>Código abierto</b> GPL-3.0 · Prueba gratuita</span>
+        <span class="eyebrow"><b>Código abierto</b> GPL-3.0 · 24 idiomas</span>
         <h1>Selecciona, haz clic derecho,<br /><span class="dim">y sigue leyendo.</span></h1>
-        <p class="hero-sub">Una extensión de Chrome. Traduce el texto seleccionado, bloques completos de contenido y el texto de las imágenes al idioma que elijas. 24 idiomas de destino y configuración independiente del idioma de la interfaz; puedes conectarte directamente a la plataforma elegida con tu propia API Key o usar puntos gratuitos sin necesidad de ninguna Key.</p>
+        <p class="hero-sub">Una extensión de Chrome. Selecciona texto, un área completa de la página o una imagen y tradúcela al idioma que prefieras. Los 24 idiomas de interfaz y de destino se eligen de forma independiente; empieza con tu propia API Key de OpenAI, DeepSeek o DeepL.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Añadir a Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Ver el código</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>No almacena traducciones · Sin estadísticas de terceros</span> <span><i class="dot"></i>Cuatro modos de traducción</span></div>
+        <p class="release-note"><a class="link" href="/es/changelog.html#v2-0-0"><span class="mono" data-extension-version>v2.0.0</span> próximamente</a>: la prueba sin Key y los servicios de cuenta y suscripción están en preparación y aún no están disponibles.</p>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
@@ -186,7 +187,7 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Traducción por selección</h3>
-            <p>Selecciona texto en cualquier idioma, haz clic derecho y elige traducir; la traducción aparece carácter a carácter en la ventana emergente. Puedes cambiar temporalmente el idioma de destino y volver a traducir desde el texto original.</p>
+            <p>Tras seleccionar texto, haz clic derecho para traducir; la traducción aparece en una ventana emergente centrada y, en las plataformas compatibles con salida en streaming, se muestra palabra por palabra. Si cambias temporalmente el idioma de destino, se vuelve a traducir desde el texto original.</p>
             <ul>
               <li>Se pueden traducir chino, palabras cortas y combinaciones de idiomas; los números, la puntuación y los emojis no muestran la opción de traducción</li>
               <li>La ventana está centrada y se puede arrastrar; se cierra con <span class="mono">Esc</span> o con un clic en el fondo, y no es una burbuja que persigue el cursor</li>
@@ -235,7 +236,8 @@
             <ul>
               <li>Las imágenes largas se dividen en bloques antes del reconocimiento y los cortes se desplazan a las líneas en blanco entre textos, para no partir una frase en dos</li>
               <li>Antes de analizarlas, las imágenes se escalan por píxeles totales y no por el lado más largo, así que la anchura de una imagen larga no se pierde</li>
-              <li>El resultado se abre en una ventana aparte para que lo compares con la imagen original</li>
+              <li>Superpone la traducción sobre la imagen original; también puedes abrir el panel de imágenes, subir o pegar una imagen, o introducir la URL de una imagen</li>
+              <li>Al cambiar el idioma de destino se reutiliza el texto ya reconocido; al cambiar la imagen se vuelve a reconocer</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -272,6 +274,41 @@
         </article>
 
       </div>
+
+      <aside class="feature-extra reveal">
+        <div>
+          <p class="kicker">Experimental</p>
+          <h3>Subtítulos en tiempo real para vídeo</h3>
+        </div>
+        <div>
+          <p>Función experimental opcional, desactivada de forma predeterminada. Captura el audio de la pestaña actual, lo reconoce como subtítulos y luego lo traduce; el idioma de reconocimiento de voz y el idioma de destino de la traducción se configuran por separado.</p>
+          <p>De forma predeterminada, el reconocimiento se realiza en el dispositivo y requiere compatibilidad del navegador y la descarga del paquete de idioma; también puedes cambiar manualmente al reconocimiento en la nube de Google, en cuyo caso el audio se envía a Google. La precisión y la compatibilidad del reconocimiento siguen siendo limitadas, por lo que no se recomienda depender de él para contenido importante. El servicio alojado de 2.0.0 solo recibe el texto ya reconocido y no ofrece subida ni transcripción de audio o vídeo.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="languages">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Languages</p>
+        <h2>Lee el contenido del mundo en tu idioma</h2>
+        <p>El idioma de la interfaz, el origen de la traducción y el destino son independientes entre sí. En el primer uso, el destino predeterminado se elige según el idioma del navegador, y también puedes fijarlo en los ajustes.</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>24 idiomas de interfaz y de destino</b>
+          <p>Chino simplificado, chino tradicional, inglés, japonés, coreano, español, portugués (Brasil), francés, alemán, italiano, neerlandés, ruso, ucraniano, polaco, turco, árabe, hebreo, persa, hindi, bengalí, urdu, indonesio, vietnamita y tailandés.</p>
+        </div>
+        <div class="fact">
+          <b>La entrada del menú contextual sigue el destino de traducción</b>
+          <p>Si el destino es japonés, el menú indica traducir al japonés; si el destino es inglés, indica traducir al inglés. También se puede traducir texto seleccionado en chino, ya no está diseñado solo para lectores de chino.</p>
+        </div>
+        <div class="fact">
+          <b>De derecha a izquierda también se lee con naturalidad</b>
+          <p>Las interfaces en árabe, hebreo, persa y urdu usan un diseño de derecha a izquierda. El texto original y la traducción determinan su dirección por separado, sin alterar la maquetación de la página. Las combinaciones de idiomas realmente disponibles dependen de la plataforma elegida.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -280,8 +317,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>El texto solo sale del navegador cuando tú traduces</h2>
-        <p>Ambos modos envían contenido únicamente cuando inicias la traducción de forma activa: con tu propia Key, la solicitud va directamente a la plataforma que elijas; con puntos, pasa por nuestro servidor hacia el proveedor del modelo, y el servidor no guarda el texto original ni la traducción.</p>
+        <h2>El contenido solo se envía cuando tú activas la traducción</h2>
+        <p>Con tu propia Key, el contenido que se traduce se envía directamente a la plataforma que elijas. La traducción por puntos, próximamente, se enviará a través de nuestro servidor al proveedor del modelo; el servidor no guarda imágenes, texto original ni traducciones. Consulta la política de privacidad para saber cómo se procesa el audio cuando se activan los subtítulos de vídeo.</p>
       </div>
 
       <div class="facts reveal">
@@ -290,8 +327,8 @@
           <p>La solicitud se envía desde tu navegador directamente a la plataforma que selecciones en los ajustes, sin pasar por nosotros. La API Key se guarda en <span class="mono">chrome.storage.local</span> y no se sincroniza con la cuenta de Chrome.</p>
         </div>
         <div class="fact">
-          <b>Traducción con puntos: sin conservar contenido</b>
-          <p>El texto se envía por HTTPS a nuestro servidor y se reenvía al proveedor del modelo para completar la traducción. El servidor solo registra el número de caracteres, los tokens y el consumo de puntos para facturación y prevención de abusos; no guarda el texto original ni la traducción.</p>
+          <b>Servicio alojado: no conserva el contenido traducido</b>
+          <p>El texto y las imágenes alojados solo permanecen brevemente en memoria mientras se procesa la solicitud. La cuenta solo guarda el correo electrónico y el nombre de usuario necesarios; los registros de uso, puntos y suscripción se utilizan para prestar el servicio, y no se recopilan avatares, apodos ni huellas de dispositivo.</p>
         </div>
         <div class="fact">
           <b>Sin publicidad ni estadísticas de terceros</b>
@@ -308,33 +345,36 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Pricing</p>
-        <h2>Uso gratuito, suscripción cuando la necesites</h2>
-        <p>Con tu propia API Key es siempre gratis; si prefieres no solicitar una Key, usa nuestra traducción con puntos: al instalar recibes puntos gratuitos y, cuando se agoten, puedes suscribirte para un uso ilimitado.</p>
+        <h2>Funciona con tu propia clave; el servicio sin clave estará disponible próximamente</h2>
+        <p>La extensión es de código abierto y gratuita; el coste de usar tu propia clave lo cobra la plataforma que elijas. Las siguientes pruebas y suscripciones son el plan de lanzamiento de 2.0.0 y aún no están disponibles para reclamar ni comprar.</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">Con tu propia Key</b>
+          <span class="plan-status">Disponible actualmente</span>
           <p class="plan-price">Gratis</p>
           <p class="plan-desc">Introduce tu propia Key de OpenAI, DeepSeek o DeepL; la solicitud se envía directamente al proveedor y este te cobra según el uso.</p>
           <ul>
             <li>Traducción de selección, párrafos completos, áreas de la página, imágenes y subtítulos de vídeo</li>
             <li>La Key solo se guarda en tu navegador</li>
-            <li>Sin límite de uso</li>
+            <li>El alcance de compatibilidad, la cuota y el coste dependen de la plataforma elegida; DeepL no ofrece reconocimiento de imágenes</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">Prueba gratuita</b>
+          <span class="plan-status">Próximamente</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">Al instalar la extensión recibirás 50,00 puntos y al registrar una cuenta obtendrás 200,00 puntos adicionales. Los puntos no caducan y se descuentan según el uso real.</p>
+          <p class="plan-desc">Se planea ofrecer 50.00 puntos de prueba para visitantes, 200.00 puntos adicionales al registrar una cuenta, y combinar los puntos de prueba restantes. Los puntos no caducan y se descuentan con precisión según el uso real.</p>
           <ul>
             <li>No requiere ninguna API Key</li>
-            <li>Traducción de texto por selección, párrafos completos, áreas de la página y subtítulos</li>
+            <li>Traducción de texto al seleccionar, párrafos completos, áreas de la página web, imágenes y subtítulos ya reconocidos</li>
             <li>Si la traducción falla, no se descuentan créditos</li>
           </ul>
         </div>
         <div class="plan featured">
           <b class="plan-name">Suscripción</b>
+          <span class="plan-status">Precio planificado · Compra aún no disponible</span>
           <p class="plan-price">$3.99<span>/ mes</span></p>
           <p class="plan-alt">O $29.99 / año, un 37 % menos que el pago mensual</p>
           <p class="plan-desc">Traducción con créditos de uso ilimitado, sin seguir contabilizando créditos. Puedes cancelar en cualquier momento y seguir usando el servicio hasta el final del período en curso.</p>
@@ -343,11 +383,35 @@
             <li>Sin límite de veces conforme a la política de uso razonable</li>
             <li>Reembolso completo si se solicita dentro de los 7 días posteriores al primer pago</li>
           </ul>
-          <a class="btn btn-primary" href="https://app.huaci.app/plans">Suscripción</a>
+          <a class="btn btn-ghost" href="/es/changelog.html#v2-0-0">Ver avance de 2.0.0</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">Los precios se expresan en dólares estadounidenses y pueden incluir impuestos adicionales según tu región. El pago lo procesa <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> como distribuidor (Merchant of Record) y emite el recibo; no tenemos acceso a los datos de tu tarjeta. Las reglas concretas sobre suscripción, reembolsos y uso razonable se detallan en los <a class="link" href="/es/terms.html">Términos del servicio</a>.</p>
+      <p class="after-facts reveal">Los precios y las asignaciones indicados arriba son planificados; cuando se abran oficialmente, prevalecerá lo que figure en el centro de usuario. Los precios están en dólares estadounidenses y pueden incluir impuestos adicionales; el plan será procesado por <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> como distribuidor (Merchant of Record) para pagos y recibos; no tenemos acceso a la información de tarjetas bancarias. Las reglas de suscripción, reembolso y uso razonable se detallan en los <a class="link" href="/es/terms.html">términos del servicio</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="account-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Account · 2.0.0</p>
+        <h2>Úsalo en la extensión, gestiónalo en el centro de usuario</h2>
+        <p>El servicio de cuenta está previsto para 2.0.0. La extensión es el punto de entrada principal para iniciar sesión y traducir; el sitio web y el centro de usuario comparten la misma cuenta y los mismos beneficios de suscripción.</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>Inicio de sesión con correo electrónico o Google</b>
+          <p>Inicia sesión con un código de verificación por correo electrónico o una cuenta de Google; completa la autorización en la pestaña actual del navegador y vuelve a la extensión. Solo se necesitan correo electrónico y nombre de usuario.</p>
+        </div>
+        <div class="fact">
+          <b>Saldo y estado actualizados a tiempo</b>
+          <p>Sin suscripción, consulta los puntos restantes; con suscripción, se muestra uso ilimitado. En el centro de usuario puedes ver tu uso, historial de puntos, suscripción, pedidos y sesiones de inicio de sesión; al cerrar la sesión web actual, la extensión asociada también cerrará sesión.</p>
+        </div>
+        <div class="fact">
+          <b>Conserva siempre la opción de usar tu propia clave</b>
+          <p>La traducción alojada y el uso de tu propia clave se pueden alternar. Las solicitudes con tu propia clave se conectan directamente a la plataforma, no descuentan puntos alojados y no requieren comprar nuestra suscripción.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -357,7 +421,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>Instálala en cuatro pasos</h2>
-        <p>Por ahora se carga en modo desarrollador y requiere Chrome 116 o superior. Una vez instalada, puedes traducir con los créditos gratuitos o introducir tu propia API Key.</p>
+        <p>A continuación se muestra la instalación desde el código fuente; requiere Chrome 116 o superior. La cuenta y el servicio sin clave aún no están disponibles; actualmente, selecciona en los ajustes la plataforma con tu propia API Key.</p>
       </div>
 
       <div class="steps reveal">
@@ -368,14 +432,14 @@
           <div><b>Abre la página de extensiones</b> <span>— escribe <span class="mono">chrome://extensions/</span> en la barra de direcciones y activa el «Modo de desarrollador» de la esquina superior derecha.</span></div>
         </div>
         <div class="step">
-          <div><b>Cargar la extensión</b> <span>— haz clic en «Cargar descomprimida» y selecciona la carpeta que acabas de extraer.</span></div>
+          <div><b>Cargar la extensión</b> <span>——haz clic en «Cargar extensión descomprimida» y selecciona el directorio <span class="mono">apps/extension</span> del repositorio, no el directorio raíz del repositorio.</span></div>
         </div>
         <div class="step">
-          <div><b>Empezar a traducir</b> <span>——La primera instalación reclama automáticamente los créditos gratuitos y abre la página de bienvenida; basta con seleccionar texto para traducir. Si prefieres usar tu propia Key, elige la plataforma en la página de ajustes, pega la Key y pulsa «Probar conexión» para confirmar que funciona.</span></div>
+          <div><b>Comenzar a traducir</b> <span>——Selecciona OpenAI, DeepSeek o DeepL en la página de configuración, introduce tu propia API Key y prueba la conexión. Confirma el idioma de destino predeterminado, selecciona el texto y haz clic derecho para traducir.</span></div>
         </div>
       </div>
 
-      <p class="after-facts reveal">Compatible con las API de ChatGPT (OpenAI) y DeepSeek, y puedes cambiar entre ambas cuando quieras. Las dos usan por defecto su modelo más económico: traducir es una tarea frecuente y de textos cortos, así que no hace falta pagar por los caros.</p>
+      <p class="after-facts reveal">La traducción de imágenes requiere seleccionar un modelo compatible con el reconocimiento de imágenes; DeepL se utiliza para la traducción de texto. Los subtítulos de vídeo son una función experimental que debe activarse manualmente; la capacidad de reconocimiento de voz depende del navegador. La extensión no admite la traducción en páginas protegidas como las páginas internas de Chrome o Chrome Web Store.</p>
     </div>
   </section>
 

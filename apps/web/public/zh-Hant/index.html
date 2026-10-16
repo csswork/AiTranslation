@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
-<meta name="description" content="一個開源的 Chrome 擴充功能：將選取文字、整塊區域和圖片裡的文字翻譯成你選擇的語言。24 種目標語言，可用免費點數或自己的 API Key，無廣告、無第三方統計。" />
+<meta name="description" content="開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。自帶 API Key 即可使用；2.0.0 的免 Key 試用、帳戶與訂閱服務即將上線。" />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/" />
 <meta property="og:title" content="AI 劃詞翻譯" />
-<meta property="og:description" content="選取文字，右鍵，然後接著讀。網頁文字、整塊區域、圖片裡的文字都能翻譯成你選擇的語言。開源，免費點數或自帶 API Key 都能用。" />
+<meta property="og:description" content="選取文字，右鍵，然後接著讀。24 種介面與目標語言，支援文字、網頁區域與圖片翻譯。自帶 Key 可用，2.0.0 帳戶與免 Key 服務即將上線。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -77,11 +77,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow"><b>開源</b> GPL-3.0 · 免費試用</span>
+        <span class="eyebrow"><b>開源</b> GPL-3.0 · 24 種語言</span>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊區域和圖片裡的文字，都能翻譯成你選擇的語言。24 種目標語言，介面語言獨立設定；可以用你自己的 API Key 直接連接所選平台，也可以用免費點數，不需要任何 Key。</p>
+        <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊網頁區域，或一張圖片，就能譯成你熟悉的語言。24 種介面與目標語言可獨立選擇，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可開始。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">安裝到 Chrome</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>不存譯文 · 無第三方統計</span> <span><i class="dot"></i>四種翻譯方式</span></div>
+        <p class="release-note"><a class="link" href="/zh-Hant/changelog.html#v2-0-0"><span class="mono" data-extension-version>v2.0.0</span> 即將發布</a>：免 Key 試用、帳戶與訂閱服務正在準備，目前尚未開放。</p>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
@@ -186,7 +187,7 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>劃詞翻譯</h3>
-            <p>選取任意語言的文字，右鍵選擇翻譯，譯文在彈窗裡逐字出現。可臨時切換目標語言，用原文重新翻譯。</p>
+            <p>選取文字後右鍵翻譯，譯文在居中彈窗裡顯示；支援串流輸出的平台可逐字呈現。臨時換個目標語言，會用原文重新翻譯。</p>
             <ul>
               <li>中文、短詞和混合語言都可以翻譯；純數字、標點和表情不顯示翻譯入口</li>
               <li>彈出視窗置中且可拖曳，按 <span class="mono">Esc</span> 或點擊背景即可關閉，不是追著游標跑的小氣泡</li>
@@ -235,7 +236,8 @@
             <ul>
               <li>長圖會先切塊再辨識，切縫會自動移到文字之間的空白行，不會把一句話切成兩半</li>
               <li>送交辨識前依總像素縮放，而不是依最長邊，長圖的寬度不會被壓縮掉</li>
-              <li>結果會在獨立視窗中開啟，可以和原圖對照觀看</li>
+              <li>在原圖位置覆蓋譯文；也可開啟圖片面板，上傳、貼上圖片或輸入圖片位址</li>
+              <li>切換目標語言複用已識別的文字；更換圖片後重新識別</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -272,6 +274,41 @@
         </article>
 
       </div>
+
+      <aside class="feature-extra reveal">
+        <div>
+          <p class="kicker">Experimental</p>
+          <h3>影片即時字幕</h3>
+        </div>
+        <div>
+          <p>可選的實驗功能，預設關閉。讀取目前分頁的聲音，識別成字幕後再翻譯；語音識別語言與翻譯目標分別設定。</p>
+          <p>預設在本機識別，需瀏覽器支援並下載語言包；也可主動切換到 Google 雲端識別，此時聲音會發給 Google。識別準確度和相容性仍有限，不建議依賴它處理重要內容。2.0.0 的託管服務只接收識別後的文字，不提供音影片上傳與轉寫。</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="languages">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Languages</p>
+        <h2>用你的語言，讀世界的內容</h2>
+        <p>介面語言、翻譯來源和目標各自獨立。首次使用會根據瀏覽器語言選擇預設目標，也可以在設定裡固定下來。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>24 種介面與目標語言</b>
+          <p>簡體中文、繁體中文、英語、日語、韓語、西班牙語、葡萄牙語（巴西）、法語、德語、義大利語、荷蘭語、俄語、烏克蘭語、波蘭語、土耳其語、阿拉伯語、希伯來語、波斯語、印地語、孟加拉語、烏爾都語、印尼語、越南語與泰語。</p>
+        </div>
+        <div class="fact">
+          <b>右鍵入口跟隨翻譯目標</b>
+          <p>目標選日語，選單就提示譯成日語；目標選英語，就提示譯成英語。選取中文也能翻譯，不再只為中文讀者設計。</p>
+        </div>
+        <div class="fact">
+          <b>從右往左，也讀得自然</b>
+          <p>阿拉伯語、希伯來語、波斯語和烏爾都語介面使用從右往左的佈局。原文與譯文各自判斷方向，不改變網頁本身的排版。實際可用的語言組合取決於所選平台。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -280,8 +317,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>只在你翻譯時，文字才離開瀏覽器</h2>
-        <p>兩種用法都只在你主動觸發翻譯時傳送內容：自帶 Key 時直接傳往你選的平台；用點數翻譯時經我們的伺服器轉給模型服務商，伺服器不保存原文和譯文。</p>
+        <h2>你觸發翻譯，內容才會傳送</h2>
+        <p>自帶 Key 時，翻譯內容直接發往你選的平台。即將上線的點數翻譯會經我們的伺服器轉給模型服務商，伺服器不保存圖片、原文或譯文。影片字幕開啟後的聲音處理方式見隱私政策。</p>
       </div>
 
       <div class="facts reveal">
@@ -290,8 +327,8 @@
           <p>請求從你的瀏覽器直接傳往你在設定裡選的那家平台，不經過我們。API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 帳號同步。</p>
         </div>
         <div class="fact">
-          <b>點數翻譯：不留存內容</b>
-          <p>文字經 HTTPS 傳到我們的伺服器，轉給模型服務商完成翻譯。伺服器只記錄字數、token 與扣點，用於計費和防濫用，不保存原文和譯文。</p>
+          <b>託管服務：不留存翻譯內容</b>
+          <p>託管文字與圖片只在處理請求時短暫停留於記憶體。帳戶只保存必要的電子郵件與使用者名稱；用量、點數和訂閱記錄用於提供服務，不蒐集頭像、暱稱或裝置指紋。</p>
         </div>
         <div class="fact">
           <b>沒有廣告與第三方統計</b>
@@ -308,33 +345,36 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Pricing</p>
-        <h2>免費可用，需要時再訂閱</h2>
-        <p>用自己的 API Key 始終免費；不想申請 Key，就用我們的點數翻譯——裝好即送免費點數，用完可以訂閱，無限使用。</p>
+        <h2>自帶 Key 可用，免 Key 服務即將上線</h2>
+        <p>擴充功能本身開源免費，自帶 Key 的費用由所選平台收取。以下試用與訂閱是 2.0.0 的上線方案，目前尚未開放領取或購買。</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">自帶 Key</b>
+          <span class="plan-status">目前可用</span>
           <p class="plan-price">免費</p>
           <p class="plan-desc">填入你自己的 OpenAI、DeepSeek 或 DeepL Key，請求直接傳往對方，費用由平台按用量向你收取。</p>
           <ul>
             <li>劃詞、整段、網頁區域、圖片與影片字幕翻譯</li>
             <li>Key 只保存在你的瀏覽器裡</li>
-            <li>沒有限制用量</li>
+            <li>支援範圍、額度與費用由所選平台決定；DeepL 不提供圖片辨識</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">免費試用</b>
+          <span class="plan-status">即將上線</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">裝好擴充功能即送 50.00 點，註冊帳戶再送 200.00 點。點數不會過期，依實際用量扣減。</p>
+          <p class="plan-desc">計劃提供 50.00 點訪客試用，註冊帳戶再贈 200.00 點，並合併剩餘試用點數。點數不過期，按實際用量精確扣減。</p>
           <ul>
             <li>不需要任何 API Key</li>
-            <li>選取文字、整段、網頁區域與字幕的文字翻譯</li>
+            <li>劃詞、整段、網頁區域、圖片與已辨識字幕的文字翻譯</li>
             <li>翻譯失敗不扣點</li>
           </ul>
         </div>
         <div class="plan featured">
           <b class="plan-name">訂閱</b>
+          <span class="plan-status">計劃價格 · 尚未開放購買</span>
           <p class="plan-price">$3.99<span>/ 月</span></p>
           <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
           <p class="plan-desc">點數翻譯無限使用，不再計算點數。隨時可以取消，本期結束前仍可使用。</p>
@@ -343,11 +383,35 @@
             <li>依合理使用原則不限次數</li>
             <li>首次付款 7 天內可申請全額退款</li>
           </ul>
-          <a class="btn btn-primary" href="https://app.huaci.app/plans">訂閱</a>
+          <a class="btn btn-ghost" href="/zh-Hant/changelog.html#v2-0-0">查看 2.0.0 預告</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">價格以美元計，可能另加所在地區的稅費。付款由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商（Merchant of Record）處理並開立收據，我們不接觸你的信用卡資訊。訂閱、退款與合理使用的具體規則見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
+      <p class="after-facts reveal">以上為計劃價格和贈送額度，正式開放時以使用者中心為準。價格以美元計，可能另加稅費；計劃由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商（Merchant of Record）處理付款與收據，我們不接觸銀行卡資訊。訂閱、退款與合理使用規則見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
+    </div>
+  </section>
+
+  <section class="section" id="account-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Account · 2.0.0</p>
+        <h2>在擴充功能裡用，在使用者中心管理</h2>
+        <p>帳戶服務隨 2.0.0 準備上線。擴充功能是登入與翻譯的主要入口，官網和使用者中心共用同一個帳戶及訂閱權益。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>電子郵件或 Google 登入</b>
+          <p>使用電子郵件驗證碼或 Google 帳戶登入，在目前瀏覽器分頁完成授權後返回擴充功能。只需要電子郵件與使用者名稱。</p>
+        </div>
+        <div class="fact">
+          <b>餘額與狀態及時更新</b>
+          <p>未訂閱時查看剩餘點數，訂閱後顯示無限使用。使用者中心可查看自己的用量、點數記錄、訂閱、訂單與登入工作階段；目前網頁工作階段登出後，關聯的擴充功能也會登出。</p>
+        </div>
+        <div class="fact">
+          <b>隨時保留自帶 Key 的選擇</b>
+          <p>託管翻譯和自帶 Key 可切換使用。自帶 Key 的請求直接連接平台，不扣託管點數，也不需要購買我們的訂閱。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -357,7 +421,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>四步裝好</h2>
-        <p>目前以開發者模式載入，需要 Chrome 116 或更高版本。安裝後即可用免費點數翻譯，也可以填入自己的 API Key。</p>
+        <p>以下為原始碼安裝方式，需要 Chrome 116 或更高版本。帳戶與免 Key 服務尚未上線，目前請在設定中選擇自帶 API Key 的平台。</p>
       </div>
 
       <div class="steps reveal">
@@ -368,14 +432,14 @@
           <div><b>開啟擴充功能頁面</b> <span>——在網址列輸入 <span class="mono">chrome://extensions/</span>，開啟右上角的「開發人員模式」。</span></div>
         </div>
         <div class="step">
-          <div><b>載入擴充功能</b> <span>——點選「載入未封裝項目」，選取剛才那個資料夾。</span></div>
+          <div><b>載入擴充功能</b> <span>——點「載入未封裝項目」，選擇倉庫中的 <span class="mono">apps/extension</span> 目錄，而不是倉庫根目錄。</span></div>
         </div>
         <div class="step">
-          <div><b>開始翻譯</b> <span>——首次安裝會自動領取免費點數並開啟歡迎頁，選取文字就能翻譯。想用自己的 Key，在設定頁選好平台、貼上 Key，點「測試連線」確認能通。</span></div>
+          <div><b>開始翻譯</b> <span>——在設定頁選擇 OpenAI、DeepSeek 或 DeepL，填入自己的 API Key 並測試連線。確認預設目標語言後，選取文字，右鍵翻譯。</span></div>
         </div>
       </div>
 
-      <p class="after-facts reveal">支援串接 ChatGPT（OpenAI）與 DeepSeek 的 API，隨時可以切換。兩者都預設選用各自最便宜的等級——翻譯是高頻率、短輸入的工作，沒必要用貴的。</p>
+      <p class="after-facts reveal">圖片翻譯需選擇支援圖片辨識的模型；DeepL 用於文字翻譯。影片字幕是需手動開啟的實驗功能，語音辨識能力取決於瀏覽器。擴充功能不支援在 Chrome 內部頁面、Chrome 應用程式商店等受保護頁面翻譯。</p>
     </div>
   </section>
 

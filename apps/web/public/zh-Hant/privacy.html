@@ -73,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>隱私權政策</h2>
-        <p class="updated">最後更新：2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最後更新：2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -81,6 +81,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>一句話總結</h3>
+          <p>帳戶、點數與訂閱服務計劃隨 2.0.0 上線，目前尚未向公眾開放。以下同時說明這些服務開放後的資料處理方式。</p>
           <p>AI Selection Translator 有兩種用法。<b>自帶 Key</b>：你要翻譯的內容直接傳送至你自己設定的 AI 平台，不經過我們。<b>點數翻譯</b>：內容經我們的伺服器轉給模型服務商完成翻譯，伺服器<b>不儲存原文與譯文</b>。帳戶、計費與防濫用僅保留運行所必需的資料，不用於廣告，也不出售。</p>
 
           <h3>翻譯時會傳送的內容</h3>
@@ -109,6 +110,9 @@
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>不會傳送</b>：你未主動翻譯的頁面內容、瀏覽歷史、Cookie、表單資料。擴充功能不會在背景自動掃描或上傳任何東西。</p>
+
+          <h3>實驗影片字幕的聲音處理</h3>
+          <p>影片字幕預設關閉。開啟後，預設在本機辨識目前分頁的聲音，可能需要下載瀏覽器語言包；只有你主動選擇「改用雲端辨識」時，聲音才會傳送至 Google 的語音辨識服務，適用 <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隱私權政策</a>。辨識後的字幕文字再按所選翻譯模式傳送給翻譯平台或我們的伺服器。我們不接收或保存影片、音訊，不提供託管音視訊轉寫。</p>
 
           <h3>帳戶資料</h3>
           <p>註冊或登入後，我們儲存：</p>
@@ -169,7 +173,7 @@
                 <tr><td><code>storage</code></td><td>在本機儲存上述設定與登入權杖</td></tr>
                 <tr><td><code>scripting</code></td><td>在你觸發翻譯時，將所需指令碼注入目前頁面</td></tr>
                 <tr><td><code>activeTab</code></td><td>僅作用於你目前操作的那個分頁</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時，讀取目前分頁的聲音並在本機辨識成文字</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時讀取目前分頁的聲音；預設本機辨識，主動選擇雲端辨識時傳送給 Google</td></tr>
                 <tr>
                   <td>存取 <code>api.openai.com</code>、<code>api.deepseek.com</code>、<code>api-free.deepl.com</code>、<code>api.deepl.com</code></td>
                   <td>自帶 Key 時向你選定的平台傳送翻譯請求</td>

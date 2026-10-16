@@ -73,12 +73,49 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Journal des modifications</h2>
-        <p>Les numéros de version proviennent de <span class="mono">manifest.json</span>. Pour les changements plus fins, consultez le <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">journal des commits</a> du dépôt.</p>
+        <p>Les versions publiées et les annonces de la prochaine version sont consignées ici. La version 2.0.0 est en préparation ; le compte et le service hébergé ne sont pas encore disponibles ; pour les modifications plus détaillées, voir l'<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">historique des commits</a> du dépôt.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">Bientôt disponible</div>
+        </div>
+        <div class="log-body">
+          <h3>Compte, traduction sans clé et abonnement</h3>
+          <p>Les fonctionnalités de cette version peuvent déjà être testées en local ; le backend n'est pas encore déployé, les points d'essai et l'abonnement ne sont pas encore ouverts au public. Le mode avec clé personnelle reste disponible.</p>
+          <ul>
+            <li><b>Connexion au compte</b> : code de vérification par e-mail ou connexion Google, autorisation dans un onglet de la fenêtre actuelle puis retour à l'extension ; la fenêtre contextuelle et la page de paramètres affichent le nom d'utilisateur, le solde et l'état de l'abonnement.</li>
+            <li><b>Essai et points</b> : il est prévu d'offrir un essai visiteur et des points à l'inscription ; les points d'essai restants peuvent être transférés sur le compte, les points offerts n'expirent pas ; déduction précise selon l'usage réel, remboursement en cas d'échec, plus d'arrondi à l'unité supérieure à chaque fois.</li>
+            <li><b>Texte et images hébergés</b> : aucune clé personnelle requise, prise en charge de la sélection de texte, du panneau de traduction, des zones de page web et de la reconnaissance et traduction d'images. Les sous-titres vidéo déjà reconnus peuvent passer par la traduction de texte hébergée ; l'envoi audio/vidéo et la transcription hébergée ne sont pas encore disponibles.</li>
+            <li><b>Abonnement et facturation</b> : l'espace utilisateur gère l'abonnement, les commandes, l'usage et les sessions de connexion. Après abonnement, usage illimité selon le principe d'utilisation raisonnable ; le traitement des paiements passe par Creem, l'encaissement réel reste à valider avant mise en ligne.</li>
+            <li><b>Synchronisation d'état</b> : la déconnexion sur le web révoque la connexion de l'extension autorisée par cette session web, sans affecter les autres navigateurs ; le développement local et l'environnement de production sont traités séparément.</li>
+            <li><b>Interface et confidentialité</b> : suppression de l'affichage en double du solde dans la fenêtre contextuelle ; ajout des explications sur les images hébergées et sur le traitement des données de la reconnaissance vocale Google Cloud en option. Aucun contenu de traduction ni image n'est conservé.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>D'un outil de traduction chinois à 24 langues</h3>
+          <ul>
+            <li><b>Interface multilingue complète</b> : 24 langues d'interface et langues cibles, l'interface, la source et la cible étant indépendantes ; la première installation suit la langue du navigateur, la mise à niveau conserve les préférences existantes et la configuration de l'API.</li>
+            <li><b>Interaction de traduction adaptée aux lecteurs de différentes langues</b> : prise en charge du chinois, des mots courts et des sélections multilingues ; le menu contextuel est généré selon la langue cible actuelle, et ne propose plus uniquement « traduire en chinois ».</li>
+            <li><b>Changement temporaire de cible</b> : la fenêtre contextuelle de sélection retraduit à partir du texte source et permet d'enregistrer explicitement la cible par défaut ; le panneau de traduction mémorise ses propres choix de source et de cible.</li>
+            <li><b>Améliorations des zones et des images</b> : la traduction de zone permet de restaurer le texte original et bascule en repli en cas d'échec ; le changement de cible pour une image réutilise le résultat de reconnaissance, et le cache est vidé après changement d'image.</li>
+            <li><b>Sens d'écriture et capacités des plateformes</b> : prise en charge des interfaces de droite à gauche comme l'arabe, mise en page indépendante du texte source et de la traduction ; DeepL est traité selon les combinaisons de langues réellement prises en charge, avec un message explicite en cas de non-prise en charge.</li>
+            <li><b>Sous-titres vidéo expérimentaux</b> : activation manuelle possible de la reconnaissance vocale et de la traduction des sous-titres pour l'onglet actuel, désactivée par défaut ; la qualité de reconnaissance et la compatibilité restent limitées.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>

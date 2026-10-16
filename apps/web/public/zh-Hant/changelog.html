@@ -73,12 +73,49 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>更新記錄</h2>
-        <p>版本編號取自 <span class="mono">manifest.json</span>。更細部的變更可以查看儲存庫的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交記錄</a>。</p>
+        <p>已發佈版本與下一版預告都記錄在這裡。2.0.0 正在準備發佈，帳戶與託管服務尚未上線；更細的改動見倉庫的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交記錄</a>。</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">即將發佈</div>
+        </div>
+        <div class="log-body">
+          <h3>帳戶、免 Key 翻譯與訂閱</h3>
+          <p>本版功能已可在本地測試，後端尚未部署，試用點數與訂閱尚未向公眾開放。自帶 Key 模式繼續保留。</p>
+          <ul>
+            <li><b>帳戶登入</b>：電子郵件驗證碼或 Google 登入，在當前視窗的標籤頁授權後回到擴充功能；彈出頁與設定頁顯示使用者名稱、餘額和訂閱狀態。</li>
+            <li><b>試用與點數</b>：計劃提供訪客試用與註冊贈送，剩餘試用點數可轉入帳戶，贈送點數不過期；按實際用量精確扣減，失敗返還，不再每次向上取整扣一點。</li>
+            <li><b>託管文字與圖片</b>：無需自備 Key，支援劃詞、翻譯面板、網頁區域和圖片識別與翻譯。已識別的影片字幕可走託管文字翻譯；音影片上傳與託管轉寫尚未提供。</li>
+            <li><b>訂閱與帳單</b>：使用者中心管理訂閱、訂單、用量和登入工作階段。訂閱後按合理使用原則無限使用，支付計劃透過 Creem 處理，正式收款仍待上線驗證。</li>
+            <li><b>狀態同步</b>：網頁登出會撤銷由該網頁工作階段授權的擴充功能登入，不影響其他瀏覽器；本地開發與正式環境分別處理。</li>
+            <li><b>介面與隱私</b>：移除彈出頁重複的餘額顯示；補齊託管圖片說明與可選 Google 雲端語音辨識的資料處理說明。不儲存翻譯內容或圖片。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>從中文翻譯工具，到 24 種語言</h3>
+          <ul>
+            <li><b>完整多語言介面</b>：提供 24 種介面與目標語言，介面、來源和目標各自獨立；首次安裝跟隨瀏覽器語言，升級保留已有偏好與 API 設定。</li>
+            <li><b>面向不同語言讀者的翻譯互動</b>：支援中文、短詞和混合語言選區，右鍵選單按當前目標語言產生，不再只提供「翻譯成中文」。</li>
+            <li><b>臨時切換目標</b>：劃詞彈窗從原文重譯，可明確儲存預設目標；翻譯面板記住自己的來源與目標選擇。</li>
+            <li><b>區域與圖片改進</b>：區域翻譯可恢復原文，失敗時回退；圖片切換目標時重複使用識別結果，更換圖片後清空快取。</li>
+            <li><b>文字方向與平台能力</b>：支援阿拉伯語等從右往左的介面，原文和譯文獨立排版；DeepL 按實際支援的語言組合處理，不支援時明確提示。</li>
+            <li><b>實驗影片字幕</b>：可手動開啟當前標籤頁的語音辨識與字幕翻譯，預設關閉，識別效果與相容性仍有限。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>

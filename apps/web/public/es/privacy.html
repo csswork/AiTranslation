@@ -73,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidad</h2>
-        <p class="updated">Última actualización: 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
+        <p class="updated">Última actualización: 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Versión original en Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -81,6 +81,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>En una frase</h3>
+          <p>Las cuentas, los puntos y los planes de suscripción están previstos para el lanzamiento de la versión 2.0.0 y actualmente no están disponibles al público. A continuación se describe también cómo se tratarán los datos cuando estos servicios estén disponibles.</p>
           <p>AI Selection Translator tiene dos modos de uso. <b>Clave propia</b>: el contenido que deseas traducir se envía directamente a la plataforma de IA que hayas configurado, sin pasar por nosotros. <b>Traducción por créditos</b>: el contenido se transmite a través de nuestro servidor al proveedor del modelo para completar la traducción; el servidor <b>no guarda el texto original ni la traducción</b>. La cuenta, la facturación y la prevención de abuso solo conservan los datos necesarios para su funcionamiento; no se utilizan para publicidad ni se venden.</p>
 
           <h3>Contenido que se envía al traducir</h3>
@@ -109,6 +110,9 @@
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>No se envía</b>: contenido de páginas que no hayas traducido manualmente, historial de navegación, cookies ni datos de formularios. La extensión no escanea ni sube nada automáticamente en segundo plano.</p>
+
+          <h3>Procesamiento de audio de los subtítulos de vídeo experimentales</h3>
+          <p>Los subtítulos de vídeo están desactivados de forma predeterminada. Al activarlos, el sonido de la pestaña actual se reconoce de forma predeterminada en el dispositivo local, lo que puede requerir la descarga del paquete de idioma del navegador; solo cuando seleccionas activamente «usar reconocimiento en la nube», el sonido se envía al servicio de reconocimiento de voz de Google, sujeto a la <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad de Google</a>. El texto de los subtítulos reconocidos se envía después a la plataforma de traducción o a nuestro servidor según el modo de traducción seleccionado. No recibimos ni almacenamos vídeo ni audio, ni ofrecemos transcripción alojada de audio y vídeo.</p>
 
           <h3>Datos de la cuenta</h3>
           <p>Tras registrarte o iniciar sesión, guardamos:</p>
@@ -169,7 +173,7 @@
                 <tr><td><code>storage</code></td><td>Guarda la configuración anterior y el token de sesión en el dispositivo</td></tr>
                 <tr><td><code>scripting</code></td><td>Inyectar en la página actual los scripts necesarios cuando inicias una traducción</td></tr>
                 <tr><td><code>activeTab</code></td><td>Actúa solo en la pestaña en la que estás trabajando</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Solo cuando activas la traducción de subtítulos de video, lee el audio de la pestaña actual y lo reconoce como texto en el dispositivo</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Solo lee el sonido de la pestaña actual cuando activas la traducción de subtítulos de vídeo; de forma predeterminada el reconocimiento es local, y se envía a Google cuando se selecciona activamente el reconocimiento en la nube</td></tr>
                 <tr>
                   <td>Acceso a <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Con tu propia API Key, envía solicitudes de traducción a la plataforma que elijas</td>

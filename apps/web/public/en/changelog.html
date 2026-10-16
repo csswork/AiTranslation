@@ -73,12 +73,49 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Changelog</h2>
-        <p>Version numbers come from <span class="mono">manifest.json</span>. For finer-grained changes, see the repository's <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">commit log</a>.</p>
+        <p>Released versions and previews of the next version are recorded here. 2.0.0 is being prepared for release; accounts and hosted services are not yet available. For more detailed changes, see the repository's <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">commit history</a>.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">Coming soon</div>
+        </div>
+        <div class="log-body">
+          <h3>Accounts, Key-free translation, and subscriptions</h3>
+          <p>The features in this version can already be tested locally. The backend has not yet been deployed, and trial credits and subscriptions are not yet open to the public. Bring-your-own-key mode remains available.</p>
+          <ul>
+            <li><b>Account login</b>: Sign in with an email verification code or Google, authorize in a tab in the current window, then return to the extension; the popup and settings pages show the username, balance, and subscription status.</li>
+            <li><b>Trial and credits</b>: Plans include guest trials and sign-up bonuses. Remaining trial credits can be transferred to an account, and bonus credits do not expire; deductions are precise based on actual usage, refunded on failure, and no longer rounded up by one credit each time.</li>
+            <li><b>Hosted text and images</b>: No personal key required. Supports selection, the translation panel, webpage regions, and image recognition and translation. Recognized video subtitles can use hosted text translation; audio and video upload and hosted transcription are not yet available.</li>
+            <li><b>Subscriptions and billing</b>: The user center manages subscriptions, orders, usage, and login sessions. Subscriptions provide unlimited use under a fair-use policy. Payment plans are handled through Creem; live payment collection is still pending launch validation.</li>
+            <li><b>Status sync</b>: Logging out on the web revokes extension logins authorized by that web session without affecting other browsers; local development and production environments are handled separately.</li>
+            <li><b>Interface and privacy</b>: Removed the duplicate balance display from the popup; added hosted image descriptions and data processing disclosures for optional Google Cloud speech recognition. Translation content and images are not stored.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>From a Chinese translation tool to 24 languages</h3>
+          <ul>
+            <li><b>Full multilingual interface</b>: Provides 24 interface and target languages, with interface, source, and target each independent; first install follows the browser language, and upgrades preserve existing preferences and API configuration.</li>
+            <li><b>Translation interactions for readers of different languages</b>: Supports Chinese, short phrases, and mixed-language selections. The context menu is generated according to the current target language and no longer only offers "Translate to Chinese."</li>
+            <li><b>Temporary target switching</b>: The selection popup retranslates from the source text and can explicitly save the default target; the translation panel remembers its own source and target selections.</li>
+            <li><b>Region and image improvements</b>: Region translation can restore the original text and falls back on failure; switching the target for an image reuses the recognition result, and changing the image clears the cache.</li>
+            <li><b>Text direction and platform capabilities</b>: Supports right-to-left interfaces such as Arabic, with source and translated text laid out independently; DeepL is handled according to the language combinations it actually supports, with a clear notice when unsupported.</li>
+            <li><b>Experimental video subtitles</b>: Speech recognition and subtitle translation can be manually enabled for the current tab. Off by default; recognition quality and compatibility remain limited.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>

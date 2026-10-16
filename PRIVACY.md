@@ -1,7 +1,7 @@
 # Privacy Policy / 隐私政策
 
 **AI Selection Translator (AI 划词翻译)**
-Last updated / 最后更新：2026-10-15
+Last updated / 最后更新：2026-10-16
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
 
@@ -10,6 +10,8 @@ Last updated / 最后更新：2026-10-15
 ## English
 
 ### In one sentence
+
+Accounts, credits and subscriptions are planned for version 2.0.0 and are not yet publicly available. This policy also describes how those services will process data once launched.
 
 AI Selection Translator works in two ways. **Bring your own key**: what you translate goes straight to the AI provider you configured, never through us. **Credit translation**: the text passes through our server to a model provider, and our server **does not store the original or the translation**. For accounts, billing, and abuse prevention we keep only what is needed to run the service; nothing is used for advertising or sold.
 
@@ -37,6 +39,10 @@ How these providers handle what they receive is governed by their own privacy po
 - Fireworks AI: [fireworks.ai/privacy-policy](https://fireworks.ai/privacy-policy)
 
 **Never sent**: page content you did not ask to translate, browsing history, cookies, or form data. Nothing is scanned or uploaded in the background.
+
+### Audio processing for experimental video captions
+
+Video captions are off by default. When enabled, speech from the current tab is recognized on your device by default, which may require a browser language pack. Only if you explicitly select cloud recognition is audio sent to Google's speech recognition service, governed by the [Google Privacy Policy](https://policies.google.com/privacy). Recognized caption text is then sent to your chosen translation provider or our server according to the translation mode. We do not receive or store video or audio, and do not offer hosted audio or video transcription.
 
 ### Account data
 
@@ -99,7 +105,7 @@ All extension and server source code is public under GPL-3.0, so you can verify 
 | `storage` | Save the settings and sign-in token above on your machine |
 | `scripting` | Inject the needed script into the current page when you trigger a translation |
 | `activeTab` | Act only on the tab you are working in |
-| `tabCapture`, `offscreen` | Only with video caption translation on: read the current tab's audio and recognize speech on your device |
+| `tabCapture`, `offscreen` | Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to Google if you explicitly select cloud recognition |
 | Access to `api.openai.com`, `api.deepseek.com`, `api-free.deepl.com`, `api.deepl.com` | Send translation requests to the provider you selected when using your own key |
 | Optional access to your own API origin | Only if you enter a custom API base URL (a proxy or relay). Requested for that single origin when you click “Test connection”; never for all sites |
 | Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. |
@@ -113,6 +119,8 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 ## 中文
 
 ### 一句话概括
+
+账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。以下同时说明这些服务开放后的数据处理方式。
 
 AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 **点数翻译**：内容经我们的服务器转给模型服务商完成翻译，服务器**不保存原文和译文**。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。
 
@@ -140,6 +148,10 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 - Fireworks AI：[fireworks.ai/privacy-policy](https://fireworks.ai/privacy-policy)
 
 **不会发送**：你没有主动翻译的页面内容、浏览历史、Cookie、表单数据。扩展不会在后台自动扫描或上传任何东西。
+
+### 实验视频字幕的声音处理
+
+视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 [Google 隐私政策](https://policies.google.com/privacy)。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。
 
 ### 账户数据
 
@@ -202,7 +214,7 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | `storage` | 在本机保存上述设置与登录令牌 |
 | `scripting` | 在你触发翻译时向当前页面注入所需脚本 |
 | `activeTab` | 仅作用于你当前操作的那个标签页 |
-| `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时，读取当前标签页的声音并在本机识别成文字 |
+| `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google |
 | 访问 `api.openai.com`、`api.deepseek.com`、`api-free.deepl.com`、`api.deepl.com` | 自带 Key 时向你选定的平台发送翻译请求 |
 | 可选：访问你自己的接口域名 | 仅当你填写了自定义接口地址（代理或中转）时申请，且只申请那一个域名；在点击「测试连接」时弹出授权，不会申请所有网站 |
 | 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区 |

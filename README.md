@@ -4,9 +4,9 @@
 
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
-| 网站 | [apps/web](apps/web/README.md) | Vercel | 已有宣传站、隐私页、更新日志和 11 种语言页面；登录入口及状态展示待实现 |
-| 后端 | [apps/backend](apps/backend/README.md) | VPS | 用户管理界面第一批已可本地运行（邮箱验证码与 Google 登录、账户、会话），尚未部署；API 与管理员界面待实现 |
-| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 已有 24 语言翻译；优先实现登录、点数与订阅入口，保留自带 Key |
+| 网站 | [apps/web](apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；账户入口与状态已实现，本地启用，生产待后端上线 |
+| 后端 | [apps/backend](apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版可本地运行，尚未部署，正式收款未验证 |
+| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 2.0.0 准备发布：24 语言、自带 Key、账户与点数、订阅入口；免 Key 服务待后端上线 |
 
 ## 目录
 
@@ -81,7 +81,7 @@ Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`
 ## 部署
 
 - **Vercel 网站**：保留仓库根目录作为 Vercel 项目根目录，`vercel.json` 构建 `apps/web`，仅发布 `apps/web/public`。GitHub 工作流在网站、Vercel 配置或相关构建入口发生变化时触发。
-- **VPS 后端**：`apps/backend` 独立部署，目前用户管理界面第一批可在本地运行；接入正式发信服务前生产配置会拒绝启动。部署草案见 [deploy/README.md](apps/backend/deploy/README.md)。托管翻译、支付、扩展 API 与管理员界面待实现。
+- **VPS 后端**：`apps/backend` 独立部署，目前可本地测试，尚未上线。托管音视频转写尚未实现，已识别字幕可走托管文字翻译；Creem 正式收款仍待验证。部署说明见 [deploy/README.md](apps/backend/deploy/README.md)。
 - **Chrome 扩展**：单独打包发布到 Chrome 商店。ZIP 白名单为扩展 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。
 
 职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。

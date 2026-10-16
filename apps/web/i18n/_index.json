@@ -185,9 +185,121 @@
       "index.html"
     ]
   },
-  "版本号取自 <span class=\"mono\">manifest.json</span>。更细的改动可以看仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
+  "已发布版本与下一版预告都记录在这里。2.0.0 正在准备发布，账户与托管服务尚未上线；更细的改动见仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
     "kind": "text",
     "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "即将发布": {
+    "kind": "text",
+    "tag": "div",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "账户、免 Key 翻译与订阅": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "本版功能已可在本地测试，后端尚未部署，试用点数与订阅尚未向公众开放。自带 Key 模式继续保留。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>账户登录</b>：邮箱验证码或 Google 登录，在当前窗口的标签页授权后回到扩展；弹出页与设置页显示用户名、余额和订阅状态。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>试用与点数</b>：计划提供访客试用与注册赠送，剩余试用点数可转入账户，赠送点数不过期；按实际用量精确扣减，失败返还，不再每次向上取整扣一点。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>托管文字与图片</b>：无需自备 Key，支持划词、翻译面板、网页区域和图片识别与翻译。已识别的视频字幕可走托管文字翻译；音视频上传与托管转写尚未提供。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>订阅与账单</b>：用户中心管理订阅、订单、用量和登录会话。订阅后按合理使用原则无限使用，支付计划通过 Creem 处理，正式收款仍待上线验证。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>状态同步</b>：网页登出会撤销由该网页会话授权的扩展登录，不影响其他浏览器；本地开发与正式环境分别处理。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>界面与隐私</b>：移除弹出页重复的余额显示；补齐托管图片说明与可选 Google 云端语音识别的数据处理说明。不保存翻译内容或图片。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "从中文翻译工具，到 24 种语言": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>完整多语言界面</b>：提供 24 种界面与目标语言，界面、来源和目标各自独立；首次安装跟随浏览器语言，升级保留已有偏好与 API 配置。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>面向不同语言读者的翻译交互</b>：支持中文、短词和混合语言选区，右键菜单按当前目标语言生成，不再只提供「翻译成中文」。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>临时切换目标</b>：划词弹窗从原文重译，可明确保存默认目标；翻译面板记住自己的来源与目标选择。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>区域与图片改进</b>：区域翻译可恢复原文，失败时回退；图片切换目标时复用识别结果，更换图片后清空缓存。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>文字方向与平台能力</b>：支持阿拉伯语等从右往左的界面，原文和译文独立排版；DeepL 按实际支持的语言组合处理，不支持时明确提示。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>实验视频字幕</b>：可手动开启当前标签页的语音识别与字幕翻译，默认关闭，识别效果与兼容性仍有限。": {
+    "kind": "text",
+    "tag": "li",
     "pages": [
       "changelog.html"
     ]
@@ -264,7 +376,7 @@
       "index.html"
     ]
   },
-  "@meta:description|一个开源的 Chrome 扩展：把选中文字、整块区域和图片里的文字翻译成你选择的语言。24 种目标语言，可用免费点数或自己的 API Key，无广告、无第三方统计。": {
+  "@meta:description|开源 Chrome 翻译扩展，支持划词、网页区域、图片与独立翻译面板，提供 24 种界面与目标语言。自带 API Key 即可使用；2.0.0 的免 Key 试用、账户与订阅服务即将上线。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -278,7 +390,7 @@
       "index.html"
     ]
   },
-  "@meta:og:description|选中文字，右键，然后接着读。网页文字、整块区域、图片里的字都能翻译成你选择的语言。开源，免费点数或自带 API Key 都能用。": {
+  "@meta:og:description|选中文字，右键，然后接着读。24 种界面与目标语言，支持文字、网页区域与图片翻译。自带 Key 可用，2.0.0 账户与免 Key 服务即将上线。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -292,7 +404,7 @@
       "index.html"
     ]
   },
-  "<b>开源</b> GPL-3.0 · 免费试用": {
+  "<b>开源</b> GPL-3.0 · 24 种语言": {
     "kind": "text",
     "tag": "span",
     "pages": [
@@ -306,7 +418,7 @@
       "index.html"
     ]
   },
-  "一个 Chrome 扩展。选中文字、整块区域和图片里的文字，都能翻译成你选择的语言。24 种目标语言，界面语言独立设置；可以用你自己的 API Key 直接连接所选平台，也可以用免费点数，不需要任何 Key。": {
+  "一个 Chrome 扩展。选中文字、整块网页区域，或一张图片，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -323,6 +435,13 @@
   "<span><i class=\"dot\"></i>Chrome 116+</span> <span><i class=\"dot\"></i>不存译文 · 无第三方统计</span> <span><i class=\"dot\"></i>四种翻译方式</span>": {
     "kind": "text",
     "tag": "div",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<a class=\"link\" href=\"changelog.html#v2-0-0\"><span class=\"mono\" data-extension-version>v2.0.0</span> 即将发布</a>：免 Key 试用、账户与订阅服务正在准备，当前尚未开放。": {
+    "kind": "text",
+    "tag": "p",
     "pages": [
       "index.html"
     ]
@@ -390,7 +509,7 @@
       "index.html"
     ]
   },
-  "选中任意语言的文字，右键选择翻译，译文在弹窗里逐字出现。可临时切换目标语言，用原文重新翻译。": {
+  "选中文字后右键翻译，译文在居中弹窗里显示；支持流式输出的平台可逐字呈现。临时换个目标语言，会用原文重新翻译。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -502,7 +621,14 @@
       "index.html"
     ]
   },
-  "结果在独立窗口打开，可以和原图对照着看": {
+  "在原图位置覆盖译文；也可打开图片面板，上传、粘贴图片或输入图片地址": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "切换目标语言复用已识别的文字；更换图片后重新识别": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -558,14 +684,91 @@
       "index.html"
     ]
   },
-  "只在你翻译时，文字才离开浏览器": {
+  "视频实时字幕": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "可选的实验功能，默认关闭。读取当前标签页的声音，识别成字幕后再翻译；语音识别语言与翻译目标分别设置。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "默认在本机识别，需浏览器支持并下载语言包；也可主动切换到 Google 云端识别，此时声音会发给 Google。识别准确度和兼容性仍有限，不建议依赖它处理重要内容。2.0.0 的托管服务只接收识别后的文字，不提供音视频上传与转写。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "用你的语言，读世界的内容": {
     "kind": "text",
     "tag": "h2",
     "pages": [
       "index.html"
     ]
   },
-  "两种用法都只在你主动触发翻译时发送内容：自带 Key 时直接发往你选的平台；用点数翻译时经我们的服务器转给模型服务商，服务器不保存原文和译文。": {
+  "界面语言、翻译来源和目标各自独立。首次使用会根据浏览器语言选择默认目标，也可以在设置里固定下来。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "24 种界面与目标语言": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "简体中文、繁体中文、英语、日语、韩语、西班牙语、葡萄牙语（巴西）、法语、德语、意大利语、荷兰语、俄语、乌克兰语、波兰语、土耳其语、阿拉伯语、希伯来语、波斯语、印地语、孟加拉语、乌尔都语、印尼语、越南语与泰语。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "右键入口跟随翻译目标": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "目标选日语，菜单就提示译成日语；目标选英语，就提示译成英语。选中中文也能翻译，不再只为中文读者设计。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "从右往左，也读得自然": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "阿拉伯语、希伯来语、波斯语和乌尔都语界面使用从右往左的布局。原文与译文各自判断方向，不改变网页本身的排版。实际可用的语言组合取决于所选平台。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "你触发翻译，内容才会发送": {
+    "kind": "text",
+    "tag": "h2",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "自带 Key 时，翻译内容直接发往你选的平台。即将上线的点数翻译会经我们的服务器转给模型服务商，服务器不保存图片、原文或译文。视频字幕开启后的声音处理方式见隐私政策。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -586,14 +789,14 @@
       "index.html"
     ]
   },
-  "点数翻译：不留存内容": {
+  "托管服务：不留存翻译内容": {
     "kind": "text",
     "tag": "b",
     "pages": [
       "index.html"
     ]
   },
-  "文字经 HTTPS 发到我们的服务器，转给模型服务商完成翻译。服务器只记录字数、token 与扣点，用于计费和防滥用，不保存原文和译文。": {
+  "托管文字与图片只在处理请求时短暂停留于内存。账户只保存必要的邮箱与用户名；用量、点数和订阅记录用于提供服务，不采集头像、昵称或设备指纹。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -621,14 +824,14 @@
       "index.html"
     ]
   },
-  "免费可用，需要时再订阅": {
+  "自带 Key 可用，免 Key 服务即将上线": {
     "kind": "text",
     "tag": "h2",
     "pages": [
       "index.html"
     ]
   },
-  "用自己的 API Key 始终免费；不想申请 Key，就用我们的点数翻译——装好即送免费点数，用完可以订阅，无限使用。": {
+  "扩展本身开源免费，自带 Key 的费用由所选平台收取。以下试用与订阅是 2.0.0 的上线方案，目前尚未开放领取或购买。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -638,6 +841,13 @@
   "自带 Key": {
     "kind": "text",
     "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "当前可用": {
+    "kind": "text",
+    "tag": "span",
     "pages": [
       "index.html"
     ]
@@ -670,7 +880,7 @@
       "index.html"
     ]
   },
-  "没有用量限制": {
+  "支持范围、额度和费用由所选平台决定；DeepL 不提供图片识别": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -684,7 +894,14 @@
       "index.html"
     ]
   },
-  "装好扩展即送 50.00 点，注册账户再送 200.00 点。点数不过期，按实际用量扣减。": {
+  "即将上线": {
+    "kind": "text",
+    "tag": "span",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "计划提供 50.00 点访客试用，注册账户再赠 200.00 点，并合并剩余试用点数。点数不过期，按实际用量精确扣减。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -698,7 +915,7 @@
       "index.html"
     ]
   },
-  "划词、整段、网页区域与字幕的文字翻译": {
+  "划词、整段、网页区域、图片与已识别字幕的文字翻译": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -715,6 +932,13 @@
   "订阅": {
     "kind": "text",
     "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "计划价格 · 尚未开放购买": {
+    "kind": "text",
+    "tag": "span",
     "pages": [
       "index.html"
     ]
@@ -761,7 +985,70 @@
       "index.html"
     ]
   },
-  "价格以美元计，可能另加所在地区的税费。付款由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商（Merchant of Record）处理并开具收据，我们不接触你的银行卡信息。订阅、退款与合理使用的具体规则见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
+  "查看 2.0.0 预告": {
+    "kind": "text",
+    "tag": "a",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "以上为计划价格和赠送额度，正式开放时以用户中心为准。价格以美元计，可能另加税费；计划由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商（Merchant of Record）处理付款与收据，我们不接触银行卡信息。订阅、退款与合理使用规则见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "在扩展里用，在用户中心管理": {
+    "kind": "text",
+    "tag": "h2",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "账户服务随 2.0.0 准备上线。扩展是登录与翻译的主要入口，官网和用户中心共用同一个账户及订阅权益。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "邮箱或 Google 登录": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "使用邮箱验证码或 Google 账户登录，在当前浏览器标签页完成授权后返回扩展。只需要邮箱与用户名。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "余额与状态及时更新": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "未订阅时查看剩余点数，订阅后显示无限使用。用户中心可查看自己的用量、点数记录、订阅、订单与登录会话；当前网页会话登出后，关联的扩展也会退出。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "随时保留自带 Key 的选择": {
+    "kind": "text",
+    "tag": "b",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "托管翻译和自带 Key 可切换使用。自带 Key 的请求直接连接平台，不扣托管点数，也不需要购买我们的订阅。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -775,7 +1062,7 @@
       "index.html"
     ]
   },
-  "目前以开发者模式加载，需要 Chrome 116 或更高版本。装好就能用免费点数翻译，也可以填自己的 API Key。": {
+  "以下为源码安装方式，需要 Chrome 116 或更高版本。账户与免 Key 服务尚未上线，当前请在设置中选择自带 API Key 的平台。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -796,21 +1083,21 @@
       "index.html"
     ]
   },
-  "<b>加载扩展</b> <span>——点「加载已解压的扩展程序」，选中刚才那个目录。</span>": {
+  "<b>加载扩展</b> <span>——点「加载已解压的扩展程序」，选择仓库中的 <span class=\"mono\">apps/extension</span> 目录，而不是仓库根目录。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>开始翻译</b> <span>——首次安装会自动领取免费点数并打开欢迎页，选中文字就能翻译。想用自己的 Key，在设置页选好平台、粘贴 Key，点「测试连接」确认能通。</span>": {
+  "<b>开始翻译</b> <span>——在设置页选择 OpenAI、DeepSeek 或 DeepL，填入自己的 API Key 并测试连接。确认默认目标语言后，选中文字，右键翻译。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "支持接入 ChatGPT（OpenAI）与 DeepSeek 的 API，随时可以切换。两者都默认选用各自最便宜的档位——翻译是高频、短输入的活，没必要上贵的。": {
+  "图片翻译需选择支持图片识别的模型；DeepL 用于文字翻译。视频字幕是需手动开启的实验功能，语音识别能力取决于浏览器。扩展不支持在 Chrome 内部页面、Chrome 应用商店等受保护页面翻译。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -887,7 +1174,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-15 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-10-16 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -897,6 +1184,13 @@
   "一句话概括": {
     "kind": "text",
     "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。以下同时说明这些服务开放后的数据处理方式。": {
+    "kind": "text",
+    "tag": "p",
     "pages": [
       "privacy.html"
     ]
@@ -1077,6 +1371,20 @@
     ]
   },
   "<b>不会发送</b>：你没有主动翻译的页面内容、浏览历史、Cookie、表单数据。扩展不会在后台自动扫描或上传任何东西。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "实验视频字幕的声音处理": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 <a class=\"link\" href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 隐私政策</a>。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1349,7 +1657,7 @@
       "privacy.html"
     ]
   },
-  "仅在你开启视频字幕翻译时，读取当前标签页的声音并在本机识别成文字": {
+  "仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1455,7 +1763,7 @@
       "terms.html"
     ]
   },
-  "最后更新：2026-10-15 · <a class=\"link\" href=\"#english\">English version below</a>": {
+  "最后更新：2026-10-16 · <a class=\"link\" href=\"#english\">English version below</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1465,6 +1773,13 @@
   "1. 服务说明": {
     "kind": "text",
     "tag": "h3",
+    "pages": [
+      "terms.html"
+    ]
+  },
+  "账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。相关条款在服务开放后适用，当前不会通过本网站收取订阅费用。": {
+    "kind": "text",
+    "tag": "p",
     "pages": [
       "terms.html"
     ]

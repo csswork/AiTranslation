@@ -321,6 +321,13 @@ function writeLangJs() {
 
 function check() {
   const problems = [];
+  // 版本更新时必须同时写首页状态和更新日志，避免再次漏记发行版本。
+  const manifest = JSON.parse(read(path.resolve(ROOT, '../extension/manifest.json')));
+  const latest = /data-release-version="([^"]+)"/.exec(read(pagePath('changelog.html')))?.[1];
+  const advertised = /data-extension-version>v([^<]+)</.exec(read(pagePath('index.html')))?.[1];
+  if (latest !== manifest.version || advertised !== manifest.version) {
+    problems.push('首页与最新更新日志必须对应扩展版本 ' + manifest.version + '（尚未发布时注明预告）');
+  }
   const { catalog, index } = extract({ quiet: true });
   const sourceKeys = new Set(Object.keys(catalog));
   const pending = [];
@@ -436,15 +443,18 @@ async function translate(code) {
     '输入是 JSON 数组，每项 {"id": 数字, "kind": "标签名", "html": "中文原文"}。',
     '输出必须是 JSON 数组，长度与输入完全一致、顺序一致，每项 {"id": 同输入, "text": "译文"}；除这个数组外不要输出任何内容。',
     '规则：',
-    '1. HTML 标签与属性原样保留（如 <span class="mono">chrome.storage.local</span>、<a class="link" href="...">）；标签不能增删，href/src 一个字符都不要改；',
+    '1. HTML 标签与属性原样保留（如 <span class="mono">chrome.storage.local</span>、<a class="link" href="...">）；标签不能增删，href/src 一个字符都不要改。kind 只表示上下文，不要按 kind 在译文外添加标签；',
     '2. 不翻译 OpenAI、ChatGPT、DeepSeek、DeepL、GitHub、Chrome、GPL-3.0、API Key、chrome.storage.local、URL 与代码；',
     '3. 产品名「AI 划词翻译」统一写作 AI Selection Translator；',
     '4. 技术说明文语气，克制准确，不用感叹号；表格单元格保持简短；',
     '5. 只输出译文，不要解释。',
+    '6. 严格保留版本号、金额、点数及数值；“即将上线”“计划”“尚未开放”必须保留其未发布含义，不能译成已经可用。',
+    'HTML 标签里面的可见文字也必须翻译。text 必须是 html 的完整译文，不能返回 kind（例如 p、li）或摘要；除日语、繁体中文外，译文不得残留汉字。',
+    ...(code === 'zh-Hant' ? ['7. 使用繁體中文字，不得混入簡體字。產品名稱保留繁體中文「AI 劃詞翻譯」。'] : []),
   ].join('\n');
 
   const kindOf = (k) => (index[k] && index[k].kind === 'attr' ? k.slice(0, k.indexOf('|')) : index[k] && index[k].tag) || 'text';
-  const tagSeq = (s) => (s.match(/<\/?([a-zA-Z][-a-zA-Z0-9]*)/g) || []).map((x) => x.replace(/[<\/]/g, '').toLowerCase()).sort().join(',');
+  const markup = (s) => (s.match(/<\/?[a-zA-Z][^>]*>/g) || []).sort().join('\n');
 
   /** 一次请求：返回 id → 译文。模型漏 id 时按位置兜底。 */
   async function ask(items) {
@@ -474,7 +484,16 @@ async function translate(code) {
       const value = typeof (item && item.text) === 'string' ? item.text : '';
       if (!value.trim()) return;
       const id = Number(item && item.id);
-      out.set(Number.isFinite(id) ? id : (items[i] && items[i].id), value);
+      const resolvedId = Number.isFinite(id) ? id : items[i]?.id;
+      const original = items.find((entry) => entry.id === resolvedId);
+      // 模型不能新增标签或改掉链接；不合格的段落留给下方逐条重试。
+      if (!original || markup(original.html) !== markup(value)) return;
+      if (value.trim() === original.kind) return;
+      const sourceText = original.html.replace(/<[^>]*>/g, '').trim();
+      const translatedText = value.replace(/<[^>]*>/g, '').trim();
+      if (sourceText.length > 15 && translatedText.length < sourceText.length * 0.15) return;
+      if (!loc.usesHan && CJK.test(value)) return;
+      out.set(resolvedId, value);
     });
     return out;
   }
@@ -489,7 +508,6 @@ async function translate(code) {
     for (let j = 0; j < batch.length; j += 1) {
       const value = got.get(j);
       if (!value) continue;
-      if (tagSeq(batch[j]) !== tagSeq(value)) console.warn('  ~ 标签结构可能变了：' + JSON.stringify(source[batch[j]]).slice(0, 40));
       cat[batch[j]] = value;
     }
     // 整批没给的，逐条再要一次；还拿不到就记下来，最后一起报

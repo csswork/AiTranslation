@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · 웹페이지 속 외국어를 선택하고 오른쪽 버튼으로 바로 이해합니다</title>
-<meta name="description" content="오픈 소스 Chrome 확장 프로그램: 선택한 텍스트, 영역 전체, 이미지 속 텍스트를 원하는 언어로 번역합니다. 24개 대상 언어, 무료 포인트 또는 자체 API Key 사용 가능, 광고 없음, 제3자 통계 없음." />
+<meta name="description" content="오픈 소스 Chrome 번역 확장 프로그램으로, 텍스트 선택, 웹페이지 영역, 이미지 및 독립 번역 패널을 지원하며 24개의 인터페이스 및 대상 언어를 제공합니다. 자체 API Key로 사용할 수 있으며, 2.0.0의 키 없는 체험, 계정 및 구독 서비스가 출시 예정입니다." />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="ko_KR" />
 <meta property="og:url" content="https://huaci.app/ko/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="텍스트를 선택하고 우클릭한 뒤 이어서 읽으세요. 웹페이지 텍스트, 영역 전체, 이미지 속 글자를 원하는 언어로 번역할 수 있습니다. 오픈 소스이며 무료 포인트 또는 자체 API Key를 사용할 수 있습니다." />
+<meta property="og:description" content="텍스트를 선택하고 우클릭한 후 계속 읽으세요. 24개의 인터페이스 및 대상 언어, 텍스트, 웹페이지 영역 및 이미지 번역을 지원합니다. 자체 키로 사용 가능하며, 2.0.0 계정 및 키 없는 서비스가 출시 예정입니다." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -77,11 +77,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow"><b>오픈 소스</b> GPL-3.0 · 무료 체험</span>
+        <span class="eyebrow"><b>오픈 소스</b> GPL-3.0 · 24개 언어</span>
         <h1>선택하고, 오른쪽 버튼,<br /><span class="dim">그리고 계속 읽습니다.</span></h1>
-        <p class="hero-sub">Chrome 확장 프로그램입니다. 선택한 텍스트, 영역 전체, 이미지 속 텍스트를 원하는 언어로 번역합니다. 24개 대상 언어를 지원하며 인터페이스 언어는 별도로 설정할 수 있습니다. 자신의 API Key로 선택한 플랫폼에 직접 연결하거나, Key 없이 무료 포인트로 사용할 수 있습니다.</p>
+        <p class="hero-sub">Chrome 확장 프로그램입니다. 텍스트, 웹페이지의 특정 영역 또는 이미지를 선택하면 익숙한 언어로 번역합니다. 24가지 인터페이스 언어와 대상 언어를 각각 선택할 수 있으며, 본인의 OpenAI, DeepSeek 또는 DeepL API Key로 바로 시작할 수 있습니다.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Chrome에 설치</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 보기</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>번역문 저장 안 함 · 제3자 통계 없음</span> <span><i class="dot"></i>네 가지 번역 방식</span></div>
+        <p class="release-note"><a class="link" href="/ko/changelog.html#v2-0-0"><span class="mono" data-extension-version>v2.0.0</span> 출시 예정</a>: Key 없는 체험, 계정 및 구독 서비스를 준비 중이며 현재는 아직 제공되지 않습니다.</p>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
@@ -186,7 +187,7 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>선택 번역</h3>
-            <p>모든 언어의 텍스트를 선택하고 우클릭하여 번역을 선택하면 팝업에서 번역문이 글자 단위로 나타납니다. 대상 언어를 임시로 전환하여 원문으로 다시 번역할 수 있습니다.</p>
+            <p>텍스트를 선택한 후 우클릭으로 번역하면 번역문이 화면 중앙 팝업에 표시됩니다. 스트리밍 출력을 지원하는 플랫폼에서는 글자 단위로 표시됩니다. 임시로 대상 언어를 변경하면 원문으로 다시 번역합니다.</p>
             <ul>
               <li>중국어, 짧은 단어, 혼합 언어 모두 번역 가능하며 숫자, 문장 부호, 이모지만 있는 경우 번역 진입점을 표시하지 않습니다</li>
               <li>팝업은 화면 중앙에 있고 드래그할 수 있으며 <span class="mono">Esc</span> 또는 배경 클릭으로 닫힙니다. 커서를 따라다니는 작은 말풍선이 아닙니다</li>
@@ -235,7 +236,8 @@
             <ul>
               <li>긴 이미지는 먼저 분할한 뒤 인식하며, 이음매는 텍스트 사이의 빈 줄로 자동 이동해 한 문장이 두 동강 나지 않습니다</li>
               <li>검사 전에 가장 긴 변이 아니라 총픽셀 기준으로 축소하므로 긴 이미지의 너비가 사라지지 않습니다</li>
-              <li>결과는 별도 창에서 열려 원본 이미지와 나란히 볼 수 있습니다</li>
+              <li>원본 이미지 위치에 번역문을 덮어씁니다. 이미지 패널을 열어 이미지를 업로드하거나 붙여넣거나 이미지 주소를 입력할 수도 있습니다</li>
+              <li>대상 언어를 전환하면 이미 인식된 텍스트를 재사용합니다. 이미지를 교체하면 다시 인식합니다</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -272,6 +274,41 @@
         </article>
 
       </div>
+
+      <aside class="feature-extra reveal">
+        <div>
+          <p class="kicker">Experimental</p>
+          <h3>동영상 실시간 자막</h3>
+        </div>
+        <div>
+          <p>선택적 실험 기능이며 기본적으로 꺼져 있습니다. 현재 탭의 소리를 읽어 자막으로 인식한 후 번역합니다. 음성 인식 언어와 번역 대상은 각각 설정합니다.</p>
+          <p>기본적으로 로컬에서 인식하며 브라우저 지원과 언어 팩 다운로드가 필요합니다. Google 클라우드 인식으로 직접 전환할 수도 있으며, 이 경우 소리가 Google로 전송됩니다. 인식 정확도와 호환성은 아직 제한적이므로 중요한 내용 처리에 의존하는 것은 권장하지 않습니다. 2.0.0의 호스팅 서비스는 인식된 텍스트만 수신하며 음성·영상 업로드 및 변환 기능은 제공하지 않습니다.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="languages">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Languages</p>
+        <h2>당신의 언어로, 세계의 콘텐츠를 읽습니다</h2>
+        <p>인터페이스 언어, 번역 소스 및 대상은 각각 독립적입니다. 처음 사용 시 브라우저 언어에 따라 기본 대상이 선택되며, 설정에서 고정할 수도 있습니다.</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>24가지 인터페이스 및 대상 언어</b>
+          <p>중국어 간체, 중국어 번체, 영어, 일본어, 한국어, 스페인어, 포르투갈어(브라질), 프랑스어, 독일어, 이탈리아어, 네덜란드어, 러시아어, 우크라이나어, 폴란드어, 터키어, 아랍어, 히브리어, 페르시아어, 힌디어, 벵골어, 우르두어, 인도네시아어, 베트남어, 태국어.</p>
+        </div>
+        <div class="fact">
+          <b>우클릭 진입점이 번역 대상에 따라 표시</b>
+          <p>대상이 일본어면 메뉴에 일본어로 번역이라고 표시됩니다. 대상이 영어면 영어로 번역이라고 표시됩니다. 중국어를 선택해도 번역할 수 있으며, 더 이상 중국어 사용자만을 위한 설계가 아닙니다.</p>
+        </div>
+        <div class="fact">
+          <b>오른쪽에서 왼쪽으로도 자연스럽게 읽힙니다</b>
+          <p>아랍어, 히브리어, 페르시아어, 우르두어 인터페이스는 오른쪽에서 왼쪽으로 배치됩니다. 원문과 번역문이 각각 방향을 판단하며 웹페이지 자체의 레이아웃은 변경하지 않습니다. 실제 사용 가능한 언어 조합은 선택한 플랫폼에 따라 다릅니다.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -280,8 +317,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>번역할 때만 텍스트가 브라우저를 벗어납니다</h2>
-        <p>두 방식 모두 사용자가 번역을 직접 실행할 때만 내용을 전송합니다. 자체 Key 사용 시 선택한 플랫폼으로 바로 전송되며, 포인트 번역 시에는 당사 서버를 거쳐 모델 제공업체로 전달되며 서버는 원문과 번역문을 저장하지 않습니다.</p>
+        <h2>번역을 실행할 때만 콘텐츠가 전송됩니다</h2>
+        <p>자체 Key를 사용하는 경우 번역 내용은 선택한 플랫폼으로 직접 전송됩니다. 출시 예정인 포인트 번역은 당사 서버를 거쳐 모델 서비스 제공업체로 전달되며, 서버는 이미지, 원문 또는 번역문을 저장하지 않습니다. 동영상 자막 활성화 후의 소리 처리 방식은 개인정보 처리방침을 참조하십시오.</p>
       </div>
 
       <div class="facts reveal">
@@ -290,8 +327,8 @@
           <p>요청은 당사를 거치지 않고 브라우저에서 설정에서 선택한 플랫폼으로 직접 전송됩니다. API Key는 <span class="mono">chrome.storage.local</span>에 저장되며 Chrome 계정 동기화를 사용하지 않습니다.</p>
         </div>
         <div class="fact">
-          <b>포인트 번역: 내용 미보관</b>
-          <p>텍스트는 HTTPS를 통해 당사 서버로 전송된 후 모델 제공업체로 전달되어 번역됩니다. 서버는 과금과 남용 방지를 위해 글자 수, token, 포인트 차감만 기록하며 원문과 번역문은 저장하지 않습니다.</p>
+          <b>호스팅 서비스: 번역 내용을 보관하지 않음</b>
+          <p>호스팅되는 텍스트와 이미지는 요청 처리 중에만 메모리에 일시적으로 머무릅니다. 계정에는 필요한 이메일과 사용자 이름만 저장되며, 사용량, 포인트 및 구독 기록은 서비스 제공을 위해 사용됩니다. 프로필 사진, 닉네임 또는 기기 지문은 수집하지 않습니다.</p>
         </div>
         <div class="fact">
           <b>광고 및 제3자 통계 없음</b>
@@ -308,33 +345,36 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Pricing</p>
-        <h2>무료로 사용하고 필요할 때 구독</h2>
-        <p>자체 API Key를 사용하면 항상 무료입니다. Key를 발급받고 싶지 않다면 포인트 번역을 사용하세요. 설치 시 무료 포인트가 제공되며, 소진 후 구독하면 무제한으로 사용할 수 있습니다.</p>
+        <h2>자체 Key로 사용 가능, Key 없는 서비스는 출시 예정</h2>
+        <p>확장 프로그램 자체는 오픈 소스이며 무료이고, 자체 키 사용 시 발생하는 비용은 선택한 플랫폼에서 부과합니다. 아래 체험 및 구독은 2.0.0의 출시 계획이며, 현재는 신청이나 구매가 불가능합니다.</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">자체 Key</b>
+          <span class="plan-status">현재 사용 가능</span>
           <p class="plan-price">무료</p>
           <p class="plan-desc">자신의 OpenAI, DeepSeek 또는 DeepL Key를 입력하면 요청이 해당 플랫폼으로 직접 전송되며, 비용은 플랫폼이 사용량에 따라 청구합니다.</p>
           <ul>
             <li>선택 텍스트, 문단 전체, 웹페이지 영역, 이미지 및 동영상 자막 번역</li>
             <li>Key는 브라우저에만 저장됩니다</li>
-            <li>사용량 제한 없음</li>
+            <li>지원 범위, 할당량 및 비용은 선택한 플랫폼에서 결정합니다. DeepL은 이미지 인식을 제공하지 않습니다.</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">무료 체험</b>
+          <span class="plan-status">출시 예정</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">확장 프로그램을 설치하면 50.00 포인트를, 계정을 등록하면 200.00 포인트를 추가로 지급합니다. 포인트는 만료되지 않으며 실제 사용량에 따라 차감됩니다.</p>
+          <p class="plan-desc">50.00 포인트 방문자 체험을 제공하고, 계정 등록 시 200.00 포인트를 추가 지급하며, 남은 체험 포인트를 합산할 계획입니다. 포인트는 만료되지 않으며 실제 사용량에 따라 정확히 차감됩니다.</p>
           <ul>
             <li>API Key가 필요하지 않음</li>
-            <li>텍스트 선택, 문단 전체, 웹페이지 영역 및 자막 번역</li>
+            <li>텍스트 선택, 전체 단락, 웹페이지 영역, 이미지 및 인식된 자막의 텍스트 번역</li>
             <li>번역 실패 시 포인트가 차감되지 않음</li>
           </ul>
         </div>
         <div class="plan featured">
           <b class="plan-name">구독</b>
+          <span class="plan-status">예정 가격 · 아직 구매 불가</span>
           <p class="plan-price">$3.99<span>/ 월</span></p>
           <p class="plan-alt">또는 $29.99 / 년, 월 결제 대비 37% 절약</p>
           <p class="plan-desc">포인트 번역을 무제한으로 사용할 수 있으며, 더 이상 포인트를 계산하지 않습니다. 언제든지 취소할 수 있고, 현재 기간이 끝나기 전까지는 계속 사용할 수 있습니다.</p>
@@ -343,11 +383,35 @@
             <li>합리적 사용 원칙에 따라 횟수 제한 없음</li>
             <li>최초 결제 후 7일 이내 전액 환불 신청 가능</li>
           </ul>
-          <a class="btn btn-primary" href="https://app.huaci.app/plans">구독</a>
+          <a class="btn btn-ghost" href="/ko/changelog.html#v2-0-0">2.0.0 예고 보기</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">가격은 미국 달러 기준이며, 거주 지역에 따라 세금이 추가될 수 있습니다. 결제는 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a>이 판매자(Merchant of Record)로서 처리하고 영수증을 발행하며, 저희는 귀하의 카드 정보에 접근하지 않습니다. 구독, 환불 및 합리적 사용에 관한 구체적인 규칙은 <a class="link" href="/ko/terms.html">서비스 약관</a>을 참조하세요.</p>
+      <p class="after-facts reveal">위 내용은 예정 가격 및 지급 포인트이며, 정식 출시 시 사용자 센터 기준으로 적용됩니다. 가격은 미국 달러 기준이며 세금이 추가될 수 있습니다. 결제는 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a>이 판매자(Merchant of Record)로서 처리하며, 당사는 카드 정보에 접근하지 않습니다. 구독, 환불 및 합리적 사용 규칙은 <a class="link" href="/ko/terms.html">서비스 약관</a>을 참조하세요.</p>
+    </div>
+  </section>
+
+  <section class="section" id="account-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Account · 2.0.0</p>
+        <h2>확장 프로그램에서 사용하고, 사용자 센터에서 관리</h2>
+        <p>계정 서비스는 2.0.0과 함께 출시 준비 중입니다. 확장 프로그램은 로그인 및 번역의 주요 진입점이며, 공식 웹사이트와 사용자 센터는 동일한 계정 및 구독 혜택을 공유합니다.</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>이메일 또는 Google 로그인</b>
+          <p>이메일 인증 코드 또는 Google 계정으로 로그인하며, 현재 브라우저 탭에서 인증을 완료한 후 확장 프로그램으로 돌아갑니다. 이메일과 사용자 이름만 필요합니다.</p>
+        </div>
+        <div class="fact">
+          <b>잔액 및 상태 실시간 업데이트</b>
+          <p>구독하지 않은 경우 남은 포인트를 확인하고, 구독 후에는 무제한 사용이 표시됩니다. 사용자 센터에서 자신의 사용량, 포인트 기록, 구독, 주문 및 로그인 세션을 확인할 수 있습니다. 현재 웹 세션에서 로그아웃하면 연결된 확장 프로그램도 로그아웃됩니다.</p>
+        </div>
+        <div class="fact">
+          <b>언제든 자체 Key 선택 유지</b>
+          <p>호스팅 번역과 자체 Key를 전환하여 사용할 수 있습니다. 자체 Key 요청은 플랫폼에 직접 연결되며 호스팅 포인트가 차감되지 않고, 당사 구독도 필요하지 않습니다.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -357,7 +421,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>네 단계로 설치</h2>
-        <p>현재 개발자 모드로 로드하며, Chrome 116 이상이 필요합니다. 설치 후 무료 포인트로 바로 번역할 수 있고, 자신의 API Key를 입력할 수도 있습니다.</p>
+        <p>다음은 소스 코드 설치 방법이며 Chrome 116 이상이 필요합니다. 계정 및 Key 없는 서비스는 아직 출시되지 않았으므로, 현재는 설정에서 자체 API Key 플랫폼을 선택하세요.</p>
       </div>
 
       <div class="steps reveal">
@@ -368,14 +432,14 @@
           <div><b>확장 페이지 열기</b> <span>——주소 표시줄에 <span class="mono">chrome://extensions/</span>를 입력하고 오른쪽 위의 “개발자 모드”를 켭니다.</span></div>
         </div>
         <div class="step">
-          <div><b>확장 프로그램 로드</b> <span>——“압축해제된 확장 프로그램을 로드합니다”를 클릭하고 방금 그 폴더를 선택합니다.</span></div>
+          <div><b>확장 프로그램 로드</b> <span>——「압축 해제된 확장 프로그램 로드」를 클릭하고, 저장소 루트 디렉터리가 아닌 저장소 내 <span class="mono">apps/extension</span> 디렉터리를 선택하세요.</span></div>
         </div>
         <div class="step">
-          <div><b>번역 시작</b> <span>——최초 설치 시 무료 포인트가 자동으로 지급되고 환영 페이지가 열리며, 텍스트를 선택하면 번역됩니다. 자신의 Key를 사용하려면 설정 페이지에서 플랫폼을 선택하고 Key를 붙여넣은 후 「연결 테스트」를 눌러 정상 작동을 확인하세요.</span></div>
+          <div><b>번역 시작</b> <span>——설정 페이지에서 OpenAI, DeepSeek 또는 DeepL을 선택하고 본인의 API Key를 입력한 뒤 연결을 테스트하세요. 기본 대상 언어를 확인한 후 텍스트를 선택하고 우클릭하여 번역합니다.</span></div>
         </div>
       </div>
 
-      <p class="after-facts reveal">ChatGPT(OpenAI)와 DeepSeek API를 연동할 수 있으며 언제든 전환할 수 있습니다. 둘 다 기본적으로 각자의 가장 저렴한 등급을 사용합니다. 번역은 빈도가 높고 입력이 짧은 작업이므로 비싼 모델을 쓸 필요가 없습니다.</p>
+      <p class="after-facts reveal">이미지 번역은 이미지 인식을 지원하는 모델을 선택해야 하며, DeepL은 텍스트 번역에 사용됩니다. 동영상 자막은 수동으로 활성화해야 하는 실험 기능이며, 음성 인식 성능은 브라우저에 따라 달라집니다. 확장 프로그램은 Chrome 내부 페이지, Chrome 웹 스토어 등 보호된 페이지에서는 번역을 지원하지 않습니다.</p>
     </div>
   </section>
 

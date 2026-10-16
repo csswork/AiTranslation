@@ -73,12 +73,49 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Änderungsprotokoll</h2>
-        <p>Die Versionsnummer stammt aus <span class="mono">manifest.json</span>. Feinere Änderungen finden Sie im <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">Commit-Protokoll</a> des Repositorys.</p>
+        <p>Veröffentlichte Versionen und Ankündigungen der nächsten Version sind hier dokumentiert. 2.0.0 wird derzeit für die Veröffentlichung vorbereitet; Konto- und Hosting-Dienste sind noch nicht verfügbar; detailliertere Änderungen finden sich in den <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">Commit-Aufzeichnungen</a> des Repositorys.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">Demnächst verfügbar</div>
+        </div>
+        <div class="log-body">
+          <h3>Konto, Key-freie Übersetzung und Abonnement</h3>
+          <p>Die Funktionen dieser Version können bereits lokal getestet werden, das Backend ist noch nicht bereitgestellt, Testpunkte und Abonnements sind noch nicht öffentlich verfügbar. Der Modus mit eigenem Key bleibt weiterhin erhalten.</p>
+          <ul>
+            <li><b>Kontoanmeldung</b>: Anmeldung per E-Mail-Verifizierungscode oder Google, Autorisierung im Tab des aktuellen Fensters und Rückkehr zur Erweiterung; Popup- und Einstellungsseite zeigen Benutzername, Guthaben und Abonnementstatus an.</li>
+            <li><b>Testphase und Punkte</b>: Geplant sind Gasttests und ein Registrierungsbonus; verbleibende Testpunkte können auf das Konto übertragen werden, Bonuspunkte verfallen nicht; die Abrechnung erfolgt exakt nach tatsächlichem Verbrauch, bei Fehlschlägen erfolgt eine Rückerstattung, es wird nicht mehr pro Vorgang aufgerundet und ein Punkt abgezogen.</li>
+            <li><b>Gehostete Text- und Bildübersetzung</b>: Kein eigener Key erforderlich, unterstützt Textauswahl, Übersetzungsbereich, Webseitenbereiche sowie Bilderkennung und -übersetzung. Bereits erkannte Video-Untertitel können die gehostete Textübersetzung nutzen; Audio- und Video-Upload sowie gehostete Transkription sind noch nicht verfügbar.</li>
+            <li><b>Abonnement und Abrechnung</b>: Im Benutzerzentrum werden Abonnement, Bestellungen, Nutzung und Anmeldesitzungen verwaltet. Nach dem Abonnement gilt eine unbegrenzte Nutzung nach dem Grundsatz der angemessenen Nutzung; die Zahlungsabwicklung erfolgt über Creem, die endgültige Zahlungsabwicklung muss noch online verifiziert werden.</li>
+            <li><b>Statussynchronisierung</b>: Eine Abmeldung auf der Webseite widerruft die über diese Websitzung autorisierte Erweiterungsanmeldung, ohne andere Browser zu beeinflussen; lokale Entwicklung und Produktionsumgebung werden getrennt behandelt.</li>
+            <li><b>Oberfläche und Datenschutz</b>: Die doppelte Guthabenanzeige im Popup wurde entfernt; die Beschreibung der gehosteten Bilder sowie die Datenverarbeitungshinweise zur optionalen Google Cloud-Spracherkennung wurden ergänzt. Übersetzungsinhalte oder Bilder werden nicht gespeichert.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>Vom chinesischen Übersetzungstool zu 24 Sprachen</h3>
+          <ul>
+            <li><b>Vollständig mehrsprachige Oberfläche</b>: 24 Oberflächen- und Zielsprachen, Oberfläche, Quelle und Ziel jeweils unabhängig; bei der Erstinstallation wird die Browsersprache übernommen, bei einem Upgrade bleiben bestehende Einstellungen und API-Konfigurationen erhalten.</li>
+            <li><b>Übersetzungsinteraktion für Leser verschiedener Sprachen</b>: Unterstützt chinesische, kurze und gemischtsprachige Textauswahlen; das Kontextmenü wird entsprechend der aktuellen Zielsprache generiert und bietet nicht mehr nur „Ins Chinesische übersetzen“.</li>
+            <li><b>Temporäres Umschalten des Ziels</b>: Das Auswahl-Popup übersetzt aus dem Original neu und kann das Standardziel explizit speichern; der Übersetzungsbereich merkt sich seine eigene Quell- und Zielauswahl.</li>
+            <li><b>Verbesserungen bei Bereichen und Bildern</b>: Die Bereichsübersetzung kann das Original wiederherstellen und fällt bei Fehlern darauf zurück; beim Wechsel des Ziels für ein Bild wird das Erkennungsergebnis wiederverwendet, nach einem Bildwechsel wird der Cache geleert.</li>
+            <li><b>Textrichtung und Plattformfähigkeiten</b>: Unterstützt von rechts nach links verlaufende Oberflächen wie Arabisch, Original und Übersetzung werden unabhängig gesetzt; DeepL wird entsprechend den tatsächlich unterstützten Sprachkombinationen behandelt, bei Nichtunterstützung erfolgt ein klarer Hinweis.</li>
+            <li><b>Experimentelle Video-Untertitel</b>: Spracherkennung und Untertitelübersetzung für den aktuellen Tab können manuell aktiviert werden, standardmäßig deaktiviert; Erkennungsqualität und Kompatibilität sind noch eingeschränkt.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>

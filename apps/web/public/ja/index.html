@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · ページ上の外国語も、選択して右クリックするだけで読めます</title>
-<meta name="description" content="オープンソースの Chrome 拡張機能：選択したテキスト、領域全体、画像内の文字を、選んだ言語に翻訳します。24 のターゲット言語に対応し、無料ポイントまたは自分の API Key を利用できます。広告なし、サードパーティ解析なし。" />
+<meta name="description" content="オープンソースの Chrome 翻訳拡張機能。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key で利用可能。2.0.0 の Key 不要の試用、アカウント、サブスクリプションサービスは近日公開予定です。" />
 <meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content="https://huaci.app/ja/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み進められます。Web ページの文字、領域全体、画像内の文字を、選んだ言語に翻訳できます。オープンソースで、無料ポイントでも自分の API Key でも利用できます。" />
+<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み続ける。24 種類のインターフェース言語とターゲット言語、テキスト、Web ページ領域、画像翻訳に対応。独自 Key で利用可能。2.0.0 のアカウントと Key 不要サービスは近日公開予定です。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -77,11 +77,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow"><b>オープンソース</b> GPL-3.0 · 無料トライアル</span>
+        <span class="eyebrow"><b>オープンソース</b> GPL-3.0 · 24 言語</span>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
-        <p class="hero-sub">Chrome 拡張機能です。選択したテキスト、領域全体、画像内の文字を、選択した言語に翻訳できます。24 のターゲット言語に対応し、UI 言語は個別に設定できます。ご自身の API Key で選択したプラットフォームに直接接続する方法と、無料ポイントを使う方法があり、後者では Key は不要です。</p>
+        <p class="hero-sub">Chrome 拡張機能です。テキスト、Web ページの領域、または画像を選択するだけで、使い慣れた言語に翻訳できます。24 種類の UI 言語と翻訳先言語は個別に選択でき、ご自身の OpenAI、DeepSeek、または DeepL の API Key で利用を開始できます。</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#install">Chrome にインストール</a> <a class="btn btn-ghost" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースを見る</a></div>
         <div class="hero-meta"><span><i class="dot"></i>Chrome 116+</span> <span><i class="dot"></i>訳文を保存しません · サードパーティ解析なし</span> <span><i class="dot"></i>4 つの翻訳方法</span></div>
+        <p class="release-note"><a class="link" href="/ja/changelog.html#v2-0-0"><span class="mono" data-extension-version>v2.0.0</span> 近日公開予定</a>：Key 不要の試用、アカウントおよびサブスクリプションサービスを準備中で、現在はまだ利用できません。</p>
       </div>
 
       <!-- 首屏刻意不放视频：这里用静态示意图，第一眼就完整可读，
@@ -186,7 +187,7 @@
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>選択翻訳</h3>
-            <p>任意の言語のテキストを選択し、右クリックで翻訳を選ぶと、訳文がポップアップに一文字ずつ表示されます。対象言語は一時的に切り替えられ、原文から再翻訳できます。</p>
+            <p>テキストを選択して右クリックで翻訳すると、訳文が中央のポップアップに表示されます。ストリーミング出力に対応するプラットフォームでは、文字ごとに表示されます。一時的に翻訳先言語を変更すると、原文から再翻訳されます。</p>
             <ul>
               <li>中国語、短い語句、混在言語も翻訳可能。数字のみ、句読点、絵文字には翻訳入口を表示しない</li>
               <li>ポップアップは中央に表示され、ドラッグ可能です。<span class="mono">Esc</span> または背景のクリックで閉じられ、カーソルを追いかける小さなバブルではありません</li>
@@ -235,7 +236,8 @@
             <ul>
               <li>長い画像は先に分割してから認識し、継ぎ目は自動的にテキスト間の空白行へ移されるため、一文が真っ二つになることはありません</li>
               <li>送信前に最長辺ではなく総ピクセル数で縮小するため、長い画像の幅がつぶれません</li>
-              <li>結果は独立したウィンドウで開き、元の画像と見比べられます</li>
+              <li>元の画像の位置に訳文を重ねて表示します。画像パネルを開いて、画像のアップロード、貼り付け、または画像 URL の入力もできます</li>
+              <li>翻訳先言語を切り替えると、認識済みのテキストを再利用します。画像を変更すると再認識します</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -272,6 +274,41 @@
         </article>
 
       </div>
+
+      <aside class="feature-extra reveal">
+        <div>
+          <p class="kicker">Experimental</p>
+          <h3>動画のリアルタイム字幕</h3>
+        </div>
+        <div>
+          <p>任意の実験的機能で、デフォルトではオフです。現在のタブの音声を読み取り、字幕として認識してから翻訳します。音声認識言語と翻訳先はそれぞれ設定します。</p>
+          <p>デフォルトでは本機で認識し、ブラウザの対応と言語パックのダウンロードが必要です。Google のクラウド認識に切り替えることもでき、その場合音声は Google に送信されます。認識精度と互換性は依然として限定的で、重要な内容の処理に依存することは推奨しません。2.0.0 のホスト型サービスは認識後のテキストのみを受け取り、音声・動画のアップロードや文字起こしは提供しません。</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="languages">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Languages</p>
+        <h2>あなたの言語で、世界の内容を読む</h2>
+        <p>UI 言語、翻訳元、翻訳先はそれぞれ独立しています。初回利用時はブラウザの言語に基づいてデフォルトの翻訳先が選択され、設定で固定することもできます。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>24 種類の UI 言語と翻訳先言語</b>
+          <p>簡体字中国語、繁体字中国語、英語、日本語、韓国語、スペイン語、ポルトガル語（ブラジル）、フランス語、ドイツ語、イタリア語、オランダ語、ロシア語、ウクライナ語、ポーランド語、トルコ語、アラビア語、ヘブライ語、ペルシア語、ヒンディー語、ベンガル語、ウルドゥー語、インドネシア語、ベトナム語、タイ語。</p>
+        </div>
+        <div class="fact">
+          <b>右クリックメニューは翻訳先に追従</b>
+          <p>翻訳先に日本語を選ぶと、メニューには日本語への翻訳と表示されます。翻訳先に英語を選ぶと、英語への翻訳と表示されます。中国語を選択しても翻訳でき、もはや中国語話者のためだけに設計されていません。</p>
+        </div>
+        <div class="fact">
+          <b>右から左への言語も自然に読める</b>
+          <p>アラビア語、ヘブライ語、ペルシア語、ウルドゥー語の UI は右から左へのレイアウトを使用します。原文と訳文はそれぞれ方向を判定し、Web ページ自体のレイアウトは変更しません。実際に利用可能な言語の組み合わせは、選択したプラットフォームによって異なります。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -280,8 +317,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>翻訳するときだけ、テキストがブラウザの外に出ます</h2>
-        <p>どちらの方法も、翻訳を明示的に実行したときのみ内容を送信します。Key を持ち込む場合は選択したプラットフォームへ直接送信され、ポイント翻訳の場合は当社のサーバーを経由してモデルプロバイダーに転送されます。サーバーは原文と訳文を保存しません。</p>
+        <h2>翻訳を実行したときのみ、内容が送信されます</h2>
+        <p>ご自身の Key を使用する場合、翻訳内容は選択したプラットフォームに直接送信されます。近日公開予定のポイント翻訳では、当社のサーバーを経由してモデルサービス提供者に転送され、サーバーは画像、原文、訳文を保存しません。動画字幕を有効にした場合の音声の処理方法については、プライバシーポリシーをご覧ください。</p>
       </div>
 
       <div class="facts reveal">
@@ -290,8 +327,8 @@
           <p>リクエストはブラウザから設定で選択したプラットフォームへ直接送信され、当社を経由しません。API Key は <span class="mono">chrome.storage.local</span> に保存され、Chrome アカウントの同期は使用しません。</p>
         </div>
         <div class="fact">
-          <b>ポイント翻訳：内容を保持しません</b>
-          <p>テキストは HTTPS で当社のサーバーに送信され、モデルプロバイダーに転送されて翻訳が完了します。サーバーは文字数、token、ポイント消費のみを記録し、課金と不正利用防止に使用します。原文と訳文は保存しません。</p>
+          <b>ホスト型サービス：翻訳内容を保持しません</b>
+          <p>ホスト型のテキストと画像は、リクエストの処理中に一時的にメモリ上にのみ留まります。アカウントには必要なメールアドレスとユーザー名のみを保存します。利用量、ポイント、サブスクリプションの記録はサービスの提供に使用し、アバター、ニックネーム、デバイスフィンガープリントは収集しません。</p>
         </div>
         <div class="fact">
           <b>広告と第三者統計はありません</b>
@@ -308,33 +345,36 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Pricing</p>
-        <h2>無料で利用でき、必要に応じて購読</h2>
-        <p>ご自身の API Key を使う場合は常に無料です。Key を取得したくない場合は、当社のポイント翻訳を利用できます。インストール時に無料ポイントが付与され、使い切った後は購読により無制限で利用できます。</p>
+        <h2>独自のKeyで利用可能、Key不要サービスは近日公開予定</h2>
+        <p>拡張機能自体はオープンソースで無料、独自のKeyを使用する場合の費用は選択したプラットフォームが請求します。以下は2.0.0のリリース時の案内であり、現時点では受け取りや購入はできません。</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">Key を持ち込む場合</b>
+          <span class="plan-status">現在利用可能</span>
           <p class="plan-price">無料</p>
           <p class="plan-desc">ご自身の OpenAI、DeepSeek、DeepL の Key を入力すると、リクエストは相手先へ直接送信され、費用はプラットフォームから利用量に応じて請求されます。</p>
           <ul>
             <li>選択テキスト、段落全体、Web ページ領域、画像、動画字幕の翻訳</li>
             <li>Key はブラウザ内にのみ保存されます</li>
-            <li>利用回数の制限なし</li>
+            <li>対応範囲、利用枠、費用は選択したプラットフォームにより異なります。DeepLは画像認識に対応していません</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">無料トライアル</b>
+          <span class="plan-status">近日公開予定</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">拡張機能をインストールすると50.00ポイント、アカウント登録でさらに200.00ポイントを進呈。ポイントに有効期限はなく、実際の使用量に応じて減算されます。</p>
+          <p class="plan-desc">50.00ポイントのゲストトライアルを提供し、アカウント登録でさらに200.00ポイントを付与、残りのトライアルポイントも統合する予定です。ポイントは有効期限がなく、実際の使用量に応じて正確に差し引かれます。</p>
           <ul>
             <li>API Key は不要</li>
-            <li>選択テキスト、段落全体、Web ページ領域、字幕のテキスト翻訳</li>
+            <li>選択テキスト、段落全体、Webページ領域、画像、認識済み字幕のテキスト翻訳</li>
             <li>翻訳に失敗した場合はポイントを消費しません</li>
           </ul>
         </div>
         <div class="plan featured">
           <b class="plan-name">サブスクリプション</b>
+          <span class="plan-status">予定価格 · 購入はまだできません</span>
           <p class="plan-price">$3.99<span>/ 月</span></p>
           <p class="plan-alt">または $29.99 / 年、月払いより 37% お得</p>
           <p class="plan-desc">ポイント翻訳は無制限に利用でき、ポイント計算は行いません。いつでも解約でき、当期間の終了までは引き続き利用できます。</p>
@@ -343,11 +383,35 @@
             <li>合理的な使用の原則に基づき回数無制限</li>
             <li>初回支払いから 7 日以内は全額返金を申請可能</li>
           </ul>
-          <a class="btn btn-primary" href="https://app.huaci.app/plans">サブスクリプション</a>
+          <a class="btn btn-ghost" href="/ja/changelog.html#v2-0-0">2.0.0の予告を見る</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">価格は米ドル表示で、お住まいの地域の税金が別途加算される場合があります。支払いは <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> が販売業者（Merchant of Record）として処理し領収書を発行します。当社がお客様のカード情報に触れることはありません。サブスクリプション、返金、合理的な使用の具体的な規則は<a class="link" href="/ja/terms.html">利用規約</a>をご覧ください。</p>
+      <p class="after-facts reveal">上記は予定価格と付与ポイントであり、正式公開時にはユーザーセンターの内容が優先されます。価格は米ドル建てで、別途税金が加算される場合があります。決済と領収書は<a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a>が販売業者（Merchant of Record）として処理し、当方はカード情報に触れません。サブスクリプション、返金、合理的な使用に関する規則は<a class="link" href="/ja/terms.html">利用規約</a>をご覧ください。</p>
+    </div>
+  </section>
+
+  <section class="section" id="account-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Account · 2.0.0</p>
+        <h2>拡張機能で使用し、ユーザーセンターで管理</h2>
+        <p>アカウントサービスは2.0.0でリリース予定です。拡張機能はログインと翻訳の主要な入口であり、公式サイトとユーザーセンターは同じアカウントおよびサブスクリプション特典を共有します。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact">
+          <b>メールまたはGoogleでログイン</b>
+          <p>メール認証コードまたはGoogleアカウントでログインし、現在のブラウザタブで認証を完了すると拡張機能に戻ります。必要なのはメールアドレスとユーザー名のみです。</p>
+        </div>
+        <div class="fact">
+          <b>残高とステータスを随時更新</b>
+          <p>未購読の場合は残りのポイントを表示し、購読後は無制限利用を表示します。ユーザーセンターでは、自身の使用量、ポイント履歴、サブスクリプション、注文、ログインセッションを確認できます。現在のWebセッションからログアウトすると、関連する拡張機能もログアウトします。</p>
+        </div>
+        <div class="fact">
+          <b>独自のKeyを使用する選択肢をいつでも保持</b>
+          <p>ホスト型翻訳と独自のKeyは切り替えて使用できます。独自のKeyによるリクエストはプラットフォームに直接接続し、ホスト型のポイントを消費せず、当方のサブスクリプションを購入する必要もありません。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -357,7 +421,7 @@
       <div class="section-head reveal">
         <p class="kicker">Install</p>
         <h2>4 ステップでセットアップ</h2>
-        <p>現在はデベロッパーモードで読み込みます。Chrome 116 以降が必要です。インストール後すぐに無料ポイントで翻訳でき、自分の API Key を入力することもできます。</p>
+        <p>以下はソースコードからのインストール方法で、Chrome 116以降が必要です。アカウントとKey不要サービスはまだ公開されていないため、現在は設定で独自のAPI Keyを使用するプラットフォームを選択してください。</p>
       </div>
 
       <div class="steps reveal">
@@ -368,14 +432,14 @@
           <div><b>拡張機能ページを開く</b> <span>— アドレスバーに <span class="mono">chrome://extensions/</span> と入力し、右上の「デベロッパーモード」をオンにします。</span></div>
         </div>
         <div class="step">
-          <div><b>拡張機能を読み込む</b> <span>— 「パッケージ化されていない拡張機能を読み込む」をクリックし、先ほどのディレクトリを選択します。</span></div>
+          <div><b>拡張機能を読み込む</b> <span>——「パッケージ化されていない拡張機能を読み込む」をクリックし、リポジトリのルートディレクトリではなく、リポジトリ内の <span class="mono">apps/extension</span> ディレクトリを選択します。</span></div>
         </div>
         <div class="step">
-          <div><b>翻訳を開始</b> <span>——初回インストール時に無料ポイントが自動付与されウェルカムページが開きます。テキストを選択するだけで翻訳できます。自分の Key を使う場合は、設定ページでプラットフォームを選択し Key を貼り付け、「接続テスト」で接続を確認してください。</span></div>
+          <div><b>翻訳を開始</b> <span>——設定ページで OpenAI、DeepSeek または DeepL を選択し、自身の API Key を入力して接続をテストします。デフォルトのターゲット言語を確認した後、テキストを選択して右クリックで翻訳します。</span></div>
         </div>
       </div>
 
-      <p class="after-facts reveal">ChatGPT（OpenAI）と DeepSeek の API に対応し、いつでも切り替えられます。どちらも既定では各社の最も安価なティアを選択します — 翻訳は高頻度・短入力の作業であり、高価なモデルを使う必要はありません。</p>
+      <p class="after-facts reveal">画像翻訳には画像認識に対応したモデルを選択する必要があります。DeepL はテキスト翻訳に使用します。動画字幕は手動で有効化する実験的機能であり、音声認識能力はブラウザに依存します。拡張機能は Chrome の内部ページ、Chrome ウェブストアなどの保護されたページでは翻訳できません。</p>
     </div>
   </section>
 

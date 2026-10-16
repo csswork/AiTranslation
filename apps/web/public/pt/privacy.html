@@ -73,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidade</h2>
-        <p class="updated">Última atualização: 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original em Markdown</a></p>
+        <p class="updated">Última atualização: 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Texto original em Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -81,6 +81,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>Em uma frase</h3>
+          <p>Conta, pontos e serviços de assinatura estão planejados para o lançamento da versão 2.0.0 e ainda não estão disponíveis ao público. A seguir, também descrevemos como os dados serão tratados após a disponibilização desses serviços.</p>
           <p>O AI Selection Translator tem dois modos de uso. <b>Chave própria</b>: o conteúdo que você deseja traduzir é enviado diretamente à plataforma de IA que você configurou, sem passar por nós. <b>Tradução por pontos</b>: o conteúdo é encaminhado ao provedor do modelo através do nosso servidor para concluir a tradução, e o servidor <b>não armazena o texto original nem a tradução</b>. Conta, cobrança e prevenção de abuso retêm apenas os dados necessários para operação, não são usados para publicidade nem vendidos.</p>
 
           <h3>Conteúdo enviado durante a tradução</h3>
@@ -109,6 +110,9 @@
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>Não é enviado</b>: conteúdo de páginas que você não traduziu ativamente, histórico de navegação, cookies, dados de formulários. A extensão não escaneia nem envia nada automaticamente em segundo plano.</p>
+
+          <h3>Processamento de áudio das legendas de vídeo experimentais</h3>
+          <p>As legendas de vídeo ficam desativadas por padrão. Quando ativadas, o áudio da aba atual é reconhecido localmente por padrão, podendo ser necessário baixar o pacote de idioma do navegador; somente quando você optar ativamente por "usar reconhecimento na nuvem" o áudio será enviado ao serviço de reconhecimento de fala do Google, aplicando-se a <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>. O texto das legendas reconhecido é então enviado à plataforma de tradução escolhida ou aos nossos servidores, conforme o modo de tradução selecionado. Não recebemos nem armazenamos vídeos ou áudios, e não oferecemos transcrição de áudio e vídeo hospedada.</p>
 
           <h3>Dados da conta</h3>
           <p>Após registrar-se ou fazer login, armazenamos:</p>
@@ -169,7 +173,7 @@
                 <tr><td><code>storage</code></td><td>Salva as configurações acima e o token de login localmente</td></tr>
                 <tr><td><code>scripting</code></td><td>Injetar o script necessário na página atual quando você aciona uma tradução</td></tr>
                 <tr><td><code>activeTab</code></td><td>Atua somente na aba em que você está trabalhando</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Somente quando você ativa a tradução de legendas de vídeo, captura o áudio da aba atual e o reconhece como texto localmente</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lê o áudio da aba atual somente quando você ativa a tradução de legendas de vídeo; reconhecimento local por padrão, enviado ao Google quando o reconhecimento na nuvem é escolhido ativamente</td></tr>
                 <tr>
                   <td>Acesso a <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code> e <code>api.deepl.com</code></td>
                   <td>Ao usar sua própria API Key, envia solicitações de tradução à plataforma que você escolher</td>

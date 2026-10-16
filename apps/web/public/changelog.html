@@ -77,13 +77,50 @@
         <p class="kicker">Changelog</p>
         <h2>更新日志</h2>
         <p>
-          版本号取自 <span class="mono">manifest.json</span>。更细的改动可以看仓库的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交记录</a>。
+          已发布版本与下一版预告都记录在这里。2.0.0 正在准备发布，账户与托管服务尚未上线；更细的改动见仓库的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交记录</a>。
         </p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">即将发布</div>
+        </div>
+        <div class="log-body">
+          <h3>账户、免 Key 翻译与订阅</h3>
+          <p>本版功能已可在本地测试，后端尚未部署，试用点数与订阅尚未向公众开放。自带 Key 模式继续保留。</p>
+          <ul>
+            <li><b>账户登录</b>：邮箱验证码或 Google 登录，在当前窗口的标签页授权后回到扩展；弹出页与设置页显示用户名、余额和订阅状态。</li>
+            <li><b>试用与点数</b>：计划提供访客试用与注册赠送，剩余试用点数可转入账户，赠送点数不过期；按实际用量精确扣减，失败返还，不再每次向上取整扣一点。</li>
+            <li><b>托管文字与图片</b>：无需自备 Key，支持划词、翻译面板、网页区域和图片识别与翻译。已识别的视频字幕可走托管文字翻译；音视频上传与托管转写尚未提供。</li>
+            <li><b>订阅与账单</b>：用户中心管理订阅、订单、用量和登录会话。订阅后按合理使用原则无限使用，支付计划通过 Creem 处理，正式收款仍待上线验证。</li>
+            <li><b>状态同步</b>：网页登出会撤销由该网页会话授权的扩展登录，不影响其他浏览器；本地开发与正式环境分别处理。</li>
+            <li><b>界面与隐私</b>：移除弹出页重复的余额显示；补齐托管图片说明与可选 Google 云端语音识别的数据处理说明。不保存翻译内容或图片。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>从中文翻译工具，到 24 种语言</h3>
+          <ul>
+            <li><b>完整多语言界面</b>：提供 24 种界面与目标语言，界面、来源和目标各自独立；首次安装跟随浏览器语言，升级保留已有偏好与 API 配置。</li>
+            <li><b>面向不同语言读者的翻译交互</b>：支持中文、短词和混合语言选区，右键菜单按当前目标语言生成，不再只提供「翻译成中文」。</li>
+            <li><b>临时切换目标</b>：划词弹窗从原文重译，可明确保存默认目标；翻译面板记住自己的来源与目标选择。</li>
+            <li><b>区域与图片改进</b>：区域翻译可恢复原文，失败时回退；图片切换目标时复用识别结果，更换图片后清空缓存。</li>
+            <li><b>文字方向与平台能力</b>：支持阿拉伯语等从右往左的界面，原文和译文独立排版；DeepL 按实际支持的语言组合处理，不支持时明确提示。</li>
+            <li><b>实验视频字幕</b>：可手动开启当前标签页的语音识别与字幕翻译，默认关闭，识别效果与兼容性仍有限。</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>

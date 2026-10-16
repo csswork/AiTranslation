@@ -73,7 +73,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-10-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -81,6 +81,7 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>In one sentence</h3>
+          <p>Accounts, credits, and subscription services are planned for release with 2.0.0 and are not yet available to the public. The following also describes how data will be handled once these services become available.</p>
           <p>AI Selection Translator can be used in two ways. <b>Bring your own key</b>: the content you want to translate is sent directly to the AI platform you configured, without going through us. <b>Credit-based translation</b>: the content is forwarded by our server to the model provider to complete the translation, and the server <b>does not store the original text or the translation</b>. Account, billing, and anti-abuse data is limited to what is necessary for operation, is not used for advertising, and is not sold.</p>
 
           <h3>What is sent during translation</h3>
@@ -109,6 +110,9 @@
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
           <p><b>Not sent</b>: page content you have not actively translated, browsing history, cookies, or form data. The extension does not automatically scan or upload anything in the background.</p>
+
+          <h3>Audio handling for experimental video subtitles</h3>
+          <p>Video subtitles are off by default. When enabled, audio from the current tab is recognized locally by default, which may require downloading a browser language pack; audio is sent to Google's speech recognition service only when you explicitly choose "use cloud recognition," subject to the <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. The recognized subtitle text is then sent to the translation platform or our servers according to the selected translation mode. We do not receive or store video or audio, and we do not provide hosted audio/video transcription.</p>
 
           <h3>Account data</h3>
           <p>After registration or login, we store:</p>
@@ -169,7 +173,7 @@
                 <tr><td><code>storage</code></td><td>Stores the above settings and login token locally</td></tr>
                 <tr><td><code>scripting</code></td><td>Inject the needed script into the current page when you trigger a translation</td></tr>
                 <tr><td><code>activeTab</code></td><td>Act only on the tab you are working in</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Only when you enable video subtitle translation, reads the audio of the current tab and recognizes it as text locally</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Reads audio from the current tab only when you enable video subtitle translation; recognized locally by default, sent to Google when you explicitly choose cloud recognition</td></tr>
                 <tr>
                   <td>Access to <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Sends translation requests to your chosen platform when using your own API Key</td>

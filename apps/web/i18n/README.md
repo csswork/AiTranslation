@@ -60,7 +60,7 @@ i18n/
 
 `public/lang.js`（由 `lang.template.js` 生成）在 `<head>` 里同步加载：
 
-1. `localStorage.lang` 里选过 → **以选择为准**；没选过 → 按 `navigator.languages` 猜（认不出落到 `en`）。
+1. `lang` Cookie 里选过 → **以选择为准**；没选过 → 按 `navigator.languages` 猜（认不出落到 `en`）。在 huaci.app 下与用户中心共用父域偏好 Cookie；旧 localStorage 值仅作一次迁移。
 2. 发现语言不一致就 `location.replace` 到同一页的对应语言（路径保留，`/privacy.html` → `/en/privacy.html`）。
 3. 导航右上角的下拉里可以手动选；选「自动」= 清掉记录，回到跟随浏览器。
 4. **爬虫与无头浏览器不跳转**：Googlebot 的 `Accept-Language` 是 en-US，跟着跳会让中文原文（`x-default`）
@@ -71,7 +71,7 @@ i18n/
 ## 状态
 
 11 种语言已上线：`zh-Hans`（基础）· `en` · `zh-Hant` · `ja` · `ko` · `es` · `pt` · `fr` · `de` · `ru` · `ar`，
-每种语言一份完整译文（146/146 段），页面里没有残留中文，`sitemap.xml` 与 hreflang 都已包含。
+每种语言一份完整译文，段数以 `--check` 的当前结果为准；`sitemap.xml` 与 hreflang 都已包含。
 阿拉伯语是 RTL：站点 CSS 用的是逻辑属性，`dir="rtl"` 不需要额外覆盖，真实 Chrome 里已核对过布局不溢出。
 
 ## 还没做的

@@ -16,6 +16,19 @@ const ROOT = new URL('..', import.meta.url).pathname;
 const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'i18n/locales.json', 'utf8'));
 const enabled = CONFIG.locales.filter((l) => l.enabled);
 const PAGES = ['index.html', 'privacy.html', 'terms.html', 'changelog.html'];
+const VERSION = JSON.parse(fs.readFileSync(ROOT + '../extension/manifest.json', 'utf8')).version;
+
+// 包括中文在内，每种语言都必须有当前版本与遗漏的历史版本记录。
+for (const loc of enabled) {
+  const dir = ROOT + 'public/' + (loc.path ? loc.path + '/' : '');
+  const home = fs.readFileSync(dir + 'index.html', 'utf8');
+  const log = fs.readFileSync(dir + 'changelog.html', 'utf8');
+  assert.ok(home.includes('data-extension-version>v' + VERSION + '</span>'), loc.code + ' 首页版本落后于 manifest');
+  const releases = [...log.matchAll(/data-release-version="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(releases[0], VERSION, loc.code + ' 最新更新日志落后于 manifest');
+  assert.ok(releases.includes('1.1.0') && releases.includes('1.0.0'), loc.code + ' 缺失历史版本');
+}
+console.log('✓ 首页与最新更新日志对应扩展版本 ' + VERSION + '，历史版本齐全');
 
 /* ---- 1. 工具自检：缺译、过期产物、hreflang 失配都在这里报 ---- */
 try {
@@ -29,11 +42,21 @@ try {
 /* ---- 2. 每个启用语言都要有完整译文 ---- */
 {
   const zh = JSON.parse(fs.readFileSync(ROOT + 'i18n/' + CONFIG.base + '.json', 'utf8'));
+  const index = JSON.parse(fs.readFileSync(ROOT + 'i18n/_index.json', 'utf8'));
   for (const loc of enabled) {
     if (loc.code === CONFIG.base) continue;
     const cat = JSON.parse(fs.readFileSync(ROOT + 'i18n/' + loc.code + '.json', 'utf8'));
     const missing = Object.keys(zh).filter((k) => !cat[k]);
     assert.deepEqual(missing, [], loc.code + ' 缺 ' + missing.length + ' 条译文');
+    const markup = (text) => (text.match(/<\/?[a-zA-Z][^>]*>/g) || []).sort();
+    for (const key of Object.keys(zh)) {
+      assert.deepEqual(markup(cat[key]), markup(zh[key]), loc.code + ' 译文改变了 HTML 标签或链接：' + key);
+      assert.notEqual(cat[key].trim(), index[key].tag, loc.code + ' 译文错误地返回了标签名：' + key);
+      const sourceText = zh[key].replace(/<[^>]*>/g, '').trim();
+      const translatedText = cat[key].replace(/<[^>]*>/g, '').trim();
+      assert.ok(sourceText.length <= 15 || translatedText.length >= sourceText.length * 0.15,
+        loc.code + ' 译文异常过短，可能只返回了标签名或摘要：' + key);
+    }
     // 日语与繁体中文本来就用汉字，这两条检查只对拉丁/西里尔/阿拉伯/谚文语言成立
     if (loc.usesHan) {
       const han = Object.values(cat).filter((v) => /[\u3400-\u9FFF]/.test(v)).length;

@@ -73,12 +73,49 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Registro de alterações</h2>
-        <p>Os números de versão vêm do <span class="mono">manifest.json</span>. Para alterações mais detalhadas, consulte o <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">histórico de commits</a> do repositório.</p>
+        <p>Versões publicadas e prévias da próxima versão estão registradas aqui. A versão 2.0.0 está em preparação para lançamento; a conta e o serviço hospedado ainda não estão disponíveis; alterações mais detalhadas podem ser vistas no <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">histórico de commits</a> do repositório.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
 
-      <article class="log-entry reveal">
+      <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
+        <div class="log-when">
+          <span class="log-ver">v2.0.0</span>
+          <div class="release-status">Em breve</div>
+        </div>
+        <div class="log-body">
+          <h3>Conta, tradução sem Key e assinatura</h3>
+          <p>Os recursos desta versão já podem ser testados localmente, o backend ainda não foi implantado, os pontos de teste e a assinatura ainda não estão abertos ao público. O modo com Key própria continua disponível.</p>
+          <ul>
+            <li><b>Login na conta</b>: código de verificação por e-mail ou login com Google, autorização na aba da janela atual e retorno à extensão; o popup e a página de configurações exibem nome de usuário, saldo e status da assinatura.</li>
+            <li><b>Teste e pontos</b>: planejado oferecer teste para visitantes e bônus de registro, os pontos de teste restantes podem ser transferidos para a conta, os pontos de bônus não expiram; dedução precisa conforme o uso real, com devolução em caso de falha, sem arredondar para cima um ponto a cada uso.</li>
+            <li><b>Texto e imagem hospedados</b>: sem necessidade de Key própria, suporta seleção de texto, painel de tradução, região da página e reconhecimento e tradução de imagens. Legendas de vídeo já reconhecidas podem usar tradução de texto hospedada; upload de áudio e vídeo e transcrição hospedada ainda não estão disponíveis.</li>
+            <li><b>Assinatura e cobrança</b>: o centro do usuário gerencia assinatura, pedidos, uso e sessões de login. Após a assinatura, uso ilimitado sob princípios de uso razoável, o plano de pagamento é processado via Creem, a cobrança oficial ainda aguarda validação de lançamento.</li>
+            <li><b>Sincronização de status</b>: o logout na página web revoga o login da extensão autorizado por essa sessão da página, sem afetar outros navegadores; desenvolvimento local e ambiente oficial são tratados separadamente.</li>
+            <li><b>Interface e privacidade</b>: removida a exibição duplicada de saldo no popup; complementadas as descrições de imagens hospedadas e o aviso de tratamento de dados do reconhecimento de voz opcional do Google Cloud. Conteúdo de tradução ou imagens não são armazenados.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-1-0" data-release-version="1.1.0">
+        <div class="log-when">
+          <span class="log-ver">v1.1.0</span>
+          <div>2026-10-13</div>
+        </div>
+        <div class="log-body">
+          <h3>De ferramenta de tradução para chinês a 24 idiomas</h3>
+          <ul>
+            <li><b>Interface multilíngue completa</b>: 24 idiomas de interface e de destino, interface, origem e destino independentes entre si; a primeira instalação segue o idioma do navegador, atualizações preservam preferências e configurações de API existentes.</li>
+            <li><b>Interação de tradução para leitores de diferentes idiomas</b>: suporta seleção em chinês, palavras curtas e idiomas mistos, o menu de contexto é gerado conforme o idioma de destino atual, não oferecendo mais apenas "traduzir para chinês".</li>
+            <li><b>Troca temporária de destino</b>: o popup de seleção retraduz a partir do texto original, permite salvar explicitamente o destino padrão; o painel de tradução lembra suas próprias escolhas de origem e destino.</li>
+            <li><b>Melhorias em região e imagem</b>: a tradução de região pode restaurar o original, com fallback em caso de falha; ao trocar o destino de uma imagem, o resultado do reconhecimento é reutilizado, o cache é limpo após trocar a imagem.</li>
+            <li><b>Direção do texto e capacidades da plataforma</b>: suporta interfaces da direita para a esquerda, como árabe, com layout independente para original e tradução; o DeepL é tratado conforme as combinações de idiomas realmente suportadas, com aviso claro quando não suportado.</li>
+            <li><b>Legendas de vídeo experimentais</b>: pode ativar manualmente o reconhecimento de voz e a tradução de legendas na aba atual, desativado por padrão, o efeito de reconhecimento e a compatibilidade ainda são limitados.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="log-entry reveal" id="v1-0-0" data-release-version="1.0.0">
         <div class="log-when">
           <span class="log-ver">v1.0.0</span>
           <div>2026-09-15</div>
