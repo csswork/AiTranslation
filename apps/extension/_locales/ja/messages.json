@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "ポイント翻訳に失敗しました"
   },
-  "m_4103a84ace27803a": {
-    "message": "ポイント翻訳は現在テキストのみ対応しています。画像翻訳には ChatGPT または DeepSeek に切り替えてください。"
-  },
   "m_e675111ecc7e0a28": {
     "message": "ポイント翻訳には接続テストは不要です。ログイン後すぐに使用できます。"
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "ログアウト"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "選択翻訳、範囲翻訳、翻訳パネルのテキスト翻訳に対応しています。画像翻訳には現在 ChatGPT または DeepSeek に切り替えて自分の Key を入力する必要があります。"
   },
   "m_918b7761e2f3dd27": {
     "message": "原文は当社のサーバーを通じてモデルプロバイダー（現在は DeepSeek）に送信され翻訳されます。原文と訳文は保存せず、アカウントには文字数とポイントの差し引きのみを記録します。"
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "テキスト選択、範囲翻訳、翻訳パネル、画像翻訳に対応しており、API Keyの入力は不要です。"
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "翻訳方法"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "約 $arg1$ 文字を翻訳できます",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "クレジット"
+  },
+  "m_c1f65837307903eb": {
+    "message": "未ログイン"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "ログインするとクレジットで翻訳できます。API Key は不要です"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "登録不要 · クレジットは無期限"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "ゲスト"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "無料クレジットを使い切りました"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "登録でさらに $arg1$ クレジットをプレゼント",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "登録して $arg1$ クレジットを受け取る",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "年払いサブスクリプション"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "月払いサブスクリプション"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "更新をキャンセル済み"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "有効期限 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "次回更新 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "利用履歴"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "無料枠 · クレジットは無期限"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "クレジットを使い切りました"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "クレジットがまもなくなくなります"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "サブスクリプションで無制限に利用"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "アカウントと利用状況"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "現在は自分の API Key を使用中のため、クレジットは消費されません。"
+  },
+  "m_3e9721196db81746": {
+    "message": "クレジット翻訳は一時的に利用できません。自分の API Key に切り替えられます。"
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key 設定済み"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "API Key が未設定です。ここをクリックして設定してください"
   },
   "extensionName": {
     "message": "AI翻訳"

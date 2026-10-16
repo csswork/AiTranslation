@@ -5,124 +5,174 @@
     <title>AI 划词翻译</title>
     <style>
       :root {
-        --bg: #fff; --text: #0f172a; --muted: rgba(15, 23, 42, 0.55);
-        --faint: rgba(15, 23, 42, 0.38); --line: rgba(15, 23, 42, 0.1);
-        --accent: #4f46e5; --accent-soft: rgba(79, 70, 229, 0.08);
-        --ok: #15803d; --warn: #b45309;
+        --bg: #fff; --card: #f7f7fb; --text: #0f172a; --muted: rgba(15, 23, 42, 0.58);
+        --faint: rgba(15, 23, 42, 0.4); --line: rgba(15, 23, 42, 0.1);
+        --accent: #4f46e5; --accent-soft: rgba(79, 70, 229, 0.08); --accent-ink: #4338ca;
+        --ok: #15803d; --ok-soft: rgba(21, 128, 61, 0.1);
+        --warn: #b45309; --warn-soft: rgba(180, 83, 9, 0.1);
+        --gradient: linear-gradient(135deg, #5b5eea, #9747ec);
         color-scheme: light dark;
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #191b21; --text: #e9eaee; --muted: rgba(233, 234, 238, 0.6);
-          --faint: rgba(233, 234, 238, 0.4); --line: rgba(255, 255, 255, 0.1);
-          --accent: #818cf8; --accent-soft: rgba(129, 140, 248, 0.14);
-          --ok: #4ade80; --warn: #fbbf24;
+          --bg: #16181d; --card: #1e2128; --text: #e9eaee; --muted: rgba(233, 234, 238, 0.62);
+          --faint: rgba(233, 234, 238, 0.42); --line: rgba(255, 255, 255, 0.09);
+          --accent: #818cf8; --accent-soft: rgba(129, 140, 248, 0.14); --accent-ink: #c7c9ff;
+          --ok: #4ade80; --ok-soft: rgba(74, 222, 128, 0.12);
+          --warn: #fbbf24; --warn-soft: rgba(251, 191, 36, 0.12);
+          --gradient: linear-gradient(135deg, #6d70f5, #a855f7);
         }
       }
       * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
       body {
-        width: 268px; margin: 0; padding: 14px;
+        width: 300px; margin: 0; padding: 12px 14px 14px;
         background: var(--bg); color: var(--text);
-        font: 13px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
           "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       }
-      .head { display: flex; align-items: center; gap: 9px; }
-      .mark { width: 26px; height: 26px; flex: none; }
-      .name { font-size: 13.5px; font-weight: 620; }
-      .steps {
-        margin: 12px 0 0; padding: 10px 12px;
-        background: var(--accent-soft); border-radius: 10px;
-        font-size: 12px; color: var(--muted);
+      button { font: inherit; color: inherit; }
+
+      /* 页头：品牌 + 设置入口（不再占一个大按钮） */
+      .head { display: flex; align-items: center; gap: 8px; }
+      .mark { width: 22px; height: 22px; flex: none; }
+      .name { font-size: 13.5px; font-weight: 620; flex: 1; }
+      .icon-btn {
+        display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0;
+        border: 0; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer;
       }
-      .steps b { color: var(--text); font-weight: 560; }
-      .row {
-        display: flex; align-items: center; gap: 8px;
-        margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+      .icon-btn:hover { background: var(--accent-soft); color: var(--text); }
+      .icon-btn svg { width: 17px; height: 17px; }
+
+      /* 账户卡片：身份 → 余额 → 下一步。这是弹窗里最重要的一块 */
+      .account {
+        margin-top: 10px; padding: 12px; border-radius: 12px;
+        background: var(--card); border: 1px solid var(--line);
       }
-      .row:first-of-type { border-top: 0; }
-      .row .label { font-size: 12px; color: var(--muted); flex: 1 1 auto; }
-      select {
-        font: inherit; font-size: 12px; color: inherit; cursor: pointer;
-        padding: 4px 7px; border-radius: 7px;
-        border: 1px solid var(--line); background: transparent;
-      }
-      .state { font-size: 11.5px; }
-      .state.ok { color: var(--ok); }
-      .state.warn { color: var(--warn); }
-      button.btn {
-        width: 100%; margin-top: 8px; font: inherit; font-size: 12.5px; font-weight: 530;
-        padding: 8px; border-radius: 9px; cursor: pointer;
-        color: #fff; background: var(--accent); border: 0;
-      }
-      button.btn:hover { filter: brightness(1.06); }
-      button.btn.ghost {
-        color: var(--accent); background: transparent; border: 1px solid var(--line);
-      }
-      button.btn.ghost:hover { background: var(--accent-soft); filter: none; }
-      .hint { margin: 9px 0 0; font-size: 11px; color: var(--faint); text-align: center; }
-      [hidden] { display: none !important; }
-      /* 账户：已登录显示首字母圆标、用户名、试用 / 订阅与剩余点数；未登录显示注册引导按钮 */
-      :root { --gradient: linear-gradient(135deg, #5b5eea, #9747ec); }
-      @media (prefers-color-scheme: dark) { :root { --gradient: linear-gradient(135deg, #6d70f5, #a855f7); } }
-      .account { margin-top: 12px; }
-      .account-in {
-        display: flex; align-items: center; gap: 9px; padding: 9px 10px;
-        border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
-        background: transparent; width: 100%; font: inherit; color: inherit; text-align: start;
-      }
-      .account-in:hover { background: var(--accent-soft); }
+      .who { display: flex; align-items: center; gap: 9px; min-width: 0; }
       .avatar {
-        flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
-        background: var(--gradient); color: #fff; font-size: 12px; font-weight: 700;
+        flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+        background: var(--gradient); color: #fff; font-size: 12.5px; font-weight: 700;
       }
-      .avatar.guest { background: var(--bg); color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); font-size: 13px; }
-      .who { display: grid; min-width: 0; flex: 1; }
-      .who b { font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .who span { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .credits {
-        font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
+      .avatar.outline { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+      .who-text { display: grid; min-width: 0; flex: 1; }
+      .who-text b { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .who-text span { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .badge {
+        flex: none; font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 999px;
+        background: var(--accent-soft); color: var(--accent-ink);
+      }
+      .badge.ok { background: var(--ok-soft); color: var(--ok); }
+      .badge.warn { background: var(--warn-soft); color: var(--warn); }
+
+      .balance { margin-top: 12px; }
+      .amount { display: flex; align-items: baseline; gap: 5px; }
+      .amount b {
+        font-size: 26px; font-weight: 750; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
         background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
       }
-      .credits.empty { background: none; color: var(--warn); }
-      button.btn.gradient { background: var(--gradient); margin-top: 0; }
+      .amount span { font-size: 12px; color: var(--muted); }
+      .balance.low .amount b, .balance.empty .amount b { background: none; color: var(--warn); }
+      .balance-note { margin: 2px 0 0; font-size: 11.5px; color: var(--muted); }
+      .balance.low .balance-note, .balance.empty .balance-note { color: var(--warn); }
+
+      .cta {
+        display: block; width: 100%; margin-top: 12px; padding: 8px 10px; border: 0; border-radius: 9px;
+        font-size: 12.5px; font-weight: 600; cursor: pointer; color: #fff; background: var(--gradient);
+      }
+      .cta:hover { filter: brightness(1.07); }
+      .cta.soft { color: var(--accent-ink); background: var(--accent-soft); }
+      .cta.soft:hover { filter: none; background: color-mix(in srgb, var(--accent) 16%, transparent); }
+      .links { display: flex; justify-content: center; gap: 14px; margin-top: 8px; }
+      .link {
+        padding: 0; border: 0; background: none; cursor: pointer;
+        font-size: 11.5px; color: var(--muted); text-decoration: underline; text-underline-offset: 2px;
+      }
+      .link:hover { color: var(--accent); }
+      /* 使用自己的 API Key 时卡片收紧：点数暂不消耗，不抢翻译设置的位置 */
+      .account.compact .balance { margin-top: 8px; }
+      .account.compact .amount b { font-size: 18px; }
+      .mode-note { margin: 10px 0 0; padding-top: 9px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); }
+
+      /* 怎么用：一行安静的提示 */
+      .tip { margin: 12px 2px 0; font-size: 11.5px; color: var(--muted); }
+      .tip b { color: var(--text); font-weight: 560; }
+
+      /* 翻译方式 */
+      .section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+      .row { display: flex; align-items: center; gap: 8px; }
+      .row .label { font-size: 12px; color: var(--muted); flex: 1 1 auto; }
+      select {
+        font-size: 12px; cursor: pointer; max-width: 172px; text-overflow: ellipsis;
+        padding: 4px 7px; border-radius: 7px; border: 1px solid var(--line); background: transparent;
+      }
+      .key-state { margin: 6px 0 0; font-size: 11.5px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); flex: none; }
+      .key-state.warn { color: var(--warn); cursor: pointer; }
+      .key-state.warn .dot { background: var(--warn); }
+
+      /* 工具：并排的次要入口 */
+      .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+      .tool {
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+        padding: 8px 6px; border-radius: 9px; border: 1px solid var(--line); background: transparent;
+        font-size: 12px; font-weight: 530; cursor: pointer; color: var(--text);
+      }
+      .tool:hover { background: var(--accent-soft); border-color: transparent; }
+      .tool svg { width: 15px; height: 15px; color: var(--accent); flex: none; }
+      .tool.wide { grid-column: 1 / -1; }
     </style>
   </head>
   <body>
     <div class="head">
       <img class="mark" src="../../icons/icon128.png" alt="" />
       <div class="name">AI 划词翻译</div>
-    </div>
-
-    <div class="account">
-      <button class="account-in" id="accountIn" type="button" hidden>
-        <span class="avatar" id="avatar" aria-hidden="true"></span>
-        <span class="who"><b id="username"></b><span id="accountMeta"></span></span>
-        <b class="credits" id="credits"></b>
+      <button class="icon-btn" id="open" type="button" aria-label="打开设置" title="打开设置">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
-      <button id="login" class="btn gradient" type="button" hidden>登录 / 注册</button>
     </div>
 
-    <p class="steps" id="targetName"></p>
+    <!-- 账户卡片：内容全部由 popup.js 按状态（未登录 / 访客 / 注册 / 订阅）填写 -->
+    <section class="account" id="account" aria-live="polite">
+      <div class="who">
+        <span class="avatar" id="avatar" aria-hidden="true"></span>
+        <span class="who-text"><b id="title"></b><span id="subtitle"></span></span>
+        <span class="badge" id="badge" hidden></span>
+      </div>
+      <div class="balance" id="balance" hidden>
+        <div class="amount"><b id="amount"></b><span id="unit"></span></div>
+        <p class="balance-note" id="balanceNote"></p>
+      </div>
+      <button class="cta" id="cta" type="button" hidden></button>
+      <div class="links" id="links"></div>
+      <p class="mode-note" id="modeNote" hidden></p>
+    </section>
 
-    <div class="row">
-      <span class="label">翻译平台</span>
-      <select id="provider"></select>
-    </div>
-    <div class="row" id="modelRow">
-      <span class="label">当前模型</span>
-      <span class="state" id="model">—</span>
-    </div>
-    <div class="row" id="keyRow" hidden>
-      <span class="label">API Key</span>
-      <span class="state" id="keyState">—</span>
+    <p class="tip" id="tip"></p>
+
+    <div class="section">
+      <div class="row">
+        <span class="label">翻译方式</span>
+        <select id="provider"></select>
+      </div>
+      <p class="key-state" id="keyState" hidden><i class="dot"></i><span id="keyText"></span></p>
     </div>
 
-    <button id="panel" class="btn ghost" type="button">打开翻译面板</button>
-    <button id="image" class="btn ghost" type="button">图片翻译</button>
-    <!-- 实验功能，默认关闭：popup.js 按设置决定显不显示 -->
-    <button id="video" class="btn ghost" type="button" hidden title="给当前页面的视频开 / 关实时字幕">视频实时字幕</button>
-    <button id="open" class="btn" type="button">打开设置</button>
-    <p class="hint">任何语言的文字都可以翻译，包括中文。</p>
+    <div class="tools">
+      <button class="tool" id="panel" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <span>翻译面板</span>
+      </button>
+      <button class="tool" id="image" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>
+        <span>图片翻译</span>
+      </button>
+      <!-- 实验功能，默认关闭：popup.js 按设置决定显不显示 -->
+      <button class="tool wide" id="video" type="button" hidden title="给当前页面的视频开 / 关实时字幕">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h4M13 15h4M7 11h10"/></svg>
+        <span>视频实时字幕</span>
+      </button>
+    </div>
 
     <script src="../lib/languages.js"></script>
     <script src="../lib/messages.js"></script>

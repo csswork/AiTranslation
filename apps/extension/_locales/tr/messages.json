@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Krediyle çeviri başarısız oldu"
   },
-  "m_4103a84ace27803a": {
-    "message": "Krediyle çeviri şu anda yalnızca metni destekler. Görsel çevirisi için ChatGPT veya DeepSeek'e geçin."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Krediyle çeviri bağlantı testi gerektirmez. Kullanmak için giriş yapmanız yeterli."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Çıkış yap"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Seçim, alan çevirisi ve çeviri paneli için metin çevirisini destekler. Görsel çevirisi şu anda ChatGPT veya DeepSeek'e geçmeyi ve kendi Key'inizi girmeyi gerektirir."
   },
   "m_918b7761e2f3dd27": {
     "message": "Kaynak metin, çeviri için sunucularımız üzerinden model sağlayıcısına (şu anda DeepSeek) gönderilir. Kaynak veya çevrilmiş metni saklamayız; hesabınız yalnızca karakter sayılarını ve kredi düşümlerini kaydeder."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Metin seçimi, alan çevirisi, çeviri paneli ve görsel çevirisini destekler; API Key gerekmez."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Çeviri yöntemi"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Yaklaşık $arg1$ karakter çevirebilir",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "kredi"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Giriş yapılmadı"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Krediyle çeviri için giriş yapın, API Key gerekmez"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Kayıt gerekmez · Krediler süresi dolmaz"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Misafir"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Ücretsiz krediler tükendi"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Kaydolun, $arg1$ kredi daha kazanın",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Kaydolun, $arg1$ kredi alın",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Yıllık abonelik"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Aylık abonelik"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Yenileme iptal edildi"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "$arg1$ tarihine kadar geçerli",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Sonraki yenileme $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Kullanım geçmişi"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Ücretsiz kota · Krediler süresi dolmaz"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Krediler tükendi"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Krediler azalıyor"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Sınırsız kullanım için abone olun"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Hesap ve kullanım"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Şu anda kendi API Key'inizi kullanıyorsunuz, kredi harcanmaz."
+  },
+  "m_3e9721196db81746": {
+    "message": "Krediyle çeviri geçici olarak kullanılamıyor; kendi API Key'inize geçebilirsiniz."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key yapılandırıldı"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Henüz API Key girilmedi, yapılandırmak için buraya tıklayın"
   },
   "extensionName": {
     "message": "AI çevirmen"

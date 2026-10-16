@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "點數翻譯失敗"
   },
-  "m_4103a84ace27803a": {
-    "message": "點數翻譯目前僅支援文字，圖片翻譯請切換至 ChatGPT 或 DeepSeek"
-  },
   "m_e675111ecc7e0a28": {
     "message": "點數翻譯不需要測試連線，登入後即可使用"
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "登出"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "支援劃詞、區域翻譯和翻譯面板的文字翻譯；圖片翻譯目前需切換至 ChatGPT 或 DeepSeek 並填寫自己的 Key。"
   },
   "m_918b7761e2f3dd27": {
     "message": "原文會經我們的伺服器傳送給模型服務商（目前是 DeepSeek）完成翻譯；我們不儲存原文和譯文，帳戶只記錄字數與扣點。"
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "支援劃詞、區域翻譯、翻譯面板和圖片翻譯，無需填寫 API Key。"
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "翻譯方式"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "約可翻譯 $arg1$ 字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "點"
+  },
+  "m_c1f65837307903eb": {
+    "message": "未登入"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "登入後可使用點數翻譯，不需要 API Key"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "免註冊 · 點數不過期"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "訪客"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "免費點數已用完"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "註冊，再送 $arg1$ 點",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "註冊，領取 $arg1$ 點",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "年付訂閱"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "月付訂閱"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "已取消續訂"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "有效期至 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "下次續費 $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "用量記錄"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "免費額度 · 點數不過期"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "點數已用完"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "點數即將用完"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "訂閱，無限使用"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "帳戶與用量"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "目前使用自己的 API Key，不消耗點數。"
+  },
+  "m_3e9721196db81746": {
+    "message": "點數翻譯暫時無法使用，可先切換到自己的 API Key。"
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key 已設定"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "尚未填寫 API Key，點這裡前往設定"
   },
   "extensionName": {
     "message": "AI 劃詞翻譯"

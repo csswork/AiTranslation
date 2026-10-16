@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Punktebasierte Übersetzung fehlgeschlagen"
   },
-  "m_4103a84ace27803a": {
-    "message": "Punktebasierte Übersetzung unterstützt derzeit nur Text. Für Bildübersetzung wechseln Sie zu ChatGPT oder DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Punktebasierte Übersetzung erfordert keinen Verbindungstest. Melden Sie sich einfach an, um sie zu nutzen."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Abmelden"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Unterstützt Textübersetzung für Textauswahl, Bereichsübersetzung und das Übersetzungsfenster. Bildübersetzung erfordert derzeit den Wechsel zu ChatGPT oder DeepSeek und die Eingabe Ihres eigenen Keys."
   },
   "m_918b7761e2f3dd27": {
     "message": "Der Ausgangstext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet. Wir speichern weder Ausgangstext noch Übersetzung; Ihr Konto zeichnet nur Zeichenzahlen und Punkteabzüge auf."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Unterstützt Textauswahl, Bereichsübersetzung, Übersetzungsbereich und Bildübersetzung, ohne dass ein API Key erforderlich ist."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Übersetzungsmethode"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Kann etwa $arg1$ Zeichen übersetzen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "Guthaben"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Nicht angemeldet"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Melde dich an, um die Guthaben-Übersetzung zu nutzen, kein API Key erforderlich"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Keine Registrierung · Guthaben verfällt nie"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Gast"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Kostenloses Guthaben aufgebraucht"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Registriere dich und erhalte $arg1$ Guthaben mehr",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Registriere dich, um $arg1$ Guthaben zu erhalten",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Jahresabonnement"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Monatsabonnement"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Verlängerung storniert"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Gültig bis $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Nächste Verlängerung $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Nutzungsverlauf"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Kostenloses Kontingent · Guthaben verfällt nie"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Guthaben aufgebraucht"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Guthaben fast aufgebraucht"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Abonnieren für unbegrenzte Nutzung"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Konto und Nutzung"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Derzeit wird dein eigener API Key verwendet, Guthaben wird nicht verbraucht."
+  },
+  "m_3e9721196db81746": {
+    "message": "Die Guthaben-Übersetzung ist vorübergehend nicht verfügbar; du kannst zu deinem eigenen API Key wechseln."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key konfiguriert"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Noch kein API Key hinterlegt, klicke hier zum Einrichten"
   },
   "extensionName": {
     "message": "KI-Übersetzer"

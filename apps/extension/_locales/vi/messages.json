@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Dịch bằng điểm thất bại"
   },
-  "m_4103a84ace27803a": {
-    "message": "Dịch bằng điểm hiện chỉ hỗ trợ văn bản. Để dịch hình ảnh, hãy chuyển sang ChatGPT hoặc DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Dịch bằng điểm không cần kiểm tra kết nối. Chỉ cần đăng nhập là dùng được."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Đăng xuất"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Hỗ trợ dịch văn bản cho chọn văn bản, dịch vùng và bảng dịch. Dịch hình ảnh hiện cần chuyển sang ChatGPT hoặc DeepSeek và nhập Key của riêng bạn."
   },
   "m_918b7761e2f3dd27": {
     "message": "Văn bản gốc được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch. Chúng tôi không lưu văn bản gốc và bản dịch; tài khoản chỉ ghi số ký tự và điểm đã trừ."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Hỗ trợ dịch bằng chọn văn bản, dịch vùng, bảng dịch và dịch hình ảnh, không cần nhập API Key."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Phương thức dịch"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Có thể dịch khoảng $arg1$ ký tự",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "điểm"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Chưa đăng nhập"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Đăng nhập để dùng dịch bằng điểm, không cần API Key"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Không cần đăng ký · Điểm không hết hạn"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Khách"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Điểm miễn phí đã dùng hết"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Đăng ký, nhận thêm $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Đăng ký để nhận $arg1$ điểm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Đăng ký theo năm"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Đăng ký theo tháng"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Đã hủy gia hạn"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Có hiệu lực đến $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Gia hạn tiếp theo $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Lịch sử sử dụng"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Hạn mức miễn phí · Điểm không hết hạn"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Điểm đã dùng hết"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Điểm sắp dùng hết"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Đăng ký, sử dụng không giới hạn"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Tài khoản và sử dụng"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Hiện đang dùng API Key của bạn, không tiêu tốn điểm."
+  },
+  "m_3e9721196db81746": {
+    "message": "Dịch bằng điểm tạm thời không khả dụng, bạn có thể chuyển sang API Key của mình."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key đã được cấu hình"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Chưa điền API Key, nhấn vào đây để thiết lập"
   },
   "extensionName": {
     "message": "Trình dịch AI"

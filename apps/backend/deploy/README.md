@@ -58,6 +58,8 @@ curl -fsS http://127.0.0.1:8787/healthz
 
 迁移 `008_exact_credit_units.sql` 将旧整数点数等值转换为 `bigint` 整数字符额度，保留当前余额和历史扣费，不追溯重新计费。发布前备份数据库，停止旧进程后迁移，再启动新版；迁移后旧代码不能继续运行。删除旧的 `CHARS_PER_CREDIT` 环境配置；迁移会删除 `chars_per_credit` 运营设置。同步发布新版扩展和官网：点数接口改为两位小数展示字符串并新增 `credits.available`，旧版扩展不能正确识别显示为 `0.00` 的剩余额度。恢复旧版须恢复备份并回滚代码，不能只回退代码。详见 [精确额度记账](../../../docs/backend/credit-accounting.md)。
 
+迁移 `009_hosted_image_recognition.sql` 增加图片识别用量类型，不改变已有余额。扩展的点数图片翻译需要同步更新后端并执行迁移；识图使用服务端 DeepSeek Flash，识别文字沿用文字翻译精确扣点。管理端可调整 `hosted_image_hourly_requests`（默认每个用户每小时 60 次，长图切片及失败请求均计次，0 表示暂停）。
+
 systemd 单元示例：
 
 ```ini

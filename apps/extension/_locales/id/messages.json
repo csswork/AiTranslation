@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Terjemahan poin gagal"
   },
-  "m_4103a84ace27803a": {
-    "message": "Terjemahan poin saat ini hanya mendukung teks. Untuk terjemahan gambar, beralihlah ke ChatGPT atau DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Terjemahan poin tidak memerlukan uji koneksi. Cukup masuk untuk menggunakannya."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Keluar"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Mendukung terjemahan teks untuk pemilihan, terjemahan area, dan panel terjemahan. Terjemahan gambar saat ini memerlukan beralih ke ChatGPT atau DeepSeek dan memasukkan Key Anda sendiri."
   },
   "m_918b7761e2f3dd27": {
     "message": "Teks sumber dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan. Kami tidak menyimpan teks sumber atau terjemahan; akun Anda hanya mencatat jumlah karakter dan pengurangan poin."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Mendukung terjemahan teks yang dipilih, area, panel terjemahan, dan gambar, tanpa perlu mengisi API Key."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Metode terjemahan"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Dapat menerjemahkan sekitar $arg1$ karakter",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "kredit"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Belum masuk"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Masuk untuk menggunakan terjemahan berbasis kredit, tidak perlu API Key"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Tanpa pendaftaran · Kredit tidak pernah kedaluwarsa"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Tamu"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Kredit gratis sudah habis"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Daftar dan dapatkan $arg1$ kredit lagi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Daftar untuk klaim $arg1$ kredit",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Langganan tahunan"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Langganan bulanan"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Perpanjangan dibatalkan"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Berlaku hingga $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Perpanjangan berikutnya $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Riwayat penggunaan"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Kuota gratis · Kredit tidak pernah kedaluwarsa"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Kredit sudah habis"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Kredit hampir habis"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Berlangganan, penggunaan tanpa batas"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Akun dan penggunaan"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Saat ini menggunakan API Key Anda sendiri, kredit tidak terpakai."
+  },
+  "m_3e9721196db81746": {
+    "message": "Terjemahan berbasis kredit sementara tidak tersedia, Anda dapat beralih ke API Key Anda sendiri."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key sudah dikonfigurasi"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "API Key belum diisi, klik di sini untuk mengatur"
   },
   "extensionName": {
     "message": "Penerjemah AI"

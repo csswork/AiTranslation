@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Traduzione a crediti non riuscita"
   },
-  "m_4103a84ace27803a": {
-    "message": "La traduzione a crediti supporta al momento solo il testo. Per la traduzione delle immagini, passa a ChatGPT o DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "La traduzione a crediti non richiede un test di connessione. Basta accedere per usarla."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Esci"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Supporta la traduzione di testo per selezione, traduzione di area e pannello di traduzione. La traduzione delle immagini richiede al momento di passare a ChatGPT o DeepSeek e inserire la propria Key."
   },
   "m_918b7761e2f3dd27": {
     "message": "Il testo originale viene inviato tramite i nostri server al fornitore del modello (attualmente DeepSeek) per la traduzione. Non conserviamo il testo originale né quello tradotto; l'account registra solo il numero di caratteri e i crediti detratti."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Supporta traduzione di testo selezionato, traduzione di aree, pannello di traduzione e traduzione di immagini, senza bisogno di inserire una API Key."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Metodo di traduzione"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Può tradurre circa $arg1$ caratteri",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "crediti"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Non connesso"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Accedi per usare la traduzione a crediti, senza API Key"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Nessuna registrazione · I crediti non scadono"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Ospite"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Crediti gratuiti esauriti"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Registrati e ricevi altri $arg1$ crediti",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Registrati per ottenere $arg1$ crediti",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Abbonamento annuale"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Abbonamento mensile"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Rinnovo annullato"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Valido fino al $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Prossimo rinnovo $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Cronologia utilizzo"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Quota gratuita · I crediti non scadono"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Crediti esauriti"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Crediti quasi esauriti"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Abbonati per un utilizzo illimitato"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Account e utilizzo"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Al momento usi la tua API Key, i crediti non vengono consumati."
+  },
+  "m_3e9721196db81746": {
+    "message": "La traduzione a crediti non è temporaneamente disponibile; puoi passare alla tua API Key."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key configurata"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Non hai ancora inserito una API Key, clicca qui per configurarla"
   },
   "extensionName": {
     "message": "Traduttore AI"

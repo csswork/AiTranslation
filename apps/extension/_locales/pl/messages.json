@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Tłumaczenie za punkty nie powiodło się"
   },
-  "m_4103a84ace27803a": {
-    "message": "Tłumaczenie za punkty obsługuje obecnie tylko tekst. Aby tłumaczyć obrazy, przełącz się na ChatGPT lub DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Tłumaczenie za punkty nie wymaga testu połączenia. Wystarczy się zalogować."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Wyloguj się"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Obsługuje tłumaczenie tekstu dla zaznaczenia, tłumaczenie obszaru i panelu tłumaczenia. Tłumaczenie obrazów wymaga obecnie przełączenia na ChatGPT lub DeepSeek i wpisania własnego klucza."
   },
   "m_918b7761e2f3dd27": {
     "message": "Tekst źródłowy jest wysyłany przez nasze serwery do dostawcy modelu (obecnie DeepSeek) w celu tłumaczenia. Nie przechowujemy tekstu źródłowego ani tłumaczenia; konto rejestruje tylko liczbę znaków i potrącenia punktów."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Obsługuje tłumaczenie zaznaczonego tekstu, obszarów, panel tłumaczeń i tłumaczenie obrazów, bez konieczności podawania klucza API."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Metoda tłumaczenia"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Można przetłumaczyć około $arg1$ znaków",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "kredyty"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Nie zalogowano"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Zaloguj się, aby tłumaczyć za kredyty, bez potrzeby klucza API"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Bez rejestracji · Kredyty nie wygasają"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Gość"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Darmowe kredyty wykorzystane"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Zarejestruj się i otrzymaj dodatkowe $arg1$ kredytów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Zarejestruj się, aby odebrać $arg1$ kredytów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Subskrypcja roczna"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Subskrypcja miesięczna"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Anulowano odnowienie"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Ważne do $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Następne odnowienie $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Historia użycia"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Darmowy limit · Kredyty nie wygasają"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Kredyty wykorzystane"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Kredyty na wyczerpaniu"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Subskrybuj, korzystaj bez ograniczeń"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Konto i użycie"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Obecnie używasz własnego klucza API, kredyty nie są zużywane."
+  },
+  "m_3e9721196db81746": {
+    "message": "Tłumaczenie za kredyty jest tymczasowo niedostępne; możesz przełączyć się na własny klucz API."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "Klucz API skonfigurowany"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Nie ustawiono jeszcze klucza API, kliknij tutaj, aby go skonfigurować"
   },
   "extensionName": {
     "message": "Tłumacz AI"

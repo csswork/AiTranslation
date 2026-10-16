@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Vertaling met credits mislukt"
   },
-  "m_4103a84ace27803a": {
-    "message": "Vertaling met credits ondersteunt momenteel alleen tekst. Schakel voor afbeeldingsvertaling over naar ChatGPT of DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Vertaling met credits vereist geen verbindingstest. Log in om het te gebruiken."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Uitloggen"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Ondersteunt tekstvertaling voor selectie, gebiedsvertaling en het vertaalpaneel. Voor afbeeldingsvertaling moet je momenteel overschakelen naar ChatGPT of DeepSeek en je eigen Key invoeren."
   },
   "m_918b7761e2f3dd27": {
     "message": "De brontekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd voor vertaling. We slaan de bron- en vertaalde tekst niet op; je account registreert alleen tekentellingen en creditafschrijvingen."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Ondersteunt tekstselectie, gebiedsvertaling, vertaalpaneel en afbeeldingsvertaling, zonder API Key."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Vertaalmethode"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Kan ongeveer $arg1$ tekens vertalen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "punten"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Niet ingelogd"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Log in om te vertalen met punten, geen API Key nodig"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Geen registratie · Punten verlopen nooit"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Gast"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Gratis punten opgebruikt"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Registreer en ontvang $arg1$ extra punten",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Registreer en ontvang $arg1$ punten",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Jaarabonnement"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Maandabonnement"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Verlenging geannuleerd"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Geldig tot $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Volgende verlenging $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Gebruiksgeschiedenis"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Gratis tegoed · Punten verlopen nooit"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Punten opgebruikt"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Punten raken bijna op"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Abonneer voor onbeperkt gebruik"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Account en gebruik"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Je gebruikt momenteel je eigen API Key, er worden geen punten verbruikt."
+  },
+  "m_3e9721196db81746": {
+    "message": "Vertalen met punten is tijdelijk niet beschikbaar; je kunt overschakelen naar je eigen API Key."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key geconfigureerd"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Nog geen API Key ingevuld, klik hier om in te stellen"
   },
   "extensionName": {
     "message": "AI-vertaler"

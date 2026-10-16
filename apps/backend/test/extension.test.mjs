@@ -36,8 +36,12 @@ async function extensionLogin(app, config, mailbox, email) {
 function api(app, config, path, { method = 'GET', token, body, origin = ORIGIN } = {}) {
   const headers = { origin };
   if (token) headers.authorization = `Bearer ${token}`;
-  if (body) headers['content-type'] = 'application/json';
-  return app.request(new URL(`/api/extension${path}`, config.appOrigin), { method, headers, body: body ? JSON.stringify(body) : undefined });
+  const encoded = body ? JSON.stringify(body) : undefined;
+  if (encoded) {
+    headers['content-type'] = 'application/json';
+    headers['content-length'] = String(Buffer.byteLength(encoded));
+  }
+  return app.request(new URL(`/api/extension${path}`, config.appOrigin), { method, headers, body: encoded });
 }
 
 test('扩展登录：未登录先去登录页，确认后带一次性授权码回到扩展，PKCE 换取扩展会话', async () => {
@@ -340,4 +344,29 @@ test('图片托管：模型失败不扣点，失败及并发请求也受可配�
   assert.doesNotMatch(JSON.stringify(failed), /sensitive/);
   assert.equal((await pool.query("SELECT status FROM usage_events WHERE kind = 'image'")).rows[0].status, 'failed');
   assert.equal((await pool.query("SELECT 1 FROM credit_ledger WHERE entry_type IN ('usage', 'refund')")).rowCount, 0);
+});
+
+test('图片托管：访客不足显示精度的正余额可识图；订阅用户零余额也可识图且仍受隐藏上限约束', async () => {
+  const { hosted, images } = fakeVision();
+  const { app, config, mailbox, settings } = buildApp({ pool, hosted });
+  const guest = await (await api(app, config, '/guest', { method: 'POST', body: {} })).json();
+  await pool.query("UPDATE credit_ledger SET amount_units = 1 WHERE entry_type = 'guest_grant'");
+  let res = await api(app, config, '/read-image', { method: 'POST', token: guest.token, body: { image: IMAGE } });
+  assert.equal(res.status, 200);
+  assert.deepEqual((await res.json()).credits, { balance: '0.00', available: true });
+  const { token } = await extensionLogin(app, config, mailbox, 'vision-sub@example.com');
+  const { rows: [user] } = await pool.query("SELECT id FROM users WHERE email = 'vision-sub@example.com'");
+  await pool.query('DELETE FROM credit_ledger WHERE user_id = $1', [user.id]);
+  await pool.query(`INSERT INTO subscriptions (user_id, provider, provider_subscription_id, plan, status, last_event_at)
+    VALUES ($1, 'creem', 'sub_vision_test', 'monthly', 'active', now())`, [user.id]);
+  res = await api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE } });
+  assert.equal(res.status, 200);
+  assert.equal((await res.json()).subscription.unlimited, true);
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'ja' } });
+  assert.equal((await res.json()).cost, '0.00');
+  await settings.set('subscriber_monthly_chars', 5);
+  res = await api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE } });
+  assert.equal(res.status, 429);
+  assert.equal((await res.json()).error, 'fair_use');
+  assert.equal(images.length, 2);
 });

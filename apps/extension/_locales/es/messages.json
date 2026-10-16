@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Error en la traducción con puntos"
   },
-  "m_4103a84ace27803a": {
-    "message": "La traducción con puntos actualmente solo admite texto. Para traducir imágenes, cambia a ChatGPT o DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "La traducción con puntos no requiere probar la conexión. Solo inicia sesión para usarla."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Cerrar sesión"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Admite traducción de texto por selección, traducción por área y el panel de traducción. La traducción de imágenes actualmente requiere cambiar a ChatGPT o DeepSeek e introducir tu propia Key."
   },
   "m_918b7761e2f3dd27": {
     "message": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción. No almacenamos el texto original ni la traducción; tu cuenta solo registra el recuento de caracteres y los puntos descontados."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Admite traducción de texto seleccionado, por área, panel de traducción y traducción de imágenes, sin necesidad de introducir una API Key."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Método de traducción"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Puede traducir aproximadamente $arg1$ caracteres",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "créditos"
+  },
+  "m_c1f65837307903eb": {
+    "message": "No has iniciado sesión"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Inicia sesión para usar la traducción con créditos, no se necesita API Key"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "Sin registro · Los créditos no caducan"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Invitado"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Créditos gratuitos agotados"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Regístrate y obtén $arg1$ créditos más",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Regístrate para reclamar $arg1$ créditos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Suscripción anual"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Suscripción mensual"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Renovación cancelada"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Válido hasta $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Próxima renovación $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Historial de uso"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Cuota gratuita · Los créditos no caducan"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Créditos agotados"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Créditos por agotarse"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Suscríbete para uso ilimitado"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Cuenta y uso"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Actualmente usas tu propia API Key, no se consumen créditos."
+  },
+  "m_3e9721196db81746": {
+    "message": "La traducción con créditos no está disponible temporalmente; puedes cambiar a tu propia API Key."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key configurada"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "Aún no has configurado una API Key, haz clic aquí para configurarla"
   },
   "extensionName": {
     "message": "Traductor IA"

@@ -150,4 +150,22 @@ const deferred = () => { let resolve; const promise = new Promise((r) => { resol
   assert.equal(store.accountStatus.username, 'new_member');
   assert.equal(store.accountStatus.credits.balance, 100, '旧登录的翻译响应不能覆盖新账户余额');
 }
-console.log('✓ 账户同步：来源、环境、服务端撤销、离线与并发刷新检查通过');
+for (const production of [false, true]) {
+  const { context, store, accountOrigin, message } = boot(production);
+  let request;
+  context.fetch = async (url, init) => {
+    request = { url, init };
+    return { ok: true, status: 200, json: async () => ({ raw: '[]', credits: { balance: '0.00', available: true } }) };
+  };
+  assert.equal(await context.AITrAccount.readImageText({ image: 'synthetic-image' }), '[]');
+  assert.equal(request.url, `${accountOrigin}/api/extension/read-image`);
+  assert.deepEqual(JSON.parse(request.init.body), { image: 'synthetic-image' });
+  assert.equal(request.init.headers.authorization, 'Bearer original-token');
+  assert.equal(store.accountStatus.credits.available, true);
+  request = null;
+  await message({}, { type: 'hosted-read-image', image: 'from-website' });
+  assert.equal(request, null, '网页不能使用扩展页面专用的托管识图消息');
+  context.fetch = async () => ({ status: 413, json: async () => ({ error: 'too_large' }) });
+  await assert.rejects(context.AITrAccount.readImageText({ image: 'large' }), err => err.code === 'too_large');
+}
+console.log('✓ 账户同步与托管识图：来源、本地/生产环境、会话及余额检查通过');

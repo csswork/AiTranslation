@@ -1319,9 +1319,6 @@
   "m_26c9827f33df5036": {
     "message": "Credit-based translation failed"
   },
-  "m_4103a84ace27803a": {
-    "message": "Credit-based translation currently supports text only. For image translation, switch to ChatGPT or DeepSeek."
-  },
   "m_e675111ecc7e0a28": {
     "message": "Credit-based translation doesn't require a connection test. Just log in to use it."
   },
@@ -1363,9 +1360,6 @@
   },
   "m_3ab8cc15939f3b5c": {
     "message": "Log out"
-  },
-  "m_d2ffae2f0a159a66": {
-    "message": "Supports text translation for selection, area translation, and the translation panel. Image translation currently requires switching to ChatGPT or DeepSeek and entering your own Key."
   },
   "m_918b7761e2f3dd27": {
     "message": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions."
@@ -1518,6 +1512,106 @@
   },
   "m_36d07a204c5bc7cf": {
     "message": "Supports text selection, area translation, translation panel, and image translation, with no API Key required."
+  },
+  "m_da4ace1c0a4635b3": {
+    "message": "Translation method"
+  },
+  "m_3ed95de0cf58ca4f": {
+    "message": "Can translate about $arg1$ characters",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_08dddeac1319d6e8": {
+    "message": "credits"
+  },
+  "m_c1f65837307903eb": {
+    "message": "Not signed in"
+  },
+  "m_887b3ad28272dbe8": {
+    "message": "Sign in to use credit-based translation, no API Key needed"
+  },
+  "m_20c320ecc4a391d6": {
+    "message": "No sign-up · Credits never expire"
+  },
+  "m_8b358d0f97427aa2": {
+    "message": "Guest"
+  },
+  "m_baaa20678b8f77bb": {
+    "message": "Free credits used up"
+  },
+  "m_62bb69ea54d26905": {
+    "message": "Sign up and get $arg1$ more credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_acb98d1f08d6c743": {
+    "message": "Sign up to claim $arg1$ credits",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c3bf940cbf95a91b": {
+    "message": "Annual subscription"
+  },
+  "m_c36cb96c5fa284bc": {
+    "message": "Monthly subscription"
+  },
+  "m_dc0f3b5b79f12534": {
+    "message": "Renewal canceled"
+  },
+  "m_abcb2ccebd99d14b": {
+    "message": "Valid until $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_36911c067d0da032": {
+    "message": "Next renewal $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f84c7d6122a7753f": {
+    "message": "Usage history"
+  },
+  "m_6900127a909ce8fa": {
+    "message": "Free quota · Credits never expire"
+  },
+  "m_0bba27e21ae20477": {
+    "message": "Credits used up"
+  },
+  "m_4ce4585ca73f7f7b": {
+    "message": "Credits running low"
+  },
+  "m_2ad23ca2d50001c5": {
+    "message": "Subscribe for unlimited use"
+  },
+  "m_99768a0f0f254b8c": {
+    "message": "Account and usage"
+  },
+  "m_115a02e3bd153c37": {
+    "message": "Currently using your own API Key, credits are not consumed."
+  },
+  "m_3e9721196db81746": {
+    "message": "Credit-based translation is temporarily unavailable; you can switch to your own API Key."
+  },
+  "m_b8ea4883feecc096": {
+    "message": "API Key configured"
+  },
+  "m_f0dc2a82e94a1504": {
+    "message": "No API Key set yet, click here to configure"
   },
   "extensionName": {
     "message": "AI Translator"
