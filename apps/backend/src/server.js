@@ -1,6 +1,5 @@
 /** VPS 服务入口：npm start（开发时 npm run dev）。 */
 import { serve } from '@hono/node-server';
-import * as undici from 'undici';
 import { createApp } from './app.js';
 import { createGoogleClient } from './auth/google.js';
 import { googleJwks, verifyGoogleIdToken } from './auth/google-id-token.js';
@@ -23,8 +22,11 @@ try {
 // Node 自带的 fetch 不读代理环境变量。设置了 HTTPS_PROXY / HTTP_PROXY 时（例如本机经代理访问 Google），
 // 出站请求（OAuth 令牌交换等）改走代理；支持 http:// 与 socks5://。VPS 上不设置即直连。
 // 内置 fetch 与 undici 包的版本不同，混用会出错（UND_ERR_INVALID_ARG），所以一并换成 undici 的实现。
+// 只在需要代理时才加载 undici：导入它就会注册全局 dispatcher，内置 fetch 随之改用它，
+// 带 Content-Length 头的请求（如 arctic 的 Google 令牌交换）会因此失败。
 const proxy = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
 if (proxy) {
+  const undici = await import('undici');
   const { fetch, Request, Response, Headers, FormData } = undici;
   Object.assign(globalThis, { fetch, Request, Response, Headers, FormData });
   const socks = /^socks5h?:\/\//i.test(proxy);
