@@ -35,6 +35,10 @@ async function adminLogin(app, config, mailbox, email = 'boss@example.com') {
   assert.equal((await a.get('/')).headers.get('location'), '/2fa', '二步验证前不能进入');
   const page = await a.text('/2fa');
   const secret = page.match(/<code>([A-Z2-7 ]+)<\/code>/)[1].replace(/ /g, '');
+  // 二维码在服务端渲染成内联 SVG（不用脚本、不放宽 CSP），不含 style 属性
+  const qr = page.match(/<figure class="totp-qr"[^>]*>(<svg[\s\S]*?<\/svg>)<\/figure>/);
+  assert.ok(qr, '绑定页显示二维码');
+  assert.doesNotMatch(qr[1], /style=/);
   assert.equal((await a.post('/2fa', { code: '000000' })).headers.get('location'), '/2fa');
   res = await a.post('/2fa', { code: totpCode(secret, currentStep()) });
   assert.equal(res.headers.get('location'), '/');

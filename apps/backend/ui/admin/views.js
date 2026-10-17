@@ -2,7 +2,8 @@
  * 管理员界面（管理端）的页面。只有中文；服务端渲染，没有浏览器脚本。
  * 样式沿用用户端的 account.css，另加 admin.css（报表与表格）。
  */
-import { html } from 'hono/html';
+import { html, raw } from 'hono/html';
+import { renderSVG } from 'uqr';
 import { displayCredits } from '../../src/credits/units.js';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
@@ -132,9 +133,11 @@ export const totpPage = ({ setup = null, note = null }) => layout({
   body: html`<section class="card auth">
   <h1>${setup ? '绑定二步验证' : '二步验证'}</h1>
   ${setup
-    ? html`<p>用身份验证器 App（如 1Password、Google Authenticator、Authy）添加账户，手动输入下面的密钥，然后填入 App 显示的 6 位验证码。</p>
+    ? html`<p>用身份验证器 App（如 1Password、Google Authenticator、Authy）扫描下面的二维码添加账户，然后填入 App 显示的 6 位验证码。</p>
+  <figure class="totp-qr" aria-label="二步验证二维码">${raw(renderSVG(setup.url, { ecc: 'M', border: 2 }))}</figure>
+  <p class="fine">无法扫码时手动输入密钥：</p>
   <p class="secret" dir="ltr"><code>${setup.secret.match(/.{1,4}/g).join(' ')}</code></p>
-  <p class="fine">也可以在支持的 App 中打开：<a href="${setup.url}" dir="ltr">otpauth 链接</a>。密钥只显示在这次绑定过程中。</p>`
+  <p class="fine">也可以在支持的 App 中打开：<a href="${setup.url}" dir="ltr">otpauth 链接</a>。二维码与密钥只显示在这次绑定过程中。</p>`
     : html`<p class="muted">输入身份验证器 App 显示的 6 位验证码。</p>`}
   <form method="post" action="/2fa" class="stack">
     <label for="code">验证码</label>

@@ -156,6 +156,8 @@ form.inline input { width: auto; flex: 1 1 160px; }
 .setting select { font: inherit; border: 1px solid var(--btn-line); background: var(--bg); color: var(--text); }
 .settings-form > .button { justify-self: start; }
 @media (max-width: 760px) { .setting { grid-template-columns: 1fr; } }
+.totp-qr { margin: .25rem 0 .75rem; width: min(13rem, 100%); }
+.totp-qr svg { display: block; width: 100%; height: auto; border-radius: 8px; }
 .secret code { font-size: 1.15rem; letter-spacing: .08em; padding: .4rem .6rem; border-radius: 8px; background: var(--surface-2); }
 .tag.ok { color: var(--ok); background: var(--ok-bg); }
 .tag.warn { color: var(--error); background: var(--error-bg); }
