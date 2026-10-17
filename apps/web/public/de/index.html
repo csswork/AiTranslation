@@ -150,7 +150,7 @@
                   <line class="pv-menu-sep" x1="460" y1="278" x2="654" y2="278" stroke="#2e3547"/>
                   <rect class="pv-menu-hover" x="458" y="286" width="198" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
                   <circle class="pv-accent" cx="472" cy="299" r="4" fill="#6d70f5"/>
-                  <text class="pv-text" x="484" y="303.5" font-size="12" fill="#e8eaf0">Ins Chinesische übersetzen</text>
+                  <text class="pv-text" x="484" y="303.5" font-size="12" fill="#e8eaf0">Nach Deutsch übersetzen</text>
                   <rect class="pv-menu-item" x="470" y="327" width="80" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
                 </g>
                 <!-- 模拟鼠标拖选，只在演示过程中出现。四层 <g> 各管一段位移（横拖 → 落到第二行 → 往回收 → 移到菜单项），
@@ -175,7 +175,7 @@
                   <rect class="pv-head" x="168.5" y="158" width="463" height="16" fill="#1b202b"/>
                   <line class="pv-head-line" x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
                   <circle class="pv-accent" cx="192" cy="153" r="4.5" fill="#6d70f5"/>
-                  <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">Ins Chinesische übersetzen</text>
+                  <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">Nach Deutsch übersetzen</text>
                   <rect class="pv-chip" x="556" y="147" width="40" height="13" rx="6.5" fill="rgba(255,255,255,.1)"/>
                   <circle class="pv-close" cx="612" cy="153" r="4" fill="rgba(255,255,255,.28)"/>
                   <!-- 译文：载入时由 main.js 逐段放出来 -->
@@ -384,7 +384,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
         <h2>Mit eigenem Key nutzbar, Key-freier Dienst in Vorbereitung</h2>
-        <p>Die Erweiterung selbst ist Open Source und kostenlos; die Kosten für einen eigenen Key werden von der gewählten Plattform erhoben. Die folgenden Test- und Abonnementoptionen sind das Startkonzept für 2.0.0 und derzeit weder zur Inanspruchnahme noch zum Kauf verfügbar.</p>
+        <p>Die Erweiterung ist quelloffen und kostenlos. Testphase und Abonnement erscheinen mit Version 2.0.0 und sind derzeit noch nicht verfügbar.</p>
       </div>
 
       <div class="plans reveal">
@@ -392,21 +392,19 @@
           <b class="plan-name">Eigener Key</b>
           <span class="plan-status">Derzeit verfügbar</span>
           <p class="plan-price">Kostenlos</p>
-          <p class="plan-desc">Tragen Sie Ihren eigenen OpenAI-, DeepSeek- oder DeepL-Key ein; die Anfragen gehen direkt an den jeweiligen Anbieter, die Kosten werden von der Plattform nutzungsabhängig abgerechnet.</p>
+          <p class="plan-desc">Hinterlegen Sie Ihren eigenen OpenAI-, DeepSeek- oder DeepL-Key; die Kosten werden von der Plattform nutzungsabhängig berechnet.</p>
           <ul>
-            <li>Übersetzung von markiertem Text, ganzen Absätzen, Webseitenbereichen, Bildern und Untertiteln</li>
+            <li>Übersetzung von markiertem Text, Webseitenbereichen, Bildern und Videountertiteln</li>
             <li>Der Key wird nur in Ihrem Browser gespeichert</li>
-            <li>Umfang, Kontingent und Kosten richten sich nach der gewählten Plattform; DeepL bietet keine Bilderkennung</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">Kostenlos testen</b>
           <span class="plan-status">In Vorbereitung</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">Geplant sind 50,00 Punkte als Gast-Testversion, weitere 200,00 Punkte bei Registrierung eines Kontos sowie die Zusammenführung verbleibender Testpunkte. Punkte verfallen nicht und werden exakt nach tatsächlicher Nutzung abgezogen.</p>
+          <p class="plan-desc">Gäste erhalten 50.00 Punkte zum Testen, bei Registrierung zusätzlich 200.00 Punkte. Punkte verfallen nicht und werden nach tatsächlicher Nutzung abgezogen.</p>
           <ul>
             <li>Kein API Key erforderlich</li>
-            <li>Textübersetzung für Auswahl, ganze Absätze, Webseitenbereiche, Bilder und bereits erkannte Untertitel</li>
             <li>Bei fehlgeschlagener Übersetzung werden keine Punkte abgezogen</li>
           </ul>
         </div>
@@ -415,9 +413,8 @@
           <span class="plan-status">Geplanter Preis · Noch nicht käuflich erwerbbar</span>
           <p class="plan-price">$3.99<span>/ Monat</span></p>
           <p class="plan-alt">Oder $29.99 / Jahr, 37 % günstiger als die monatliche Zahlung</p>
-          <p class="plan-desc">Punktebasierte Übersetzung ist unbegrenzt nutzbar, es werden keine Punkte mehr berechnet. Jederzeit kündbar, bis zum Ende des aktuellen Zeitraums weiterhin nutzbar.</p>
+          <p class="plan-desc">Punkte ermöglichen unbegrenzte Übersetzungen; jederzeit kündbar.</p>
           <ul>
-            <li>Enthält alle Funktionen der kostenlosen Testversion</li>
             <li>Unbegrenzte Nutzung nach dem Grundsatz der angemessenen Nutzung</li>
             <li>Volle Rückerstattung innerhalb von 7 Tagen nach der ersten Zahlung möglich</li>
           </ul>
@@ -425,7 +422,7 @@
         </div>
       </div>
 
-      <p class="after-facts reveal">Die oben genannten Preise und Gratisguthaben sind geplant; beim offiziellen Start gilt das Nutzerzentrum. Preise in US-Dollar, gegebenenfalls zzgl. Steuern; die Zahlungsabwicklung als Wiederverkäufer (Merchant of Record) ist für <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> geplant, wir haben keinen Zugriff auf Karteninformationen. Abonnement-, Rückerstattungs- und Fair-Use-Regeln siehe <a class="link" href="/de/terms.html">Nutzungsbedingungen</a>.</p>
+      <p class="after-facts reveal">Die oben genannten Preise sind Planungspreise; bei offizieller Freigabe gelten die Angaben im Nutzerzentrum. Die Preise sind in US-Dollar angegeben, Steuern können zusätzlich anfallen; die Zahlungsabwicklung erfolgt durch <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> als Händler, wir haben keinen Zugriff auf Kartendaten. Details siehe <a class="link" href="/de/terms.html">Nutzungsbedingungen</a>.</p>
     </div>
   </section>
 
@@ -459,30 +456,30 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>Aus dem Chrome Web Store installieren</h2>
-        <p>Erfordert Chrome 116 oder höher; auch Chromium-basierte Browser wie Edge können von derselben Seite aus installieren. Konten und der Dienst ohne eigenen Key sind noch nicht verfügbar; wählen Sie derzeit in den Einstellungen eine Plattform mit eigenem API Key.</p>
+        <p>Erfordert Chrome 116 oder höher; auch Chromium-basierte Browser wie Edge werden unterstützt.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Store-Seite öffnen</b> <span>– Öffnen Sie am Computer in Chrome die <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store-Seite der Erweiterung</a>.</span></div>
+          <div><b>Store-Seite öffnen</b> <span>Öffnen Sie am Computer die <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Seite im Chrome Web Store</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Zu Chrome hinzufügen</b> <span>– Klicken Sie auf „Zu Chrome hinzufügen“ und wählen Sie im Bestätigungsdialog „Erweiterung hinzufügen“.</span></div>
+          <div><b>Zu Chrome hinzufügen</b> <span>Klicken Sie auf „Zu Chrome hinzufügen“ und bestätigen Sie.</span></div>
         </div>
         <div class="step">
-          <div><b>An die Symbolleiste anheften</b> <span>– Klicken Sie auf das Puzzle-Symbol rechts neben der Adressleiste und heften Sie die Erweiterung an die Symbolleiste; anschließend öffnen Sie über das Symbol die Einstellungen und das Übersetzungsfenster.</span></div>
+          <div><b>An die Symbolleiste anheften</b> <span>Klicken Sie auf das Puzzleteil-Symbol und heften Sie die Erweiterung an die Symbolleiste.</span></div>
         </div>
         <div class="step">
-          <div><b>Übersetzung starten</b> <span>—— Wählen Sie auf der Einstellungsseite OpenAI, DeepSeek oder DeepL, tragen Sie Ihren eigenen API Key ein und testen Sie die Verbindung. Bestätigen Sie die Standard-Zielsprache, markieren Sie Text und übersetzen Sie per Rechtsklick.</span></div>
+          <div><b>Übersetzung starten</b> <span>Hinterlegen Sie in den Einstellungen Ihren eigenen API Key, markieren Sie Text und übersetzen Sie per Rechtsklick.</span></div>
         </div>
       </div>
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store öffnen</a>
-        <p>Möchten Sie selbst bauen? Sie können auch aus dem <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub-Quellcode</a> unter <span class="mono">chrome://extensions/</span> im Entwicklermodus das Verzeichnis <span class="mono">apps/extension</span> laden.</p>
+        <p>Alternativ können Sie aus dem <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub-Quellcode</a> <span class="mono">apps/extension</span> im Entwicklermodus laden.</p>
       </div>
 
-      <p class="after-facts reveal">Für die Bildübersetzung muss ein Modell mit Bilderkennung gewählt werden; DeepL dient der Textübersetzung. Video-Untertitel sind eine experimentelle Funktion, die manuell aktiviert werden muss; die Spracherkennung hängt vom Browser ab. Die Erweiterung unterstützt keine Übersetzung auf geschützten Seiten wie internen Chrome-Seiten oder dem Chrome Web Store.</p>
+      <p class="after-facts reveal">Für die Bildübersetzung ist ein Modell mit Bilderkennung erforderlich; die Erweiterung kann nicht auf geschützten Seiten wie internen Chrome-Seiten oder dem Web Store verwendet werden.</p>
     </div>
   </section>
 

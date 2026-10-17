@@ -150,7 +150,7 @@
                   <line class="pv-menu-sep" x1="460" y1="278" x2="654" y2="278" stroke="#2e3547"/>
                   <rect class="pv-menu-hover" x="458" y="286" width="198" height="26" rx="5" fill="rgba(109,112,245,.3)"/>
                   <circle class="pv-accent" cx="472" cy="299" r="4" fill="#6d70f5"/>
-                  <text class="pv-text" x="484" y="303.5" font-size="12" fill="#e8eaf0">الترجمة إلى الصينية</text>
+                  <text class="pv-text" x="484" y="303.5" font-size="12" fill="#e8eaf0">ترجم إلى العربية</text>
                   <rect class="pv-menu-item" x="470" y="327" width="80" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
                 </g>
                 <!-- 模拟鼠标拖选，只在演示过程中出现。四层 <g> 各管一段位移（横拖 → 落到第二行 → 往回收 → 移到菜单项），
@@ -175,7 +175,7 @@
                   <rect class="pv-head" x="168.5" y="158" width="463" height="16" fill="#1b202b"/>
                   <line class="pv-head-line" x1="168" y1="174" x2="632" y2="174" stroke="#2a3142"/>
                   <circle class="pv-accent" cx="192" cy="153" r="4.5" fill="#6d70f5"/>
-                  <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">الترجمة إلى الصينية</text>
+                  <text class="pv-text" x="207" y="158" font-size="13" font-weight="600" fill="#e8eaf0">ترجم إلى العربية</text>
                   <rect class="pv-chip" x="556" y="147" width="40" height="13" rx="6.5" fill="rgba(255,255,255,.1)"/>
                   <circle class="pv-close" cx="612" cy="153" r="4" fill="rgba(255,255,255,.28)"/>
                   <!-- 译文：载入时由 main.js 逐段放出来 -->
@@ -384,7 +384,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
         <h2>مفتاحك الخاص متاح للاستخدام، وخدمة بدون مفتاح قريباً</h2>
-        <p>الإضافة نفسها مفتوحة المصدر ومجانية، وتتحمل تكاليف المفتاح الخاص بك عبر المنصة التي تختارها. التجربة والاشتراك التاليان هما خطة إطلاق 2.0.0، ولم يتم فتح استلامهما أو شرائهما بعد.</p>
+        <p>الإضافة مفتوحة المصدر ومجانية. تتوفر النسخة التجريبية والاشتراك مع إصدار 2.0.0، وهي غير متاحة حالياً.</p>
       </div>
 
       <div class="plans reveal">
@@ -392,21 +392,19 @@
           <b class="plan-name">Key الخاص بك</b>
           <span class="plan-status">متاح حالياً</span>
           <p class="plan-price">مجاني</p>
-          <p class="plan-desc">أدخل Key الخاص بك من OpenAI أو DeepSeek أو DeepL، وتُرسل الطلبات مباشرة إلى الجهة المعنية، وتُحتسب التكلفة عليك من المنصة حسب الاستخدام.</p>
+          <p class="plan-desc">أدخل مفتاح OpenAI أو DeepSeek أو DeepL الخاص بك، وتُحتسب التكلفة من المنصة حسب الاستخدام.</p>
           <ul>
-            <li>ترجمة النص المحدد والفقرة الكاملة ومناطق صفحة الويب والصور وترجمات الفيديو</li>
+            <li>ترجمة النص المحدد ومناطق صفحة الويب والصور وترجمات الفيديو</li>
             <li>يُحفظ Key في متصفحك فقط</li>
-            <li>يحدد النطاق والحصة والتكلفة حسب المنصة المختارة؛ DeepL لا يوفر التعرف على الصور</li>
           </ul>
         </div>
         <div class="plan">
           <b class="plan-name">تجربة مجانية</b>
           <span class="plan-status">قريباً</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">يُخطط لتوفير 50.00 نقطة تجريبية للزوار، و200.00 نقطة إضافية عند تسجيل حساب، مع دمج النقاط التجريبية المتبقية. النقاط لا تنتهي صلاحيتها، وتُخصم بدقة حسب الاستخدام الفعلي.</p>
+          <p class="plan-desc">يحصل الزائر على 50.00 نقطة تجريبية، وعند التسجيل يحصل على 200.00 نقطة إضافية. لا تنتهي صلاحية النقاط، وتُخصم حسب الاستخدام الفعلي.</p>
           <ul>
             <li>لا حاجة إلى أي API Key</li>
-            <li>ترجمة النص عند التحديد، والفقرة الكاملة، ومنطقة صفحة الويب، والصور، والترجمات المكتشفة</li>
             <li>لا تُخصم النقاط عند فشل الترجمة</li>
           </ul>
         </div>
@@ -415,9 +413,8 @@
           <span class="plan-status">السعر المخطط · الشراء غير متاح بعد</span>
           <p class="plan-price">$3.99<span>/ شهريًا</span></p>
           <p class="plan-alt">أو $29.99 / سنويًا، بتوفير 37% مقارنة بالدفع الشهري</p>
-          <p class="plan-desc">استخدام غير محدود لترجمة النقاط، دون احتساب النقاط. يمكنك الإلغاء في أي وقت، ويمكنك الاستمرار في الاستخدام حتى نهاية الفترة الحالية.</p>
+          <p class="plan-desc">استخدام غير محدود للترجمة بالنقاط، مع إمكانية الإلغاء في أي وقت.</p>
           <ul>
-            <li>يشمل جميع ميزات التجربة المجانية</li>
             <li>عدد غير محدود وفقًا لمبدأ الاستخدام المعقول</li>
             <li>إمكانية طلب استرداد كامل خلال 7 أيام من أول دفعة</li>
           </ul>
@@ -425,7 +422,7 @@
         </div>
       </div>
 
-      <p class="after-facts reveal">ما ورد أعلاه هو السعر المخطط والرصيد الممنوح، وعند الإطلاق الرسمي يُعتمد ما يظهر في مركز المستخدم. الأسعار بالدولار الأمريكي وقد تُضاف ضرائب؛ وتتولى <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> بصفتها التاجر المسجل (Merchant of Record) معالجة الدفع والإيصالات، ولا نصل إلى معلومات بطاقتك البنكية. قواعد الاشتراك والاسترداد والاستخدام المعقول في <a class="link" href="/ar/terms.html">شروط الخدمة</a>.</p>
+      <p class="after-facts reveal">الأسعار المذكورة أعلاه مخططة، وتُعتمد الأسعار الرسمية عند الإتاحة في مركز المستخدم. الأسعار بالدولار الأمريكي وقد تُضاف رسوم ضريبية؛ وتتولى <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> معالجة الدفع بصفتها الموزع، ولا نطّلع على بيانات البطاقات البنكية. راجع <a class="link" href="/ar/terms.html">شروط الخدمة</a>.</p>
     </div>
   </section>
 
@@ -459,30 +456,30 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>التثبيت من متجر Chrome الإلكتروني</h2>
-        <p>يتطلب Chrome 116 أو إصدارًا أحدث، ويمكن أيضًا تثبيته من الصفحة نفسها في المتصفحات المبنية على Chromium مثل Edge. خدمة الحساب والخدمة بدون مفتاح لم تُطرح بعد، لذا يُرجى حاليًا اختيار منصة تتطلب API Key خاصًا بك في الإعدادات.</p>
+        <p>يتطلب Chrome 116 أو إصداراً أحدث، وينطبق الأمر نفسه على المتصفحات المبنية على Chromium مثل Edge.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>افتح صفحة المتجر</b> <span>—— افتح <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">صفحة الإضافة في متجر Chrome الإلكتروني</a> باستخدام Chrome على الكمبيوتر.</span></div>
+          <div><b>افتح صفحة المتجر</b> <span>افتح <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">صفحة متجر Chrome الإلكتروني</a> على الكمبيوتر.</span></div>
         </div>
         <div class="step">
-          <div><b>أضف إلى Chrome</b> <span>—— انقر على «إضافة إلى Chrome»، ثم اختر «إضافة الإضافة» في مربع التأكيد الذي يظهر.</span></div>
+          <div><b>أضف إلى Chrome</b> <span>انقر على «إضافة إلى Chrome» ثم أكّد.</span></div>
         </div>
         <div class="step">
-          <div><b>ثبّت في شريط الأدوات</b> <span>—— انقر على أيقونة الأحجية على يمين شريط العنوان لتثبيت الإضافة في شريط الأدوات، وبعد ذلك يمكنك النقر على الأيقونة لفتح الإعدادات ولوحة الترجمة.</span></div>
+          <div><b>ثبّت في شريط الأدوات</b> <span>انقر على أيقونة الأحجية لتثبيت الإضافة في شريط الأدوات.</span></div>
         </div>
         <div class="step">
-          <div><b>بدء الترجمة</b> <span>—— اختر OpenAI أو DeepSeek أو DeepL في صفحة الإعدادات، وأدخل مفتاح API Key الخاص بك واختبر الاتصال. بعد تأكيد اللغة الهدف الافتراضية، حدد النص وانقر بزر الفأرة الأيمن للترجمة.</span></div>
+          <div><b>ابدأ الترجمة</b> <span>أدخل مفتاح API الخاص بك في الإعدادات، وحدّد النص، ثم انقر بزر الفأرة الأيمن للترجمة.</span></div>
         </div>
       </div>
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">افتح متجر Chrome الإلكتروني</a>
-        <p>هل تريد البناء بنفسك؟ يمكنك أيضًا تحميل دليل <span class="mono">apps/extension</span> من <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">الشيفرة المصدرية على GitHub</a> في <span class="mono">chrome://extensions/</span> بوضع المطور.</p>
+        <p>يمكنك أيضاً تحميل <span class="mono">apps/extension</span> من <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">مصدر GitHub</a> في وضع المطوّر.</p>
       </div>
 
-      <p class="after-facts reveal">تتطلب ترجمة الصور اختيار نموذج يدعم التعرف على الصور؛ أما DeepL فيُستخدم لترجمة النصوص. ترجمة الفيديو ميزة تجريبية يجب تشغيلها يدويًا، وتعتمد قدرة التعرف على الكلام على المتصفح. لا يدعم الامتداد الترجمة في صفحات Chrome المحمية مثل صفحات Chrome الداخلية ومتجر Chrome.</p>
+      <p class="after-facts reveal">تتطلب ترجمة الصور اختيار نموذج يدعم التعرّف على الصور؛ ولا تعمل الإضافة في صفحات Chrome الداخلية ومتجر التطبيقات وغيرها من الصفحات المحمية.</p>
     </div>
   </section>
 

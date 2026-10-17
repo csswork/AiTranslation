@@ -852,7 +852,7 @@
       "index.html"
     ]
   },
-  "扩展本身开源免费，自带 Key 的费用由所选平台收取。以下试用与订阅是 2.0.0 的上线方案，目前尚未开放领取或购买。": {
+  "扩展开源免费。试用与订阅随 2.0.0 上线，目前尚未开放。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -880,14 +880,14 @@
       "index.html"
     ]
   },
-  "填入你自己的 OpenAI、DeepSeek 或 DeepL Key，请求直接发往对方，费用由平台按用量向你收取。": {
+  "填入自己的 OpenAI、DeepSeek 或 DeepL Key，费用由平台按用量收取。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "index.html"
     ]
   },
-  "划词、整段、网页区域、图片与视频字幕翻译": {
+  "划词、网页区域、图片与视频字幕翻译": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -895,13 +895,6 @@
     ]
   },
   "Key 只保存在你的浏览器里": {
-    "kind": "text",
-    "tag": "li",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "支持范围、额度和费用由所选平台决定；DeepL 不提供图片识别": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -922,7 +915,7 @@
       "index.html"
     ]
   },
-  "计划提供 50.00 点访客试用，注册账户再赠 200.00 点，并合并剩余试用点数。点数不过期，按实际用量精确扣减。": {
+  "访客试用 50.00 点，注册再送 200.00 点。点数不过期，按实际用量扣减。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -930,13 +923,6 @@
     ]
   },
   "不需要任何 API Key": {
-    "kind": "text",
-    "tag": "li",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "划词、整段、网页区域、图片与已识别字幕的文字翻译": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -978,16 +964,9 @@
       "index.html"
     ]
   },
-  "点数翻译无限使用，不再计算点数。随时可以取消，本期结束前仍可使用。": {
+  "点数翻译无限使用，随时可以取消。": {
     "kind": "text",
     "tag": "p",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "包含免费试用的全部功能": {
-    "kind": "text",
-    "tag": "li",
     "pages": [
       "index.html"
     ]
@@ -1013,7 +992,7 @@
       "index.html"
     ]
   },
-  "以上为计划价格和赠送额度，正式开放时以用户中心为准。价格以美元计，可能另加税费；计划由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商（Merchant of Record）处理付款与收据，我们不接触银行卡信息。订阅、退款与合理使用规则见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
+  "以上为计划价格，正式开放时以用户中心为准。价格以美元计，可能另加税费；由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商处理付款，我们不接触银行卡信息。详见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1083,35 +1062,35 @@
       "index.html"
     ]
   },
-  "需要 Chrome 116 或更高版本，Edge 等 Chromium 内核浏览器也可以从同一页面安装。账户与免 Key 服务尚未上线，当前请在设置中选择自带 API Key 的平台。": {
+  "需要 Chrome 116 或更高版本，Edge 等 Chromium 内核浏览器同样适用。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "index.html"
     ]
   },
-  "<b>打开商店页面</b> <span>——在电脑上用 Chrome 打开<a class=\"link\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\">扩展的 Chrome 应用商店页面</a>。</span>": {
+  "<b>打开商店页面</b> <span>在电脑上打开<a class=\"link\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\">Chrome 应用商店页面</a>。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>添加至 Chrome</b> <span>——点「添加至 Chrome」，在弹出的确认框里选「添加扩展程序」。</span>": {
+  "<b>添加至 Chrome</b> <span>点「添加至 Chrome」并确认。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>固定到工具栏</b> <span>——点地址栏右侧的拼图图标，把扩展固定到工具栏，之后点图标就能打开设置和翻译面板。</span>": {
+  "<b>固定到工具栏</b> <span>点拼图图标，把扩展固定到工具栏。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>开始翻译</b> <span>——在设置页选择 OpenAI、DeepSeek 或 DeepL，填入自己的 API Key 并测试连接。确认默认目标语言后，选中文字，右键翻译。</span>": {
+  "<b>开始翻译</b> <span>在设置里填入自己的 API Key，选中文字，右键翻译。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
@@ -1125,14 +1104,14 @@
       "index.html"
     ]
   },
-  "想自己构建？也可以从 <a class=\"link\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">GitHub 源码</a>在 <span class=\"mono\">chrome://extensions/</span> 以开发者模式加载 <span class=\"mono\">apps/extension</span> 目录。": {
+  "也可以从 <a class=\"link\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">GitHub 源码</a>以开发者模式加载 <span class=\"mono\">apps/extension</span>。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "index.html"
     ]
   },
-  "图片翻译需选择支持图片识别的模型；DeepL 用于文字翻译。视频字幕是需手动开启的实验功能，语音识别能力取决于浏览器。扩展不支持在 Chrome 内部页面、Chrome 应用商店等受保护页面翻译。": {
+  "图片翻译需选择支持图片识别的模型；扩展无法在 Chrome 内部页面、应用商店等受保护页面中使用。": {
     "kind": "text",
     "tag": "p",
     "pages": [
