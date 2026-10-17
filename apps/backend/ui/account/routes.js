@@ -267,7 +267,9 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
       claims = await finishGoogleAuth(google, code, verifier);
     } catch (err) {
       // 只记录错误类别与 OAuth 错误码，不记录授权码、令牌或响应内容。
-      log.warn(`Google 授权码交换失败：${err.constructor?.name || err.name} ${err.code || err.cause?.code || ''}`.trim());
+      // ArcticFetchError 包着 fetch 的 TypeError，真正的网络错误码（ETIMEDOUT、ENOTFOUND 等）在再下一层。
+      const code = err.code || err.cause?.code || err.cause?.cause?.code || err.cause?.message || '';
+      log.warn(`Google 授权码交换失败：${err.constructor?.name || err.name} ${code}`.trim());
       return back(c, 'google_failed', failPath);
     }
     if (!claims.subject) return back(c, 'google_failed', failPath);
