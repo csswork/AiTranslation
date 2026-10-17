@@ -144,7 +144,9 @@ main, .nav, .foot { position: relative; z-index: 1; }
 }
 .brand { display: flex; align-items: center; gap: .6rem; font-weight: 620; letter-spacing: -.01em; }
 .brand img { width: 26px; height: 26px; }
-.nav-links { margin-inline-start: auto; display: flex; align-items: center; gap: var(--s3); }
+.nav-links { --nav-gap: var(--s3); margin-inline-start: auto; display: flex; align-items: center; gap: var(--nav-gap); }
+/* 菜单链接之间保持 --nav-gap；语言、配色、登录这几个按钮之间收紧到 .75rem（与用户端页头一致） */
+.nav-links .lang ~ * { margin-inline-start: calc(.75rem - var(--nav-gap)); }
 .nav-links a { color: var(--text-2); font-size: .92rem; transition: color .18s ease; }
 .nav-links a:hover { color: var(--text); }
 @media (max-width: 720px) { .nav-links .hide-sm { display: none; } }
@@ -152,7 +154,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .brand, .nav-links a { white-space: nowrap; }
 @media (max-width: 480px) {
   .nav-in { gap: .75rem; }
-  .nav-links { gap: .9rem; }
+  .nav-links { --nav-gap: .9rem; }
 }
 /* 再窄（360 宽的安卓机、iPhone SE）：品牌只留图标，文字仍留给读屏 */
 @media (max-width: 370px) {
@@ -467,7 +469,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 /* ------------------------------------------------------------------ 区块 */
 
 .section { padding: var(--s7) 0; }
-.section-head { max-width: 54ch; }
+.section-head { max-width: unset; padding: 0 0 var(--s4); }
 /* 小标题：一截发丝线 + 疏排的小字，不用全大写的粗体 */
 .section-head .kicker,
 .feature-extra .kicker {
@@ -775,7 +777,7 @@ html:not(.js) .theme-toggle { display: none; }
 /* 导航里的语言下拉。结构由 lang.js 填：<label class="lang"><svg/><span data-lang-switcher><select/></span></label> */
 .lang {
   display: inline-flex; align-items: center; gap: 3px;
-  height: 34px; padding: 0 7px 0 9px;
+  height: 34px; padding: 0 9px;
   border: 1px solid var(--line); border-radius: 9px;
   color: var(--text-2); cursor: pointer;
   transition: color .18s ease, background .18s ease, border-color .18s ease;
@@ -784,14 +786,21 @@ html:not(.js) .theme-toggle { display: none; }
 .lang svg { display: block; width: 16px; height: 16px; flex: none; }
 .lang select {
   appearance: none; -webkit-appearance: none;
-  border: 0; background: transparent; color: inherit;
+  border: 0; color: inherit;
+  position: relative; top: -1px;
   font: inherit; font-size: .82rem; line-height: 1.2;
-  padding: 0 1px; cursor: pointer; max-width: 7.5em;
+  padding: 0 1px; padding-inline-end: 15px; cursor: pointer; max-width: 8.5em;
+  /* 去掉系统样式后自己画下拉箭头：两段渐变拼成一个 V，颜色跟着文字（currentColor）走，不用图片 */
+  background:
+    linear-gradient(45deg, transparent 50%, currentColor 50%) no-repeat right 5px top 55% / 4px 4px,
+    linear-gradient(135deg, currentColor 50%, transparent 50%) no-repeat right 1px top 55% / 4px 4px,
+    transparent;
 }
+[dir="rtl"] .lang select { background-position: left 1px top 55%, left 5px top 55%, 0 0; }
 .lang select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 /* 没有脚本时下拉是空的：整块藏起来，导航保持原样 */
 html:not(.js) .lang { display: none; }
-@media (max-width: 640px) { .lang select { max-width: 5em; } }
+@media (max-width: 640px) { .lang select { max-width: 6em; } }
 
 /* 首屏示意图里的字是 SVG <text>，从 x 往右排。
    RTL 页面上若跟着翻转，文字会从卡片左边缘往外长——这里按 LTR 排版，阿拉伯字母自身仍正常连写。 */
@@ -804,12 +813,12 @@ html:not(.js) .lang { display: none; }
   .nav-links a[data-nav-github] { display: none; }
   .lang { padding: 0 5px 0 7px; }
   .lang svg { display: none; }
-  .lang select { max-width: 4.6em; }
+  .lang select { max-width: 5.6em; }
   /* 法语、俄语的导航词比英文长得多（Confidentialité、Конфиденциальность），一行放不下就换行，
      否则整行会被撑破；导航高度随之改成自适应 */
   .nav-in { height: auto; min-height: 62px; flex-wrap: wrap; row-gap: .4rem; padding-block: .5rem; }
   /* 再长的词（俄语 Возможности / Конфиденциальность）让链接自己再折一行，字号也跟着收一点 */
-  .nav-links { flex-wrap: wrap; justify-content: flex-end; gap: .8rem; row-gap: .4rem; }
+  .nav-links { --nav-gap: .8rem; flex-wrap: wrap; justify-content: flex-end; row-gap: .4rem; }
   .nav-links a { font-size: .88rem; }
 }
 
