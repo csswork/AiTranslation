@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
 <meta name="description" content="開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。自帶 API Key 即可使用；2.0.0 的免 Key 試用、帳戶與訂閱服務即將上線。" />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/zh-Hant/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI 劃詞翻譯：選取，按右鍵，然後繼續閱讀。" />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。自帶 API Key 即可使用；2.0.0 的免 Key 試用、帳戶與訂閱服務即將上線。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/zh-Hant/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>即將發佈：免 Key 試用、帳戶與訂閱服務正在準備，目前尚未開放。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
         <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊網頁區域，或一張圖片，就能譯成你熟悉的語言。24 種介面與目標語言可獨立選擇，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可開始。</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> 安裝到 Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> 安裝到 Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <p class="install-note" data-install-note hidden>這個瀏覽器無法安裝 Chrome 擴充功能：請在電腦上使用 Chrome、Edge 等 Chromium 核心瀏覽器開啟本頁。</p>
         <ul class="hero-meta">
           <li><b>開源</b> GPL-3.0 · 24 種語言</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>四步裝好</h2>
-        <p>以下為原始碼安裝方式，需要 Chrome 116 或更高版本。帳戶與免 Key 服務尚未上線，目前請在設定中選擇自帶 API Key 的平台。</p>
+        <h2>從 Chrome 線上應用程式商店安裝</h2>
+        <p>需要 Chrome 116 或更高版本，Edge 等 Chromium 核心瀏覽器也可以從同一頁面安裝。帳戶與免 Key 服務尚未上線，目前請在設定中選擇自帶 API Key 的平台。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>取得原始碼</b> <span>——在 GitHub 上 Download ZIP 後解壓縮，或直接 <span class="mono">git clone</span> 儲存庫。</span></div>
+          <div><b>開啟商店頁面</b> <span>——在電腦上用 Chrome 開啟<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">擴充功能的 Chrome 線上應用程式商店頁面</a>。</span></div>
         </div>
         <div class="step">
-          <div><b>開啟擴充功能頁面</b> <span>——在網址列輸入 <span class="mono">chrome://extensions/</span>，開啟右上角的「開發人員模式」。</span></div>
+          <div><b>新增至 Chrome</b> <span>——點「新增至 Chrome」，在彈出的確認框中選「新增擴充功能」。</span></div>
         </div>
         <div class="step">
-          <div><b>載入擴充功能</b> <span>——點「載入未封裝項目」，選擇倉庫中的 <span class="mono">apps/extension</span> 目錄，而不是倉庫根目錄。</span></div>
+          <div><b>固定到工具列</b> <span>——點網址列右側的拼圖圖示，將擴充功能固定到工具列，之後點圖示即可開啟設定與翻譯面板。</span></div>
         </div>
         <div class="step">
           <div><b>開始翻譯</b> <span>——在設定頁選擇 OpenAI、DeepSeek 或 DeepL，填入自己的 API Key 並測試連線。確認預設目標語言後，選取文字，右鍵翻譯。</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">開啟 Chrome 線上應用程式商店</a>
+        <p>想自行建置？也可以從 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 原始碼</a>在 <span class="mono">chrome://extensions/</span> 以開發者模式載入 <span class="mono">apps/extension</span> 目錄。</p>
       </div>
 
       <p class="after-facts reveal">圖片翻譯需選擇支援圖片辨識的模型；DeepL 用於文字翻譯。影片字幕是需手動開啟的實驗功能，語音辨識能力取決於瀏覽器。擴充功能不支援在 Chrome 內部頁面、Chrome 應用程式商店等受保護頁面翻譯。</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>裝好之後，就忘了它</h2>
       <p>直到下一次，你又選取了一段看不懂的文字。</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">到 GitHub 取得原始碼</a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新記錄</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">新增至 Chrome</a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
     </div>
   </section>
 

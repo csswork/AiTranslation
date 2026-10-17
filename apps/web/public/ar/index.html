@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · النص الأجنبي في أي صفحة، حدِّده وانقر بزر الفأرة الأيمن لتفهمه</title>
 <meta name="description" content="إضافة ترجمة مفتوحة المصدر لمتصفح Chrome، تدعم تحديد النص ومناطق صفحات الويب والصور ولوحة ترجمة مستقلة، وتوفّر 24 لغة للواجهة واللغة الهدف. تكفي مفاتيح API الخاصة للاستخدام؛ وستصدر قريباً في الإصدار 2.0.0 خدمات التجربة دون مفتاح والحساب والاشتراك." />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/ar/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: حدِّد، انقر بزر الفأرة الأيمن، ثم واصل القراءة." />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ar/#app","name":"AI Selection Translator","url":"https://huaci.app/ar/","description":"إضافة ترجمة مفتوحة المصدر لمتصفح Chrome، تدعم تحديد النص ومناطق صفحات الويب والصور ولوحة ترجمة مستقلة، وتوفّر 24 لغة للواجهة واللغة الهدف. تكفي مفاتيح API الخاصة للاستخدام؛ وستصدر قريباً في الإصدار 2.0.0 خدمات التجربة دون مفتاح والحساب والاشتراك.","image":"https://huaci.app/assets/og.png","inLanguage":"ar","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/ar/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>قريبًا: التجربة بدون مفتاح وخدمات الحساب والاشتراك قيد الإعداد، وهي غير متاحة حاليًا.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>حدِّد، ثم انقر بزر الفأرة الأيمن،<br /><span class="dim">ثم واصل القراءة.</span></h1>
         <p class="hero-sub">إضافة Chrome. حدّد نصًا أو منطقة كاملة من صفحة ويب أو صورة، لتُترجم إلى اللغة التي تعرفها. يمكن اختيار 24 لغة للواجهة واللغة الهدف بشكل مستقل، وابدأ باستخدام API Key الخاص بك من OpenAI أو DeepSeek أو DeepL.</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> التثبيت على Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض الشفرة المصدرية</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> التثبيت في Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض الشيفرة المصدرية</a></div>
         <p class="install-note" data-install-note hidden>هذا المتصفح لا يدعم إضافات Chrome: يُرجى فتح هذه الصفحة على الحاسوب باستخدام متصفح مبني على Chromium مثل Chrome أو Edge.</p>
         <ul class="hero-meta">
           <li><b>مفتوح المصدر</b> GPL-3.0 · 24 لغة</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>التثبيت في أربع خطوات</h2>
-        <p>فيما يلي طريقة التثبيت من المصدر، وتتطلب Chrome 116 أو أحدث. خدمات الحساب وبدون مفتاح لم تُطلق بعد، لذا اختر حالياً في الإعدادات منصة بمفتاح API خاص بك.</p>
+        <h2>التثبيت من متجر Chrome الإلكتروني</h2>
+        <p>يتطلب Chrome 116 أو إصدارًا أحدث، ويمكن أيضًا تثبيته من الصفحة نفسها في المتصفحات المبنية على Chromium مثل Edge. خدمة الحساب والخدمة بدون مفتاح لم تُطرح بعد، لذا يُرجى حاليًا اختيار منصة تتطلب API Key خاصًا بك في الإعدادات.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>احصل على المصدر</b> <span>— نزِّل ملف ZIP من GitHub ثم استخرجه، أو استنسخ المستودع مباشرة عبر <span class="mono">git clone</span>.</span></div>
+          <div><b>افتح صفحة المتجر</b> <span>—— افتح <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">صفحة الإضافة في متجر Chrome الإلكتروني</a> باستخدام Chrome على الكمبيوتر.</span></div>
         </div>
         <div class="step">
-          <div><b>افتح صفحة الإضافات</b> <span>— اكتب <span class="mono">chrome://extensions/</span> في شريط العناوين، ثم فعِّل «وضع المطوِّر» في أعلى اليمين.</span></div>
+          <div><b>أضف إلى Chrome</b> <span>—— انقر على «إضافة إلى Chrome»، ثم اختر «إضافة الإضافة» في مربع التأكيد الذي يظهر.</span></div>
         </div>
         <div class="step">
-          <div><b>تحميل الإضافة</b> <span>—— انقر على «تحميل الإضافة غير المضغوطة»، واختر مجلد <span class="mono">apps/extension</span> في المستودع، وليس جذر المستودع.</span></div>
+          <div><b>ثبّت في شريط الأدوات</b> <span>—— انقر على أيقونة الأحجية على يمين شريط العنوان لتثبيت الإضافة في شريط الأدوات، وبعد ذلك يمكنك النقر على الأيقونة لفتح الإعدادات ولوحة الترجمة.</span></div>
         </div>
         <div class="step">
           <div><b>بدء الترجمة</b> <span>—— اختر OpenAI أو DeepSeek أو DeepL في صفحة الإعدادات، وأدخل مفتاح API Key الخاص بك واختبر الاتصال. بعد تأكيد اللغة الهدف الافتراضية، حدد النص وانقر بزر الفأرة الأيمن للترجمة.</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">افتح متجر Chrome الإلكتروني</a>
+        <p>هل تريد البناء بنفسك؟ يمكنك أيضًا تحميل دليل <span class="mono">apps/extension</span> من <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">الشيفرة المصدرية على GitHub</a> في <span class="mono">chrome://extensions/</span> بوضع المطور.</p>
       </div>
 
       <p class="after-facts reveal">تتطلب ترجمة الصور اختيار نموذج يدعم التعرف على الصور؛ أما DeepL فيُستخدم لترجمة النصوص. ترجمة الفيديو ميزة تجريبية يجب تشغيلها يدويًا، وتعتمد قدرة التعرف على الكلام على المتصفح. لا يدعم الامتداد الترجمة في صفحات Chrome المحمية مثل صفحات Chrome الداخلية ومتجر Chrome.</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>ثبِّتها، ثم انسَ أمرها</h2>
       <p>إلى أن تحدِّد في المرة القادمة مقطعًا لا تفهمه.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">احصل على المصدر من GitHub</a> <a class="btn btn-ghost" href="/ar/changelog.html">سجل التحديثات</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">إضافة إلى Chrome</a> <a class="btn btn-ghost" href="/ar/changelog.html">سجل التحديثات</a></div>
     </div>
   </section>
 

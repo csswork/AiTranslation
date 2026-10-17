@@ -4,19 +4,19 @@
    方向相关的间距一律用逻辑属性，阿拉伯语页面（dir="rtl"）自动镜像。 */
 :root {
   color-scheme: light dark;
-  --bg:          light-dark(#f6f6fb, #0a0c11);
-  --surface:     light-dark(#fdfdff, #0e1117);
-  --surface-2:   light-dark(#efeff7, #141821);
-  --line:        light-dark(#e2e2ee, #232936);
-  --line-strong: light-dark(#b9bbd3, #2e3547);
-  --btn-line:    light-dark(#c3c5d9, #2e3547);
-  --text:        light-dark(#16171f, #e8eaf0);
-  --text-2:      light-dark(#4e5267, #9aa3b5);
-  --text-3:      light-dark(#666b82, #626c80);
-  --accent:       light-dark(#5b5eea, #6d70f5);
-  --accent-hover: light-dark(#4d50de, #7b7ef7);
-  --accent-2:     light-dark(#9747ec, #a855f7);
-  --accent-ink:   light-dark(#4649cf, #c7c9ff);
+  --bg:          light-dark(#f6f5f1, #121211);
+  --surface:     light-dark(#fdfcf9, #191917);
+  --surface-2:   light-dark(#efede7, #201f1d);
+  --line:        light-dark(#e4e1d8, #2b2a27);
+  --line-strong: light-dark(#c9c5b9, #3d3b37);
+  --btn-line:    light-dark(#cfcbbf, #3a3834);
+  --text:        light-dark(#1d1c19, #ecebe6);
+  --text-2:      light-dark(#57544c, #a8a59c);
+  --text-3:      light-dark(#736f65, #85827a);
+  --accent:       light-dark(#4a4fc0, #6f72e6);
+  --accent-hover: light-dark(#3e42ad, #7f82ec);
+  --accent-2:     light-dark(#8c5bd6, #b48cf0);
+  --accent-ink:   light-dark(#3f43b0, #b9bbfa);
   --ok:           light-dark(#1d7a46, #6fd69b);
   --ok-bg:        light-dark(#e8f6ee, #11261a);
   --error:        light-dark(#b42318, #ff8a80);
@@ -30,10 +30,10 @@
 /* 不认 light-dark() 的老浏览器：与官网一样固定深色，并隐藏切换按钮 */
 @supports not (color: light-dark(#000, #fff)) {
   :root {
-    --bg: #0a0c11; --surface: #0e1117; --surface-2: #141821;
-    --line: #232936; --line-strong: #2e3547; --btn-line: #2e3547;
-    --text: #e8eaf0; --text-2: #9aa3b5; --text-3: #626c80;
-    --accent: #6d70f5; --accent-hover: #7b7ef7; --accent-2: #a855f7; --accent-ink: #c7c9ff;
+    --bg: #121211; --surface: #191917; --surface-2: #201f1d;
+    --line: #2b2a27; --line-strong: #3d3b37; --btn-line: #3a3834;
+    --text: #ecebe6; --text-2: #a8a59c; --text-3: #85827a;
+    --accent: #6f72e6; --accent-hover: #7f82ec; --accent-2: #b48cf0; --accent-ink: #b9bbfa;
     --ok: #6fd69b; --ok-bg: #11261a; --error: #ff8a80; --error-bg: #2a1414;
     color-scheme: dark;
   }

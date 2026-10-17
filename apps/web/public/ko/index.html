@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · 웹페이지 속 외국어를 선택하고 오른쪽 버튼으로 바로 이해합니다</title>
 <meta name="description" content="오픈 소스 Chrome 번역 확장 프로그램으로, 텍스트 선택, 웹페이지 영역, 이미지 및 독립 번역 패널을 지원하며 24개의 인터페이스 및 대상 언어를 제공합니다. 자체 API Key로 사용할 수 있으며, 2.0.0의 키 없는 체험, 계정 및 구독 서비스가 출시 예정입니다." />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/ko/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: 선택하고, 오른쪽 버튼을 누르고, 계속 읽습니다." />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ko/#app","name":"AI Selection Translator","url":"https://huaci.app/ko/","description":"오픈 소스 Chrome 번역 확장 프로그램으로, 텍스트 선택, 웹페이지 영역, 이미지 및 독립 번역 패널을 지원하며 24개의 인터페이스 및 대상 언어를 제공합니다. 자체 API Key로 사용할 수 있으며, 2.0.0의 키 없는 체험, 계정 및 구독 서비스가 출시 예정입니다.","image":"https://huaci.app/assets/og.png","inLanguage":"ko","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/ko/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>출시 예정: 키 없는 체험판, 계정 및 구독 서비스를 준비 중이며 현재는 이용할 수 없습니다.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>선택하고, 오른쪽 버튼,<br /><span class="dim">그리고 계속 읽습니다.</span></h1>
         <p class="hero-sub">Chrome 확장 프로그램입니다. 텍스트, 웹페이지의 특정 영역 또는 이미지를 선택하면 익숙한 언어로 번역합니다. 24가지 인터페이스 언어와 대상 언어를 각각 선택할 수 있으며, 본인의 OpenAI, DeepSeek 또는 DeepL API Key로 바로 시작할 수 있습니다.</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome에 설치 </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 보기</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome에 설치 </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 보기</a></div>
         <p class="install-note" data-install-note hidden>이 브라우저에는 Chrome 확장 프로그램을 설치할 수 없습니다. 컴퓨터에서 Chrome, Edge 등 Chromium 기반 브라우저로 이 페이지를 열어 주세요.</p>
         <ul class="hero-meta">
           <li><b>오픈 소스</b> GPL-3.0 · 24개 언어</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>네 단계로 설치</h2>
-        <p>다음은 소스 코드 설치 방법이며 Chrome 116 이상이 필요합니다. 계정 및 Key 없는 서비스는 아직 출시되지 않았으므로, 현재는 설정에서 자체 API Key 플랫폼을 선택하세요.</p>
+        <h2>Chrome 웹 스토어에서 설치</h2>
+        <p>Chrome 116 이상이 필요하며, Edge 등 Chromium 기반 브라우저에서도 같은 페이지에서 설치할 수 있습니다. 계정 및 키 없는 서비스는 아직 출시되지 않았으므로, 현재는 설정에서 자체 API Key를 사용하는 플랫폼을 선택하십시오.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>소스 받기</b> <span>——GitHub에서 Download ZIP으로 받아 압축을 풀거나, <span class="mono">git clone</span>으로 저장소를 복제합니다.</span></div>
+          <div><b>스토어 페이지 열기</b> <span>——컴퓨터의 Chrome에서 <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">확장 프로그램의 Chrome 웹 스토어 페이지</a>를 엽니다.</span></div>
         </div>
         <div class="step">
-          <div><b>확장 페이지 열기</b> <span>——주소 표시줄에 <span class="mono">chrome://extensions/</span>를 입력하고 오른쪽 위의 “개발자 모드”를 켭니다.</span></div>
+          <div><b>Chrome에 추가</b> <span>——「Chrome에 추가」를 클릭하고, 표시되는 확인 창에서 「확장 프로그램 추가」를 선택합니다.</span></div>
         </div>
         <div class="step">
-          <div><b>확장 프로그램 로드</b> <span>——「압축 해제된 확장 프로그램 로드」를 클릭하고, 저장소 루트 디렉터리가 아닌 저장소 내 <span class="mono">apps/extension</span> 디렉터리를 선택하세요.</span></div>
+          <div><b>툴바에 고정</b> <span>——주소 표시줄 오른쪽의 퍼즐 아이콘을 클릭하여 확장 프로그램을 툴바에 고정하면, 이후 아이콘을 클릭해 설정과 번역 패널을 열 수 있습니다.</span></div>
         </div>
         <div class="step">
           <div><b>번역 시작</b> <span>——설정 페이지에서 OpenAI, DeepSeek 또는 DeepL을 선택하고 본인의 API Key를 입력한 뒤 연결을 테스트하세요. 기본 대상 언어를 확인한 후 텍스트를 선택하고 우클릭하여 번역합니다.</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 웹 스토어 열기</a>
+        <p>직접 빌드하려면 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 소스</a>에서 <span class="mono">chrome://extensions/</span>의 개발자 모드로 <span class="mono">apps/extension</span> 디렉터리를 로드할 수도 있습니다.</p>
       </div>
 
       <p class="after-facts reveal">이미지 번역은 이미지 인식을 지원하는 모델을 선택해야 하며, DeepL은 텍스트 번역에 사용됩니다. 동영상 자막은 수동으로 활성화해야 하는 실험 기능이며, 음성 인식 성능은 브라우저에 따라 달라집니다. 확장 프로그램은 Chrome 내부 페이지, Chrome 웹 스토어 등 보호된 페이지에서는 번역을 지원하지 않습니다.</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>설치하고 잊어버리면 됩니다</h2>
       <p>다음에 또 이해할 수 없는 문장을 선택할 때까지.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub에서 소스 가져오기</a> <a class="btn btn-ghost" href="/ko/changelog.html">변경 내역</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome에 추가</a> <a class="btn btn-ghost" href="/ko/changelog.html">변경 로그</a></div>
     </div>
   </section>
 

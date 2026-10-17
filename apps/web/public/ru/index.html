@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Понимайте иностранный текст на любой странице одним щелчком правой кнопки</title>
 <meta name="description" content="Открытое расширение для перевода в Chrome: перевод выделенного текста, областей веб-страницы, изображений и отдельная панель перевода, 24 языка интерфейса и целевых языков. Работает со своим API Key; пробный доступ без ключа, аккаунт и подписка в версии 2.0.0 скоро появятся." />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/ru/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: выделить, щёлкнуть правой кнопкой и читать дальше." />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ru/#app","name":"AI Selection Translator","url":"https://huaci.app/ru/","description":"Открытое расширение для перевода в Chrome: перевод выделенного текста, областей веб-страницы, изображений и отдельная панель перевода, 24 языка интерфейса и целевых языков. Работает со своим API Key; пробный доступ без ключа, аккаунт и подписка в версии 2.0.0 скоро появятся.","image":"https://huaci.app/assets/og.png","inLanguage":"ru","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/ru/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Скоро: пробный период без ключа, аккаунт и подписка готовятся, пока недоступны.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Выделите, щёлкните правой кнопкой,<br /><span class="dim">и читайте дальше.</span></h1>
         <p class="hero-sub">Расширение для Chrome. Выделите текст, целую область веб-страницы или изображение — и получите перевод на знакомый вам язык. 24 языка интерфейса и целевых языка выбираются независимо; для начала достаточно собственного API Key OpenAI, DeepSeek или DeepL.</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Установить в Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Исходный код</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Установить в Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Посмотреть исходный код</a></div>
         <p class="install-note" data-install-note hidden>В этом браузере нельзя установить расширения Chrome: откройте эту страницу на компьютере в браузере на базе Chromium, например Chrome или Edge.</p>
         <ul class="hero-meta">
           <li><b>Открытый исходный код</b> GPL-3.0 · 24 языка</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Установка в четыре шага</h2>
-        <p>Ниже приведён способ установки из исходного кода; требуется Chrome 116 или выше. Сервис аккаунтов и сервис без ключа ещё не запущены; сейчас выберите в настройках платформу со своим API Key.</p>
+        <h2>Установка из Chrome Web Store</h2>
+        <p>Требуется Chrome 116 или новее; браузеры на движке Chromium, например Edge, также можно установить с той же страницы. Аккаунт и сервис без API Key пока не запущены — сейчас выберите в настройках платформу с собственным API Key.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Получите исходный код</b> <span>— скачайте ZIP на GitHub и распакуйте его либо клонируйте репозиторий командой <span class="mono">git clone</span>.</span></div>
+          <div><b>Откройте страницу магазина</b> <span>— на компьютере откройте в Chrome <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">страницу расширения в Chrome Web Store</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Откройте страницу расширений</b> <span>— введите <span class="mono">chrome://extensions/</span> в адресной строке и включите «Режим разработчика» в правом верхнем углу.</span></div>
+          <div><b>Добавьте в Chrome</b> <span>— нажмите «Добавить в Chrome» и в появившемся окне подтверждения выберите «Добавить расширение».</span></div>
         </div>
         <div class="step">
-          <div><b>Загрузить расширение</b> <span>——нажмите «Загрузить распакованное расширение» и выберите каталог <span class="mono">apps/extension</span> в репозитории, а не корневой каталог репозитория.</span></div>
+          <div><b>Закрепите на панели инструментов</b> <span>— нажмите значок пазла справа от адресной строки и закрепите расширение на панели инструментов; после этого по нажатию на значок открываются настройки и панель перевода.</span></div>
         </div>
         <div class="step">
           <div><b>Начать перевод</b> <span>— выберите OpenAI, DeepSeek или DeepL на странице настроек, укажите свой API Key и проверьте подключение. Подтвердите язык перевода по умолчанию, выделите текст и вызовите перевод через контекстное меню.</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Открыть Chrome Web Store</a>
+        <p>Хотите собрать самостоятельно? Можно также загрузить каталог <span class="mono">apps/extension</span> из <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">исходного кода на GitHub</a> в режиме разработчика на странице <span class="mono">chrome://extensions/</span>.</p>
       </div>
 
       <p class="after-facts reveal">Для перевода изображений требуется модель с поддержкой распознавания изображений; DeepL используется для перевода текста. Субтитры видео — экспериментальная функция, которую нужно включить вручную; качество распознавания речи зависит от браузера. Расширение не поддерживает перевод на защищённых страницах, таких как внутренние страницы Chrome и Chrome Web Store.</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>Установите — и забудьте</h2>
       <p>До следующего раза, когда вы снова выделите непонятный вам текст.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Исходный код на GitHub</a> <a class="btn btn-ghost" href="/ru/changelog.html">История изменений</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Добавить в Chrome</a> <a class="btn btn-ghost" href="/ru/changelog.html">История изменений</a></div>
     </div>
   </section>
 

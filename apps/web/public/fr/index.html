@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Comprendre le texte étranger d’une page d’un clic droit</title>
 <meta name="description" content="Extension de traduction Chrome open source, prenant en charge la sélection de texte, les zones de page web, les images et un panneau de traduction indépendant, avec 24 langues d'interface et langues cibles. Utilisable avec sa propre clé API ; l'essai sans clé, le compte et le service d'abonnement de la version 2.0.0 seront bientôt disponibles." />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/fr/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator : sélectionnez, faites un clic droit, puis continuez à lire." />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/fr/#app","name":"AI Selection Translator","url":"https://huaci.app/fr/","description":"Extension de traduction Chrome open source, prenant en charge la sélection de texte, les zones de page web, les images et un panneau de traduction indépendant, avec 24 langues d'interface et langues cibles. Utilisable avec sa propre clé API ; l'essai sans clé, le compte et le service d'abonnement de la version 2.0.0 seront bientôt disponibles.","image":"https://huaci.app/assets/og.png","inLanguage":"fr","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/fr/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Bientôt disponible : l'essai sans clé, le compte et les services d'abonnement sont en préparation et ne sont pas encore ouverts.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Sélectionnez, faites un clic droit,<br /><span class="dim">puis continuez à lire.</span></h1>
         <p class="hero-sub">Une extension Chrome. Sélectionnez du texte, une zone entière d'une page web ou une image pour la traduire dans la langue que vous maîtrisez. 24 langues d'interface et langues cibles sont sélectionnables indépendamment ; utilisez votre propre clé API OpenAI, DeepSeek ou DeepL pour commencer.</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Installer sur Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Installer sur Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
         <p class="install-note" data-install-note hidden>Ce navigateur ne peut pas installer d'extensions Chrome : ouvrez cette page sur un ordinateur avec un navigateur basé sur Chromium, comme Chrome ou Edge.</p>
         <ul class="hero-meta">
           <li><b>Open source</b> GPL-3.0 · 24 langues</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Installation en quatre étapes</h2>
-        <p>Voici la méthode d'installation depuis le code source ; Chrome 116 ou une version supérieure est requis. Le service de compte et le service sans clé ne sont pas encore disponibles ; pour l'instant, sélectionnez dans les paramètres une plateforme avec votre propre API Key.</p>
+        <h2>Installer depuis le Chrome Web Store</h2>
+        <p>Nécessite Chrome 116 ou une version ultérieure ; les navigateurs à moteur Chromium tels qu'Edge peuvent également installer l'extension depuis la même page. Le compte et le service sans clé ne sont pas encore disponibles ; pour l'instant, veuillez sélectionner dans les paramètres une plateforme avec votre propre API Key.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Récupérez le code source</b> <span>— téléchargez le fichier ZIP depuis GitHub et décompressez-le, ou faites directement <span class="mono">git clone</span> du dépôt.</span></div>
+          <div><b>Ouvrir la page du store</b> <span>—— sur ordinateur, ouvrez dans Chrome la <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">page Chrome Web Store de l'extension</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Ouvrez la page des extensions</b> <span>— saisissez <span class="mono">chrome://extensions/</span> dans la barre d’adresse, puis activez le « Mode développeur » en haut à droite.</span></div>
+          <div><b>Ajouter à Chrome</b> <span>—— cliquez sur « Ajouter à Chrome », puis sélectionnez « Ajouter l'extension » dans la boîte de confirmation.</span></div>
         </div>
         <div class="step">
-          <div><b>Charger l'extension</b> <span>——cliquez sur « Charger l'extension non empaquetée », puis sélectionnez le répertoire <span class="mono">apps/extension</span> du dépôt, et non la racine du dépôt.</span></div>
+          <div><b>Épingler à la barre d'outils</b> <span>—— cliquez sur l'icône de pièce de puzzle à droite de la barre d'adresse pour épingler l'extension à la barre d'outils ; cliquez ensuite sur l'icône pour ouvrir les paramètres et le panneau de traduction.</span></div>
         </div>
         <div class="step">
           <div><b>Commencer la traduction</b> <span>—— dans la page de paramètres, sélectionnez OpenAI, DeepSeek ou DeepL, saisissez votre propre API Key et testez la connexion. Après avoir confirmé la langue cible par défaut, sélectionnez le texte et traduisez par clic droit.</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Ouvrir le Chrome Web Store</a>
+        <p>Vous souhaitez le compiler vous-même ? Vous pouvez aussi charger le répertoire <span class="mono">apps/extension</span> depuis le <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">code source GitHub</a> dans <span class="mono">chrome://extensions/</span> en mode développeur.</p>
       </div>
 
       <p class="after-facts reveal">La traduction d'images nécessite un modèle prenant en charge la reconnaissance d'images ; DeepL sert à la traduction de texte. Les sous-titres vidéo sont une fonction expérimentale à activer manuellement, et la reconnaissance vocale dépend du navigateur. L'extension ne prend pas en charge la traduction sur les pages internes de Chrome, le Chrome Web Store et autres pages protégées.</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>Installez-la, puis oubliez-la</h2>
       <p>Jusqu’à la prochaine fois, où vous sélectionnerez un passage que vous ne comprenez pas.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Obtenir le code source sur GitHub</a> <a class="btn btn-ghost" href="/fr/changelog.html">Journal des modifications</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Ajouter à Chrome</a> <a class="btn btn-ghost" href="/fr/changelog.html">Journal des modifications</a></div>
     </div>
   </section>
 

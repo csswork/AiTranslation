@@ -36,8 +36,9 @@ assert.ok(pages.length, 'public/ 下应当有页面');
 
 for (const page of pages) {
   const html = fs.readFileSync(`${ROOT}public/${page}`, 'utf8');
-  // 只看没有 src 的 <script>：外链脚本走 'self'
-  const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  // 只看没有 src 的 <script>：外链脚本走 'self'。
+  // type="application/ld+json" 是结构化数据（SEO），浏览器不执行，CSP 的 script-src 不管它
+  const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   for (const code of inline) {
     const hash = crypto.createHash('sha256').update(code, 'utf8').digest('base64');
     assert.ok(allowed.has(hash), `${page} 的内联脚本没被 CSP 放行，应加入 'sha256-${hash}'`);

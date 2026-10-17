@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · ページ上の外国語も、選択して右クリックするだけで読めます</title>
 <meta name="description" content="オープンソースの Chrome 翻訳拡張機能。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key で利用可能。2.0.0 の Key 不要の試用、アカウント、サブスクリプションサービスは近日公開予定です。" />
-<meta name="theme-color" content="#f6f6fb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0a0c11" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
+<link rel="apple-touch-icon" href="/assets/icon128.png" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://huaci.app/ja/" />
 <!-- i18n:alternates -->
 <link rel="alternate" hreflang="zh-Hans" href="https://huaci.app/" />
@@ -34,6 +36,9 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator：選択して、右クリックして、そのまま読み続ける。" />
 <meta name="twitter:card" content="summary_large_image" />
+<!-- i18n:jsonld -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ja/#app","name":"AI Selection Translator","url":"https://huaci.app/ja/","description":"オープンソースの Chrome 翻訳拡張機能。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key で利用可能。2.0.0 の Key 不要の試用、アカウント、サブスクリプションサービスは近日公開予定です。","image":"https://huaci.app/assets/og.png","inLanguage":"ja","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
 <script src="/lang.js"></script>
@@ -81,9 +86,9 @@
         <a class="release-pill" href="/ja/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>近日公開予定：キー不要の試用、アカウントおよびサブスクリプションサービスを準備中で、現在はまだ利用できません。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
         <p class="hero-sub">Chrome 拡張機能です。テキスト、Web ページの領域、または画像を選択するだけで、使い慣れた言語に翻訳できます。24 種類の UI 言語と翻訳先言語は個別に選択でき、ご自身の OpenAI、DeepSeek、または DeepL の API Key で利用を開始できます。</p>
-        <!-- 安装按钮：main.js 按浏览器决定去向。Chromium 内核且已配置商店地址时直接打开 Chrome 应用商店详情页
-             （网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；否则留在下面的安装步骤 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#install" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome にインストール </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome にインストール </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
         <p class="install-note" data-install-note hidden>このブラウザには Chrome 拡張機能をインストールできません。パソコンで Chrome、Edge などの Chromium ベースのブラウザを使用して本ページを開いてください。</p>
         <ul class="hero-meta">
           <li><b>オープンソース</b> GPL-3.0 · 24 言語</li>
@@ -453,23 +458,28 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>4 ステップでセットアップ</h2>
-        <p>以下はソースコードからのインストール方法で、Chrome 116以降が必要です。アカウントとKey不要サービスはまだ公開されていないため、現在は設定で独自のAPI Keyを使用するプラットフォームを選択してください。</p>
+        <h2>Chrome ウェブストアからインストール</h2>
+        <p>Chrome 116 以降が必要です。Edge など Chromium ベースのブラウザでも同じページからインストールできます。アカウントとキー不要のサービスはまだ提供を開始していません。現在は設定で、独自の API Key を使用するプラットフォームを選択してください。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>ソースを入手</b> <span>— GitHub で Download ZIP を選んで解凍するか、<span class="mono">git clone</span> でリポジトリを取得します。</span></div>
+          <div><b>ストアページを開く</b> <span>——パソコンの Chrome で<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">拡張機能の Chrome ウェブストアページ</a>を開きます。</span></div>
         </div>
         <div class="step">
-          <div><b>拡張機能ページを開く</b> <span>— アドレスバーに <span class="mono">chrome://extensions/</span> と入力し、右上の「デベロッパーモード」をオンにします。</span></div>
+          <div><b>Chrome に追加</b> <span>——「Chrome に追加」をクリックし、表示される確認ダイアログで「拡張機能を追加」を選択します。</span></div>
         </div>
         <div class="step">
-          <div><b>拡張機能を読み込む</b> <span>——「パッケージ化されていない拡張機能を読み込む」をクリックし、リポジトリのルートディレクトリではなく、リポジトリ内の <span class="mono">apps/extension</span> ディレクトリを選択します。</span></div>
+          <div><b>ツールバーに固定</b> <span>——アドレスバー右側のパズルアイコンをクリックし、拡張機能をツールバーに固定します。以後、アイコンをクリックすると設定と翻訳パネルを開けます。</span></div>
         </div>
         <div class="step">
           <div><b>翻訳を開始</b> <span>——設定ページで OpenAI、DeepSeek または DeepL を選択し、自身の API Key を入力して接続をテストします。デフォルトのターゲット言語を確認した後、テキストを選択して右クリックで翻訳します。</span></div>
         </div>
+      </div>
+
+      <div class="install-cta reveal">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome ウェブストアを開く</a>
+        <p>自分でビルドする場合：<a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub のソースコード</a>から <span class="mono">chrome://extensions/</span> でデベロッパーモードを有効にし、<span class="mono">apps/extension</span> ディレクトリを読み込むこともできます。</p>
       </div>
 
       <p class="after-facts reveal">画像翻訳には画像認識に対応したモデルを選択する必要があります。DeepL はテキスト翻訳に使用します。動画字幕は手動で有効化する実験的機能であり、音声認識能力はブラウザに依存します。拡張機能は Chrome の内部ページ、Chrome ウェブストアなどの保護されたページでは翻訳できません。</p>
@@ -481,7 +491,7 @@
     <div class="cta reveal">
       <h2>インストールしたら、あとは忘れてしまってください</h2>
       <p>そして次に、あなたが読めない文字列を選ぶときまで。</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub でソースを入手</a> <a class="btn btn-ghost" href="/ja/changelog.html">変更履歴</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome に追加</a> <a class="btn btn-ghost" href="/ja/changelog.html">更新履歴</a></div>
     </div>
   </section>
 

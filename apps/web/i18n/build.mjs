@@ -42,6 +42,8 @@ const META_KEYS = new Set(['description','og:title','og:description','og:image:a
 const CJK = /[\u3400-\u9FFF]/;
 const ALT_START = '<!-- i18n:alternates -->';
 const ALT_END = '<!-- /i18n:alternates -->';
+const LD_START = '<!-- i18n:jsonld -->';
+const LD_END = '<!-- /i18n:jsonld -->';
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
 const read = (p) => fs.readFileSync(p, 'utf8');
@@ -246,6 +248,50 @@ function withAlternates(html, block) {
   return html.slice(0, m.index) + m[0] + '\n' + block + html.slice(m.index + m[0].length);
 }
 
+/**
+ * 结构化数据（JSON-LD）：只写进带 i18n:jsonld 占位的页面（首页）。
+ * 名称、简介、图片都取自这一页已经译好的 meta，各语言各自一份，不另外维护文案。
+ * 它是不执行的数据块，CSP 的 script-src 不管它（test/csp.mjs 也跳过它）。
+ */
+function withJsonLd(html, loc, page) {
+  if (!html.includes(LD_START)) return html;
+  const meta = (attr, name) => {
+    const m = new RegExp('<meta ' + attr + '="' + name + '" content="([^"]*)"').exec(html);
+    return m ? m[1].replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&') : undefined;
+  };
+  const name = meta('property', 'og:site_name');
+  const home = urlFor(loc, 'index.html');
+  const data = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name, inLanguage: enabled().map((l) => l.htmlLang) },
+      {
+        '@type': 'SoftwareApplication',
+        '@id': home + '#app',
+        name,
+        url: urlFor(loc, page),
+        description: meta('name', 'description'),
+        image: meta('property', 'og:image'),
+        inLanguage: loc.htmlLang,
+        applicationCategory: 'BrowserApplication',
+        applicationSubCategory: 'Translation',
+        operatingSystem: 'Windows, macOS, Linux, ChromeOS',
+        browserRequirements: 'Google Chrome 116+',
+        license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        installUrl: 'https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj',
+        downloadUrl: 'https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj',
+        sameAs: ['https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj', 'https://github.com/csswork/AiTranslation'],
+      },
+    ],
+  };
+  // 防止 JSON 里出现 </script>：把 < 写成转义
+  const json = JSON.stringify(data).replace(/</g, '\\u003c');
+  const block = LD_START + '\n<script type="application/ld+json">' + json + '</script>\n' + LD_END;
+  return html.replace(new RegExp(LD_START + '[\\s\\S]*?' + LD_END), block);
+}
+
 function htmlTag(loc) {
   return '<html lang="' + loc.htmlLang + '" data-locale="' + loc.code + '"' + (loc.dir === 'rtl' ? ' dir="rtl"' : '') + '>';
 }
@@ -262,13 +308,13 @@ function rewrite(html, loc, page) {
   // 那些页面里已经没有 #english 那一节了，指向它的链接（连同前后的「 · 」分隔符）必须一起去掉，
   // 否则读者点到的是一条死锚点。译文里若已删掉这个链接，这行正则不会命中。
   out = out.replace(/<a\b[^>]*href="#english"[^>]*>[\s\S]*?<\/a>\s*·\s*/g, '');
-  return withAlternates(out, alternatesBlock(page));
+  return withJsonLd(withAlternates(out, alternatesBlock(page)), loc, page);
 }
 
 /** 基础语言（中文源页面）只维护 hreflang 块，其余原样 */
 function refreshBase(page) {
   const html = read(pagePath(page));
-  const out = withAlternates(html, alternatesBlock(page));
+  const out = withJsonLd(withAlternates(html, alternatesBlock(page)), byCode(BASE), page);
   if (out !== html) fs.writeFileSync(pagePath(page), out);
   return out !== html;
 }

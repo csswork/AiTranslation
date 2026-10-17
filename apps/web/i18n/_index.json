@@ -432,7 +432,7 @@
       "index.html"
     ]
   },
-  "<a class=\"btn btn-primary btn-lg\" href=\"#install\" data-install> <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 10.5l5 5 5-5M5 20h14\"/></svg> 安装到 Chrome </a> <a class=\"btn btn-ghost btn-lg\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">查看源码</a>": {
+  "<a class=\"btn btn-primary btn-lg\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\" data-install> <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 10.5l5 5 5-5M5 20h14\"/></svg> 安装到 Chrome </a> <a class=\"btn btn-ghost btn-lg\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">查看源码</a>": {
     "kind": "text",
     "tag": "div",
     "pages": [
@@ -1076,35 +1076,35 @@
       "index.html"
     ]
   },
-  "四步装好": {
+  "从 Chrome 应用商店安装": {
     "kind": "text",
     "tag": "h2",
     "pages": [
       "index.html"
     ]
   },
-  "以下为源码安装方式，需要 Chrome 116 或更高版本。账户与免 Key 服务尚未上线，当前请在设置中选择自带 API Key 的平台。": {
+  "需要 Chrome 116 或更高版本，Edge 等 Chromium 内核浏览器也可以从同一页面安装。账户与免 Key 服务尚未上线，当前请在设置中选择自带 API Key 的平台。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "index.html"
     ]
   },
-  "<b>拿到源码</b> <span>——在 GitHub 上 Download ZIP 后解压，或者直接 <span class=\"mono\">git clone</span> 仓库。</span>": {
+  "<b>打开商店页面</b> <span>——在电脑上用 Chrome 打开<a class=\"link\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\">扩展的 Chrome 应用商店页面</a>。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>打开扩展页</b> <span>——地址栏输入 <span class=\"mono\">chrome://extensions/</span>，打开右上角的「开发者模式」。</span>": {
+  "<b>添加至 Chrome</b> <span>——点「添加至 Chrome」，在弹出的确认框里选「添加扩展程序」。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
       "index.html"
     ]
   },
-  "<b>加载扩展</b> <span>——点「加载已解压的扩展程序」，选择仓库中的 <span class=\"mono\">apps/extension</span> 目录，而不是仓库根目录。</span>": {
+  "<b>固定到工具栏</b> <span>——点地址栏右侧的拼图图标，把扩展固定到工具栏，之后点图标就能打开设置和翻译面板。</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
@@ -1114,6 +1114,20 @@
   "<b>开始翻译</b> <span>——在设置页选择 OpenAI、DeepSeek 或 DeepL，填入自己的 API Key 并测试连接。确认默认目标语言后，选中文字，右键翻译。</span>": {
     "kind": "text",
     "tag": "div",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "打开 Chrome 应用商店": {
+    "kind": "text",
+    "tag": "a",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "想自己构建？也可以从 <a class=\"link\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">GitHub 源码</a>在 <span class=\"mono\">chrome://extensions/</span> 以开发者模式加载 <span class=\"mono\">apps/extension</span> 目录。": {
+    "kind": "text",
+    "tag": "p",
     "pages": [
       "index.html"
     ]
@@ -1139,7 +1153,7 @@
       "index.html"
     ]
   },
-  "<a class=\"btn btn-primary\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">去 GitHub 拿源码</a> <a class=\"btn btn-ghost\" href=\"changelog.html\">更新日志</a>": {
+  "<a class=\"btn btn-primary\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\">添加到 Chrome</a> <a class=\"btn btn-ghost\" href=\"changelog.html\">更新日志</a>": {
     "kind": "text",
     "tag": "div",
     "pages": [

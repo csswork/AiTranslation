@@ -5,12 +5,12 @@
  * 翻页是 CSS Scroll Snap。这里剩下的四件事全部用 IntersectionObserver，主线程只在状态真正变化时才醒一下。
  *
  *   1. 导航吸顶状态 —— 顶部一个哨兵离开视口就给 .nav 打标记
- *   2. 演示视频 —— 快进视口时才创建 <video>，进入播放、离开暂停；
+ *   2. 演示视频 —— 离视口一屏时才创建 <video>，大半进入视口才从头播放，离开或切走标签页就暂停；
  *      文件还没放进来就静默留住占位层，不出现破图
  *   3. 全屏分页 —— 右侧圆点与导航高亮跟着当前屏走
  *   4. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
  *
- * 另外有安装按钮：按浏览器决定去商店还是去安装步骤；
+ * 另外有安装按钮：装不了 Chrome 扩展的浏览器改去安装说明；
  * 账户入口：载入时读取一次用户端的登录状态；
  * 配色切换：只在点击按钮、或系统切换明暗时才运行；
  * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
@@ -39,30 +39,26 @@
 
   /*
    * 网页无法替用户安装扩展（Chrome 2018 年起取消了站外内联安装），只能把人送到 Chrome 应用商店详情页，
-   * 由用户自己点「添加至 Chrome」。所以这里只决定按钮去哪：
-   *   · Chromium 内核（Chrome、Edge、Brave、Opera…）且填了商店地址 → 新标签页打开商店详情页；
-   *   · 商店地址还空着 → 保持跳到页面下方的源码安装步骤；
-   *   · Firefox、Safari 等装不了 Chrome 扩展 → 仍指向安装步骤，并在按钮下方提示换浏览器。
-   * 上架后把详情页地址填进 STORE_URL 即可，无需改 HTML 或 CSP（只是普通链接跳转）。
+   * 由用户自己点「添加至 Chrome」。首屏按钮在 HTML 里默认就指向商店（没有脚本也能用），这里只处理例外：
+   * Firefox、Safari 等装不了 Chrome 扩展，手机上的 Chrome 也不支持扩展——这些情况改为跳到页面下方的
+   * 安装说明，并在按钮下方提示换用电脑上的 Chromium 内核浏览器（Chrome、Edge、Brave、Opera…）。
    */
-  const STORE_URL = '';
   const isChromium = (() => {
     const brands = navigator.userAgentData && navigator.userAgentData.brands;
     if (brands && brands.length) return brands.some((b) => /Chromium|Google Chrome|Microsoft Edge/.test(b.brand));
     return /\b(Chrome|Chromium|CriOS|Edg)\//.test(navigator.userAgent) && !/\bFirefox\//.test(navigator.userAgent);
   })();
-  // 手机上的 Chrome 也不支持扩展：只在桌面端送去商店
   const isMobile = (navigator.userAgentData && navigator.userAgentData.mobile) || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  document.querySelectorAll('[data-install]').forEach((button) => {
-    if (isChromium && !isMobile && STORE_URL) {
-      button.href = STORE_URL;
-      button.target = '_blank';
-      button.rel = 'noopener';
-    }
-  });
-  const installNote = document.querySelector('[data-install-note]');
-  if (installNote && (!isChromium || isMobile)) installNote.hidden = false;
+  if (!isChromium || isMobile) {
+    document.querySelectorAll('[data-install]').forEach((button) => {
+      button.href = '#install';
+      button.removeAttribute('target');
+      button.removeAttribute('rel');
+    });
+    const installNote = document.querySelector('[data-install-note]');
+    if (installNote) installNote.hidden = false;
+  }
 
   /* ------------------------------------------------------------ 账户入口 */
 
@@ -251,23 +247,40 @@
 
   const frames = document.querySelectorAll('.frame[data-video]');
 
+  // 用户开了「省流量」：不预先拉视频、不自动播放，给一套控件让他自己点
+  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+  const manual = reduceMotion || saveData;
+
   if (frames.length && hasIO) {
-    /* 进入视口播放，离开暂停。省电，也免得后台几段视频一起跑。 */
+    /*
+     * 播放只在演示真正到位时发生：大半个展示框进入视口（全屏分页里就是这一屏停稳）才开始，
+     * 每次进来都从头播，让人看到完整的一遍；离开视口或切到别的标签页立刻暂停。
+     */
+    const visible = new Set();
+    const play = (video) => {
+      const started = video.play();
+      // 浏览器可能因为自动播放策略拒绝，静默吞掉即可
+      if (started && typeof started.catch === 'function') started.catch(() => {});
+    };
     const playback = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const video = entry.target;
           if (entry.isIntersecting) {
-            const started = video.play();
-            // 浏览器可能因为自动播放策略拒绝，静默吞掉即可
-            if (started && typeof started.catch === 'function') started.catch(() => {});
+            visible.add(video);
+            video.currentTime = 0;
+            if (!document.hidden) play(video);
           } else {
+            visible.delete(video);
             video.pause();
           }
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.6 },
     );
+    document.addEventListener('visibilitychange', () => {
+      visible.forEach((video) => (document.hidden ? video.pause() : play(video)));
+    });
 
     /**
      * 挂上视频。文件不存在时（用户还没把录屏放进 assets/）
@@ -298,12 +311,13 @@
       video.muted = true; // 必须在 play() 之前，否则自动播放会被拦
       video.loop = true;
       video.playsInline = true;
-      video.preload = 'metadata';
+      // 已经离这一屏只差一屏了：正常情况直接拉够能播的数据；省流量时只拿首帧和时长
+      video.preload = manual ? 'metadata' : 'auto';
       video.setAttribute('muted', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('aria-label', '功能演示');
-      // 用户要求减少动效时不自动播放，改成给一套控件让他自己决定
-      if (reduceMotion) video.controls = true;
+      // 减少动效或省流量时不自动播放，改成给一套控件让用户自己决定
+      if (manual) video.controls = true;
 
       video.addEventListener(
         'loadeddata',
@@ -313,7 +327,7 @@
           frame.classList.add('has-media');
           video.classList.add('is-ready'); // 淡入，避免第一帧闪一下黑
           dropLoading();
-          if (!reduceMotion) playback.observe(video);
+          if (!manual) playback.observe(video);
         },
         { once: true },
       );
@@ -331,7 +345,7 @@
       body.appendChild(video);
     };
 
-    /* 离视口还有一屏的时候才开始加载，首屏不为下面的视频买单 */
+    /* 离视口还有一屏的时候才开始加载（全屏分页里就是「下一屏」），首屏不为下面的视频买单 */
     const lazy = new IntersectionObserver(
       (entries, observer) => {
         for (const entry of entries) {
@@ -340,7 +354,7 @@
           attach(entry.target);
         }
       },
-      { rootMargin: '300px 0px' },
+      { rootMargin: '0px 0px 100% 0px' },
     );
 
     frames.forEach((frame) => lazy.observe(frame));
@@ -357,14 +371,20 @@
   const slides = [...document.querySelectorAll('[data-slide]')];
   const foot = document.querySelector('.foot');
   if (document.body.classList.contains('fullpage') && slides.length && hasIO) {
-    // 导航在窄屏上会折成两行，页脚高度随语言变：实测后写进 CSS 变量，翻页落点和最后一屏才准
+    // 导航在窄屏上会折成两行，页脚高度随语言变：实测后写进 CSS 变量，翻页落点和最后一屏才准。
+    // 同时检查有没有哪一屏比视口还高（长语言、矮窗口）：有就改成就近吸附（styles.css 的 snap-loose）
     if ('ResizeObserver' in window) {
-      const root = document.documentElement.style;
-      const measure = new ResizeObserver(() => {
-        if (nav) root.setProperty('--nav-h', `${nav.offsetHeight}px`);
-        if (foot) root.setProperty('--foot-h', `${foot.offsetHeight}px`);
-      });
-      [nav, foot].forEach((el) => el && measure.observe(el));
+      const html = document.documentElement;
+      const update = () => {
+        const navHeight = nav ? nav.offsetHeight : 0;
+        if (nav) html.style.setProperty('--nav-h', `${navHeight}px`);
+        if (foot) html.style.setProperty('--foot-h', `${foot.offsetHeight}px`);
+        const room = window.innerHeight - navHeight + 2;
+        html.classList.toggle('snap-loose', slides.some((slide) => slide.offsetHeight > room));
+      };
+      const measure = new ResizeObserver(update);
+      [nav, foot, ...slides].forEach((el) => el && measure.observe(el));
+      window.addEventListener('load', update, { once: true }); // 字体与图片到齐后再量一次
     }
 
     const pager = document.createElement('div');
