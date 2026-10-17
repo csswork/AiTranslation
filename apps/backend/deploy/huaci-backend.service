@@ -1,0 +1,22 @@
+# /etc/systemd/system/huaci-backend.service（由 deploy/setup-server.sh 安装）
+[Unit]
+Description=Huaci backend (app.huaci.app / admin.huaci.app)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=huaci
+Group=huaci
+WorkingDirectory=/srv/huaci/current
+EnvironmentFile=/etc/huaci/backend.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

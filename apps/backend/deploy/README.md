@@ -1,12 +1,13 @@
 # VPS 部署说明（草案）
 
-状态：尚未部署。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
+状态：服务器（AWS EC2 新加坡，Debian 13）已初始化，尚未发布上线。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
 
 ## 运行方式
 
-- Node.js 22+ 进程监听 `127.0.0.1:8787`，由反向代理（Caddy 或 Nginx）终止 HTTPS 后转发；设置 `TRUST_PROXY=1`，限流按 `X-Forwarded-For` 区分来源。
-- PostgreSQL 与服务在同一台 VPS 或内网，数据库账号只授予本应用库的权限。
-- 配置全部来自进程环境（systemd `EnvironmentFile`，文件权限 600，不放进仓库），不使用 `.env.local`。
+- 用户端 `app.huaci.app` 与管理端 `admin.huaci.app` 是同一个服务，按主机名区分界面。
+- Node.js 22+ 进程监听 `127.0.0.1:8787`，由 Caddy（[`Caddyfile`](Caddyfile)）自动申请 HTTPS 证书后转发；设置 `TRUST_PROXY=1`。经 Cloudflare 代理时 Caddy 只对 Cloudflare 地址段采信 `CF-Connecting-IP`，并把它写成 `X-Forwarded-For`，限流按此区分来源。
+- PostgreSQL 单独部署（如 Amazon RDS），数据库账号只授予本应用库的权限；RDS 连接串用 `sslmode=verify-full`，CA 由 `NODE_EXTRA_CA_CERTS` 指向服务器上的 RDS 证书包。
+- 配置全部来自 `/etc/huaci/backend.env`（root:huaci 640，模板 [`backend.env.example`](backend.env.example)，不放进仓库）：systemd 用 `EnvironmentFile` 读取，迁移用 `node --env-file` 读取，不使用 `.env.local`。
 
 ## 环境变量
 
@@ -46,31 +47,29 @@
 
 ## 发布步骤
 
+### 首次初始化服务器（一次性）
+
 ```sh
-cd apps/backend
-npm ci --omit=dev
-NODE_ENV=production npm run migrate   # 服务启动时若有未执行的迁移会拒绝启动
-systemctl restart huaci-backend
-curl -fsS http://127.0.0.1:8787/healthz
+# 在服务器上以 root 运行；参数是 GitHub Actions 部署私钥对应的公钥
+sudo bash apps/backend/deploy/setup-server.sh "ssh-ed25519 AAAA... github-actions-deploy@huaci"
+sudoedit /etc/huaci/backend.env
 ```
+
+[`setup-server.sh`](setup-server.sh) 安装 Node.js 22（NodeSource）与 Caddy（官方源），创建用户 `huaci`（运行服务，也是部署登录用户，只能 `sudo systemctl restart huaci-backend`）、目录 `/srv/huaci/releases`、配置模板、[systemd 服务](huaci-backend.service) 与 Caddy 配置，并自动生成 `AUTH_SECRET`。安全组需放行 TCP 80（证书验证与跳转）与 443。
+
+### 日常发布：GitHub Actions
+
+推到 `main` 且改动了 `apps/backend/**` 时，[`deploy-backend.yml`](../../../.github/workflows/deploy-backend.yml) 先用 PostgreSQL 服务容器跑 `check:i18n` 与后端测试，通过后把已提交的 `apps/backend` 打包传到 `/srv/huaci/releases/<sha>`，再执行 [`release.sh`](release.sh)：`npm ci --omit=dev` → 迁移 → 切换 `/srv/huaci/current` → 重启 → 检查 `/healthz`，保留最近 5 个版本。PR 只跑测试；也可在 Actions 页面手动触发。
+
+仓库 Secret：`DEPLOY_HOST`（服务器 IP）、`DEPLOY_SSH_KEY`（部署私钥）、`DEPLOY_KNOWN_HOSTS`（服务器主机公钥，`ssh-keyscan -t ed25519 <IP>` 的输出）。
+
+迁移执行后不会自动回滚代码；需要回退时按下面各迁移的说明恢复备份，再把 `current` 指回旧版本并重启。
 
 迁移 `007_link_extension_sessions.sql` 将扩展会话关联到授权它的网页会话，网页登出会撤销关联扩展。旧版正式扩展会话需重新登录一次，访客会话保留。本地运行 `npm run migrate:backend` 后重启后端，并在 Chrome 重新加载扩展、刷新用户端页面，以启用新增的状态同步内容脚本；生产按上面的迁移和发布顺序更新。两种环境只接受各自的用户端来源（本地 `http://localhost:8787`；生产 `https://app.huaci.app`），不会跨环境同步。
 
 迁移 `008_exact_credit_units.sql` 将旧整数点数等值转换为 `bigint` 整数字符额度，保留当前余额和历史扣费，不追溯重新计费。发布前备份数据库，停止旧进程后迁移，再启动新版；迁移后旧代码不能继续运行。删除旧的 `CHARS_PER_CREDIT` 环境配置；迁移会删除 `chars_per_credit` 运营设置。同步发布新版扩展和官网：点数接口改为两位小数展示字符串并新增 `credits.available`，旧版扩展不能正确识别显示为 `0.00` 的剩余额度。恢复旧版须恢复备份并回滚代码，不能只回退代码。详见 [精确额度记账](../../../docs/backend/credit-accounting.md)。
 
 迁移 `009_hosted_image_recognition.sql` 增加图片识别用量类型，不改变已有余额。扩展的点数图片翻译需要同步更新后端并执行迁移；识图使用服务端 DeepSeek Flash，识别文字沿用文字翻译精确扣点。管理端可调整 `hosted_image_hourly_requests`（默认每个用户每小时 60 次，长图切片及失败请求均计次，0 表示暂停）。
-
-systemd 单元示例：
-
-```ini
-[Service]
-WorkingDirectory=/srv/huaci/apps/backend
-EnvironmentFile=/etc/huaci/backend.env
-ExecStart=/usr/bin/node src/server.js
-Restart=on-failure
-User=huaci
-NoNewPrivileges=true
-```
 
 ## 上线前必须完成
 

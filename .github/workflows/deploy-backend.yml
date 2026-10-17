@@ -1,0 +1,120 @@
+# 测试 apps/backend 并发布到 VPS（app.huaci.app / admin.huaci.app 是同一个服务）。
+#
+# 只在后端相关文件变动时触发；PR 只跑测试，推到 main 或手动触发时才发布。
+# 服务器需先用 apps/backend/deploy/setup-server.sh 初始化，并填好 /etc/huaci/backend.env。
+#
+# 需要三个仓库 Secret：
+#   DEPLOY_HOST         服务器公网 IP 或主机名
+#   DEPLOY_SSH_KEY      部署私钥（对应公钥在服务器 huaci 用户的 authorized_keys）
+#   DEPLOY_KNOWN_HOSTS  ssh-keyscan 得到的服务器主机公钥，防止连到冒充的主机
+
+name: Deploy backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+# 发布不并行、不中途取消，避免迁移执行到一半
+concurrency:
+  group: deploy-backend-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: huaci_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/huaci_test
+    defaults:
+      run:
+        working-directory: apps/backend
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/backend/package-lock.json
+
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check:i18n
+      - run: npm test
+
+  deploy:
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: 检查 Secrets 是否齐全
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          : "${DEPLOY_HOST:?缺少仓库 Secret: DEPLOY_HOST}"
+          : "${DEPLOY_SSH_KEY:?缺少仓库 Secret: DEPLOY_SSH_KEY}"
+          : "${DEPLOY_KNOWN_HOSTS:?缺少仓库 Secret: DEPLOY_KNOWN_HOSTS}"
+
+      - uses: actions/checkout@v7
+
+      # 只打包已提交的 apps/backend，不含 node_modules 与本地 .env.local
+      - name: 打包
+        run: git archive --format=tar.gz -o backend.tgz "HEAD:apps/backend"
+
+      - name: 配置 SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_deploy
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: 发布
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          SHA: ${{ github.sha }}
+        run: |
+          ssh_opts=(-i ~/.ssh/id_deploy -o StrictHostKeyChecking=yes -o BatchMode=yes)
+          scp "${ssh_opts[@]}" backend.tgz "huaci@$DEPLOY_HOST:/tmp/backend-$SHA.tgz"
+          ssh "${ssh_opts[@]}" "huaci@$DEPLOY_HOST" bash -s -- "$SHA" <<'REMOTE'
+          set -euo pipefail
+          sha=$1
+          dir=/srv/huaci/releases/$sha
+          rm -rf "$dir" && mkdir -p "$dir"
+          tar -xzf "/tmp/backend-$sha.tgz" -C "$dir"
+          rm -f "/tmp/backend-$sha.tgz"
+          bash "$dir/deploy/release.sh"
+          REMOTE
+          {
+            echo "### 后端已发布"
+            echo ""
+            echo "版本：\`$SHA\`"
+            echo ""
+            echo "- https://app.huaci.app"
+            echo "- https://admin.huaci.app"
+          } >> "$GITHUB_STEP_SUMMARY"
