@@ -158,7 +158,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ------------------------------------------------------------------ 英雄区 */
 
-.hero { position: relative; padding: var(--s6) 0; }
+.hero { position: relative; padding: var(--s6) 0; overflow-x: clip; }  /* 示意图背后的光晕不撑出横向滚动 */
 .hero-grid {
   display: grid; gap: clamp(2.5rem, 5vw, 5rem);
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr);
@@ -176,7 +176,7 @@ main, .nav, .foot { position: relative; z-index: 1; }
   transition: border-color .18s ease, color .18s ease, background .18s ease;
 }
 .release-pill:hover { border-color: var(--line-strong); color: var(--text); background: var(--surface); }
-.release-pill b {
+.release-pill .release-ver {
   flex: none; padding: .12rem .45rem; border-radius: 6px;
   background: color-mix(in srgb, var(--accent) 16%, transparent);
   color: var(--accent-ink); font-weight: 600; font-size: .76rem;
@@ -1067,3 +1067,10 @@ html:has(body.fullpage) { scroll-padding-top: var(--nav-h); }
   .fullpage .closing { min-height: 0; }
   .lang-hero { font-size: clamp(5.5rem, 28vw, 8rem); }
 }
+
+/* 右侧分页圆点占了页边：正文两侧多留一些，圆点不压在内容上（导航和页脚不受影响） */
+@media (min-width: 900px) and (min-height: 640px) {
+  .fullpage main { --page: min(1200px, 100% - 9rem); }
+}
+/* 矮窗口里首屏内容已经到底，下滑提示会压到文字 */
+@media (max-height: 820px) { .scroll-cue { display: none; } }
