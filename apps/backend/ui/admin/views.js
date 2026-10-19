@@ -102,6 +102,7 @@ export const loginPage = ({ note = null, email = '' } = {}) => layout({
   body: html`<section class="card auth">
   <h1>管理员登录</h1>
   <p class="muted">只有被指定为管理员的账户能登录。验证码发送到管理员邮箱，随后需要二步验证。</p>
+  <p class="muted">登录成功后，此浏览器保留登录 30 天。退出登录或清除 Cookie 后需重新登录。</p>
   <form method="post" action="/login" class="stack">
     <label for="email">邮箱</label>
     <input id="email" name="email" type="email" required autocomplete="email" value="${email}" dir="ltr">

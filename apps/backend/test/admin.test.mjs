@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
+import { createAdminSession, markVerified, validateAdminSession } from '../src/admin/auth.js';
 import { base32Decode, base32Encode, currentStep, totpCode, verifyTotp } from '../src/admin/totp.js';
 import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
@@ -25,12 +26,13 @@ test('TOTP：与 RFC 6238 测试向量一致，同一时间步只能用一次', 
 async function adminLogin(app, config, mailbox, email = 'boss@example.com') {
   await signInWithEmail(app, config, mailbox, email);
   await pool.query(`INSERT INTO admins (user_id) SELECT id FROM users WHERE email = $1`, [email]);
-  const a = browser(app, config, ADMIN);
+  const a = browser(app, config, config.adminOrigin);
   await a.post('/login', { email });
   // 开发环境（console 发信）验证页直接给出验证码
   const verify = await a.text('/login/verify');
   assert.match(verify, new RegExp(`data-dev-code="${mailbox.last(email)}"[\\s\\S]*dev-code\\.js|dev-code\\.js[\\s\\S]*data-dev-code="${mailbox.last(email)}"`));
   let res = await a.post('/login/verify', { code: mailbox.last(email) });
+  const pendingResponse = res;
   assert.equal(res.headers.get('location'), '/2fa');
   assert.equal((await a.get('/')).headers.get('location'), '/2fa', '二步验证前不能进入');
   const page = await a.text('/2fa');
@@ -39,11 +41,61 @@ async function adminLogin(app, config, mailbox, email = 'boss@example.com') {
   const qr = page.match(/<figure class="totp-qr"[^>]*>(<svg[\s\S]*?<\/svg>)<\/figure>/);
   assert.ok(qr, '绑定页显示二维码');
   assert.doesNotMatch(qr[1], /style=/);
-  assert.equal((await a.post('/2fa', { code: '000000' })).headers.get('location'), '/2fa');
+  const failedResponse = await a.post('/2fa', { code: totpCode(secret, currentStep()) === '000000' ? '111111' : '000000' });
+  assert.equal(failedResponse.headers.get('location'), '/2fa');
   res = await a.post('/2fa', { code: totpCode(secret, currentStep()) });
   assert.equal(res.headers.get('location'), '/');
-  return { a, secret };
+  return { a, secret, pendingResponse, failedResponse, loginResponse: res };
 }
+
+test('管理端：完整登录后 Cookie 与服务端保留 30 天，访问或重复提交二步验证不续期', async () => {
+  const { app, config, mailbox } = buildApp({ pool, config: testConfig({
+    ADMIN_REQUIRE_2FA: '1', ADMIN_ORIGIN: 'https://admin.huaci.app', SESSION_DAYS: '7',
+  }) });
+  const { a, pendingResponse, failedResponse, loginResponse } = await adminLogin(app, config, mailbox);
+  const adminCookie = (res) => res.headers.getSetCookie().find((cookie) => cookie.startsWith('__Host-huaci_admin='));
+  assert.match(adminCookie(pendingResponse), /Max-Age=43200(?:;|$)/, '二步验证前仍使用短期会话');
+  assert.equal(adminCookie(failedResponse), undefined, '错误的二步验证码不能签发长期 Cookie');
+  const cookie = adminCookie(loginResponse);
+  assert.match(cookie, /Max-Age=2592000(?:;|$)/);
+  for (const flag of ['HttpOnly', 'Secure', 'SameSite=Strict', 'Path=/']) assert.ok(cookie.includes(flag), flag);
+  assert.doesNotMatch(cookie, /Domain=/i, '仅限管理端主机');
+  const { rows: [session] } = await pool.query('SELECT id, verified_at, expires_at FROM admin_sessions');
+  assert.equal(session.expires_at - session.verified_at, 30 * 86400 * 1000, '从完成验证起算，独立于用户端 SESSION_DAYS');
+
+  // 模拟关闭浏览器后，用保留下来的持久 Cookie 再次访问。
+  const reopened = browser(app, config, config.adminOrigin);
+  reopened.jar.set('__Host-huaci_admin', a.jar.get('__Host-huaci_admin'));
+  assert.equal((await reopened.get('/')).status, 200);
+  assert.equal((await reopened.get('/login')).headers.get('location'), '/');
+  assert.equal(adminCookie(await reopened.post('/2fa', { code: '000000' })), undefined);
+  assert.equal((await pool.query('SELECT expires_at FROM admin_sessions WHERE id = $1', [session.id])).rows[0].expires_at.getTime(), session.expires_at.getTime());
+
+  await pool.query("UPDATE admin_sessions SET expires_at = now() - interval '1 second' WHERE id = $1", [session.id]);
+  assert.equal((await reopened.get('/')).headers.get('location'), '/login', '超过期限必须重新登录');
+});
+
+test('管理端：长期会话退出后立即失效，过期或已撤销的待验证会话不能升级', async () => {
+  const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
+  const { a } = await adminLogin(app, config, mailbox);
+  const token = a.jar.get('huaci_admin');
+  const auth = await validateAdminSession(pool, token);
+  assert.equal(await markVerified(pool, auth.session.id), false, '完成登录后不能重复延长');
+  const res = await a.post('/logout');
+  assert.match(res.headers.getSetCookie().find((cookie) => cookie.startsWith('huaci_admin=')), /Max-Age=0(?:;|$)/);
+  const replay = browser(app, config, ADMIN);
+  replay.jar.set('huaci_admin', token);
+  assert.equal((await replay.get('/')).headers.get('location'), '/login');
+
+  for (const invalidation of ["expires_at = now() - interval '1 second'", 'revoked_at = now()']) {
+    const pendingToken = await createAdminSession(pool, auth.admin.id);
+    const pending = await validateAdminSession(pool, pendingToken);
+    await pool.query(`UPDATE admin_sessions SET ${invalidation} WHERE id = $1`, [pending.session.id]);
+    assert.equal(await markVerified(pool, pending.session.id), false);
+    assert.equal(await validateAdminSession(pool, pendingToken), null);
+    assert.equal((await pool.query('SELECT verified_at FROM admin_sessions WHERE id = $1', [pending.session.id])).rows[0].verified_at, null);
+  }
+});
 
 test('管理端：独立入口，只有指定的管理员能登录，必须二步验证；用户端会话无效', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
@@ -127,13 +179,18 @@ test('本地开发默认跳过二步验证：邮箱验证码通过后直接进�
   await a.post('/login', { email: 'dev@example.com' });
   const res = await a.post('/login/verify', { code: mailbox.last('dev@example.com') });
   assert.equal(res.headers.get('location'), '/');
+  assert.match(res.headers.getSetCookie().find((cookie) => cookie.startsWith('huaci_admin=')), /Max-Age=2592000(?:;|$)/);
   assert.match(await a.text('/'), /运营概览/);
   const { rows: [adminRow] } = await pool.query('SELECT totp_enabled_at FROM admins');
   assert.equal(adminRow.totp_enabled_at, null, '没有绑定 TOTP');
 
   // 打开二步验证时登录到一半留下的会话：本地关闭后直接可用，不再跳到 /2fa
   await pool.query('UPDATE admin_sessions SET verified_at = NULL');
-  assert.equal((await a.get('/')).status, 200);
+  const resumed = await a.get('/');
+  assert.equal(resumed.status, 200);
+  assert.match(resumed.headers.getSetCookie().find((cookie) => cookie.startsWith('huaci_admin=')), /Max-Age=2592000(?:;|$)/);
+  const { rows: [session] } = await pool.query('SELECT verified_at, expires_at FROM admin_sessions');
+  assert.equal(session.expires_at - session.verified_at, 30 * 86400 * 1000);
   assert.equal((await a.get('/2fa')).headers.get('location'), '/');
 });
 

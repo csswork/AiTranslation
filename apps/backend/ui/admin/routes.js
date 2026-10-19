@@ -7,6 +7,7 @@ import { Hono } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import { HTTPException } from 'hono/http-exception';
 import {
+  ADMIN_PENDING_SESSION_MAX_AGE, ADMIN_SESSION_MAX_AGE,
   audit, createAdminSession, findAdminByEmail, markVerified, revokeAdminSession, validateAdminSession,
 } from '../../src/admin/auth.js';
 import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.js';
@@ -58,13 +59,20 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     if (note) flashNote(c, note);
     return c.redirect(path, 303);
   };
+  // 数据库与浏览器同时保留 30 天，只有完整登录成功后才写入长期 Cookie。
+  const completeLogin = async (c, sessionId, token) => {
+    if (!await markVerified(pool, sessionId)) return false;
+    setCookie(c, cookieName, token, { ...cookieBase, maxAge: ADMIN_SESSION_MAX_AGE });
+    return true;
+  };
 
   app.use('*', async (c, next) => {
-    const auth = await validateAdminSession(pool, getCookie(c, cookieName));
+    const token = getCookie(c, cookieName);
+    let auth = await validateAdminSession(pool, token);
     // 本地开发不要求二步验证：之前（例如打开二步验证时）留下的未验证会话直接视为已验证。
     if (auth && !auth.session.verified && !config.adminRequire2fa) {
-      await markVerified(pool, auth.session.id);
-      auth.session.verified = true;
+      if (await completeLogin(c, auth.session.id, token)) auth.session.verified = true;
+      else auth = null;
     }
     c.set('adminAuth', auth);
     await next();
@@ -135,14 +143,14 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     deleteCookie(c, 'admin_pending', cookieBase);
     deleteCookie(c, 'admin_dev_code', cookieBase);
     const token = await createAdminSession(pool, found.id);
-    setCookie(c, cookieName, token, { ...cookieBase, maxAge: 12 * 3600 });
     if (!config.adminRequire2fa) {
       // 本地开发不做二步验证（生产环境始终要求）。
       const auth = await validateAdminSession(pool, token);
-      await markVerified(pool, auth.session.id);
+      if (!auth || !await completeLogin(c, auth.session.id, token)) return c.redirect('/login', 303);
       await audit(pool, { adminId: found.id, action: 'admin.login', detail: { twoFactor: 'skipped_dev' } });
       return c.redirect('/', 303);
     }
+    setCookie(c, cookieName, token, { ...cookieBase, maxAge: ADMIN_PENDING_SESSION_MAX_AGE });
     return c.redirect('/2fa', 303);
   });
 
@@ -163,6 +171,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.post('/2fa', async (c) => {
     const auth = c.get('adminAuth');
     if (!auth) return c.redirect('/login', 303);
+    if (auth.session.verified) return c.redirect('/', 303);
     if (!totpLimiter(auth.admin.id)) return back(c, '/2fa', fail('尝试次数过多，请 10 分钟后再试。'));
     const body = await c.req.parseBody();
     const secret = auth.admin.totp_secret && openSecret(config.authSecret, auth.admin.totp_secret);
@@ -172,7 +181,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       'UPDATE admins SET totp_last_step = $2, totp_enabled_at = COALESCE(totp_enabled_at, now()) WHERE user_id = $1',
       [auth.admin.id, step],
     );
-    await markVerified(pool, auth.session.id);
+    if (!await completeLogin(c, auth.session.id, getCookie(c, cookieName))) return c.redirect('/login', 303);
     await audit(pool, { adminId: auth.admin.id, action: auth.admin.totp_enabled_at ? 'admin.login' : 'admin.totp_enabled' });
     return c.redirect('/', 303);
   });

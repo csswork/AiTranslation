@@ -39,6 +39,8 @@ test('邮箱验证码注册：创建账号、发放一次试用点数、只保�
   res = await b.post('/login/verify', { code: mailbox.sent[0].code });
   assert.equal(res.status, 303);
   assert.equal(location(res), '/');
+  assert.equal(config.sessionDays, 30, '用户端默认保留 30 天');
+  assert.match(res.headers.getSetCookie().find((cookie) => cookie.startsWith('huaci_session=')), /Max-Age=2592000(?:;|$)/);
 
   const overview = await b.text('/');
   assert.match(overview, /alice@example\.com/);
@@ -58,10 +60,18 @@ test('邮箱验证码注册：创建账号、发放一次试用点数、只保�
   assert.equal(ledger[0].expires_at, null, '注册赠送不过期');
 
   const token = b.jar.get('huaci_session');
-  const { rows: sessions } = await pool.query('SELECT token_hash, client FROM sessions');
+  const { rows: sessions } = await pool.query('SELECT token_hash, client, created_at, expires_at FROM sessions');
   assert.equal(sessions.length, 1);
   assert.equal(sessions[0].client, 'web');
   assert.notEqual(sessions[0].token_hash, token);
+  assert.equal(sessions[0].expires_at - sessions[0].created_at, 30 * 86400 * 1000);
+  // 服务端随使用续期，但网页 Cookie 只在登录时设置，访问不会刷新其期限。
+  await pool.query("UPDATE sessions SET last_used_at = now() - interval '2 hours', expires_at = now() + interval '1 day'");
+  const visit = await b.get('/');
+  assert.equal(visit.status, 200);
+  assert.equal(visit.headers.getSetCookie().some((cookie) => cookie.startsWith('huaci_session=')), false);
+  const { rows: [renewed] } = await pool.query('SELECT last_used_at, expires_at FROM sessions');
+  assert.equal(renewed.expires_at - renewed.last_used_at, 30 * 86400 * 1000);
 });
 
 test('再次登录同一邮箱使用原账号，不重复发放试用', async () => {

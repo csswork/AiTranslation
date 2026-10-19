@@ -1,11 +1,13 @@
 /**
  * 管理员权限与会话（A1）。管理员由命令行指定（scripts/admin.mjs），普通用户注册不会获得管理权限。
  * 登录：管理员邮箱验证码（独立用途 admin_login）→ TOTP 二步验证（首次登录时绑定）。
- * 管理员会话独立于用户会话：只用于管理端主机，令牌只存哈希，12 小时有效，二步验证通过前不能访问任何管理页面。
+ * 管理员会话独立于用户会话：只用于管理端主机，令牌只存哈希。
+ * 待二步验证会话 12 小时有效；完成登录验证后保留 30 天，访问页面不顺延。
  */
 import { createHash, randomBytes } from 'node:crypto';
 
-const SESSION_HOURS = 12;
+export const ADMIN_PENDING_SESSION_MAX_AGE = 12 * 3600;
+export const ADMIN_SESSION_MAX_AGE = 30 * 86400;
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 
 export async function findAdminByEmail(db, email) {
@@ -21,8 +23,8 @@ export async function createAdminSession(db, userId) {
   const token = randomBytes(32).toString('base64url');
   await db.query(`DELETE FROM admin_sessions WHERE user_id = $1 AND (revoked_at IS NOT NULL OR expires_at <= now())`, [userId]);
   await db.query(
-    `INSERT INTO admin_sessions (user_id, token_hash, expires_at) VALUES ($1, $2, now() + make_interval(hours => $3))`,
-    [userId, hashToken(token), SESSION_HOURS],
+    `INSERT INTO admin_sessions (user_id, token_hash, expires_at) VALUES ($1, $2, now() + make_interval(secs => $3))`,
+    [userId, hashToken(token), ADMIN_PENDING_SESSION_MAX_AGE],
   );
   return token;
 }
@@ -43,7 +45,15 @@ export async function validateAdminSession(db, token) {
   return { session: { id, verified: Boolean(verifiedAt) }, admin };
 }
 
-export const markVerified = (db, sessionId) => db.query('UPDATE admin_sessions SET verified_at = now() WHERE id = $1', [sessionId]);
+/** 仅在首次完成登录时延长有效期；不能恢复过期或已撤销的会话。 */
+export async function markVerified(db, sessionId) {
+  const { rowCount } = await db.query(
+    `UPDATE admin_sessions SET verified_at = now(), expires_at = now() + make_interval(secs => $2)
+     WHERE id = $1 AND verified_at IS NULL AND revoked_at IS NULL AND expires_at > now()`,
+    [sessionId, ADMIN_SESSION_MAX_AGE],
+  );
+  return rowCount > 0;
+}
 export const revokeAdminSession = (db, sessionId) => db.query('UPDATE admin_sessions SET revoked_at = now() WHERE id = $1', [sessionId]);
 
 /** 写管理操作审计（A9）。 */
