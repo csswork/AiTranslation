@@ -102,12 +102,13 @@ function createMenu() {
       // 内置 PDF 阅读器里给区域加按钮没有意义，换成下面的「翻译整个 PDF」
       visible: !pdfActive,
     });
-    // 与元素项同为 'page'，但两者按「当前标签页是不是 PDF」互斥显示（见 syncPageMenus），
-    // 任何时刻仍只出一项。PDF 里没选中文字时右键，出现的就是这一项。
+    // 与元素项按「当前标签页是不是 PDF」互斥显示（见 syncPageMenus），任何时刻仍只出一项。
+    // 内置阅读器的正文是嵌套子框架里的插件：在上面右键，Chrome 不算 'page'，
+    // 只匹配 'frame'，所以两个都要。代价：PDF 里选中文字右键时，它会和划词项一起出现。
     await create({
       id: PDF_MENU_ID,
       title: t("翻译整个 PDF"),
-      contexts: ['page'],
+      contexts: ['page', 'frame'],
       visible: pdfActive,
     });
     await create({

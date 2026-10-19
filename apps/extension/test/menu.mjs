@@ -187,7 +187,8 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   // 被 Chrome 折叠成二级子菜单，反而更难点。
   // PDF 项与元素项同为 'page'，靠显隐互斥（见 3c），不参与这里的检查
   const pdfItem = state.items.get('ai-translate-pdf');
-  assert.deepEqual(pdfItem.contexts, ['page']);
+  // 内置阅读器的正文在子框架的插件里，右键时只匹配 'frame'
+  assert.deepEqual(pdfItem.contexts, ['page', 'frame']);
   assert.equal(pdfItem.visible && elem.visible, false, 'PDF 项与元素项不能同时可见');
   const all = [sel, elem, image, video];
   for (let i = 0; i < all.length; i += 1) {
