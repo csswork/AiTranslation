@@ -5,7 +5,7 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
-// 最近使用时间每小时最多写一次，同时顺延有效期。
+// 最近使用时间每小时最多写一次，同时顺延有效期；提高配置期限时也为仍有效的旧会话续期。
 const TOUCH_INTERVAL_MS = 60 * 60 * 1000;
 
 export async function createSession(db, config, userId, client = 'web', { id = randomUUID(), webSessionId = null } = {}) {
@@ -24,7 +24,8 @@ export async function createSession(db, config, userId, client = 'web', { id = r
 export async function validateSession(db, config, token) {
   if (!token || token.length > 100) return null;
   const { rows: [row] } = await db.query(
-    `SELECT s.id AS session_id, s.client, s.last_used_at,
+    `SELECT s.id AS session_id, s.client, s.last_used_at, s.expires_at, s.web_session_id,
+            w.last_used_at AS web_last_used_at, w.expires_at AS web_expires_at,
             u.id, u.kind, u.email, u.username, u.email_verified_at, u.hosted_frozen_at, u.created_at
      FROM sessions s JOIN users u ON u.id = s.user_id
      LEFT JOIN sessions w ON w.id = s.web_session_id
@@ -33,13 +34,25 @@ export async function validateSession(db, config, token) {
     [hashToken(token)],
   );
   if (!row) return null;
-  if (Date.now() - new Date(row.last_used_at).getTime() > TOUCH_INTERVAL_MS) {
+  const {
+    session_id: id, client, last_used_at: lastUsedAt, expires_at: expiresAt,
+    web_session_id: webSessionId, web_last_used_at: webLastUsedAt, web_expires_at: webExpiresAt,
+    ...user
+  } = row;
+  const now = Date.now();
+  const renewalDue = (lastUsed, expires) => now - new Date(lastUsed).getTime() > TOUCH_INTERVAL_MS
+    || new Date(expires).getTime() - now < config.sessionDays * 86400_000 - TOUCH_INTERVAL_MS;
+  const renewIds = [];
+  if (renewalDue(lastUsedAt, expiresAt)) renewIds.push(id);
+  // 扩展的有效使用也保留授权它的网页会话，避免只使用扩展的客户因父会话到期而掉线。
+  if (webSessionId && renewalDue(webLastUsedAt, webExpiresAt)) renewIds.push(webSessionId);
+  if (renewIds.length) {
     await db.query(
-      'UPDATE sessions SET last_used_at = now(), expires_at = now() + make_interval(days => $2) WHERE id = $1',
-      [row.session_id, config.sessionDays],
+      `UPDATE sessions SET last_used_at = now(), expires_at = GREATEST(expires_at, now() + make_interval(days => $2))
+       WHERE id = ANY($1::uuid[]) AND revoked_at IS NULL AND expires_at > now()`,
+      [renewIds, config.sessionDays],
     );
   }
-  const { session_id: id, client, last_used_at: _lastUsed, ...user } = row;
   return { session: { id, client }, user };
 }
 

@@ -137,6 +137,56 @@ test('扩展接口：只接受扩展会话；CORS 只给扩展来源；退出或
 });
 
 for (const production of [false, true]) {
+  test(`扩展使用同时续期一年及关联网页会话，不续其他浏览器；过期或撤销不恢复（${production ? '生产 HTTPS' : '本地 localhost'}）`, async () => {
+    const config = testConfig(production ? {
+      NODE_ENV: 'production', APP_ORIGIN: 'https://app.huaci.app', EXTENSION_IDS: EXT_ID,
+      MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'test', MAIL_FROM: 'no-reply@huaci.app',
+    } : {});
+    const { hosted } = fakeHosted();
+    const { app, mailbox } = buildApp({ pool, config, hosted });
+    const first = await extensionLogin(app, config, mailbox, 'active@example.com');
+    await extensionLogin(app, config, mailbox, 'active@example.com');
+    const { rows: [ext] } = await pool.query('SELECT id, web_session_id FROM sessions WHERE token_hash = $1',
+      [createHash('sha256').update(first.token).digest('hex')]);
+    const ids = [ext.id, ext.web_session_id];
+    const unrelated = (await pool.query('SELECT id, last_used_at, expires_at FROM sessions WHERE NOT (id = ANY($1::uuid[])) ORDER BY id', [ids])).rows;
+    // 模拟旧版 30 天会话：即使刚访问过，也会升级到一年，无需用户重新授权。
+    await pool.query("UPDATE sessions SET expires_at = now() + interval '30 days' WHERE id = ANY($1::uuid[])", [ids]);
+    const res = await api(app, config, '/translate', { method: 'POST', token: first.token, body: { texts: ['Hello'], target: 'fr' } });
+    assert.equal(res.status, 200, '托管翻译在续期期间正常可用');
+    assert.deepEqual((await res.json()).translations, ['[fr] Hello']);
+    let sessions = (await pool.query('SELECT id, last_used_at, expires_at FROM sessions WHERE id = ANY($1::uuid[]) ORDER BY id', [ids])).rows;
+    assert.equal(sessions.length, 2);
+    for (const session of sessions) assert.equal(session.expires_at - session.last_used_at, 365 * 86400_000);
+    assert.deepEqual((await pool.query('SELECT id, last_used_at, expires_at FROM sessions WHERE NOT (id = ANY($1::uuid[])) ORDER BY id', [ids])).rows, unrelated);
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 200);
+    assert.deepEqual((await pool.query('SELECT id, last_used_at, expires_at FROM sessions WHERE id = ANY($1::uuid[]) ORDER BY id', [ids])).rows, sessions, '一小时内不重复写库');
+
+    // 扩展刚续期过，网页会话却即将过期：必须独立续期父会话。
+    await pool.query("UPDATE sessions SET last_used_at = now() - interval '2 hours', expires_at = now() + interval '2 minutes' WHERE id = $1", [ext.web_session_id]);
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 200);
+    const { rows: [parent] } = await pool.query('SELECT last_used_at, expires_at FROM sessions WHERE id = $1', [ext.web_session_id]);
+    assert.equal(parent.expires_at - parent.last_used_at, 365 * 86400_000);
+
+    const webRes = await first.browser.get('/');
+    const name = config.secureCookies ? '__Host-huaci_session' : 'huaci_session';
+    const cookie = webRes.headers.getSetCookie().find((value) => value.startsWith(`${name}=`));
+    assert.match(cookie, /Max-Age=31536000(?:;|$)/);
+    assert.match(cookie, /HttpOnly/);
+    assert.doesNotMatch(cookie, /Domain=/i);
+    if (production) assert.match(cookie, /Secure/);
+
+    // 不访问网页，只使用扩展也能持续保留；已经过期的凭据则不能复活。
+    for (const id of ids) {
+      await pool.query("UPDATE sessions SET expires_at = now() - interval '1 second' WHERE id = $1", [id]);
+      assert.equal((await api(app, config, '/me', { token: first.token })).status, 401);
+      assert.ok((await pool.query('SELECT expires_at FROM sessions WHERE id = $1', [id])).rows[0].expires_at < new Date());
+      await pool.query("UPDATE sessions SET expires_at = now() + interval '1 day' WHERE id = $1", [id]);
+    }
+    await first.browser.post('/logout');
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 401, '主动退出仍撤销关联扩展');
+  });
+
   test(`网页登出同步撤销本次授权的扩展，保留其他浏览器登录（${production ? '生产 HTTPS' : '本地 localhost'}）`, async () => {
     const config = testConfig(production ? {
       NODE_ENV: 'production', APP_ORIGIN: 'https://app.huaci.app', EXTENSION_IDS: EXT_ID,

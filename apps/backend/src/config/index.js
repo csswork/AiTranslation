@@ -163,7 +163,7 @@ export function readConfig(env = process.env) {
     },
     creem,
     hostedMaxChars: Math.max(1, int(env.HOSTED_MAX_CHARS, 6000, 'HOSTED_MAX_CHARS')),
-    sessionDays: int(env.SESSION_DAYS, 30, 'SESSION_DAYS'),
+    sessionDays: int(env.SESSION_DAYS, 365, 'SESSION_DAYS'),
     links: {
       website: env.WEBSITE_URL || 'https://huaci.app/',
       extension: env.EXTENSION_URL || '',

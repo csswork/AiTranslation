@@ -128,7 +128,11 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   };
 
   app.use('*', async (c, next) => {
-    c.set('auth', await validateWebSession(pool, config, getSessionToken(c, config)));
+    const token = getSessionToken(c, config);
+    const auth = await validateWebSession(pool, config, token);
+    c.set('auth', auth);
+    // 页面访问滚动刷新 Cookie；POST 登录与退出由各自路由设置或清除，避免重复写入。
+    if (auth && c.req.method === 'GET') setSessionCookie(c, config, token);
     await next();
   });
 

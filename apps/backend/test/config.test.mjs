@@ -9,6 +9,8 @@ test('开发环境默认值', () => {
   assert.equal(config.appOrigin, 'http://localhost:8787');
   assert.equal(config.secureCookies, false);
   assert.equal(config.google, null);
+  assert.equal(config.sessionDays, 365, '用户端与扩展默认滚动保留一年');
+  assert.equal(readConfig({ ...base, SESSION_DAYS: '7' }).sessionDays, 7, '仍可显式配置期限');
   assert.ok(config.authSecret.length >= 32, '开发环境自动生成密钥');
 });
 

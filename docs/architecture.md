@@ -52,11 +52,11 @@ flowchart LR
 
 扩展在当前窗口的标签页打开用户端授权页，由用户主动登录，身份验证在 VPS 完成，确认后回到扩展自己的回调页（web_accessible_resources，只对用户端来源开放）返回一次性授权码，再用 PKCE 校验交换会话令牌。会话可撤销，令牌不放入回调 URL 或宿主网页。后台 API 调用由 service worker 发起，不需要 `identity` 权限；API 主机不申请 host 权限，靠服务端对扩展来源的 CORS 白名单放行。
 
-网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前已实现用户管理界面的网页登录与官网状态接口：接口暂由用户端主机提供（`/api/web/session`，CORS 白名单 + credentials），会话 Cookie 只绑定用户端主机；拆分出独立的 `api.huaci.app` 时再调整 Cookie 归属。官网入口在生产用户端上线前保持隐藏。扩展登录与扩展会话已实现（本地），接口同样暂由用户端主机提供（`/api/extension`），扩展令牌不刷新，过期或被撤销后回到未登录、由用户重新登录。
+网页与扩展登录凭据分别管理，使用同一后台用户 ID、点数账本和订阅权益；Chrome 账号或浏览器同步状态不能代替本产品的登录验证。目前已实现用户管理界面的网页登录与官网状态接口：接口暂由用户端主机提供（`/api/web/session`，CORS 白名单 + credentials），会话 Cookie 只绑定用户端主机；拆分出独立的 `api.huaci.app` 时再调整 Cookie 归属。官网入口在生产用户端上线前保持隐藏。扩展登录与扩展会话已实现（本地），接口同样暂由用户端主机提供（`/api/extension`）。用户端与扩展默认滚动保留一年（`SESSION_DAYS=365`）；有效访问续期服务端会话，网页访问与官网状态查询也刷新用户端 Cookie。令牌值保持不变，过期或被撤销后回到未登录、由用户重新登录。管理端独立固定为 30 天。
 
 参考：[Chrome 登录 API](https://developer.chrome.com/docs/extensions/reference/api/identity)、[扩展跨域请求](https://developer.chrome.com/docs/extensions/develop/concepts/network-requests)、[网页携带会话凭据](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials)。
 
-扩展正式会话关联授权网页会话；网页登出撤销这次登录关联的扩展，其他浏览器保持登录。用户端专用内容脚本只通知扩展核对服务端状态，不读取 Cookie、不传递凭据。通知在脚本与 service worker 两端都按 `AITrEnv.accountOrigin` 校验完整来源；开发环境只接受 `http://localhost:8787`，生产只接受 `https://app.huaci.app`。旧版未关联的正式扩展会话在迁移 `007` 后重新授权一次。
+扩展正式会话关联授权网页会话；扩展有效使用时，同时为仍有效的关联网页会话续期，避免只使用扩展时被父会话的旧期限中断。扩展不能读取或刷新网页 Cookie，也不能恢复过期或已撤销的会话。网页登出撤销这次登录关联的扩展，其他浏览器保持登录。用户端专用内容脚本只通知扩展核对服务端状态，不读取 Cookie、不传递凭据。通知在脚本与 service worker 两端都按 `AITrEnv.accountOrigin` 校验完整来源；开发环境只接受 `http://localhost:8787`，生产只接受 `https://app.huaci.app`。旧版未关联的正式扩展会话在迁移 `007` 后重新授权一次。
 
 ## 精确额度与点数展示
 

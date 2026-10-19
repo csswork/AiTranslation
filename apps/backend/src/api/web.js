@@ -1,5 +1,5 @@
 /**
- * 官网（huaci.app）读取登录状态的接口。只读，不修改任何数据。
+ * 官网（huaci.app）读取登录状态的接口。不修改业务数据，有效访问会续期会话和 Cookie。
  *
  * 官网与用户端是同一站点（*.huaci.app）的不同来源：浏览器带 credentials 跨源请求时会附上
  * 用户端的会话 Cookie（SameSite=Lax 对同站请求有效），服务端只对 WEB_ORIGINS 白名单返回 CORS 头。
@@ -8,7 +8,7 @@
 import { Hono } from 'hono';
 import { validateWebSession } from '../auth/sessions.js';
 import { accountState } from '../billing/entitlements.js';
-import { getSessionToken } from '../http/cookies.js';
+import { getSessionToken, setSessionCookie } from '../http/cookies.js';
 
 export function webApi({ config, pool }) {
   const app = new Hono();
@@ -26,8 +26,10 @@ export function webApi({ config, pool }) {
 
   app.get('/session', async (c) => {
     const loginUrl = `${config.appOrigin}/login`;
-    const auth = await validateWebSession(pool, config, getSessionToken(c, config));
+    const token = getSessionToken(c, config);
+    const auth = await validateWebSession(pool, config, token);
     if (!auth) return c.json({ signedIn: false, loginUrl });
+    setSessionCookie(c, config, token);
     const state = await accountState(pool, auth.user);
     return c.json({
       signedIn: true,

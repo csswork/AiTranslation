@@ -18,6 +18,7 @@ test('官网状态接口：未登录只返回登录地址，带 CORS 白名单�
   assert.equal(res.headers.get('access-control-allow-credentials'), 'true');
   assert.match(res.headers.get('vary'), /Origin/);
   assert.equal(res.headers.get('cache-control'), 'no-store');
+  assert.equal(res.headers.getSetCookie().length, 0, '未登录不签发会话 Cookie');
   assert.deepEqual(await res.json(), { signedIn: false, loginUrl: 'http://localhost:8787/login' });
 });
 
@@ -31,6 +32,15 @@ test('官网状态接口：已登录返回用户名和点数，不返回邮箱�
   assert.deepEqual(body.credits, { balance: '100.00', available: true });
   assert.equal(body.accountUrl, 'http://localhost:8787/');
   assert.doesNotMatch(JSON.stringify(body), /web@example\.com|"id"/);
+  // 不访问账户页面、只从官网读取状态时，也为仍有效的旧 30 天会话续期。
+  await pool.query("UPDATE sessions SET expires_at = now() + interval '30 days'");
+  const renewal = await b.request('/api/web/session', { headers: { origin: WEB } });
+  const cookie = renewal.headers.getSetCookie().find((value) => value.startsWith('huaci_session='));
+  assert.match(cookie, /Max-Age=31536000(?:;|$)/);
+  assert.match(cookie, /HttpOnly/);
+  assert.doesNotMatch(cookie, /Domain=/i);
+  const { rows: [session] } = await pool.query('SELECT last_used_at, expires_at FROM sessions');
+  assert.equal(session.expires_at - session.last_used_at, 365 * 86400_000);
 
   const evil = await b.request('/api/web/session', { headers: { origin: 'https://evil.example' } });
   assert.equal(evil.headers.get('access-control-allow-origin'), null);

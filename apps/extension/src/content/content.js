@@ -301,7 +301,6 @@
             <span class="title"></span>
             <select class="target" title="目标语言"></select>
             <select class="provider" title="切换翻译平台"></select>
-            <button class="btn default-target" type="button" title="设置为默认目标语言">★</button>
             <button class="icon retry" type="button" title="重新翻译" aria-label="重新翻译">${ICON.retry}</button>
             <button class="icon close" type="button" title="关闭（Esc）" aria-label="关闭">${ICON.close}</button>
           </div>
@@ -334,7 +333,6 @@
         title: q('.title'),
         provider: q('.provider'),
         target: q('.target'),
-        defaultTarget: q('.default-target'),
         retry: q('.retry'),
         close: q('.close'),
         body: q('.body'),
@@ -354,7 +352,6 @@
       dom.retry.addEventListener('click', () => retranslate());
       dom.provider.addEventListener('change', () => retranslate(dom.provider.value));
       dom.target.addEventListener('change', () => retranslate(undefined, dom.target.value));
-      dom.defaultTarget.addEventListener('click', () => send({ type: 'set-default-target', targetId }));
       dom.copy.addEventListener('click', copyResult);
       enableDrag();
 
