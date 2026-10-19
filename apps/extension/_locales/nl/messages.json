@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "Nog geen API Key ingevuld, klik hier om in te stellen"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "Vertaal de volledige PDF"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "Weergavemodus"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "Selecteer 'Opslaan als PDF' in het afdrukvenster"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "PDF vertalen · AI-tekstselectie vertalen"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "PDF vertalen"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "Naast elkaar"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "Vertaling starten"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "PDF downloaden"
+  },
+  "m_9de082e5b926003f": {
+    "message": "Selecteer of sleep een PDF-bestand"
+  },
+  "m_59f17be2009977b9": {
+    "message": "Bestanden worden alleen lokaal verwerkt; alleen de geëxtraheerde tekst wordt naar het door jou gekozen vertaalplatform gestuurd."
+  },
+  "m_36c3d934aabfc987": {
+    "message": "Vertalen: pagina $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "Alle $arg1$ pagina's vertaald · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "Gestopt: $arg1$/$arg2$ pagina's vertaald",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "$arg1$ pagina's in totaal",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "Doorgaan met vertalen"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "PDF lezen… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "PDF verwerken…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "Deze PDF is beveiligd met een wachtwoord en kan nog niet worden vertaald."
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "Kan dit bestand niet openen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "Het aantal alinea's in de vertaling klopt niet. Probeer het opnieuw of gebruik een ander model."
+  },
+  "m_6613650da2bee135": {
+    "message": "Deze PDF bevat geen extraheerbare tekst (mogelijk een scan) en kan nog niet worden vertaald."
+  },
+  "m_efb2876a3143ffef": {
+    "message": "$arg1$ pagina's zijn nog niet vertaald en worden in de oorspronkelijke taal geëxporteerd. Doorgaan?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "Export voorbereiden: pagina $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "Selecteer een PDF-bestand."
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "PDF lezen…"
+  },
+  "m_68b6edb889805933": {
+    "message": "Deze PDF is te groot ($arg1$ MB). Splits het bestand en probeer het opnieuw.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "Kan de inhoud van deze PDF niet lezen. Je kunt hem eerst downloaden en hierheen slepen om te vertalen."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

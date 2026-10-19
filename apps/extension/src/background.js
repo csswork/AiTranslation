@@ -17,6 +17,8 @@ const MENU_ID = 'ai-translate-selection';
 const ELEMENT_MENU_ID = 'ai-translate-element';
 const IMAGE_MENU_ID = 'ai-translate-image';
 const VIDEO_MENU_ID = 'ai-translate-video';
+const PDF_MENU_ID = 'ai-translate-pdf';
+const PDF_PAGE = 'src/pdf/pdf.html';
 const PORT_NAME = 'ai-translate-panel';
 const VIDEO_FILE = 'src/content/video.js';
 const OFFSCREEN_URL = 'src/offscreen/offscreen.html';
@@ -34,6 +36,7 @@ const CONTENT_FILES = [
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
+  'src/content/pdf.js',
 ];
 
 /** `${tabId}:${frameId}` -> 该框架最近一次上报的选中文字（保留换行）。 */
@@ -61,6 +64,7 @@ function createMenu() {
     await AITrSettings.migrateSettings();
     const settings = await AITrSettings.loadSettings();
     const title = t("翻译成$1", [AITrSettings.targetMenu(settings)]);
+    const pdfActive = await activeTabIsPdf();
     await chrome.contextMenus.removeAll();
     const created = [];
     const create = (props) =>
@@ -95,7 +99,16 @@ function createMenu() {
       // 代价：整块是链接的区域（信息流卡片）加不了元素规则，
       // 可以右键它外层的容器。
       contexts: ['page'],
-      visible: true,
+      // 内置 PDF 阅读器里给区域加按钮没有意义，换成下面的「翻译整个 PDF」
+      visible: !pdfActive,
+    });
+    // 与元素项同为 'page'，但两者按「当前标签页是不是 PDF」互斥显示（见 syncPageMenus），
+    // 任何时刻仍只出一项。PDF 里没选中文字时右键，出现的就是这一项。
+    await create({
+      id: PDF_MENU_ID,
+      title: t("翻译整个 PDF"),
+      contexts: ['page'],
+      visible: pdfActive,
     });
     await create({
       id: IMAGE_MENU_ID,
@@ -172,6 +185,69 @@ async function updateMenuVisibility(text) {
       /* 忽略：菜单确实建不起来时，日志已在 createMenu 里打过 */
     }
   }
+}
+
+/* ------------------------------------------------------------ PDF 标签页 */
+
+/**
+ * 哪些标签页正显示内置 PDF 阅读器。由 src/content/pdf.js 在页面加载时上报；
+ * 存进 session 存储，service worker 重启后仍然知道。
+ */
+let pdfTabsTask = null;
+function pdfTabs() {
+  pdfTabsTask ||= chrome.storage.session.get('pdfTabs')
+    .then((stored) => new Set(stored.pdfTabs || []))
+    .catch(() => new Set());
+  return pdfTabsTask;
+}
+
+async function setPdfTab(tabId, pdf) {
+  const tabs = await pdfTabs();
+  if (tabs.has(tabId) === pdf) return;
+  if (pdf) tabs.add(tabId);
+  else tabs.delete(tabId);
+  try {
+    await chrome.storage.session.set({ pdfTabs: [...tabs] });
+  } catch {
+    /* 存不下也只影响 service worker 重启后的菜单显隐 */
+  }
+}
+
+async function activeTabIsPdf() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    return tab?.id != null && (await pdfTabs()).has(tab.id);
+  } catch {
+    return false;
+  }
+}
+
+/** 右键菜单是全局的：跟着当前标签页切换「区域按钮」与「翻译整个 PDF」。 */
+async function syncPageMenus(tabId) {
+  const pdf = tabId != null && (await pdfTabs()).has(tabId);
+  try {
+    await chrome.contextMenus.update(ELEMENT_MENU_ID, { visible: !pdf });
+    await chrome.contextMenus.update(PDF_MENU_ID, { visible: pdf });
+  } catch {
+    await createMenu(); // 重建时已按当前标签页决定显隐
+  }
+}
+
+chrome.tabs.onActivated?.addListener(({ tabId }) => syncPageMenus(tabId));
+chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
+  if (windowId === chrome.windows.WINDOW_ID_NONE) return;
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, windowId });
+    if (tab?.id != null) await syncPageMenus(tab.id);
+  } catch {
+    /* 窗口已关闭 */
+  }
+});
+
+/** 在 PDF 标签页右边打开翻译页；字节由翻译页自己向该标签页的内容脚本要。 */
+async function openPdfTranslation(tab) {
+  const url = `${chrome.runtime.getURL(PDF_PAGE)}?tab=${tab.id}`;
+  await chrome.tabs.create({ url, index: tab.index + 1, openerTabId: tab.id, windowId: tab.windowId });
 }
 
 /** 传统翻译接口识别不了图片，换到这类平台时把「翻译图片」藏起来。 */
@@ -458,6 +534,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     }
     return;
   }
+  if (info.menuItemId === PDF_MENU_ID && tab?.id) {
+    await openPdfTranslation(tab);
+    return;
+  }
   if (info.menuItemId === ELEMENT_MENU_ID && tab?.id) {
     if (!(await ensureContentScript(tab.id))) return;
     try {
@@ -544,6 +624,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (type === 'ping') {
     sendResponse({ ok: true });
+    return false;
+  }
+
+  // 只采信顶层框架的上报：PDF 阅读器内部还嵌着同地址的子框架
+  if (type === 'page-kind') {
+    const tab = sender.tab;
+    if (tab?.id != null && (sender.frameId ?? 0) === 0) {
+      setPdfTab(tab.id, Boolean(message.pdf)).then(() => {
+        if (tab.active) syncPageMenus(tab.id);
+      });
+    }
     return false;
   }
 
@@ -720,6 +811,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.tabs.onRemoved.addListener((tabId) => {
   translationRuns.get(tabId)?.abort();
   translationRuns.delete(tabId);
+  setPdfTab(tabId, false);
   for (const key of selections.keys()) {
     if (key.startsWith(`${tabId}:`)) selections.delete(key);
   }

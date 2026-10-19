@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "还没有填写 API Key，点这里去设置"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "翻译整个 PDF"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "显示方式"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "在打印窗口里选择「另存为 PDF」"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "翻译 PDF · AI 划词翻译"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "翻译 PDF"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "对照"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "开始翻译"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "下载 PDF"
+  },
+  "m_9de082e5b926003f": {
+    "message": "选择或拖入一个 PDF 文件"
+  },
+  "m_59f17be2009977b9": {
+    "message": "文件只在本机解析，只有提取出的文字会发给你选择的翻译平台。"
+  },
+  "m_36c3d934aabfc987": {
+    "message": "正在翻译：$arg1$/$arg2$ 页",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "已翻译全部 $arg1$ 页 · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "已停止：$arg1$/$arg2$ 页已翻译",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "共 $arg1$ 页",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "继续翻译"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "正在读取 PDF… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "正在解析 PDF…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "这个 PDF 有密码保护，暂不支持翻译。"
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "无法打开这个文件：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "翻译结果的段数不对，重试或换个模型试试"
+  },
+  "m_6613650da2bee135": {
+    "message": "这个 PDF 里没有可提取的文字（可能是扫描件），暂不支持翻译。"
+  },
+  "m_efb2876a3143ffef": {
+    "message": "还有 $arg1$ 页没有翻译完，这些页会按原文导出。继续吗？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "正在准备导出：$arg1$/$arg2$ 页",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "请选择 PDF 文件。"
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "正在读取 PDF…"
+  },
+  "m_68b6edb889805933": {
+    "message": "这个 PDF 太大（$arg1$ MB），请拆分后再翻译。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "读不到这个 PDF 的内容。可以先下载，再拖到这里翻译。"
+  },
   "extensionName": {
     "message": "AI 划词翻译"
   },

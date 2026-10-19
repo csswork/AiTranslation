@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "Noch kein API Key hinterlegt, klicke hier zum Einrichten"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "Gesamtes PDF übersetzen"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "Anzeigemodus"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "Wählen Sie im Druckfenster „Als PDF speichern“"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "PDF übersetzen · KI-Textmarkierungsübersetzung"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "PDF übersetzen"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "Nebeneinander"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "Übersetzung starten"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "PDF herunterladen"
+  },
+  "m_9de082e5b926003f": {
+    "message": "PDF-Datei auswählen oder hineinziehen"
+  },
+  "m_59f17be2009977b9": {
+    "message": "Dateien werden nur lokal verarbeitet; nur der extrahierte Text wird an die von Ihnen gewählte Übersetzungsplattform gesendet."
+  },
+  "m_36c3d934aabfc987": {
+    "message": "Übersetzung: Seite $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "Alle $arg1$ Seiten übersetzt · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "Gestoppt: $arg1$/$arg2$ Seiten übersetzt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "Insgesamt $arg1$ Seiten",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "Übersetzung fortsetzen"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "PDF wird gelesen… $arg1$ %",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "PDF wird analysiert…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "Dieses PDF ist passwortgeschützt und kann noch nicht übersetzt werden."
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "Diese Datei kann nicht geöffnet werden: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "Die Übersetzung hat die falsche Anzahl an Absätzen. Versuche es erneut oder verwende ein anderes Modell."
+  },
+  "m_6613650da2bee135": {
+    "message": "Dieses PDF enthält keinen extrahierbaren Text (möglicherweise ein Scan) und kann noch nicht übersetzt werden."
+  },
+  "m_efb2876a3143ffef": {
+    "message": "$arg1$ Seiten sind noch unübersetzt und werden in der Originalsprache exportiert. Fortfahren?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "Export wird vorbereitet: Seite $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "Bitte wähle eine PDF-Datei aus."
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "PDF wird gelesen…"
+  },
+  "m_68b6edb889805933": {
+    "message": "Dieses PDF ist zu groß ($arg1$ MB). Bitte teile es auf und versuche es erneut.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "Der Inhalt dieses PDFs kann nicht gelesen werden. Du kannst es zuerst herunterladen und dann hierher ziehen, um es zu übersetzen."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

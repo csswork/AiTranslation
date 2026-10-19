@@ -51,7 +51,8 @@
         "src/lib/tiles.js",
         "src/content/content.js",
         "src/content/elements.js",
-        "src/content/image.js"
+        "src/content/image.js",
+        "src/content/pdf.js"
       ],
       "run_at": "document_idle",
       "all_frames": true,

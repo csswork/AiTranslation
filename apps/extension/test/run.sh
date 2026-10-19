@@ -18,7 +18,8 @@ done
 
 echo
 echo -n '  语法检查   '
-for js in $(find src -name '*.js'); do
+# src/vendor 是原样引入的第三方构建产物，不在这里检查
+for js in $(find src -name '*.js' -not -path 'src/vendor/*'); do
   node --check "$js" || fail=1
 done
 [ $fail -eq 0 ] && echo '全部通过' || echo '有失败项'

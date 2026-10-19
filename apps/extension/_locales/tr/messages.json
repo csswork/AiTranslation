@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "Henüz API Key girilmedi, yapılandırmak için buraya tıklayın"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "Tüm PDF'yi çevir"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "Görüntüleme modu"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "Yazdırma penceresinde \"PDF olarak kaydet\" seçeneğini seçin"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "PDF çevir · AI seçim çevirisi"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "PDF çevir"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "Yan yana"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "Çeviriyi başlat"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "PDF indir"
+  },
+  "m_9de082e5b926003f": {
+    "message": "Bir PDF dosyası seçin veya sürükleyin"
+  },
+  "m_59f17be2009977b9": {
+    "message": "Dosyalar yalnızca yerel olarak işlenir; yalnızca çıkarılan metin seçtiğiniz çeviri platformuna gönderilir."
+  },
+  "m_36c3d934aabfc987": {
+    "message": "Çevriliyor: sayfa $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "$arg1$ sayfanın tamamı çevrildi · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "Durduruldu: $arg1$/$arg2$ sayfa çevrildi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "Toplam $arg1$ sayfa",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "Çevirmeye devam et"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "PDF okunuyor… %$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "PDF ayrıştırılıyor…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "Bu PDF parola korumalı ve henüz çevrilemiyor."
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "Bu dosya açılamıyor: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "Çevirideki paragraf sayısı yanlış. Tekrar deneyin veya farklı bir model kullanın."
+  },
+  "m_6613650da2bee135": {
+    "message": "Bu PDF'te çıkarılabilir metin yok (taranmış olabilir) ve henüz çevrilemiyor."
+  },
+  "m_efb2876a3143ffef": {
+    "message": "$arg1$ sayfa henüz çevrilmedi ve bu sayfalar orijinal dilinde dışa aktarılacak. Devam edilsin mi?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "Dışa aktarma hazırlanıyor: sayfa $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "Lütfen bir PDF dosyası seçin."
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "PDF okunuyor…"
+  },
+  "m_68b6edb889805933": {
+    "message": "Bu PDF çok büyük ($arg1$ MB). Lütfen bölüp tekrar deneyin.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "Bu PDF'in içeriği okunamıyor. Önce indirip ardından buraya sürükleyerek çevirebilirsiniz."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

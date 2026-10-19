@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "尚未填寫 API Key，點這裡前往設定"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "翻译整个 PDF"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "顯示方式"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "在列印視窗中選擇「另存為 PDF」"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "翻譯 PDF · AI 劃詞翻譯"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "翻譯 PDF"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "對照"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "開始翻譯"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "下載 PDF"
+  },
+  "m_9de082e5b926003f": {
+    "message": "選擇或拖入一個 PDF 檔案"
+  },
+  "m_59f17be2009977b9": {
+    "message": "檔案僅在本機解析，只有擷取出的文字會傳送給你選擇的翻譯平台。"
+  },
+  "m_36c3d934aabfc987": {
+    "message": "正在翻譯：第 $arg1$/$arg2$ 頁",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "已翻譯全部 $arg1$ 頁 · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "已停止：已翻譯 $arg1$/$arg2$ 頁",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "共 $arg1$ 頁",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "繼續翻譯"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "正在讀取 PDF… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "正在解析 PDF…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "這個 PDF 有密碼保護，暫不支援翻譯。"
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "無法開啟這個檔案：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "翻譯結果的段落數不正確，請重試或改用其他模型"
+  },
+  "m_6613650da2bee135": {
+    "message": "這個 PDF 沒有可擷取的文字（可能是掃描檔），暫不支援翻譯。"
+  },
+  "m_efb2876a3143ffef": {
+    "message": "還有 $arg1$ 頁尚未翻譯完成，這些頁面將以原文匯出。要繼續嗎？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "正在準備匯出：第 $arg1$/$arg2$ 頁",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "請選擇 PDF 檔案。"
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "正在讀取 PDF…"
+  },
+  "m_68b6edb889805933": {
+    "message": "這個 PDF 太大（$arg1$ MB），請拆分後再翻譯。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "無法讀取這個 PDF 的內容。您可以先下載，再拖曳到這裡翻譯。"
+  },
   "extensionName": {
     "message": "AI 劃詞翻譯"
   },

@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "עדיין לא הוגדר API Key, לחץ כאן להגדרה"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "תרגם את כל ה-PDF"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "מצב תצוגה"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "בחר \"שמור כ-PDF\" בחלון ההדפסה"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "תרגום PDF · תרגום AI של טקסט נבחר"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "תרגום PDF"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "זה לצד זה"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "התחל תרגום"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "הורד PDF"
+  },
+  "m_9de082e5b926003f": {
+    "message": "בחר או גרור קובץ PDF"
+  },
+  "m_59f17be2009977b9": {
+    "message": "הקבצים מנותחים באופן מקומי בלבד; רק הטקסט שחולץ נשלח לפלטפורמת התרגום שתבחר."
+  },
+  "m_36c3d934aabfc987": {
+    "message": "מתרגם: עמוד $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "תורגמו כל $arg1$ העמודים · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "הופסק: תורגמו $arg1$/$arg2$ עמודים",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "סך הכול $arg1$ עמודים",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "המשך לתרגם"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "קורא PDF… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "מנתח PDF…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "ה-PDF הזה מוגן בסיסמה ולא ניתן לתרגם אותו עדיין."
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "לא ניתן לפתוח את הקובץ הזה: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "לתרגום יש מספר פסקאות שגוי. נסה שוב או השתמש במודל אחר."
+  },
+  "m_6613650da2bee135": {
+    "message": "אין ב-PDF הזה טקסט שניתן לחלץ (ייתכן שזה סרוק) ולא ניתן לתרגם אותו עדיין."
+  },
+  "m_efb2876a3143ffef": {
+    "message": "עדיין לא תורגמו $arg1$ עמודים, והם ייוצאו בשפת המקור. להמשיך?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "מכין ייצוא: עמוד $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "יש לבחור קובץ PDF."
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "קורא PDF…"
+  },
+  "m_68b6edb889805933": {
+    "message": "ה-PDF הזה גדול מדי ($arg1$ MB). יש לפצל אותו ולנסות שוב.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "לא ניתן לקרוא את תוכן ה-PDF הזה. אפשר להוריד אותו ואז לגרור אותו לכאן לתרגום."
+  },
   "extensionName": {
     "message": "מתרגם AI"
   },

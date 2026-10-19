@@ -12,7 +12,8 @@ export function sourceMessages(root) {
   function walk(dir) {
     for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
       const file = path.join(dir, item.name);
-      if (item.isDirectory()) { if (item.name !== 'locales') walk(file); continue; }
+      // vendor/ 是第三方代码（pdf.js），不含界面文案
+      if (item.isDirectory()) { if (!['locales', 'vendor'].includes(item.name)) walk(file); continue; }
       if (!/\.(html|js)$/.test(file) || ['messages.js', 'languages.js'].includes(item.name)) continue;
       const source = fs.readFileSync(file, 'utf8');
       if (file.endsWith('.html')) { html(source); continue; }

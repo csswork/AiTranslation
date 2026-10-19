@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "API Key が未設定です。ここをクリックして設定してください"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "PDF全体を翻訳"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "表示モード"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "印刷ウィンドウで「PDF として保存」を選択してください"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "PDF 翻訳 · AI 選択テキスト翻訳"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "PDF を翻訳"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "対訳表示"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "翻訳を開始"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "PDF をダウンロード"
+  },
+  "m_9de082e5b926003f": {
+    "message": "PDF ファイルを選択またはドラッグしてください"
+  },
+  "m_59f17be2009977b9": {
+    "message": "ファイルは本機でのみ解析され、抽出されたテキストだけが選択した翻訳プラットフォームに送信されます。"
+  },
+  "m_36c3d934aabfc987": {
+    "message": "翻訳中：$arg1$/$arg2$ ページ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "全 $arg1$ ページを翻訳しました · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "停止しました：$arg1$/$arg2$ ページ翻訳済み",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "全 $arg1$ ページ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "翻訳を続ける"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "PDF を読み込み中… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "PDF を解析中…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "この PDF はパスワードで保護されているため、まだ翻訳できません。"
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "このファイルを開けません：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "翻訳結果の段落数が正しくありません。再試行するか、別のモデルをお試しください。"
+  },
+  "m_6613650da2bee135": {
+    "message": "この PDF には抽出可能なテキストがありません（スキャンの可能性があります）。まだ翻訳できません。"
+  },
+  "m_efb2876a3143ffef": {
+    "message": "$arg1$ ページが未翻訳です。これらのページは原文のままエクスポートされます。続行しますか？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "エクスポートを準備中：$arg1$/$arg2$ ページ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "PDF ファイルを選択してください。"
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "PDF を読み込み中…"
+  },
+  "m_68b6edb889805933": {
+    "message": "この PDF は大きすぎます（$arg1$ MB）。分割してから翻訳してください。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "この PDF の内容を読み取れません。先にダウンロードしてから、ここにドラッグして翻訳できます。"
+  },
   "extensionName": {
     "message": "AI翻訳"
   },

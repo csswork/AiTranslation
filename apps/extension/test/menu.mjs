@@ -15,6 +15,8 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     settings: initialSettings,
     offscreen: false, // offscreen 文档在不在（决定要不要发消息过去）
     sent: [], // 发给 offscreen 的消息
+    pdfTabs: [], // chrome.storage.session 里记录的 PDF 标签页
+    activeTab: null,
   };
 
   let pendingError = null;
@@ -77,10 +79,16 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
         },
       },
       onChanged: { addListener: (f) => (state.listeners.storage = f) },
+      session: {
+        get: async () => ({ pdfTabs: state.pdfTabs }),
+        set: async (patch) => { state.pdfTabs = patch.pdfTabs; },
+      },
     },
-    tabs: { query: async () => [], sendMessage: async () => ({ ok: true }),
+    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab }] : []), sendMessage: async () => ({ ok: true }),
             connect: () => ({ postMessage(){}, disconnect(){}, onDisconnect:{addListener(){}}, onMessage:{addListener(){}} }),
-            onRemoved: { addListener: () => {} } },
+            onRemoved: { addListener: () => {} },
+            onActivated: { addListener: (f) => (state.listeners.activated = f) } },
+    windows: { WINDOW_ID_NONE: -1, onFocusChanged: { addListener: () => {} } },
     scripting: { executeScript: async () => [{ result: true }] },
     commands: { onCommand: { addListener: () => {} } },
   };
@@ -111,10 +119,11 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 3, '不靠任何事件，启动时就应建好三个常驻菜单项');
+  assert.equal(state.items.size, 4, '不靠任何事件，启动时就应建好四个常驻菜单项');
   assert.ok(state.items.has('ai-translate-selection'));
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
+  assert.equal(state.items.get('ai-translate-pdf').visible, false, '「翻译整个 PDF」默认隐藏');
   assert.equal(state.items.has('ai-translate-video'), false,
     '视频字幕默认关闭，不应建出菜单项');
   assert.equal(state.items.get('ai-translate-element').visible, true);
@@ -132,7 +141,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 3, '划词项 + 元素项 + 图片项，共三个（视频字幕默认关闭）');
+  assert.equal(state.items.size, 4, '划词项 + 元素项 + PDF 项 + 图片项，共四个（视频字幕默认关闭）');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -142,7 +151,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 3);
+  assert.equal(state.items.size, 4);
   assert.equal(state.items.get('ai-translate-selection').visible, true,
     '选中中文时，保留翻译入口');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
@@ -176,6 +185,10 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 
   // 各项两两不得共享 contexts：任何重叠都会让两项同时出现，
   // 被 Chrome 折叠成二级子菜单，反而更难点。
+  // PDF 项与元素项同为 'page'，靠显隐互斥（见 3c），不参与这里的检查
+  const pdfItem = state.items.get('ai-translate-pdf');
+  assert.deepEqual(pdfItem.contexts, ['page']);
+  assert.equal(pdfItem.visible && elem.visible, false, 'PDF 项与元素项不能同时可见');
   const all = [sel, elem, image, video];
   for (let i = 0; i < all.length; i += 1) {
     for (let j = i + 1; j < all.length; j += 1) {
@@ -210,6 +223,34 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   console.log('✓ 选中非中文时显示，标题为「翻译成中文」');
 }
 
+/* --- 3c. PDF 标签页：「翻译整个 PDF」替换「区域按钮」，切走后换回 --- */
+{
+  const { state } = boot();
+  state.listeners.installed({ reason: 'update' });
+  await settle();
+  const items = () => [state.items.get('ai-translate-element').visible, state.items.get('ai-translate-pdf').visible];
+  state.listeners.message({ type: 'page-kind', pdf: true }, { tab: { id: 7, active: true }, frameId: 0 }, () => {});
+  await settle();
+  assert.deepEqual(items(), [false, true], '当前 PDF 标签页：只显示 PDF 项');
+  // PDF 阅读器里嵌着的同地址子框架不算
+  state.listeners.message({ type: 'page-kind', pdf: false }, { tab: { id: 7, active: true }, frameId: 3 }, () => {});
+  await settle();
+  assert.deepEqual(items(), [false, true], '子框架的上报不改变状态');
+  state.listeners.activated({ tabId: 8 });
+  await settle();
+  assert.deepEqual(items(), [true, false], '切到普通标签页：换回区域按钮');
+  state.listeners.activated({ tabId: 7 });
+  await settle();
+  assert.deepEqual(items(), [false, true], '切回 PDF 标签页');
+  assert.deepEqual(state.pdfTabs, [7], 'PDF 标签页记在 session 存储里，service worker 重启后仍可用');
+  // 重建菜单（例如 service worker 重启）时按当前标签页决定显隐
+  state.activeTab = 7;
+  state.listeners.installed({ reason: 'update' });
+  await settle();
+  assert.deepEqual(items(), [false, true], '重建后仍按当前 PDF 标签页显示');
+  console.log('✓ PDF 标签页里右键空白处出现「翻译整个 PDF」，与区域按钮互斥');
+}
+
 /* --- 3b. 空选区不藏菜单：内置 PDF 阅读器里内容脚本读不到选区，
    别的网页点空白上报的空选区不能把全局菜单藏掉 --- */
 {
@@ -242,7 +283,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   const video = state.items.get('ai-translate-video');
   assert.ok(video, '打开总开关后应出现视频菜单项');
-  assert.equal(state.items.size, 4, '打开后共四个菜单项');
+  assert.equal(state.items.size, 5, '打开后共五个菜单项');
   assert.deepEqual(video.contexts, ['video']);
   assert.equal(video.visible, true);
   assert.equal(state.duplicateErrors, 0);
@@ -257,7 +298,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
   await settle();
   assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
-  assert.equal(state.items.size, 3);
+  assert.equal(state.items.size, 4);
   assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
   assert.ok(
     state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),

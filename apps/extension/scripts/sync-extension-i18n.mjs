@@ -31,7 +31,7 @@ if (process.argv.includes('--watch')) {
   });
   fs.watch(path.join(root, 'src'), { recursive: true }, (_event, name) => {
     const file = String(name || '');
-    if (!/\.(html|js)$/.test(file) || /(?:^|\/)(?:messages|languages)\.js$/.test(file) || file.startsWith('locales/')) return;
+    if (!/\.(html|js)$/.test(file) || /(?:^|\/)(?:messages|languages)\.js$/.test(file) || file.startsWith('locales/') || file.startsWith('vendor/')) return;
     clearTimeout(timer); timer = setTimeout(sync, 400);
   });
   console.log('Watching extension source messages; refresh runs locally after edits.');

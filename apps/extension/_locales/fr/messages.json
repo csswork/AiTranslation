@@ -1613,6 +1613,144 @@
   "m_f0dc2a82e94a1504": {
     "message": "Aucune clé API définie, cliquez ici pour la configurer"
   },
+  "m_5ab7c5e1d7663545": {
+    "message": "Traduire tout le PDF"
+  },
+  "m_8d3d73a18affda8e": {
+    "message": "Mode d'affichage"
+  },
+  "m_feb47bbf1f97a7ba": {
+    "message": "Sélectionnez « Enregistrer au format PDF » dans la fenêtre d'impression"
+  },
+  "m_a1d07f09639714f2": {
+    "message": "Traduire un PDF · Traduction par sélection IA"
+  },
+  "m_ef71e99f635619d2": {
+    "message": "Traduire un PDF"
+  },
+  "m_e182fb40a0809fbf": {
+    "message": "Côte à côte"
+  },
+  "m_b7986efeed2532ee": {
+    "message": "Lancer la traduction"
+  },
+  "m_ef4cf2e4ee2c6128": {
+    "message": "Télécharger le PDF"
+  },
+  "m_9de082e5b926003f": {
+    "message": "Sélectionnez ou glissez un fichier PDF"
+  },
+  "m_59f17be2009977b9": {
+    "message": "Les fichiers sont analysés uniquement en local ; seul le texte extrait est envoyé à la plateforme de traduction que vous choisissez."
+  },
+  "m_36c3d934aabfc987": {
+    "message": "Traduction : page $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_b7724460ea8e7104": {
+    "message": "Les $arg1$ pages ont été traduites · $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_68656c104922921c": {
+    "message": "Arrêté : $arg1$/$arg2$ pages traduites",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_169a646a2e97c248": {
+    "message": "$arg1$ pages au total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_617691195220114e": {
+    "message": "Continuer la traduction"
+  },
+  "m_43c71a4e8ee5a199": {
+    "message": "Lecture du PDF… $arg1$ %",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b83392f01b33b0f1": {
+    "message": "Analyse du PDF…"
+  },
+  "m_76c1f6c812a2f7e0": {
+    "message": "Ce PDF est protégé par mot de passe et ne peut pas encore être traduit."
+  },
+  "m_d2685fd4b9661ad9": {
+    "message": "Impossible d'ouvrir ce fichier : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a4f66e611d1204cf": {
+    "message": "Le nombre de paragraphes de la traduction est incorrect. Réessayez ou utilisez un autre modèle."
+  },
+  "m_6613650da2bee135": {
+    "message": "Ce PDF ne contient aucun texte extractible (il s'agit peut-être d'un scan) et ne peut pas encore être traduit."
+  },
+  "m_efb2876a3143ffef": {
+    "message": "$arg1$ pages ne sont pas encore traduites et seront exportées dans leur langue d'origine. Continuer ?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b17a9035021ff010": {
+    "message": "Préparation de l'export : page $arg1$/$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2c4694c2f4c88336": {
+    "message": "Veuillez sélectionner un fichier PDF."
+  },
+  "m_c1da1bcc5489cfc2": {
+    "message": "Lecture du PDF…"
+  },
+  "m_68b6edb889805933": {
+    "message": "Ce PDF est trop volumineux ($arg1$ Mo). Veuillez le diviser puis réessayer.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82e98e4cef120b1d": {
+    "message": "Impossible de lire le contenu de ce PDF. Vous pouvez d'abord le télécharger, puis le glisser ici pour le traduire."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

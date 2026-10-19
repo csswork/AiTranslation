@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>翻译 PDF · AI 划词翻译</title>
+    <link rel="stylesheet" href="pdf.css" />
+    <style id="pageSize"></style>
+  </head>
+  <body class="mode-compare">
+    <header class="top">
+      <img class="mark" src="../../icons/icon128.png" alt="" />
+      <div class="titles">
+        <h1 id="name">翻译 PDF</h1>
+        <p class="status" id="status" aria-live="polite"></p>
+        <div class="progress" id="progressWrap" hidden><div class="progress-bar" id="progress"></div></div>
+      </div>
+      <div class="controls">
+        <label class="pick"><span class="pick-label">目标语言</span><select id="target"></select></label>
+        <label class="pick"><span class="pick-label">平台</span><select id="provider"></select></label>
+        <div class="seg" role="group" aria-label="显示方式">
+          <button type="button" data-mode="compare" aria-pressed="true">对照</button>
+          <button type="button" data-mode="translated" aria-pressed="false">译文</button>
+          <button type="button" data-mode="original" aria-pressed="false">原文</button>
+        </div>
+        <button id="run" class="btn" type="button" disabled>开始翻译</button>
+        <button id="download" class="btn ghost" type="button" disabled title="在打印窗口里选择「另存为 PDF」">下载 PDF</button>
+        <button id="settings" class="btn ghost small" type="button">设置</button>
+      </div>
+    </header>
+
+    <div class="error" id="error" hidden><p id="errorText"></p></div>
+
+    <section class="empty" id="empty" hidden>
+      <label class="drop" id="drop">
+        <input id="file" type="file" accept="application/pdf,.pdf" hidden />
+        <strong>选择或拖入一个 PDF 文件</strong>
+        <span class="note" id="emptyNote">文件只在本机解析，只有提取出的文字会发给你选择的翻译平台。</span>
+      </label>
+    </section>
+
+    <main class="pages" id="pages"></main>
+
+    <script src="../lib/languages.js"></script>
+    <script src="../lib/messages.js"></script>
+    <script src="../lib/i18n.js"></script>
+    <script src="../lib/lang.js"></script>
+    <script src="../lib/settings.js"></script>
+    <script src="../lib/providers.js"></script>
+    <script src="../lib/pdf-layout.js"></script>
+    <script src="pdf.js"></script>
+  </body>
+</html>
