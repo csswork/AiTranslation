@@ -123,6 +123,7 @@
 
   /** 账户卡片：正式账户、访客试用、未登录与新安装引导四种状态。 */
   function renderAccount() {
+    AITrAuthUi.sync();
     const active = account.signedIn || account.guest;
     const welcome = !active && onboarding === 'pending' && !hasOwnKey();
     el.welcome.hidden = !welcome;
@@ -177,6 +178,7 @@
       b.type = 'button';
       b.className = ghost ? 'btn ghost' : 'btn';
       b.textContent = label;
+      b.toggleAttribute('data-login', onClick === login);
       b.addEventListener('click', onClick);
       return b;
     };
@@ -209,6 +211,7 @@
     }
     el.hostedState.replaceChildren(state);
     el.hostedActions.replaceChildren(...actions);
+    AITrAuthUi.sync();
   }
 
   function openLink(name) {
@@ -225,12 +228,9 @@
 
   async function login() {
     showAccountError('');
-    document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = true; });
-    const reply = await chrome.runtime.sendMessage({ type: 'account-login' }).catch((err) => ({ ok: false, error: String(err?.message || err) }));
-    document.querySelectorAll('[data-login]').forEach((b) => { b.disabled = false; });
+    await AITrAuthUi.login({ onError: showAccountError });
     // 授权页在新标签页打开；登录完成后 service worker 结束引导、按需切到点数翻译并切回本页，
     // 这里通过 storage 变化更新
-    if (!reply?.ok) showAccountError(reply?.error || t('登录失败，请重试'));
   }
 
   function renderCards() {

@@ -103,7 +103,7 @@ export const loginPage = ({ note = null, email = '' } = {}) => layout({
   <h1>管理员登录</h1>
   <p class="muted">只有被指定为管理员的账户能登录。验证码发送到管理员邮箱，随后需要二步验证。</p>
   <p class="muted">登录成功后，此浏览器保留登录 30 天。退出登录或清除 Cookie 后需重新登录。</p>
-  <form method="post" action="/login" class="stack">
+  <form method="post" action="/login" class="stack" data-auth-form>
     <label for="email">邮箱</label>
     <input id="email" name="email" type="email" required autocomplete="email" value="${email}" dir="ltr">
     <button class="button primary" type="submit">发送验证码</button>
@@ -119,7 +119,7 @@ export const verifyPage = ({ email, note = null, devCode = null }) => layout({
   <h1>输入邮箱验证码</h1>
   ${devCode ? html`<p class="notice notice-ok" role="alert" data-dev-code="${devCode}">开发环境没有发信服务，验证码：<strong dir="ltr">${devCode}</strong></p>` : ''}
   <p class="muted">如果 ${email} 是管理员账户，验证码已发送。</p>
-  <form method="post" action="/login/verify" class="stack">
+  <form method="post" action="/login/verify" class="stack" data-auth-form>
     <label for="code">6 位验证码</label>
     <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" required maxlength="6" dir="ltr">
     <button class="button primary" type="submit">继续</button>
@@ -140,7 +140,7 @@ export const totpPage = ({ setup = null, note = null }) => layout({
   <p class="secret" dir="ltr"><code>${setup.secret.match(/.{1,4}/g).join(' ')}</code></p>
   <p class="fine">也可以在支持的 App 中打开：<a href="${setup.url}" dir="ltr">otpauth 链接</a>。二维码与密钥只显示在这次绑定过程中。</p>`
     : html`<p class="muted">输入身份验证器 App 显示的 6 位验证码。</p>`}
-  <form method="post" action="/2fa" class="stack">
+  <form method="post" action="/2fa" class="stack" data-auth-form>
     <label for="code">验证码</label>
     <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" required maxlength="6" dir="ltr">
     <button class="button primary" type="submit">${setup ? '完成绑定' : '验证'}</button>

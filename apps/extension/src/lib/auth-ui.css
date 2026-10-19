@@ -1,0 +1,10 @@
+[data-login][aria-busy="true"] { cursor: progress; }
+[data-login][aria-busy="true"]::before, .auth-status[aria-busy="true"]::before {
+  content: ""; display: inline-block; width: .85em; height: .85em; vertical-align: -.1em;
+  margin-inline-end: .5em; border: 2px solid currentColor; border-inline-end-color: transparent;
+  border-radius: 50%; animation: auth-spin .7s linear infinite;
+}
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  [data-login][aria-busy="true"]::before, .auth-status[aria-busy="true"]::before { animation: none; }
+}

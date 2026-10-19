@@ -8,6 +8,7 @@
   if (reply?.ok) return;
   await AITrI18n.ready;
   const state = document.getElementById('state');
+  state.removeAttribute('aria-busy');
   state.textContent = reply?.error || AITrI18n.t('登录失败，请重试');
   state.className = 'error';
   document.getElementById('back').hidden = false;

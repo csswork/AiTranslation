@@ -133,7 +133,7 @@ const GSI_LANGUAGES = { 'zh-Hans': 'zh-CN', 'zh-Hant': 'zh-TW' };
  */
 const oneTapHead = (ui) => html`<script src="https://accounts.google.com/gsi/client?hl=${GSI_LANGUAGES[ui.locale.code] || ui.locale.code}" async defer></script>
 <script src="${assetUrl('one-tap.js')}" defer></script>`;
-const oneTapForm = (oneTap) => html`<form method="post" action="/auth/google/one-tap" data-one-tap data-client-id="${oneTap.clientId}" data-nonce="${oneTap.nonce}" hidden><input type="hidden" name="credential"></form>`;
+const oneTapForm = (ui, oneTap) => html`<form method="post" action="/auth/google/one-tap" data-one-tap data-client-id="${oneTap.clientId}" data-nonce="${oneTap.nonce}" data-auth-form hidden><input type="hidden" name="credential"><p class="auth-progress" role="status">${ui.t('处理中')}…</p></form>`;
 
 export function loginPage(ui, { googleEnabled, oneTap = null, email = '', notice = null }) {
   const { t } = ui;
@@ -144,15 +144,15 @@ export function loginPage(ui, { googleEnabled, oneTap = null, email = '', notice
     body: html`<section class="card auth">
   <h1>${t('登录或注册')}</h1>
   <p class="muted">${t('输入邮箱获取验证码。未注册的邮箱验证后会自动创建账户并获得试用点数。')}</p>
-  <form method="post" action="/login/email" class="stack">
+  <form method="post" action="/login/email" class="stack" data-auth-form>
     <label for="email">${t('邮箱')}</label>
     <input id="email" name="email" type="email" autocomplete="email" required maxlength="254" value="${email}">
     <button class="button primary" type="submit">${t('发送验证码')}</button>
   </form>
   ${googleEnabled ? html`<div class="divider"><span>${t('或')}</span></div>
-  <a class="button google-button" href="/auth/google">${googleLogo}<span>${t('使用 Google 登录')}</span></a>` : ''}
+  <a class="button google-button" href="/auth/google" data-auth-link>${googleLogo}<span>${t('使用 Google 登录')}</span></a>` : ''}
   <p class="fine">${t('账户只保存邮箱和用户名，不保存姓名、头像等资料。')}</p>
-  ${oneTap ? oneTapForm(oneTap) : ''}
+  ${oneTap ? oneTapForm(ui, oneTap) : ''}
 </section>`,
   });
 }
@@ -167,13 +167,13 @@ export function verifyPage(ui, { title, email, action, resendAction, backHref, n
     body: html`<section class="card auth">
   <h1>${title}</h1>
   <p class="muted">${t('验证码已发送到 {email}，10 分钟内有效。', { email: html`<strong>${email}</strong>` })}</p>
-  <form method="post" action="${action}" class="stack">
+  <form method="post" action="${action}" class="stack" data-auth-form>
     <label for="code">${t('6 位验证码')}</label>
     <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]{6,7}" maxlength="7" required autofocus>
     <button class="button primary" type="submit">${t('验证')}</button>
   </form>
   <div class="row">
-    <form method="post" action="${resendAction}"><button class="link-button" type="submit">${t('重新发送')}</button></form>
+    <form method="post" action="${resendAction}" data-auth-form><button class="link-button" type="submit">${t('重新发送')}</button></form>
     <a href="${backHref}">${t('更换邮箱')}</a>
   </div>
 </section>`,
@@ -426,7 +426,7 @@ export function accountPage(ui, { user, identities, googleEnabled, notice, usern
     ${googleEnabled || google ? html`<li><span>Google</span>${google
       ? html`<span class="muted">${t('已绑定 · {date}', { date: ui.date(google.created_at) })}</span>
         <form method="post" action="/account/google/unlink"><button class="link-button" type="submit">${t('解除绑定')}</button></form>`
-      : html`<form method="post" action="/auth/google/link"><button class="button google-button compact" type="submit">${googleLogo}<span>${t('绑定 Google')}</span></button></form>`}</li>` : ''}
+      : html`<form method="post" action="/auth/google/link" data-auth-form><button class="button google-button compact" type="submit">${googleLogo}<span>${t('绑定 Google')}</span></button></form>`}</li>` : ''}
   </ul>
   <p class="fine">${t('绑定新的登录方式不会重复发放试用点数。Google 只用于验证身份，不保存姓名或头像。')}</p>
 </section>`,
@@ -541,7 +541,7 @@ export function extensionConsentPage(ui, { user }) {
   <h1>${t('允许 AI 划词翻译扩展登录？')}</h1>
   <p>${t('扩展将以 {username} 的身份查看点数、试用与订阅状态，并在你选择「点数翻译」时使用点数。', { username: html`<strong>${user.username}</strong>` })}</p>
   <p class="fine">${t('扩展只获得自己的登录会话，不会读取你的网站登录状态；随时可以在「登录会话」里退出。')}</p>
-  <form method="post" action="/extension/authorize/confirm" class="stack">
+  <form method="post" action="/extension/authorize/confirm" class="stack" data-auth-form>
     <button class="button primary" type="submit" name="decision" value="approve">${t('允许并返回扩展')}</button>
     <button class="button" type="submit" name="decision" value="deny">${t('取消')}</button>
   </form>

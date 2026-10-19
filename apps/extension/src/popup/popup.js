@@ -17,6 +17,7 @@
     cta: $('cta'),
     links: $('links'),
     modeNote: $('modeNote'),
+    accountError: $('accountError'),
     tip: $('tip'),
     provider: $('provider'),
     keyState: $('keyState'),
@@ -38,7 +39,13 @@
 
   const close = () => window.close();
   const actions = {
-    login: async () => { await chrome.runtime.sendMessage({ type: 'account-login' }).catch(() => {}); close(); },
+    login: () => {
+      el.accountError.hidden = true;
+      return AITrAuthUi.login({
+        onOpened: close,
+        onError: (message) => { el.accountError.textContent = message; el.accountError.hidden = false; },
+      });
+    },
     plans: () => { chrome.tabs.create({ url: AITrEnv.links.plans }); close(); },
     billing: () => { chrome.tabs.create({ url: AITrEnv.links.billing }); close(); },
     usage: () => { chrome.tabs.create({ url: AITrEnv.links.usage }); close(); },
@@ -137,6 +144,7 @@
     }
 
     el.cta.hidden = !card.cta;
+    el.cta.toggleAttribute('data-login', card.cta?.action === 'login');
     if (card.cta) {
       el.cta.textContent = card.cta.label;
       el.cta.className = `cta ${card.cta.soft ? 'soft' : ''}`;
@@ -147,6 +155,7 @@
       button.type = 'button';
       button.className = 'link';
       button.textContent = link.label;
+      button.toggleAttribute('data-login', link.action === 'login');
       button.addEventListener('click', actions[link.action]);
       return button;
     }));
@@ -158,6 +167,7 @@
     else if (active && account.hosted && !account.hosted.available) note = t('点数翻译暂时不可用，可以先切换到自己的 API Key。');
     el.modeNote.textContent = note;
     el.modeNote.hidden = !note;
+    AITrAuthUi.sync();
   }
 
   /* ------------------------------------------------------------ 翻译方式 */

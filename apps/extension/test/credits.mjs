@@ -29,12 +29,26 @@ assert.equal(credits.available(undefined), false);
 // 执行真实 popup 渲染，账户卡片跟随 storage 更新，托管模式不重复显示余额行。
 locale = 'en';
 const nodes = new Map();
-const node = () => ({ className: '', hidden: false, textContent: '', replaceChildren() {}, addEventListener() {},
-  classList: { toggle() {} } });
+const allNodes = new Set();
+const node = () => {
+  const attributes = new Map();
+  const events = {};
+  const n = { className: '', hidden: false, textContent: '', disabled: false, events,
+    replaceChildren(...children) { this.children = children; }, addEventListener(type, handler) { events[type] = handler; },
+    setAttribute: (name, value) => attributes.set(name, value), removeAttribute: (name) => attributes.delete(name),
+    getAttribute: (name) => attributes.get(name) ?? null,
+    toggleAttribute: (name, value) => value ? attributes.set(name, '') : attributes.delete(name),
+    classList: { toggle() {} },
+  };
+  allNodes.add(n);
+  return n;
+};
 const element = (id) => { if (!nodes.has(id)) nodes.set(id, node()); return nodes.get(id); };
 let changed;
 Object.assign(context, {
-  document: { getElementById: element, createElement: node },
+  document: { getElementById: element, createElement: node,
+    querySelectorAll: () => [...allNodes].filter((n) => n.getAttribute('data-login') !== null),
+  },
   AITrSettings: {
     normalize: () => ({ provider: 'hosted' }), loadSettings: async () => ({ provider: 'hosted' }),
     providerList: () => [{ id: 'hosted', label: 'Hosted' }], resolveProvider: () => ({}),
@@ -45,6 +59,7 @@ Object.assign(context, {
     onChanged: { addListener: (fn) => { changed = fn; } },
   }, runtime: { sendMessage: async () => ({}) } },
 });
+vm.runInContext(source('src/lib/auth-ui.js'), context);
 vm.runInContext(source('src/popup/popup.js'), context);
 await new Promise(setImmediate);
 assert.equal(element('keyState').hidden, true, '托管模式不显示 API Key 状态');
@@ -67,4 +82,34 @@ assert.equal(element('keyState').hidden, true);
 update({ signedIn: false });
 assert.equal(element('balance').hidden, true, '未登录不显示余额');
 assert.match(element('cta').textContent, /登录/);
-console.log('✓ 24 种语言两位小数、旧缓存，弹窗账户卡片的未登录 / 访客 / 注册 / 订阅状态');
+
+// 登录请求未返回时，所有入口与动态重新渲染的按钮都保持等待状态；失败可重试。
+let resolveLogin;
+let loginCalls = 0;
+let closed = 0;
+context.window = { close: () => { closed += 1; } };
+context.chrome.runtime.sendMessage = () => { loginCalls += 1; return new Promise((resolve) => { resolveLogin = resolve; }); };
+element('cta').events.click();
+element('cta').events.click();
+assert.equal(loginCalls, 1);
+assert.equal(element('cta').getAttribute('aria-busy'), 'true');
+assert.equal(element('cta').disabled, true);
+update({ guest: true, credits: { balance: '1.00', available: true } });
+const alternate = element('links').children[0];
+assert.equal(alternate.disabled, true, '渲染期间新建的登录按钮也禁用');
+assert.equal(alternate.getAttribute('aria-busy'), 'true');
+alternate.events.click();
+assert.equal(loginCalls, 1);
+resolveLogin({ ok: false, error: 'Network unavailable' });
+await new Promise(setImmediate);
+assert.equal(element('cta').disabled, false);
+assert.equal(element('cta').getAttribute('aria-busy'), null);
+assert.equal(element('accountError').textContent, 'Network unavailable');
+assert.equal(element('accountError').hidden, false);
+assert.equal(closed, 0, '失败时保留弹窗和错误提示');
+alternate.events.click();
+resolveLogin({ ok: true });
+await new Promise(setImmediate);
+assert.equal(loginCalls, 2);
+assert.equal(closed, 1);
+console.log('✓ 24 种语言点数与账户卡片，登录等待、防重复提交、失败恢复和动态入口');

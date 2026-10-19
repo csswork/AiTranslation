@@ -1,6 +1,60 @@
-// 页头两个控件的增强。没有脚本时两个表单照常提交给服务端，效果相同，只是会刷新页面。
+// 页头控件与登录等待反馈的渐进增强；表单仍由浏览器提交，没有脚本时也可使用。
 (() => {
   const root = document.documentElement;
+
+  // 登录各步骤共用锁，避免邮箱、Google、验证码和二步验证被重复提交。
+  let authPending = false;
+  const restoreAuth = [];
+  const rememberAttribute = (node, name, value) => {
+    const previous = node.getAttribute(name);
+    restoreAuth.push(() => previous === null ? node.removeAttribute(name) : node.setAttribute(name, previous));
+    node.setAttribute(name, value);
+  };
+  const beginAuth = (active, form = null) => {
+    authPending = true;
+    rememberAttribute(active, 'aria-busy', 'true');
+    for (const control of document.querySelectorAll('[data-auth-form] button, [data-auth-link], a[href="/login"], .account-link.is-login')) {
+      if ('disabled' in control) {
+        const disabled = control.disabled;
+        restoreAuth.push(() => { control.disabled = disabled; });
+        control.disabled = true;
+      } else rememberAttribute(control, 'aria-disabled', 'true');
+    }
+    if (form?.hasAttribute('data-one-tap')) {
+      const hidden = form.hidden;
+      restoreAuth.push(() => { form.hidden = hidden; });
+      form.hidden = false;
+    }
+  };
+  document.querySelectorAll('[data-auth-form]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      if (event.defaultPrevented) return;
+      if (authPending) { event.preventDefault(); return; }
+      const button = event.submitter || form.querySelector('button[type="submit"]');
+      // disabled 的提交按钮不会进入 FormData；保留授权确认的 decision 等必要字段。
+      if (button?.name && !button.disabled) {
+        const field = document.createElement('input');
+        field.type = 'hidden';
+        field.name = button.name;
+        field.value = button.value;
+        form.appendChild(field);
+        restoreAuth.push(() => field.remove());
+      }
+      beginAuth(button || form, form);
+    });
+  });
+  document.querySelectorAll('[data-auth-link], a[href="/login"], .account-link.is-login').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      // 在新标签页打开时保留浏览器的原生行为。
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (authPending) { event.preventDefault(); return; }
+      beginAuth(link);
+    });
+  });
+  window.addEventListener('pageshow', () => {
+    while (restoreAuth.length) restoreAuth.pop()();
+    authPending = false;
+  });
 
   // 配色：与官网相同，跟随系统；手动切换后写入 theme Cookie，切回与系统一致时清除。
   const themeForm = document.querySelector('[data-theme-form]');

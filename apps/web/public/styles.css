@@ -739,6 +739,16 @@ main, .nav, .foot { position: relative; z-index: 1; }
   box-shadow: 0 1px 0 rgba(255, 255, 255, .12) inset, 0 4px 14px -6px var(--accent);
 }
 .nav-links .account-link.is-login:hover { background: var(--accent-hover); color: #fff; }
+.account-link[aria-busy="true"] { cursor: progress; }
+.account-link[aria-busy="true"]::before {
+  content: ""; display: inline-block; width: .85em; height: .85em; flex: none;
+  border: 2px solid currentColor; border-inline-end-color: transparent; border-radius: 50%;
+  animation: auth-spin .7s linear infinite;
+}
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .account-link[aria-busy="true"]::before { animation: none; }
+}
 .nav-links .account-link.is-user {
   padding-inline: 4px 11px;
   border: 1px solid var(--line); color: var(--text-2);

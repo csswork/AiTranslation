@@ -16,7 +16,7 @@
       callback: (response) => {
         if (!response || !response.credential) return;
         form.elements.credential.value = response.credential;
-        form.submit();
+        form.requestSubmit();
       },
     });
     id.prompt();

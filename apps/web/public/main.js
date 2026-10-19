@@ -71,6 +71,19 @@
    */
   const ACCOUNT_ORIGIN = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787' : '';
   const accountLink = document.querySelector('[data-account]');
+  if (accountLink) {
+    accountLink.addEventListener('click', (event) => {
+      if (!accountLink.classList.contains('is-login') || event.defaultPrevented || event.button !== 0
+        || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (accountLink.getAttribute('aria-busy') === 'true') { event.preventDefault(); return; }
+      accountLink.setAttribute('aria-busy', 'true');
+      accountLink.setAttribute('aria-disabled', 'true');
+    });
+    window.addEventListener('pageshow', () => {
+      accountLink.removeAttribute('aria-busy');
+      accountLink.removeAttribute('aria-disabled');
+    });
+  }
   if (accountLink && ACCOUNT_ORIGIN && window.fetch) {
     fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
