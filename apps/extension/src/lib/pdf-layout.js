@@ -126,6 +126,8 @@
         !short &&
         !restyled &&
         !(line.cell && last.cell) && // 表格的格子各自成块，保持行列不变
+        // 格子与普通行相接（表格标题接表头、格内换行）：只有左边对齐时才是同一段
+        (!(line.cell || last.cell) || Math.abs(line.left - block.left) < block.size) &&
         line.size / block.size < 1.3 &&
         block.size / line.size < 1.3 &&
         line.top >= last.top + last.size * 0.3 && // 在上一行下面
@@ -134,7 +136,7 @@
         line.right > block.left - block.size &&
         block.chars + line.text.length <= MAX_BLOCK_CHARS;
       if (!join) {
-        block = { lines: [], left: line.left, right: line.right, top: line.top, bottom: line.bottom, size: line.size, chars: 0 };
+        block = { lines: [], left: line.left, right: line.right, top: line.top, bottom: line.bottom, size: line.size, chars: 0, cell: true };
         blocks.push(block);
       }
       block.lines.push(line);
@@ -142,20 +144,23 @@
       block.right = Math.max(block.right, line.right);
       block.bottom = Math.max(block.bottom, line.bottom);
       block.chars += line.text.length;
+      block.cell &&= line.cell;
     }
     return blocks.map((b) => {
       const text = joinLines(b.lines.map((l) => l.text));
       const letters = (text.match(LETTER) || []).length;
-      // 外扩一点再盖：PDF 记录的字宽常比实际渲染的字形略窄，不扩的话右边会露出原文的残笔
+      // 外扩一点再盖：PDF 记录的字宽常比实际渲染的字形略窄，不扩的话右边会露出原文的残笔。
+      // 表格格子紧挨着表格线，只扩一小圈，免得把线盖掉
       const pad = b.size * 0.12;
       return {
         text,
         left: b.left - pad,
         top: b.top - pad,
-        width: b.right - b.left + pad + b.size * 0.6,
+        width: b.right - b.left + pad + b.size * (b.cell ? 0.15 : 0.6),
         height: b.bottom - b.top + pad * 2,
         size: b.size,
         lines: b.lines.length,
+        cell: b.cell,
         // 页码、公式编号、纯数字表格格子不送去翻译，原样保留
         translatable: letters >= 2,
       };

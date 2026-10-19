@@ -363,39 +363,44 @@
   }
 
   /**
-   * 给每个译文块取底色和字色：底色取块边缘一圈像素的中位数，
-   * 字色取块内与底色差别最大的像素；差别太小（浅色字、图片上的字）就按底色亮度选黑或白。
+   * 给每个译文块取底色和字色：底色取块内出现最多的颜色（文字笔画只占少数像素，
+   * 也不会被贴边的表格线带偏），字色取与底色差别最大的像素；
+   * 差别太小（浅色字、图片上的字）就按底色亮度选黑或白。
    */
   function sampleColors(blocks, context, scale, width, height) {
     for (const block of blocks) {
       if (!block.translatable) continue;
-      const x0 = Math.max(0, Math.floor(block.left * scale) - 2);
-      const y0 = Math.max(0, Math.floor(block.top * scale) - 2);
-      const x1 = Math.min(width, Math.ceil((block.left + block.width) * scale) + 2);
-      const y1 = Math.min(height, Math.ceil((block.top + block.height) * scale) + 2);
+      const x0 = Math.max(0, Math.floor(block.left * scale));
+      const y0 = Math.max(0, Math.floor(block.top * scale));
+      const x1 = Math.min(width, Math.ceil((block.left + block.width) * scale));
+      const y1 = Math.min(height, Math.ceil((block.top + block.height) * scale));
       const w = x1 - x0;
       const h = y1 - y0;
       if (w < 2 || h < 2) continue;
       const data = context.getImageData(x0, y0, w, h).data;
-      const at = (x, y) => {
-        const i = (y * w + x) * 4;
-        return [data[i], data[i + 1], data[i + 2]];
-      };
-      const ring = [];
-      const step = Math.max(1, Math.floor((w + h) / 120));
-      for (let x = 0; x < w; x += step) ring.push(at(x, 0), at(x, h - 1));
-      for (let y = 0; y < h; y += step) ring.push(at(0, y), at(w - 1, y));
-      const median = (channel) => ring.map((p) => p[channel]).sort((a, b) => a - b)[ring.length >> 1];
-      const bg = [median(0), median(1), median(2)];
+      const step = Math.max(1, Math.floor(Math.sqrt((w * h) / 2500)));
+      const counts = new Map();
+      const samples = [];
+      for (let y = 0; y < h; y += step) {
+        for (let x = 0; x < w; x += step) {
+          const i = (y * w + x) * 4;
+          const p = [data[i], data[i + 1], data[i + 2]];
+          samples.push(p);
+          // 按 16 级量化后计数，抗锯齿的过渡色不会分散众数
+          const key = (p[0] >> 4) << 8 | (p[1] >> 4) << 4 | (p[2] >> 4);
+          const entry = counts.get(key);
+          if (entry) { entry.n++; entry.sum[0] += p[0]; entry.sum[1] += p[1]; entry.sum[2] += p[2]; }
+          else counts.set(key, { n: 1, sum: [...p] });
+        }
+      }
+      let top = null;
+      for (const entry of counts.values()) if (!top || entry.n > top.n) top = entry;
+      const bg = top.sum.map((v) => Math.round(v / top.n));
       let fg = null;
       let best = 0;
-      const inner = Math.max(1, Math.floor(Math.sqrt((w * h) / 900)));
-      for (let y = 1; y < h - 1; y += inner) {
-        for (let x = 1; x < w - 1; x += inner) {
-          const p = at(x, y);
-          const d = Math.abs(p[0] - bg[0]) + Math.abs(p[1] - bg[1]) + Math.abs(p[2] - bg[2]);
-          if (d > best) { best = d; fg = p; }
-        }
+      for (const p of samples) {
+        const d = Math.abs(p[0] - bg[0]) + Math.abs(p[1] - bg[1]) + Math.abs(p[2] - bg[2]);
+        if (d > best) { best = d; fg = p; }
       }
       const light = 0.299 * bg[0] + 0.587 * bg[1] + 0.114 * bg[2] > 140;
       if (!fg || best < 120) fg = light ? [17, 17, 17] : [250, 250, 250];
