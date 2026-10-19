@@ -210,6 +210,25 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   console.log('✓ 选中非中文时显示，标题为「翻译成中文」');
 }
 
+/* --- 3b. 空选区不藏菜单：内置 PDF 阅读器里内容脚本读不到选区，
+   别的网页点空白上报的空选区不能把全局菜单藏掉 --- */
+{
+  const { state } = boot();
+  state.listeners.installed({ reason: 'update' });
+  await settle();
+  const report = (text) => state.listeners.message({ type: 'selection', text }, { tab: { id: 1 }, frameId: 0 }, () => {});
+  report('');
+  await settle();
+  assert.equal(state.items.get('ai-translate-selection').visible, true, '空选区上报后划词菜单仍可见');
+  report('12345 …');
+  await settle();
+  assert.equal(state.items.get('ai-translate-selection').visible, false, '纯数字、标点仍然隐藏');
+  report('');
+  await settle();
+  assert.equal(state.items.get('ai-translate-selection').visible, true, '清空选区后恢复可见');
+  console.log('✓ 空选区不隐藏划词菜单（PDF 阅读器可用），纯数字仍隐藏');
+}
+
 /* --- 4. 视频字幕总开关：默认关闭不建项，打开后出现，关掉后整块消失 --- */
 {
   const { state, chrome } = boot();

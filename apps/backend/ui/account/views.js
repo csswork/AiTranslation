@@ -9,6 +9,7 @@ import { html } from 'hono/html';
 import { k } from '../../src/i18n/index.js';
 import { assetUrl } from './assets.js';
 import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
+import { timeChart } from '../charts.js';
 
 const GITHUB = 'https://github.com/csswork/AiTranslation';
 
@@ -201,51 +202,90 @@ const SUB_STATUS_LABELS = {
 };
 const subStatus = (ui, status) => (SUB_STATUS_LABELS[status] ? ui.t(SUB_STATUS_LABELS[status]) : status);
 
-export function overviewPage(ui, { user, state, notice }) {
+export function overviewPage(ui, { user, state, usage, notice }) {
   const { t } = ui;
   const sub = state.subscription;
+  const num = (value) => new Intl.NumberFormat(ui.locale.htmlLang).format(value);
+  const compact = (value) => new Intl.NumberFormat(ui.locale.htmlLang, { notation: 'compact', maximumFractionDigits: 2 }).format(value);
+  const dayLabel = new Intl.DateTimeFormat(ui.locale.htmlLang, { month: 'numeric', day: 'numeric', timeZone: 'UTC' });
+  const labelFormat = (day) => dayLabel.format(new Date(`${day}T00:00:00Z`));
+  const tooltipDate = new Intl.DateTimeFormat(ui.locale.htmlLang, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+  const dateLabels = usage.days.map((d) => d.day);
+  const totals = usage.totals;
+  const consumed = displayCredits(totals.credits_units);
+  const creditsLabel = sub ? t('翻译字符数') : t('点数消耗');
+  const creditsValue = sub ? num(totals.chars) : consumed;
+  const series = (name, field, kind, cls = 'usage-primary') => ({
+    name: String(name), values: usage.days.map((d) => Number(d[field])), kind, cls, field,
+  });
+  const emptyChart = html`<div class="overview-empty" role="status">${t('所选范围内暂无可展示的数据。')}</div>`;
+  const chart = (items, options = {}) => timeChart({
+    labels: dateLabels, series: items, width: 410, height: 230, axisFormat: compact, labelFormat,
+    format: (_, s, i) => num(usage.days[i][s.field]), showLegend: false,
+    interactive: true, tooltipDateFormat: (day) => `${tooltipDate.format(new Date(`${day}T00:00:00Z`))} UTC`, ...options,
+  }) || emptyChart;
+  const consumption = series(creditsLabel, sub ? 'chars' : 'credits_units', 'bar');
+  // 仅 SVG 坐标用展示点数；汇总与提示文字继续从 BigInt 整数额度精确格式化。
+  if (!sub) consumption.values = consumption.values.map((value) => value / 500);
   return layout(ui, {
     title: t('账户总览'),
     user,
     active: 'overview',
     notice,
-    body: html`<h1>${t('账户总览')}</h1>
-<div class="grid">
-  <section class="card">
-    <h2>${t('账户')}</h2>
-    <dl class="facts">
-      <dt>${t('用户名')}</dt><dd>${user.username}</dd>
-      <dt>${t('邮箱')}</dt><dd>${user.email}</dd>
-      <dt>${t('注册时间')}</dt><dd>${ui.date(user.created_at)}</dd>
-    </dl>
+    head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
+    body: html`<div class="overview">
+  <div class="overview-heading">
+    <div><h1>${t('账户总览')}</h1><p class="overview-identity">${user.username}<span aria-hidden="true"> · </span>${user.email}</p></div>
+    <div class="overview-balance">
+      <span>${sub ? t('托管翻译') : t('剩余点数')}</span>
+      ${sub ? html`<strong data-unlimited>${t('无限使用')}</strong>` : html`<strong data-balance>${state.credits.balance}<span class="unit">${t('点')}</span></strong>`}
+    </div>
+  </div>
+  <div class="overview-toolbar">
+    <form method="get" action="/" class="overview-filters">
+      <label class="overview-filter"><span>${t('时间范围')}</span><select name="period">
+        ${[['month', k('本月')], ['7d', k('近 7 天')], ['30d', k('近 30 天')]].map(([value, label]) => html`<option value="${value}"${usage.period === value ? html` selected` : ''}>${t(label)}</option>`)}
+      </select></label>
+      <label class="overview-filter"><span>${t('翻译类型')}</span><select name="kind">
+        ${[['all', k('全部')], ['text', k('文字')], ['image', k('图片识别')]].map(([value, label]) => html`<option value="${value}"${usage.kind === value ? html` selected` : ''}>${t(label)}</option>`)}
+      </select></label>
+      <button class="button" type="submit">${t('筛选')}</button>
+      ${usage.period !== 'month' || usage.kind !== 'all' ? html`<a class="overview-reset" href="/">${t('清除筛选条件')}</a>` : ''}
+    </form>
+    <a class="overview-detail" href="/usage">${t('查看用量')} <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="overview-metrics">
+    <section class="overview-metric"><h2>${creditsLabel}</h2><p data-metric="consumed">${creditsValue}${!sub ? html`<span>${t('点')}</span>` : ''}</p></section>
+    <section class="overview-metric"><h2>${t('请求次数')}</h2><p data-metric="requests">${num(totals.requests)}</p></section>
+    <section class="overview-metric"><h2>${t('模型用量')}</h2><p data-metric="tokens">${num(totals.input + totals.output)}<span>${t('词元')}</span></p></section>
+  </div>
+  <section class="overview-chart overview-chart-main" data-chart="consumed">
+    <div class="overview-chart-head"><h2>${creditsLabel}<span>${creditsValue}${!sub ? html` ${t('点')}` : ''}</span></h2><span class="overview-timezone">UTC</span></div>
+    ${chart([consumption], { width: 820, height: 270, format: (_, s, i) => sub ? num(usage.days[i].chars) : `${displayCredits(usage.days[i].credits_units)} ${t('点')}` })}
+  </section>
+  <div class="overview-chart-grid">
+    <section class="overview-chart" data-chart="requests">
+      <div class="overview-chart-head"><h2>${t('请求次数')}<span>${num(totals.requests)}</span></h2></div>
+      ${chart([series(t('请求次数'), 'requests')])}
+    </section>
+    <section class="overview-chart" data-chart="tokens">
+      <div class="overview-chart-head"><h2>${t('模型用量')}<span>${num(totals.input + totals.output)}</span></h2></div>
+      ${chart([series(t('输入词元'), 'input', 'bar'), series(t('输出词元'), 'output', 'bar', 'usage-secondary')], { stacked: true, showLegend: true,
+        tooltipItems: (i) => [
+          { label: String(t('输入词元')), value: num(usage.days[i].input), tone: 'usage-primary' },
+          { label: String(t('输出词元')), value: num(usage.days[i].output), tone: 'usage-secondary' },
+          { label: String(t('模型用量')), value: num(usage.days[i].input + usage.days[i].output), total: true },
+        ],
+      })}
+    </section>
+  </div>
+  <p class="overview-note">${t('仅统计托管服务用量，不包含自带 API Key 的请求。时间以 UTC 统计，失败请求不扣点。')}</p>
+  <div class="overview-footer">
+    <div class="overview-plan"><span class="overview-plan-dot" aria-hidden="true"></span><strong>${sub ? t(PLAN_LABELS[sub.plan] || k('订阅')) : t('暂无订阅')}</strong>
+      ${sub ? html`<span>${subStatus(ui, sub.status)}</span>${sub.periodEnd ? html`<span>${sub.renews ? t('下次续费') : t('有效期至')} ${ui.date(sub.periodEnd)}</span>` : ''}<a href="/billing">${t('管理订阅与账单')}</a>` : html`<a href="/plans">${t('查看订阅方案')}</a>`}
+    </div>
     <a href="/account">${t('管理邮箱与登录方式')}</a>
-  </section>
-  ${sub
-    ? html`<section class="card">
-    <h2>${t('托管翻译')}</h2>
-    <p class="big small" data-unlimited>${t('无限使用')}</p>
-    <p class="muted">${t('订阅期间托管翻译不限次数，不消耗点数。')}</p>
-    <a href="/usage">${t('查看用量')}</a>
-  </section>`
-    : html`<section class="card">
-    <h2>${t('点数')}</h2>
-    <p class="big" data-balance>${state.credits.balance}<span class="unit">${t('点')}</span></p>
-    <p class="muted">${t('赠送点数不会过期。点数用完后可以订阅，无限使用。')}</p>
-    <a href="/usage">${t('查看点数记录')}</a>
-  </section>`}
-  <section class="card">
-    <h2>${t('订阅')}</h2>
-    ${sub
-      ? html`<p class="big small">${t(PLAN_LABELS[sub.plan] || k('订阅'))}</p>
-    <dl class="facts">
-      <dt>${t('状态')}</dt><dd>${subStatus(ui, sub.status)}</dd>
-      ${sub.periodEnd ? html`<dt>${sub.renews ? t('下次续费') : t('有效期至')}</dt><dd>${ui.date(sub.periodEnd)}</dd>` : ''}
-    </dl>
-    <a href="/billing">${t('管理订阅与账单')}</a>`
-      : html`<p class="big small">${t('暂无订阅')}</p>
-    <p class="muted">${t('订阅后托管翻译无限使用。扩展里的自带 Key 模式始终免费可用。')}</p>
-    <a href="/plans">${t('查看订阅方案')}</a>`}
-  </section>
+  </div>
 </div>`,
   });
 }

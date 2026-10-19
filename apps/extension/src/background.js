@@ -153,9 +153,14 @@ AITrI18n.onChange(createMenu);
 // createMenu 是 removeAll + create 且已串行化，每次 service worker 启动跑一次是安全的。
 createMenu();
 
-/** 没有可翻译的文字时把菜单藏起来；任何语言都允许手动翻译。 */
+/**
+ * 选中的全是数字、标点时把菜单藏起来；任何语言都允许手动翻译。
+ * 空选区不藏：菜单本来就只在 Chrome 判定有选区时出现，而内置 PDF 阅读器、
+ * 未注入脚本的框架里，Chrome 有选区、内容脚本却读不到。菜单显隐是全局的，
+ * 别的网页点一下空白若把它藏掉，这些地方就再也右键不出来。
+ */
 async function updateMenuVisibility(text) {
-  const visible = AITrLang.shouldOffer(text);
+  const visible = !String(text || '').trim() || AITrLang.shouldOffer(text);
   try {
     await chrome.contextMenus.update(MENU_ID, { visible });
   } catch {

@@ -23,6 +23,7 @@ import {
 } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter } from '../../src/http/security.js';
 import { isLocale, k } from '../../src/i18n/index.js';
+import { usageOverview } from '../../src/usage/overview.js';
 import { THEMES, safePath, uiContext } from './context.js';
 import * as views from './views.js';
 
@@ -389,6 +390,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
 
   app.get('/', requireUser, async (c) => render(c, views.overviewPage, {
     user: user(c), state: await accountState(pool, user(c)), notice: takeFlash(c),
+    usage: await usageOverview(pool, user(c).id, { period: c.req.query('period'), kind: c.req.query('kind') }),
   }));
 
   const pricing = async () => {
