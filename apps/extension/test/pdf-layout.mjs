@@ -55,14 +55,14 @@ function line(text, { x = 72, y, size = 10, eol = true } = {}) {
 /* --- 4. 双栏：内容流先左栏后右栏，右栏不并进左栏 --- */
 {
   const blocks = L.buildBlocks([
-    ...line('Left column first line', { y: 100, x: 50 }),
-    ...line('Left column second line', { y: 112, x: 50 }),
-    ...line('Right column first line', { y: 100, x: 320 }),
-    ...line('Right column second line', { y: 112, x: 320 }),
+    ...line('Left column text runs across this line and', { y: 100, x: 50 }),
+    ...line('continues on the next line of the column', { y: 112, x: 50 }),
+    ...line('Right column text runs across this line and', { y: 100, x: 320 }),
+    ...line('continues on its own next line as well', { y: 112, x: 320 }),
   ]);
   assert.deepEqual(blocks.map((b) => b.text), [
-    'Left column first line Left column second line',
-    'Right column first line Right column second line',
+    'Left column text runs across this line and continues on the next line of the column',
+    'Right column text runs across this line and continues on its own next line as well',
   ]);
   console.log('✓ 双栏按栏分块');
 }
@@ -76,6 +76,47 @@ function line(text, { x = 72, y, size = 10, eol = true } = {}) {
   ]);
   assert.deepEqual(lines.map((l) => l.text), ['Name', 'Value']);
   console.log('✓ 表格两格分开，旋转文字不参与');
+}
+
+/* --- 5b. 表格：pdf.js 用横跨整格的空格片段把各格连起来，必须拆开，且格子不上下合并 --- */
+{
+  const row = (y, cells) => cells.flatMap(([str, x, w], i) => [
+    ...(i ? [{ str: ' ', x: cells[i - 1][1] + cells[i - 1][2], y, w: x - cells[i - 1][1] - cells[i - 1][2], size: 8.8 }] : []),
+    { str, x, y, w, size: 8.8, hasEOL: i === cells.length - 1 },
+  ]);
+  const blocks = L.buildBlocks([
+    ...row(80.8, [['Apr 21', 154.8, 28.6], ['Nov 21', 204, 29.4], ['Dec 21', 254.1, 30.2]]),
+    ...row(96.1, [['Belgium', 46.1, 35.7], ['2.1', 165.7, 13], ['7.1', 215.8, 13]]),
+    ...row(111.5, [['Germany', 46.1, 40.4], ['2.1', 165.7, 13], ['6.0', 215.8, 13]]),
+    ...row(126.1, [['Estonia', 46.1, 32.5], ['1.6', 165.7, 13], ['8.6', 215.8, 13]]),
+  ]);
+  assert.deepEqual(blocks.map((b) => b.text), [
+    'Apr 21', 'Nov 21', 'Dec 21', 'Belgium', '2.1', '7.1', 'Germany', '2.1', '6.0', 'Estonia', '1.6', '8.6',
+  ]);
+  assert.deepEqual(blocks.filter((b) => b.translatable).map((b) => b.text),
+    ['Apr 21', 'Nov 21', 'Dec 21', 'Belgium', 'Germany', 'Estonia'], '数字格原样保留');
+  assert.ok(blocks.every((b) => b.width < 60), '每格的覆盖范围只有那一格，不横跨整行');
+  // 格距只有一个多字宽时，同样按格拆开
+  const tight = L.buildBlocks(row(587.3, [['Apr 21', 248.1, 26.4], ['Nov 21', 284.9, 27.1], ['Dec 21', 320.9, 27.8]]));
+  assert.deepEqual(tight.map((b) => b.text), ['Apr 21', 'Nov 21', 'Dec 21']);
+  console.log('✓ 表格逐格成块，行列保持不变');
+}
+
+/* --- 5c. 小标题和下面的正文分开，段落最后一行之后另起一块 --- */
+{
+  const body = 'The euro area consists of Belgium, Germany, Estonia, Ireland, Greece and more';
+  const blocks = L.buildBlocks([
+    ...line('Geographical information', { y: 100, size: 10 }),
+    ...line(body, { y: 112, size: 10 }),
+    ...line('Luxembourg and Finland.', { y: 124, size: 10 }),
+    ...line(body, { y: 136, size: 10 }),
+  ]);
+  assert.deepEqual(blocks.map((b) => b.text), [
+    'Geographical information',
+    `${body} Luxembourg and Finland.`,
+    body,
+  ]);
+  console.log('✓ 小标题、段落结尾的短行之后另起一块');
 }
 
 /* --- 6. 中日韩文字跨行不补空格 --- */

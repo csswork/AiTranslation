@@ -320,6 +320,7 @@
           w: item.width,
           size: Math.hypot(tx[2], tx[3]),
           hasEOL: item.hasEOL,
+          font: item.fontName,
           // 竖排、旋转的文字不翻译，原样保留
           rotated: tx[0] <= 0 || Math.abs(tx[1]) > Math.abs(tx[0]) * 0.05,
         };

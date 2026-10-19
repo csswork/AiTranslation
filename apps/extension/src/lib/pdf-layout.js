@@ -8,7 +8,7 @@
  *   行   → 块：字号接近、上下挨着、水平方向有重叠。
  *
  * 坐标约定：输入已换算到「页面左上角为原点、向下为正」的 CSS 像素（缩放 1），
- * y 是基线，size 是字号。纯函数、无 DOM，可以在 node 里测。
+ * y 是基线，size 是字号，font 是 pdf.js 的字体名（可省略）。纯函数、无 DOM，可以在 node 里测。
  *
  * 和 lang.js 一样不能用 import / export，结果挂在 globalThis 上。
  */
@@ -40,7 +40,12 @@
         continue;
       }
       const str = String(item.str || '');
-      if (!str) {
+      // 纯空白片段：pdf.js 用它标出词间或格间的空隙，宽度可能横跨整整一格。
+      // 只记下「这里有空格」，不能算进行宽，否则表格同一行的各格会连成一行。
+      if (!str.trim()) {
+        if (line && str) line.space = true;
+        // 超过一个字宽的空隙不是词间空格，是表格分格（正文的词间空格本来就在文字片段里）
+        if (line && (item.w || 0) > Math.max(item.size || 0, line.size)) line.split = true;
         if (item.hasEOL && line) line.ended = true;
         continue;
       }
@@ -49,26 +54,41 @@
       const fresh =
         !line ||
         line.ended ||
+        line.split ||
         Math.abs(item.y - line.y) > Math.min(size, line.size) * 0.5 ||
         item.x < line.right - Math.max(size, line.size) * 0.6 || // 回到左边：换行了
         item.x - line.right > Math.max(size, line.size) * 2.2; // 中间空得太远：分栏或表格的另一格
       if (fresh) {
-        if (!str.trim()) continue; // 行首空白没有意义
-        line = { text: str, left: item.x, right, y: item.y, size, ended: false };
+        line = { text: str, left: item.x, right, y: item.y, size, ended: false, split: false, space: false, fonts: new Set() };
         lines.push(line);
       } else {
         const gap = item.x - line.right;
-        if (gap > Math.min(size, line.size) * 0.12) line.text += glue(line.text, str);
+        if (line.space || gap > Math.min(size, line.size) * 0.12) line.text += glue(line.text, str);
+        line.space = false;
         line.text += str;
         line.right = Math.max(line.right, right);
         line.size = Math.max(line.size, size);
       }
+      if (item.font) line.fonts.add(item.font);
       if (item.hasEOL) line.ended = true;
     }
     return lines
       .map((l) => ({ ...l, text: l.text.replace(/\s+/g, ' ').trim() }))
       .filter((l) => l.text)
-      .map(({ ended, ...l }) => ({ ...l, top: l.y - l.size * 0.9, bottom: l.y + l.size * 0.28 }));
+      .map(({ ended, split, space, ...l }) => ({ ...l, top: l.y - l.size * 0.9, bottom: l.y + l.size * 0.28 }));
+  }
+
+  /**
+   * 标出表格单元格：同一条基线上还有别的行（左右分开的几格），而且自己不长。
+   * 双栏正文同样左右并排，但每行都很长，不算。
+   */
+  function markCells(lines) {
+    for (const line of lines) {
+      line.cell = line.right - line.left < line.size * 15 && lines.some((other) => other !== line &&
+        Math.abs(other.y - line.y) < Math.min(other.size, line.size) * 0.5 &&
+        (other.right <= line.left || other.left >= line.right));
+    }
+    return lines;
   }
 
   /** 把多行合成一段：英文行尾连字符断开的词接回去。 */
@@ -94,10 +114,18 @@
   function buildBlocks(items) {
     const blocks = [];
     let block = null;
-    for (const line of buildLines(items)) {
+    for (const line of markCells(buildLines(items))) {
       const last = block?.lines.at(-1);
+      // 上一行比这一段明显短：段落在那里结束了，或者它是小标题
+      const reach = block ? Math.max(block.right, line.right) : 0;
+      const short = block && last.right < reach - Math.max(block.size * 8, (reach - block.left) * 0.3);
+      // 上下两行用的字体完全不同：多半是粗体小标题接正文。行内夹几个粗体词时仍有共用的正文字体
+      const restyled = block && last.fonts.size && line.fonts.size && ![...line.fonts].some((font) => last.fonts.has(font));
       const join =
         block &&
+        !short &&
+        !restyled &&
+        !(line.cell && last.cell) && // 表格的格子各自成块，保持行列不变
         line.size / block.size < 1.3 &&
         block.size / line.size < 1.3 &&
         line.top >= last.top + last.size * 0.3 && // 在上一行下面
