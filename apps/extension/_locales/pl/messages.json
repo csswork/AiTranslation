@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Zaznacz obszary do przetłumaczenia; możesz zaznaczyć wiele obszarów. Jeśli nic nie zaznaczysz i klikniesz „Przetłumacz zaznaczenie”, przetłumaczony zostanie cały obraz."
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", AI dzieli na $arg1$ akapitów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ region, $arg2$ segments recognized",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Right-click an image on a webpage and select \"Translate text in image\"; you can also open the \"Image Translation\" page from the extension icon."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "When translating images via right-click"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "Automatically recognize and translate the whole image"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Select the area to translate first"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "You can switch between the two modes in the popup: after automatic translation you can still select an area; when selecting, confirm without selecting anything to translate the whole image."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "AI smart segmentation"
+  },
+  "m_68def233c2515f6e": {
+    "message": "During recognition, let the model determine which lines belong to the same segment (paragraph, heading, dialog box), then translate and lay out the whole segment together instead of line by line."
+  },
+  "m_3137a468f3955094": {
+    "message": "The model must output extra segmentation info: recognition is slightly slower, and with your own API Key each image uses a few more tokens. Credit-based translation still deducts credits by translated character count; recognition itself costs no credits. Segmentation is decided by the model and may occasionally merge unrelated text into one segment."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "Podczas rozpoznawania obrazu model podaje pozycję każdego wiersza i oznacza, które wiersze należą do tego samego bloku (akapit, nagłówek, pole dialogowe), aby cały blok był tłumaczony i układany razem. Gdy opcja jest wyłączona, model sam decyduje, czy zwracać wyniki według bloków, czy wierszy, co na złożonych obrazach łatwo powoduje rozdzielanie treści lub niedokładne ramki."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "Zwiększa to zużycie przy rozpoznawaniu obrazu: model musi podać pozycję i numer bloku każdego wiersza, a w praktyce liczba tokenów wyjściowych na obraz rośnie o 50–80%, a rozpoznawanie jest nieco wolniejsze. W przypadku własnego klucza API koszt ten ponosi Twoje konto; samo rozpoznawanie obrazu przy tłumaczeniu za punkty nie zużywa punktów, a tłumaczenie nadal jest rozliczane według liczby przetłumaczonych znaków. Podział na bloki ustala model, który czasem może połączyć niepowiązany tekst w jeden blok."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

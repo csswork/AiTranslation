@@ -164,33 +164,87 @@
     return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
   };
 
+  /** 各行的外接框，限制在 bound 以内；没有有效的框时返回 null。 */
+  function unionBox(boxes, bound = { x: 0, y: 0, w: 1, h: 1 }) {
+    const list = boxes.filter((b) => b && b.w > 0 && b.h > 0);
+    if (!list.length) return null;
+    const x0 = Math.max(bound.x, Math.min(...list.map((b) => b.x)));
+    const y0 = Math.max(bound.y, Math.min(...list.map((b) => b.y)));
+    const x1 = Math.min(bound.x + bound.w, Math.max(...list.map((b) => b.x + b.w)));
+    const y1 = Math.min(bound.y + bound.h, Math.max(...list.map((b) => b.y + b.h)));
+    return x1 > x0 && y1 > y0 ? { x: x0, y: y0, w: x1 - x0, h: y1 - y0 } : null;
+  }
+
   /**
-   * 每个选区合成一段：保持模型给的顺序（竖排日文是从右往左读，不能按坐标重排）。
-   * box 是选区本身；textBox 是选区内文字的外接框，遮盖只盖这一块——
+   * 合成一段：保持模型给的顺序（竖排日文是从右往左读，不能按坐标重排）。
+   * 识别框高度约等于字形高度：拉丁大写字母只占字号的七成左右，中文接近满格，
+   * 直接拿框高中位数当字号上限（相对整图高），两头都不至于差太多。
+   */
+  function mergeLines(parts, bound) {
+    const text = parts.reduce((acc, b) => joinText(acc, String(b.text).trim()), '');
+    const heights = parts.map((b) => b.box?.h).filter((h) => h > 0);
+    return { text, textBox: unionBox(parts.map((b) => b.box), bound), fontMax: heights.length ? median(heights) : 0 };
+  }
+
+  /**
+   * 按段落编号分组，保持首次出现的顺序。没有编号或没有坐标的行各自成组
+   * （没开 AI 智能分段、模型没照做，或者是旧版后台）。
+   */
+  function splitByPara(lines) {
+    const groups = [];
+    const byKey = new Map();
+    for (const line of lines) {
+      if (line.para == null || !line.box) {
+        groups.push([line]);
+        continue;
+      }
+      const key = String(line.para);
+      if (!byKey.has(key)) {
+        byKey.set(key, []);
+        groups.push(byKey.get(key));
+      }
+      byKey.get(key).push(line);
+    }
+    return groups;
+  }
+
+  /**
+   * 不同请求（长图切块、多批拼图）各自从 0 开始编号，合并前加上前缀，免得串段。
+   */
+  function tagParagraphs(blocks, prefix) {
+    return (blocks || []).map((b) => (b?.para == null ? b : { ...b, para: `${prefix}:${b.para}` }));
+  }
+
+  /**
+   * AI 智能分段：同一段的各行合成一整段翻译，框取各行的外接框，排版时整段铺开。
+   * 只有一行的段原样保留（仍按单行处理遮盖和字号）。
+   */
+  function groupParagraphs(blocks) {
+    const lines = (blocks || []).filter((b) => String(b?.text || '').trim());
+    return splitByPara(lines).map((parts) => {
+      if (parts.length === 1) return parts[0];
+      const merged = mergeLines(parts);
+      return { ...merged, box: merged.textBox, para: parts[0].para, lines: parts.length };
+    });
+  }
+
+  /**
+   * 每个选区合成一段；开了 AI 智能分段且选区里有好几段时，按段拆开。
+   * box 是选区本身；textBox 是这一段文字的外接框，遮盖只盖这一块——
    * 选区往往比文字大（框住整个对话框），整块盖上会把对话框的描边也盖掉。
    * fontMax 是原文的大致字号（相对整图高），译文不会比原文还大。
    * @returns {Array<{region:number,text:string,box:object,textBox:object|null,fontMax:number}>}
    */
   function groupByRegion(blocks, regions) {
-    return regions
-      .map((box, region) => {
-        const parts = blocks.filter((b) => b.region === region && String(b.text || '').trim());
-        const text = parts.reduce((acc, b) => joinText(acc, String(b.text).trim()), '');
-        const boxes = parts.map((b) => b.box).filter((b) => b && b.w > 0 && b.h > 0);
-        // 识别框高度约等于字形高度：拉丁大写字母只占字号的七成左右，中文接近满格，
-        // 直接拿框高当字号上限，两头都不至于差太多
-        const fontMax = boxes.length ? median(boxes.map((b) => b.h)) : box.h * 0.5;
-        let textBox = null;
-        if (boxes.length) {
-          const x0 = Math.max(box.x, Math.min(...boxes.map((b) => b.x)));
-          const y0 = Math.max(box.y, Math.min(...boxes.map((b) => b.y)));
-          const x1 = Math.min(box.x + box.w, Math.max(...boxes.map((b) => b.x + b.w)));
-          const y1 = Math.min(box.y + box.h, Math.max(...boxes.map((b) => b.y + b.h)));
-          if (x1 > x0 && y1 > y0) textBox = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
-        }
-        return { region, text, box, textBox, fontMax };
-      })
-      .filter((g) => g.text);
+    return regions.flatMap((box, region) => {
+      const parts = blocks.filter((b) => b.region === region && String(b.text || '').trim());
+      if (!parts.length) return [];
+      const paragraphs = parts.some((b) => b.para != null) ? splitByPara(parts) : [parts];
+      return paragraphs.map((lines) => {
+        const merged = mergeLines(lines, box);
+        return { region, box, ...merged, fontMax: merged.fontMax || box.h * 0.5 };
+      });
+    }).filter((g) => g.text);
   }
 
   /**
@@ -237,11 +291,11 @@
         const images = T.cutTiles(canvas, w, h, plan) || [];
         const perTile = [];
         for (let j = 0; j < images.length; j += 1) {
-          perTile.push(await read(images[j], { width: w, height: plan[j].height }));
+          perTile.push(tagParagraphs(await read(images[j], { width: w, height: plan[j].height }), `${i}.${j}`));
         }
         blocks = T.mergeBlocks(perTile, plan, h);
       } else {
-        blocks = await read(canvas.toDataURL('image/jpeg', 0.9), { width: w, height: h });
+        blocks = tagParagraphs(await read(canvas.toDataURL('image/jpeg', 0.9), { width: w, height: h }), i);
       }
       out.push(...unpackBlocks(blocks, batch, regions));
     }
@@ -256,6 +310,9 @@
     unpackBlocks,
     filterByRegions,
     joinText,
+    unionBox,
+    tagParagraphs,
+    groupParagraphs,
     groupByRegion,
     stitch,
     readRegions,

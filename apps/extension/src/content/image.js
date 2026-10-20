@@ -91,7 +91,9 @@
       canvas = document.createElement('canvas');
       canvas.width = sw;
       canvas.height = sh;
-      canvas.getContext('2d').drawImage(img, 0, 0, sw, sh);
+      // 这块画布之后要逐框取相近色（多次 getImageData），第一次取上下文时就要声明，
+      // 否则 Chrome 会提示 GPU 画布反复读回很慢
+      canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, sw, sh);
       // 探测画布有没有被跨域图片污染。读一个像素就够，
       // 用 toDataURL 试探会把整张大图白编码一遍。
       canvas.getContext('2d').getImageData(0, 0, 1, 1);
@@ -106,7 +108,7 @@
           canvas = document.createElement('canvas');
           canvas.width = sw;
           canvas.height = sh;
-          canvas.getContext('2d').drawImage(fresh, 0, 0, sw, sh);
+          canvas.getContext('2d', { willReadFrequently: true }).drawImage(fresh, 0, 0, sw, sh);
           canvas.getContext('2d').getImageData(0, 0, 1, 1);
         } catch {
           canvas = null;
@@ -424,6 +426,8 @@
     panel.fillColor.addEventListener('change', saveFill);
     panel.pick.addEventListener('click', () => setPicking(true));
     panel.cancelPick.addEventListener('click', () => {
+      // 「先框选」打开的窗口还没有任何译文，取消就是关掉
+      if (!panel.blocks.length) { closePanel(); return; }
       generation += 1;
       controller?.abort();
       setBusy(false);
@@ -433,9 +437,9 @@
       if (!imageResult) return;
       const regions = panel.picker.regions;
       if (regions.length) { translateRegions(imageResult, regions); return; }
-      // 选区全删掉了：回到整张图
-      if (imageResult.groups) {
-        translateBlocks({ ...imageResult, regions: null, groups: null }, panel.target.value);
+      // 选区全删掉了，或者「先框选」时一个没框：翻译整张图
+      if (imageResult.groups || !imageResult.merged) {
+        translateWhole(imageResult);
         return;
       }
       panel.meta.textContent = t('先在图上拖动鼠标框出要翻译的区域');
@@ -486,7 +490,9 @@
     panel.target.disabled = on;
     if (on) {
       panel.picker.set(imageResult?.regions || []);
-      panel.meta.textContent = t('拖动鼠标框出要翻译的区域，可以框多个');
+      panel.meta.textContent = panel.blocks.length
+        ? t('拖动鼠标框出要翻译的区域，可以框多个')
+        : t('框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图');
     } else panel.meta.textContent = panel.metaText;
   }
 
@@ -660,7 +666,8 @@
     controller = new AbortController();
     const { signal } = controller;
     const { grabbed, settings } = result;
-    const items = result.groups || result.merged;
+    // 开了 AI 智能分段时，同一段的各行合成一整段；没有段落编号时原样逐行
+    const items = result.groups || Regions.groupParagraphs(result.merged);
     const worth = items.filter((b) => Lang.shouldOffer(b.text));
     if (!worth.length) {
       report(result.groups ? t("选区里没有需要翻译的文字")
@@ -724,10 +731,66 @@
             return reply.blocks;
           },
         })
-        : Regions.filterByRegions(result.merged, regions);
+        // 读不到像素：先识别整张图（「先框选」时还没识别过），再挑出选区里的
+        : Regions.filterByRegions(result.merged || await recognizeWhole(result, signal, token), regions);
       if (token !== generation) return;
       const groups = Regions.groupByRegion(found, regions);
-      await translateBlocks({ ...result, regions, groups }, panel.target.value, token);
+      const merged = result.merged || (grabbed.ctx ? null : lastLines);
+      await translateBlocks({ ...result, merged, regions, groups }, panel.target.value, token);
+    } catch (err) {
+      if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
+    } finally {
+      if (token === generation) setBusy(false);
+    }
+  }
+
+  /** 最近一次整图识别的结果，读不到像素时框选要从这里挑。 */
+  let lastLines = null;
+
+  /**
+   * 识别整张图（长图分块逐块识别再合并）。进度写在遮罩上，弹窗开着时写在标题栏。
+   * 被新的操作打断时返回 null。
+   */
+  async function recognizeWhole(result, signal, token) {
+    const { grabbed, settings } = result;
+    const progress = (text) => {
+      if (mask) mask.label.textContent = text;
+      if (panel?.open) panel.meta.textContent = text;
+    };
+    const total = grabbed.parts.length;
+    const perTile = [];
+    for (let i = 0; i < total; i += 1) {
+      progress(total > 1 ? t('正在识别 $1/$2…', [i + 1, total]) : t('正在识别图中文字…'));
+      const reply = await AITrRequests.request({ type: 'read-image',
+        image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
+      if (token !== generation) return null;
+      if (!reply?.ok) {
+        throw new Error(grabbed.byUrl
+          ? t("这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板")
+          : reply?.error || t('识别失败'));
+      }
+      // 各块的段落编号各自从 0 开始，合并前加上块号
+      perTile.push(Regions.tagParagraphs(reply.blocks, i));
+    }
+    lastLines = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
+    return lastLines;
+  }
+
+  /** 弹窗里翻译整张图：识别过就直接用，「先框选」时还没识别就先识别。 */
+  async function translateWhole(result) {
+    const base = { ...result, regions: null, groups: null };
+    if (base.merged) {
+      translateBlocks(base, panel.target.value);
+      return;
+    }
+    const token = ++generation;
+    controller?.abort();
+    controller = new AbortController();
+    setBusy(true);
+    try {
+      const merged = await recognizeWhole(base, controller.signal, token);
+      if (!merged || token !== generation) return;
+      await translateBlocks({ ...base, merged }, panel.target.value, token);
     } catch (err) {
       if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
     } finally {
@@ -745,25 +808,23 @@
     const settings = await AITrSettings.loadSettings();
     if (token !== generation) return;
     showMask(img, t("正在读取图片…"));
+    lastLines = null;
     try {
       const grabbed = await grabImage(img);
       if (token !== generation) return;
       if (!grabbed) { showFailure(t("这张图还没加载完")); return; }
-      const total = grabbed.parts.length;
-      const perTile = [];
-      for (let i = 0; i < total; i += 1) {
-        mask.label.textContent = total > 1 ? t('正在识别 $1/$2…', [i + 1, total]) : t('正在识别图中文字…');
-        const reply = await AITrRequests.request({ type: 'read-image',
-          image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
-        if (token !== generation) return;
-        if (!reply?.ok) {
-          showFailure(grabbed.byUrl ? t("这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板") : reply?.error || t('识别失败'));
-          return;
-        }
-        perTile.push(reply.blocks);
+      const result = { grabbed, merged: null, settings, regions: null, groups: null, targetId: settings.target };
+      if (settings.imageMode === 'select') {
+        // 先框选：直接打开窗口露出原图，用户框完再识别，不白识别整张图
+        hideMask();
+        imageResult = result;
+        openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: '' });
+        setPicking(true);
+        return;
       }
-      const merged = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
-      await translateBlocks({ grabbed, merged, settings, regions: null, groups: null }, settings.target, token);
+      const merged = await recognizeWhole(result, signal, token);
+      if (!merged) return;
+      await translateBlocks({ ...result, merged }, settings.target, token);
     } catch (err) {
       if (token === generation) showFailure(String(err?.message || err));
     }

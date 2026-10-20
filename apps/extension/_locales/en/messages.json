@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Box the areas to translate; you can box multiple areas. If you don't box anything and just click \"Translate selection\", the whole image will be translated."
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", AI splits into $arg1$ paragraphs",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ regions, $arg2$ segments recognized",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Right-click an image on a webpage and select \"Translate text in image\"; you can also open the \"Image Translation\" page from the extension icon."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "When translating images via right-click"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "Automatically recognize and translate the whole image"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Select the area to translate first"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "You can switch between the two modes in the popup: after automatic translation you can still select an area; when selecting, confirm without selecting anything to translate the whole image."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "AI smart segmentation"
+  },
+  "m_68def233c2515f6e": {
+    "message": "During recognition, let the model determine which lines belong to the same segment (paragraph, heading, dialog box), then translate and lay out the whole segment together instead of line by line."
+  },
+  "m_3137a468f3955094": {
+    "message": "The model must output extra segmentation info: recognition is slightly slower, and with your own API Key each image uses a few more tokens. Credit-based translation still deducts credits by translated character count; recognition itself costs no credits. Segmentation is decided by the model and may occasionally merge unrelated text into one segment."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "When recognizing images, have the model give the position of each line and mark which lines belong to the same block (paragraph, heading, dialog box), so the whole block is translated and laid out together. When off, the model decides whether to return results by block or by line, which on complex images can easily split things up or produce inaccurate boxes."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "This increases image recognition usage: the model must output the position and block number of each line, and in practice output tokens per image rise by 50–80%, with recognition also slightly slower. With your own API Key, this cost is borne by your account; image recognition for credit-based translation itself doesn't consume credits, and translation is still charged by translated character count. Blocking is decided by the model, which may occasionally merge unrelated text into one block."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

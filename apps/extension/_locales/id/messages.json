@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Tandai area yang akan diterjemahkan, bisa beberapa area; jika tidak menandai apa pun dan langsung klik \"Terjemahkan pilihan\", seluruh gambar akan diterjemahkan"
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", AI membagi menjadi $arg1$ paragraf",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ area, $arg2$ segmen terdeteksi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Klik kanan gambar di halaman web, lalu pilih \"Terjemahkan teks dalam gambar\"; Anda juga bisa membuka halaman \"Terjemahan Gambar\" dari ikon ekstensi."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "Saat menerjemahkan gambar lewat klik kanan"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "Kenali dan terjemahkan seluruh gambar secara otomatis"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Pilih dulu area yang akan diterjemahkan"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "Kedua mode dapat saling beralih di popup: setelah terjemahan otomatis Anda masih bisa memilih area; saat memilih, konfirmasi tanpa memilih apa pun untuk menerjemahkan seluruh gambar."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "Segmentasi cerdas AI"
+  },
+  "m_68def233c2515f6e": {
+    "message": "Saat pengenalan, biarkan model menentukan baris mana yang termasuk segmen yang sama (paragraf, judul, kotak dialog), lalu terjemahkan dan tata seluruh segmen sekaligus, bukan baris per baris."
+  },
+  "m_3137a468f3955094": {
+    "message": "Model harus mengeluarkan info segmentasi tambahan: pengenalan sedikit lebih lambat, dan dengan API Key sendiri setiap gambar memakai lebih banyak token. Terjemahan berbasis poin tetap memotong poin sesuai jumlah karakter terjemahan; pengenalan sendiri tidak memotong poin. Segmentasi ditentukan oleh model dan kadang dapat menggabungkan teks yang tidak terkait menjadi satu segmen."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "Saat mengenali gambar, minta model memberikan posisi setiap baris dan menandai baris mana yang termasuk dalam blok yang sama (paragraf, judul, kotak dialog), agar seluruh blok diterjemahkan dan ditata bersama. Jika nonaktif, model memutuskan sendiri apakah mengembalikan hasil per blok atau per baris, yang pada gambar kompleks mudah terpecah atau kotaknya tidak akurat."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "Ini meningkatkan penggunaan pengenalan gambar: model harus mengeluarkan posisi dan nomor blok setiap baris, dan dalam praktiknya token keluaran per gambar naik 50–80%, dengan pengenalan juga sedikit lebih lambat. Dengan API Key milik Anda sendiri, biaya ini ditanggung oleh akun Anda; pengenalan gambar untuk terjemahan berbasis poin sendiri tidak memotong poin, dan terjemahan tetap dipotong berdasarkan jumlah karakter terjemahan. Pemblokiran ditentukan oleh model, yang terkadang dapat menggabungkan teks yang tidak terkait menjadi satu blok."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

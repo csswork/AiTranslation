@@ -73,7 +73,12 @@ assert.ok(rc.w < region.box.w && rc.h < region.box.h, '不铺满整个选区（�
 assert.equal(R.coverBox({ ...region, textBox: null }, natural), region.box, '没有文字坐标时铺满选区');
 const corner = R.coverBox({ box: { x: 0, y: 0, w: 0.2, h: 0.1 } }, natural);
 assert.ok(corner.x === 0 && corner.y === 0, '放大后不越过图片边缘');
-console.log('✓ 遮盖范围：识别行放出一圈，选区只盖文字所在范围且不越出选区');
+// AI 分出的段（不在选区里）：按行高放宽，但不越出图片
+const para = { box: { x: 0, y: 0.2, w: 0.4, h: 0.1 }, textBox: { x: 0, y: 0.2, w: 0.4, h: 0.1 }, fontMax: 0.04 };
+const pc = R.coverBox(para, natural);
+assert.ok(pc.x === 0 && pc.y < 0.2 && pc.y + pc.h > 0.3 && pc.x + pc.w > 0.4);
+assert.ok(near(0.2 - pc.y, 0.04 * 0.3), '段按行高的三成放宽');
+console.log('✓ 遮盖范围：识别行放出一圈，选区只盖文字所在范围且不越出选区，AI 段按行高放宽');
 
 /* ---- 6. 排版：断行、字号二分、CJK 标点不放行首 ---- */
 // 等宽假测量：每个字符宽 = 0.6 × 字号，中日文宽 = 1 × 字号

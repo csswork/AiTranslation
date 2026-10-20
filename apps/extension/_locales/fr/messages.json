@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Encadrez les zones à traduire ; vous pouvez en encadrer plusieurs. Si vous n'encadrez rien et cliquez simplement sur « Traduire la sélection », toute l'image sera traduite."
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", l'IA divise en $arg1$ paragraphes",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ zones, $arg2$ segments reconnus",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Faites un clic droit sur une image d'une page web et choisissez « Traduire le texte de l'image » ; vous pouvez aussi ouvrir la page « Traduction d'images » depuis l'icône de l'extension."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "Lors de la traduction d'images par clic droit"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "Reconnaître et traduire automatiquement toute l'image"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Sélectionnez d'abord la zone à traduire"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "Vous pouvez basculer entre les deux modes dans la fenêtre : après la traduction automatique, vous pouvez encore sélectionner une zone ; en mode sélection, confirmez sans rien sélectionner pour traduire toute l'image."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "Segmentation intelligente par IA"
+  },
+  "m_68def233c2515f6e": {
+    "message": "Lors de la reconnaissance, laissez le modèle déterminer quelles lignes appartiennent au même segment (paragraphe, titre, bulle de dialogue), puis traduisez et mettez en page tout le segment ensemble au lieu de ligne par ligne."
+  },
+  "m_3137a468f3955094": {
+    "message": "Le modèle doit fournir des informations de segmentation supplémentaires : la reconnaissance est un peu plus lente et, avec votre propre API Key, chaque image utilise un peu plus de tokens. La traduction par points déduit toujours des points selon le nombre de caractères traduits ; la reconnaissance elle-même ne coûte aucun point. La segmentation est décidée par le modèle et peut parfois fusionner du texte sans rapport dans un même segment."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "Lors de la reconnaissance d'image, demander au modèle de fournir la position de chaque ligne et d'indiquer quelles lignes appartiennent au même bloc (paragraphe, titre, boîte de dialogue), afin que tout le bloc soit traduit et mis en page ensemble. Si désactivé, le modèle décide lui-même de renvoyer les résultats par bloc ou par ligne, ce qui, sur des images complexes, peut facilement fragmenter le contenu ou produire des cadres imprécis."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "Cela augmente la consommation de la reconnaissance d'image : le modèle doit produire la position et le numéro de bloc de chaque ligne, ce qui, en pratique, augmente de 50 à 80 % les tokens de sortie par image, et la reconnaissance est aussi légèrement plus lente. Avec votre propre API Key, ce coût est à la charge de votre compte ; la reconnaissance d'image pour la traduction par points ne consomme pas de points en soi, et la traduction reste facturée selon le nombre de caractères traduits. Le découpage en blocs est déterminé par le modèle, qui peut occasionnellement fusionner des textes sans rapport dans un même bloc."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

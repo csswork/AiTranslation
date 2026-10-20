@@ -25,6 +25,24 @@ test('托管识图使用服务端 Flash 模型与 Key，图片只放 user 消息
   assert.equal(result.meta.outputTokens, 20);
 });
 
+test('AI 智能分段：换用逐行加段落编号的提示词，只保留合法编号；默认识别不带编号', async () => {
+  const prompts = [];
+  const content = '[{"text":"WHERE ARE","box":[1,2,3,4],"para":0},{"text":"WE GOING?","box":[1,5,3,8],"para":0},' +
+    '{"text":"Limited","box":[5,5,9,9],"para":-1},{"text":"Sale","box":[5,1,9,3],"para":"1"}]';
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    prompts.push(JSON.parse(init.body).messages[0].content);
+    return Response.json({ choices: [{ message: { content } }] });
+  } });
+  const grouped = JSON.parse((await hosted.readImageText({ image, layout: 'paragraphs' })).raw);
+  assert.match(prompts[0], /"para"/);
+  assert.deepEqual(grouped.map((b) => b.para), [0, 0, undefined, undefined], '负数和字符串编号丢弃');
+  const plain = JSON.parse((await hosted.readImageText({ image })).raw);
+  assert.doesNotMatch(prompts[1], /"para"/);
+  assert.ok(plain.every((b) => !('para' in b)), '未开启分段时不返回编号');
+  await hosted.readImageText({ image, layout: 'anything-else' });
+  assert.doesNotMatch(prompts[2], /"para"/, '未知 layout 按逐行识别');
+});
+
 test('空图、错误坐标与非 JSON 回复；错误不包含识别内容，不向未验证视觉能力的备用服务商发送图片', async () => {
   let content = '[]', status = 200, calls = 0;
   const hosted = createHostedTranslator(config, { fetchImpl: async () => {

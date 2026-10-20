@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Selecteer de te vertalen gebieden; je kunt meerdere gebieden selecteren. Selecteer je niets en klik je gewoon op \"Selectie vertalen\", dan wordt de hele afbeelding vertaald."
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", AI verdeelt in $arg1$ alinea's",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ regio's, $arg2$ segmenten herkend",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Klik met de rechtermuisknop op een afbeelding op een webpagina en kies \"Tekst in afbeelding vertalen\"; je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "Bij vertalen van afbeeldingen via rechtermuisknop"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "De hele afbeelding automatisch herkennen en vertalen"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Selecteer eerst het gebied dat je wilt vertalen"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "Je kunt in de pop-up tussen beide modi wisselen: na automatisch vertalen kun je alsnog een gebied selecteren; bij selecteren bevestig je zonder selectie om de hele afbeelding te vertalen."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "AI-slimme segmentering"
+  },
+  "m_68def233c2515f6e": {
+    "message": "Laat het model tijdens de herkenning bepalen welke regels bij hetzelfde segment horen (alinea, kop, dialoogvenster), en vertaal en formatteer het hele segment in één keer in plaats van regel voor regel."
+  },
+  "m_3137a468f3955094": {
+    "message": "Het model moet extra segmenteringsinformatie uitvoeren: herkenning is iets langzamer en met je eigen API Key gebruikt elke afbeelding iets meer tokens. Bij vertaling met punten worden punten nog steeds afgetrokken op basis van het aantal vertaalde tekens; herkenning zelf kost geen punten. Segmentering wordt door het model bepaald en kan soms ongerelateerde tekst samenvoegen tot één segment."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "Laat het model bij het herkennen van afbeeldingen de positie van elke regel aangeven en markeren welke regels bij hetzelfde blok horen (alinea, kop, dialoogvenster), zodat het hele blok samen wordt vertaald en opgemaakt. Staat dit uit, dan bepaalt het model zelf of het per blok of per regel teruggeeft, wat bij complexe afbeeldingen snel tot versnippering of onnauwkeurige kaders leidt."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "Dit verhoogt het verbruik bij het herkennen van afbeeldingen: het model moet de positie en het bloknummer van elke regel uitvoeren, en in de praktijk stijgt het aantal output-tokens per afbeelding met 50–80%, terwijl de herkenning ook iets langzamer gaat. Met je eigen API Key komen deze kosten voor jouw rekening; bij vertaling met punten kost de beeldherkenning zelf geen punten, en de vertaling wordt nog steeds per vertaald teken afgerekend. De blokindeling wordt door het model bepaald, dat af en toe niet-verwante tekst in één blok kan samenvoegen."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

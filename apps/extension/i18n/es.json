@@ -445,5 +445,18 @@
   "$1 个选区，$2 个识别出文字": "$1 selecciones, $2 con texto reconocido",
   "选区里没有识别到文字": "No se reconoció texto en la selección",
   "完成框选": "Finalizar selección",
-  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "$1 áreas seleccionadas; haz clic en \"Reconocer y traducir\" para procesar solo estas áreas"
+  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "$1 áreas seleccionadas; haz clic en \"Reconocer y traducir\" para procesar solo estas áreas",
+  "框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图": "Delimita las áreas que quieres traducir; puedes delimitar varias. Si no delimitas ninguna y haces clic en «Traducir selección», se traducirá toda la imagen.",
+  "，AI 分成 $1 段": ", la IA lo divide en $1 párrafos",
+  "$1 个选区，识别出 $2 段": "$1 regiones, $2 segmentos reconocidos",
+  "在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。": "Haz clic derecho en una imagen de la página web y selecciona «Traducir el texto de la imagen»; también puedes abrir la página «Traducción de imágenes» desde el icono de la extensión.",
+  "右键翻译图片时": "Al traducir imágenes con clic derecho",
+  "自动识别并翻译整张图": "Reconoce y traduce toda la imagen automáticamente",
+  "先框选要翻译的区域": "Selecciona primero el área que quieres traducir",
+  "两种方式在弹窗里都能互相切换：自动翻译后可以再框选；框选时一个不框直接确认，就翻译整张图。": "Puedes alternar entre los dos modos en la ventana emergente: tras la traducción automática aún puedes seleccionar un área; al seleccionar, confirma sin marcar nada para traducir toda la imagen.",
+  "AI 智能分段": "Segmentación inteligente con IA",
+  "识图时让模型判断哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版，不再逐行处理。": "Durante el reconocimiento, deja que el modelo determine qué líneas pertenecen al mismo segmento (párrafo, título, cuadro de diálogo) y traduce y compón todo el segmento junto en lugar de línea por línea.",
+  "模型要多输出分段信息：识别会稍慢，自带 API Key 时每张图会多用一些 token。点数翻译照常按译文字数扣点，识图本身不扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "El modelo debe generar información de segmentación adicional: el reconocimiento es algo más lento y, con tu propia API Key, cada imagen usa algunos tokens más. La traducción por puntos sigue descontando puntos según el número de caracteres traducidos; el reconocimiento en sí no cuesta puntos. La segmentación la decide el modelo y en ocasiones puede unir texto no relacionado en un mismo segmento.",
+  "识图时让模型逐行给出位置，并标出哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版。不开时由模型自行决定按段还是按行返回，复杂的图上容易拆碎或框不准。": "Al reconocer imágenes, haz que el modelo indique la posición de cada línea y marque qué líneas pertenecen al mismo bloque (párrafo, título, cuadro de diálogo), para traducir y maquetar todo el bloque junto. Si está desactivado, el modelo decide si devolver los resultados por bloque o por línea, lo que en imágenes complejas puede fragmentar el contenido o producir cuadros imprecisos.",
+  "会增加识图消耗：模型要多输出每一行的位置和分段编号，实测每张图的输出 token 多五到八成，识别也稍慢。自带 API Key 时这部分费用由你的账户承担；点数翻译的识图本身不扣点，翻译仍按译文字数扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "Esto aumenta el consumo del reconocimiento de imágenes: el modelo debe indicar la posición y el número de bloque de cada línea, y en la práctica los tokens de salida por imagen aumentan entre un 50 y un 80 %, y el reconocimiento es algo más lento. Con tu propia API Key, este coste corre a cargo de tu cuenta; el reconocimiento de imágenes para la traducción por puntos no consume puntos en sí, y la traducción se sigue cobrando según el número de caracteres traducidos. La agrupación en bloques la decide el modelo, que en ocasiones puede fusionar texto no relacionado en un mismo bloque."
 }

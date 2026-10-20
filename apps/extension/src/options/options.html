@@ -170,6 +170,29 @@
       </section>
 
       <section class="card">
+        <h2>图片翻译</h2>
+        <p class="desc">在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。</p>
+        <div class="fields">
+          <label class="field">
+            <span class="label">右键翻译图片时</span>
+            <select id="imageMode">
+              <option value="auto">自动识别并翻译整张图</option>
+              <option value="select">先框选要翻译的区域</option>
+            </select>
+            <span class="help">两种方式在弹窗里都能互相切换：自动翻译后可以再框选；框选时一个不框直接确认，就翻译整张图。</span>
+          </label>
+          <label class="switch">
+            <input id="imageParagraphs" type="checkbox" />
+            <span>
+              <b>AI 智能分段</b>
+              <i>识图时让模型逐行给出位置，并标出哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版。不开时由模型自行决定按段还是按行返回，复杂的图上容易拆碎或框不准。</i>
+              <i class="warn">会增加识图消耗：模型要多输出每一行的位置和分段编号，实测每张图的输出 token 多五到八成，识别也稍慢。自带 API Key 时这部分费用由你的账户承担；点数翻译的识图本身不扣点，翻译仍按译文字数扣点。分段由模型判断，偶尔会把不相关的文字并成一段。</i>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
         <h2>元素翻译规则</h2>
         <p class="desc">
           在网页上右键某个区域，选「为这个区域添加翻译按钮」，即可记住该网站的这个区域；

@@ -1896,6 +1896,58 @@
       }
     }
   },
+  "m_e4d4223d7081de24": {
+    "message": "Khoanh vùng cần dịch, có thể khoanh nhiều vùng; nếu không khoanh mà nhấn trực tiếp \"Dịch vùng chọn\" thì sẽ dịch toàn bộ ảnh"
+  },
+  "m_d54c518e073a3c6f": {
+    "message": ", AI chia thành $arg1$ đoạn",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fa4178d21592df3": {
+    "message": "$arg1$ vùng, nhận diện được $arg2$ đoạn",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_5ee80fabcca1e14a": {
+    "message": "Nhấp chuột phải vào hình ảnh trên trang web và chọn \"Dịch văn bản trong ảnh\"; bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích."
+  },
+  "m_b63004f2a2c446cb": {
+    "message": "Khi dịch hình ảnh bằng nhấp chuột phải"
+  },
+  "m_56c33a2058e4fa2f": {
+    "message": "Tự động nhận diện và dịch toàn bộ hình ảnh"
+  },
+  "m_4d9d7e678186c45f": {
+    "message": "Chọn vùng cần dịch trước"
+  },
+  "m_a5ab69bef0227173": {
+    "message": "Bạn có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên: sau khi dịch tự động vẫn có thể chọn vùng; khi chọn vùng, xác nhận mà không chọn gì sẽ dịch toàn bộ hình ảnh."
+  },
+  "m_f8ef11290fa47a30": {
+    "message": "Phân đoạn thông minh bằng AI"
+  },
+  "m_68def233c2515f6e": {
+    "message": "Khi nhận diện, để mô hình xác định những dòng nào thuộc cùng một đoạn (đoạn văn, tiêu đề, hộp thoại), rồi dịch và bố cục cả đoạn cùng nhau thay vì xử lý từng dòng."
+  },
+  "m_3137a468f3955094": {
+    "message": "Mô hình phải xuất thêm thông tin phân đoạn: nhận diện sẽ chậm hơn một chút, và khi dùng API Key của riêng bạn, mỗi hình ảnh sẽ tốn thêm một ít token. Dịch bằng điểm vẫn trừ điểm theo số ký tự bản dịch; bản thân việc nhận diện không tốn điểm. Việc phân đoạn do mô hình quyết định và đôi khi có thể gộp văn bản không liên quan vào cùng một đoạn."
+  },
+  "m_7d4c113fe60aa224": {
+    "message": "Khi nhận dạng ảnh, yêu cầu mô hình đưa ra vị trí từng dòng và đánh dấu những dòng nào thuộc cùng một khối (đoạn văn, tiêu đề, hộp thoại), để cả khối được dịch và dàn trang cùng nhau. Khi tắt, mô hình tự quyết định trả kết quả theo khối hay theo dòng, trên ảnh phức tạp dễ bị chia nhỏ hoặc đóng khung không chính xác."
+  },
+  "m_c9fa5988d5152f22": {
+    "message": "Sẽ làm tăng mức tiêu thụ khi nhận dạng ảnh: mô hình phải xuất thêm vị trí và số khối của từng dòng, thực tế token đầu ra mỗi ảnh tăng 50–80%, nhận dạng cũng chậm hơn một chút. Khi dùng API Key riêng, chi phí này do tài khoản của bạn chịu; nhận dạng ảnh cho dịch bằng điểm không bị trừ điểm, việc dịch vẫn trừ điểm theo số ký tự bản dịch. Việc phân khối do mô hình quyết định, đôi khi có thể gộp văn bản không liên quan vào cùng một khối."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

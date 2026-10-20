@@ -825,7 +825,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (type === 'hosted-read-image' && fromExtensionPage) {
-    AITrAccount.readImageText({ image: message.image })
+    AITrAccount.readImageText({ image: message.image, layout: message.layout })
       .then((raw) => sendResponse({ ok: true, raw }))
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
     return true;

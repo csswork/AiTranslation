@@ -445,5 +445,18 @@
   "$1 个选区，$2 个识别出文字": "$1 vùng chọn, $2 vùng nhận dạng được văn bản",
   "选区里没有识别到文字": "Không nhận dạng được văn bản trong vùng chọn",
   "完成框选": "Hoàn tất chọn vùng",
-  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "Đã chọn $1 vùng, nhấn \"Nhận dạng và dịch\" để chỉ xử lý các vị trí này"
+  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "Đã chọn $1 vùng, nhấn \"Nhận dạng và dịch\" để chỉ xử lý các vị trí này",
+  "框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图": "Khoanh vùng cần dịch, có thể khoanh nhiều vùng; nếu không khoanh mà nhấn trực tiếp \"Dịch vùng chọn\" thì sẽ dịch toàn bộ ảnh",
+  "，AI 分成 $1 段": ", AI chia thành $1 đoạn",
+  "$1 个选区，识别出 $2 段": "$1 vùng, nhận diện được $2 đoạn",
+  "在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。": "Nhấp chuột phải vào hình ảnh trên trang web và chọn \"Dịch văn bản trong ảnh\"; bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích.",
+  "右键翻译图片时": "Khi dịch hình ảnh bằng nhấp chuột phải",
+  "自动识别并翻译整张图": "Tự động nhận diện và dịch toàn bộ hình ảnh",
+  "先框选要翻译的区域": "Chọn vùng cần dịch trước",
+  "两种方式在弹窗里都能互相切换：自动翻译后可以再框选；框选时一个不框直接确认，就翻译整张图。": "Bạn có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên: sau khi dịch tự động vẫn có thể chọn vùng; khi chọn vùng, xác nhận mà không chọn gì sẽ dịch toàn bộ hình ảnh.",
+  "AI 智能分段": "Phân đoạn thông minh bằng AI",
+  "识图时让模型判断哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版，不再逐行处理。": "Khi nhận diện, để mô hình xác định những dòng nào thuộc cùng một đoạn (đoạn văn, tiêu đề, hộp thoại), rồi dịch và bố cục cả đoạn cùng nhau thay vì xử lý từng dòng.",
+  "模型要多输出分段信息：识别会稍慢，自带 API Key 时每张图会多用一些 token。点数翻译照常按译文字数扣点，识图本身不扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "Mô hình phải xuất thêm thông tin phân đoạn: nhận diện sẽ chậm hơn một chút, và khi dùng API Key của riêng bạn, mỗi hình ảnh sẽ tốn thêm một ít token. Dịch bằng điểm vẫn trừ điểm theo số ký tự bản dịch; bản thân việc nhận diện không tốn điểm. Việc phân đoạn do mô hình quyết định và đôi khi có thể gộp văn bản không liên quan vào cùng một đoạn.",
+  "识图时让模型逐行给出位置，并标出哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版。不开时由模型自行决定按段还是按行返回，复杂的图上容易拆碎或框不准。": "Khi nhận dạng ảnh, yêu cầu mô hình đưa ra vị trí từng dòng và đánh dấu những dòng nào thuộc cùng một khối (đoạn văn, tiêu đề, hộp thoại), để cả khối được dịch và dàn trang cùng nhau. Khi tắt, mô hình tự quyết định trả kết quả theo khối hay theo dòng, trên ảnh phức tạp dễ bị chia nhỏ hoặc đóng khung không chính xác.",
+  "会增加识图消耗：模型要多输出每一行的位置和分段编号，实测每张图的输出 token 多五到八成，识别也稍慢。自带 API Key 时这部分费用由你的账户承担；点数翻译的识图本身不扣点，翻译仍按译文字数扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "Sẽ làm tăng mức tiêu thụ khi nhận dạng ảnh: mô hình phải xuất thêm vị trí và số khối của từng dòng, thực tế token đầu ra mỗi ảnh tăng 50–80%, nhận dạng cũng chậm hơn một chút. Khi dùng API Key riêng, chi phí này do tài khoản của bạn chịu; nhận dạng ảnh cho dịch bằng điểm không bị trừ điểm, việc dịch vẫn trừ điểm theo số ký tự bản dịch. Việc phân khối do mô hình quyết định, đôi khi có thể gộp văn bản không liên quan vào cùng một khối."
 }

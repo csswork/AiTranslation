@@ -124,6 +124,10 @@
     // 图片译文的背景：默认取文字周围的相近色；也可固定深色半透明、白、黑或自定义颜色
     imageFill: 'auto',
     imageFillColor: '#ffffff',
+    // 右键翻译图片：auto 直接识别整张图；select 先打开窗口让用户框选区域
+    imageMode: 'auto',
+    // AI 智能分段：识图时让模型给每行标段落编号，同一段合起来翻译（默认关闭）
+    imageParagraphs: false,
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -151,6 +155,8 @@
       videoTranslate: input.videoTranslate !== false,
       imageFill: IMAGE_FILLS.includes(input.imageFill) ? input.imageFill : DEFAULTS.imageFill,
       imageFillColor: /^#[0-9a-f]{6}$/i.test(input.imageFillColor) ? input.imageFillColor.toLowerCase() : DEFAULTS.imageFillColor,
+      imageMode: input.imageMode === 'select' ? 'select' : 'auto',
+      imageParagraphs: input.imageParagraphs === true,
     };
     for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

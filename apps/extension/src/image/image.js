@@ -109,7 +109,8 @@
       const canvas = document.createElement('canvas');
       canvas.width = Math.round(w * scale);
       canvas.height = Math.round(h * scale);
-      const ctx = canvas.getContext('2d');
+      // 之后要逐框取相近色（多次 getImageData），声明后 Chrome 改用 CPU 画布，读回更快
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       ctx.getImageData(0, 0, 1, 1); // 被跨域污染时这里就会抛错
       return {
@@ -404,10 +405,14 @@
       el.rawWrap.hidden = false;
       const withBox = result.blocks.filter((b) => b.box).length;
       el.meta.textContent = result.regions
-        ? t("$1 个选区，$2 个识别出文字", [result.regions.length, result.blocks.length])
+        ? t("$1 个选区，识别出 $2 段", [result.regions.length, result.blocks.length])
         : t("识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4", [result.blocks.length, withBox, result.scale.x, result.scale.y]);
 
-      if (!result.blocks.length) {
+      // AI 智能分段：同一段的各行合成一整段（选区结果已经按选区合并过）
+      const units = result.regions ? result.blocks : Regions.groupParagraphs(result.blocks);
+      if (units.length < result.blocks.length) el.meta.textContent += t("，AI 分成 $1 段", [units.length]);
+
+      if (!units.length) {
         renderBlocks([]);
         setStatus(result.regions ? t("选区里没有识别到文字") : t("图中没有识别到文字"));
         return;
@@ -416,8 +421,8 @@
       // 星级、价格、尺码这类纯数字符号没有翻译的意义，
       // 送去翻译只会原样返回，白花 token 还会盖住原图。
       // 这里复用划词菜单同一套判断。
-      const translatable = result.blocks.filter((b) => L.shouldOffer(b.text));
-      const skipped = result.blocks.length - translatable.length;
+      const translatable = units.filter((b) => L.shouldOffer(b.text));
+      const skipped = units.length - translatable.length;
       const tagSkipped = (list, done) =>
         list.map((b) => {
           const translation = done.get(b) || '';
@@ -430,10 +435,10 @@
         });
 
       // 先把识别结果画出来，翻译失败也能看到方框准不准
-      renderBlocks(tagSkipped(result.blocks, new Map(translatable.map((b) => [b, '']))));
+      renderBlocks(tagSkipped(units, new Map(translatable.map((b) => [b, '']))));
 
       if (!translatable.length) {
-        setStatus(t("识别到 $1 段，都无需翻译", [result.blocks.length]));
+        setStatus(t("识别到 $1 段，都无需翻译", [units.length]));
         return;
       }
 
@@ -446,7 +451,7 @@
       if (signal.aborted) return;
 
       const done = new Map(translatable.map((b, i) => [b, translations[i] || '']));
-      const tagged = tagSkipped(result.blocks, done);
+      const tagged = tagSkipped(units, done);
       renderBlocks(tagged);
       // 列表里不显示被跳过的条目，所以在状态里把数量说清楚
       const hidden = tagged.filter((b) => b.skipped || b.sameAsSource).length;
@@ -647,8 +652,8 @@
   // 不重新请求接口，切换是免费的。
   /** 换一种换算方式重画。都在本地算，不重新请求接口，切换是免费的。 */
   function requantize() {
-    // 选区结果的框就是选区本身，不是模型坐标
-    if (!lastResult || lastResult.regions) return;
+    // 选区结果的框就是选区本身、AI 分出的段是多行合并的框，都不是模型的单个坐标
+    if (!lastResult || lastResult.regions || blocks.some((b) => b.lines)) return;
     const scale = currentScale();
     const order = el.order.value;
     blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale, order) }));

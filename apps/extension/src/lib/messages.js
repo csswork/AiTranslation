@@ -446,7 +446,20 @@ globalThis.AITrMessageIds = {
   "$1 个选区，$2 个识别出文字": "m_624b2891ab0e9d7c",
   "选区里没有识别到文字": "m_77591a35edf4f47c",
   "完成框选": "m_d2302c23f60dc6b7",
-  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "m_363086fb80754309"
+  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "m_363086fb80754309",
+  "框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图": "m_e4d4223d7081de24",
+  "，AI 分成 $1 段": "m_d54c518e073a3c6f",
+  "$1 个选区，识别出 $2 段": "m_5fa4178d21592df3",
+  "在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。": "m_5ee80fabcca1e14a",
+  "右键翻译图片时": "m_b63004f2a2c446cb",
+  "自动识别并翻译整张图": "m_56c33a2058e4fa2f",
+  "先框选要翻译的区域": "m_4d9d7e678186c45f",
+  "两种方式在弹窗里都能互相切换：自动翻译后可以再框选；框选时一个不框直接确认，就翻译整张图。": "m_a5ab69bef0227173",
+  "AI 智能分段": "m_f8ef11290fa47a30",
+  "识图时让模型判断哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版，不再逐行处理。": "m_68def233c2515f6e",
+  "模型要多输出分段信息：识别会稍慢，自带 API Key 时每张图会多用一些 token。点数翻译照常按译文字数扣点，识图本身不扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "m_3137a468f3955094",
+  "识图时让模型逐行给出位置，并标出哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版。不开时由模型自行决定按段还是按行返回，复杂的图上容易拆碎或框不准。": "m_7d4c113fe60aa224",
+  "会增加识图消耗：模型要多输出每一行的位置和分段编号，实测每张图的输出 token 多五到八成，识别也稍慢。自带 API Key 时这部分费用由你的账户承担；点数翻译的识图本身不扣点，翻译仍按译文字数扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "m_c9fa5988d5152f22"
 };
 globalThis.AITrEnglish = {
   "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
@@ -895,5 +908,18 @@ globalThis.AITrEnglish = {
   "$1 个选区，$2 个识别出文字": "$1 selections, $2 with recognized text",
   "选区里没有识别到文字": "No text recognized in the selection",
   "完成框选": "Finish selecting",
-  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "$1 areas selected; click \"Recognize and translate\" to process only these areas"
+  "已框选 $1 个区域，点「识别并翻译」只处理这些位置": "$1 areas selected; click \"Recognize and translate\" to process only these areas",
+  "框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图": "Box the areas to translate; you can box multiple areas. If you don't box anything and just click \"Translate selection\", the whole image will be translated.",
+  "，AI 分成 $1 段": ", AI splits into $1 paragraphs",
+  "$1 个选区，识别出 $2 段": "$1 regions, $2 segments recognized",
+  "在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。": "Right-click an image on a webpage and select \"Translate text in image\"; you can also open the \"Image Translation\" page from the extension icon.",
+  "右键翻译图片时": "When translating images via right-click",
+  "自动识别并翻译整张图": "Automatically recognize and translate the whole image",
+  "先框选要翻译的区域": "Select the area to translate first",
+  "两种方式在弹窗里都能互相切换：自动翻译后可以再框选；框选时一个不框直接确认，就翻译整张图。": "You can switch between the two modes in the popup: after automatic translation you can still select an area; when selecting, confirm without selecting anything to translate the whole image.",
+  "AI 智能分段": "AI smart segmentation",
+  "识图时让模型判断哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版，不再逐行处理。": "During recognition, let the model determine which lines belong to the same segment (paragraph, heading, dialog box), then translate and lay out the whole segment together instead of line by line.",
+  "模型要多输出分段信息：识别会稍慢，自带 API Key 时每张图会多用一些 token。点数翻译照常按译文字数扣点，识图本身不扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "The model must output extra segmentation info: recognition is slightly slower, and with your own API Key each image uses a few more tokens. Credit-based translation still deducts credits by translated character count; recognition itself costs no credits. Segmentation is decided by the model and may occasionally merge unrelated text into one segment.",
+  "识图时让模型逐行给出位置，并标出哪几行属于同一段（段落、标题、对话框），整段一起翻译、一起排版。不开时由模型自行决定按段还是按行返回，复杂的图上容易拆碎或框不准。": "When recognizing images, have the model give the position of each line and mark which lines belong to the same block (paragraph, heading, dialog box), so the whole block is translated and laid out together. When off, the model decides whether to return results by block or by line, which on complex images can easily split things up or produce inaccurate boxes.",
+  "会增加识图消耗：模型要多输出每一行的位置和分段编号，实测每张图的输出 token 多五到八成，识别也稍慢。自带 API Key 时这部分费用由你的账户承担；点数翻译的识图本身不扣点，翻译仍按译文字数扣点。分段由模型判断，偶尔会把不相关的文字并成一段。": "This increases image recognition usage: the model must output the position and block number of each line, and in practice output tokens per image rise by 50–80%, with recognition also slightly slower. With your own API Key, this cost is borne by your account; image recognition for credit-based translation itself doesn't consume credits, and translation is still charged by translated character count. Blocking is decided by the model, which may occasionally merge unrelated text into one block."
 };

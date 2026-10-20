@@ -120,6 +120,19 @@ assert.equal(out.blocks[0].box, null);
 assert.ok(out.blocks[1].box);
 console.log('✓ 个别条目缺坐标不影响其余结果');
 
+// AI 智能分段：换用逐行加段落编号的提示词，解析出 para；没开时提示词不提 para
+assert.doesNotMatch(captured.body.messages[0].content, /para/, '默认不要求段落编号');
+reply(JSON.stringify([
+  { text: 'WHERE ARE', box: [100, 100, 300, 150], para: 0 },
+  { text: 'WE GOING?', box: [100, 160, 300, 210], para: 0 },
+  { text: 'Sale', box: [500, 100, 700, 150], para: '1' },
+  { text: 'Off', box: [500, 300, 700, 350], para: -2 },
+]));
+out = await P.readImageText({ image: 'x', settings: { ...settings, imageParagraphs: true }, model: 'm' });
+assert.match(captured.body.messages[0].content, /para/, '开启后提示词要求每行标段落编号');
+assert.deepEqual(out.blocks.map((b) => b.para), [0, 0, null, null], '非整数或负数编号当作独立一段');
+console.log('✓ AI 智能分段：提示词要求段落编号，解析出合法编号');
+
 // 非法回复要带上原始内容，便于排查
 reply('抱歉，我看不清这张图。');
 await assert.rejects(

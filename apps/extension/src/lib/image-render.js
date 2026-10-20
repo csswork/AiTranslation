@@ -19,7 +19,7 @@
   const MAX_AREA = 120000000;
   /** 识别框往往贴着笔画，四周放出一点，免得露出原文的边角。 */
   const LINE_PAD = 0.12;
-  /** 选区按行高放出的比例：整段译文往往比原文长，要留点地方。 */
+  /** 整段按行高放出的比例：整段译文往往比原文长，要留点地方。 */
   const REGION_PAD = 0.3;
 
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -132,15 +132,17 @@
 
   /**
    * 实际遮盖的范围（0-1 相对坐标）。识别出的单行文字四周放出一点，免得露出原文边角；
-   * 选区盖住其中文字所在的范围（多放出一些，译文不至于贴边），并限制在选区以内。
+   * 合成的整段（选区里的文字、AI 分出的段落）盖住各行的外接框，按行高多放出一些，
+   * 整段译文往往比原文长，不至于贴边。选区里的段限制在选区以内；
    * 选区里没有文字坐标可依时铺满选区。
    */
   function coverBox(item, natural) {
     const region = item.region != null;
-    if (!natural?.w || !natural?.h || (region && !item.textBox)) return item.box;
-    const base = region ? item.textBox : item.box;
-    const lineHeight = region && item.fontMax ? item.fontMax : base.h;
-    const padPx = Math.max(1, lineHeight * natural.h * (region ? REGION_PAD : LINE_PAD));
+    const grouped = item.textBox != null;
+    if (!natural?.w || !natural?.h || (region && !grouped)) return item.box;
+    const base = grouped ? item.textBox : item.box;
+    const lineHeight = grouped && item.fontMax ? item.fontMax : base.h;
+    const padPx = Math.max(1, lineHeight * natural.h * (grouped ? REGION_PAD : LINE_PAD));
     const px = padPx / natural.w;
     const py = padPx / natural.h;
     const bound = region ? item.box : { x: 0, y: 0, w: 1, h: 1 };
@@ -258,7 +260,8 @@
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
-    const ctx = canvas.getContext('2d');
+    // 先逐框取相近色（多次 getImageData）再画，声明后 Chrome 改用 CPU 画布，读回更快
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     ctx.drawImage(source, 0, 0, width, height);
 
     // 先把颜色全部取完再画，免得后画的框采到前面盖上去的颜色
