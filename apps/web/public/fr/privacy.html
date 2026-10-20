@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Politique de confidentialité</h2>
-        <p class="updated">Dernière mise à jour : 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown originale</a></p>
+        <p class="updated">Dernière mise à jour : 2026-10-20 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Source Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -98,6 +98,7 @@
                 <tr><td>Le texte contenu dans la zone que vous avez désignée</td><td>Lors d'un clic sur le bouton de traduction dans la zone concernée</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte que vous saisissez dans le panneau de traduction</td><td>Lorsque vous cliquez sur Traduire</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte reconnu des sous-titres vidéo</td><td>Lorsque la traduction des sous-titres vidéo est activée</td><td>Idem</td><td>Idem</td></tr>
+                <tr><td>Texte extrait des PDF que vous traduisez (pas encore publié)</td><td>Lors de l'utilisation de « Traduire tout le PDF » ou de l'ouverture d'un fichier dans la page de traduction PDF</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>L'image que vous choisissez de traduire</td><td>Lors d’une traduction d’image</td><td>La plateforme visuelle que vous sélectionnez</td><td>Notre serveur, puis transmis à DeepSeek</td></tr>
               </tbody>
             </table>
@@ -115,6 +116,9 @@
 
           <h3>Traitement audio des sous-titres vidéo expérimentaux</h3>
           <p>Les sous-titres vidéo sont désactivés par défaut. Une fois activés, le son de l'onglet actif est reconnu par défaut en local, ce qui peut nécessiter le téléchargement du pack linguistique du navigateur ; ce n'est que si vous choisissez explicitement « utiliser la reconnaissance cloud » que le son est envoyé au service de reconnaissance vocale de Google, soumis à la <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a>. Le texte des sous-titres reconnu est ensuite envoyé à la plateforme de traduction ou à nos serveurs selon le mode de traduction choisi. Nous ne recevons ni ne conservons les vidéos et les audios, et nous ne proposons pas d'hébergement pour la transcription audio-vidéo.</p>
+
+          <h3>Traduction de PDF entier (pas encore publiée)</h3>
+          <p>Cette fonctionnalité n'est pas encore publiée avec la version du Chrome Store. Lorsque vous choisissez « Traduire tout le PDF » dans le lecteur PDF intégré à Chrome, l'extension relit le PDF ouvert dans cet onglet depuis le même site, en utilisant comme le lecteur le cache du navigateur et les cookies propres à ce site ; vous pouvez aussi sélectionner ou glisser un fichier dans la page de traduction PDF. Le fichier est analysé et affiché uniquement sur votre appareil, sans être envoyé à nous ni à la plateforme de traduction ; seuls les textes extraits sont envoyés par lots conformément au tableau ci-dessus. La page rendue et la traduction sont conservées uniquement dans la mémoire de cette page et supprimées à sa fermeture. « Télécharger le PDF » génère le fichier via la fenêtre d'impression du navigateur, à l'emplacement que vous choisissez.</p>
 
           <h3>Données de compte</h3>
           <p>Après inscription ou connexion, nous conservons :</p>
@@ -186,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Script de contenu sur tous les sites</td>
-                  <td>L'utilisateur peut sélectionner du texte ou désigner une zone de traduction sur n'importe quelle page web ; le content script fournit l'entrée de traduction et ne filtre que les sélections sans texte</td>
+                  <td>L'utilisateur peut sélectionner du texte ou désigner une zone de traduction sur n'importe quelle page web ; le script de contenu fournit le point d'entrée de traduction et filtre uniquement les sélections sans texte. Dans le lecteur PDF intégré à Chrome, il identifie aussi les PDF afin d'afficher l'entrée « Traduire tout le PDF » ; le fichier n'est lu qu'après votre choix de cette entrée (pas encore publié)</td>
                 </tr>
               </tbody>
             </table>

@@ -75,10 +75,29 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Changelog</h2>
-        <p>Major changes for each version are recorded here; for more detailed changes, see the repository's <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">commit history</a>.</p>
+        <p>Released versions and previews of the next version are recorded here; for more detailed changes, see the repository's <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">commit history</a>.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">Next version</span>
+          <div class="release-status">Coming soon</div>
+        </div>
+        <div class="log-body">
+          <h3>Full PDF translation</h3>
+          <p>The following features have been developed but have not yet been released with the store version.</p>
+          <ul>
+            <li><b>Translate the entire PDF</b>: In Chrome's built-in PDF viewer, right-click without selecting any text to open the PDF translation page alongside it; you can also drag a local PDF into the translation page.</li>
+            <li><b>Preserve the original layout</b>: Translations overlay the original positions; charts, table rows and columns, and table borders remain unchanged, and the font size is reduced automatically when space is insufficient.</li>
+            <li><b>Side-by-side view and download</b>: View side by side, translation only, or original only; save as PDF via browser printing, and the translation remains selectable and searchable.</li>
+            <li><b>Local parsing</b>: Files are parsed only on your device, and only the extracted text is sent to the translation platform you choose; credit-based translation and bring-your-own Key are supported. Scanned documents and password-protected PDFs are not supported yet.</li>
+            <li><b>Context menu fix</b>: After selecting text in a PDF, the right-click selection translator no longer disappears due to clicks on other web pages.</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

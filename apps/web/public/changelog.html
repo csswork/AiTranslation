@@ -79,11 +79,30 @@
         <p class="kicker">Changelog</p>
         <h2>更新日志</h2>
         <p>
-          各版本的主要改动都记录在这里；更细的改动见仓库的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交记录</a>。
+          已发布版本与下一版预告都记录在这里；更细的改动见仓库的<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">提交记录</a>。
         </p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">下一版</span>
+          <div class="release-status">即将发布</div>
+        </div>
+        <div class="log-body">
+          <h3>整份 PDF 翻译</h3>
+          <p>以下功能已完成开发，尚未随商店版本发布。</p>
+          <ul>
+            <li><b>翻译整个 PDF</b>：在 Chrome 内置 PDF 阅读器里不选文字直接右键，即可在旁边打开 PDF 翻译页；也可以把本地 PDF 拖进翻译页。</li>
+            <li><b>保持原有版面</b>：译文按原位置覆盖，图表、表格的行列与表格线保持不变，放不下时自动缩小字号。</li>
+            <li><b>对照与下载</b>：可并排对照、只看译文或只看原文；通过浏览器打印另存为 PDF，译文可选中、可搜索。</li>
+            <li><b>本机解析</b>：文件只在本机解析，只有提取出的文字发给你选择的翻译平台；支持点数翻译与自带 Key。暂不支持扫描件和有密码的 PDF。</li>
+            <li><b>右键菜单修复</b>：在 PDF 里选中文字后，右键划词翻译不再因为在其他网页的点击而消失。</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

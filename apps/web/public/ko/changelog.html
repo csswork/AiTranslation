@@ -75,10 +75,29 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>변경 내역</h2>
-        <p>각 버전의 주요 변경 사항은 여기에 기록됩니다. 더 자세한 변경 사항은 저장소의 <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">커밋 기록</a>을 참고하세요.</p>
+        <p>출시된 버전과 다음 버전 예고를 모두 여기에 기록합니다. 더 자세한 변경 사항은 저장소의 <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">커밋 기록</a>을 참고하세요.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">다음 버전</span>
+          <div class="release-status">출시 예정</div>
+        </div>
+        <div class="log-body">
+          <h3>전체 PDF 번역</h3>
+          <p>다음 기능은 개발이 완료되었으나 아직 스토어 버전으로 출시되지 않았습니다.</p>
+          <ul>
+            <li><b>전체 PDF 번역</b>: Chrome 내장 PDF 리더에서 텍스트를 선택하지 않고 바로 우클릭하면 옆에 PDF 번역 페이지가 열립니다. 로컬 PDF를 번역 페이지로 끌어다 놓을 수도 있습니다.</li>
+            <li><b>원본 레이아웃 유지</b>: 번역문이 원래 위치에 덮어씌워지며, 차트와 표의 행·열 및 표 테두리는 그대로 유지되고 공간이 부족하면 글자 크기가 자동으로 줄어듭니다.</li>
+            <li><b>대조 및 다운로드</b>: 나란히 대조하거나 번역문만 또는 원문만 볼 수 있습니다. 브라우저 인쇄로 PDF로 저장할 수 있으며 번역문은 선택과 검색이 가능합니다.</li>
+            <li><b>로컬 파싱</b>: 파일은 로컬에서만 파싱되며, 추출된 텍스트만 선택한 번역 플랫폼으로 전송됩니다. 포인트 번역과 자체 Key를 지원합니다. 스캔본과 암호가 설정된 PDF는 아직 지원하지 않습니다.</li>
+            <li><b>우클릭 메뉴 수정</b>: PDF에서 텍스트를 선택한 후 우클릭 선택 번역이 다른 웹페이지의 클릭으로 인해 사라지지 않습니다.</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

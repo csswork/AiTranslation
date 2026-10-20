@@ -75,10 +75,29 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Änderungsprotokoll</h2>
-        <p>Alle wesentlichen Änderungen der einzelnen Versionen sind hier dokumentiert; detailliertere Änderungen finden sich in den <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">Commit-Aufzeichnungen</a> des Repositorys.</p>
+        <p>Veröffentlichte Versionen und Ankündigungen der nächsten Version sind hier dokumentiert; detailliertere Änderungen finden sich in den <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">Commit-Aufzeichnungen</a> des Repositorys.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">Nächste Version</span>
+          <div class="release-status">Demnächst verfügbar</div>
+        </div>
+        <div class="log-body">
+          <h3>Übersetzung ganzer PDF-Dateien</h3>
+          <p>Die folgenden Funktionen sind fertig entwickelt, aber noch nicht mit der Store-Version veröffentlicht.</p>
+          <ul>
+            <li><b>Ganzes PDF übersetzen</b>: Im integrierten PDF-Reader von Chrome ohne Textauswahl direkt per Rechtsklick die PDF-Übersetzungsseite daneben öffnen; alternativ eine lokale PDF-Datei in die Übersetzungsseite ziehen.</li>
+            <li><b>Ursprüngliches Layout beibehalten</b>: Übersetzungen überlagern die Originalposition; Diagramme, Tabellenzeilen und -spalten sowie Tabellenlinien bleiben unverändert, bei Platzmangel wird die Schriftgröße automatisch verkleinert.</li>
+            <li><b>Vergleich und Download</b>: Nebeneinander vergleichen, nur die Übersetzung oder nur das Original anzeigen; über den Browser-Druck als PDF speichern, die Übersetzung ist auswählbar und durchsuchbar.</li>
+            <li><b>Lokale Verarbeitung</b>: Dateien werden nur lokal verarbeitet, nur der extrahierte Text wird an die gewählte Übersetzungsplattform gesendet; Unterstützung für Punktübersetzung und eigenen Key. Gescannte Dokumente und passwortgeschützte PDFs werden derzeit nicht unterstützt.</li>
+            <li><b>Kontextmenü-Korrektur</b>: Nach Auswahl von Text in einem PDF verschwindet die Auswahlübersetzung per Rechtsklick nicht mehr durch Klicks auf anderen Webseiten.</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

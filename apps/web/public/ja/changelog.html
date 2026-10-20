@@ -75,10 +75,29 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>変更履歴</h2>
-        <p>各バージョンの主な変更点はここに記録しています。より詳細な変更はリポジトリの<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">コミット履歴</a>を参照してください。</p>
+        <p>公開済みバージョンと次期バージョンの予告はここに記録されています。より詳細な変更はリポジトリの<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">コミット履歴</a>をご覧ください。</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">次期バージョン</span>
+          <div class="release-status">近日公開予定</div>
+        </div>
+        <div class="log-body">
+          <h3>PDF 全体の翻訳</h3>
+          <p>以下の機能は開発済みですが、ストア版ではまだ公開されていません。</p>
+          <ul>
+            <li><b>PDF 全体を翻訳</b>：Chrome 内蔵の PDF ビューアでテキストを選択せずに右クリックすると、隣に PDF 翻訳ページが開きます。ローカルの PDF を翻訳ページにドラッグすることもできます。</li>
+            <li><b>元のレイアウトを維持</b>：訳文は元の位置に重ねて表示され、図表や表の行・列、表の罫線はそのまま保たれます。収まらない場合は自動で文字サイズを縮小します。</li>
+            <li><b>対照表示とダウンロード</b>：並べて対照表示、訳文のみ、原文のみの表示が可能です。ブラウザの印刷から PDF として保存でき、訳文は選択・検索できます。</li>
+            <li><b>ローカル解析</b>：ファイルは端末上でのみ解析され、抽出されたテキストだけが選択した翻訳プラットフォームに送信されます。ポイント翻訳と独自 Key に対応しています。スキャン文書とパスワード付き PDF には現在対応していません。</li>
+            <li><b>右クリックメニューの修正</b>：PDF 内でテキストを選択した後、右クリックによる選択翻訳が他のウェブページでのクリックによって消えなくなりました。</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-10-16 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-10-20 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -98,6 +98,7 @@
                 <tr><td>The text inside a region you marked</td><td>When you click the translate button on the selected area</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Text you type into the translation panel</td><td>Clicking Translate</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Recognized text from video subtitles</td><td>When video subtitle translation is enabled</td><td>Same</td><td>Same</td></tr>
+                <tr><td>Text extracted from PDFs you translate (not yet released)</td><td>When using "Translate the entire PDF" or opening a file on the PDF translation page</td><td>Same</td><td>Same</td></tr>
                 <tr><td>The image you choose to translate</td><td>Using image translation</td><td>The vision platform you choose</td><td>Our server, then forwarded to DeepSeek</td></tr>
               </tbody>
             </table>
@@ -115,6 +116,9 @@
 
           <h3>Audio handling for experimental video subtitles</h3>
           <p>Video subtitles are off by default. When enabled, audio from the current tab is recognized locally by default, which may require downloading a browser language pack; audio is sent to Google's speech recognition service only when you explicitly choose "use cloud recognition," subject to the <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. The recognized subtitle text is then sent to the translation platform or our servers according to the selected translation mode. We do not receive or store video or audio, and we do not provide hosted audio/video transcription.</p>
+
+          <h3>Full PDF translation (not yet released)</h3>
+          <p>This feature has not yet been released with the Chrome store version. When you select "Translate the entire PDF" in Chrome's built-in PDF viewer, the extension re-reads the PDF open in that tab from the same website, using the browser cache and the website's own cookies just like the viewer; you can also select or drag a file into the PDF translation page. Files are parsed and displayed only on your device and are not uploaded to us or to the translation platform; only the text extracted from them is sent in batches as described in the table above. The rendered page and translation are kept only in that page's memory and are discarded when it is closed. "Download PDF" generates the file through the browser's print dialog, and the file is saved to the location you choose.</p>
 
           <h3>Account data</h3>
           <p>After registration or login, we store:</p>
@@ -186,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Content script on all sites</td>
-                  <td>The user may select text or specify a translation region on any web page; the content script provides the translation entry point and only filters selections that contain no text</td>
+                  <td>Users may select text or specify a translation area on any web page; the content script provides the translation entry point and only filters out selections that contain no text. In Chrome's built-in PDF viewer, it also detects PDFs to show the "Translate the entire PDF" entry, and reads the file only after you choose that entry (not yet released)</td>
                 </tr>
               </tbody>
             </table>

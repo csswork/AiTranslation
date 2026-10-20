@@ -75,10 +75,29 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Registro de alterações</h2>
-        <p>As principais alterações de cada versão estão registadas aqui; para alterações mais detalhadas, consulte o <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">histórico de commits</a> do repositório.</p>
+        <p>As versões publicadas e a prévia da próxima versão estão registradas aqui; para alterações mais detalhadas, consulte o <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">histórico de commits</a> do repositório.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
+      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+
+      <article class="log-entry reveal" id="next">
+        <div class="log-when">
+          <span class="log-ver">Próxima versão</span>
+          <div class="release-status">Em breve</div>
+        </div>
+        <div class="log-body">
+          <h3>Tradução do PDF completo</h3>
+          <p>As funcionalidades abaixo já foram desenvolvidas, mas ainda não foram lançadas com a versão da loja.</p>
+          <ul>
+            <li><b>Traduzir o PDF inteiro</b>: no leitor de PDF integrado do Chrome, clique com o botão direito sem selecionar texto para abrir a página de tradução do PDF ao lado; você também pode arrastar um PDF local para a página de tradução.</li>
+            <li><b>Mantém o layout original</b>: a tradução é sobreposta na posição original; as linhas e colunas de gráficos e tabelas e as linhas de grade permanecem inalteradas, e o tamanho da fonte é reduzido automaticamente quando não há espaço suficiente.</li>
+            <li><b>Comparação e download</b>: é possível comparar lado a lado, ver apenas a tradução ou apenas o original; salve como PDF pela impressão do navegador, com texto traduzido selecionável e pesquisável.</li>
+            <li><b>Análise local</b>: o arquivo é analisado apenas no dispositivo e somente o texto extraído é enviado à plataforma de tradução escolhida; oferece tradução por pontos e chave própria. No momento, não há suporte para documentos digitalizados nem PDFs protegidos por senha.</li>
+            <li><b>Correção do menu de contexto</b>: após selecionar texto em um PDF, o menu de tradução por seleção não desaparece mais devido a cliques em outras páginas.</li>
+          </ul>
+        </div>
+      </article>
 
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">

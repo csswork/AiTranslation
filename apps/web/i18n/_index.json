@@ -185,9 +185,72 @@
       "index.html"
     ]
   },
-  "各版本的主要改动都记录在这里；更细的改动见仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
+  "已发布版本与下一版预告都记录在这里；更细的改动见仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
     "kind": "text",
     "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "下一版": {
+    "kind": "text",
+    "tag": "span",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "即将发布": {
+    "kind": "text",
+    "tag": "div",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "整份 PDF 翻译": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "以下功能已完成开发，尚未随商店版本发布。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>翻译整个 PDF</b>：在 Chrome 内置 PDF 阅读器里不选文字直接右键，即可在旁边打开 PDF 翻译页；也可以把本地 PDF 拖进翻译页。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>保持原有版面</b>：译文按原位置覆盖，图表、表格的行列与表格线保持不变，放不下时自动缩小字号。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>对照与下载</b>：可并排对照、只看译文或只看原文；通过浏览器打印另存为 PDF，译文可选中、可搜索。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>本机解析</b>：文件只在本机解析，只有提取出的文字发给你选择的翻译平台；支持点数翻译与自带 Key。暂不支持扫描件和有密码的 PDF。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>右键菜单修复</b>：在 PDF 里选中文字后，右键划词翻译不再因为在其他网页的点击而消失。": {
+    "kind": "text",
+    "tag": "li",
     "pages": [
       "changelog.html"
     ]
@@ -1174,7 +1237,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-16 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-10-20 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1321,6 +1384,20 @@
       "privacy.html"
     ]
   },
+  "你翻译的 PDF 中提取的文字（尚未发布）": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "使用「翻译整个 PDF」，或在 PDF 翻译页打开文件时": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
   "你选择翻译的图片": {
     "kind": "text",
     "tag": "td",
@@ -1385,6 +1462,20 @@
     ]
   },
   "视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 <a class=\"link\" href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 隐私政策</a>。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "整份 PDF 翻译（尚未发布）": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "此功能尚未随 Chrome 商店版本发布。你在 Chrome 内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1699,7 +1790,7 @@
       "privacy.html"
     ]
   },
-  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区": {
+  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件（尚未发布）": {
     "kind": "text",
     "tag": "td",
     "pages": [

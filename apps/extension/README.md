@@ -1,12 +1,13 @@
 # AI Selection Translator
 
-A Chrome extension for translating selected text, page regions, images and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
+A Chrome extension for translating selected text, page regions, images, whole PDF documents and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
 
 - **24 language choices throughout the extension:** Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese (Brazil), French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean.
 - **Independent preferences:** interface language, default translation target, and source language are separate. A new installation chooses its default target from Chrome's language; upgrades preserve the existing target and API configuration.
 - **Translate any script**, including Chinese and mixed-language text. Only selections containing no letters are filtered out. Simplified ↔ Traditional conversion remains available.
 - **Temporary target changes:** the selection popup retranslates the original text. Its star button explicitly saves the current target as the default. The text panel remembers its own source/target choices, and swaps only when a source has been selected.
 - **Images:** changing the target reuses recognized source text; changing the image clears that cache.
+- **Whole PDFs:** in Chrome's built-in PDF viewer, right-click with nothing selected → **Translate entire PDF** opens a translation page next to the PDF (or drop any PDF file onto that page). Translations are laid over the original positions, so layout, figures and tables stay in place; view side by side, translation only or original only, and save the result through the print dialog (**Save as PDF**). Not yet released to the store. See [PDF translation](../../docs/extension/pdf-translation.md).
 - **Regions:** translation uses a fixed target for all batches, preserves originals, and supports restoring the source. Failed batches restore completed portions rather than leaving mixed languages.
 - **RTL:** Arabic, Hebrew, Persian and Urdu interfaces use right-to-left layout. Original and translated text have independent direction; opening an overlay does not change the host page's direction.
 - **Provider capabilities:** DeepL language support is checked against the configured API. Unsupported pairs return an error without switching to a different language. Vision requires a vision-capable provider/model.
@@ -47,13 +48,15 @@ Besides bring-your-own-key, the first provider is **点数翻译** (credit trans
 - **Sign-in** opens the account site's authorization page in a new tab in the current window. It does not use `launchWebAuthFlow`, which opens a separate window. After approval the site redirects to the extension's own `src/auth/callback.html` with a one-time code. That page is the only web-accessible resource, and only for the account origins. It hands its URL to the service worker. The worker checks `state` and exchanges the code with the PKCE verifier for an extension session token, stored in `chrome.storage.local` only. The verifier waits in `chrome.storage.session`. The worker then switches back to the tab that started sign-in and closes the callback tab; started from the popup, the callback tab becomes the options page.
 - **Status**: account type (guest or registered), username, credit balance, subscription and the sign-up bonus are cached as `accountStatus`. The options page and toolbar popup listen for storage changes, so balance updates after every hosted translation; the options page also refreshes when it is opened or becomes visible. An expired or revoked session returns to signed-out.
 - **Web sign-out**: the backend links each member extension session to the web session that authorized it (including a guest converted during web sign-in). Signing out of that web session revokes its extension sessions, while other browsers stay signed in. A dedicated content script requests a status refresh after navigation, restored pages, or returning to the account page. Both the script and worker check the full origin: unpacked builds accept only `http://localhost:8787`, store builds only `https://app.huaci.app`; the website port, admin origin, subframes, and the other environment are ignored. Pages send no tokens or account data; the worker reads the actual status from the backend.
-- **Billing** is enforced by the server: exactly 1 credit per 500 Unicode code points, with no minimum per request or rounding during billing; failed translations are refunded exactly, and subscribers are not charged. The server stores integer units (1 character = 1 unit), while balances, bonuses and usage display two decimal places. API credit values are display strings; use `credits.available` to determine whether any quota remains, even if the displayed balance is `0.00`. The client never computes charges or quota. The conversion rate is internal and no longer included in `/me`. Hosted mode covers text (selection, text panel, regions, recognized captions) and image recognition/translation; it does not provide hosted audio or video transcription. See [credit accounting](../../docs/backend/credit-accounting.md).
+- **Billing** is enforced by the server: exactly 1 credit per 500 Unicode code points, with no minimum per request or rounding during billing; failed translations are refunded exactly, and subscribers are not charged. The server stores integer units (1 character = 1 unit), while balances, bonuses and usage display two decimal places. API credit values are display strings; use `credits.available` to determine whether any quota remains, even if the displayed balance is `0.00`. The client never computes charges or quota. The conversion rate is internal and no longer included in `/me`. Hosted mode covers text (selection, text panel, regions, whole PDFs, recognized captions) and image recognition/translation; it does not provide hosted audio or video transcription. See [credit accounting](../../docs/backend/credit-accounting.md).
 - Hosted translation of a single text (selection popup, text panel) streams from the server (SSE) unless streaming output is turned off; regions and captions use batch requests. The text panel receives the stream from the service worker over a `hosted-stream` port that only extension pages may open. When credit translation is selected, the service worker pre-warms the connection (`GET /api/extension/ping`, no token, at most every 30 seconds) after a text selection, a right-click or opening the text panel.
 - All account and hosted requests are sent by the service worker to the fixed account origin. Page translations reach it through the usual translation port; the account messages (guest claim, login, logout, refresh, hosted translate) are accepted only from extension pages. Signing in while a guest sends the guest token along, so the server merges the guest into the account.
 
 ## Usage
 
 Select text → right-click → **Translate to your target language**. You can also use the floating selection button or keyboard shortcut.
+
+In Chrome's built-in PDF viewer, selected text uses the same right-click item; with nothing selected, right-click → **Translate entire PDF**.
 
 ## Layout
 
@@ -66,6 +69,7 @@ src/
     content.js             Selection reporting + the Shadow DOM popup
     elements.js            Region (element) translation buttons from saved rules
     image.js               In-page image translation overlay
+    pdf.js                 Built-in PDF viewer: reports PDF tabs and hands the file's bytes to the PDF page
     video.js               Experimental video caption overlay, injected on demand
   lib/
     providers.js           OpenAI-compatible, DeepL and hosted requests, SSE parsing, error mapping
@@ -78,11 +82,14 @@ src/
     requests.js            Cancels provider fetches when a request port disconnects
     rules.js, selector.js  Region translation rules and reusable CSS selectors
     tiles.js               Long-image tiling for vision models
+    pdf-layout.js          Groups PDF text fragments into lines, paragraphs and table cells
     captions.js, speech.js Caption segmentation and on-device speech language packs
   options/                 Options page
   popup/                   Toolbar popup (status at a glance + quick provider switch)
   translate/               Standalone text translation panel
   image/                   Image translation page
+  pdf/                     Whole-PDF translation page: render, translate in place, compare, print to PDF
+  vendor/pdfjs/            Mozilla pdf.js 6.3.289 (legacy build, Apache-2.0), unmodified; see its README
   manage/                  Region translation rule management (not the VPS admin interface)
   offscreen/               Offscreen document for tab audio capture and speech recognition
 icons/                     Icons
@@ -94,6 +101,10 @@ Development-only files live beside the runtime: `i18n/` (UI catalogs and languag
 ## Design notes
 
 - **Timing of menu visibility.** Chrome decides which context menu items to show at the moment of the right-click, while `contextMenus.update()` is asynchronous. So the content script reports the selection to the background and updates the menu on `mouseup` / `selectionchange` — i.e. *before* the right-click — and treats the `contextmenu` event only as a fallback. The item defaults to visible, so even if reporting fails the feature never silently disappears.
+
+- **An empty selection does not hide the selection item.** Menu visibility is global, and inside Chrome's built-in PDF viewer the content script cannot read the selection. If a click on another page reported an empty selection and hid the item, it could never appear in a PDF again. Chrome already shows `selection` items only when something is selected, so the item is hidden only for selections with no letters.
+
+- **The PDF item swaps with the region item.** Both apply to right-clicks without a selection; the worker shows exactly one, depending on whether the active tab is a PDF (reported by `content/pdf.js`, kept in `chrome.storage.session`). It declares `page` and `frame` because the PDF body is a plugin in a nested frame, where Chrome does not apply `page`.
 
 - **Language detection never hides an explicit translation request.** Short, mixed, and same-language selections remain translatable. The provider detects the source unless the text panel explicitly specifies it.
 
@@ -115,6 +126,7 @@ Development-only files live beside the runtime: `i18n/` (UI catalogs and languag
 
 - Protected pages (`chrome://`, the Chrome Web Store, and similar) do not allow script injection, so the extension does not work there.
 - At most 6000 characters per translation; anything beyond that is truncated, and the popup says so.
+- Whole-PDF translation: scanned PDFs (no text layer) and password-protected files are not supported; files over 200 MB are rejected; the keyboard shortcut does not work inside the built-in PDF viewer; PDF tabs opened before the extension was reloaded or updated need a refresh before the menu item appears.
 - A custom base URL (proxy or relay) needs its origin authorized separately — the permission prompt appears when you click **测试连接** — and only https is supported.
 
 ## Development

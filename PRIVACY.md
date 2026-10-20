@@ -1,7 +1,7 @@
 # Privacy Policy / 隐私政策
 
 **AI Selection Translator (AI 划词翻译)**
-Last updated / 最后更新：2026-10-16
+Last updated / 最后更新：2026-10-20
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
 
@@ -25,6 +25,7 @@ Only when **you actively trigger a translation** (context menu, keyboard shortcu
 | Text in a region you marked | Clicking that region's translate button | Same | Same |
 | Text typed into the translation panel | Clicking Translate | Same | Same |
 | Recognized video caption text | With video caption translation on | Same | Same |
+| Text extracted from a PDF you translate (not yet released) | Using “Translate entire PDF”, or opening a file on the PDF translation page | Same | Same |
 | The image you choose to translate | Image translation | Your chosen vision provider | Our server, then DeepSeek |
 
 With your own key you can use **OpenAI (ChatGPT)**, **DeepSeek**, or **DeepL**; requests go to `https://api.openai.com`, `https://api.deepseek.com`, and `https://api-free.deepl.com` (or `https://api.deepl.com` for a paid DeepL key).
@@ -43,6 +44,10 @@ How these providers handle what they receive is governed by their own privacy po
 ### Audio processing for experimental video captions
 
 Video captions are off by default. When enabled, speech from the current tab is recognized on your device by default, which may require a browser language pack. Only if you explicitly select cloud recognition is audio sent to Google's speech recognition service, governed by the [Google Privacy Policy](https://policies.google.com/privacy). Recognized caption text is then sent to your chosen translation provider or our server according to the translation mode. We do not receive or store video or audio, and do not offer hosted audio or video transcription.
+
+### Whole-PDF translation (not yet released)
+
+This feature is not yet available in the Chrome Web Store version. When you choose “Translate entire PDF” in Chrome's built-in PDF viewer, the extension reads the PDF open in that tab again from the same site, using the browser cache and that site's own cookies just as the viewer did. You can also choose or drop a file onto the PDF translation page. The file is opened and rendered on your device and is never uploaded to us or to a provider; only the text extracted from it is sent, in batches, as listed in the table above. Rendered pages and translations stay in that page's memory and are discarded when you close it. “Download PDF” uses your browser's print dialog, and the file is saved wherever you choose.
 
 ### Account data
 
@@ -108,7 +113,7 @@ All extension and server source code is public under GPL-3.0, so you can verify 
 | `tabCapture`, `offscreen` | Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to Google if you explicitly select cloud recognition |
 | Access to `api.openai.com`, `api.deepseek.com`, `api-free.deepl.com`, `api.deepl.com` | Send translation requests to the provider you selected when using your own key |
 | Optional access to your own API origin | Only if you enter a custom API base URL (a proxy or relay). Requested for that single origin when you click “Test connection”; never for all sites |
-| Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. |
+| Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. In Chrome's built-in PDF viewer they also detect the PDF so the “Translate entire PDF” entry can be shown, and read the file only after you choose that entry (not yet released). |
 
 ### Contact
 
@@ -134,6 +139,7 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | 你指定区域内的文字 | 点击区域上的翻译按钮时 | 同上 | 同上 |
 | 你在翻译面板输入的文字 | 点击翻译时 | 同上 | 同上 |
 | 视频字幕的识别文字 | 开启视频字幕翻译时 | 同上 | 同上 |
+| 你翻译的 PDF 中提取的文字（尚未发布） | 使用「翻译整个 PDF」，或在 PDF 翻译页打开文件时 | 同上 | 同上 |
 | 你选择翻译的图片 | 使用图片翻译时 | 你选择的视觉平台 | 我们的服务器，再转给 DeepSeek |
 
 自带 Key 可选 **OpenAI（ChatGPT）**、**DeepSeek** 与 **DeepL**，请求分别发往 `https://api.openai.com`、`https://api.deepseek.com`， 以及 DeepL 的 `https://api-free.deepl.com`（付费 Key 为 `https://api.deepl.com`）。
@@ -152,6 +158,10 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 ### 实验视频字幕的声音处理
 
 视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 [Google 隐私政策](https://policies.google.com/privacy)。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。
+
+### 整份 PDF 翻译（尚未发布）
+
+此功能尚未随 Chrome 商店版本发布。你在 Chrome 内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。
 
 ### 账户数据
 
@@ -217,7 +227,7 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google |
 | 访问 `api.openai.com`、`api.deepseek.com`、`api-free.deepl.com`、`api.deepl.com` | 自带 Key 时向你选定的平台发送翻译请求 |
 | 可选：访问你自己的接口域名 | 仅当你填写了自定义接口地址（代理或中转）时申请，且只申请那一个域名；在点击「测试连接」时弹出授权，不会申请所有网站 |
-| 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区 |
+| 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件（尚未发布） |
 
 ### 联系方式
 
