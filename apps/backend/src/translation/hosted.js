@@ -97,6 +97,93 @@ async function callModel(provider, { texts, target, source, image }, fetchImpl, 
   };
 }
 
+/** 逐条读取 OpenAI 兼容流式响应里 `data: ` 行的内容（不含 [DONE]）。 */
+async function* sseData(body) {
+  const decoder = new TextDecoder();
+  let buffer = '';
+  for await (const bytes of body) {
+    buffer += decoder.decode(bytes, { stream: true });
+    let index;
+    while ((index = buffer.indexOf('\n')) >= 0) {
+      const line = buffer.slice(0, index).trim();
+      buffer = buffer.slice(index + 1);
+      if (line.startsWith('data:') && line.slice(5).trim() !== '[DONE]') yield line.slice(5).trim();
+    }
+  }
+}
+
+const usageOf = (u = {}) => ({
+  inputTokens: u.prompt_tokens ?? 0,
+  cachedTokens: u.prompt_cache_hit_tokens ?? u.prompt_tokens_details?.cached_tokens ?? 0,
+  outputTokens: u.completion_tokens ?? 0,
+});
+
+/**
+ * 单段文字的流式调用：每收到一段译文就交给 onDelta。firstTimeoutMs 内没有任何输出视为超时，
+ * 整次调用最多 totalTimeoutMs。失败时 err.started 表示是否已经输出过译文（已输出就不能再换备用模型）。
+ */
+async function streamModel(provider, { text, target, source }, onDelta, fetchImpl, firstTimeoutMs, totalTimeoutMs) {
+  const controller = new AbortController();
+  let timedOut = false;
+  const abort = () => { timedOut = true; controller.abort(); };
+  let firstTimer = setTimeout(abort, firstTimeoutMs);
+  const totalTimer = setTimeout(abort, totalTimeoutMs);
+  let started = false;
+  const fail = (code) => Object.assign(new Error(code), { code, started });
+  try {
+    let response;
+    try {
+      response = await fetchImpl(`${provider.baseUrl}${ENDPOINT}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${provider.apiKey}` },
+        body: JSON.stringify({
+          model: provider.model,
+          stream: true,
+          stream_options: { include_usage: true },
+          ...provider.extraBody,
+          messages: [
+            { role: 'system', content: systemPrompt(LANGUAGES[target], source && LANGUAGES[source], false) },
+            { role: 'user', content: text },
+          ],
+        }),
+        signal: controller.signal,
+      });
+    } catch {
+      throw fail(timedOut ? 'timeout' : 'network');
+    }
+    if (!response.ok || !response.body) throw fail(`http_${response.status}`);
+    let translation = '';
+    let usage = {};
+    try {
+      for await (const data of sseData(response.body)) {
+        let chunk;
+        try { chunk = JSON.parse(data); } catch { continue; }
+        if (chunk?.error) throw fail('stream_error');
+        if (chunk?.usage) usage = chunk.usage;
+        // 开头的空白先攒着，避免只输出了换行就无法再改用备用模型。
+        const delta = chunk?.choices?.[0]?.delta?.content;
+        if (typeof delta !== 'string' || !delta) continue;
+        translation += delta;
+        if (!started) {
+          if (!translation.trim()) continue;
+          started = true;
+          clearTimeout(firstTimer);
+          firstTimer = null;
+          onDelta(translation.trimStart());
+        } else onDelta(delta);
+      }
+    } catch (err) {
+      if (err.code) throw Object.assign(err, { started });
+      throw fail(timedOut ? 'timeout' : 'network');
+    }
+    if (!translation.trim()) throw fail('empty');
+    return { translation: translation.trim(), usage: usageOf(usage) };
+  } finally {
+    clearTimeout(firstTimer);
+    clearTimeout(totalTimer);
+  }
+}
+
 /**
  * 主力模型（DeepSeek 官方）失败或超时时，改用备用模型（默认 Fireworks 美国节点上的同款模型）。
  * 返回 { translations, meta }：meta 是统计用的元数据（服务商、模型、token、耗时），不含原文译文。
@@ -124,6 +211,25 @@ export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(
         return { translations, meta: { ...meta, ...usage, latencyMs: Date.now() - started, fellBack: index > 0 } };
       } catch (err) {
         lastError = Object.assign(err, { meta: { ...meta, latencyMs: Date.now() - started } });
+      }
+    }
+    throw lastError;
+  };
+  /**
+   * 单段文字流式翻译：主力模型在输出任何译文前失败才改用备用模型；已经输出过的失败直接抛出。
+   * 返回 { translation, meta }，与 translate 的 meta 相同。
+   */
+  translate.stream = async function stream(request, onDelta) {
+    let lastError;
+    for (const [index, provider] of providers.entries()) {
+      const started = Date.now();
+      const meta = { providerKey: provider.key, provider: provider.name, model: provider.model };
+      try {
+        const { translation, usage } = await streamModel(provider, request, onDelta, fetchImpl, timeouts[index], 90_000);
+        return { translation, meta: { ...meta, ...usage, latencyMs: Date.now() - started, fellBack: index > 0 } };
+      } catch (err) {
+        lastError = Object.assign(err, { meta: { ...meta, latencyMs: Date.now() - started } });
+        if (err.started) break;
       }
     }
     throw lastError;

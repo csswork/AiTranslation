@@ -4,7 +4,9 @@
  *   POST /token      授权码 + PKCE 换取扩展会话令牌；带上访客令牌时把访客合并进正式账户
  *   GET  /me         当前用户名、用户类型、点数与订阅状态、托管翻译是否可用
  *   POST /logout     撤销当前扩展及其关联的网页登录
- *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据
+ *   GET  /ping       预热连接，不查库、不需要登录
+ *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据。
+ *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
  *   POST /read-image 托管图片识别；文字随后走 /translate，按实际文字扣点
  *
  * 认证用 Authorization: Bearer <扩展会话令牌>，不用 Cookie，所以不受站内表单的同源校验约束；
@@ -161,6 +163,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     });
   });
 
+  // 预热连接：扩展在用户选中文字或右键时先请求一次，翻译请求就能复用已建好的 TLS 连接。不查库、不需要登录。
+  app.get('/ping', (c) => c.body(null, 204));
+
   app.post('/logout', requireExtension, async (c) => {
     const { user, session } = c.get('auth');
     await revokeExtensionLogin(pool, user.id, session.id);
@@ -275,6 +280,43 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         meta?.outputTokens ?? null, meta?.inputTokens != null ? estimateCostMicros(s, meta.providerKey, meta) : null,
         meta?.latencyMs ?? null, fields.error ?? null],
     );
+
+    // 单段文字可以流式返回（划词弹窗、翻译面板），边生成边显示；扣点、返还与记录和一次性返回相同。
+    // 客户端中途断开时继续读完模型输出并照常结算，与一次性返回的行为一致。
+    if (body.stream === true && texts.length === 1 && hosted.stream) {
+      const encoder = new TextEncoder();
+      let sink, open = true;
+      const send = (payload) => {
+        if (!open) return;
+        try { sink.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`)); } catch { open = false; }
+      };
+      const run = async () => {
+        try {
+          const result = await hosted.stream({ text: texts[0], target: body.target, source: body.source || null }, (delta) => send({ delta }));
+          await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
+          send({ done: true, cost: displayCredits(cost), ...(await status(user)) });
+        } catch (err) {
+          try {
+            await refundCredits(pool, eventId);
+            await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });
+            log.warn(`托管翻译失败：${err.code || err.message}`);
+            send({ error: 'translation_failed', ...(await status(user)) });
+          } catch (inner) {
+            log.error(`托管翻译结算失败：${inner.message}`);
+            send({ error: 'translation_failed' });
+          }
+        } finally {
+          if (open) try { sink.close(); } catch { /* 已关闭 */ }
+        }
+      };
+      const stream = new ReadableStream({
+        start(controller) { sink = controller; run(); },
+        cancel() { open = false; },
+      });
+      return new Response(stream, {
+        headers: { 'content-type': 'text/event-stream; charset=utf-8', 'x-accel-buffering': 'no' },
+      });
+    }
 
     let result;
     try {

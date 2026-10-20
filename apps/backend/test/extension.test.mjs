@@ -290,7 +290,23 @@ function fakeHosted({ fail = false } = {}) {
       meta: { ...meta, inputTokens: 1_000_000, cachedTokens: 0, outputTokens: 1_000_000, fellBack: false },
     };
   };
+  // 流式：按两段吐出译文；failAfter 表示输出第一段后失败。
+  hosted.stream = async ({ text, target }, onDelta) => {
+    calls.push({ texts: [text], target, stream: true });
+    const meta = { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', latencyMs: 5 };
+    if (fail === 'before') throw Object.assign(new Error('model_500'), { code: 'http_500', meta });
+    onDelta(`[${target}] `);
+    if (fail === 'after') throw Object.assign(new Error('timeout'), { code: 'timeout', started: true, meta });
+    onDelta(text);
+    return { translation: `[${target}] ${text}`, meta: { ...meta, inputTokens: 10, cachedTokens: 0, outputTokens: 10, fellBack: false } };
+  };
   return { hosted, calls };
+}
+
+/** 读完 SSE 响应，返回每个 data 事件解析后的对象。 */
+async function sseEvents(res) {
+  const text = await res.text();
+  return text.split('\n\n').filter((block) => block.startsWith('data: ')).map((block) => JSON.parse(block.slice(6)));
 }
 
 test('托管翻译：按每 500 字 1 点扣费，记录用量；余额不足拒绝且不扣点', async () => {
@@ -353,6 +369,51 @@ test('托管翻译：模型失败时返还点数并记为失败；参数校验�
   const plain = buildApp({ pool });
   const other = await extensionLogin(plain.app, plain.config, plain.mailbox, 'nohost@example.com');
   assert.equal((await api(plain.app, plain.config, '/translate', { method: 'POST', token: other.token, body: { texts: ['x'], target: 'fr' } })).status, 503);
+});
+
+test('托管翻译流式返回：逐段输出、结束时带余额；失败返还点数；多段或未要求时仍一次性返回', async () => {
+  const { hosted, calls } = fakeHosted();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'stream@example.com');
+  let res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello world'], target: 'fr', stream: true } });
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type'), /^text\/event-stream/);
+  assert.equal(res.headers.get('access-control-allow-origin'), ORIGIN);
+  let events = await sseEvents(res);
+  assert.deepEqual(events.slice(0, 2), [{ delta: '[fr] ' }, { delta: 'Hello world' }]);
+  assert.equal(events[2].done, true);
+  assert.equal(events[2].cost, '0.02');
+  assert.equal(events[2].credits.balance, '99.98');
+  assert.equal(calls.at(-1).stream, true);
+
+  // 多段文字（区域翻译）不走流式
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['a', 'b'], target: 'fr', stream: true } });
+  assert.deepEqual((await res.json()).translations, ['[fr] a', '[fr] b']);
+  assert.equal(calls.at(-1).stream, undefined);
+
+  // 余额不足等前置检查仍是普通 JSON 错误
+  await pool.query("UPDATE credit_ledger SET amount_units = 0 WHERE entry_type = 'trial_grant'");
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'fr', stream: true } });
+  assert.equal(res.status, 402);
+
+  for (const fail of ['before', 'after']) {
+    const failing = fakeHosted({ fail });
+    const built = buildApp({ pool, hosted: failing.hosted });
+    const login = await extensionLogin(built.app, built.config, built.mailbox, `stream-${fail}@example.com`);
+    res = await api(built.app, built.config, '/translate', { method: 'POST', token: login.token, body: { texts: ['Hello'], target: 'de', stream: true } });
+    events = await sseEvents(res);
+    assert.equal(events.at(-1).error, 'translation_failed');
+    assert.equal(events.at(-1).credits.balance, '100.00', `${fail}：失败返还点数`);
+    const { rows: [event] } = await pool.query('SELECT status, error FROM usage_events WHERE user_id = (SELECT id FROM users WHERE email = $1)', [`stream-${fail}@example.com`]);
+    assert.equal(event.status, 'failed');
+  }
+});
+
+test('预热接口不需要登录、不返回内容', async () => {
+  const { app, config } = buildApp({ pool });
+  const res = await api(app, config, '/ping');
+  assert.equal(res.status, 204);
+  assert.equal(res.headers.get('access-control-allow-origin'), ORIGIN);
 });
 
 test('试用点数默认不过期；带到期时间的发放过期后剩余点数失效，余额不会因扣点变成负数', async () => {

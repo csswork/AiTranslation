@@ -558,6 +558,37 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 /* ---------------------------------------------------------------- 消息 */
 
+// 翻译面板的托管流式翻译：只接受扩展自己的页面，一个连接对应一次请求，页面断开即取消。
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name !== 'hosted-stream') return;
+  const sender = port.sender || {};
+  if (sender.id !== chrome.runtime.id || !String(sender.url || '').startsWith(chrome.runtime.getURL(''))) {
+    port.disconnect();
+    return;
+  }
+  const controller = new AbortController();
+  let started = false;
+  let closed = false;
+  port.onDisconnect.addListener(() => { closed = true; controller.abort(); });
+  const post = (message) => {
+    if (closed) return;
+    try { port.postMessage(message); } catch { closed = true; }
+  };
+  port.onMessage.addListener(async (message) => {
+    if (started) return;
+    started = true;
+    try {
+      for await (const chunk of AITrAccount.translateStream({
+        text: String(message?.text || ''), target: message?.target, source: message?.source, signal: controller.signal,
+      })) post({ type: 'delta', chunk });
+      post({ type: 'done' });
+    } catch (err) {
+      if (closed || controller.signal.aborted || err?.name === 'AbortError') return;
+      post({ type: 'error', error: String(err?.message || err), action: err?.action || null });
+    }
+  });
+});
+
 // One port owns one request. Closing an overlay or replacing an image aborts the fetch.
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'ai-translation-request') return;
@@ -647,6 +678,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       else selections.delete(key);
     }
     updateMenuVisibility(message.text);
+    // 选中文字多半接着要翻译：先把到用户端的连接建好（只在点数翻译时，最多每 30 秒一次）
+    if (message.text) globalThis.AITrAccount?.warm().catch(() => {});
+    return false;
+  }
+
+  // 右键（区域、图片翻译之前）与打开翻译面板时预热连接；请求地址固定，不接受页面传入的参数。
+  if (type === 'hosted-warm') {
+    globalThis.AITrAccount?.warm().catch(() => {});
     return false;
   }
 

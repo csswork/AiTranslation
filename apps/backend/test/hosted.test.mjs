@@ -49,3 +49,64 @@ test('托管文字仍可在主力失败后改用备用模型', async () => {
   assert.deepEqual(result.translations, ['こんにちは', '世界']);
   assert.equal(result.meta.fellBack, true);
 });
+
+/** 模拟 OpenAI 兼容的流式响应；chunks 是 delta.content 列表，可故意在中间切断行。 */
+function sseResponse(chunks, { usage = { prompt_tokens: 50, completion_tokens: 7 }, split = true } = {}) {
+  const lines = chunks.map((content) => `data: ${JSON.stringify({ choices: [{ delta: { content } }] })}\n\n`)
+    .concat(`data: ${JSON.stringify({ choices: [], usage })}\n\n`, 'data: [DONE]\n\n').join('');
+  const encoder = new TextEncoder();
+  const parts = split ? [lines.slice(0, 17), lines.slice(17, 60), lines.slice(60)] : [lines];
+  return new Response(new ReadableStream({
+    start(controller) { for (const part of parts) controller.enqueue(encoder.encode(part)); controller.close(); },
+  }), { headers: { 'content-type': 'text/event-stream' } });
+}
+
+test('流式翻译：逐段回调、跨包断行可拼接、去掉开头空白并统计 token', async () => {
+  let request;
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    request = JSON.parse(init.body);
+    return sseResponse(['\n', 'Bon', 'jour', ' le monde', '\n']);
+  } });
+  const deltas = [];
+  const result = await hosted.stream({ text: 'Hello world', target: 'fr' }, (delta) => deltas.push(delta));
+  assert.equal(request.stream, true);
+  assert.deepEqual(request.stream_options, { include_usage: true });
+  assert.equal(request.messages[1].content, 'Hello world');
+  assert.deepEqual(deltas, ['Bon', 'jour', ' le monde', '\n']);
+  assert.equal(result.translation, 'Bonjour le monde');
+  assert.equal(result.meta.inputTokens, 50);
+  assert.equal(result.meta.outputTokens, 7);
+  assert.equal(result.meta.fellBack, false);
+});
+
+test('流式翻译：主力未输出就失败时改用备用；已输出后失败不再重试', async () => {
+  let calls = 0;
+  const before = createHostedTranslator(config, { fetchImpl: async (url) => {
+    calls++;
+    return url.startsWith('https://api.deepseek.com') ? new Response(null, { status: 503 }) : sseResponse(['Hallo']);
+  } });
+  const result = await before.stream({ text: 'Hello', target: 'de' }, () => {});
+  assert.equal(result.translation, 'Hallo');
+  assert.equal(result.meta.fellBack, true);
+  assert.equal(calls, 2);
+
+  calls = 0;
+  const after = createHostedTranslator(config, { fetchImpl: async () => {
+    calls++;
+    const encoder = new TextEncoder();
+    return new Response(new ReadableStream({
+      // error() 会丢掉队列里尚未读取的数据，所以在第一段被读走后（下一次 pull）再断开。
+      start(controller) {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ choices: [{ delta: { content: 'Hal' } }] })}\n\n`));
+      },
+      pull(controller) { controller.error(new Error('reset')); },
+    }));
+  } });
+  const deltas = [];
+  await assert.rejects(after.stream({ text: 'Hello', target: 'de' }, (d) => deltas.push(d)), (err) => err.code === 'network' && err.started === true);
+  assert.deepEqual(deltas, ['Hal']);
+  assert.equal(calls, 1, '已经输出过译文，不能换备用模型重来');
+
+  const empty = createHostedTranslator({ hosted: { ...config.hosted, fallback: null } }, { fetchImpl: async () => sseResponse(['  ']) });
+  await assert.rejects(empty.stream({ text: 'Hello', target: 'de' }, () => {}), { code: 'empty' });
+});

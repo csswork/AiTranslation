@@ -59,6 +59,47 @@
     throw new TranslateError(reply?.error || t("点数翻译失败"), reply?.action);
   }
 
+  /**
+   * 托管翻译的流式版本（单段文字）。service worker 里直接读 AITrAccount；
+   * 扩展页面（翻译面板）经长连接让 service worker 代发，断开连接即取消。
+   * @returns {AsyncGenerator<string>}
+   */
+  async function* hostedStream({ text, target, source, signal }) {
+    if (globalThis.AITrAccount) {
+      try {
+        yield* globalThis.AITrAccount.translateStream({ text, target, source, signal });
+      } catch (err) {
+        if (err?.name === 'AbortError') throw err;
+        throw new TranslateError(err.message, err.action);
+      }
+      return;
+    }
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+    const port = chrome.runtime.connect({ name: 'hosted-stream' });
+    const queue = [];
+    let wake = null;
+    const push = (message) => { queue.push(message); wake?.(); wake = null; };
+    port.onMessage.addListener(push);
+    port.onDisconnect.addListener(() => push({ type: 'disconnect' }));
+    const onAbort = () => push({ type: 'abort' });
+    signal?.addEventListener('abort', onAbort, { once: true });
+    port.postMessage({ text, target, source });
+    try {
+      for (;;) {
+        if (!queue.length) await new Promise((resolve) => { wake = resolve; });
+        const message = queue.shift();
+        if (message.type === 'delta') yield message.chunk;
+        else if (message.type === 'done') return;
+        else if (message.type === 'abort') throw new DOMException('Aborted', 'AbortError');
+        else if (message.type === 'error') throw new TranslateError(message.error || t("点数翻译失败"), message.action);
+        else throw new TranslateError(t("点数翻译失败"));
+      }
+    } finally {
+      signal?.removeEventListener('abort', onAbort);
+      try { port.disconnect(); } catch { /* 已断开 */ }
+    }
+  }
+
   async function hostedReadImage({ image, signal }) {
     if (globalThis.AITrAccount) {
       try { return await globalThis.AITrAccount.readImageText({ image, signal }); }
@@ -253,8 +294,12 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
 
-    // 托管翻译：一次性返回整段译文
+    // 托管翻译：默认流式，关闭「流式输出」时一次性返回整段译文
     if (provider.kind === 'hosted') {
+      if (settings.stream !== false) {
+        yield* hostedStream({ text, target: targetId || settings.target, source: sourceId, signal });
+        return;
+      }
       const [out] = await hostedTranslate({ texts: [text], target: targetId || settings.target, source: sourceId, signal });
       if (out) yield out;
       return;
@@ -719,6 +764,7 @@
   globalThis.AITrProviders = {
     translate,
     hostedTranslate,
+    hostedStream,
     deeplTranslate,
     translateBatch,
     translateCaption,

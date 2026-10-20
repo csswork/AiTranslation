@@ -285,6 +285,10 @@
   (async () => {
     el.shortcut.textContent = isMac ? '⌘ ↩' : 'Ctrl ↩';
     settings = await S.loadSettings();
+    // 打开面板与切回面板时预热到账户服务的连接（只在点数翻译时，后台限频）
+    const warm = () => chrome.runtime.sendMessage({ type: 'hosted-warm' }).catch(() => {});
+    warm();
+    window.addEventListener('focus', warm);
 
     const stored = await chrome.storage.local.get([STORE_KEY, 'panelSource']);
     const saved = stored[STORE_KEY];

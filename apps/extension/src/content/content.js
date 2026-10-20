@@ -81,6 +81,8 @@
     () => {
       clearTimeout(reportTimer);
       report();
+      // 右键之后多半要翻译（区域、图片也一样）：让后台预热到账户服务的连接，后台自己限频
+      send({ type: 'hosted-warm' });
     },
     true
   );

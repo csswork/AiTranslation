@@ -36,9 +36,9 @@ function boot(production = false) {
   };
   const calls = [];
   const tabs = [], notifications = [];
-  const context = vm.createContext({ console: { info() {}, warn() {} }, URL, Date, setTimeout,
+  const context = vm.createContext({ console: { info() {}, warn() {} }, URL, Date, setTimeout, TextDecoder, AbortController,
     AITrI18n: { ready: Promise.resolve(), t: (s) => s, onChange() {} },
-    AITrSettings: { migrateSettings: async () => {}, loadSettings: async () => ({}), targetMenu: () => 'English', supportsVision: () => false },
+    AITrSettings: { migrateSettings: async () => {}, loadSettings: async () => ({ provider: 'hosted' }), isHosted: (id) => id === 'hosted', targetMenu: () => 'English', supportsVision: () => false },
     chrome: { runtime, storage: { local: area(store), session: area({}), onChanged: changes },
       contextMenus: { removeAll: async () => {}, create: (_props, cb) => cb(), onClicked: event() },
       tabs: { onRemoved: event(), query: async () => tabs,
@@ -298,4 +298,74 @@ for (const production of [false, true]) {
   context.fetch = async () => ({ status: 413, json: async () => ({ error: 'too_large' }) });
   await assert.rejects(context.AITrAccount.readImageText({ image: 'large' }), err => err.code === 'too_large');
 }
-console.log('✓ 账户同步与托管识图：来源、本地/生产环境、会话及余额检查通过');
+
+// 流式托管翻译：逐段产出、结束时同步余额；旧版服务端一次性返回也可用；中途出错或断开会报错。
+const sse = (events) => {
+  const encoder = new TextEncoder();
+  const text = events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join('');
+  // 故意在事件中间切包，验证跨包拼接
+  const parts = [text.slice(0, 9), text.slice(9, 31), text.slice(31)];
+  return {
+    ok: true, status: 200, headers: { get: () => 'text/event-stream; charset=utf-8' },
+    body: new ReadableStream({ start(c) { for (const p of parts) c.enqueue(encoder.encode(p)); c.close(); } }),
+  };
+};
+{
+  const { context, store, calls } = boot(true);
+  const collect = async (iter) => { const out = []; for await (const chunk of iter) out.push(chunk); return out; };
+  context.fetch = async (url, init) => { calls.push({ url, init }); return sse([{ delta: 'Bon' }, { delta: 'jour' }, { done: true, cost: '0.01', credits: { balance: '42.00' } }]); };
+  assert.deepEqual(await collect(context.AITrAccount.translateStream({ text: 'Hello', target: 'fr' })), ['Bon', 'jour']);
+  assert.deepEqual(JSON.parse(calls.at(-1).init.body), { texts: ['Hello'], target: 'fr', stream: true });
+  assert.equal(calls.at(-1).url, 'https://app.huaci.app/api/extension/translate');
+  assert.equal(store.accountStatus.credits.balance, '42.00', '结束事件带回余额');
+
+  context.fetch = async () => ({ ok: true, status: 200, headers: { get: () => 'application/json' }, json: async () => ({ translations: ['Hallo'], credits: { balance: '41.00' } }) });
+  assert.deepEqual(await collect(context.AITrAccount.translateStream({ text: 'Hello', target: 'de' })), ['Hallo'], '旧版服务端一次性返回');
+  assert.equal(store.accountStatus.credits.balance, '41.00');
+
+  context.fetch = async () => sse([{ delta: 'Hal' }, { error: 'translation_failed', credits: { balance: '41.00' } }]);
+  const partial = [];
+  await assert.rejects((async () => { for await (const c of context.AITrAccount.translateStream({ text: 'Hello', target: 'de' })) partial.push(c); })(), (err) => err.code === 'translation_failed');
+  assert.deepEqual(partial, ['Hal']);
+  context.fetch = async () => sse([{ delta: 'Hal' }]);
+  await assert.rejects(collect(context.AITrAccount.translateStream({ text: 'Hello', target: 'de' })), (err) => err.code === 'network', '没有结束事件视为断开');
+  context.fetch = async () => ({ ok: false, status: 402, headers: { get: () => 'application/json' }, json: async () => ({ error: 'insufficient_credits', kind: 'member' }) });
+  await assert.rejects(collect(context.AITrAccount.translateStream({ text: 'Hello', target: 'de' })), (err) => err.code === 'insufficient_credits');
+}
+
+// 翻译面板经长连接取流：只接受扩展自己的页面。
+{
+  const { context } = boot(true);
+  context.fetch = async () => sse([{ delta: 'Bon' }, { delta: 'jour' }, { done: true }]);
+  const connect = (sender) => {
+    const port = { name: 'hosted-stream', sender, posted: [], disconnected: false, onDisconnect: { addListener() {} },
+      onMessage: { listeners: [], addListener(fn) { this.listeners.push(fn); } },
+      postMessage(m) { this.posted.push(m); }, disconnect() { this.disconnected = true; } };
+    for (const fn of context.chrome.runtime.onConnect.listeners) fn(port);
+    return port;
+  };
+  const evil = connect({ id: ID, url: 'https://evil.example/', tab: { id: 3 } });
+  assert.equal(evil.disconnected, true, '网页内容脚本不能使用托管流式连接');
+  const page = connect({ id: ID, url: `${extensionOrigin}/src/translate/translate.html` });
+  await page.onMessage.listeners[0]({ text: 'Hello', target: 'fr' });
+  assert.deepEqual(JSON.parse(JSON.stringify(page.posted)), [{ type: 'delta', chunk: 'Bon' }, { type: 'delta', chunk: 'jour' }, { type: 'done' }]);
+}
+
+// 预热：只请求固定的 /ping，不带令牌，30 秒内只发一次；不用点数翻译时不发。
+{
+  const { context, calls } = boot(true);
+  const sent = () => calls.filter((c) => c.url.endsWith('/ping'));
+  context.fetch = async (url, init) => { calls.push({ url, init }); return { ok: true, status: 204 }; };
+  await context.AITrAccount.warm();
+  await context.AITrAccount.warm();
+  assert.equal(sent().length, 1, '限频');
+  assert.equal(sent()[0].url, 'https://app.huaci.app/api/extension/ping');
+  assert.equal(sent()[0].init.credentials, 'omit');
+  assert.equal(sent()[0].init.headers, undefined, '不带令牌');
+  const other = boot(true);
+  other.context.AITrSettings.loadSettings = async () => ({ provider: 'openai' });
+  other.context.fetch = async (url) => { other.calls.push({ url }); return { ok: true, status: 204 }; };
+  await other.context.AITrAccount.warm();
+  assert.equal(other.calls.length, 0, '自带 Key 时不预热');
+}
+console.log('✓ 账户同步、托管识图、流式翻译与连接预热：来源、本地/生产环境、会话及余额检查通过');

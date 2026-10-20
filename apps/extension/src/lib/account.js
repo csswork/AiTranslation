@@ -87,7 +87,7 @@
     };
   }
 
-  async function call(path, { method = 'GET', body, auth = true, authToken, signal } = {}) {
+  async function call(path, { method = 'GET', body, auth = true, authToken, signal, stream = false } = {}) {
     const headers = {};
     const token = auth ? authToken ?? await readToken() : '';
     if (body) headers['content-type'] = 'application/json';
@@ -108,8 +108,26 @@
       await signOutLocally(token);
       throw new AccountError(t('登录已失效，请重新登录'), 'unauthorized', 'open-options');
     }
+    // 流式响应交给调用方逐段读取；错误与旧版服务端仍返回 JSON。
+    if (stream && response.ok && /^text\/event-stream/.test(response.headers.get('content-type') || '')) {
+      return { response, data: null, token };
+    }
     const data = await response.json().catch(() => ({}));
     return { response, data, token };
+  }
+
+  /**
+   * 预热到用户端的连接：用户选中文字或右键时先发一个不带内容的请求，
+   * 真正翻译时就能复用已建好的 TLS 连接（跨境线路上能省下半秒到一秒多）。最多每 30 秒一次，只在使用点数翻译时发出。
+   */
+  const WARM_INTERVAL = 30_000;
+  let warmedAt = 0;
+  async function warm() {
+    if (Date.now() - warmedAt < WARM_INTERVAL) return;
+    warmedAt = Date.now();
+    const settings = await AITrSettings.loadSettings();
+    if (!AITrSettings.isHosted(settings.provider)) return;
+    await fetch(`${API_ORIGIN}/api/extension/ping`, { credentials: 'omit', cache: 'no-store' }).catch(() => {});
   }
 
   /** 读取最新状态；未登录时不发请求。网络失败时保留上次的状态。 */
@@ -233,24 +251,78 @@
     503: () => new AccountError(t('点数翻译暂未开放'), 'hosted_unavailable', 'open-options'),
   };
 
+  /** 用托管响应里的余额更新缓存；只接受当前会话的响应。 */
+  async function syncCredits(data, token) {
+    if (!data?.credits) return;
+    await updateState(async () => {
+      if (await readToken() !== token) return;
+      const previous = await readStatus();
+      if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
+    });
+  }
+
+  const failure = (status, data) => (FAILURES[status] || (() => new AccountError(t('点数翻译失败（$1）', [status]), 'failed')))(data);
+
   /**
-   * 托管请求统一处理认证、余额同步和错误。余额更新只接受当前会话的响应。
+   * 托管请求统一处理认证、余额同步和错误。
    */
-  async function hostedRequest(path, body, signal) {
+  async function hostedRequest(path, body, signal, options = {}) {
     // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
     if (!(await readToken())) await claimGuest().catch(() => null);
-    const { response, data, token } = await call(path, { method: 'POST', body, signal });
-    if (data.credits) {
-      await updateState(async () => {
-        if (await readToken() !== token) return;
-        const previous = await readStatus();
-        if (previous.signedIn || previous.guest) await writeStatus(statusFrom({ credits: data.credits, subscription: data.subscription }, previous));
-      });
-    }
+    const result = await call(path, { method: 'POST', body, signal, ...options });
+    const { response, data, token } = result;
+    if (!data) return result; // 流式响应由调用方读取
+    await syncCredits(data, token);
     if (response.ok) return data;
     if (path === '/read-image' && response.status === 413) throw new AccountError(t('图片过大，请缩小后重试'), 'too_large');
     if (path === '/read-image' && response.status === 400) throw new AccountError(t('图片加载失败'), 'invalid_image');
-    throw (FAILURES[response.status] || (() => new AccountError(t('点数翻译失败（$1）', [response.status]), 'failed')))(data);
+    throw failure(response.status, data);
+  }
+
+  /** 逐个读取 SSE 的 data 事件（JSON）。 */
+  async function* readEvents(body) {
+    const reader = body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let index;
+        while ((index = buffer.indexOf('\n\n')) >= 0) {
+          const block = buffer.slice(0, index);
+          buffer = buffer.slice(index + 2);
+          const line = block.split('\n').find((l) => l.startsWith('data: '));
+          if (!line) continue;
+          try { yield JSON.parse(line.slice(6)); } catch { /* 跳过不完整或无法解析的事件 */ }
+        }
+      }
+    } finally {
+      reader.cancel().catch(() => {});
+    }
+  }
+
+  /**
+   * 单段文字流式翻译（划词弹窗、翻译面板）：逐段产出译文，最后用服务端返回的余额更新缓存。
+   * 服务端不支持流式时（旧版本）会一次性返回整段，同样可用。
+   */
+  async function* translateStream({ text, target, source, signal }) {
+    const reply = await hostedRequest('/translate', { texts: [text], target, source: source || undefined, stream: true }, signal, { stream: true });
+    if (!reply.response) {
+      if (!Array.isArray(reply.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
+      if (reply.translations[0]) yield reply.translations[0];
+      return;
+    }
+    let final = null;
+    for await (const event of readEvents(reply.response.body)) {
+      if (typeof event.delta === 'string') yield event.delta;
+      else if (event.done || event.error) { final = event; break; }
+    }
+    await syncCredits(final, reply.token);
+    // 连接中途断开：服务端仍会结算，余额在下次刷新时更新。
+    if (!final) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'network');
+    if (final.error) throw failure(502, final);
   }
 
   async function translate({ texts, target, source, signal }) {
@@ -265,5 +337,5 @@
     return data.raw;
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, readImageText };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, readImageText, warm };
 })();
