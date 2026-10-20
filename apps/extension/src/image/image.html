@@ -14,6 +14,7 @@
           <h1>图片翻译</h1>
           <p class="sub">
             识别图片里的文字并翻译成你选择的语言，译文按识别到的位置盖在原图上。
+            可以先框选区域只翻译这些位置，也能把结果下载或复制成新图片。
             <b>目前是验证阶段</b>，重点看方框位置准不准。
           </p>
         </div>
@@ -56,6 +57,17 @@
             <option value="none">只看原图</option>
           </select>
         </label>
+        <label class="pick">
+          <span class="pick-label">背景</span>
+          <select id="fill" title="译文背景">
+            <option value="auto">相近色</option>
+            <option value="dark">深色半透明</option>
+            <option value="white">白色</option>
+            <option value="black">黑色</option>
+            <option value="custom">自定义</option>
+          </select>
+          <input id="fillColor" type="color" title="自定义背景色" hidden />
+        </label>
         <span class="status" id="status"></span>
         <button id="run" class="btn" type="button" disabled>识别并翻译</button>
       </div>
@@ -65,6 +77,8 @@
           <div class="pane-head">
             <span class="pane-title">图片</span>
             <span class="note" id="imageNote"></span>
+            <button id="regions" class="btn ghost small" type="button" title="只翻译框出的区域" hidden>框选区域</button>
+            <button id="clearRegions" class="btn ghost small" type="button" hidden>清除选区</button>
             <button id="clear" class="btn ghost small" type="button" hidden>清空</button>
           </div>
 
@@ -80,6 +94,7 @@
             <div class="canvas" id="canvas" hidden>
               <img id="preview" alt="" />
               <div class="overlay" id="overlay"></div>
+              <div class="pick-layer" id="picker" hidden></div>
             </div>
           </div>
         </section>
@@ -88,6 +103,8 @@
           <div class="pane-head">
             <span class="pane-title">识别结果</span>
             <span class="note" id="meta"></span>
+            <button id="save" class="btn ghost small" type="button" title="下载带译文的图片" disabled>下载图片</button>
+            <button id="copyImage" class="btn ghost small" type="button" title="复制带译文的图片" disabled>复制图片</button>
             <button id="copy" class="btn ghost small" type="button" disabled>复制译文</button>
           </div>
           <div class="out-body">
@@ -108,6 +125,10 @@
     <script src="../lib/lang.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/providers.js"></script>
+    <script src="../lib/tiles.js"></script>
+    <script src="../lib/regions.js"></script>
+    <script src="../lib/image-render.js"></script>
+    <script src="../lib/region-picker.js"></script>
     <script src="image.js"></script>
   </body>
 </html>

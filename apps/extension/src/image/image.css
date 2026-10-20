@@ -72,8 +72,9 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 .pick { display: flex; align-items: center; gap: 8px; }
 .pick-label { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 .pick select, .pick input { min-width: 140px; }
+/* 基准宽度固定：状态文字变长时不能让工具栏重新换行，否则图片会跳，框选时就画偏了 */
 .status {
-  flex: 1 1 auto; min-width: 0; font-size: 12px; color: var(--faint);
+  flex: 1 1 160px; min-width: 0; font-size: 12px; color: var(--faint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .status.busy { color: var(--accent); }
@@ -118,6 +119,11 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 .canvas.tall { width: 100%; margin: 0 auto; }
 .stage { align-items: flex-start; }
 .overlay { position: absolute; inset: 0; pointer-events: none; }
+/* 框选时藏起译文，露出原图 */
+.canvas.picking .overlay { display: none; }
+.pick input[type="color"] {
+  min-width: 0; width: 34px; height: 30px; padding: 2px; cursor: pointer;
+}
 
 /* 识别到的每一块 */
 /* 不加边框：译文块本身就够说明位置了，再套一圈线会很吵。

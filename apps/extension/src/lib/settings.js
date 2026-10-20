@@ -121,9 +121,14 @@
     // 视频字幕默认在本机识别；打开后改用 Chrome 的云端识别，声音会发给 Google
     videoCloud: false,
     videoTranslate: true, // 把识别出的每一句翻译成目标语言，显示双语字幕
+    // 图片译文的背景：默认取文字周围的相近色；也可固定深色半透明、白、黑或自定义颜色
+    imageFill: 'auto',
+    imageFillColor: '#ffffff',
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
+
+  const IMAGE_FILLS = ['auto', 'dark', 'white', 'black', 'custom'];
 
   const str = (v) => (typeof v === 'string' ? v.trim() : '');
 
@@ -144,6 +149,8 @@
       videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : Object.values(VIDEO_LANGS).find((v) => v.languageId === AITrLanguages.match(input.videoLang))?.id || DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,
+      imageFill: IMAGE_FILLS.includes(input.imageFill) ? input.imageFill : DEFAULTS.imageFill,
+      imageFillColor: /^#[0-9a-f]{6}$/i.test(input.imageFillColor) ? input.imageFillColor.toLowerCase() : DEFAULTS.imageFillColor,
     };
     for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

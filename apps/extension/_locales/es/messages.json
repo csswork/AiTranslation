@@ -1751,6 +1751,151 @@
   "m_82e98e4cef120b1d": {
     "message": "No se puede leer el contenido de este PDF. Puedes descargarlo primero y luego arrastrarlo aquí para traducirlo."
   },
+  "m_2f21906beee403de": {
+    "message": "Eliminar esta selección"
+  },
+  "m_c28f327dac9fef07": {
+    "message": "Selecciona hasta $arg1$ áreas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_247aeff04c086752": {
+    "message": "Arrastra el ratón sobre la imagen para seleccionar el área a traducir"
+  },
+  "m_af6f92bd362b21c8": {
+    "message": "Arrastra el ratón para seleccionar las áreas a traducir; puedes seleccionar varias"
+  },
+  "m_ef2bef7c7643f030": {
+    "message": "No se pueden leer los píxeles de esta imagen debido a restricciones de origen cruzado, por lo que no se puede generar una nueva imagen"
+  },
+  "m_e2f12da7faa68217": {
+    "message": "Descargado"
+  },
+  "m_6529d18466f0fdff": {
+    "message": "Error al generar la imagen"
+  },
+  "m_96fb1156117e3e6c": {
+    "message": "No hay texto que traducir en la selección"
+  },
+  "m_20ab7624ca9f835a": {
+    "message": "$arg1$ selecciones",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b1e061523da782ca": {
+    "message": "Reconociendo la selección…"
+  },
+  "m_a814e830b1cc5789": {
+    "message": "Reconociendo la selección $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_41c20e1756333fd2": {
+    "message": "Fondo de la traducción"
+  },
+  "m_de47ecce51e68289": {
+    "message": "Color de fondo personalizado"
+  },
+  "m_4b7c79ddf1febccf": {
+    "message": "Traducir solo las áreas seleccionadas"
+  },
+  "m_20bb440661c69ba3": {
+    "message": "Descargar imagen con traducciones"
+  },
+  "m_5e49043db06ec01c": {
+    "message": "Copiar imagen con traducciones"
+  },
+  "m_52738d11d9742524": {
+    "message": "Fondo: color similar"
+  },
+  "m_c021e024b4989030": {
+    "message": "Fondo: oscuro semitransparente"
+  },
+  "m_70edf338f42dd979": {
+    "message": "Fondo: blanco"
+  },
+  "m_a609f8aa562d989f": {
+    "message": "Fondo: negro"
+  },
+  "m_1da1231af62992d3": {
+    "message": "Fondo: personalizado"
+  },
+  "m_31d09fc9102eac43": {
+    "message": "Seleccionar área"
+  },
+  "m_47a464947b5da374": {
+    "message": "Traducir selección"
+  },
+  "m_4673a23061656125": {
+    "message": "Descargar"
+  },
+  "m_4c2b82e6b7eae95a": {
+    "message": "Copiar imagen"
+  },
+  "m_b93caceedd4ef2a7": {
+    "message": "Reconoce el texto de las imágenes y tradúcelo al idioma que elijas, con las traducciones superpuestas sobre la imagen original en las posiciones detectadas. Primero puedes seleccionar un área para traducir solo esas partes, y también descargar o copiar el resultado como una nueva imagen."
+  },
+  "m_f4b669c55756180e": {
+    "message": "Fondo"
+  },
+  "m_0c1285ebd6428efb": {
+    "message": "Color similar"
+  },
+  "m_58802e1300e3b955": {
+    "message": "Oscuro semitransparente"
+  },
+  "m_f56e7eff58bf730d": {
+    "message": "Blanco"
+  },
+  "m_ed7d2c54184be5f5": {
+    "message": "Negro"
+  },
+  "m_4eafa9e925b30bcd": {
+    "message": "Personalizado"
+  },
+  "m_40f33655fe456fa8": {
+    "message": "Borrar selección"
+  },
+  "m_8894375c40143d49": {
+    "message": "Descargar imagen"
+  },
+  "m_624b2891ab0e9d7c": {
+    "message": "$arg1$ selecciones, $arg2$ con texto reconocido",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_77591a35edf4f47c": {
+    "message": "No se reconoció texto en la selección"
+  },
+  "m_d2302c23f60dc6b7": {
+    "message": "Finalizar selección"
+  },
+  "m_363086fb80754309": {
+    "message": "$arg1$ áreas seleccionadas; haz clic en \"Reconocer y traducir\" para procesar solo estas áreas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

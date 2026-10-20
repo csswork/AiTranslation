@@ -12,6 +12,8 @@
   const S = globalThis.AITrSettings;
   const P = globalThis.AITrProviders;
   const L = globalThis.AITrLang;
+  const R = globalThis.AITrImageRender;
+  const Regions = globalThis.AITrRegions;
 
   /**
    * 送检尺寸限制。按「总像素」而不是「最长边」来限——
@@ -31,7 +33,10 @@
     stage: $('stage'), drop: $('drop'), file: $('file'), url: $('url'),
     canvas: $('canvas'), preview: $('preview'), overlay: $('overlay'),
     imageNote: $('imageNote'), clear: $('clear'),
+    regions: $('regions'), clearRegions: $('clearRegions'), picker: $('picker'),
+    fill: $('fill'), fillColor: $('fillColor'),
     blocks: $('blocks'), meta: $('meta'), copy: $('copy'),
+    save: $('save'), copyImage: $('copyImage'),
     error: $('error'), errorText: $('errorText'),
     raw: $('raw'), rawWrap: $('rawWrap'),
     settings: $('settings'),
@@ -92,24 +97,28 @@
       img.src = src;
     });
 
-  /** 超过上限就等比缩小；顺便把跨域图片转成 data URL（失败则保留原网址）。 */
+  /**
+   * 超过上限就等比缩小；顺便把跨域图片转成 data URL（失败则保留原网址）。
+   * 画好的送检画布留着，给译文取相近背景色。
+   */
   function prepare(img, src) {
     const { naturalWidth: w, naturalHeight: h } = img;
     const scale = sendScale(w, h);
     const needResize = scale < 1;
-    if (!needResize && src.startsWith('data:')) {
-      return { sendSrc: src, size: { width: w, height: h }, resized: false, natural: { w, h } };
-    }
     try {
       const canvas = document.createElement('canvas');
       canvas.width = Math.round(w * scale);
       canvas.height = Math.round(h * scale);
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      ctx.getImageData(0, 0, 1, 1); // 被跨域污染时这里就会抛错
       return {
-        sendSrc: canvas.toDataURL('image/jpeg', 0.9),
+        // 本来就是 data URL 又不用缩时原样送检，不重新编码一遍
+        sendSrc: !needResize && src.startsWith('data:') ? src : canvas.toDataURL('image/jpeg', 0.9),
         size: { width: canvas.width, height: canvas.height },
         resized: needResize,
         natural: { w, h },
+        ctx,
       };
     } catch {
       // 跨域图片会污染画布，读不出像素。直接把网址交给接口去取。
@@ -133,7 +142,10 @@
       const img = await loadImage(src);
       if (token !== imageLoad) return;
       const prepared = prepare(img, src);
-      image = { displaySrc: src, ...prepared };
+      image = { displaySrc: src, el: img, ...prepared };
+      picker.set([]);
+      setPicking(false);
+      onRegions([]);
       // 坐标是相对值，显示一律用原图，不用送检那份缩过的
       el.preview.src = src;
       // 长图若按高度缩进窗口，宽度会小到看不清，改成按宽度铺开并纵向滚动
@@ -144,6 +156,7 @@
       el.drop.hidden = true;
       el.canvas.hidden = false;
       el.clear.hidden = false;
+      el.regions.hidden = false;
       el.run.disabled = false;
       renderBlocks([]);
       el.rawWrap.hidden = true;
@@ -175,8 +188,13 @@
     el.canvas.hidden = true;
     el.drop.hidden = false;
     el.clear.hidden = true;
+    el.regions.hidden = true;
+    picker.set([]);
+    setPicking(false);
+    onRegions([]);
     el.run.disabled = true;
     el.copy.disabled = true;
+    el.save.disabled = el.copyImage.disabled = true;
     el.imageNote.textContent = '';
     el.meta.textContent = '';
     el.overlay.replaceChildren();
@@ -208,8 +226,25 @@
         node.style.top = `${item.box.y * 100}%`;
         node.style.width = `${item.box.w * 100}%`;
         node.style.height = `${item.box.h * 100}%`;
+        if (item.fontMax) node.dataset.fontMax = String(item.fontMax);
         const fill = document.createElement('div');
         fill.className = 'fill';
+        // 方框按识别坐标画（「只看方框」要如实反映坐标准不准），
+        // 译文的遮盖范围和导出图片一样往外放一点，免得露出原文边角
+        const cover = R.coverBox(item, image?.natural);
+        if (cover !== item.box && item.box.w && item.box.h) {
+          const px = ((item.box.x - cover.x) / item.box.w) * 100;
+          const py = ((item.box.y - cover.y) / item.box.h) * 100;
+          const pr = ((cover.x + cover.w - item.box.x - item.box.w) / item.box.w) * 100;
+          const pb = ((cover.y + cover.h - item.box.y - item.box.h) / item.box.h) * 100;
+          fill.style.inset = `${-py}% ${-pr}% ${-pb}% ${-px}%`;
+        }
+        if (image?.ctx && item.sample === undefined) {
+          const { width, height } = image.size;
+          item.sample = R.sampleAt(image.ctx, {
+            x: cover.x * width, y: cover.y * height, w: cover.w * width, h: cover.h * height,
+          }, width, height);
+        }
         fill.textContent = item.translation || item.text;
         fill.dir = 'auto';
         // 小框放不下时会裁切，鼠标悬停能看到完整内容
@@ -254,7 +289,25 @@
       }).filter(Boolean)
     );
     el.copy.disabled = !list.some((b) => b.translation);
+    // 跨域读不到像素时合成不了新图
+    el.save.disabled = el.copyImage.disabled = !image?.ctx || !exportable().length;
+    applyFill();
     requestAnimationFrame(fitAll);
+  }
+
+  /** 要画进新图的条目：和覆盖层一样，跳过没坐标、无需翻译和译文与原文相同的。 */
+  const exportable = () =>
+    blocks.filter((b) => b.box && b.translation && !b.skipped && !b.sameAsSource);
+
+  /** 按背景选项给覆盖层上色。相近色在渲染时已采样，切换选项不用重新取像素。 */
+  function applyFill() {
+    for (const node of el.overlay.querySelectorAll('.box')) {
+      const item = blocks[Number(node.dataset.index)];
+      const color = R.paint(el.fill.value, el.fillColor.value, item?.sample);
+      const fill = node.querySelector('.fill');
+      fill.style.background = color.bg;
+      fill.style.color = color.fg;
+    }
   }
 
   /**
@@ -269,11 +322,14 @@
   function fitOne(node) {
     const fill = node.querySelector('.fill');
     if (!fill) return;
-    const w = node.clientWidth;
-    const h = node.clientHeight;
+    const w = fill.clientWidth;
+    const h = fill.clientHeight;
     if (!w || !h) return;
 
-    const clamp = (v) => Math.min(FONT_MAX, Math.max(FONT_MIN, v));
+    // 选区按原文的大致字号封顶，译文不会比原文还大
+    const hint = Number(node.dataset.fontMax || 0) * el.canvas.clientHeight;
+    const top = hint > 0 ? Math.max(FONT_MIN, hint) : FONT_MAX;
+    const clamp = (v) => Math.min(top, Math.max(FONT_MIN, v));
     let size = clamp(h * 0.62);
     fill.style.fontSize = `${size.toFixed(1)}px`;
 
@@ -320,30 +376,40 @@
 
     clearError();
     el.run.disabled = true;
+    // 框选完直接点识别：退出框选，结果才看得见
+    if (!el.picker.hidden) setPicking(false);
     const started = Date.now();
 
     try {
       setStatus(t("正在识别图中文字…"), true);
-      const result = reuse && lastResult ? lastResult : await P.readImageText({
-        image: image.sendSrc,
-        imageSize: image.size,
+      const regions = picker.regions;
+      // 换目标语言时复用上次的识别结果；选区变了就得重新识别
+      const same = lastResult &&
+        JSON.stringify(lastResult.regions || []) === JSON.stringify(regions);
+      const read = (src, imageSize) => P.readImageText({
+        image: src,
+        imageSize,
         settings: requestSettings,
         model: el.model.value.trim() || undefined,
         order: el.order.value,
         signal,
       });
+      const result = reuse && same ? lastResult
+        : regions.length ? await readRegionText(regions, read)
+        : await read(image.sendSrc, image.size);
       if (signal.aborted) return;
 
       lastResult = result;
       el.raw.textContent = result.raw;
       el.rawWrap.hidden = false;
       const withBox = result.blocks.filter((b) => b.box).length;
-      el.meta.textContent =
-        t("识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4", [result.blocks.length, withBox, result.scale.x, result.scale.y]);
+      el.meta.textContent = result.regions
+        ? t("$1 个选区，$2 个识别出文字", [result.regions.length, result.blocks.length])
+        : t("识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4", [result.blocks.length, withBox, result.scale.x, result.scale.y]);
 
       if (!result.blocks.length) {
         renderBlocks([]);
-        setStatus(t("图中没有识别到文字"));
+        setStatus(result.regions ? t("选区里没有识别到文字") : t("图中没有识别到文字"));
         return;
       }
 
@@ -400,6 +466,108 @@
       }
     }
   }
+
+  /**
+   * 只识别框出的区域：从原图裁下来拼成一张图识别（更准，也只发一次请求）；
+   * 跨域读不到像素时退回整图识别，再挑出落在选区内的。
+   * 每个选区合成一整段，框就是选区本身。
+   */
+  async function readRegionText(regions, read) {
+    const raws = [];
+    const readOne = async (src, size) => {
+      const result = await read(src, size);
+      raws.push(result.raw);
+      return result.blocks;
+    };
+    const found = image.ctx
+      ? await Regions.readRegions({
+        source: image.el, natural: image.natural, regions, scaleFor: sendScale, read: readOne,
+        onProgress: (i, total) => {
+          if (total > 1) setStatus(t("正在识别选区 $1/$2…", [i + 1, total]), true);
+        },
+      })
+      : Regions.filterByRegions(await readOne(image.sendSrc, image.size), regions);
+    const groups = Regions.groupByRegion(found, regions);
+    return {
+      regions,
+      raw: raws.join('\n\n'),
+      blocks: groups.map((g) => ({
+        text: g.text, box: g.box, textBox: g.textBox, rawBox: null, region: g.region, fontMax: g.fontMax,
+      })),
+    };
+  }
+
+  /* ------------------------------------------------------------ 框选与背景 */
+
+  function setPicking(on) {
+    el.canvas.classList.toggle('picking', on);
+    el.picker.hidden = !on;
+    el.regions.textContent = on ? t("完成框选") : t("框选区域");
+    if (on) setStatus(t("拖动鼠标框出要翻译的区域，可以框多个"));
+    // 框选时覆盖层是隐藏的，量不出尺寸；露出来以后重新排字号
+    else requestAnimationFrame(fitAll);
+  }
+
+  function onRegions(list) {
+    el.clearRegions.hidden = !list.length;
+    // 识别过的方框和选区对不上了，按选区调整的坐标制式也就没意义
+    el.scale.disabled = el.order.disabled = list.length > 0;
+    if (list.length) setStatus(t("已框选 $1 个区域，点「识别并翻译」只处理这些位置", [list.length]));
+    else if (!el.picker.hidden) setStatus(t("拖动鼠标框出要翻译的区域，可以框多个"));
+  }
+
+  const picker = globalThis.AITrRegionPicker.create(el.picker, {
+    max: Regions.MAX_REGIONS,
+    deleteLabel: t("删除这个选区"),
+    onChange: onRegions,
+    onLimit: () => setStatus(t("最多框选 $1 个区域", [Regions.MAX_REGIONS])),
+  });
+  document.head.append(Object.assign(document.createElement('style'), {
+    textContent: globalThis.AITrRegionPicker.STYLE,
+  }));
+
+  el.regions.addEventListener('click', () => setPicking(el.picker.hidden));
+  el.clearRegions.addEventListener('click', () => picker.clear());
+
+  el.fill.addEventListener('change', () => {
+    el.fillColor.hidden = el.fill.value !== 'custom';
+    applyFill();
+    saveFill();
+  });
+  el.fillColor.addEventListener('input', applyFill);
+  el.fillColor.addEventListener('change', saveFill);
+  function saveFill() {
+    S.patchSettings({ imageFill: el.fill.value, imageFillColor: el.fillColor.value })
+      .then((next) => { settings = next; })
+      .catch(() => {});
+  }
+
+  /** 合成带译文的新图，下载或复制到剪贴板。全部在本机完成，不上传。 */
+  async function exportImage(toClipboard) {
+    const list = exportable();
+    if (!image?.ctx || !list.length) return;
+    const button = toClipboard ? el.copyImage : el.save;
+    const label = button.textContent;
+    button.disabled = true;
+    let text;
+    try {
+      const canvas = R.renderImage(image.el, image.natural, list,
+        { fill: el.fill.value, custom: el.fillColor.value });
+      const blob = await R.toBlob(canvas, { forClipboard: toClipboard });
+      if (toClipboard) await R.copy(blob);
+      else R.download(blob, R.fileName(image.displaySrc, el.target.value, blob));
+      text = toClipboard ? t("已复制") : t("已下载");
+    } catch {
+      text = toClipboard ? t("复制失败") : t("生成图片失败");
+    }
+    button.textContent = text;
+    setTimeout(() => {
+      button.textContent = label;
+      button.disabled = false;
+    }, 1400);
+  }
+  el.save.addEventListener('click', () => exportImage(false));
+  el.copyImage.addEventListener('click', () => exportImage(true));
 
   /* ---------------------------------------------------------------- 事件 */
 
@@ -479,7 +647,8 @@
   // 不重新请求接口，切换是免费的。
   /** 换一种换算方式重画。都在本地算，不重新请求接口，切换是免费的。 */
   function requantize() {
-    if (!lastResult) return;
+    // 选区结果的框就是选区本身，不是模型坐标
+    if (!lastResult || lastResult.regions) return;
     const scale = currentScale();
     const order = el.order.value;
     blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale, order) }));
@@ -547,5 +716,8 @@
       })
     );
     renderModelOptions();
+    el.fill.value = settings.imageFill;
+    el.fillColor.value = settings.imageFillColor;
+    el.fillColor.hidden = settings.imageFill !== 'custom';
   })();
 })();
