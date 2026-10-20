@@ -13,6 +13,7 @@ import {
 import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.js';
 import { apiUsageByUser, apiUsageForUser, overview } from '../../src/admin/reports.js';
 import { newTotpSecret, openSecret, otpauthUrl, sealSecret, verifyTotp } from '../../src/admin/totp.js';
+import { deleteUser, deletionSummary } from '../../src/admin/users.js';
 import { isValidEmail, normalizeEmail } from '../../src/auth/users.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import { accountState } from '../../src/billing/entitlements.js';
@@ -310,6 +311,40 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   userAction('revoke-sessions', 'user.revoke_sessions', async (u) => {
     const { rowCount } = await pool.query('UPDATE sessions SET revoked_at = now() WHERE user_id = $1 AND revoked_at IS NULL', [u.id]);
     return { revoked: rowCount };
+  });
+
+  /**
+   * 删除用户（二次确认）：先打开确认页查看将删除和保留的数据，再输入该用户的邮箱（访客输入用户名）并填写原因提交。
+   * 审计只记录用户 ID、类型与删除的数量，不保存邮箱或用户名。
+   */
+  const confirmationOf = (u) => u.email || u.username;
+  const deletePage = async (c, u, note = null, status = 200) => {
+    const summary = await deletionSummary(pool, u);
+    return page(c, () => views.deleteUserPage({ admin: admin(c), u, summary, confirmation: confirmationOf(u), note }), status);
+  };
+
+  app.get('/users/:id/delete', requireAdmin, async (c) => {
+    const u = await loadUser(c.req.param('id'));
+    if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
+    return deletePage(c, u);
+  });
+
+  app.post('/users/:id/delete', requireAdmin, async (c) => {
+    const u = await loadUser(c.req.param('id'));
+    if (!u) return c.notFound();
+    const body = await c.req.parseBody();
+    const reason = reasonOf(body);
+    if (!reason) return deletePage(c, u, fail('请填写删除原因。'), 400);
+    if (String(body.confirm || '').trim().toLowerCase() !== confirmationOf(u).toLowerCase()) {
+      return deletePage(c, u, fail(`确认内容不一致，请输入 ${confirmationOf(u)}。`), 400);
+    }
+    const result = await deleteUser(pool, u.id);
+    if (result.blocked) return deletePage(c, u, fail(result.blocked === 'admin' ? '管理员账号不能删除。' : '该用户仍有有效订阅，请先在 Creem 取消订阅。'), 409);
+    await audit(pool, {
+      adminId: admin(c).id, action: 'user.delete', targetType: 'user', targetId: u.id, reason,
+      detail: { kind: result.kind, removed: result.removed, kept: result.kept },
+    });
+    return back(c, '/users', ok('用户及其数据已删除。'));
   });
 
   /* ---------- A5 订阅与订单 ---------- */

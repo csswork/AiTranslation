@@ -175,6 +175,72 @@ test('管理端：修改规则写审计并立即生效；补发点数、冻结�
   assert.equal((await a.get('/')).headers.get('location'), '/login');
 });
 
+test('删除用户：二次确认后删除账号及其数据，订单与防滥用记录保留但解除关联；管理员与有效订阅不能删除', async () => {
+  const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
+  const { a } = await adminLogin(app, config, mailbox);
+  const member = await signInWithEmail(app, config, mailbox, 'leaving@example.com');
+  const { rows: [u] } = await pool.query(`SELECT id FROM users WHERE email = 'leaving@example.com'`);
+  await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status) VALUES ($1, 'text', 10, 10, 'ok')`, [u.id]);
+  await pool.query(`INSERT INTO usage_rejections (user_id, reason, audience, chars) VALUES ($1, 'rate_limited', 'member', 5)`, [u.id]);
+  await pool.query(`INSERT INTO orders (user_id, provider, provider_order_id, amount, currency, status) VALUES ($1, 'creem', 'ord_1', 399, 'USD', 'paid')`, [u.id]);
+  await pool.query(`INSERT INTO subscriptions (user_id, provider, provider_subscription_id, plan, status, current_period_end, last_event_at)
+    VALUES ($1, 'creem', 'sub_1', 'monthly', 'active', now() + interval '20 days', now())`, [u.id]);
+  await pool.query(`INSERT INTO guest_claims (ip_hash, user_id, outcome, granted_units) VALUES ('hash', $1, 'granted', 25000)`, [u.id]);
+  await pool.query(`INSERT INTO email_codes (email, purpose, code_hash, expires_at) VALUES ('leaving@example.com', 'login', 'x', now() + interval '5 minutes')`);
+  const exists = async () => (await pool.query('SELECT 1 FROM users WHERE id = $1', [u.id])).rowCount === 1;
+
+  assert.match(await a.text(`/users/${u.id}`), new RegExp(`href="/users/${u.id}/delete"`), '详情页有删除入口');
+  // 有效订阅：确认页不给提交表单，直接提交也会被拒绝
+  let page = await a.text(`/users/${u.id}/delete`);
+  assert.match(page, /仍有有效订阅/);
+  assert.doesNotMatch(page, /name="confirm"/);
+  let res = await a.post(`/users/${u.id}/delete`, { confirm: 'leaving@example.com', reason: '用户申请' });
+  assert.equal(res.status, 409);
+  assert.ok(await exists());
+
+  await pool.query(`UPDATE subscriptions SET status = 'canceled', current_period_end = now() - interval '1 day'`);
+  page = await a.text(`/users/${u.id}/delete`);
+  assert.match(page, /请输入 <code dir="ltr">leaving@example\.com<\/code> 确认删除/);
+  assert.match(page, /点数流水<\/dt><dd>1</);
+  assert.match(page, /托管请求记录<\/dt><dd>1</);
+  assert.match(page, /订单<\/dt><dd>1</);
+  // 第二次确认：原因与输入的邮箱都必须正确
+  res = await a.post(`/users/${u.id}/delete`, { confirm: 'leaving@example.com' });
+  assert.equal(res.status, 400);
+  res = await a.post(`/users/${u.id}/delete`, { confirm: 'someone@example.com', reason: '用户申请' });
+  assert.equal(res.status, 400);
+  assert.match(await res.text(), /确认内容不一致/);
+  assert.ok(await exists(), '确认失败不删除');
+
+  res = await a.post(`/users/${u.id}/delete`, { confirm: ' Leaving@Example.com ', reason: '用户申请注销' });
+  assert.equal(res.status, 303);
+  assert.equal(res.headers.get('location'), '/users');
+  assert.equal(await exists(), false);
+  for (const table of ['identities', 'sessions', 'credit_ledger', 'usage_events', 'usage_rejections']) {
+    assert.equal((await pool.query(`SELECT COUNT(*)::int AS n FROM ${table} WHERE user_id = $1`, [u.id])).rows[0].n, 0, table);
+  }
+  assert.equal((await pool.query(`SELECT COUNT(*)::int AS n FROM email_codes WHERE email = 'leaving@example.com'`)).rows[0].n, 0, '未使用的验证码一并删除');
+  const { rows: [order] } = await pool.query(`SELECT user_id, amount FROM orders WHERE provider_order_id = 'ord_1'`);
+  assert.deepEqual([order.user_id, order.amount], [null, 399], '订单保留用于收入统计，但不再关联用户');
+  assert.equal((await pool.query(`SELECT user_id FROM subscriptions WHERE provider_subscription_id = 'sub_1'`)).rows[0].user_id, null);
+  assert.equal((await pool.query(`SELECT user_id FROM guest_claims WHERE ip_hash = 'hash'`)).rows[0].user_id, null, '防重复领取的哈希记录保留');
+  assert.equal((await member.get('/')).headers.get('location')?.startsWith('/login'), true, '该用户的网页登录立即失效');
+
+  const { rows: [entry] } = await pool.query(`SELECT target_id, reason, detail FROM admin_audit WHERE action = 'user.delete'`);
+  assert.equal(entry.target_id, u.id);
+  assert.equal(entry.reason, '用户申请注销');
+  assert.equal(entry.detail.removed.ledger, 1);
+  assert.doesNotMatch(JSON.stringify(entry), /leaving/, '审计不保存邮箱或用户名');
+  assert.equal((await a.get(`/users/${u.id}/delete`)).status, 404);
+
+  // 管理员自己不能被删除
+  const { rows: [boss] } = await pool.query(`SELECT id, username FROM users WHERE email = 'boss@example.com'`);
+  assert.match(await a.text(`/users/${boss.id}/delete`), /管理员账号不能在这里删除/);
+  res = await a.post(`/users/${boss.id}/delete`, { confirm: 'boss@example.com', reason: '测试' });
+  assert.equal(res.status, 409);
+  assert.equal((await pool.query('SELECT 1 FROM users WHERE id = $1', [boss.id])).rowCount, 1);
+});
+
 test('本地开发默认跳过二步验证：邮箱验证码通过后直接进入管理端', async () => {
   const { app, config, mailbox } = buildApp({ pool });
   assert.equal(config.adminRequire2fa, false);

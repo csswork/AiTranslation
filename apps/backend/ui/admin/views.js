@@ -647,6 +647,7 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, note 
     <form method="post" action="/users/${u.id}/revoke-sessions" class="inline">
       ${reasonField}<button class="button" type="submit">撤销全部会话</button>
     </form>
+    <a class="button danger" href="/users/${u.id}/delete">删除用户…</a>
   </div>
 </section>
 
@@ -684,6 +685,49 @@ ${api.rejections.length ? html`<section class="card">
   <div class="table-wrap"><table><thead><tr><th>时间</th><th>原因</th><th class="num">字数</th><th class="num">需要点数</th><th>目标语言</th></tr></thead>
   <tbody>${api.rejections.map((x) => html`<tr><td>${dt(x.created_at)}</td><td>${REJECTIONS[x.reason] || x.reason}</td><td class="num">${num(x.chars)}</td><td class="num">${x.cost_units == null ? '—' : displayCredits(x.cost_units)}</td><td>${x.target_lang ? language(x.target_lang) : '—'}</td></tr>`)}</tbody></table></div>
 </section>` : ''}`,
+  });
+}
+
+/** 删除用户的确认页：列出将删除与保留的数据，输入邮箱（访客为用户名）并填写原因后才能提交。 */
+export function deleteUserPage({ admin, u, summary, confirmation, note }) {
+  const { removed, kept } = summary;
+  const rows = (items) => items.map(([label, n]) => html`<dt>${label}</dt><dd>${num(n)}</dd>`);
+  return layout({
+    title: `删除 ${u.username}`,
+    admin,
+    active: 'users',
+    note,
+    body: html`<p><a href="/users/${u.id}">← ${u.username}</a></p>
+<h1>删除用户</h1>
+<section class="card danger-zone">
+  <h2>${u.username}<span class="muted"> · ${KIND[u.kind]}${u.email ? html` · <span dir="ltr">${u.email}</span>` : ''}</span></h2>
+  <p>删除后无法恢复。该用户的网页与扩展登录立即失效，剩余点数作废；之后用同一邮箱登录会成为新用户。</p>
+  <div class="grid">
+    <div>
+      <h3>将删除</h3>
+      <dl class="facts">${rows([['账户资料（邮箱、用户名）', 1], ['登录方式绑定', removed.identities], ['网页与扩展会话', removed.sessions],
+        ['点数流水', removed.ledger], ['托管请求记录', removed.usage], ['被拒请求记录', removed.rejections]])}</dl>
+      <p class="fine">另外删除该邮箱尚未使用的验证码、扩展授权码与访客关联码。</p>
+    </div>
+    <div>
+      <h3>保留但解除关联</h3>
+      <dl class="facts">${rows([['订阅记录', kept.subscriptions], ['订单', kept.orders], ['访客领取记录', kept.guestClaims], ['浏览器标记', kept.browserMarks]])}</dl>
+      <p class="fine">订阅与订单只含支付平台对象 ID 和金额，用于收入统计与对账；访客领取记录与浏览器标记只有哈希，用于防止重复领取试用。</p>
+    </div>
+  </div>
+  ${summary.blocked
+    ? html`<p class="tag warn">${summary.blocked === 'admin' ? '管理员账号不能在这里删除，请先用命令行取消管理员。' : '该用户仍有有效订阅，请先在 Creem 取消订阅，待订阅结束后再删除。'}</p>`
+    : html`<form method="post" action="/users/${u.id}/delete" class="stack">
+    <label>请输入 <code dir="ltr">${confirmation}</code> 确认删除
+      <input name="confirm" required autocomplete="off" spellcheck="false" dir="ltr"></label>
+    <label>删除原因（必填，记入审计）
+      <input name="reason" required maxlength="200"></label>
+    <div class="confirm-actions">
+      <button class="button danger" type="submit">永久删除该用户及其数据</button>
+      <a class="button" href="/users/${u.id}">取消</a>
+    </div>
+  </form>`}
+</section>`,
   });
 }
 
