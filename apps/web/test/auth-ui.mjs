@@ -98,3 +98,19 @@ context.document.hidden = true;
 documentEvents.visibilitychange();
 assert.equal(requests.length, 5);
 console.log('官网登录入口：等待反馈、双向退出同步、本地化恢复与旧响应隔离通过');
+
+// 生产官网（裸域与 www）读取 app.huaci.app；其他主机（如 Vercel 预览）不发请求、入口保持隐藏。
+for (const [hostname, expected] of [['huaci.app', 'https://app.huaci.app/api/web/session'], ['www.huaci.app', 'https://app.huaci.app/api/web/session'], ['aitranslation.vercel.app', null]]) {
+  const urls = [];
+  vm.runInNewContext(script.slice(start, end), {
+    location: { hostname, href: `https://${hostname}/` },
+    document: { hidden: false, querySelector: () => ({ ...stateLink, addEventListener() {} }), addEventListener() {} },
+    window: { fetch: true, addEventListener() {} },
+    fetch: (url) => { urls.push(url); return new Promise(() => {}); },
+  });
+  assert.deepEqual(urls, expected ? [expected] : [], hostname);
+}
+const csp = JSON.parse(fs.readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8')).headers
+  .flatMap((rule) => rule.headers).find((h) => h.key.toLowerCase() === 'content-security-policy').value;
+assert.match(csp, /connect-src 'self' https:\/\/app\.huaci\.app;/, 'CSP 需放行用户端登录状态接口');
+console.log('生产官网登录状态来源与 CSP 通过');

@@ -16,6 +16,7 @@
     "http://localhost/*",
     "https://app.huaci.app/*",
     "https://huaci.app/*",
+    "https://www.huaci.app/*",
     "https://api.openai.com/*",
     "https://api.deepseek.com/*",
     "https://api-free.deepl.com/*",
@@ -62,7 +63,7 @@
       "match_about_blank": true
     },
     {
-      "matches": ["http://localhost/*", "https://app.huaci.app/*", "https://huaci.app/*"],
+      "matches": ["http://localhost/*", "https://app.huaci.app/*", "https://huaci.app/*", "https://www.huaci.app/*"],
       "js": ["src/lib/env.js", "src/content/account.js"],
       "run_at": "document_idle"
     }

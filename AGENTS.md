@@ -45,7 +45,7 @@
 - 中文 `public/*.html` 是页面源文，其他语言页面、`lang.js`、站点地图等由构建生成。修改文案后检查译文与生成产物。
 - 保持已有公开 URL 和语言路径。根目录 `PRIVACY.md` 保留既有公开链接。
 - 官网至少提供登录入口和登录后状态展示。完整注册、账户、订阅和账单属于 VPS 用户管理界面（规划 `app.huaci.app`），官网链接过去，当前按这个边界安排。
-- 官网页头的账户入口由 `main.js` 读取用户端 `/api/web/session` 后显示；`ACCOUNT_ORIGIN` 目前只在本地启用，生产用户端上线时再填入地址并放开 CSP `connect-src`。
+- 官网页头的账户入口由 `main.js` 读取用户端 `/api/web/session` 后显示；`ACCOUNT_ORIGIN` 在本地指向 `localhost:8787`，在 `huaci.app` 与 `www.huaci.app` 指向 `https://app.huaci.app`（已加入 CSP `connect-src`）；后端 `WEB_ORIGINS` 与扩展 `AITrEnv` 需同时包含这两个官网来源。
 - 官网与 VPS 用户管理界面的页头、页脚（含账户入口样式）保持同一结构、类名、样式和链接，两边各自维护；改动任一边时同步另一边，后端测试会对照官网首页检查链接。
 - 两个站点的语言与配色偏好共用 `lang`、`theme` Cookie（生产写到父域 `huaci.app`），不要改回各自的 localStorage；会话 Cookie 不放到父域。
 - 生产环境的网页和 API 均使用 HTTPS。跨子域 Cookie 请求需携带 credentials，服务端使用明确的 CORS 来源白名单，并验证修改状态的请求；不能用通配来源代替认证。

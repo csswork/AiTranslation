@@ -16,6 +16,8 @@
   const dev = !manifest.update_url;
   const accountOrigin = dev ? 'http://localhost:8787' : 'https://app.huaci.app';
   const websiteOrigin = dev ? 'http://localhost:8788' : 'https://huaci.app';
+  // Vercel 可能把裸域与 www 互相跳转；两个来源都是官网，链接仍用 websiteOrigin。
+  const websiteOrigins = dev ? [websiteOrigin] : [websiteOrigin, 'https://www.huaci.app'];
 
   globalThis.AITrEnv = Object.freeze({
     dev,
@@ -26,7 +28,7 @@
       try { return new URL(url).origin === accountOrigin; } catch { return false; }
     },
     isWebsitePage(url) {
-      try { return new URL(url).origin === websiteOrigin; } catch { return false; }
+      try { return websiteOrigins.includes(new URL(url).origin); } catch { return false; }
     },
     links: Object.freeze({
       account: `${accountOrigin}/`,

@@ -4,7 +4,7 @@
 
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
-| 网站 | [apps/web](apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；账户入口与状态已实现，本地启用，生产待后端上线 |
+| 网站 | [apps/web](apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
 | 后端 | [apps/backend](apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
 | 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 2.0.0 已上架：24 语言、自带 Key、账户与点数、订阅入口、免 Key 托管翻译 |
 

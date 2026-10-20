@@ -12,7 +12,7 @@ const event = () => ({ listeners: [], addListener(fn) { this.listeners.push(fn);
 const signedIn = { signedIn: true, kind: 'member', username: 'member', credits: { balance: 20 } };
 // 按 URL 选择接收提示的标签页需要这几个明确的站点权限，不能依赖活动标签页权限或可选权限。
 const manifest = JSON.parse(source('manifest.json'));
-for (const origin of ['http://localhost', 'https://app.huaci.app', 'https://huaci.app']) {
+for (const origin of ['http://localhost', 'https://app.huaci.app', 'https://huaci.app', 'https://www.huaci.app']) {
   assert.ok(manifest.host_permissions.includes(`${origin}/*`), `缺少账户同步站点权限：${origin}`);
   assert.ok(manifest.content_scripts.some((entry) => entry.js.includes('src/content/account.js') && entry.matches.includes(`${origin}/*`)));
 }
@@ -199,8 +199,10 @@ for (const production of [false, true]) {
   const { context, store, calls, message, tabs, notifications, accountOrigin } = boot(production);
   tabs.push(...[
     `${accountOrigin}/usage`, `${context.AITrEnv.websiteOrigin}/en/`,
+    production ? 'https://www.huaci.app/ja/' : 'http://localhost:8788/ja/',
     production ? 'http://localhost:8787/' : 'https://app.huaci.app/',
     production ? 'http://localhost:8788/' : 'https://huaci.app/',
+    production ? 'https://www.huaci.app.evil.example/' : 'https://www.huaci.app/',
     'http://localhost:9999/', 'http://admin.localhost:8787/', 'https://admin.huaci.app/',
     'https://app.huaci.app.evil.example/', 'https://app.huaci.app:444/', 'https://huaci.app:444/',
     'https://example.com/?next=https://app.huaci.app/', undefined,
@@ -214,7 +216,7 @@ for (const production of [false, true]) {
   assert.equal(calls[0].url, `${accountOrigin}/api/extension/logout`);
   assert.equal(calls[0].init.headers.authorization, 'Bearer original-token');
   assert.equal(calls[0].init.credentials, 'omit');
-  assert.deepEqual(notifications.map(({ id }) => id), [1, 2], '只通知同环境用户端与官网，不影响管理端或其他端口');
+  assert.deepEqual(notifications.map(({ id }) => id), [1, 2, 3], '只通知同环境用户端与官网，不影响管理端或其他端口');
   assert.ok(notifications.every(({ message, options }) => JSON.stringify(message) === '{"type":"account-session-changed"}' && options.frameId === 0));
   console.log(`✓ ${production ? '生产' : '本地'}扩展主动退出与网页提示来源隔离`);
 }

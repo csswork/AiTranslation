@@ -67,9 +67,11 @@
    * 官网与用户端同属一个站点，浏览器会附上用户端的会话 Cookie；服务端按来源白名单返回 CORS。
    * 未登录显示「登录」（登录后回到当前页面），已登录显示用户名并链接到账户页；
    * 用户端未配置或读取失败时入口保持隐藏，不出现无法打开的链接。
-   * 生产环境的用户端（app.huaci.app）上线后，在这里填入地址，并把它加入 vercel.json 的 connect-src。
+   * 生产官网（huaci.app 与 www.huaci.app）读取 app.huaci.app，该地址需在 vercel.json 的 connect-src 中；
+   * Vercel 预览域名不属于 huaci.app 站点，带不上会话 Cookie，入口保持隐藏。
    */
-  const ACCOUNT_ORIGIN = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787' : '';
+  const ACCOUNT_ORIGIN = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787'
+    : ['huaci.app', 'www.huaci.app'].includes(location.hostname) ? 'https://app.huaci.app' : '';
   const accountLink = document.querySelector('[data-account]');
   if (accountLink) {
     accountLink.addEventListener('click', (event) => {

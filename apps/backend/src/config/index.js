@@ -48,7 +48,7 @@ export function readConfig(env = process.env) {
     : null;
 
   // 允许读取登录状态、并可作为登录后返回地址的官网来源（逗号分隔，必须是完整来源）。
-  const webOrigins = (env.WEB_ORIGINS || (production ? 'https://huaci.app' : 'http://localhost:8788'))
+  const webOrigins = (env.WEB_ORIGINS || (production ? 'https://huaci.app,https://www.huaci.app' : 'http://localhost:8788'))
     .split(',').map((s) => s.trim()).filter(Boolean);
   for (const origin of webOrigins) {
     let valid = false;
