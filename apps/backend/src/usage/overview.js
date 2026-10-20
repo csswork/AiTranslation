@@ -1,11 +1,11 @@
 /** 用户自己的托管用量总览。按 UTC 天聚合；点数始终保留整数额度，仅在视图展示时换算。 */
+import { usagePeriod } from './period.js';
+
 export async function usageOverview(db, userId, { period = 'month', kind = 'all', now = new Date() } = {}) {
-  period = ['month', '7d', '30d'].includes(period) ? period : 'month';
+  const range = usagePeriod(period, now);
+  ({ period } = range);
   kind = ['all', 'text', 'image'].includes(kind) ? kind : 'all';
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  const from = new Date(today);
-  if (period === 'month') from.setUTCDate(1);
-  else from.setUTCDate(from.getUTCDate() - (period === '7d' ? 6 : 29));
+  const { today, from } = range;
   const { rows } = await db.query(
     `SELECT to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day,
             COUNT(*)::text AS requests,

@@ -88,3 +88,68 @@ test('Google One Tap 使用同一提交保护并显示可见进度，不禁用�
   window.fire('pageshow');
   assert.equal(oneTap.hidden, true);
 });
+
+function sessionPage(signedIn = true) {
+  const windowEvents = {}, documentEvents = {}, requests = [];
+  let reloads = 0;
+  const context = vm.createContext({
+    window: { addEventListener: (name, fn) => { (windowEvents[name] ||= []).push(fn); } },
+    document: {
+      documentElement: { dataset: {} }, body: { hasAttribute: () => signedIn }, hidden: false,
+      querySelector: () => null, querySelectorAll: () => [],
+      addEventListener: (name, fn) => { documentEvents[name] = fn; },
+    },
+    location: { reload: () => { reloads += 1; } },
+    fetch: (url, options) => new Promise((resolve, reject) => { requests.push({ url, options, resolve, reject }); }),
+  });
+  vm.runInContext(source('account.js'), context);
+  return { context, requests, reloads: () => reloads,
+    fire: (name, event = {}) => windowEvents[name]?.forEach((fn) => fn(event)),
+    visibility: () => documentEvents.visibilitychange?.(),
+  };
+}
+const settle = () => new Promise((resolve) => setImmediate(resolve));
+const sessionResponse = (signedIn) => ({ ok: true, json: async () => ({ signedIn }) });
+
+test('扩展退出提示后网页自己验证会话；仅确认退出后刷新，网络异常不退出', async () => {
+  const page = sessionPage();
+  page.fire('aitr:account-changed', { detail: { signedIn: false, url: 'https://evil.example/' } });
+  assert.equal(page.requests.length, 1);
+  assert.equal(page.requests[0].url, '/api/web/session');
+  assert.deepEqual(JSON.parse(JSON.stringify(page.requests[0].options)), { credentials: 'same-origin', cache: 'no-store' });
+  page.requests[0].resolve(sessionResponse(true));
+  await settle();
+  assert.equal(page.reloads(), 0, '不能信任事件携带的登录状态');
+
+  page.fire('focus');
+  page.requests.at(-1).reject(new Error('offline'));
+  await settle();
+  assert.equal(page.reloads(), 0);
+  page.fire('pageshow', { persisted: true });
+  page.requests.at(-1).resolve({ ok: false });
+  await settle();
+  assert.equal(page.reloads(), 0);
+  page.visibility();
+  page.requests.at(-1).resolve(sessionResponse(false));
+  await settle();
+  assert.equal(page.reloads(), 1);
+  page.context.document.hidden = true;
+  page.visibility();
+  assert.equal(page.requests.length, 4, '隐藏标签页不额外查询');
+});
+
+test('晚到的会话响应不覆盖新的核对结果；管理端与未登录页不检查用户会话', async () => {
+  const page = sessionPage();
+  page.fire('focus');
+  page.fire('aitr:account-changed');
+  page.requests[1].resolve(sessionResponse(true));
+  await settle();
+  page.requests[0].resolve(sessionResponse(false));
+  await settle();
+  assert.equal(page.reloads(), 0, '旧的退出响应不影响新登录');
+  const admin = sessionPage(false);
+  admin.fire('focus');
+  admin.fire('aitr:account-changed');
+  admin.fire('pageshow', { persisted: true });
+  assert.equal(admin.requests.length, 0);
+});

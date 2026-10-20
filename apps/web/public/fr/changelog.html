@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Journal des modifications</h2>
-        <p>Les versions publiées et les annonces de la prochaine version sont consignées ici. La version 2.0.0 est en préparation ; le compte et le service hébergé ne sont pas encore disponibles ; pour les modifications plus détaillées, voir l'<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">historique des commits</a> du dépôt.</p>
+        <p>Les principales modifications de chaque version sont consignées ici ; pour les changements plus détaillés, voir l'<a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">historique des commits</a> du dépôt.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
@@ -83,16 +83,16 @@
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">
           <span class="log-ver">v2.0.0</span>
-          <div class="release-status">Bientôt disponible</div>
+          <div>2026-10-20</div>
         </div>
         <div class="log-body">
           <h3>Compte, traduction sans clé et abonnement</h3>
-          <p>Les fonctionnalités de cette version peuvent déjà être testées en local ; le backend n'est pas encore déployé, les points d'essai et l'abonnement ne sont pas encore ouverts au public. Le mode avec clé personnelle reste disponible.</p>
+          <p>L'essai sans clé, le compte et l'abonnement sont disponibles avec cette version. Le mode avec clé personnelle reste disponible.</p>
           <ul>
             <li><b>Connexion au compte</b> : code de vérification par e-mail ou connexion Google, autorisation dans un onglet de la fenêtre actuelle puis retour à l'extension ; la fenêtre contextuelle et la page de paramètres affichent le nom d'utilisateur, le solde et l'état de l'abonnement.</li>
-            <li><b>Essai et points</b> : il est prévu d'offrir un essai visiteur et des points à l'inscription ; les points d'essai restants peuvent être transférés sur le compte, les points offerts n'expirent pas ; déduction précise selon l'usage réel, remboursement en cas d'échec, plus d'arrondi à l'unité supérieure à chaque fois.</li>
+            <li><b>Essai et points</b> : essai visiteur et points offerts à l'inscription ; les points d'essai restants peuvent être transférés sur le compte, les points offerts n'expirent pas ; déduction précise selon l'usage réel, remboursement en cas d'échec, plus d'arrondi systématique à un point par requête.</li>
             <li><b>Texte et images hébergés</b> : aucune clé personnelle requise, prise en charge de la sélection de texte, du panneau de traduction, des zones de page web et de la reconnaissance et traduction d'images. Les sous-titres vidéo déjà reconnus peuvent passer par la traduction de texte hébergée ; l'envoi audio/vidéo et la transcription hébergée ne sont pas encore disponibles.</li>
-            <li><b>Abonnement et facturation</b> : l'espace utilisateur gère l'abonnement, les commandes, l'usage et les sessions de connexion. Après abonnement, usage illimité selon le principe d'utilisation raisonnable ; le traitement des paiements passe par Creem, l'encaissement réel reste à valider avant mise en ligne.</li>
+            <li><b>Abonnement et facturation</b> : l'espace utilisateur permet de gérer l'abonnement, les commandes, l'usage et les sessions de connexion. Après abonnement, usage illimité selon le principe d'utilisation raisonnable ; les paiements sont traités par Creem.</li>
             <li><b>Synchronisation d'état</b> : la déconnexion sur le web révoque la connexion de l'extension autorisée par cette session web, sans affecter les autres navigateurs ; le développement local et l'environnement de production sont traités séparément.</li>
             <li><b>Interface et confidentialité</b> : suppression de l'affichage en double du solde dans la fenêtre contextuelle ; ajout des explications sur les images hébergées et sur le traitement des données de la reconnaissance vocale Google Cloud en option. Aucun contenu de traduction ni image n'est conservé.</li>
           </ul>

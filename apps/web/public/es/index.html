@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Entiende el texto en otro idioma con solo seleccionarlo y hacer clic derecho</title>
-<meta name="description" content="Extensión de traducción de código abierto para Chrome, compatible con selección de texto, áreas de la página web, imágenes y panel de traducción independiente; ofrece 24 idiomas de interfaz y de destino. Se puede usar con tu propia API Key; la prueba sin Key, la cuenta y el servicio de suscripción de la 2.0.0 estarán disponibles próximamente." />
+<meta name="description" content="Extensión de traducción de Chrome de código abierto, compatible con selección de texto, áreas de página web, imágenes y panel de traducción independiente, con 24 idiomas de interfaz y de destino. Permite usar una API Key propia o iniciar sesión para probar sin Key o suscribirse." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://huaci.app/es/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Selecciona texto, haz clic derecho y sigue leyendo. 24 idiomas de interfaz y de destino, compatible con traducción de texto, áreas de la página web e imágenes. Se puede usar con tu propia Key; la cuenta y el servicio sin Key de la 2.0.0 estarán disponibles próximamente." />
+<meta property="og:description" content="Selecciona texto, haz clic derecho y sigue leyendo. 24 idiomas de interfaz y de destino, con traducción de texto, áreas de página web e imágenes. Traducción con Key propia o con puntos sin Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: selecciona, haz clic derecho y sigue leyendo." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/es/#app","name":"AI Selection Translator","url":"https://huaci.app/es/","description":"Extensión de traducción de código abierto para Chrome, compatible con selección de texto, áreas de la página web, imágenes y panel de traducción independiente; ofrece 24 idiomas de interfaz y de destino. Se puede usar con tu propia API Key; la prueba sin Key, la cuenta y el servicio de suscripción de la 2.0.0 estarán disponibles próximamente.","image":"https://huaci.app/assets/og.png","inLanguage":"es","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/es/#app","name":"AI Selection Translator","url":"https://huaci.app/es/","description":"Extensión de traducción de Chrome de código abierto, compatible con selección de texto, áreas de página web, imágenes y panel de traducción independiente, con 24 idiomas de interfaz y de destino. Permite usar una API Key propia o iniciar sesión para probar sin Key o suscribirse.","image":"https://huaci.app/assets/og.png","inLanguage":"es","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,7 +83,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/es/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Próximamente: la prueba sin API Key y los servicios de cuenta y suscripción están en preparación; actualmente aún no están disponibles.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/es/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Ya disponible: la prueba sin Key, las cuentas y el servicio de suscripción ya están abiertos.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Selecciona, haz clic derecho,<br /><span class="dim">y sigue leyendo.</span></h1>
         <p class="hero-sub">Una extensión de Chrome. Selecciona texto, un área completa de la página o una imagen y tradúcela al idioma que prefieras. Los 24 idiomas de interfaz y de destino se eligen de forma independiente; empieza con tu propia API Key de OpenAI, DeepSeek o DeepL.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
@@ -317,7 +317,7 @@
           </div>
           <div>
             <p>Función experimental opcional, desactivada de forma predeterminada. Captura el audio de la pestaña actual, lo reconoce como subtítulos y luego lo traduce; el idioma de reconocimiento de voz y el idioma de destino de la traducción se configuran por separado.</p>
-            <p>De forma predeterminada, el reconocimiento se realiza en el dispositivo y requiere compatibilidad del navegador y la descarga del paquete de idioma; también puedes cambiar manualmente al reconocimiento en la nube de Google, en cuyo caso el audio se envía a Google. La precisión y la compatibilidad del reconocimiento siguen siendo limitadas, por lo que no se recomienda depender de él para contenido importante. El servicio alojado de 2.0.0 solo recibe el texto ya reconocido y no ofrece subida ni transcripción de audio o vídeo.</p>
+            <p>Por defecto, el reconocimiento se realiza en el dispositivo, lo que requiere compatibilidad del navegador y la descarga del paquete de idioma; también se puede cambiar manualmente al reconocimiento en la nube de Google, en cuyo caso el audio se envía a Google. La precisión y la compatibilidad del reconocimiento siguen siendo limitadas; no se recomienda depender de él para contenido importante. El servicio alojado solo recibe el texto reconocido y no ofrece carga ni transcripción de audio o vídeo.</p>
           </div>
         </aside>
       </div>
@@ -356,7 +356,7 @@
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>El contenido solo se envía cuando tú activas la traducción</h2>
-        <p>Con tu propia Key, el contenido que se traduce se envía directamente a la plataforma que elijas. La traducción por puntos, próximamente, se enviará a través de nuestro servidor al proveedor del modelo; el servidor no guarda imágenes, texto original ni traducciones. Consulta la política de privacidad para saber cómo se procesa el audio cuando se activan los subtítulos de vídeo.</p>
+        <p>Con Key propia, el contenido a traducir se envía directamente a la plataforma que elijas. La traducción con puntos se reenvía a través de nuestro servidor al proveedor del modelo; el servidor no guarda imágenes, texto original ni traducciones. El tratamiento del audio con los subtítulos de vídeo activados se describe en la política de privacidad.</p>
       </div>
 
       <div class="facts reveal">
@@ -383,8 +383,8 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Funciona con tu propia clave; el servicio sin clave estará disponible próximamente</h2>
-        <p>La extensión es de código abierto y gratuita. La prueba y la suscripción estarán disponibles con el lanzamiento de la versión 2.0.0; por ahora aún no están habilitadas.</p>
+        <h2>Gratis con tu propia Key, o traduce directamente sin Key</h2>
+        <p>La extensión es gratuita y de código abierto. Desde 2.0.0 se ofrece prueba sin Key y suscripción; basta con iniciar sesión en la extensión para usarlas.</p>
       </div>
 
       <div class="plans reveal">
@@ -400,7 +400,7 @@
         </div>
         <div class="plan">
           <b class="plan-name">Prueba gratuita</b>
-          <span class="plan-status">Próximamente</span>
+          <span class="plan-status">Disponible actualmente</span>
           <p class="plan-price">$0</p>
           <p class="plan-desc">Los visitantes disponen de una prueba de 50.00 puntos y, al registrarse, reciben 200.00 puntos adicionales. Los puntos no caducan y se descuentan según el uso real.</p>
           <ul>
@@ -410,7 +410,7 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Suscripción</b>
-          <span class="plan-status">Precio planificado · Compra aún no disponible</span>
+          <span class="plan-status">Suscripción disponible</span>
           <p class="plan-price">$3.99<span>/ mes</span></p>
           <p class="plan-alt">O $29.99 / año, un 37 % menos que el pago mensual</p>
           <p class="plan-desc">La traducción por puntos es de uso ilimitado y puede cancelarse en cualquier momento.</p>
@@ -418,11 +418,11 @@
             <li>Sin límite de veces conforme a la política de uso razonable</li>
             <li>Reembolso completo si se solicita dentro de los 7 días posteriores al primer pago</li>
           </ul>
-          <a class="btn btn-ghost" href="/es/changelog.html#v2-0-0">Ver avance de 2.0.0</a>
+          <a class="btn btn-ghost" href="/es/changelog.html#v2-0-0">Ver novedades de 2.0.0</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">Los precios anteriores son precios planificados; cuando se habiliten oficialmente, prevalecerán los del centro de usuario. Los precios se expresan en dólares estadounidenses y pueden incluir impuestos adicionales; <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> actúa como distribuidor y procesa los pagos; no tenemos acceso a los datos de la tarjeta bancaria. Consulta los <a class="link" href="/es/terms.html">términos del servicio</a>.</p>
+      <p class="after-facts reveal">El precio final es el que se muestra en el centro de usuario. Los precios se expresan en dólares estadounidenses y pueden incluir impuestos adicionales; <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> actúa como distribuidor y procesa el pago; no tenemos acceso a los datos de la tarjeta bancaria. Consulta los <a class="link" href="/es/terms.html">términos del servicio</a>.</p>
     </div>
   </section>
 
@@ -431,7 +431,7 @@
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
         <h2>Úsalo en la extensión, gestiónalo en el centro de usuario</h2>
-        <p>El servicio de cuenta está previsto para 2.0.0. La extensión es el punto de entrada principal para iniciar sesión y traducir; el sitio web y el centro de usuario comparten la misma cuenta y los mismos beneficios de suscripción.</p>
+        <p>El servicio de cuentas se lanza con 2.0.0. La extensión es el punto de entrada principal para iniciar sesión y traducir; el sitio web y el centro de usuario comparten la misma cuenta y los mismos beneficios de suscripción.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">

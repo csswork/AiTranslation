@@ -185,16 +185,9 @@
       "index.html"
     ]
   },
-  "已发布版本与下一版预告都记录在这里。2.0.0 正在准备发布，账户与托管服务尚未上线；更细的改动见仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
+  "各版本的主要改动都记录在这里；更细的改动见仓库的<a class=\"link\" href=\"https://github.com/csswork/AiTranslation/commits/main\" target=\"_blank\" rel=\"noopener\">提交记录</a>。": {
     "kind": "text",
     "tag": "p",
-    "pages": [
-      "changelog.html"
-    ]
-  },
-  "即将发布": {
-    "kind": "text",
-    "tag": "div",
     "pages": [
       "changelog.html"
     ]
@@ -206,7 +199,7 @@
       "changelog.html"
     ]
   },
-  "本版功能已可在本地测试，后端尚未部署，试用点数与订阅尚未向公众开放。自带 Key 模式继续保留。": {
+  "免 Key 试用、账户与订阅服务随本版开放。自带 Key 模式继续保留。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -220,7 +213,7 @@
       "changelog.html"
     ]
   },
-  "<b>试用与点数</b>：计划提供访客试用与注册赠送，剩余试用点数可转入账户，赠送点数不过期；按实际用量精确扣减，失败返还，不再每次向上取整扣一点。": {
+  "<b>试用与点数</b>：提供访客试用与注册赠送，剩余试用点数可转入账户，赠送点数不过期；按实际用量精确扣减，失败返还，不再每次向上取整扣一点。": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -234,7 +227,7 @@
       "changelog.html"
     ]
   },
-  "<b>订阅与账单</b>：用户中心管理订阅、订单、用量和登录会话。订阅后按合理使用原则无限使用，支付计划通过 Creem 处理，正式收款仍待上线验证。": {
+  "<b>订阅与账单</b>：用户中心管理订阅、订单、用量和登录会话。订阅后按合理使用原则无限使用，支付由 Creem 处理。": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -376,7 +369,7 @@
       "index.html"
     ]
   },
-  "@meta:description|开源 Chrome 翻译扩展，支持划词、网页区域、图片与独立翻译面板，提供 24 种界面与目标语言。自带 API Key 即可使用；2.0.0 的免 Key 试用、账户与订阅服务即将上线。": {
+  "@meta:description|开源 Chrome 翻译扩展，支持划词、网页区域、图片与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -390,7 +383,7 @@
       "index.html"
     ]
   },
-  "@meta:og:description|选中文字，右键，然后接着读。24 种界面与目标语言，支持文字、网页区域与图片翻译。自带 Key 可用，2.0.0 账户与免 Key 服务即将上线。": {
+  "@meta:og:description|选中文字，右键，然后接着读。24 种界面与目标语言，支持文字、网页区域与图片翻译。自带 Key 或免 Key 点数翻译均可。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -411,7 +404,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.0.0</span> <span>即将发布：免 Key 试用、账户与订阅服务正在准备，当前尚未开放。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.0.0</span> <span>已上架：免 Key 试用、账户与订阅服务现已开放。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -719,7 +712,7 @@
       "index.html"
     ]
   },
-  "默认在本机识别，需浏览器支持并下载语言包；也可主动切换到 Google 云端识别，此时声音会发给 Google。识别准确度和兼容性仍有限，不建议依赖它处理重要内容。2.0.0 的托管服务只接收识别后的文字，不提供音视频上传与转写。": {
+  "默认在本机识别，需浏览器支持并下载语言包；也可主动切换到 Google 云端识别，此时声音会发给 Google。识别准确度和兼容性仍有限，不建议依赖它处理重要内容。托管服务只接收识别后的文字，不提供音视频上传与转写。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -789,7 +782,7 @@
       "index.html"
     ]
   },
-  "自带 Key 时，翻译内容直接发往你选的平台。即将上线的点数翻译会经我们的服务器转给模型服务商，服务器不保存图片、原文或译文。视频字幕开启后的声音处理方式见隐私政策。": {
+  "自带 Key 时，翻译内容直接发往你选的平台。点数翻译会经我们的服务器转给模型服务商，服务器不保存图片、原文或译文。视频字幕开启后的声音处理方式见隐私政策。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -845,14 +838,14 @@
       "index.html"
     ]
   },
-  "自带 Key 可用，免 Key 服务即将上线": {
+  "自带 Key 免费用，也可以免 Key 直接翻译": {
     "kind": "text",
     "tag": "h2",
     "pages": [
       "index.html"
     ]
   },
-  "扩展开源免费。试用与订阅随 2.0.0 上线，目前尚未开放。": {
+  "扩展开源免费。2.0.0 起提供免 Key 试用与订阅，在扩展里登录即可使用。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -908,13 +901,6 @@
       "index.html"
     ]
   },
-  "即将上线": {
-    "kind": "text",
-    "tag": "span",
-    "pages": [
-      "index.html"
-    ]
-  },
   "访客试用 50.00 点，注册再送 200.00 点。点数不过期，按实际用量扣减。": {
     "kind": "text",
     "tag": "p",
@@ -943,7 +929,7 @@
       "index.html"
     ]
   },
-  "计划价格 · 尚未开放购买": {
+  "当前可订阅": {
     "kind": "text",
     "tag": "span",
     "pages": [
@@ -985,14 +971,14 @@
       "index.html"
     ]
   },
-  "查看 2.0.0 预告": {
+  "查看 2.0.0 更新": {
     "kind": "text",
     "tag": "a",
     "pages": [
       "index.html"
     ]
   },
-  "以上为计划价格，正式开放时以用户中心为准。价格以美元计，可能另加税费；由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商处理付款，我们不接触银行卡信息。详见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
+  "实际价格以用户中心显示为准。价格以美元计，可能另加税费；由 <a class=\"link\" href=\"https://www.creem.io\" target=\"_blank\" rel=\"noopener\">Creem</a> 作为经销商处理付款，我们不接触银行卡信息。详见<a class=\"link\" href=\"terms.html\">服务条款</a>。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1006,7 +992,7 @@
       "index.html"
     ]
   },
-  "账户服务随 2.0.0 准备上线。扩展是登录与翻译的主要入口，官网和用户中心共用同一个账户及订阅权益。": {
+  "账户服务随 2.0.0 上线。扩展是登录与翻译的主要入口，官网和用户中心共用同一个账户及订阅权益。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1202,7 +1188,7 @@
       "privacy.html"
     ]
   },
-  "账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。以下同时说明这些服务开放后的数据处理方式。": {
+  "账户、点数与订阅服务已随 2.0.0 上线，以下说明这些服务的数据处理方式。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1791,7 +1777,7 @@
       "terms.html"
     ]
   },
-  "账户、点数与订阅服务计划随 2.0.0 上线，目前尚未向公众开放。相关条款在服务开放后适用，当前不会通过本网站收取订阅费用。": {
+  "账户、点数与订阅服务已随 2.0.0 上线，相关条款自即日起适用。": {
     "kind": "text",
     "tag": "p",
     "pages": [

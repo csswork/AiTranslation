@@ -15,7 +15,7 @@ import {
   normalizeEmail, unlinkIdentity, updateEmail, updateUsername,
 } from '../../src/auth/users.js';
 import { accountState, latestSubscription } from '../../src/billing/entitlements.js';
-import { creditBalance, ledgerEntries, usageEvents } from '../../src/credits/ledger.js';
+import { creditBalance } from '../../src/credits/ledger.js';
 import { linkBrowser, mergeBrowserGuest } from '../../src/guest/index.js';
 import {
   clearPreference, clearSessionCookie, clearTemp, getBrowserMark, getSessionToken, getTemp, setBrowserMark,
@@ -24,6 +24,7 @@ import {
 import { clientAddress, createRateLimiter } from '../../src/http/security.js';
 import { isLocale, k } from '../../src/i18n/index.js';
 import { usageOverview } from '../../src/usage/overview.js';
+import { creditActivity } from '../../src/usage/activity.js';
 import { THEMES, safePath, uiContext } from './context.js';
 import * as views from './views.js';
 
@@ -448,7 +449,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     });
   });
   app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
-    user: user(c), entries: await ledgerEntries(pool, user(c).id), events: await usageEvents(pool, user(c).id),
+    user: user(c), activity: await creditActivity(pool, user(c).id, { period: c.req.query('period') }),
   }));
   app.get('/help', requireUser, (c) => render(c, views.helpPage, { user: user(c) }));
 

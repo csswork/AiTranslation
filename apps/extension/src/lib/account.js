@@ -209,7 +209,15 @@
     } catch {
       /* 服务端不可达也照样退出本机登录；会话会自然过期，也可在网页端退出 */
     }
-    return signOutLocally(token);
+    const status = await signOutLocally(token);
+    // 只提示同一环境的网页自行核对服务端状态，不传账号数据、不替网页改 Cookie 或强制刷新。
+    try {
+      const tabs = await chrome.tabs.query({});
+      await Promise.allSettled(tabs
+        .filter((tab) => AITrEnv.isAccountPage(tab.url) || AITrEnv.isWebsitePage(tab.url))
+        .map((tab) => chrome.tabs.sendMessage(tab.id, { type: 'account-session-changed' }, { frameId: 0 })));
+    } catch { /* 已关闭的标签页或没有内容脚本的旧页面在恢复焦点时核对 */ }
+    return status;
   }
 
   const FAILURES = {

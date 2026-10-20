@@ -269,6 +269,7 @@ p { margin: 0 0 var(--s2); }
 .overview .chart .tick { fill: var(--text-3); font: 10px system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .overview .usage-primary { --usage-color: var(--accent); }
 .overview .usage-secondary { --usage-color: var(--accent-2); }
+.overview .usage-failed { --usage-color: var(--error); }
 .overview .chart .bar, .overview .chart .area, .overview .chart .dot, .overview .legend i { fill: var(--usage-color); }
 .overview .chart .line { fill: none; stroke: var(--usage-color); stroke-width: 2; stroke-linejoin: round; }
 .overview .chart .area { opacity: .15; }
@@ -304,6 +305,13 @@ p { margin: 0 0 var(--s2); }
 .overview-plan { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .overview-plan strong { font-weight: 550; }
 .overview-plan-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.credit-activity { margin-bottom: var(--s3); }
+.credit-activity .overview-chart { display: flex; flex-direction: column; }
+.credit-activity .chart-interactive, .credit-activity .overview-empty { margin-top: auto; }
+.credit-activity-note { margin: 14px 0 0; font-size: .74rem; color: var(--text-3); }
+.activity-details > summary { cursor: pointer; font-weight: 600; }
+.activity-details > summary > span { margin-inline-start: 10px; color: var(--text-3); font-size: .8rem; font-weight: 400; }
+.activity-details[open] > summary { margin-bottom: 18px; }
 @media (max-width: 900px) {
   .overview-metrics { gap: 10px; }
   .overview-metric { padding: 18px; }
@@ -320,6 +328,7 @@ p { margin: 0 0 var(--s2); }
   .overview-chart-head { padding-inline: 6px; }
   .overview-chart-main .chart { min-height: 180px; }
   .overview .chart .tick { font-size: 12px; }
+  .credit-activity .chart .tick { font-size: 16px; }
   .overview-chart-main .chart .tick { font-size: 23px; }
   .overview-filter { padding-inline-start: 10px; gap: 7px; }
   .overview-filter > span { padding-inline-end: 7px; }

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · ページ上の外国語も、選択して右クリックするだけで読めます</title>
-<meta name="description" content="オープンソースの Chrome 翻訳拡張機能。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key で利用可能。2.0.0 の Key 不要の試用、アカウント、サブスクリプションサービスは近日公開予定です。" />
+<meta name="description" content="オープンソースの Chrome 翻訳拡張機能です。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key を持ち込むことも、ログイン後にキー不要で試用またはサブスクリプションすることもできます。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content="https://huaci.app/ja/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み続ける。24 種類のインターフェース言語とターゲット言語、テキスト、Web ページ領域、画像翻訳に対応。独自 Key で利用可能。2.0.0 のアカウントと Key 不要サービスは近日公開予定です。" />
+<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み進められます。24 種類のインターフェース言語とターゲット言語に対応し、テキスト、Web ページ領域、画像の翻訳をサポートします。独自キーまたはキー不要のポイント翻訳のいずれも利用できます。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator：選択して、右クリックして、そのまま読み続ける。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ja/#app","name":"AI Selection Translator","url":"https://huaci.app/ja/","description":"オープンソースの Chrome 翻訳拡張機能。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key で利用可能。2.0.0 の Key 不要の試用、アカウント、サブスクリプションサービスは近日公開予定です。","image":"https://huaci.app/assets/og.png","inLanguage":"ja","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ja/#app","name":"AI Selection Translator","url":"https://huaci.app/ja/","description":"オープンソースの Chrome 翻訳拡張機能です。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key を持ち込むことも、ログイン後にキー不要で試用またはサブスクリプションすることもできます。","image":"https://huaci.app/assets/og.png","inLanguage":"ja","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,7 +83,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ja/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>近日公開予定：キー不要の試用、アカウントおよびサブスクリプションサービスを準備中で、現在はまだ利用できません。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ja/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>公開済み：キー不要の試用、アカウント、サブスクリプションサービスが提供開始されました。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
         <p class="hero-sub">Chrome 拡張機能です。テキスト、Web ページの領域、または画像を選択するだけで、使い慣れた言語に翻訳できます。24 種類の UI 言語と翻訳先言語は個別に選択でき、ご自身の OpenAI、DeepSeek、または DeepL の API Key で利用を開始できます。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
@@ -317,7 +317,7 @@
           </div>
           <div>
             <p>任意の実験的機能で、デフォルトではオフです。現在のタブの音声を読み取り、字幕として認識してから翻訳します。音声認識言語と翻訳先はそれぞれ設定します。</p>
-            <p>デフォルトでは本機で認識し、ブラウザの対応と言語パックのダウンロードが必要です。Google のクラウド認識に切り替えることもでき、その場合音声は Google に送信されます。認識精度と互換性は依然として限定的で、重要な内容の処理に依存することは推奨しません。2.0.0 のホスト型サービスは認識後のテキストのみを受け取り、音声・動画のアップロードや文字起こしは提供しません。</p>
+            <p>既定では本機で認識し、ブラウザの対応と言語パックのダウンロードが必要です。Google のクラウド認識へ能動的に切り替えることもでき、その場合音声は Google へ送信されます。認識精度と互換性には依然として限界があり、重要な内容の処理をこれに依存することは推奨しません。ホストサービスは認識後のテキストのみを受信し、音声・動画のアップロードや文字起こしは提供しません。</p>
           </div>
         </aside>
       </div>
@@ -356,7 +356,7 @@
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>翻訳を実行したときのみ、内容が送信されます</h2>
-        <p>ご自身の Key を使用する場合、翻訳内容は選択したプラットフォームに直接送信されます。近日公開予定のポイント翻訳では、当社のサーバーを経由してモデルサービス提供者に転送され、サーバーは画像、原文、訳文を保存しません。動画字幕を有効にした場合の音声の処理方法については、プライバシーポリシーをご覧ください。</p>
+        <p>独自キーの場合、翻訳内容は選択したプラットフォームへ直接送信されます。ポイント翻訳では当社のサーバーを経由してモデルサービス提供者へ転送され、サーバーは画像、原文、訳文を保存しません。動画字幕を有効にした際の音声の取り扱いについてはプライバシーポリシーを参照してください。</p>
       </div>
 
       <div class="facts reveal">
@@ -383,8 +383,8 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>独自のKeyで利用可能、Key不要サービスは近日公開予定</h2>
-        <p>拡張機能はオープンソースで無料です。試用とサブスクリプションは 2.0.0 のリリースに合わせて提供予定で、現在はまだ利用できません。</p>
+        <h2>独自キーで無料利用、キー不要でそのまま翻訳も可能</h2>
+        <p>拡張機能はオープンソースで無料です。2.0.0 以降、キー不要の試用とサブスクリプションを提供しており、拡張機能内でログインすれば利用できます。</p>
       </div>
 
       <div class="plans reveal">
@@ -400,7 +400,7 @@
         </div>
         <div class="plan">
           <b class="plan-name">無料トライアル</b>
-          <span class="plan-status">近日公開予定</span>
+          <span class="plan-status">現在利用可能</span>
           <p class="plan-price">$0</p>
           <p class="plan-desc">ゲスト試用は 50.00 ポイント、登録でさらに 200.00 ポイントを進呈。ポイントは失効せず、実際の利用量に応じて減算されます。</p>
           <ul>
@@ -410,7 +410,7 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">サブスクリプション</b>
-          <span class="plan-status">予定価格 · 購入はまだできません</span>
+          <span class="plan-status">現在サブスクリプション可能</span>
           <p class="plan-price">$3.99<span>/ 月</span></p>
           <p class="plan-alt">または $29.99 / 年、月払いより 37% お得</p>
           <p class="plan-desc">ポイント翻訳は無制限に利用でき、いつでも解約できます。</p>
@@ -418,11 +418,11 @@
             <li>合理的な使用の原則に基づき回数無制限</li>
             <li>初回支払いから 7 日以内は全額返金を申請可能</li>
           </ul>
-          <a class="btn btn-ghost" href="/ja/changelog.html#v2-0-0">2.0.0の予告を見る</a>
+          <a class="btn btn-ghost" href="/ja/changelog.html#v2-0-0">2.0.0 の更新を見る</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">上記は予定価格であり、正式提供時はユーザーセンターの表示に準じます。価格は米ドル建てで、別途税金が加算される場合があります。決済は <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> が販売代理店として処理し、当方はカード情報に一切触れません。詳細は<a class="link" href="/ja/terms.html">利用規約</a>をご覧ください。</p>
+      <p class="after-facts reveal">実際の価格はユーザーセンターの表示を基準とします。価格は米ドル建てで、別途税金が加算される場合があります。決済は販売代理店である <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> が処理し、当社はカード情報に触れません。詳細は<a class="link" href="/ja/terms.html">利用規約</a>を参照してください。</p>
     </div>
   </section>
 
@@ -431,7 +431,7 @@
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
         <h2>拡張機能で使用し、ユーザーセンターで管理</h2>
-        <p>アカウントサービスは2.0.0でリリース予定です。拡張機能はログインと翻訳の主要な入口であり、公式サイトとユーザーセンターは同じアカウントおよびサブスクリプション特典を共有します。</p>
+        <p>アカウントサービスは 2.0.0 で公開されました。拡張機能はログインと翻訳の主要な入口であり、公式サイトとユーザーセンターは同一のアカウントおよびサブスクリプション特典を共有します。</p>
       </div>
       <div class="facts reveal">
         <div class="fact">

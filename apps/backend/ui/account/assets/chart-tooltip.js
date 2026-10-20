@@ -46,7 +46,7 @@
           const label = document.createElement('span');
           if (!item.total) {
             const swatch = document.createElement('i');
-            swatch.className = ['usage-primary', 'usage-secondary', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6'].includes(item.tone) ? item.tone : 'usage-primary';
+            swatch.className = ['usage-primary', 'usage-secondary', 'usage-failed', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6'].includes(item.tone) ? item.tone : 'usage-primary';
             swatch.setAttribute('aria-hidden', 'true');
             label.appendChild(swatch);
           }

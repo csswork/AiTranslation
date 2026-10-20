@@ -2,6 +2,24 @@
 (() => {
   const root = document.documentElement;
 
+  // 扩展退出、切回标签页或恢复缓存页后核对网页会话；管理端与未登录页不参与。
+  if (document.body?.hasAttribute('data-web-session')) {
+    let revision = 0;
+    const checkSession = async () => {
+      const current = ++revision;
+      try {
+        const response = await fetch('/api/web/session', { credentials: 'same-origin', cache: 'no-store' });
+        if (!response.ok) return;
+        const state = await response.json();
+        if (current === revision && state.signedIn === false) location.reload();
+      } catch { /* 网络异常不视为退出登录 */ }
+    };
+    window.addEventListener('aitr:account-changed', checkSession);
+    window.addEventListener('focus', checkSession);
+    window.addEventListener('pageshow', (event) => { if (event.persisted) checkSession(); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) checkSession(); });
+  }
+
   // 登录各步骤共用锁，避免邮箱、Google、验证码和二步验证被重复提交。
   let authPending = false;
   const restoreAuth = [];

@@ -3,7 +3,7 @@
  *   POST /guest      安装后静默领取访客试用（见 src/guest），返回访客会话令牌与欢迎页地址
  *   POST /token      授权码 + PKCE 换取扩展会话令牌；带上访客令牌时把访客合并进正式账户
  *   GET  /me         当前用户名、用户类型、点数与订阅状态、托管翻译是否可用
- *   POST /logout     撤销当前扩展会话
+ *   POST /logout     撤销当前扩展及其关联的网页登录
  *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据
  *   POST /read-image 托管图片识别；文字随后走 /translate，按实际文字扣点
  *
@@ -13,7 +13,7 @@
 import { randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
 import { isAllowedExtension, redeemAuthCode } from '../auth/extension.js';
-import { createSession, revokeSession, validateSession } from '../auth/sessions.js';
+import { createSession, revokeExtensionLogin, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
 import { countCharacters, creditsToUnits, displayCredits } from '../credits/units.js';
@@ -163,7 +163,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
 
   app.post('/logout', requireExtension, async (c) => {
     const { user, session } = c.get('auth');
-    await revokeSession(pool, user.id, session.id);
+    await revokeExtensionLogin(pool, user.id, session.id);
     return c.json({ ok: true });
   });
 

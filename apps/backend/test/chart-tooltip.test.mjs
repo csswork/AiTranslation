@@ -93,10 +93,12 @@ test('管理图表提示沿用对应系列的颜色，未知样式名不会注�
   points[0].dataset.chartValues = JSON.stringify([
     { label: '缓存命中', value: '100', tone: 'c6' },
     { label: '其他', value: '0', tone: 'unexpected class' },
+    { label: '失败', value: '1', tone: 'usage-failed' },
   ]);
   root.fire('pointermove', { target: points[0], clientX: 180, clientY: 170 });
   assert.equal(tip.children[1].children[0].children[0].className, 'c6');
   assert.equal(tip.children[2].children[0].children[0].className, 'usage-primary');
+  assert.equal(tip.children[3].children[0].children[0].className, 'usage-failed');
 });
 
 test('触摸点击保留提示，点图外或取消后关闭，触摸移动不触发悬停', () => {

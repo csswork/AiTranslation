@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Fremdsprachige Texte im Web mit einem Rechtsklick verstehen</title>
-<meta name="description" content="Open-Source-Chrome-Übersetzungserweiterung, unterstützt Textauswahl, Webseitenbereiche, Bilder und einen eigenständigen Übersetzungsbereich, bietet 24 Oberflächen- und Zielsprachen. Mit eigenem API Key sofort nutzbar; die Key-freie Testphase, Konto- und Abonnementdienste von 2.0.0 sind demnächst verfügbar." />
+<meta name="description" content="Open-Source-Übersetzungserweiterung für Chrome mit Unterstützung für Textauswahl, Webseitenbereiche, Bilder und ein eigenständiges Übersetzungsfenster; bietet 24 Oberflächen- und Zielsprachen. Eigener API Key kann verwendet werden, alternativ ist nach Anmeldung eine Key-freie Testphase oder ein Abonnement möglich." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="de_DE" />
 <meta property="og:url" content="https://huaci.app/de/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Text markieren, Rechtsklick, weiterlesen. 24 Oberflächen- und Zielsprachen, unterstützt Text-, Webseitenbereich- und Bildübersetzung. Mit eigenem Key nutzbar, Konto- und Key-freie Dienste von 2.0.0 sind demnächst verfügbar." />
+<meta property="og:description" content="Text markieren, Rechtsklick, und weiterlesen. 24 Oberflächen- und Zielsprachen, Unterstützung für Text-, Webseitenbereich- und Bildübersetzung. Übersetzung mit eigenem Key oder Key-frei über Punkte möglich." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: markieren, Rechtsklick, weiterlesen." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/de/#app","name":"AI Selection Translator","url":"https://huaci.app/de/","description":"Open-Source-Chrome-Übersetzungserweiterung, unterstützt Textauswahl, Webseitenbereiche, Bilder und einen eigenständigen Übersetzungsbereich, bietet 24 Oberflächen- und Zielsprachen. Mit eigenem API Key sofort nutzbar; die Key-freie Testphase, Konto- und Abonnementdienste von 2.0.0 sind demnächst verfügbar.","image":"https://huaci.app/assets/og.png","inLanguage":"de","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/de/#app","name":"AI Selection Translator","url":"https://huaci.app/de/","description":"Open-Source-Übersetzungserweiterung für Chrome mit Unterstützung für Textauswahl, Webseitenbereiche, Bilder und ein eigenständiges Übersetzungsfenster; bietet 24 Oberflächen- und Zielsprachen. Eigener API Key kann verwendet werden, alternativ ist nach Anmeldung eine Key-freie Testphase oder ein Abonnement möglich.","image":"https://huaci.app/assets/og.png","inLanguage":"de","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,7 +83,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/de/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Demnächst verfügbar: Key-freie Testversion, Konto- und Abonnementdienste sind in Vorbereitung und derzeit noch nicht verfügbar.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/de/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Verfügbar: Key-freie Testphase sowie Konto- und Abonnementdienste sind jetzt geöffnet.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Markieren, Rechtsklick,<br /><span class="dim">weiterlesen.</span></h1>
         <p class="hero-sub">Eine Chrome-Erweiterung. Text markieren, einen ganzen Seitenbereich oder ein Bild auswählen und in die vertraute Sprache übersetzen. 24 Oberflächen- und Zielsprachen sind unabhängig wählbar; mit einem eigenen OpenAI-, DeepSeek- oder DeepL-API Key kann es sofort losgehen.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
@@ -317,7 +317,7 @@
           </div>
           <div>
             <p>Optionales experimentelles Feature, standardmäßig deaktiviert. Der Ton des aktuellen Tabs wird erfasst, als Untertitel erkannt und anschließend übersetzt; Spracherkennungssprache und Übersetzungsziel werden getrennt eingestellt.</p>
-            <p>Standardmäßig erfolgt die Erkennung lokal; dafür muss der Browser dies unterstützen und das Sprachpaket heruntergeladen sein. Es kann auch aktiv auf die Google-Cloud-Erkennung umgeschaltet werden, wobei der Ton an Google gesendet wird. Erkennungsgenauigkeit und Kompatibilität sind weiterhin begrenzt; für wichtige Inhalte ist eine Abhängigkeit davon nicht zu empfehlen. Der gehostete Dienst von 2.0.0 empfängt nur den erkannten Text und bietet keinen Audio- oder Video-Upload und keine Transkription.</p>
+            <p>Standardmäßig erfolgt die Erkennung lokal; der Browser muss dies unterstützen und das Sprachpaket herunterladen. Es kann auch aktiv auf die Google-Cloud-Erkennung umgeschaltet werden, wobei die Audiodaten an Google gesendet werden. Erkennungsgenauigkeit und Kompatibilität sind weiterhin begrenzt; es wird nicht empfohlen, sich bei wichtigen Inhalten darauf zu verlassen. Der gehostete Dienst erhält nur den erkannten Text; Audio- und Video-Uploads sowie Transkription werden nicht angeboten.</p>
           </div>
         </aside>
       </div>
@@ -356,7 +356,7 @@
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>Inhalte werden erst gesendet, wenn du die Übersetzung auslöst</h2>
-        <p>Mit eigenem Key werden die Übersetzungsinhalte direkt an die gewählte Plattform gesendet. Die in Kürze erscheinende Punkte-Übersetzung wird über unsere Server an den Modellanbieter weitergeleitet; der Server speichert keine Bilder, Ausgangstexte oder Übersetzungen. Wie der Ton bei aktivierten Video-Untertiteln verarbeitet wird, steht in der Datenschutzrichtlinie.</p>
+        <p>Bei eigenem Key werden die Übersetzungsinhalte direkt an die gewählte Plattform gesendet. Bei der Punkteübersetzung werden sie über unsere Server an den Modellanbieter weitergeleitet; die Server speichern weder Bilder noch Ausgangstext oder Übersetzung. Wie Audiodaten bei aktivierten Videountertiteln verarbeitet werden, ist in der Datenschutzerklärung beschrieben.</p>
       </div>
 
       <div class="facts reveal">
@@ -383,8 +383,8 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Mit eigenem Key nutzbar, Key-freier Dienst in Vorbereitung</h2>
-        <p>Die Erweiterung ist quelloffen und kostenlos. Testphase und Abonnement erscheinen mit Version 2.0.0 und sind derzeit noch nicht verfügbar.</p>
+        <h2>Kostenlos mit eigenem Key oder direkt Key-frei übersetzen</h2>
+        <p>Die Erweiterung ist Open Source und kostenlos. Ab 2.0.0 werden eine Key-freie Testphase und Abonnements angeboten; nach Anmeldung in der Erweiterung sind sie nutzbar.</p>
       </div>
 
       <div class="plans reveal">
@@ -400,7 +400,7 @@
         </div>
         <div class="plan">
           <b class="plan-name">Kostenlos testen</b>
-          <span class="plan-status">In Vorbereitung</span>
+          <span class="plan-status">Derzeit verfügbar</span>
           <p class="plan-price">$0</p>
           <p class="plan-desc">Gäste erhalten 50.00 Punkte zum Testen, bei Registrierung zusätzlich 200.00 Punkte. Punkte verfallen nicht und werden nach tatsächlicher Nutzung abgezogen.</p>
           <ul>
@@ -410,7 +410,7 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Abonnement</b>
-          <span class="plan-status">Geplanter Preis · Noch nicht käuflich erwerbbar</span>
+          <span class="plan-status">Derzeit abonnierbar</span>
           <p class="plan-price">$3.99<span>/ Monat</span></p>
           <p class="plan-alt">Oder $29.99 / Jahr, 37 % günstiger als die monatliche Zahlung</p>
           <p class="plan-desc">Punkte ermöglichen unbegrenzte Übersetzungen; jederzeit kündbar.</p>
@@ -418,11 +418,11 @@
             <li>Unbegrenzte Nutzung nach dem Grundsatz der angemessenen Nutzung</li>
             <li>Volle Rückerstattung innerhalb von 7 Tagen nach der ersten Zahlung möglich</li>
           </ul>
-          <a class="btn btn-ghost" href="/de/changelog.html#v2-0-0">Vorschau auf 2.0.0 ansehen</a>
+          <a class="btn btn-ghost" href="/de/changelog.html#v2-0-0">Änderungen in 2.0.0 ansehen</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">Die oben genannten Preise sind Planungspreise; bei offizieller Freigabe gelten die Angaben im Nutzerzentrum. Die Preise sind in US-Dollar angegeben, Steuern können zusätzlich anfallen; die Zahlungsabwicklung erfolgt durch <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> als Händler, wir haben keinen Zugriff auf Kartendaten. Details siehe <a class="link" href="/de/terms.html">Nutzungsbedingungen</a>.</p>
+      <p class="after-facts reveal">Der tatsächliche Preis richtet sich nach der Anzeige im Benutzerzentrum. Die Preise sind in US-Dollar angegeben; es können zusätzlich Steuern anfallen. <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> wickelt die Zahlung als Wiederverkäufer ab; wir erhalten keine Kartendaten. Details siehe <a class="link" href="/de/terms.html">Nutzungsbedingungen</a>.</p>
     </div>
   </section>
 
@@ -431,7 +431,7 @@
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
         <h2>In der Erweiterung nutzen, im Nutzerzentrum verwalten</h2>
-        <p>Die Kontodienste werden mit 2.0.0 bereitgestellt. Die Erweiterung ist der Hauptzugang für Anmeldung und Übersetzung; Website und Nutzerzentrum teilen dasselbe Konto und dieselben Abonnementvorteile.</p>
+        <p>Die Kontodienste sind mit 2.0.0 online gegangen. Die Erweiterung ist der Hauptzugang für Anmeldung und Übersetzung; Website und Benutzerzentrum nutzen dasselbe Konto und dieselben Abonnementvorteile.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">

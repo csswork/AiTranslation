@@ -21,6 +21,7 @@ import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
 import { clearPreference, setPreference } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter, limitBody } from '../../src/http/security.js';
 import { SETTINGS } from '../../src/settings/index.js';
+import { creditActivity } from '../../src/usage/activity.js';
 import { THEMES, safePath } from '../account/context.js';
 import * as views from './views.js';
 
@@ -267,16 +268,15 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
     if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, ledger, events, sessions, api] = await Promise.all([
+    const [state, subs, activity, sessions, api] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
-      pool.query('SELECT entry_type, amount_units, reason, created_at FROM credit_ledger WHERE user_id = $1 ORDER BY created_at DESC LIMIT 100', [u.id]),
-      pool.query('SELECT audience, chars, cost_units, model, input_tokens, output_tokens, cost_micros, latency_ms, target_lang, status, error, created_at FROM usage_events WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50', [u.id]),
+      creditActivity(pool, u.id, { period: c.req.query('period') }),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
       apiUsageForUser(pool, u.id, 30),
     ]);
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, ledger: ledger.rows, events: events.rows, sessions: sessions.rows[0].n, api, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, note: takeNote(c),
     }));
   });
 
@@ -330,15 +330,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   /* ---------- A6 点数账本 ---------- */
 
   app.get('/ledger', requireAdmin, async (c) => {
-    const types = ['trial_grant', 'guest_grant', 'transfer', 'adjust', 'usage', 'refund', 'void'];
-    const type = types.includes(c.req.query('type')) ? c.req.query('type') : '';
-    const { rows } = await pool.query(
-      `SELECT l.user_id, u.username, l.entry_type, l.amount_units, l.reason, l.created_at
-       FROM credit_ledger l JOIN users u ON u.id = l.user_id
-       WHERE $1 = '' OR l.entry_type = $1 ORDER BY l.created_at DESC LIMIT 300`,
-      [type],
-    );
-    return page(c, () => views.ledgerPage({ admin: admin(c), entries: rows, type }));
+    const activity = await creditActivity(pool, null, { period: c.req.query('period'), incomeType: c.req.query('type'), limit: 300 });
+    return page(c, () => views.ledgerPage({ admin: admin(c), activity }));
   });
 
   /* ---------- A4 / A7 规则与服务配置 ---------- */

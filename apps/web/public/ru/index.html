@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Понимайте иностранный текст на любой странице одним щелчком правой кнопки</title>
-<meta name="description" content="Открытое расширение для перевода в Chrome: перевод выделенного текста, областей веб-страницы, изображений и отдельная панель перевода, 24 языка интерфейса и целевых языков. Работает со своим API Key; пробный доступ без ключа, аккаунт и подписка в версии 2.0.0 скоро появятся." />
+<meta name="description" content="Открытое расширение для Chrome с переводом: перевод выделенного текста, областей страницы, изображений и отдельная панель перевода; 24 языка интерфейса и целевых языков. Можно использовать свой API Key либо войти и пользоваться пробным доступом без ключа или подпиской." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="ru_RU" />
 <meta property="og:url" content="https://huaci.app/ru/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Выделите текст, нажмите правую кнопку и читайте дальше. 24 языка интерфейса и целевых языков, перевод текста, областей веб-страницы и изображений. Работает со своим ключом, аккаунт и сервис без ключа в версии 2.0.0 скоро появятся." />
+<meta property="og:description" content="Выделите текст, нажмите правую кнопку мыши и продолжайте читать. 24 языка интерфейса и целевых языков, перевод текста, областей страницы и изображений. Со своим ключом или по баллам без ключа." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: выделить, щёлкнуть правой кнопкой и читать дальше." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ru/#app","name":"AI Selection Translator","url":"https://huaci.app/ru/","description":"Открытое расширение для перевода в Chrome: перевод выделенного текста, областей веб-страницы, изображений и отдельная панель перевода, 24 языка интерфейса и целевых языков. Работает со своим API Key; пробный доступ без ключа, аккаунт и подписка в версии 2.0.0 скоро появятся.","image":"https://huaci.app/assets/og.png","inLanguage":"ru","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ru/#app","name":"AI Selection Translator","url":"https://huaci.app/ru/","description":"Открытое расширение для Chrome с переводом: перевод выделенного текста, областей страницы, изображений и отдельная панель перевода; 24 языка интерфейса и целевых языков. Можно использовать свой API Key либо войти и пользоваться пробным доступом без ключа или подпиской.","image":"https://huaci.app/assets/og.png","inLanguage":"ru","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,7 +83,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ru/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Скоро: пробный период без ключа, аккаунт и подписка готовятся, пока недоступны.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ru/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>Уже доступно: пробный доступ без ключа, аккаунт и подписка теперь открыты.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Выделите, щёлкните правой кнопкой,<br /><span class="dim">и читайте дальше.</span></h1>
         <p class="hero-sub">Расширение для Chrome. Выделите текст, целую область веб-страницы или изображение — и получите перевод на знакомый вам язык. 24 языка интерфейса и целевых языка выбираются независимо; для начала достаточно собственного API Key OpenAI, DeepSeek или DeepL.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
@@ -317,7 +317,7 @@
           </div>
           <div>
             <p>Экспериментальная функция, отключена по умолчанию. Захватывает звук текущей вкладки, распознаёт его в субтитры и затем переводит; язык распознавания речи и целевой язык перевода задаются отдельно.</p>
-            <p>По умолчанию распознавание выполняется локально — требуется поддержка браузера и загруженный языковой пакет; можно переключиться на облачное распознавание Google, при этом звук будет отправлен в Google. Точность и совместимость пока ограничены, не рекомендуется полагаться на эту функцию для важных материалов. Облачный сервис версии 2.0.0 принимает только распознанный текст и не предоставляет загрузку и транскрипцию аудио и видео.</p>
+            <p>По умолчанию распознавание выполняется локально; требуется поддержка браузера и загрузка языкового пакета. Можно вручную переключиться на облачное распознавание Google — в этом случае звук отправляется в Google. Точность и совместимость распознавания по-прежнему ограничены, не рекомендуется полагаться на него для важных материалов. Облачный сервис получает только распознанный текст; загрузка и транскрипция аудио и видео не поддерживаются.</p>
           </div>
         </aside>
       </div>
@@ -356,7 +356,7 @@
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>Содержимое отправляется только при вашем запуске перевода</h2>
-        <p>При использовании собственного Key содержимое перевода отправляется напрямую на выбранную вами платформу. Перевод за баллы, который скоро появится, будет передаваться через наш сервер поставщику модели; сервер не сохраняет изображения, исходный текст или перевод. Обработка звука при включённых субтитрах к видео описана в политике конфиденциальности.</p>
+        <p>При использовании своего ключа переводимый текст отправляется напрямую на выбранную вами платформу. При переводе по баллам текст передаётся через наш сервер поставщику модели; сервер не сохраняет изображения, исходный текст или перевод. Об обработке звука при включённых субтитрах к видео см. политику конфиденциальности.</p>
       </div>
 
       <div class="facts reveal">
@@ -383,8 +383,8 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Работает со своим ключом, сервис без ключа скоро появится</h2>
-        <p>Расширение с открытым исходным кодом и бесплатное. Пробный период и подписка появятся с версией 2.0.0, сейчас они ещё не доступны.</p>
+        <h2>Бесплатно со своим ключом или перевод без ключа</h2>
+        <p>Расширение открытое и бесплатное. Начиная с 2.0.0 доступны пробный период без ключа и подписка — достаточно войти в расширении.</p>
       </div>
 
       <div class="plans reveal">
@@ -400,7 +400,7 @@
         </div>
         <div class="plan">
           <b class="plan-name">Бесплатный пробный период</b>
-          <span class="plan-status">Скоро появится</span>
+          <span class="plan-status">Доступно сейчас</span>
           <p class="plan-price">$0</p>
           <p class="plan-desc">Гостям — 50.00 баллов на пробу, при регистрации ещё 200.00 баллов. Баллы не истекают и списываются по фактическому использованию.</p>
           <ul>
@@ -410,7 +410,7 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Подписка</b>
-          <span class="plan-status">Планируемая цена · покупка пока недоступна</span>
+          <span class="plan-status">Подписка доступна</span>
           <p class="plan-price">$3.99<span> / мес.</span></p>
           <p class="plan-alt">Или $29.99 / год — на 37% дешевле, чем при оплате за месяц</p>
           <p class="plan-desc">Баллы дают неограниченный перевод, отменить можно в любой момент.</p>
@@ -418,11 +418,11 @@
             <li>Без ограничений по количеству при соблюдении принципа добросовестного использования</li>
             <li>Полный возврат средств по запросу в течение 7 дней после первой оплаты</li>
           </ul>
-          <a class="btn btn-ghost" href="/ru/changelog.html#v2-0-0">Посмотреть анонс 2.0.0</a>
+          <a class="btn btn-ghost" href="/ru/changelog.html#v2-0-0">Смотреть обновление 2.0.0</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">Указанные цены являются планируемыми; при официальном запуске ориентируйтесь на данные в личном кабинете. Цены указаны в долларах США, возможны дополнительные налоги; платежи обрабатывает <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> как реселлер, мы не получаем данные банковских карт. Подробнее — в <a class="link" href="/ru/terms.html">условиях обслуживания</a>.</p>
+      <p class="after-facts reveal">Фактическая цена отображается в личном кабинете. Цены указаны в долларах США, возможны дополнительные налоги; платежи обрабатывает <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> как реселлер, мы не получаем данные банковских карт. Подробнее см. <a class="link" href="/ru/terms.html">Условия обслуживания</a>.</p>
     </div>
   </section>
 
@@ -431,7 +431,7 @@
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
         <h2>Используйте в расширении, управляйте в личном кабинете</h2>
-        <p>Сервис аккаунтов готовится к запуску вместе с 2.0.0. Расширение — основной вход для входа в систему и перевода; сайт и личный кабинет используют один и тот же аккаунт и права подписки.</p>
+        <p>Сервис аккаунтов запущен вместе с 2.0.0. Основная точка входа для входа и перевода — расширение; сайт и личный кабинет используют один аккаунт и одни права по подписке.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">

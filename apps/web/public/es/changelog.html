@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Changelog</p>
         <h2>Registro de cambios</h2>
-        <p>Las versiones publicadas y el avance de la próxima versión se registran aquí. La 2.0.0 está en preparación para su lanzamiento; la cuenta y el servicio alojado aún no están disponibles; para cambios más detallados, consulta el <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">historial de commits</a> del repositorio.</p>
+        <p>Los cambios principales de cada versión se registran aquí; para cambios más detallados, consulta el <a class="link" href="https://github.com/csswork/AiTranslation/commits/main" target="_blank" rel="noopener">historial de commits</a> del repositorio.</p>
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
@@ -83,16 +83,16 @@
       <article class="log-entry reveal" id="v2-0-0" data-release-version="2.0.0">
         <div class="log-when">
           <span class="log-ver">v2.0.0</span>
-          <div class="release-status">Próximamente</div>
+          <div>2026-10-20</div>
         </div>
         <div class="log-body">
           <h3>Cuenta, traducción sin Key y suscripción</h3>
-          <p>Las funciones de esta versión ya se pueden probar localmente; el backend aún no está desplegado, y los puntos de prueba y la suscripción aún no están abiertos al público. El modo con Key propia se mantiene.</p>
+          <p>La prueba sin Key, las cuentas y el servicio de suscripción se habilitan con esta versión. El modo con Key propia se mantiene.</p>
           <ul>
             <li><b>Inicio de sesión en la cuenta</b>: código de verificación por correo o inicio de sesión con Google; tras autorizar en una pestaña de la ventana actual, se vuelve a la extensión; la ventana emergente y la página de configuración muestran el nombre de usuario, el saldo y el estado de la suscripción.</li>
-            <li><b>Prueba y puntos</b>: se planea ofrecer prueba para visitantes y puntos de regalo por registro; los puntos de prueba restantes se pueden transferir a la cuenta, y los puntos de regalo no caducan; el descuento se realiza con precisión según el uso real, y se devuelve en caso de fallo, sin redondear ya un punto hacia arriba en cada uso.</li>
+            <li><b>Prueba y puntos</b>: se ofrece prueba para invitados y puntos de bienvenida al registrarse; los puntos de prueba restantes pueden transferirse a la cuenta y los puntos de bienvenida no caducan; el descuento es exacto según el uso real, con devolución en caso de fallo, sin redondear ya al alza un punto por operación.</li>
             <li><b>Texto e imágenes alojados</b>: no se requiere Key propia; admite selección de texto, panel de traducción, áreas de la página web y reconocimiento y traducción de imágenes. Los subtítulos de vídeo ya reconocidos pueden usar la traducción de texto alojada; la carga de audio y vídeo y la transcripción alojada aún no están disponibles.</li>
-            <li><b>Suscripción y facturación</b>: el centro de usuario gestiona la suscripción, los pedidos, el uso y las sesiones de inicio de sesión. Tras la suscripción, el uso es ilimitado bajo el principio de uso razonable; el plan de pago se procesa a través de Creem, y el cobro oficial aún está pendiente de validación en línea.</li>
+            <li><b>Suscripción y facturación</b>: el centro de usuario gestiona suscripciones, pedidos, uso y sesiones de inicio de sesión. Tras suscribirse, el uso es ilimitado bajo el principio de uso razonable; el pago lo procesa Creem.</li>
             <li><b>Sincronización de estado</b>: cerrar sesión en la web revoca el inicio de sesión de la extensión autorizado por esa sesión web, sin afectar a otros navegadores; el entorno de desarrollo local y el de producción se gestionan por separado.</li>
             <li><b>Interfaz y privacidad</b>: se elimina la visualización duplicada del saldo en la ventana emergente; se completan las explicaciones sobre las imágenes alojadas y sobre el tratamiento de datos del reconocimiento de voz opcional en la nube de Google. No se guardan el contenido de las traducciones ni las imágenes.</li>
           </ul>

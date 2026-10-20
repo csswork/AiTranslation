@@ -82,6 +82,24 @@ export async function revokeSession(db, userId, sessionId) {
   return rowCount > 0;
 }
 
+/** 扩展主动退出：同时撤销授权它的网页登录及该网页关联的扩展，保留其他浏览器。 */
+export async function revokeExtensionLogin(db, userId, sessionId) {
+  const { rowCount } = await db.query(
+    `WITH target AS (
+       SELECT s.id, w.id AS web_id FROM sessions s
+       LEFT JOIN sessions w ON w.id = s.web_session_id AND w.user_id = s.user_id AND w.client = 'web'
+       WHERE s.id = $1 AND s.user_id = $2 AND s.client = 'extension'
+     )
+     UPDATE sessions SET revoked_at = now()
+     WHERE user_id = $2 AND revoked_at IS NULL AND (
+       id IN (SELECT id FROM target) OR id IN (SELECT web_id FROM target)
+       OR web_session_id IN (SELECT web_id FROM target)
+     )`,
+    [sessionId, userId],
+  );
+  return rowCount > 0;
+}
+
 export async function revokeOtherSessions(db, userId, keepSessionId) {
   const { rowCount } = await db.query(
     'UPDATE sessions SET revoked_at = now() WHERE user_id = $1 AND id <> $2 AND revoked_at IS NULL',

@@ -6,8 +6,16 @@ const root = new URL('../', import.meta.url);
 const source = (file) => fs.readFileSync(new URL(file, root), 'utf8');
 const ID = 'abcdefghijklmnopabcdefghijklmnop';
 const extensionOrigin = `chrome-extension://${ID}`;
-const event = () => ({ listeners: [], addListener(fn) { this.listeners.push(fn); } });
+const event = () => ({ listeners: [], addListener(fn) { this.listeners.push(fn); },
+  removeListener(fn) { this.listeners = this.listeners.filter((listener) => listener !== fn); },
+});
 const signedIn = { signedIn: true, kind: 'member', username: 'member', credits: { balance: 20 } };
+// 按 URL 选择接收提示的标签页需要这几个明确的站点权限，不能依赖活动标签页权限或可选权限。
+const manifest = JSON.parse(source('manifest.json'));
+for (const origin of ['http://localhost', 'https://app.huaci.app', 'https://huaci.app']) {
+  assert.ok(manifest.host_permissions.includes(`${origin}/*`), `缺少账户同步站点权限：${origin}`);
+  assert.ok(manifest.content_scripts.some((entry) => entry.js.includes('src/content/account.js') && entry.matches.includes(`${origin}/*`)));
+}
 
 function boot(production = false) {
   const store = { accountSession: { token: 'original-token' }, accountStatus: { ...signedIn }, guestClaimed: true };
@@ -27,12 +35,15 @@ function boot(production = false) {
     onInstalled: event(), onStartup: event(), onMessage: event(), onConnect: event(),
   };
   const calls = [];
+  const tabs = [], notifications = [];
   const context = vm.createContext({ console: { info() {}, warn() {} }, URL, Date, setTimeout,
     AITrI18n: { ready: Promise.resolve(), t: (s) => s, onChange() {} },
     AITrSettings: { migrateSettings: async () => {}, loadSettings: async () => ({}), targetMenu: () => 'English', supportsVision: () => false },
     chrome: { runtime, storage: { local: area(store), session: area({}), onChanged: changes },
       contextMenus: { removeAll: async () => {}, create: (_props, cb) => cb(), onClicked: event() },
-      tabs: { onRemoved: event() }, commands: { onCommand: event() },
+      tabs: { onRemoved: event(), query: async () => tabs,
+        sendMessage: async (id, message, options) => { notifications.push({ id, message, options }); },
+      }, commands: { onCommand: event() },
     },
     fetch: async (url, init) => { calls.push({ url, init }); return { ok: true, status: 200, json: async () => ({ ...signedIn }) }; },
   });
@@ -45,7 +56,7 @@ function boot(production = false) {
     const wait = runtime.onMessage.listeners[0]({ type: 'account-web-changed', ...payload }, { ...sender, ...overrides }, resolve);
     if (!wait) resolve(null);
   });
-  return { context, store, calls, message, sender, accountOrigin };
+  return { context, store, calls, message, sender, accountOrigin, tabs, notifications };
 }
 
 for (const production of [false, true]) {
@@ -78,10 +89,10 @@ for (const production of [false, true]) {
 // 扩展内容脚本只报告事件，不读取 Cookie 或传播会话、用户名、余额。
 for (const production of [false, true]) {
   const { context, accountOrigin } = boot(production);
-  const windowEvents = {}, documentEvents = {}, sent = [];
-  const window = { addEventListener: (name, fn) => { windowEvents[name] = fn; } };
+  const windowEvents = {}, documentEvents = {}, sent = [], received = [];
+  const window = { addEventListener: (name, fn) => { windowEvents[name] = fn; }, dispatchEvent: (event) => { received.push(event); } };
   window.top = window;
-  Object.assign(context, { window, location: { href: `${accountOrigin}/login` },
+  Object.assign(context, { window, CustomEvent: class { constructor(type) { this.type = type; } }, location: { href: `${accountOrigin}/login` },
     document: { hidden: false, addEventListener: (name, fn) => { documentEvents[name] = fn; } },
   });
   context.chrome.runtime.sendMessage = async (msg) => { sent.push(msg); };
@@ -92,12 +103,129 @@ for (const production of [false, true]) {
   documentEvents.visibilitychange();
   assert.equal(sent.length, 3);
   assert.ok(sent.every((msg) => JSON.stringify(msg) === '{"type":"account-web-changed"}'));
+  const onMessage = context.chrome.runtime.onMessage.listeners.at(-1);
+  onMessage({ type: 'account-session-changed', signedIn: false }, { id: 'another-extension' });
+  assert.equal(received.length, 0);
+  onMessage({ type: 'account-session-changed', signedIn: false, token: 'untrusted' }, { id: ID });
+  assert.equal(received.length, 1);
+  assert.deepEqual(JSON.parse(JSON.stringify(received[0])), { type: 'aitr:account-changed' }, '给网页的事件不包含账号数据');
+  context.location.href = context.AITrEnv.websiteOrigin;
+  vm.runInContext(source('src/content/account.js'), context);
+  context.chrome.runtime.onMessage.listeners.at(-1)({ type: 'account-session-changed' }, { id: ID });
+  assert.equal(received.length, 2, '官网也能收到重新核对提示');
+  assert.equal(sent.length, 3, '官网不能通知后台核对扩展');
+  const listeners = context.chrome.runtime.onMessage.listeners.length;
   context.location.href = production ? 'http://localhost:8787/' : 'https://app.huaci.app/';
   vm.runInContext(source('src/content/account.js'), context);
   context.location.href = accountOrigin;
   window.top = {};
   vm.runInContext(source('src/content/account.js'), context);
   assert.equal(sent.length, 3, '另一环境和内嵌框架不发送同步事件');
+  assert.equal(context.chrome.runtime.onMessage.listeners.length, listeners, '另一环境和框架也不接收通知');
+}
+
+// 扩展重新加载后，旧标签页的 Chrome API 既可能同步抛错，也可能异步拒绝。
+function contentBoot() {
+  const windowEvents = new Map(), documentEvents = new Map(), sent = [], received = [];
+  const surface = (events) => ({
+    addEventListener: (name, fn) => { events.set(name, fn); },
+    removeEventListener: (name, fn) => { if (events.get(name) === fn) events.delete(name); },
+  });
+  const window = { ...surface(windowEvents), dispatchEvent: (event) => { received.push(event); } };
+  window.top = window;
+  const runtime = { id: ID, getManifest: () => ({}), onMessage: event(),
+    sendMessage: (message) => { sent.push(message); return Promise.resolve({ ok: true }); },
+  };
+  const context = vm.createContext({ URL, window, chrome: { runtime },
+    location: { href: 'http://localhost:8787/' },
+    document: { ...surface(documentEvents), hidden: false },
+    CustomEvent: class { constructor(type) { this.type = type; } },
+  });
+  vm.runInContext(source('src/lib/env.js'), context);
+  const start = () => vm.runInContext(source('src/content/account.js'), context);
+  return { context, runtime, windowEvents, documentEvents, sent, received, start };
+}
+
+for (const mode of ['missing-id', 'throwing-id', 'missing-env', 'failed-env-load', 'invalidated-during-env-check']) {
+  const page = contentBoot();
+  if (mode === 'missing-id') page.runtime.id = undefined;
+  if (mode === 'throwing-id') Object.defineProperty(page.runtime, 'id', { get() { throw new Error('Extension context invalidated.'); } });
+  if (mode === 'missing-env') page.context.AITrEnv = undefined;
+  if (mode === 'failed-env-load') {
+    page.context.AITrEnv = undefined;
+    page.runtime.getManifest = () => { throw new Error('Extension context invalidated.'); };
+    assert.doesNotThrow(() => vm.runInContext(source('src/lib/env.js'), page.context));
+  }
+  if (mode === 'invalidated-during-env-check') page.context.AITrEnv = {
+    isAccountPage() { throw new Error('Extension context invalidated.'); }, isWebsitePage() { return false; },
+  };
+  assert.doesNotThrow(page.start, mode);
+  assert.equal(page.sent.length, 0, mode);
+  assert.equal(page.windowEvents.size, 0);
+  assert.equal(page.documentEvents.size, 0);
+  assert.equal(page.runtime.onMessage.listeners.length, 0);
+}
+
+for (const mode of ['sync-throw', 'promise-rejection', 'lost-runtime-id', 'incoming-message']) {
+  const page = contentBoot();
+  page.start();
+  assert.equal(page.sent.length, 1);
+  if (mode === 'sync-throw') page.runtime.sendMessage = () => { throw new Error('Extension context invalidated.'); };
+  if (mode === 'promise-rejection') page.runtime.sendMessage = () => Promise.reject(new Error('Extension context invalidated.'));
+  if (mode === 'lost-runtime-id' || mode === 'incoming-message') page.runtime.id = undefined;
+  if (mode === 'incoming-message') {
+    assert.doesNotThrow(() => page.runtime.onMessage.listeners[0]({ type: 'account-session-changed' }, { id: ID }));
+    assert.equal(page.received.length, 0);
+  } else assert.doesNotThrow(() => page.documentEvents.get('visibilitychange')());
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(page.windowEvents.size, 0, `${mode} 清理 pageshow`);
+  assert.equal(page.documentEvents.size, 0, `${mode} 清理 visibilitychange`);
+  assert.equal(page.runtime.onMessage.listeners.length, 0, `${mode} 清理消息监听`);
+}
+
+{
+  const page = contentBoot();
+  page.runtime.sendMessage = () => Promise.reject(new Error('Could not establish connection. Receiving end does not exist.'));
+  page.start();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(page.documentEvents.size, 1, '后台暂不可用时保留监听，下次切回可重试');
+  page.runtime.sendMessage = (message) => { page.sent.push(message); return Promise.resolve(); };
+  page.documentEvents.get('visibilitychange')();
+  assert.equal(page.sent.length, 1);
+}
+console.log('✓ 内容脚本上下文失效：初始化、同步异常、异步拒绝与监听清理通过');
+
+for (const production of [false, true]) {
+  const { context, store, calls, message, tabs, notifications, accountOrigin } = boot(production);
+  tabs.push(...[
+    `${accountOrigin}/usage`, `${context.AITrEnv.websiteOrigin}/en/`,
+    production ? 'http://localhost:8787/' : 'https://app.huaci.app/',
+    production ? 'http://localhost:8788/' : 'https://huaci.app/',
+    'http://localhost:9999/', 'http://admin.localhost:8787/', 'https://admin.huaci.app/',
+    'https://app.huaci.app.evil.example/', 'https://app.huaci.app:444/', 'https://huaci.app:444/',
+    'https://example.com/?next=https://app.huaci.app/', undefined,
+  ].map((url, i) => ({ id: i + 1, url })));
+  assert.equal(await message({}, { type: 'account-logout' }), null, '网页不能发起扩展主动退出');
+  const reply = await message({ url: `${extensionOrigin}/src/popup/popup.html` }, { type: 'account-logout' });
+  assert.equal(reply.ok, true);
+  assert.equal(store.accountStatus.signedIn, false);
+  assert.equal(store.accountSession, undefined);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, `${accountOrigin}/api/extension/logout`);
+  assert.equal(calls[0].init.headers.authorization, 'Bearer original-token');
+  assert.equal(calls[0].init.credentials, 'omit');
+  assert.deepEqual(notifications.map(({ id }) => id), [1, 2], '只通知同环境用户端与官网，不影响管理端或其他端口');
+  assert.ok(notifications.every(({ message, options }) => JSON.stringify(message) === '{"type":"account-session-changed"}' && options.frameId === 0));
+  console.log(`✓ ${production ? '生产' : '本地'}扩展主动退出与网页提示来源隔离`);
+}
+
+{
+  const { context, store } = boot();
+  context.fetch = async () => { throw new TypeError('offline'); };
+  context.chrome.tabs.query = async () => { throw new Error('tabs unavailable'); };
+  await context.AITrAccount.logout();
+  assert.equal(store.accountStatus.signedIn, false, '网络失败仍可退出扩展本机登录');
+  assert.equal(store.accountSession, undefined);
 }
 
 {

@@ -129,11 +129,12 @@ test('扩展接口：只接受扩展会话；CORS 只给扩展来源；退出或
   const { rows: [ext] } = await pool.query("SELECT id FROM sessions WHERE client = 'extension'");
   await web.post(`/sessions/${ext.id}/revoke`);
   assert.equal((await api(app, config, '/me', { token })).status, 401);
+  assert.equal((await web.get('/')).status, 200, '会话列表中单独撤销扩展仍保留网页');
 
   const second = await extensionLogin(app, config, mailbox, 'cors@example.com');
   assert.equal((await api(app, config, '/logout', { method: 'POST', token: second.token })).status, 200);
   assert.equal((await api(app, config, '/me', { token: second.token })).status, 401);
-  assert.equal((await second.browser.get('/')).status, 200, '单独退出扩展不会退出网页');
+  assert.equal((await second.browser.get('/')).headers.get('location'), '/login', '扩展主动退出同时退出关联网页');
 });
 
 for (const production of [false, true]) {
@@ -209,6 +210,59 @@ for (const production of [false, true]) {
     assert.equal((await api(app, config, '/me', { token: otherBrowser.token })).status, 200);
     assert.equal((await otherBrowser.browser.get('/')).status, 200);
     assert.equal((await api(app, config, '/me', { token: otherUser.token })).status, 200);
+  });
+
+  test(`扩展登出同步退出授权网页及关联扩展，保留其他浏览器和账户（${production ? '生产 HTTPS' : '本地 localhost'}）`, async () => {
+    const config = testConfig(production ? {
+      NODE_ENV: 'production', APP_ORIGIN: 'https://app.huaci.app', EXTENSION_IDS: EXT_ID,
+      MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'test', MAIL_FROM: 'no-reply@huaci.app',
+    } : {});
+    const { app, mailbox } = buildApp({ pool, config });
+    const first = await extensionLogin(app, config, mailbox, 'reverse@example.com');
+    const otherBrowser = await extensionLogin(app, config, mailbox, 'reverse@example.com');
+    const otherUser = await extensionLogin(app, config, mailbox, 'other@example.com');
+    // 同一网页再次授权的扩展，以及尚未兑换的授权码，都受同一个网页会话约束。
+    const sibling = pkce();
+    await first.browser.get(authorizeUrl(sibling.challenge));
+    let approved = await first.browser.post('/extension/authorize/confirm', { decision: 'approve' });
+    const siblingToken = (await (await api(app, config, '/token', { method: 'POST', body: {
+      code: new URL(approved.headers.get('location')).searchParams.get('code'),
+      code_verifier: sibling.verifier, redirect_uri: REDIRECT,
+    } })).json()).token;
+    const pending = pkce();
+    await first.browser.get(authorizeUrl(pending.challenge));
+    approved = await first.browser.post('/extension/authorize/confirm', { decision: 'approve' });
+    const code = new URL(approved.headers.get('location')).searchParams.get('code');
+    const cookieName = config.secureCookies ? '__Host-huaci_session' : 'huaci_session';
+    assert.equal((await api(app, config, '/logout', { method: 'POST', token: first.browser.jar.get(cookieName) })).status, 401,
+      '网页令牌不能调用扩展退出接口');
+    assert.equal((await first.browser.get('/')).status, 200);
+
+    assert.equal((await api(app, config, '/logout', { method: 'POST', token: first.token })).status, 200);
+    assert.equal((await api(app, config, '/me', { token: first.token })).status, 401);
+    assert.equal((await api(app, config, '/me', { token: siblingToken })).status, 401);
+    const state = await first.browser.get('/api/web/session');
+    assert.equal((await state.json()).signedIn, false);
+    const cleared = state.headers.getSetCookie().find((cookie) => cookie.startsWith(`${cookieName}=`));
+    assert.match(cleared, /Max-Age=0(?:;|$)/);
+    assert.match(cleared, /HttpOnly/);
+    assert.doesNotMatch(cleared, /Domain=/i);
+    if (production) assert.match(cleared, /Secure/);
+    assert.equal(first.browser.jar.has(cookieName), false);
+    assert.equal((await first.browser.get('/')).headers.get('location'), '/login');
+    assert.equal((await api(app, config, '/token', { method: 'POST', body: {
+      code, code_verifier: pending.verifier, redirect_uri: REDIRECT,
+    } })).status, 400, '退出后不能再用尚未兑换的授权码建立会话');
+    assert.equal((await otherBrowser.browser.get('/')).status, 200);
+    assert.equal((await api(app, config, '/me', { token: otherBrowser.token })).status, 200);
+    assert.equal((await otherUser.browser.get('/')).status, 200);
+    assert.equal((await api(app, config, '/me', { token: otherUser.token })).status, 200);
+
+    const guest = await (await api(app, config, '/guest', { method: 'POST' })).json();
+    assert.ok(guest.token);
+    assert.equal((await api(app, config, '/logout', { method: 'POST', token: guest.token })).status, 200);
+    assert.equal((await api(app, config, '/me', { token: guest.token })).status, 401);
+    assert.equal((await otherBrowser.browser.get('/')).status, 200, '未关联网页的访客退出不影响正式用户');
   });
 }
 

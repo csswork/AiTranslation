@@ -8,7 +8,7 @@
 import { Hono } from 'hono';
 import { validateWebSession } from '../auth/sessions.js';
 import { accountState } from '../billing/entitlements.js';
-import { getSessionToken, setSessionCookie } from '../http/cookies.js';
+import { clearSessionCookie, getSessionToken, setSessionCookie } from '../http/cookies.js';
 
 export function webApi({ config, pool }) {
   const app = new Hono();
@@ -28,7 +28,10 @@ export function webApi({ config, pool }) {
     const loginUrl = `${config.appOrigin}/login`;
     const token = getSessionToken(c, config);
     const auth = await validateWebSession(pool, config, token);
-    if (!auth) return c.json({ signedIn: false, loginUrl });
+    if (!auth) {
+      if (token) clearSessionCookie(c, config);
+      return c.json({ signedIn: false, loginUrl });
+    }
     setSessionCookie(c, config, token);
     const state = await accountState(pool, auth.user);
     return c.json({

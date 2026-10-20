@@ -11,7 +11,7 @@
  *   4. 淡入兜底 —— 浏览器不支持 animation-timeline: view() 时才接手
  *
  * 另外有安装按钮：装不了 Chrome 扩展的浏览器改去安装说明；
- * 账户入口：载入时读取一次用户端的登录状态；
+ * 账户入口：载入、切回页面及扩展通知时核对用户端的登录状态；
  * 配色切换：只在点击按钮、或系统切换明暗时才运行；
  * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
  */
@@ -85,9 +85,15 @@
     });
   }
   if (accountLink && ACCOUNT_ORIGIN && window.fetch) {
-    fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include' })
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
-      .then((state) => {
+    const loginText = accountLink.textContent;
+    let revision = 0;
+    const refreshAccount = async () => {
+      const current = ++revision;
+      try {
+        const response = await fetch(`${ACCOUNT_ORIGIN}/api/web/session`, { credentials: 'include', cache: 'no-store' });
+        if (!response.ok) return;
+        const state = await response.json();
+        if (current !== revision) return;
         if (state.signedIn) {
           // 首字母圆标 + 用户名（与用户端页头相同的结构）；用 textContent，不拼接 HTML
           const avatar = document.createElement('span');
@@ -102,15 +108,23 @@
           accountLink.title = state.username;
           accountLink.href = state.accountUrl;
         } else {
+          accountLink.textContent = loginText;
+          accountLink.classList.replace('is-user', 'is-login');
+          accountLink.removeAttribute('title');
           const login = new URL(state.loginUrl);
           login.searchParams.set('return', location.href);
           accountLink.href = login.href;
         }
+        accountLink.removeAttribute('aria-busy');
+        accountLink.removeAttribute('aria-disabled');
         accountLink.hidden = false;
-      })
-      .catch(() => {
-        /* 用户端没启动或网络不通：保持隐藏 */
-      });
+      } catch { /* 网络异常保留上次状态；首次未连接时仍隐藏入口 */ }
+    };
+    refreshAccount();
+    window.addEventListener('aitr:account-changed', refreshAccount);
+    window.addEventListener('focus', refreshAccount);
+    window.addEventListener('pageshow', (event) => { if (event.persisted) refreshAccount(); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshAccount(); });
   }
 
   /* ------------------------------------------------------------ 配色切换 */

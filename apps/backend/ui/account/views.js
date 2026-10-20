@@ -10,6 +10,7 @@ import { k } from '../../src/i18n/index.js';
 import { assetUrl } from './assets.js';
 import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
 import { timeChart } from '../charts.js';
+import { activityCharts } from '../credit-activity.js';
 
 const GITHUB = 'https://github.com/csswork/AiTranslation';
 
@@ -108,7 +109,7 @@ export function layout(ui, { title, user = null, active = '', notice = null, bod
 <script src="${assetUrl('account.js')}" defer></script>
 ${head}
 </head>
-<body class="${user ? 'signed-in' : 'signed-out'}">
+<body class="${user ? 'signed-in' : 'signed-out'}"${user ? html` data-web-session` : ''}>
 ${header(ui, user)}
 <div class="shell">
   ${user ? html`<nav class="side" aria-label="${t('账户导航')}"><ul>${NAV.map((item) => html`<li><a href="${item.href}"${item.key === active ? html` aria-current="page"` : ''}>${t(item.label)}</a></li>`)}</ul>
@@ -393,17 +394,21 @@ const ENTRY_LABELS = {
 const KIND_LABELS = { text: k('文字'), image: k('图片识别') };
 const STATUS_LABELS = { ok: k('成功'), failed: k('失败（已返还）'), pending: k('处理中') };
 
-export function usagePage(ui, { user, entries, events = [] }) {
+export function usagePage(ui, { user, activity }) {
   const { t } = ui;
+  const { income: entries, expenses, events } = activity;
   return layout(ui, {
     title: t('用量与点数'),
     user,
     active: 'usage',
+    head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
     body: html`<h1>${t('用量与点数')}</h1>
+${activityCharts(ui, activity, { action: '/usage' })}
 <section class="card">
-  <h2>${t('点数记录')}</h2>
+  <h2>${t('点数收入')}</h2>
   <p class="fine">${t('点数按实际用量扣减，显示保留两位小数，实际余额以服务端精确记录为准。')}</p>
-  ${entries.length ? html`<div class="table-wrap"><table>
+  <p class="fine">${t('点数收入列出最近 {count} 条记录，不受图表时间范围影响。', { count: activity.limit })}</p>
+  ${entries.length ? html`<div class="table-wrap"><table data-ledger="income">
     <thead><tr><th>${t('时间')}</th><th>${t('类型')}</th><th class="num">${t('点数')}</th><th>${t('到期')}</th></tr></thead>
     <tbody>${entries.map((e) => html`<tr>
       <td>${ui.dateTime(e.created_at)}</td>
@@ -413,8 +418,17 @@ export function usagePage(ui, { user, entries, events = [] }) {
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('暂无点数记录。')}</p>`}
 </section>
-<section class="card">
-  <h2>${t('翻译请求')}</h2>
+<details class="card activity-details">
+  <summary>${t('支出明细')}<span>${expenses.length}</span></summary>
+  ${expenses.length ? html`<div class="table-wrap"><table data-ledger="expense">
+    <thead><tr><th>${t('时间')}</th><th>${t('类型')}</th><th class="num">${t('点数')}</th></tr></thead>
+    <tbody>${expenses.map((e) => html`<tr><td>${ui.dateTime(e.created_at)}</td>
+      <td>${ENTRY_LABELS[e.entry_type] ? t(ENTRY_LABELS[e.entry_type]) : e.entry_type}</td>
+      <td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td></tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">${t('暂无点数记录。')}</p>`}
+</details>
+<details class="card activity-details">
+  <summary>${t('请求明细')}<span>${events.length}</span></summary>
   ${events.length ? html`<div class="table-wrap"><table>
     <thead><tr><th>${t('时间')}</th><th>${t('类型')}</th><th class="num">${t('字数')}</th><th class="num">${t('点数')}</th><th>${t('结果')}</th></tr></thead>
     <tbody>${events.map((e) => html`<tr data-status="${e.status}">
@@ -426,7 +440,7 @@ export function usagePage(ui, { user, entries, events = [] }) {
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
   <p class="fine">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
-</section>`,
+</details>`,
   });
 }
 

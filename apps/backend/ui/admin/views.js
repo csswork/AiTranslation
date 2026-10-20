@@ -5,11 +5,14 @@
 import { html, raw } from 'hono/html';
 import { renderSVG } from 'uqr';
 import { displayCredits } from '../../src/credits/units.js';
+import { createI18n } from '../../src/i18n/index.js';
+import { INCOME_TYPES } from '../../src/usage/activity.js';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
 import { barList, donut, funnel, heatmap, histogram, sparkline, timeChart as renderTimeChart } from './charts.js';
 import { MAP_MODES, mapMode as normalizeMapMode, worldMap } from './world-map.js';
+import { activityCharts } from '../credit-activity.js';
 
 const NAV = [
   { href: '/', label: '运营概览', key: 'overview' },
@@ -581,12 +584,35 @@ ${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}`,
 
 const reasonField = html`<input name="reason" required maxlength="200" placeholder="原因（必填，记入审计）">`;
 
-export function userPage({ admin, u, state, subs, ledger, events, sessions, api, note }) {
+const activityUI = createI18n('zh-Hans');
+const ledgerTable = (entries, direction, showUser = false) => html`<div class="table-wrap"><table data-ledger="${direction}">
+  <thead><tr><th>时间</th>${showUser ? html`<th>用户</th>` : ''}<th>类型</th><th class="num">点数</th><th>原因</th></tr></thead>
+  <tbody>${entries.map((e) => html`<tr><td>${dt(e.created_at)}</td>${showUser ? html`<td><a href="/users/${e.user_id}">${e.username}</a></td>` : ''}
+    <td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td><td>${e.reason || ''}</td></tr>`)}</tbody>
+</table></div>`;
+const expenseDetails = (activity, showUser = false) => html`<details class="card activity-details">
+  <summary>支出明细<span>${activity.expenses.length}</span></summary>
+  ${activity.expenses.length ? ledgerTable(activity.expenses, 'expense', showUser) : html`<p class="muted">暂无点数记录。</p>`}
+</details>`;
+const requestDetails = (events, showUser = false) => html`<details class="card activity-details">
+  <summary>请求明细<span>${events.length}</span></summary>
+  ${events.length ? html`<div class="table-wrap"><table>
+    <thead><tr><th>时间</th>${showUser ? html`<th>用户</th>` : ''}<th>类型</th><th class="num">字数</th><th class="num">点数</th><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">成本</th><th class="num">耗时</th><th>语言</th><th>结果</th></tr></thead>
+    <tbody>${events.map((e) => html`<tr data-status="${e.status}"><td>${dt(e.created_at)}</td>${showUser ? html`<td><a href="/users/${e.user_id}">${e.username}</a></td>` : ''}
+      <td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${e.audience === 'subscriber' ? '订阅' : displayCredits(e.status === 'failed' ? 0n : e.cost_units)}</td><td>${e.model || '—'}</td>
+      <td class="num">${e.input_tokens != null ? num(e.input_tokens) : '—'}</td><td class="num">${e.output_tokens != null ? num(e.output_tokens) : '—'}</td>
+      <td class="num">${e.cost_micros != null ? usd(e.cost_micros) : '—'}</td><td class="num">${e.latency_ms ?? '—'}</td><td>${e.target_lang ? language(e.target_lang) : '—'}</td>
+      <td>${e.status === 'ok' ? '成功' : e.status === 'failed' ? '失败（已返还）' : e.status}${e.error ? html` <span class="muted">${ERRORS[e.error] || e.error}</span>` : ''}</td></tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">暂无托管请求。</p>`}
+</details>`;
+
+export function userPage({ admin, u, state, subs, activity, sessions, api, note }) {
   return layout({
     title: u.username,
     admin,
     active: 'users',
     note,
+    head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
     body: html`<p><a href="/users">← 用户</a></p>
 <h1>${u.username}</h1>
 <div class="grid">
@@ -630,11 +656,13 @@ export function userPage({ admin, u, state, subs, ledger, events, sessions, api,
   <tbody>${subs.map((s) => html`<tr><td>${s.plan || '—'}</td><td>${s.status}</td><td>${d(s.current_period_end)}</td><td dir="ltr"><code>${s.provider_subscription_id}</code></td><td>${dt(s.updated_at)}</td></tr>`)}</tbody></table></div>` : html`<p class="muted">无</p>`}
 </section>
 
+${activityCharts(activityUI, activity, { action: `/users/${u.id}` })}
 <section class="card">
-  <h2>点数账本</h2>
-  <div class="table-wrap"><table><thead><tr><th>时间</th><th>类型</th><th class="num">点数</th><th>原因</th></tr></thead>
-  <tbody>${ledger.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>
+  <h2>点数收入</h2>
+  <p class="fine">点数收入列出最近 ${activity.limit} 条记录，不受图表时间范围影响。</p>
+  ${activity.income.length ? ledgerTable(activity.income, 'income') : html`<p class="muted">暂无点数记录。</p>`}
 </section>
+${expenseDetails(activity)}
 
 ${api.all.ok || api.all.failed || api.all.rejected ? html`<h2 class="section-title">API 消耗 <span class="muted section-link">首次 ${dt(api.all.first_used)} · 最近 ${dt(api.all.last_used)}</span></h2>
 <div class="table-wrap card"><table>
@@ -649,20 +677,13 @@ ${api.models.length ? html`<section class="card"><h2>用过的模型</h2><div cl
   <tbody>${api.models.map((m) => html`<tr><td>${PROVIDER_NAMES[m.provider] || m.provider}</td><td dir="ltr"><code>${m.model}</code></td><td class="num">${num(m.requests)}</td><td class="num">${num(m.input_tokens)}</td><td class="num">${num(m.output_tokens)}</td><td class="num">${usd(m.cost_micros)}</td></tr>`)}</tbody>
 </table></div></section>` : ''}` : ''}
 
-${events.length ? html`<section class="card">
-  <h2>最近托管请求</h2>
-  <div class="table-wrap"><table><thead><tr><th>时间</th><th>类型</th><th class="num">字数</th><th class="num">点数</th><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">成本</th><th class="num">耗时</th><th>语言</th><th>结果</th></tr></thead>
-  <tbody>${events.map((e) => html`<tr><td>${dt(e.created_at)}</td><td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${displayCredits(e.cost_units)}</td><td>${e.model || '—'}</td>
-    <td class="num">${e.input_tokens != null ? num(e.input_tokens) : '—'}</td><td class="num">${e.output_tokens != null ? num(e.output_tokens) : '—'}</td>
-    <td class="num">${e.cost_micros != null ? usd(e.cost_micros) : '—'}</td><td class="num">${e.latency_ms ?? '—'}</td><td>${e.target_lang ? language(e.target_lang) : '—'}</td>
-    <td>${e.status === 'ok' ? '成功' : e.status === 'failed' ? '失败（已返还）' : e.status}${e.error ? html` <span class="muted">${ERRORS[e.error] || e.error}</span>` : ''}</td></tr>`)}</tbody></table></div>
-</section>` : ''}
+${requestDetails(activity.events)}
 
 ${api.rejections.length ? html`<section class="card">
   <h2>被拒绝的请求</h2>
   <div class="table-wrap"><table><thead><tr><th>时间</th><th>原因</th><th class="num">字数</th><th class="num">需要点数</th><th>目标语言</th></tr></thead>
   <tbody>${api.rejections.map((x) => html`<tr><td>${dt(x.created_at)}</td><td>${REJECTIONS[x.reason] || x.reason}</td><td class="num">${num(x.chars)}</td><td class="num">${x.cost_units == null ? '—' : displayCredits(x.cost_units)}</td><td>${x.target_lang ? language(x.target_lang) : '—'}</td></tr>`)}</tbody></table></div>
-</section>` : ''}</section>`,
+</section>` : ''}`,
   });
 }
 
@@ -692,15 +713,24 @@ export function subscriptionsPage({ admin, subs, orders, status }) {
 
 /* ---------- A6 点数账本 ---------- */
 
-export function ledgerPage({ admin, entries, type }) {
+export function ledgerPage({ admin, activity }) {
+  const type = activity.incomeType;
+  const periodQuery = activity.period === 'month' ? '' : `period=${activity.period}`;
   return layout({
     title: '点数账本',
     admin,
     active: 'ledger',
+    head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
     body: html`<h1>点数账本</h1>
-<nav class="seg">${['', ...Object.keys(ENTRY)].map((k) => html`<a href="/ledger${k ? `?type=${k}` : ''}"${k === type ? html` aria-current="page"` : ''}>${k ? ENTRY[k] : '全部'}</a>`)}</nav>
-<div class="table-wrap"><table><thead><tr><th>时间</th><th>用户</th><th>类型</th><th class="num">点数</th><th>原因</th></tr></thead>
-<tbody>${entries.map((e) => html`<tr><td>${dt(e.created_at)}</td><td><a href="/users/${e.user_id}">${e.username}</a></td><td>${ENTRY[e.entry_type] || e.entry_type}</td><td class="num" dir="ltr">${displayCredits(e.amount_units, { signed: true })}</td><td>${e.reason || ''}</td></tr>`)}</tbody></table></div>`,
+${activityCharts(activityUI, activity, { action: '/ledger', incomeType: type })}
+<section class="card">
+  <h2>点数收入</h2>
+  <p class="fine">点数收入列出最近 ${activity.limit} 条记录，不受图表时间范围影响。</p>
+  <nav class="seg">${['', ...INCOME_TYPES].map((k) => html`<a href="/ledger${k || periodQuery ? `?${[k ? `type=${k}` : '', periodQuery].filter(Boolean).join('&')}` : ''}"${k === type ? html` aria-current="page"` : ''}>${k ? ENTRY[k] : '全部'}</a>`)}</nav>
+  ${activity.income.length ? ledgerTable(activity.income, 'income', true) : html`<p class="muted">暂无点数记录。</p>`}
+</section>
+${expenseDetails(activity, true)}
+${requestDetails(activity.events, true)}`,
   });
 }
 

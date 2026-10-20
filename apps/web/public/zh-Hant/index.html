@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
-<meta name="description" content="開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。自帶 API Key 即可使用；2.0.0 的免 Key 試用、帳戶與訂閱服務即將上線。" />
+<meta name="description" content="開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/" />
 <meta property="og:title" content="AI 劃詞翻譯" />
-<meta property="og:description" content="選取文字，右鍵，然後接著讀。24 種介面與目標語言，支援文字、網頁區域與圖片翻譯。自帶 Key 可用，2.0.0 帳戶與免 Key 服務即將上線。" />
+<meta property="og:description" content="選取文字，按右鍵，然後接著讀。24 種介面與目標語言，支援文字、網頁區域與圖片翻譯。自帶 Key 或免 Key 點數翻譯均可。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI 劃詞翻譯：選取，按右鍵，然後繼續閱讀。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。自帶 API Key 即可使用；2.0.0 的免 Key 試用、帳戶與訂閱服務即將上線。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,7 +83,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/zh-Hant/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>即將發佈：免 Key 試用、帳戶與訂閱服務正在準備，目前尚未開放。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/zh-Hant/changelog.html#v2-0-0"><span class="mono release-ver" data-extension-version>v2.0.0</span> <span>已上架：免 Key 試用、帳戶與訂閱服務現已開放。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
         <p class="hero-sub">一個 Chrome 擴充功能。選取文字、整塊網頁區域，或一張圖片，就能譯成你熟悉的語言。24 種介面與目標語言可獨立選擇，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可開始。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
@@ -317,7 +317,7 @@
           </div>
           <div>
             <p>可選的實驗功能，預設關閉。讀取目前分頁的聲音，識別成字幕後再翻譯；語音識別語言與翻譯目標分別設定。</p>
-            <p>預設在本機識別，需瀏覽器支援並下載語言包；也可主動切換到 Google 雲端識別，此時聲音會發給 Google。識別準確度和相容性仍有限，不建議依賴它處理重要內容。2.0.0 的託管服務只接收識別後的文字，不提供音影片上傳與轉寫。</p>
+            <p>預設在本機辨識，需瀏覽器支援並下載語言套件；也可主動切換到 Google 雲端辨識，此時聲音會傳送給 Google。辨識準確度與相容性仍有限，不建議依賴它處理重要內容。託管服務只接收辨識後的文字，不提供音視訊上傳與轉寫。</p>
           </div>
         </aside>
       </div>
@@ -356,7 +356,7 @@
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>你觸發翻譯，內容才會傳送</h2>
-        <p>自帶 Key 時，翻譯內容直接發往你選的平台。即將上線的點數翻譯會經我們的伺服器轉給模型服務商，伺服器不保存圖片、原文或譯文。影片字幕開啟後的聲音處理方式見隱私政策。</p>
+        <p>自帶 Key 時，翻譯內容直接傳送至你選擇的平台。點數翻譯會經我們的伺服器轉給模型服務商，伺服器不儲存圖片、原文或譯文。視訊字幕開啟後的聲音處理方式見隱私權政策。</p>
       </div>
 
       <div class="facts reveal">
@@ -383,8 +383,8 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>自帶 Key 可用，免 Key 服務即將上線</h2>
-        <p>擴展開源免費。試用與訂閱隨 2.0.0 上線，目前尚未開放。</p>
+        <h2>自帶 Key 免費用，也可以免 Key 直接翻譯</h2>
+        <p>擴充功能開源免費。2.0.0 起提供免 Key 試用與訂閱，在擴充功能裡登入即可使用。</p>
       </div>
 
       <div class="plans reveal">
@@ -400,7 +400,7 @@
         </div>
         <div class="plan">
           <b class="plan-name">免費試用</b>
-          <span class="plan-status">即將上線</span>
+          <span class="plan-status">目前可用</span>
           <p class="plan-price">$0</p>
           <p class="plan-desc">訪客試用 50.00 點，註冊再送 200.00 點。點數不過期，按實際用量扣減。</p>
           <ul>
@@ -410,7 +410,7 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">訂閱</b>
-          <span class="plan-status">計劃價格 · 尚未開放購買</span>
+          <span class="plan-status">目前可訂閱</span>
           <p class="plan-price">$3.99<span>/ 月</span></p>
           <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
           <p class="plan-desc">點數翻譯無限使用，隨時可以取消。</p>
@@ -418,11 +418,11 @@
             <li>依合理使用原則不限次數</li>
             <li>首次付款 7 天內可申請全額退款</li>
           </ul>
-          <a class="btn btn-ghost" href="/zh-Hant/changelog.html#v2-0-0">查看 2.0.0 預告</a>
+          <a class="btn btn-ghost" href="/zh-Hant/changelog.html#v2-0-0">查看 2.0.0 更新</a>
         </div>
       </div>
 
-      <p class="after-facts reveal">以上為計畫價格，正式開放時以使用者中心為準。價格以美元計，可能另加稅費；由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商處理付款，我們不接觸銀行卡資訊。詳見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
+      <p class="after-facts reveal">實際價格以使用者中心顯示為準。價格以美元計，可能另加稅費；由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商處理付款，我們不接觸銀行卡資訊。詳見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
     </div>
   </section>
 
@@ -431,7 +431,7 @@
       <div class="section-head reveal">
         <p class="kicker">Account · 2.0.0</p>
         <h2>在擴充功能裡用，在使用者中心管理</h2>
-        <p>帳戶服務隨 2.0.0 準備上線。擴充功能是登入與翻譯的主要入口，官網和使用者中心共用同一個帳戶及訂閱權益。</p>
+        <p>帳戶服務隨 2.0.0 上線。擴充功能是登入與翻譯的主要入口，官網和使用者中心共用同一個帳戶及訂閱權益。</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
