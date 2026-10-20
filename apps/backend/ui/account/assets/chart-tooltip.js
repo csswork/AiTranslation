@@ -22,13 +22,13 @@
       return points.includes(point) ? point : null;
     };
     const position = (point, event) => {
-      const box = root.getBoundingClientRect();
       const bounds = point.getBoundingClientRect();
-      const x = event ? event.clientX - box.left : bounds.left + bounds.width / 2 - box.left;
-      const y = event ? event.clientY - box.top : bounds.top - box.top + 20;
-      const left = Math.max(8, Math.min(x + 14, box.width - tip.offsetWidth - 8));
+      const x = event ? event.clientX : bounds.left + bounds.width / 2;
+      const y = event ? event.clientY : bounds.top + 20;
+      // 图表只露出一部分时，提示也要完整显示在屏幕中；fixed 定位不被面板裁切。
+      const left = Math.max(8, Math.min(x + 14, window.innerWidth - tip.offsetWidth - 8));
       const above = y - tip.offsetHeight - 12;
-      const top = Math.max(8, Math.min(above >= 8 ? above : y + 16, box.height - tip.offsetHeight - 8));
+      const top = Math.max(8, Math.min(above >= 8 ? above : y + 16, window.innerHeight - tip.offsetHeight - 8));
       tip.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
     };
     const show = (point, event) => {
@@ -46,7 +46,7 @@
           const label = document.createElement('span');
           if (!item.total) {
             const swatch = document.createElement('i');
-            swatch.className = item.tone === 'usage-secondary' ? 'usage-secondary' : 'usage-primary';
+            swatch.className = ['usage-primary', 'usage-secondary', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6'].includes(item.tone) ? item.tone : 'usage-primary';
             swatch.setAttribute('aria-hidden', 'true');
             label.appendChild(swatch);
           }

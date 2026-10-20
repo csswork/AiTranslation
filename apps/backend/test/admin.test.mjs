@@ -111,9 +111,14 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
 
   const { a } = await adminLogin(app, config, mailbox);
   const overview = await a.text('/');
-  // 核心指标始终显示（没有数据时为 0）；没有数据的图表与排行不显示
+  // 核心指标保留零值，主要图表显示空状态，不伪造曲线、构成或排行。
   assert.match(overview, /API 消耗[\s\S]*输入 token[\s\S]*经营[\s\S]*净收入[\s\S]*US\$0\.00[\s\S]*收入[\s\S]*支出[\s\S]*用户与使用[\s\S]*托管请求[\s\S]*有效订阅[\s\S]*增长趋势/);
-  assert.doesNotMatch(overview, /转化漏斗|使用时段|每日 token|每日收入|每日支出|按服务商与模型|累计收入、支出与利润/);
+  assert.match(overview, /暂无托管请求[\s\S]*暂无模型成本数据/);
+  assert.doesNotMatch(overview, /转化漏斗|每日收入|每日支出|按服务商与模型|class="arc |class="chart heat"/);
+  assert.match(overview, /<script src="\/assets\/chart-tooltip\.js\?v=[a-f0-9]+" defer/);
+  const headers = (await a.get('/')).headers;
+  assert.match(headers.get('content-security-policy'), /script-src 'self';/);
+  assert.match(headers.get('content-security-policy'), /style-src 'self';/);
   const { rows: [adminRow] } = await pool.query('SELECT totp_secret, totp_enabled_at FROM admins');
   assert.ok(adminRow.totp_enabled_at);
   assert.doesNotMatch(adminRow.totp_secret, /^[A-Z2-7]+$/, 'TOTP 密钥加密存储');
@@ -223,14 +228,55 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(page, /增长趋势[\s\S]*<svg class="chart"/);
   assert.match(page, /转化漏斗/);
   assert.match(page, /目标语言[\s\S]*简体中文[\s\S]*日语/);
-  assert.match(page, /安装地区[\s\S]*美国[\s\S]*日本/);
+  assert.match(page, /aria-label="世界地图 · 使用分布"/);
+  assert.match(page, /data-country="US"[^>]*data-chart-values="[^>]*扩展安装[^>]*2/);
+  assert.match(page, /data-country="JP"[^>]*data-chart-values="[^>]*托管请求[^>]*1/);
+  assert.match(await a.text('/?days=7&map=installs'), /按扩展安装数量着色/);
+  assert.match(await a.text('/?days=7&map=revenue'), /所选范围内暂无收入分布数据/);
+  assert.match(await a.text('/?days=7&map=constructor'), /aria-label="世界地图 · 使用分布"/);
   assert.match(page, /使用时段[\s\S]*class="chart heat"/);
   assert.match(page, /响应耗时[\s\S]*P50/);
+  assert.match(page, /data-chart-date="[^"]+ Asia\/Shanghai"/);
+  assert.match(page, /data-chart-values="[^<]*合计[^<]*7,200/);
+  assert.match(page, /<details class="dashboard-details"><summary>消耗与异常明细/);
+  assert.match(page, /class="funnel-steps"/);
   assert.match(page, /data-theme-form/, '页头有配色切换');
 
   // 配色与用户端共用 theme Cookie
   await a.post('/preferences/theme', { theme: 'dark', next: '/' });
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
+});
+
+test('运营首页：同一时区的自然日汇总与图表一致，历史无服务商记录也计入 token，缓存不重复', async () => {
+  const { overview } = await import('../src/admin/reports.js');
+  const { dayLabels } = await import('../src/admin/finance.js');
+  const { overviewPage } = await import('../ui/admin/views.js');
+  const timeZone = 'America/New_York';
+  const day = dayLabels(7, timeZone)[0];
+  const { rows: [boundary] } = await pool.query('SELECT $1::date::timestamp AT TIME ZONE $2 AS start', [day, timeZone]);
+  const { rows: [user] } = await pool.query("INSERT INTO users (email, username) VALUES ('legacy@example.com', 'legacy') RETURNING id");
+  for (const offset of [-1, 1]) {
+    await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, input_tokens, cached_tokens, output_tokens, cost_micros, created_at)
+      VALUES ($1, 'text', 250, 250, 'ok', 400, 100, 200, 12000, $2)`, [user.id, new Date(boundary.start.getTime() + offset)]);
+  }
+  const report = await overview(pool, 7, { timeZone });
+  assert.equal(report.current.requests, 1);
+  assert.equal(report.previous.requests, 1);
+  assert.equal(report.daily[0].requests, 1);
+  assert.equal(report.daily.reduce((sum, day) => sum + day.requests, 0), report.current.requests);
+  assert.deepEqual(report.finance.api.tokens[0], { day, input: 300, cached: 100, output: 200 });
+  assert.equal(report.finance.api.models.length, 0, '没有服务商标记，不伪造模型明细');
+  const page = String(await overviewPage({ admin: { email: 'boss@example.com' }, r: report, geoConfigured: false }));
+  assert.match(page, /输入 token[\s\S]*<strong>400<\/strong>[\s\S]*缓存命中 25\.0%/);
+  assert.match(page, /输出 token[\s\S]*<strong>200<\/strong>/);
+  assert.match(page, /600 token/);
+  assert.match(page, /data-chart-date="[^"]+ America\/New_York"/);
+  assert.match(page, /&quot;合计&quot;,&quot;value&quot;:&quot;600&quot;/);
+  const codes = ['US', 'JP', 'SG', 'CN', 'IN', 'GB', 'FR', 'DE', 'CA', 'AU', 'BR', 'MX', 'KR', 'TH', 'VN', 'MY', 'ID', 'PH', 'TW', 'HK'];
+  await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, country, created_at)
+    SELECT $1, 'text', 1, 1, 'ok', code, now() - interval '1 second' FROM unnest($2::text[]) AS code`, [user.id, codes]);
+  const global = await overview(pool, 7, { timeZone });
+  assert.equal(global.countries.usage.length, codes.length, '地图提供全部地区，不被原排行的前 15 条截断');
 });
 
 test('支出分摊：一次性记在当天，每月按年 / 365 天分摊，结束日之后不再计入', async () => {
@@ -335,4 +381,5 @@ test('每位用户的 API 使用都有记录：成功、失败与被拒（点数
   const overview = await a.text('/?days=7');
   assert.match(overview, /<h2 class="section-title">API 消耗[\s\S]*查看每位用户[\s\S]*被拒绝的请求/);
   assert.ok(overview.indexOf('API 消耗') < overview.indexOf('用户与使用'), 'API 消耗在首页最前面');
+  assert.match(overview, /被拒绝的请求<\/span><span class="delta down">新增/);
 });

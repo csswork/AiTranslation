@@ -409,19 +409,26 @@
     }
   }
 
-  /** 把译文块盖到译文页上。 */
+  /** 把译文块盖到译文页上；这一页正在翻译时，还没回来的段落先放扫光占位。 */
   function paint(page) {
     if (!page.blocks) return;
     const dir = AITrLanguages.LANGUAGES[target]?.dir || 'ltr';
     const pct = (value, total) => `${(value / total) * 100}%`;
-    page.overlay.replaceChildren(...page.blocks.filter((block) => block.translated).map((block) => {
+    const waiting = page.status === 'busy';
+    const shown = page.blocks.filter((block) => block.translated || (waiting && block.translatable));
+    page.overlay.replaceChildren(...shown.map((block, index) => {
       const node = document.createElement('div');
-      node.className = 'blk';
+      node.className = block.translated ? 'blk' : 'blk wait';
       node.style.left = pct(block.left, page.width);
       node.style.top = pct(block.top, page.height);
       node.style.width = pct(block.width, page.width);
       node.style.height = pct(block.height, page.height);
-      node.style.background = block.bg || '#fff';
+      node.style.backgroundColor = block.bg || '#fff';
+      if (!block.translated) {
+        // 相邻占位错开起步，扫光像波浪一样往下走
+        node.style.animationDelay = `${(index % 10) * 0.09}s`;
+        return node;
+      }
       node.style.color = block.fg || '#111';
       node.dataset.size = String((block.size / page.width) * 100);
       node.style.fontSize = `${node.dataset.size}cqw`;
@@ -455,6 +462,7 @@
     page.translated.classList.add('busy');
     try {
       const blocks = await ensureBlocks(page);
+      paint(page); // 先铺上等待占位
       for (const group of Layout.batches(blocks)) {
         if (group.every((index) => blocks[index].translated)) continue; // 上次停下前已经翻好
         const texts = group.map((index) => blocks[index].text);
@@ -474,6 +482,7 @@
       throw err;
     } finally {
       page.translated.classList.remove('busy');
+      paint(page); // 收掉剩下的占位
     }
   }
 
@@ -520,8 +529,10 @@
     runController?.abort();
     runController = null;
     for (const page of pages) {
-      if (page.status === 'busy') page.status = 'pending';
+      if (page.status !== 'busy') continue;
+      page.status = 'pending';
       page.translated.classList.remove('busy');
+      paint(page);
     }
     renderProgress();
     renderButtons();

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import { test } from 'node:test';
 import { timeChart } from '../ui/charts.js';
+import { donut, funnel, heatmap, histogram } from '../ui/admin/charts.js';
 
 // 轻量事件环境：测试实际浏览器脚本的显示、隐藏和导航行为；布局另用浏览器核对。
 class Element {
@@ -50,7 +51,7 @@ function setup() {
   const document = new Element();
   document.querySelectorAll = () => [root];
   document.createElement = (tag) => new Element(tag);
-  const window = new Element();
+  const window = Object.assign(new Element(), { innerWidth: 1280, innerHeight: 720 });
   vm.runInNewContext(fs.readFileSync(new URL('../ui/account/assets/chart-tooltip.js', import.meta.url), 'utf8'), { document, window });
   return { root, points: root.points, tip: root.children.at(-1), document, window };
 }
@@ -74,17 +75,28 @@ test('日期悬停立即显示精确文本，移动到零值日期更新，移�
   assert.equal(tip.hidden, true);
 });
 
-test('提示框贴边时保持在图内，展示文本不执行 HTML，并保留服务端小数和大整数', () => {
+test('提示框贴边时保持在视口内，展示文本不执行 HTML，并保留服务端小数和大整数', () => {
   const { root, points, tip } = setup();
   points[2].dataset.chartValues = JSON.stringify([
     { label: '<img src=x onerror=alert(1)>', value: '0.01 点' },
     { label: '合计', value: '9,007,199,254,740,993', total: true },
   ]);
-  root.fire('pointermove', { target: points[2], pointerType: 'mouse', clientX: 505, clientY: 55 });
-  assert.equal(tip.style.transform, 'translate(222px, 21px)');
+  root.fire('pointermove', { target: points[2], pointerType: 'mouse', clientX: 1279, clientY: 4 });
+  assert.equal(tip.style.transform, 'translate(1092px, 20px)');
   assert.match(tip.textContent, /<img src=x onerror=alert\(1\)>0\.01 点合计9,007,199,254,740,993/);
   assert.equal(tip.children[1].children[0].children.at(-1).tag, 'span');
   assert.match(tip.children[2].className, /chart-tooltip-total/);
+});
+
+test('管理图表提示沿用对应系列的颜色，未知样式名不会注入 DOM', () => {
+  const { root, points, tip } = setup();
+  points[0].dataset.chartValues = JSON.stringify([
+    { label: '缓存命中', value: '100', tone: 'c6' },
+    { label: '其他', value: '0', tone: 'unexpected class' },
+  ]);
+  root.fire('pointermove', { target: points[0], clientX: 180, clientY: 170 });
+  assert.equal(tip.children[1].children[0].children[0].className, 'c6');
+  assert.equal(tip.children[2].children[0].children[0].className, 'usage-primary');
 });
 
 test('触摸点击保留提示，点图外或取消后关闭，触摸移动不触发悬停', () => {
@@ -138,4 +150,22 @@ test('SVG 交互仅按需启用，包含零值日期、格式化数值和安全�
   assert.doesNotMatch(interactive, /<script>/);
   const bounds = [...interactive.matchAll(/<rect class="hover" x="([\d.]+)" y="12" width="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])]);
   assert.deepEqual(bounds, [[48, 100], [148, 200], [348, 100]], '连续覆盖从左轴到右边界，包括零值日期');
+});
+
+test('管理构成与分布图：小额支出不因取整消失，零值分布可查看，动态标签安全转义', async () => {
+  const ring = String(await donut([{ label: '<script>', value: .1, cls: 'c5' }], { format: (value) => `$${(value / 100).toFixed(4)}` }));
+  assert.match(ring, /data-chart-point/);
+  assert.match(ring, /\$0\.0010/);
+  assert.doesNotMatch(ring, /<script>/);
+  assert.equal(donut([]), '');
+  const heat = String(await heatmap([{ dow: 1, hour: 8, n: 2 }], { timeZone: 'UTC' }));
+  assert.equal((heat.match(/data-chart-point/g) || []).length, 168);
+  assert.match(heat, /周一 0:00–1:00 · UTC/);
+  assert.match(heat, /&quot;value&quot;:&quot;0&quot;/);
+  const buckets = String(await histogram([{ label: '<1s', value: 2 }, { label: '1–2s', value: 0 }]));
+  assert.equal((buckets.match(/data-chart-point/g) || []).length, 2);
+  assert.match(buckets, /data-chart-date="&lt;1s"/);
+  const steps = String(await funnel([{ label: '安装', value: 10 }, { label: '用过', value: 0 }, { label: '注册', value: 0 }]));
+  assert.match(steps, /上步 — · 总 0%/);
+  assert.doesNotMatch(steps, /NaN|Infinity/);
 });

@@ -8,6 +8,12 @@ const shortNumber = (v) => {
   return String(round(v));
 };
 
+/** 供时间图、构成图与分布图共用的纯文本提示数据；插值统一由 Hono 转义。 */
+export function chartPointAttributes(label, items, index) {
+  const description = `${label}\n${items.map((item) => `${item.label}：${item.value}`).join('\n')}`;
+  return html` data-chart-point data-chart-date="${label}" data-chart-values="${JSON.stringify(items)}" tabindex="${index === 0 ? '0' : '-1'}" role="button" aria-label="${description}"`;
+}
+
 /** 坐标轴的整齐刻度：返回 [0, step, 2·step, …] 覆盖 max。 */
 function ticks(max, count = 4) {
   if (max <= 0) return [0, 1];
@@ -96,7 +102,7 @@ export function timeChart({ labels, series, format = fmt, width = 760, height = 
     // 交互图的日期命中区连续覆盖整个绘图区，零值日期也能查看，首尾不越过坐标轴。
     const left = i === 0 ? pad.l : (x(i - 1) + x(i)) / 2;
     const right = i === n - 1 ? w - pad.r : (x(i) + x(i + 1)) / 2;
-    return html`<rect class="hover" x="${round(interactive ? left : x(i) - slot / 2)}" y="${pad.t}" width="${round(interactive ? right - left : slot)}" height="${ih}"${interactive ? html` data-chart-point data-chart-date="${date}" data-chart-values="${JSON.stringify(items)}" tabindex="${i === 0 ? '0' : '-1'}" role="button" aria-label="${description}"` : ''}><title>${description}</title></rect>`;
+    return html`<rect class="hover" x="${round(interactive ? left : x(i) - slot / 2)}" y="${pad.t}" width="${round(interactive ? right - left : slot)}" height="${ih}"${interactive ? chartPointAttributes(date, items, i) : ''}><title>${description}</title></rect>`;
   })}
 </svg>`;
   return html`${interactive ? html`<div class="chart-interactive" data-chart-interactive>${svg}</div>` : svg}

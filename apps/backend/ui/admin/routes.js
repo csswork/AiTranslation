@@ -198,7 +198,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/', requireAdmin, async (c) => {
     const days = [7, 30, 90].includes(Number(c.req.query('days'))) ? Number(c.req.query('days')) : 30;
     const r = await overview(pool, days, { settings: await settings.all(), timeZone: config.reportTimeZone });
-    return page(c, () => views.overviewPage({ admin: admin(c), r, geoConfigured: Boolean(config.geoCountryHeader) }));
+    return page(c, () => views.overviewPage({ admin: admin(c), r, geoConfigured: Boolean(config.geoCountryHeader), mapMode: c.req.query('map') }));
   });
 
   /* ---------- API 用量：每位用户 ---------- */

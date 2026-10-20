@@ -33,8 +33,15 @@ async function periodTotals(db, from, to) {
 
 export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shanghai' } = {}) {
   const now = new Date();
-  const from = new Date(now.getTime() - days * 86400_000);
-  const prevFrom = new Date(from.getTime() - days * 86400_000);
+  const labels = dayLabels(days, timeZone, 0, now);
+  const prevLabels = dayLabels(days, timeZone, days, now);
+  // 汇总、每日趋势与财务报表共用自然日边界；由 PostgreSQL 处理时区及夏令时。
+  const { rows: [bounds] } = await db.query(
+    'SELECT $1::date::timestamp AT TIME ZONE $3 AS start, $2::date::timestamp AT TIME ZONE $3 AS previous',
+    [labels[0], prevLabels[0], timeZone],
+  );
+  const from = bounds.start;
+  const prevFrom = bounds.previous;
   const q = async (sql, params = []) => (await db.query(sql, params)).rows;
   const window = [from, now];
 
@@ -80,11 +87,11 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     q(`SELECT ui_lang AS key, COUNT(*)::int AS installs FROM guest_claims
        WHERE ui_lang IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC LIMIT 12`, window),
     q(`SELECT country AS key, COUNT(*)::int AS installs, COUNT(*) FILTER (WHERE merged_user_id IS NOT NULL)::int AS registered
-       FROM guest_claims WHERE country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC LIMIT 15`, window),
+       FROM guest_claims WHERE country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC`, window),
     q(`SELECT country AS key, COUNT(*)::int AS requests, COUNT(DISTINCT user_id)::int AS users, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
-       FROM usage_events WHERE country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY requests DESC LIMIT 15`, window),
+       FROM usage_events WHERE country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY requests DESC`, window),
     q(`SELECT country AS key, COUNT(*)::int AS orders, COALESCE(SUM(amount - refunded_amount), 0)::bigint AS revenue
-       FROM orders WHERE currency = 'USD' AND country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY revenue DESC LIMIT 15`, window),
+       FROM orders WHERE currency = 'USD' AND country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY revenue DESC`, window),
     q(`SELECT currency, COUNT(*)::int AS orders, COALESCE(SUM(amount), 0)::bigint AS gross, COALESCE(SUM(refunded_amount), 0)::bigint AS refunded
        FROM orders WHERE created_at >= $1 AND created_at < $2 GROUP BY currency ORDER BY gross DESC`, window),
     // 星期 × 小时的请求分布（ISO 星期：1 = 周一）。
@@ -134,8 +141,8 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
   const mrrCents = Math.round(((plans.monthly || 0) * monthly + (plans.yearly || 0) * yearly / 12) * 100);
   const subscriberCost = Number(audiences.find((a) => a.key === 'subscriber')?.cost_micros || 0);
   const finance = await financeReport(db, {
-    labels: dayLabels(days, timeZone, 0, now),
-    prevLabels: dayLabels(days, timeZone, days, now),
+    labels,
+    prevLabels,
     timeZone,
     settings,
   });
