@@ -239,6 +239,60 @@
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">02</p>
+            <h3>이미지 번역</h3>
+            <p>이미지를 마우스 오른쪽 버튼으로 클릭해 이미지 속 텍스트를 인식하고, 번역문을 인식된 위치에 맞춰 원본 이미지 위에 덮어씁니다.</p>
+            <ul>
+              <li>긴 이미지는 먼저 분할한 뒤 인식하며, 이음매는 텍스트 사이의 빈 줄로 자동 이동해 한 문장이 두 동강 나지 않습니다</li>
+              <li>검사 전에 가장 긴 변이 아니라 총픽셀 기준으로 축소하므로 긴 이미지의 너비가 사라지지 않습니다</li>
+              <li>원본 이미지 위치에 번역문을 덮어씁니다. 이미지 패널을 열어 이미지를 업로드하거나 붙여넣거나 이미지 주소를 입력할 수도 있습니다</li>
+              <li>대상 언어를 전환하면 이미 인식된 텍스트를 재사용합니다. 이미지를 교체하면 다시 인식합니다</li>
+            </ul>
+          </div>
+          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-image.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">03</p>
+            <h3>PDF 전체 번역 <span class="soon">출시 예정</span></h3>
+            <p>Chrome에서 연 PDF에서 텍스트를 선택하지 않고 바로 우클릭하면 문서 전체가 옆 페이지에서 번역됩니다. 번역문은 원래 위치에 그대로 덮어씌워지며 레이아웃, 도표, 표가 모두 유지됩니다.</p>
+            <ul>
+              <li>원문과 번역문을 나란히 대조하며 볼 수 있고, 번역문만 또는 원문만 볼 수도 있습니다</li>
+              <li>표는 셀 단위로 번역되며 행과 열, 표 테두리가 그대로 유지됩니다. 공간에 맞지 않는 번역문은 글자 크기가 자동으로 축소됩니다</li>
+              <li>브라우저 인쇄로 PDF로 저장하면 번역문이 선택 및 검색 가능한 텍스트로 남습니다</li>
+              <li>파일은 로컬에서만 분석되며, 추출된 텍스트만 번역 플랫폼으로 전송됩니다. 로컬 PDF는 번역 페이지로 직접 끌어다 놓을 수 있습니다. 스캔 문서는 현재 지원하지 않습니다</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">04</p>
             <h3>요소 번역</h3>
             <p>페이지의 특정 영역을 우클릭하여 번역 버튼을 추가합니다. 클릭하면 영역의 텍스트가 선택한 언어로 즉시 바뀌고, 다시 클릭하면 원문으로 복원됩니다.</p>
             <ul>
@@ -254,60 +308,6 @@
             </div>
             <div class="frame-body">
               <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-element.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">03</p>
-            <h3>이미지 번역</h3>
-            <p>이미지를 마우스 오른쪽 버튼으로 클릭해 이미지 속 텍스트를 인식하고, 번역문을 인식된 위치에 맞춰 원본 이미지 위에 덮어씁니다.</p>
-            <ul>
-              <li>긴 이미지는 먼저 분할한 뒤 인식하며, 이음매는 텍스트 사이의 빈 줄로 자동 이동해 한 문장이 두 동강 나지 않습니다</li>
-              <li>검사 전에 가장 긴 변이 아니라 총픽셀 기준으로 축소하므로 긴 이미지의 너비가 사라지지 않습니다</li>
-              <li>원본 이미지 위치에 번역문을 덮어씁니다. 이미지 패널을 열어 이미지를 업로드하거나 붙여넣거나 이미지 주소를 입력할 수도 있습니다</li>
-              <li>대상 언어를 전환하면 이미 인식된 텍스트를 재사용합니다. 이미지를 교체하면 다시 인식합니다</li>
-            </ul>
-          </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-image.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide flip" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">04</p>
-            <h3>PDF 전체 번역 <span class="soon">출시 예정</span></h3>
-            <p>Chrome에서 연 PDF에서 텍스트를 선택하지 않고 바로 우클릭하면 문서 전체가 옆 페이지에서 번역됩니다. 번역문은 원래 위치에 그대로 덮어씌워지며 레이아웃, 도표, 표가 모두 유지됩니다.</p>
-            <ul>
-              <li>원문과 번역문을 나란히 대조하며 볼 수 있고, 번역문만 또는 원문만 볼 수도 있습니다</li>
-              <li>표는 셀 단위로 번역되며 행과 열, 표 테두리가 그대로 유지됩니다. 공간에 맞지 않는 번역문은 글자 크기가 자동으로 축소됩니다</li>
-              <li>브라우저 인쇄로 PDF로 저장하면 번역문이 선택 및 검색 가능한 텍스트로 남습니다</li>
-              <li>파일은 로컬에서만 분석되며, 추출된 텍스트만 번역 플랫폼으로 전송됩니다. 로컬 PDF는 번역 페이지로 직접 끌어다 놓을 수 있습니다. 스캔 문서는 현재 지원하지 않습니다</li>
-            </ul>
-          </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
             </div>
           </div>
         </div>

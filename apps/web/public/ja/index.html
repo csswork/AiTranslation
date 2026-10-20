@@ -239,6 +239,60 @@
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">02</p>
+            <h3>画像翻訳</h3>
+            <p>画像を右クリックすると中のテキストを認識し、訳文を認識した位置に合わせて元の画像に重ねます。</p>
+            <ul>
+              <li>長い画像は先に分割してから認識し、継ぎ目は自動的にテキスト間の空白行へ移されるため、一文が真っ二つになることはありません</li>
+              <li>送信前に最長辺ではなく総ピクセル数で縮小するため、長い画像の幅がつぶれません</li>
+              <li>元の画像の位置に訳文を重ねて表示します。画像パネルを開いて、画像のアップロード、貼り付け、または画像 URL の入力もできます</li>
+              <li>翻訳先言語を切り替えると、認識済みのテキストを再利用します。画像を変更すると再認識します</li>
+            </ul>
+          </div>
+          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-image.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">03</p>
+            <h3>PDF 全体の翻訳 <span class="soon">近日公開</span></h3>
+            <p>Chrome で開いた PDF 内で、テキストを選択せずに右クリックすると、文書全体が隣のページで翻訳されます。訳文は元の位置に重ねて表示され、レイアウト、図表、表は変わりません。</p>
+            <ul>
+              <li>原文と訳文を並べて対照表示、訳文のみまたは原文のみの表示も可能</li>
+              <li>表はセルごとに翻訳され、行・列と罫線はそのまま維持されます。収まらない訳文は自動的に文字サイズが縮小されます</li>
+              <li>ブラウザの印刷から PDF として保存でき、訳文は選択・検索可能なテキストです</li>
+              <li>ファイルは本機でのみ解析され、抽出されたテキストのみが翻訳プラットフォームに送信されます。ローカルの PDF は翻訳ページに直接ドラッグできます。スキャン文書には未対応です</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>デモ動画プレースホルダー</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">04</p>
             <h3>要素翻訳</h3>
             <p>ページ上の任意の領域を右クリックして、翻訳ボタンを割り当てます。クリックすると、その領域内のテキストが選択した言語にその場で置き換わり、もう一度クリックすると原文に戻ります。</p>
             <ul>
@@ -254,60 +308,6 @@
             </div>
             <div class="frame-body">
               <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-element.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">03</p>
-            <h3>画像翻訳</h3>
-            <p>画像を右クリックすると中のテキストを認識し、訳文を認識した位置に合わせて元の画像に重ねます。</p>
-            <ul>
-              <li>長い画像は先に分割してから認識し、継ぎ目は自動的にテキスト間の空白行へ移されるため、一文が真っ二つになることはありません</li>
-              <li>送信前に最長辺ではなく総ピクセル数で縮小するため、長い画像の幅がつぶれません</li>
-              <li>元の画像の位置に訳文を重ねて表示します。画像パネルを開いて、画像のアップロード、貼り付け、または画像 URL の入力もできます</li>
-              <li>翻訳先言語を切り替えると、認識済みのテキストを再利用します。画像を変更すると再認識します</li>
-            </ul>
-          </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-image.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide flip" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">04</p>
-            <h3>PDF 全体の翻訳 <span class="soon">近日公開</span></h3>
-            <p>Chrome で開いた PDF 内で、テキストを選択せずに右クリックすると、文書全体が隣のページで翻訳されます。訳文は元の位置に重ねて表示され、レイアウト、図表、表は変わりません。</p>
-            <ul>
-              <li>原文と訳文を並べて対照表示、訳文のみまたは原文のみの表示も可能</li>
-              <li>表はセルごとに翻訳され、行・列と罫線はそのまま維持されます。収まらない訳文は自動的に文字サイズが縮小されます</li>
-              <li>ブラウザの印刷から PDF として保存でき、訳文は選択・検索可能なテキストです</li>
-              <li>ファイルは本機でのみ解析され、抽出されたテキストのみが翻訳プラットフォームに送信されます。ローカルの PDF は翻訳ページに直接ドラッグできます。スキャン文書には未対応です</li>
-            </ul>
-          </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>デモ動画プレースホルダー</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
             </div>
           </div>
         </div>

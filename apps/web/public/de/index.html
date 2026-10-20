@@ -239,6 +239,60 @@
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">02</p>
+            <h3>Bildübersetzung</h3>
+            <p>Ein Rechtsklick auf ein Bild erkennt den darin enthaltenen Text; anschließend wird die Übersetzung an der erkannten Position über das Originalbild gelegt.</p>
+            <ul>
+              <li>Lange Bilder werden vor der Erkennung in Kacheln geteilt; die Schnittkanten werden automatisch in die Leerzeilen zwischen den Textzeilen verschoben, sodass kein Satz geteilt wird</li>
+              <li>Vor der Übergabe wird nach Gesamtpixelzahl statt nach der längsten Kante skaliert, damit die Breite langer Bilder nicht zusammengedrückt wird</li>
+              <li>Die Übersetzung wird an der Position des Originalbilds überlagert; alternativ lässt sich das Bildfenster öffnen, um Bilder hochzuladen, einzufügen oder eine Bild-URL einzugeben</li>
+              <li>Beim Wechsel der Zielsprache wird der bereits erkannte Text wiederverwendet; nach dem Austausch des Bilds wird neu erkannt</li>
+            </ul>
+          </div>
+          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-image.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">03</p>
+            <h3>Übersetzung ganzer PDF-Dokumente <span class="soon">Demnächst verfügbar</span></h3>
+            <p>In einem in Chrome geöffneten PDF ohne Textauswahl direkt das Kontextmenü öffnen: Das gesamte Dokument wird auf einer benachbarten Seite übersetzt. Die Übersetzung wird an der ursprünglichen Position eingeblendet; Layout, Diagramme und Tabellen bleiben unverändert.</p>
+            <ul>
+              <li>Original und Übersetzung im direkten Vergleich nebeneinander; auch nur die Übersetzung oder nur das Original lässt sich anzeigen</li>
+              <li>Tabellen werden Zelle für Zelle übersetzt, Zeilen, Spalten und Tabellenlinien bleiben erhalten; zu lange Übersetzungen werden automatisch verkleinert</li>
+              <li>Über den Browser-Druck als PDF speichern; die Übersetzung ist auswählbarer und durchsuchbarer Text</li>
+              <li>Dateien werden ausschließlich lokal verarbeitet; nur der extrahierte Text wird an die Übersetzungsplattform gesendet. Lokale PDFs lassen sich direkt in die Übersetzungsseite ziehen. Gescannte Dokumente werden derzeit nicht unterstützt</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>Platzhalter für Demovideo</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">04</p>
             <h3>Elementübersetzung</h3>
             <p>Rechtsklick auf einen Bereich der Seite, um ihm eine Übersetzungsschaltfläche zuzuweisen. Ein Klick ersetzt den Text im Bereich direkt durch die gewählte Sprache, ein weiterer Klick stellt das Original wieder her.</p>
             <ul>
@@ -254,60 +308,6 @@
             </div>
             <div class="frame-body">
               <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-element.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">03</p>
-            <h3>Bildübersetzung</h3>
-            <p>Ein Rechtsklick auf ein Bild erkennt den darin enthaltenen Text; anschließend wird die Übersetzung an der erkannten Position über das Originalbild gelegt.</p>
-            <ul>
-              <li>Lange Bilder werden vor der Erkennung in Kacheln geteilt; die Schnittkanten werden automatisch in die Leerzeilen zwischen den Textzeilen verschoben, sodass kein Satz geteilt wird</li>
-              <li>Vor der Übergabe wird nach Gesamtpixelzahl statt nach der längsten Kante skaliert, damit die Breite langer Bilder nicht zusammengedrückt wird</li>
-              <li>Die Übersetzung wird an der Position des Originalbilds überlagert; alternativ lässt sich das Bildfenster öffnen, um Bilder hochzuladen, einzufügen oder eine Bild-URL einzugeben</li>
-              <li>Beim Wechsel der Zielsprache wird der bereits erkannte Text wiederverwendet; nach dem Austausch des Bilds wird neu erkannt</li>
-            </ul>
-          </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-image.mp4</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature slide flip" data-slide>
-      <div class="wrap">
-        <div class="feature-grid">
-          <div class="feature-copy reveal">
-            <p class="no">04</p>
-            <h3>Übersetzung ganzer PDF-Dokumente <span class="soon">Demnächst verfügbar</span></h3>
-            <p>In einem in Chrome geöffneten PDF ohne Textauswahl direkt das Kontextmenü öffnen: Das gesamte Dokument wird auf einer benachbarten Seite übersetzt. Die Übersetzung wird an der ursprünglichen Position eingeblendet; Layout, Diagramme und Tabellen bleiben unverändert.</p>
-            <ul>
-              <li>Original und Übersetzung im direkten Vergleich nebeneinander; auch nur die Übersetzung oder nur das Original lässt sich anzeigen</li>
-              <li>Tabellen werden Zelle für Zelle übersetzt, Zeilen, Spalten und Tabellenlinien bleiben erhalten; zu lange Übersetzungen werden automatisch verkleinert</li>
-              <li>Über den Browser-Druck als PDF speichern; die Übersetzung ist auswählbarer und durchsuchbarer Text</li>
-              <li>Dateien werden ausschließlich lokal verarbeitet; nur der extrahierte Text wird an die Übersetzungsplattform gesendet. Lokale PDFs lassen sich direkt in die Übersetzungsseite ziehen. Gescannte Dokumente werden derzeit nicht unterstützt</li>
-            </ul>
-          </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
-            <div class="frame-bar" aria-hidden="true">
-              <i></i><i></i><i></i>
-              <span class="addr"></span>
-            </div>
-            <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demovideo</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
             </div>
           </div>
         </div>

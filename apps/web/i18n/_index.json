@@ -628,48 +628,6 @@
       "index.html"
     ]
   },
-  "元素翻译": {
-    "kind": "text",
-    "tag": "h3",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "右键页面上的某个区域，给它挂一个翻译按钮。点一下，区域里的文字就地换成所选语言，再点可恢复原文。": {
-    "kind": "text",
-    "tag": "p",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "规则按域名记住，下次再来同一个网站，按钮自动挂上": {
-    "kind": "text",
-    "tag": "li",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "长内容分批送出，边译边替换，不用等整块跑完": {
-    "kind": "text",
-    "tag": "li",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "攒下的规则可以在管理页逐条查看和删除": {
-    "kind": "text",
-    "tag": "li",
-    "pages": [
-      "index.html"
-    ]
-  },
-  "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-element.mp4</span>": {
-    "kind": "text",
-    "tag": "div",
-    "pages": [
-      "index.html"
-    ]
-  },
   "图片翻译": {
     "kind": "text",
     "tag": "h3",
@@ -762,6 +720,48 @@
     ]
   },
   "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-pdf.mp4</span>": {
+    "kind": "text",
+    "tag": "div",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "元素翻译": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "右键页面上的某个区域，给它挂一个翻译按钮。点一下，区域里的文字就地换成所选语言，再点可恢复原文。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "规则按域名记住，下次再来同一个网站，按钮自动挂上": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "长内容分批送出，边译边替换，不用等整块跑完": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "攒下的规则可以在管理页逐条查看和删除": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-element.mp4</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [
