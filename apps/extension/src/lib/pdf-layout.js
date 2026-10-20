@@ -91,8 +91,13 @@
     return lines;
   }
 
-  /** 把多行合成一段：英文行尾连字符断开的词接回去。 */
-  function joinLines(texts) {
+  /**
+   * 把多行合成一段：英文行尾连字符断开的词接回去。
+   * 行尾的连字符可能是排版断词（remark-/ably），也可能是复合词本来的连字符恰好落在行尾
+   * （Retrieval-/augmented），光看这两行分不出来；context 是同一页的全部文字，
+   * 别处出现过带连字符的完整写法就保留连字符。
+   */
+  function joinLines(texts, context = '') {
     let out = '';
     for (const raw of texts) {
       const text = raw.trim();
@@ -102,7 +107,9 @@
       } else if (/\p{Ll}-$/u.test(out) && /^\p{Ll}/u.test(text)) {
         // 本来就带连字符的复合词（state-of-the-）保留连字符，只是不补空格
         const word = out.slice(out.lastIndexOf(' ') + 1, -1);
-        out = (word.includes('-') ? out : out.slice(0, -1)) + text;
+        const next = text.match(/^\p{L}+/u)[0];
+        const keep = word.includes('-') || context.includes(`${word}-${next}`);
+        out = (keep ? out : out.slice(0, -1)) + text;
       } else {
         out += glue(out, text) + text;
       }
@@ -114,7 +121,9 @@
   function buildBlocks(items) {
     const blocks = [];
     let block = null;
-    for (const line of markCells(buildLines(items))) {
+    const lines = markCells(buildLines(items));
+    const context = lines.map((line) => line.text).join('\n');
+    for (const line of lines) {
       const last = block?.lines.at(-1);
       // 上一行比这一段明显短：段落在那里结束了，或者它是小标题
       const reach = block ? Math.max(block.right, line.right) : 0;
@@ -147,7 +156,7 @@
       block.cell &&= line.cell;
     }
     return blocks.map((b) => {
-      const text = joinLines(b.lines.map((l) => l.text));
+      const text = joinLines(b.lines.map((l) => l.text), context);
       const letters = (text.match(LETTER) || []).length;
       // 外扩一点再盖：PDF 记录的字宽常比实际渲染的字形略窄，不扩的话右边会露出原文的残笔。
       // 表格格子紧挨着表格线，只扩一小圈，免得把线盖掉

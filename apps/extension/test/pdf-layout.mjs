@@ -124,6 +124,11 @@ function line(text, { x = 72, y, size = 10, eol = true } = {}) {
   assert.equal(L.joinLines(['大语言模型的文笔', '非常流畅。']), '大语言模型的文笔非常流畅。');
   assert.equal(L.joinLines(['state-of-the-', 'art']), 'state-of-the-art', '连字符后是小写才去掉……');
   assert.equal(L.joinLines(['pre-', 'Trained']), 'pre- Trained', '……大写开头保留原样');
+  // 复合词的连字符恰好落在行尾：同一页别处出现过完整写法就保留
+  assert.equal(L.joinLines(['models. Retrieval-', 'augmented generation'], 'Retrieval-augmented generation in practice'),
+    'models. Retrieval-augmented generation');
+  assert.equal(L.joinLines(['models. Retrieval-', 'augmented generation']), 'models. Retrievalaugmented generation',
+    '没有旁证时仍按断词处理');
   console.log('✓ 中日韩跨行不补空格，连字符只在小写断词时接回');
 }
 

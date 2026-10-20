@@ -565,7 +565,7 @@
       "index.html"
     ]
   },
-  "四个入口，都在右键菜单里": {
+  "五个入口，都在右键菜单里": {
     "kind": "text",
     "tag": "h2",
     "pages": [
@@ -713,6 +713,55 @@
     ]
   },
   "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-image.mp4</span>": {
+    "kind": "text",
+    "tag": "div",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "整份 PDF 翻译 <span class=\"soon\">即将发布</span>": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "在 Chrome 打开的 PDF 里，不选文字直接右键，整份文档在旁边的页面里翻译。译文按原位置盖回去，版面、图表和表格都不变。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "原文和译文并排对照，也可以只看译文或只看原文": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "表格逐格翻译，行列与表格线保持原样；放不下的译文自动缩小字号": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "通过浏览器打印另存为 PDF，译文是可选中、可搜索的文字": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "文件只在本机解析，只有提取出的文字发给翻译平台；本地 PDF 可以直接拖进翻译页。暂不支持扫描件": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-pdf.mp4</span>": {
     "kind": "text",
     "tag": "div",
     "pages": [

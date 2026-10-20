@@ -7,16 +7,19 @@
 ## 演示视频（已就位）
 
 **首屏刻意不放视频**：那里用静态示意图（直接内联在 `index.html` 里的 SVG），第一眼就完整可读，
-也不和下面「01 划词翻译」那段视频重复。四个功能区块各放一段，`main.js` 自动接管，不需要改 HTML：
+也不和下面「01 划词翻译」那段视频重复。五个功能区块各放一段，`main.js` 自动接管，不需要改 HTML：
 
 | 文件名 | 出现在哪 | 内容 | 时长 |
 | --- | --- | --- | --- |
 | `demo-selection.mp4` | 功能 01 划词翻译 | 在真实的维基百科页面上划词 → 浮动按钮 → 弹窗里译文逐字出现 | 9.7s |
 | `demo-element.mp4` | 功能 02 元素翻译 | 悬停区域出现按钮 → 点击就地变中文 | 8.2s |
 | `demo-image.mp4` | 功能 03 图片翻译 | **在网页里右键一张图片** → 图上转圈识别 → 结果面板把译文盖回原位 → 切回原图对照 | 11.3s |
-| `demo-panel.mp4` | 功能 04 翻译面板 | 输入原文 → 右侧逐字出译文 | 10.6s |
+| `demo-pdf.mp4` | 功能 04 整份 PDF 翻译（即将发布） | **在 Chrome 内置 PDF 阅读器里右键空白处** → 翻译页灰色骨架扫光 → 译文盖回原位，推镜看正文与表格 → 切到只看译文 | 15.8s |
+| `demo-panel.mp4` | 功能 05 翻译面板 | 输入原文 → 右侧逐字出译文 | 10.6s |
 
 全部 1280×800（16:10）、30fps、H.264 + faststart、**无音轨**，单文件 0.36–1.2 MB。
+`demo-pdf.mp4` 跨两个标签页录制（阅读器 → 翻译页），翻译页渲染好第一页后才接上，中间不留加载空白；
+演示用的报告由 `tools/capture/pages/report.html` 经 `make-report-pdf.mjs` 打印成 `report.pdf`。
 首尾各有一段淡出到页面底色的过渡，循环播放时不会跳。
 
 视频是滚到视口附近才开始拉的。**空窗期由 `main.js` 压一层转圈**（`.frame-loading`），
@@ -27,9 +30,11 @@
 
 ```bash
 cd tools/capture
-node record-demos.mjs                    # 录 4 段（可只录某几段：node record-demos.mjs image）
+node make-report-pdf.mjs                 # 只在改了 pages/report.html 时需要
+node record-demos.mjs                    # 全部重录（可只录某几段：node record-demos.mjs pdf）
+# 8788 被本机官网预览占用时：CAPTURE_PORT=8790 node record-demos.mjs pdf
 /Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/compose_demos.py
-for c in selection element image panel; do
+for c in selection element image pdf panel; do
   node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i out/demo-frames/$c/frame_%06d.png \
     -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -an -movflags +faststart \
     ../../apps/web/public/assets/demo-$c.mp4

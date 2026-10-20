@@ -519,6 +519,12 @@ main, .nav, .foot { position: relative; z-index: 1; }
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 600; letter-spacing: -.01em;
 }
+/* 尚未发布的功能：标题后面的小标签 */
+.feature h3 .soon {
+  display: inline-block; vertical-align: middle; margin-inline-start: .45rem;
+  padding: .12rem .6rem; border: 1px solid var(--line-strong); border-radius: 999px;
+  font: 500 .8rem/1.5 var(--font-sans); letter-spacing: 0; color: var(--accent-ink);
+}
 .feature-copy > p:not(.no) { margin-top: var(--s2); color: var(--text-2); max-width: 42ch; text-wrap: pretty; }
 .feature ul {
   margin: var(--s3) 0 0; padding: var(--s3) 0 0; list-style: none;
