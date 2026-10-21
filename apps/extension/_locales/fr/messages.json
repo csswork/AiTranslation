@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Cela augmente la consommation de la reconnaissance d'image : le modèle doit produire la position et le numéro de bloc de chaque ligne, ce qui, en pratique, augmente de 50 à 80 % les tokens de sortie par image, et la reconnaissance est aussi légèrement plus lente. Avec votre propre API Key, ce coût est à la charge de votre compte ; la reconnaissance d'image pour la traduction par points ne consomme pas de points en soi, et la traduction reste facturée selon le nombre de caractères traduits. Le découpage en blocs est déterminé par le modèle, qui peut occasionnellement fusionner des textes sans rapport dans un même bloc."
   },
+  "m_640d4b7077f78683": {
+    "message": "Cela augmente la consommation de la reconnaissance d'image : les invites sont plus longues et le modèle doit préciser la direction de mise en page de chaque bloc, ce qui ajoute en pratique environ 20 % de tokens par image et ralentit légèrement la reconnaissance. Avec votre propre API Key, ce coût est à la charge de votre compte ; la reconnaissance d'image pour la traduction par points ne consomme pas de points, et la traduction reste facturée selon le nombre de caractères traduits."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Lors de la reconnaissance d'image, demander au modèle de fournir les positions des blocs de texte tels que bulles de dialogue, narration, titres et paragraphes, et de gérer correctement le texte vertical (par ex. les mangas japonais) et les furigana ; le texte d'un même bloc est traduit et mis en page ensemble. Lorsque cette option est désactivée, le modèle décide lui-même comment diviser le texte."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

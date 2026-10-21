@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Sẽ làm tăng mức tiêu thụ khi nhận dạng ảnh: mô hình phải xuất thêm vị trí và số khối của từng dòng, thực tế token đầu ra mỗi ảnh tăng 50–80%, nhận dạng cũng chậm hơn một chút. Khi dùng API Key riêng, chi phí này do tài khoản của bạn chịu; nhận dạng ảnh cho dịch bằng điểm không bị trừ điểm, việc dịch vẫn trừ điểm theo số ký tự bản dịch. Việc phân khối do mô hình quyết định, đôi khi có thể gộp văn bản không liên quan vào cùng một khối."
   },
+  "m_640d4b7077f78683": {
+    "message": "Việc này làm tăng mức tiêu thụ khi nhận dạng hình ảnh: prompt dài hơn, mô hình phải mô tả hướng dàn trang của từng khối, theo thử nghiệm tốn thêm khoảng 20% token mỗi hình và nhận dạng cũng chậm hơn một chút. Khi dùng API Key của riêng bạn, chi phí này do tài khoản của bạn chi trả; nhận dạng hình ảnh khi dịch bằng điểm không bị trừ điểm, việc dịch vẫn trừ điểm theo số ký tự bản dịch."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Khi nhận dạng hình ảnh, yêu cầu mô hình cung cấp vị trí cho các khối văn bản như bong bóng hội thoại, lời dẫn, tiêu đề và đoạn văn, đồng thời xử lý đúng văn bản dọc (ví dụ: truyện tranh Nhật Bản) và furigana; văn bản trong cùng một khối được dịch và dàn trang cùng nhau. Khi tắt, mô hình tự quyết định cách phân chia văn bản."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

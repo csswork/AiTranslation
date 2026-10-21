@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Görsel tanıma tüketimini artırır: model her satırın konumunu ve blok numarasını fazladan çıktı olarak verir; ölçümlere göre görsel başına çıktı token sayısı %50–80 artar ve tanıma biraz yavaşlar. Kendi API Key'inizi kullanıyorsanız bu maliyet hesabınıza yansır; puanla çeviride görsel tanıma puan düşmez, çeviri yine çevrilen karakter sayısına göre puan düşer. Bloklama model tarafından belirlenir ve bazen ilgisiz metinleri tek blokta birleştirebilir."
   },
+  "m_640d4b7077f78683": {
+    "message": "Görsel tanıma tüketimini artırır: istem daha uzundur ve model her bloğun düzen yönünü belirtmek zorundadır; testlerde görsel başına yaklaşık %20 daha fazla token ekler ve tanıma biraz yavaşlar. Kendi API Key'inizle bu maliyet hesabınıza aittir; puanla çeviride görsel tanıma puan düşmez, çeviri yine çevrilen karakter sayısına göre puan düşer."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Görsel tanıma sırasında modelin konuşma balonları, anlatım, başlıklar ve paragraflar gibi metin bloklarının konumlarını belirtmesini sağlar; dikey metinleri (ör. Japon mangası) ve furiganayı da doğru şekilde işler; aynı bloktaki metin birlikte çevrilir ve birlikte düzenlenir. Kapalıyken metnin nasıl bölüneceğine model kendisi karar verir."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Ini meningkatkan penggunaan pengenalan gambar: model harus mengeluarkan posisi dan nomor blok setiap baris, dan dalam praktiknya token keluaran per gambar naik 50–80%, dengan pengenalan juga sedikit lebih lambat. Dengan API Key milik Anda sendiri, biaya ini ditanggung oleh akun Anda; pengenalan gambar untuk terjemahan berbasis poin sendiri tidak memotong poin, dan terjemahan tetap dipotong berdasarkan jumlah karakter terjemahan. Pemblokiran ditentukan oleh model, yang terkadang dapat menggabungkan teks yang tidak terkait menjadi satu blok."
   },
+  "m_640d4b7077f78683": {
+    "message": "Ini menambah konsumsi pengenalan gambar: prompt lebih panjang dan model harus menjelaskan arah tata letak setiap blok, yang berdasarkan pengujian menambah sekitar 20% token per gambar dan membuat pengenalan sedikit lebih lambat. Dengan API Key milik sendiri, biaya ini ditanggung oleh akun Anda; pengenalan gambar untuk terjemahan berbasis poin tidak memotong poin, dan terjemahan tetap dipotong berdasarkan jumlah karakter terjemahan."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Saat mengenali gambar, minta model memberikan posisi untuk blok teks seperti balon dialog, narasi, judul, dan paragraf, serta menangani teks vertikal (misalnya manga Jepang) dan furigana dengan benar; teks dalam blok yang sama diterjemahkan dan ditata bersama. Saat nonaktif, model memutuskan sendiri cara membagi teks."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

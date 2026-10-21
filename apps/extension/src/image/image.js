@@ -227,12 +227,18 @@
         node.style.top = `${item.box.y * 100}%`;
         node.style.width = `${item.box.w * 100}%`;
         node.style.height = `${item.box.h * 100}%`;
+        // 方框按识别坐标画（「只看方框」要如实反映坐标准不准）；译文的遮盖范围
+        // 和导出图片一样按笔画校正，读不到像素或找不到笔画时退回按框放宽
+        if (item.cover === undefined) {
+          const others = list.filter((o) => o !== item && o.box && !o.skipped && !o.sameAsSource);
+          const refined = image?.ctx ? R.refineCover(image.ctx, image.size.width, image.size.height, item, others) : null;
+          item.cover = refined?.cover || R.coverBox(item, image?.natural);
+          if (refined) item.fontMax = refined.fontMax;
+        }
+        const cover = item.cover;
         if (item.fontMax) node.dataset.fontMax = String(item.fontMax);
         const fill = document.createElement('div');
         fill.className = 'fill';
-        // 方框按识别坐标画（「只看方框」要如实反映坐标准不准），
-        // 译文的遮盖范围和导出图片一样往外放一点，免得露出原文边角
-        const cover = R.coverBox(item, image?.natural);
         if (cover !== item.box && item.box.w && item.box.h) {
           const px = ((item.box.x - cover.x) / item.box.w) * 100;
           const py = ((item.box.y - cover.y) / item.box.h) * 100;
@@ -397,7 +403,7 @@
       });
       const result = reuse && same ? lastResult
         : regions.length ? await readRegionText(regions, read)
-        : await read(image.sendSrc, image.size);
+        : await readWhole(read);
       if (signal.aborted) return;
 
       lastResult = result;
@@ -408,11 +414,7 @@
         ? t("$1 个选区，识别出 $2 段", [result.regions.length, result.blocks.length])
         : t("识别 $1 段，$2 段带坐标 · 坐标制式 $3×$4", [result.blocks.length, withBox, result.scale.x, result.scale.y]);
 
-      // AI 智能分段：同一段的各行合成一整段（选区结果已经按选区合并过）
-      const units = result.regions ? result.blocks : Regions.groupParagraphs(result.blocks);
-      if (units.length < result.blocks.length) el.meta.textContent += t("，AI 分成 $1 段", [units.length]);
-
-      if (!units.length) {
+      if (!result.blocks.length) {
         renderBlocks([]);
         setStatus(result.regions ? t("选区里没有识别到文字") : t("图中没有识别到文字"));
         return;
@@ -421,8 +423,8 @@
       // 星级、价格、尺码这类纯数字符号没有翻译的意义，
       // 送去翻译只会原样返回，白花 token 还会盖住原图。
       // 这里复用划词菜单同一套判断。
-      const translatable = units.filter((b) => L.shouldOffer(b.text));
-      const skipped = units.length - translatable.length;
+      const translatable = result.blocks.filter((b) => L.shouldOffer(b.text));
+      const skipped = result.blocks.length - translatable.length;
       const tagSkipped = (list, done) =>
         list.map((b) => {
           const translation = done.get(b) || '';
@@ -435,10 +437,10 @@
         });
 
       // 先把识别结果画出来，翻译失败也能看到方框准不准
-      renderBlocks(tagSkipped(units, new Map(translatable.map((b) => [b, '']))));
+      renderBlocks(tagSkipped(result.blocks, new Map(translatable.map((b) => [b, '']))));
 
       if (!translatable.length) {
-        setStatus(t("识别到 $1 段，都无需翻译", [units.length]));
+        setStatus(t("识别到 $1 段，都无需翻译", [result.blocks.length]));
         return;
       }
 
@@ -451,7 +453,7 @@
       if (signal.aborted) return;
 
       const done = new Map(translatable.map((b, i) => [b, translations[i] || '']));
-      const tagged = tagSkipped(units, done);
+      const tagged = tagSkipped(result.blocks, done);
       renderBlocks(tagged);
       // 列表里不显示被跳过的条目，所以在状态里把数量说清楚
       const hidden = tagged.filter((b) => b.skipped || b.sameAsSource).length;
@@ -470,6 +472,30 @@
         el.run.disabled = !image;
       }
     }
+  }
+
+  /**
+   * 识别整张图：和右键翻译一样补白成正方形送检，长图先切块再合并；
+   * 读不到像素（跨域）时只能按网址整张送检。
+   */
+  async function readWhole(read) {
+    if (!image.ctx) return read(image.sendSrc, image.size);
+    const T = globalThis.AITrTiles;
+    const { canvas } = image.ctx;
+    const { parts, plan } = T.squareParts(canvas, canvas.width, canvas.height);
+    const results = [];
+    for (let i = 0; i < parts.length; i += 1) {
+      if (parts.length > 1) setStatus(t("正在识别 $1/$2…", [i + 1, parts.length]), true);
+      results.push(await read(parts[i].image, parts[i].size));
+    }
+    const perTile = results.map((r, i) => T.fromSquare(r.blocks, parts[i].frame));
+    return {
+      blocks: parts.length > 1 ? T.mergeBlocks(perTile, plan, canvas.height) : perTile[0],
+      raw: results.map((r) => r.raw).join('\n\n'),
+      scale: results[0].scale,
+      // 切换坐标制式时在本地重算，要知道送检的是哪个正方形
+      sent: parts.length === 1 ? parts[0] : null,
+    };
   }
 
   /**
@@ -642,8 +668,10 @@
     const choice = el.scale.value;
     if (choice === 'ratio') return { x: 1, y: 1 };
     if (choice === '1000') return { x: 1000, y: 1000 };
-    if (choice === 'pixel' && image?.size) {
-      return { x: image.size.width, y: image.size.height };
+    // 「图片像素」指送检那张图的像素：补成正方形以后就是正方形的边长
+    const sent = lastResult?.sent?.size || image?.size;
+    if (choice === 'pixel' && sent) {
+      return { x: sent.width, y: sent.height };
     }
     return lastResult?.scale || { x: 1000, y: 1000 };
   }
@@ -652,11 +680,17 @@
   // 不重新请求接口，切换是免费的。
   /** 换一种换算方式重画。都在本地算，不重新请求接口，切换是免费的。 */
   function requantize() {
-    // 选区结果的框就是选区本身、AI 分出的段是多行合并的框，都不是模型的单个坐标
-    if (!lastResult || lastResult.regions || blocks.some((b) => b.lines)) return;
+    // 选区结果的框就是选区本身；长图分块识别的坐标已经合并过，都没法按原始坐标重算
+    if (!lastResult || lastResult.regions || (image?.ctx && !lastResult.sent)) return;
     const scale = currentScale();
     const order = el.order.value;
-    blocks = blocks.map((b) => ({ ...b, box: P.normalizeBox(b.rawBox, scale, order) }));
+    const frame = lastResult.sent?.frame;
+    blocks = blocks.map((b) => {
+      const box = P.normalizeBox(b.rawBox, scale, order);
+      // 正方形送检图上的坐标换算回原图；落在补白里的就没有框
+      return { ...b, cover: undefined, sample: undefined,
+        box: box && frame ? globalThis.AITrTiles.fromSquare([{ box }], frame)[0]?.box || null : box };
+    });
     renderBlocks(blocks);
     el.meta.textContent = t("$1 段 · 制式 $2×$3 · 顺序 $4", [blocks.length, scale.x, scale.y, order]);
   }

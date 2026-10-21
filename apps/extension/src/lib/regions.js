@@ -187,64 +187,20 @@
   }
 
   /**
-   * 按段落编号分组，保持首次出现的顺序。没有编号或没有坐标的行各自成组
-   * （没开 AI 智能分段、模型没照做，或者是旧版后台）。
-   */
-  function splitByPara(lines) {
-    const groups = [];
-    const byKey = new Map();
-    for (const line of lines) {
-      if (line.para == null || !line.box) {
-        groups.push([line]);
-        continue;
-      }
-      const key = String(line.para);
-      if (!byKey.has(key)) {
-        byKey.set(key, []);
-        groups.push(byKey.get(key));
-      }
-      byKey.get(key).push(line);
-    }
-    return groups;
-  }
-
-  /**
-   * 不同请求（长图切块、多批拼图）各自从 0 开始编号，合并前加上前缀，免得串段。
-   */
-  function tagParagraphs(blocks, prefix) {
-    return (blocks || []).map((b) => (b?.para == null ? b : { ...b, para: `${prefix}:${b.para}` }));
-  }
-
-  /**
-   * AI 智能分段：同一段的各行合成一整段翻译，框取各行的外接框，排版时整段铺开。
-   * 只有一行的段原样保留（仍按单行处理遮盖和字号）。
-   */
-  function groupParagraphs(blocks) {
-    const lines = (blocks || []).filter((b) => String(b?.text || '').trim());
-    return splitByPara(lines).map((parts) => {
-      if (parts.length === 1) return parts[0];
-      const merged = mergeLines(parts);
-      return { ...merged, box: merged.textBox, para: parts[0].para, lines: parts.length };
-    });
-  }
-
-  /**
-   * 每个选区合成一段；开了 AI 智能分段且选区里有好几段时，按段拆开。
-   * box 是选区本身；textBox 是这一段文字的外接框，遮盖只盖这一块——
-   * 选区往往比文字大（框住整个对话框），整块盖上会把对话框的描边也盖掉。
+   * 每个选区合成一段。box 是选区本身；textBox 是模型给的选区内文字外接框，
+   * 只在读不到像素、没法按笔画校正时才用来定遮盖范围。
    * fontMax 是原文的大致字号（相对整图高），译文不会比原文还大。
    * @returns {Array<{region:number,text:string,box:object,textBox:object|null,fontMax:number}>}
    */
   function groupByRegion(blocks, regions) {
-    return regions.flatMap((box, region) => {
-      const parts = blocks.filter((b) => b.region === region && String(b.text || '').trim());
-      if (!parts.length) return [];
-      const paragraphs = parts.some((b) => b.para != null) ? splitByPara(parts) : [parts];
-      return paragraphs.map((lines) => {
-        const merged = mergeLines(lines, box);
+    return regions
+      .map((box, region) => {
+        const parts = blocks.filter((b) => b.region === region && String(b.text || '').trim());
+        if (!parts.length) return null;
+        const merged = mergeLines(parts, box);
         return { region, box, ...merged, fontMax: merged.fontMax || box.h * 0.5 };
-      });
-    }).filter((g) => g.text);
+      })
+      .filter((g) => g?.text);
   }
 
   /**
@@ -272,7 +228,7 @@
    * @param {{w:number,h:number}} args.natural 原图像素尺寸
    * @param {(w:number,h:number)=>number} args.scaleFor 送检缩放系数
    * @param {(image:string, size:{width:number,height:number})=>Promise<Array>} args.read
-   *   识别一张图，返回 0-1 坐标的 blocks
+   *   识别一张（已补成正方形的）图，返回 0-1 坐标的 blocks
    * @param {(done:number,total:number)=>void} [args.onProgress]
    */
   async function readRegions({ source, natural, regions, scaleFor, read, onProgress }) {
@@ -283,20 +239,11 @@
       onProgress?.(i, batches.length);
       const batch = batches[i];
       const canvas = stitch(source, batch, scaleFor(batch.width, batch.height));
-      const { width: w, height: h } = canvas;
-      let blocks;
-      if (T?.needsTiling(w, h)) {
-        // 单个选区本身就是长条：和长图一样切块，切缝挪到空白处
-        const plan = T.refinePlan(T.planTiles(w, h), T.rowDarkness(canvas.getContext('2d'), w, h), h);
-        const images = T.cutTiles(canvas, w, h, plan) || [];
-        const perTile = [];
-        for (let j = 0; j < images.length; j += 1) {
-          perTile.push(tagParagraphs(await read(images[j], { width: w, height: plan[j].height }), `${i}.${j}`));
-        }
-        blocks = T.mergeBlocks(perTile, plan, h);
-      } else {
-        blocks = tagParagraphs(await read(canvas.toDataURL('image/jpeg', 0.9), { width: w, height: h }), i);
-      }
+      // 和整图一样补白成正方形送检；单个选区本身是长条时先切块
+      const { parts, plan } = T.squareParts(canvas, canvas.width, canvas.height);
+      const perTile = [];
+      for (const part of parts) perTile.push(T.fromSquare(await read(part.image, part.size), part.frame));
+      const blocks = parts.length > 1 ? T.mergeBlocks(perTile, plan, canvas.height) : perTile[0];
       out.push(...unpackBlocks(blocks, batch, regions));
     }
     return out;
@@ -311,8 +258,6 @@
     filterByRegions,
     joinText,
     unionBox,
-    tagParagraphs,
-    groupParagraphs,
     groupByRegion,
     stitch,
     readRegions,

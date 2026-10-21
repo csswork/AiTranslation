@@ -25,22 +25,25 @@ test('托管识图使用服务端 Flash 模型与 Key，图片只放 user 消息
   assert.equal(result.meta.outputTokens, 20);
 });
 
-test('AI 智能分段：换用逐行加段落编号的提示词，只保留合法编号；默认识别不带编号', async () => {
-  const prompts = [];
-  const content = '[{"text":"WHERE ARE","box":[1,2,3,4],"para":0},{"text":"WE GOING?","box":[1,5,3,8],"para":0},' +
-    '{"text":"Limited","box":[5,5,9,9],"para":-1},{"text":"Sale","box":[5,1,9,3],"para":"1"}]';
+test('AI 智能分段：换用按文字块识别（说明竖排与注音）的提示词；识图温度为 0，翻译仍用 1.3', async () => {
+  const bodies = [];
   const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
-    prompts.push(JSON.parse(init.body).messages[0].content);
+    bodies.push(JSON.parse(init.body));
+    const content = bodies.at(-1).messages[1].content?.[1]
+      ? '[{"text":"りんごは「一個」","box":[700,30,960,210],"vertical":true,"para":3}]'
+      : '"翻訳"';
     return Response.json({ choices: [{ message: { content } }] });
   } });
-  const grouped = JSON.parse((await hosted.readImageText({ image, layout: 'paragraphs' })).raw);
-  assert.match(prompts[0], /"para"/);
-  assert.deepEqual(grouped.map((b) => b.para), [0, 0, undefined, undefined], '负数和字符串编号丢弃');
-  const plain = JSON.parse((await hosted.readImageText({ image })).raw);
-  assert.doesNotMatch(prompts[1], /"para"/);
-  assert.ok(plain.every((b) => !('para' in b)), '未开启分段时不返回编号');
+  const blocks = JSON.parse((await hosted.readImageText({ image, layout: 'paragraphs' })).raw);
+  assert.match(bodies[0].messages[0].content, /text block/);
+  assert.match(bodies[0].messages[0].content, /vertical columns/);
+  assert.match(bodies[0].messages[0].content, /furigana/);
+  assert.deepEqual(blocks, [{ text: 'りんごは「一個」', box: [700, 30, 960, 210] }], '只回传文字与坐标');
+  await hosted.readImageText({ image });
+  assert.doesNotMatch(bodies[1].messages[0].content, /text block/, '默认仍用原来的提示词');
   await hosted.readImageText({ image, layout: 'anything-else' });
-  assert.doesNotMatch(prompts[2], /"para"/, '未知 layout 按逐行识别');
+  assert.doesNotMatch(bodies[2].messages[0].content, /text block/, '未知 layout 按默认处理');
+  assert.ok(bodies.every((b) => b.temperature === 0 && b.thinking?.type === 'disabled'), '识图温度为 0，且不开思考');
 });
 
 test('空图、错误坐标与非 JSON 回复；错误不包含识别内容，不向未验证视觉能力的备用服务商发送图片', async () => {

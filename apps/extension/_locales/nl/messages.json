@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Dit verhoogt het verbruik bij het herkennen van afbeeldingen: het model moet de positie en het bloknummer van elke regel uitvoeren, en in de praktijk stijgt het aantal output-tokens per afbeelding met 50–80%, terwijl de herkenning ook iets langzamer gaat. Met je eigen API Key komen deze kosten voor jouw rekening; bij vertaling met punten kost de beeldherkenning zelf geen punten, en de vertaling wordt nog steeds per vertaald teken afgerekend. De blokindeling wordt door het model bepaald, dat af en toe niet-verwante tekst in één blok kan samenvoegen."
   },
+  "m_640d4b7077f78683": {
+    "message": "Dit verhoogt het verbruik bij beeldherkenning: prompts zijn langer en het model moet de lay-outrichting van elk blok aangeven, wat in tests ongeveer 20% meer tokens per afbeelding oplevert en herkenning iets langzamer maakt. Met je eigen API Key komen deze kosten voor jouw rekening; beeldherkenning voor vertaling met punten verbruikt zelf geen punten, en vertaling wordt nog steeds per aantal vertaalde tekens afgerekend."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Laat het model bij het herkennen van afbeeldingen posities geven voor tekstblokken zoals tekstballonnen, vertelling, titels en alinea's, en correct omgaan met verticale tekst (bijv. Japanse manga) en furigana; tekst in hetzelfde blok wordt samen vertaald en samen opgemaakt. Indien uitgeschakeld, bepaalt het model zelf hoe de tekst wordt verdeeld."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

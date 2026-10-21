@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Dies erhöht den Verbrauch bei der Bilderkennung: Das Modell muss die Position und Blocknummer jeder Zeile ausgeben, wodurch die Ausgabe-Token pro Bild in der Praxis um 50–80 % steigen und die Erkennung etwas langsamer wird. Mit eigenem API Key trägt dein Konto diese Kosten; die Bilderkennung bei der Punkte-Übersetzung selbst verbraucht keine Punkte, und die Übersetzung wird weiterhin nach der Anzahl der übersetzten Zeichen abgerechnet. Die Blockbildung entscheidet das Modell, das gelegentlich unzusammenhängenden Text zu einem Block zusammenfassen kann."
   },
+  "m_640d4b7077f78683": {
+    "message": "Dies erhöht den Verbrauch bei der Bilderkennung: Die Prompts sind länger und das Modell muss die Layoutrichtung jedes Blocks angeben, was im Test pro Bild etwa 20 % mehr Tokens verursacht und die Erkennung etwas langsamer macht. Mit eigenem API Key trägt dein Konto diese Kosten; die Bilderkennung bei der Punkte-Übersetzung selbst verbraucht keine Punkte, und die Übersetzung wird weiterhin nach der Anzahl der übersetzten Zeichen abgerechnet."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Beim Texterkennen lässt das Modell Positionen für Textblöcke wie Sprechblasen, Erzähltext, Titel und Absätze ausgeben und behandelt vertikalen Text (z. B. japanische Manga) sowie Furigana korrekt; Text im selben Block wird zusammen übersetzt und zusammen gesetzt. Wenn deaktiviert, entscheidet das Modell selbst, wie der Text aufgeteilt wird."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

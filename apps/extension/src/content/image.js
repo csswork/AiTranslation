@@ -129,46 +129,17 @@
     }
 
     const ctx = canvas.getContext('2d');
-    // 送检那份画布顺便用来给预览取相近背景色
+    // 送检那份画布顺便用来给预览取相近背景色、按像素校正遮盖位置
     const pixels = { source, ctx, width: sw, height: sh };
-    if (!Tiles.needsTiling(sw, sh)) {
-      return {
-        parts: [{ image: canvas.toDataURL('image/jpeg', 0.9), size: { width: sw, height: sh } }],
-        plan: [{ top: 0, height: sh }],
-        fullHeight: sh,
-        display: url,
-        natural,
-        ...pixels,
-      };
-    }
-
-    // 长图：先扫每行墨水量，把切缝挪到空白处，再切
-    const plan = Tiles.refinePlan(
-      Tiles.planTiles(sw, sh),
-      Tiles.rowDarkness(ctx, sw, sh),
-      sh
-    );
-    const images = Tiles.cutTiles(canvas, sw, sh, plan);
-    if (!images) {
-      return {
-        parts: [{ image: canvas.toDataURL('image/jpeg', 0.9), size: { width: sw, height: sh } }],
-        plan: [{ top: 0, height: sh }],
-        fullHeight: sh,
-        display: url,
-        natural,
-        ...pixels,
-      };
-    }
+    // 每块补白成正方形送检（长图先切块），坐标识别回来后再换算
+    const { parts, plan } = Tiles.squareParts(canvas, sw, sh);
     return {
-      parts: images.map((image, i) => ({
-        image,
-        size: { width: sw, height: plan[i].height },
-      })),
+      parts,
       plan,
       fullHeight: sh,
       display: url,
       natural,
-      tiled: true,
+      tiled: plan.length > 1,
       ...pixels,
     };
   }
@@ -572,15 +543,18 @@
       node.title = grabbed.ctx ? node.dataset.title : t('这张图跨域读不到像素，生成不了新图片');
     }
 
-    panel.blocks = blocks.map((item) => {
-      const cover = Render.coverBox(item, natural);
+    panel.blocks = blocks.map((item, i) => {
+      // 按笔画校正遮盖范围和字号；读不到像素或找不到笔画时退回按框放宽
+      const others = blocks.filter((_, j) => j !== i);
+      const refined = Render.refineCover(grabbed.ctx, grabbed.width, grabbed.height, item, others);
+      const cover = refined?.cover || Render.coverBox(item, natural);
       const sample = grabbed.ctx
         ? Render.sampleAt(grabbed.ctx, {
           x: cover.x * grabbed.width, y: cover.y * grabbed.height,
           w: cover.w * grabbed.width, h: cover.h * grabbed.height,
         }, grabbed.width, grabbed.height)
         : null;
-      return { ...item, cover, sample };
+      return { ...item, cover, sample, fontMax: refined?.fontMax ?? item.fontMax };
     });
     panel.layer.replaceChildren(
       ...panel.blocks.map((item) => {
@@ -666,8 +640,7 @@
     controller = new AbortController();
     const { signal } = controller;
     const { grabbed, settings } = result;
-    // 开了 AI 智能分段时，同一段的各行合成一整段；没有段落编号时原样逐行
-    const items = result.groups || Regions.groupParagraphs(result.merged);
+    const items = result.groups || result.merged;
     const worth = items.filter((b) => Lang.shouldOffer(b.text));
     if (!worth.length) {
       report(result.groups ? t("选区里没有需要翻译的文字")
@@ -769,8 +742,7 @@
           ? t("这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板")
           : reply?.error || t('识别失败'));
       }
-      // 各块的段落编号各自从 0 开始，合并前加上块号
-      perTile.push(Regions.tagParagraphs(reply.blocks, i));
+      perTile.push(Tiles.fromSquare(reply.blocks, grabbed.parts[i].frame));
     }
     lastLines = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
     return lastLines;

@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Zwiększa to zużycie przy rozpoznawaniu obrazu: model musi podać pozycję i numer bloku każdego wiersza, a w praktyce liczba tokenów wyjściowych na obraz rośnie o 50–80%, a rozpoznawanie jest nieco wolniejsze. W przypadku własnego klucza API koszt ten ponosi Twoje konto; samo rozpoznawanie obrazu przy tłumaczeniu za punkty nie zużywa punktów, a tłumaczenie nadal jest rozliczane według liczby przetłumaczonych znaków. Podział na bloki ustala model, który czasem może połączyć niepowiązany tekst w jeden blok."
   },
+  "m_640d4b7077f78683": {
+    "message": "Zwiększa to zużycie przy rozpoznawaniu obrazu: prompty są dłuższe, a model musi określić kierunek układu każdego bloku, co w testach dodaje około 20% tokenów na obraz i nieco spowalnia rozpoznawanie. Przy własnym kluczu API koszt ten ponosi Twoje konto; rozpoznawanie obrazu w tłumaczeniu za punkty samo w sobie nie zużywa punktów, a tłumaczenie nadal jest rozliczane według liczby przetłumaczonych znaków."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Podczas rozpoznawania obrazów model podaje pozycje bloków tekstu, takich jak dymki dialogowe, narracja, tytuły i akapity, oraz poprawnie obsługuje tekst pionowy (np. japońska manga) i furiganę; tekst w tym samym bloku jest tłumaczony i układany razem. Po wyłączeniu model sam decyduje o podziale tekstu."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

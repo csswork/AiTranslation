@@ -92,3 +92,18 @@ assert.deepEqual(sorted.map((b) => b.text), ['上', '下']);
 console.log('✓ 合并结果按阅读顺序排列');
 
 console.log('\n全部通过');
+
+/* ---- 补白成正方形送检：坐标换算回原图，补白里的丢掉 ---- */
+// 1220×1602 的竖图补成 1602×1602，内容占宽度的 1220/1602
+const frame = { w: 1220 / 1602, h: 1 };
+const back = T.fromSquare([
+  { text: 'in', box: { x: 0.5, y: 0.2, w: 0.1, h: 0.1 } },
+  { text: 'pad', box: { x: 0.85, y: 0.2, w: 0.1, h: 0.1 } },   // 中心在补白里
+  { text: 'nobox', box: null },
+], frame);
+assert.deepEqual(back.map((b) => b.text), ['in', 'nobox'], '落在补白里的丢掉，没坐标的保留');
+assert.ok(Math.abs(back[0].box.x - 0.5 * 1602 / 1220) < 1e-9 && Math.abs(back[0].box.w - 0.1 * 1602 / 1220) < 1e-9);
+assert.equal(back[0].box.y, 0.2, '高度方向占满，不用换算');
+assert.deepEqual(T.fromSquare([{ text: 'a', box: { x: 0.1, y: 0.1, w: 0.1, h: 0.1 } }], null)[0].box,
+  { x: 0.1, y: 0.1, w: 0.1, h: 0.1 }, '按网址送检（没有补白）时原样');
+console.log('✓ 补白成正方形后坐标换算回原图，补白里的毛刺丢掉');

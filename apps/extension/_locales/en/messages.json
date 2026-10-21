@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "This increases image recognition usage: the model must output the position and block number of each line, and in practice output tokens per image rise by 50–80%, with recognition also slightly slower. With your own API Key, this cost is borne by your account; image recognition for credit-based translation itself doesn't consume credits, and translation is still charged by translated character count. Blocking is decided by the model, which may occasionally merge unrelated text into one block."
   },
+  "m_640d4b7077f78683": {
+    "message": "This increases image recognition usage: prompts are longer and the model must specify the layout direction of each block, which in testing adds about 20% more tokens per image and makes recognition slightly slower. With your own API Key, this cost is borne by your account; image recognition for credit-based translation itself does not consume credits, and translation is still charged by translated character count."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "When recognizing images, have the model provide positions for text blocks such as speech bubbles, narration, titles, and paragraphs, and correctly handle vertical text (e.g., Japanese manga) and furigana; text in the same block is translated and laid out together. When off, the model decides how to divide the text."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

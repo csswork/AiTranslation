@@ -1948,6 +1948,12 @@
   "m_c9fa5988d5152f22": {
     "message": "Esto aumenta el consumo del reconocimiento de imágenes: el modelo debe indicar la posición y el número de bloque de cada línea, y en la práctica los tokens de salida por imagen aumentan entre un 50 y un 80 %, y el reconocimiento es algo más lento. Con tu propia API Key, este coste corre a cargo de tu cuenta; el reconocimiento de imágenes para la traducción por puntos no consume puntos en sí, y la traducción se sigue cobrando según el número de caracteres traducidos. La agrupación en bloques la decide el modelo, que en ocasiones puede fusionar texto no relacionado en un mismo bloque."
   },
+  "m_640d4b7077f78683": {
+    "message": "Esto aumenta el consumo del reconocimiento de imágenes: las indicaciones son más largas y el modelo debe especificar la dirección de maquetación de cada bloque, lo que en pruebas añade aproximadamente un 20 % más de tokens por imagen y hace el reconocimiento algo más lento. Con tu propia API Key, este coste corre a cargo de tu cuenta; el reconocimiento de imágenes para la traducción por puntos no consume puntos, y la traducción se sigue cobrando según el número de caracteres traducidos."
+  },
+  "m_590cdb5a16aa234e": {
+    "message": "Al reconocer imágenes, haz que el modelo indique las posiciones de los bloques de texto como bocadillos, narración, títulos y párrafos, y que maneje correctamente el texto vertical (p. ej., manga japonés) y el furigana; el texto de un mismo bloque se traduce y se compone junto. Si está desactivado, el modelo decide cómo dividir el texto."
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

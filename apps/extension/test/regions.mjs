@@ -105,43 +105,4 @@ assert.ok(near(tb.x, 0.1) && near(tb.y, 0.1) && near(tb.w, 0.2) && near(tb.h, 0.
 assert.ok(near(groups[1].fontMax, 0.03), '字号上限按原文行高估算');
 console.log('✓ 每个选区合成一整段翻译，顺序与模型一致');
 
-/* ---- 6. AI 智能分段：同一编号的行合成一段，没编号的逐行 ---- */
-const lines = [
-  { text: 'WHERE ARE', para: 0, box: { x: 0.2, y: 0.6, w: 0.2, h: 0.04 } },
-  { text: 'Sale', para: 1, box: { x: 0.7, y: 0.1, w: 0.1, h: 0.05 } },
-  { text: 'WE GOING?', para: 0, box: { x: 0.21, y: 0.65, w: 0.19, h: 0.04 } },
-  { text: 'no para', para: null, box: { x: 0.1, y: 0.9, w: 0.3, h: 0.03 } },
-  { text: 'no box', para: 0, box: null },
-];
-const paras = G.groupParagraphs(lines);
-assert.deepEqual(paras.map((p) => p.text), ['WHERE ARE WE GOING?', 'Sale', 'no para', 'no box'],
-  '按首次出现的顺序；单行段和没有编号、没有坐标的行原样保留');
-const bubble = paras[0];
-assert.equal(bubble.lines, 2);
-assert.ok(near(bubble.box.x, 0.2) && near(bubble.box.y, 0.6) && near(bubble.box.w, 0.2) && near(bubble.box.h, 0.09),
-  '段的框是各行的外接框');
-assert.deepEqual(bubble.textBox, bubble.box);
-assert.ok(near(bubble.fontMax, 0.04), '字号上限按行高');
-assert.equal(paras[1], lines[1], '只有一行的段不改动');
-assert.deepEqual(G.groupParagraphs(lines.map((l) => ({ ...l, para: null }))).map((p) => p.text),
-  lines.map((l) => l.text), '没开分段时逐行不变');
-
-// 不同请求的编号各自从 0 开始：加前缀后不能串段
-const tile0 = G.tagParagraphs([{ text: 'A', para: 0, box: lines[0].box }], 0);
-const tile1 = G.tagParagraphs([{ text: 'B', para: 0, box: lines[1].box }, { text: 'C', para: null, box: lines[3].box }], 1);
-assert.equal(G.groupParagraphs([...tile0, ...tile1]).length, 3, '两块各自的第 0 段不能合在一起');
-assert.equal(tile1[1].para, null);
-
-// 选区里有好几段时按段拆开，每段框限制在选区内
-const area = { x: 0, y: 0, w: 0.5, h: 1 };
-const inArea = G.groupByRegion([
-  { text: 'Title', region: 0, para: 'a', box: { x: 0.1, y: 0.1, w: 0.3, h: 0.05 } },
-  { text: 'Body one', region: 0, para: 'b', box: { x: 0.1, y: 0.3, w: 0.3, h: 0.03 } },
-  { text: 'body two', region: 0, para: 'b', box: { x: 0.1, y: 0.34, w: 0.6, h: 0.03 } },
-], [area]);
-assert.deepEqual(inArea.map((g) => g.text), ['Title', 'Body one body two']);
-assert.ok(inArea.every((g) => g.region === 0 && g.box === area));
-assert.ok(near(inArea[1].textBox.x + inArea[1].textBox.w, 0.5), '段的框不越出选区');
-console.log('✓ AI 智能分段：同段合并、单行与无编号逐行、编号加前缀不串段、选区内按段拆开');
-
 console.log('全部通过');

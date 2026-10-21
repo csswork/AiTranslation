@@ -102,6 +102,10 @@ layout = R.layoutText('这是一段比较长的中文译文，需要换行显示
 assert.ok(layout.lines.length > 1);
 assert.equal(layout.lines.join(''), '这是一段比较长的中文译文，需要换行显示。', '中文按字断行，不丢字');
 for (const l of layout.lines) assert.ok(!/^[，。]/.test(l), `标点不能出现在行首：${l}`);
+layout = R.layoutText('苹果是“一个”，胡萝卜是“一根”', 80, 300, measure);
+for (const l of layout.lines) assert.ok(!/^[”，]/.test(l), `右引号不能出现在行首：${l}`);
+for (const l of layout.lines) assert.ok(!/“$/.test(l), `左引号不能留在行尾：${l}`);
+assert.equal(layout.lines.join(''), '苹果是“一个”，胡萝卜是“一根”', '挪动引号不丢字');
 
 layout = R.layoutText('Supercalifragilisticexpialidocious', 60, 400, measure);
 assert.ok(layout.lines.length > 1, '一个词比整行还宽时按字断开');
@@ -120,5 +124,72 @@ assert.equal(R.fileName('https://cdn.example.com/a/b/poster%20v2.final.jpg?x=1',
 assert.equal(R.fileName('data:image/png;base64,AAAA', 'en', { type: 'image/png' }), 'image-en.png');
 assert.equal(R.fileName('not a url', 'ja', null), 'image-ja.png');
 console.log('✓ 导出尺寸有上限，文件名取原图名加目标语言');
+
+/* ---- 8. 按笔画校正：找出真实的文字范围，不被描边、画面和偏掉的框带歪 ---- */
+const canvasOf = (w, h) => {
+  const data = new Uint8ClampedArray(w * h * 4).fill(255);
+  const dot = (x, y, c = 0) => { if (x >= 0 && y >= 0 && x < w && y < h) data.set([c, c, c, 255], (y * w + x) * 4); };
+  const rect = (x0, y0, rw, rh, c = 0) => { for (let y = y0; y < y0 + rh; y += 1) for (let x = x0; x < x0 + rw; x += 1) dot(x, y, c); };
+  return { data, dot, rect };
+};
+// 220×220 的窗口：一圈对话框描边，里面两列竖排的字，每个字 14×14、行距 6
+const bubble = canvasOf(220, 220);
+for (let a = 0; a < Math.PI * 2; a += 0.002) {
+  for (let r = 98; r < 101; r += 1) bubble.dot(Math.round(110 + r * Math.cos(a)), Math.round(110 + r * Math.sin(a)));
+}
+for (const x of [116, 90]) for (let y = 60; y < 150; y += 20) bubble.rect(x, y, 14, 14);
+// 模型给的框偏左上，只罩住大半的字（补成正方形送检后常见的误差）
+let found = R.inkBox(bubble.data, 220, 220, { x: 80, y: 55, w: 45, h: 85 });
+assert.ok(found, '应找到文字');
+assert.ok(Math.abs(found.x - 90) <= 2 && Math.abs(found.x + found.w - 130) <= 2, `横向应正好包住两列：${found.x}..${found.x + found.w}`);
+assert.ok(Math.abs(found.y - 60) <= 2 && Math.abs(found.y + found.h - 154) <= 2, `纵向应包住整列：${found.y}..${found.y + found.h}`);
+assert.ok(Math.abs(found.glyph - 14) <= 2, '估出单个字的尺寸');
+
+// 画面从窗口边上伸进来（人物的头发）：不算文字
+const art = canvasOf(220, 220);
+for (const x of [116, 90]) for (let y = 60; y < 150; y += 20) art.rect(x, y, 14, 14);
+art.rect(170, 0, 50, 220, 40);
+found = R.inkBox(art.data, 220, 220, { x: 80, y: 50, w: 140, h: 120 });
+assert.ok(found.x + found.w <= 134, '碰到窗口边缘的大块画面不算进来');
+
+// 用户贴着字画的框：碰边的小字照样算
+const tight = canvasOf(60, 40);
+tight.rect(0, 5, 12, 12); tight.rect(16, 5, 12, 12); tight.rect(32, 5, 12, 12); tight.rect(48, 5, 12, 12);
+found = R.inkBox(tight.data, 60, 40, { x: 0, y: 0, w: 60, h: 40 });
+assert.ok(found && found.x === 0 && found.x + found.w >= 59, '贴边的字不能被当成画面丢掉');
+
+// 离得很远的别的文字不并进来
+const two = canvasOf(300, 120);
+two.rect(20, 20, 14, 14); two.rect(40, 20, 14, 14);
+two.rect(250, 90, 14, 14);
+found = R.inkBox(two.data, 300, 120, { x: 15, y: 15, w: 45, h: 25 });
+assert.ok(found.x + found.w < 100, '远处的另一段文字不并进来');
+
+assert.equal(R.inkBox(canvasOf(100, 100).data, 100, 100, { x: 10, y: 10, w: 50, h: 50 }), null, '空白处没有笔画');
+
+// 字旁边紧挨着人物的头（不碰窗口边缘的大块画面）、白板上圈字的圆：都不算文字
+const head = canvasOf(260, 200);
+for (const x of [40, 64]) for (let y = 30; y < 130; y += 20) head.rect(x, y, 14, 14);
+head.rect(95, 60, 90, 90, 60);
+for (let a = 0; a < Math.PI * 2; a += 0.004) head.dot(Math.round(225 + 22 * Math.cos(a)), Math.round(40 + 22 * Math.sin(a)));
+found = R.inkBox(head.data, 260, 200, { x: 30, y: 20, w: 60, h: 120 });
+assert.ok(found.x + found.w <= 82 && found.y + found.h <= 128, `只包住两列字：${found.x},${found.y} ${found.w}×${found.h}`);
+assert.ok(Math.abs(found.glyph - 14) <= 2, '字号按字估，不被圆圈和画面带大');
+
+// 白板上的标签旁边是彩色插画（蓝色的河）：颜色不同，不并进来
+const board = canvasOf(200, 120);
+const blue = (x, y, w, h) => { for (let yy = y; yy < y + h; yy += 1) for (let xx = x; xx < x + w; xx += 1) board.data.set([60, 140, 230, 255], (yy * 200 + xx) * 4); };
+board.rect(20, 40, 14, 14);
+for (let i = 0; i < 8; i += 1) blue(44 + i * 12, 30 + (i % 3) * 8, 8, 3);
+found = R.inkBox(board.data, 200, 120, { x: 15, y: 35, w: 30, h: 25 });
+assert.ok(found.x + found.w <= 40, `只包住黑色的字：${found.x}..${found.x + found.w}`);
+
+// 心里话两侧的波浪线：细长的线条不算文字
+const thought = canvasOf(200, 200);
+for (const x of [80, 104]) for (let y = 40; y < 140; y += 20) thought.rect(x, y, 14, 14);
+for (let y = 20; y < 180; y += 1) thought.rect(Math.round(60 + 4 * Math.sin(y / 8)), y, 3, 1);
+found = R.inkBox(thought.data, 200, 200, { x: 70, y: 30, w: 60, h: 120 });
+assert.ok(found.x >= 76 && found.y >= 36 && found.y + found.h <= 144, `波浪线不并进来：${found.x},${found.y} ${found.w}×${found.h}`);
+console.log('✓ 按笔画校正：偏掉的框也能找回整段文字，描边、画面和远处的字不算进来');
 
 console.log('全部通过');

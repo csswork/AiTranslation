@@ -10,6 +10,8 @@
  * 把切缝挪到附近最空白的一行去（漫画的分格间隙、段落行距都是理想切点），
  * 再留一点重叠作保险。
  *
+ * 送检前每块都补白成正方形（见 squareImage）。
+ *
  * 纯计算部分不依赖 DOM，可以单独测。与 lang.js 一样不能出现 import / export。
  */
 (() => {
@@ -166,6 +168,71 @@
     return out.sort((a, b) => a.box.y - b.box.y || a.box.x - b.box.x);
   }
 
+  /**
+   * 送检图的最大边长。补白成正方形后总像素约 400 万，与原来的送检上限相当，
+   * 请求体也不会超过托管接口的 8 MiB。
+   */
+  const MAX_SQUARE = 2048;
+
+  /**
+   * 把画布上的一块补白成正方形送检（原图放在左上角）。
+   * 视觉模型对非正方形的图给出的坐标很不稳定：同一张 1220×1602 的漫画连识三次，
+   * 有两次下半部分整体下移两成；补成正方形后三次都对得上（IoU 0.66-0.71，
+   * 不补时 0.24-0.66）。
+   * @returns {{image: string, size: {width:number,height:number}, frame: {w:number,h:number}}}
+   *   frame 是原图内容在正方形里所占的比例，换算坐标用
+   */
+  function squareImage(source, sx, sy, sw, sh) {
+    const side = Math.max(sw, sh);
+    const scale = Math.min(1, MAX_SQUARE / side);
+    const size = Math.max(1, Math.round(side * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.drawImage(source, sx, sy, sw, sh, 0, 0, sw * scale, sh * scale);
+    return {
+      image: canvas.toDataURL('image/jpeg', 0.9),
+      size: { width: size, height: size },
+      frame: { w: sw / side, h: sh / side },
+    };
+  }
+
+  /** 正方形送检图上的 0-1 坐标换算回原图内容；落在补白里的丢掉。 */
+  function fromSquare(blocks, frame) {
+    if (!frame) return blocks || [];
+    const out = [];
+    for (const item of blocks || []) {
+      if (!item?.box) {
+        out.push(item);
+        continue;
+      }
+      const x0 = item.box.x / frame.w;
+      const y0 = item.box.y / frame.h;
+      const x1 = (item.box.x + item.box.w) / frame.w;
+      const y1 = (item.box.y + item.box.h) / frame.h;
+      if ((x0 + x1) / 2 > 1 || (y0 + y1) / 2 > 1) continue;
+      const clamp = (v) => Math.min(1, Math.max(0, v));
+      out.push({ ...item, box: { x: clamp(x0), y: clamp(y0), w: clamp(x1) - clamp(x0), h: clamp(y1) - clamp(y0) } });
+    }
+    return out;
+  }
+
+  /**
+   * 送检用的各块：不长的图整张补成正方形；长图先按墨水量把切缝挪到空白处，
+   * 再把每块分别补成正方形。坐标经 fromSquare 换算后是各块内的 0-1。
+   * @returns {{parts: Array<{image,size,frame}>, plan: Array<{top,height}>}}
+   */
+  function squareParts(canvas, width, height) {
+    if (!needsTiling(width, height)) {
+      return { parts: [squareImage(canvas, 0, 0, width, height)], plan: [{ top: 0, height }] };
+    }
+    const plan = refinePlan(planTiles(width, height), rowDarkness(canvas.getContext('2d'), width, height), height);
+    return { parts: plan.map((tile) => squareImage(canvas, 0, tile.top, width, tile.height)), plan };
+  }
+
   /** 按规划切图。需要 canvas，只能在有 DOM 的地方调用。 */
   function cutTiles(source, width, height, plan) {
     try {
@@ -193,5 +260,9 @@
     refinePlan,
     mergeBlocks,
     cutTiles,
+    MAX_SQUARE,
+    squareImage,
+    fromSquare,
+    squareParts,
   };
 })();
