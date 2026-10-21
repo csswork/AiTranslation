@@ -120,15 +120,15 @@ assert.equal(out.blocks[0].box, null);
 assert.ok(out.blocks[1].box);
 console.log('✓ 个别条目缺坐标不影响其余结果');
 
-// AI 智能分段：换用按文字块识别的提示词（与后台同一份）；识图温度为 0
-assert.doesNotMatch(captured.body.messages[0].content, /text block/, '默认用原来的提示词');
+// 识图提示词按文字块识别（与后台同一份），说明竖排与注音；识图温度为 0
+assert.match(captured.body.messages[0].content, /text block/);
+assert.match(captured.body.messages[0].content, /vertical columns/);
+assert.match(captured.body.messages[0].content, /furigana/);
 assert.equal(captured.body.temperature, 0, '识图不要翻译场景的随机性');
 reply(JSON.stringify([{ text: 'りんごは「一個」', box: [700, 30, 960, 210], vertical: true }]));
-out = await P.readImageText({ image: 'x', settings: { ...settings, imageParagraphs: true }, model: 'm' });
-assert.match(captured.body.messages[0].content, /text block/);
-assert.match(captured.body.messages[0].content, /furigana/);
+out = await P.readImageText({ image: 'x', settings, model: 'm' });
 assert.deepEqual(out.blocks.map((b) => b.text), ['りんごは「一個」']);
-console.log('✓ AI 智能分段：按文字块识别，识图温度为 0');
+console.log('✓ 按文字块识别（竖排、注音），识图温度为 0');
 
 // 非法回复要带上原始内容，便于排查
 reply('抱歉，我看不清这张图。');

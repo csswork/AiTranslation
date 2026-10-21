@@ -438,18 +438,16 @@ const IMAGE = 'data:image/png;base64,' + 'A'.repeat(100_000);
 function fakeVision() {
   const { hosted } = fakeHosted();
   const images = [];
-  const layouts = [];
-  hosted.readImageText = async ({ image, layout }) => {
+  hosted.readImageText = async ({ image }) => {
     images.push(image);
-    layouts.push(layout);
     return { raw: '[{"text":"Hello 🌍","box":[100,200,800,400]}]',
       meta: { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', inputTokens: 100, cachedTokens: 0, outputTokens: 20, latencyMs: 5 } };
   };
-  return { hosted, images, layouts };
+  return { hosted, images };
 }
 
 test('图片托管：识图后按识别文字精确扣点，记录识图成本且不保存图片、原文或译文', async () => {
-  const { hosted, images, layouts } = fakeVision();
+  const { hosted, images } = fakeVision();
   const { app, config, mailbox } = buildApp({ pool, hosted });
   const { token, browser: web } = await extensionLogin(app, config, mailbox, 'vision@example.com');
   const me = await (await api(app, config, '/me', { token })).json();
@@ -459,18 +457,12 @@ test('图片托管：识图后按识别文字精确扣点，记录识图成本�
   const recognized = await res.json();
   assert.equal(recognized.credits.balance, '100.00', '识图不重复扣点');
   assert.deepEqual(images, [IMAGE]);
-  assert.deepEqual(layouts, ['lines'], '默认逐行识别');
-  for (const layout of ['paragraphs', 'evil']) {
-    assert.equal((await api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE, layout } })).status, 200);
-  }
-  assert.deepEqual(layouts, ['lines', 'paragraphs', 'lines'], 'AI 智能分段只认 paragraphs，其他值按逐行');
   const texts = JSON.parse(recognized.raw).map(b => b.text);
   res = await api(app, config, '/translate', { method: 'POST', token, body: { texts, target: 'ja' } });
   assert.equal(res.status, 200);
   assert.equal((await res.json()).credits.balance, '99.99');
   const { rows } = await pool.query('SELECT * FROM usage_events ORDER BY created_at');
-  assert.deepEqual(rows.map(e => [e.kind, e.status, e.chars, e.cost_units]),
-    [['image', 'ok', 0, '0'], ['image', 'ok', 0, '0'], ['image', 'ok', 0, '0'], ['text', 'ok', 7, '7']], '分段识图同样不扣点');
+  assert.deepEqual(rows.map(e => [e.kind, e.status, e.chars, e.cost_units]), [['image', 'ok', 0, '0'], ['text', 'ok', 7, '7']]);
   assert.equal(rows[0].input_tokens, 100);
   assert.ok(rows[0].cost_micros > 0);
   assert.doesNotMatch(JSON.stringify(rows), /Hello|data:image|こんにちは/);

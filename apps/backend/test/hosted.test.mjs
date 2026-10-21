@@ -25,25 +25,19 @@ test('托管识图使用服务端 Flash 模型与 Key，图片只放 user 消息
   assert.equal(result.meta.outputTokens, 20);
 });
 
-test('AI 智能分段：换用按文字块识别（说明竖排与注音）的提示词；识图温度为 0，翻译仍用 1.3', async () => {
-  const bodies = [];
+test('识图按文字块识别（说明竖排与注音）；识图温度为 0、不开思考，只回传文字与坐标', async () => {
+  let body;
   const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
-    bodies.push(JSON.parse(init.body));
-    const content = bodies.at(-1).messages[1].content?.[1]
-      ? '[{"text":"りんごは「一個」","box":[700,30,960,210],"vertical":true,"para":3}]'
-      : '"翻訳"';
-    return Response.json({ choices: [{ message: { content } }] });
+    body = JSON.parse(init.body);
+    return Response.json({ choices: [{ message: { content: '[{"text":"りんごは「一個」","box":[700,30,960,210],"vertical":true,"para":3}]' } }] });
   } });
-  const blocks = JSON.parse((await hosted.readImageText({ image, layout: 'paragraphs' })).raw);
-  assert.match(bodies[0].messages[0].content, /text block/);
-  assert.match(bodies[0].messages[0].content, /vertical columns/);
-  assert.match(bodies[0].messages[0].content, /furigana/);
-  assert.deepEqual(blocks, [{ text: 'りんごは「一個」', box: [700, 30, 960, 210] }], '只回传文字与坐标');
-  await hosted.readImageText({ image });
-  assert.doesNotMatch(bodies[1].messages[0].content, /text block/, '默认仍用原来的提示词');
-  await hosted.readImageText({ image, layout: 'anything-else' });
-  assert.doesNotMatch(bodies[2].messages[0].content, /text block/, '未知 layout 按默认处理');
-  assert.ok(bodies.every((b) => b.temperature === 0 && b.thinking?.type === 'disabled'), '识图温度为 0，且不开思考');
+  const blocks = JSON.parse((await hosted.readImageText({ image })).raw);
+  assert.match(body.messages[0].content, /text block/);
+  assert.match(body.messages[0].content, /vertical columns/);
+  assert.match(body.messages[0].content, /furigana/);
+  assert.equal(body.temperature, 0);
+  assert.equal(body.thinking?.type, 'disabled');
+  assert.deepEqual(blocks, [{ text: 'りんごは「一個」', box: [700, 30, 960, 210] }], '舍弃模型的其他字段');
 });
 
 test('空图、错误坐标与非 JSON 回复；错误不包含识别内容，不向未验证视觉能力的备用服务商发送图片', async () => {

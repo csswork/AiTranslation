@@ -219,8 +219,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         meta?.latencyMs ?? null, error]);
     let result;
     try {
-      // layout 只认 paragraphs（AI 智能分段），其他值一律按逐行识别
-      result = await hosted.readImageText({ image: body.image, layout: body.layout === 'paragraphs' ? 'paragraphs' : 'lines' });
+      result = await hosted.readImageText({ image: body.image });
     } catch (err) {
       // 不把模型响应或请求内容写进日志；识别没有扣点，不需要写返还流水。
       await record(err.meta, 'failed', /^[a-z_\d]{1,60}$/.test(err.code) ? err.code : 'image_failed');

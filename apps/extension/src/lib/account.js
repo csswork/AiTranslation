@@ -331,8 +331,8 @@
     return data.translations;
   }
 
-  async function readImageText({ image, layout, signal }) {
-    const data = await hostedRequest('/read-image', layout === 'paragraphs' ? { image, layout } : { image }, signal);
+  async function readImageText({ image, signal }) {
+    const data = await hostedRequest('/read-image', { image }, signal);
     if (typeof data.raw !== 'string') throw new AccountError(t('识别失败'), 'invalid_response');
     return data.raw;
   }
