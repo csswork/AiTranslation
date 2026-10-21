@@ -79,21 +79,24 @@
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
-      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+      <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
-      <article class="log-entry reveal" id="next">
+      <article class="log-entry reveal" id="v2-1-0" data-release-version="2.1.0">
         <div class="log-when">
-          <span class="log-ver">Next version</span>
-          <div class="release-status">Coming soon</div>
+          <span class="log-ver">v2.1.0</span>
+          <div>2026-10-21</div>
         </div>
         <div class="log-body">
-          <h3>Full PDF translation</h3>
-          <p>The following features have been developed but have not yet been released with the store version.</p>
+          <h3>Full PDF Translation and Enhanced Image Translation</h3>
+          <p>This release adds full PDF translation and reworks recognition, masking, and export for image translation.</p>
           <ul>
             <li><b>Translate the entire PDF</b>: In Chrome's built-in PDF viewer, right-click without selecting any text to open the PDF translation page alongside it; you can also drag a local PDF into the translation page.</li>
             <li><b>Preserve the original layout</b>: Translations overlay the original positions; charts, table rows and columns, and table borders remain unchanged, and the font size is reduced automatically when space is insufficient.</li>
             <li><b>Side-by-side view and download</b>: View side by side, translation only, or original only; save as PDF via browser printing, and the translation remains selectable and searchable.</li>
             <li><b>Local parsing</b>: Files are parsed only on your device, and only the extracted text is sent to the translation platform you choose; credit-based translation and bring-your-own Key are supported. Scanned documents and password-protected PDFs are not supported yet.</li>
+            <li><b>Select an area to translate in an image</b>: select only the region to translate, using a rectangle or circle; after selecting, you can drag and resize it. In settings, you can choose to select an area first after right-clicking.</li>
+            <li><b>More accurate placement of image translations</b>: recognizes and translates by speech bubble and by full paragraph, supports vertical text and furigana in Japanese manga; masking areas are corrected based on the strokes in the image.</li>
+            <li><b>Similar-color backgrounds and new images</b>: the translation background defaults to a color similar to the surrounding text, and you can also choose dark, white, black, or a custom color; results can be downloaded or copied as a new image, composited locally.</li>
             <li><b>Context menu fix</b>: After selecting text in a PDF, the right-click selection translator no longer disappears due to clicks on other web pages.</li>
           </ul>
         </div>

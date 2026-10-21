@@ -36,7 +36,7 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Version **2.0.0 is live on the Chrome Web Store**. Accounts, hosted trials and subscriptions are available through the account service at `app.huaci.app`; bring-your-own-key providers remain available in settings.
+Version **2.0.0 is live on the Chrome Web Store**; **2.1.0** (whole-PDF translation, image region selection and export) is packaged and awaiting store upload. Accounts, hosted trials and subscriptions are available through the account service at `app.huaci.app`; bring-your-own-key providers remain available in settings.
 
 Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
 

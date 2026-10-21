@@ -79,21 +79,24 @@
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
-      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+      <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
-      <article class="log-entry reveal" id="next">
+      <article class="log-entry reveal" id="v2-1-0" data-release-version="2.1.0">
         <div class="log-when">
-          <span class="log-ver">下一版</span>
-          <div class="release-status">即將發佈</div>
+          <span class="log-ver">v2.1.0</span>
+          <div>2026-10-21</div>
         </div>
         <div class="log-body">
-          <h3>整份 PDF 翻譯</h3>
-          <p>以下功能已完成開發，尚未隨商店版本發佈。</p>
+          <h3>整份 PDF 翻譯與圖片翻譯增強</h3>
+          <p>本版新增整份 PDF 翻譯，並重做了圖片翻譯的識別、遮蓋與匯出。</p>
           <ul>
             <li><b>翻譯整個 PDF</b>：在 Chrome 內建 PDF 閱讀器裡不選文字直接右鍵，即可在旁邊開啟 PDF 翻譯頁；也可以把本機 PDF 拖進翻譯頁。</li>
             <li><b>保持原有版面</b>：譯文按原位置覆蓋，圖表、表格的行列與表格線保持不變，放不下時自動縮小字號。</li>
             <li><b>對照與下載</b>：可並排對照、只看譯文或只看原文；透過瀏覽器列印另存為 PDF，譯文可選取、可搜尋。</li>
             <li><b>本機解析</b>：檔案只在本機解析，只有提取出的文字發給你選擇的翻譯平台；支援點數翻譯與自帶 Key。暫不支援掃描件和有密碼的 PDF。</li>
+            <li><b>框選翻譯圖片</b>：可以只框選要翻譯的地方，矩形或圓形都行，框好後能拖動、調整大小；設定裡可選右鍵後先框選。</li>
+            <li><b>更準的圖片譯文位置</b>：按對話框、段落整段識別和翻譯，支援日文漫畫的豎排文字與注音假名；遮蓋範圍按圖上的筆畫校正。</li>
+            <li><b>相近色背景與新圖片</b>：譯文底色預設取文字周圍的相近色，也可選深色、白、黑或自訂顏色；結果可下載或複製成一張新圖片，在本機合成。</li>
             <li><b>右鍵選單修復</b>：在 PDF 裡選取文字後，右鍵劃詞翻譯不再因為在其他網頁的點擊而消失。</li>
           </ul>
         </div>

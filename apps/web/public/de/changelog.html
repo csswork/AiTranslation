@@ -79,21 +79,24 @@
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
-      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+      <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
-      <article class="log-entry reveal" id="next">
+      <article class="log-entry reveal" id="v2-1-0" data-release-version="2.1.0">
         <div class="log-when">
-          <span class="log-ver">Nächste Version</span>
-          <div class="release-status">Demnächst verfügbar</div>
+          <span class="log-ver">v2.1.0</span>
+          <div>2026-10-21</div>
         </div>
         <div class="log-body">
-          <h3>Übersetzung ganzer PDF-Dateien</h3>
-          <p>Die folgenden Funktionen sind fertig entwickelt, aber noch nicht mit der Store-Version veröffentlicht.</p>
+          <h3>Übersetzung ganzer PDF-Dokumente und verbesserte Bildübersetzung</h3>
+          <p>Diese Version fügt die Übersetzung ganzer PDF-Dokumente hinzu und überarbeitet Erkennung, Abdeckung und Export der Bildübersetzung.</p>
           <ul>
             <li><b>Ganzes PDF übersetzen</b>: Im integrierten PDF-Reader von Chrome ohne Textauswahl direkt per Rechtsklick die PDF-Übersetzungsseite daneben öffnen; alternativ eine lokale PDF-Datei in die Übersetzungsseite ziehen.</li>
             <li><b>Ursprüngliches Layout beibehalten</b>: Übersetzungen überlagern die Originalposition; Diagramme, Tabellenzeilen und -spalten sowie Tabellenlinien bleiben unverändert, bei Platzmangel wird die Schriftgröße automatisch verkleinert.</li>
             <li><b>Vergleich und Download</b>: Nebeneinander vergleichen, nur die Übersetzung oder nur das Original anzeigen; über den Browser-Druck als PDF speichern, die Übersetzung ist auswählbar und durchsuchbar.</li>
             <li><b>Lokale Verarbeitung</b>: Dateien werden nur lokal verarbeitet, nur der extrahierte Text wird an die gewählte Übersetzungsplattform gesendet; Unterstützung für Punktübersetzung und eigenen Key. Gescannte Dokumente und passwortgeschützte PDFs werden derzeit nicht unterstützt.</li>
+            <li><b>Bildübersetzung per Auswahlrahmen</b>: Es kann nur der zu übersetzende Bereich ausgewählt werden, rechteckig oder kreisförmig; nach dem Auswählen lässt sich der Rahmen verschieben und in der Größe ändern. In den Einstellungen kann festgelegt werden, dass nach einem Rechtsklick zuerst ein Auswahlrahmen gezogen wird.</li>
+            <li><b>Genauere Position der Bildübersetzung</b>: Erkennung und Übersetzung erfolgen absatzweise nach Sprechblasen und Absätzen, einschließlich vertikaler Schrift und Furigana in japanischen Manga; der Abdeckungsbereich wird anhand der Striche im Bild korrigiert.</li>
+            <li><b>Ähnliche Hintergrundfarben und neue Bilder</b>: Die Hintergrundfarbe der Übersetzung übernimmt standardmäßig eine ähnliche Farbe aus der Umgebung des Textes; alternativ sind Dunkel, Weiß, Schwarz oder eine benutzerdefinierte Farbe wählbar. Das Ergebnis kann als neues Bild heruntergeladen oder kopiert werden, zusammengesetzt lokal auf dem Gerät.</li>
             <li><b>Kontextmenü-Korrektur</b>: Nach Auswahl von Text in einem PDF verschwindet die Auswahlübersetzung per Rechtsklick nicht mehr durch Klicks auf anderen Webseiten.</li>
           </ul>
         </div>

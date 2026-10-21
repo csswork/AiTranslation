@@ -79,21 +79,24 @@
       </div>
 
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
-      <!-- 预告条目不写 data-release-version：发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
+      <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
-      <article class="log-entry reveal" id="next">
+      <article class="log-entry reveal" id="v2-1-0" data-release-version="2.1.0">
         <div class="log-when">
-          <span class="log-ver">Próxima versão</span>
-          <div class="release-status">Em breve</div>
+          <span class="log-ver">v2.1.0</span>
+          <div>2026-10-21</div>
         </div>
         <div class="log-body">
-          <h3>Tradução do PDF completo</h3>
-          <p>As funcionalidades abaixo já foram desenvolvidas, mas ainda não foram lançadas com a versão da loja.</p>
+          <h3>Tradução de PDF completo e aprimoramento da tradução de imagens</h3>
+          <p>Esta versão adiciona a tradução de PDF completo e reformula o reconhecimento, a cobertura e a exportação da tradução de imagens.</p>
           <ul>
             <li><b>Traduzir o PDF inteiro</b>: no leitor de PDF integrado do Chrome, clique com o botão direito sem selecionar texto para abrir a página de tradução do PDF ao lado; você também pode arrastar um PDF local para a página de tradução.</li>
             <li><b>Mantém o layout original</b>: a tradução é sobreposta na posição original; as linhas e colunas de gráficos e tabelas e as linhas de grade permanecem inalteradas, e o tamanho da fonte é reduzido automaticamente quando não há espaço suficiente.</li>
             <li><b>Comparação e download</b>: é possível comparar lado a lado, ver apenas a tradução ou apenas o original; salve como PDF pela impressão do navegador, com texto traduzido selecionável e pesquisável.</li>
             <li><b>Análise local</b>: o arquivo é analisado apenas no dispositivo e somente o texto extraído é enviado à plataforma de tradução escolhida; oferece tradução por pontos e chave própria. No momento, não há suporte para documentos digitalizados nem PDFs protegidos por senha.</li>
+            <li><b>Tradução de imagem por seleção de área</b>: é possível selecionar apenas a área a traduzir, com retângulo ou círculo; após a seleção, a área pode ser arrastada e redimensionada; nas configurações, é possível optar por selecionar a área primeiro após o clique direito.</li>
+            <li><b>Posição mais precisa do texto traduzido na imagem</b>: reconhecimento e tradução por balão de fala e por parágrafo inteiro, com suporte a texto vertical e furigana em mangás japoneses; a área de cobertura é corrigida conforme os traços na imagem.</li>
+            <li><b>Fundo de cor semelhante e nova imagem</b>: a cor de fundo do texto traduzido usa por padrão a cor semelhante ao redor do texto, podendo também ser escolhida entre escuro, branco, preto ou cor personalizada; o resultado pode ser baixado ou copiado como uma nova imagem, composta localmente.</li>
             <li><b>Correção do menu de contexto</b>: após selecionar texto em um PDF, o menu de tradução por seleção não desaparece mais devido a cliques em outras páginas.</li>
           </ul>
         </div>

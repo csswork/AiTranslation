@@ -192,28 +192,14 @@
       "changelog.html"
     ]
   },
-  "下一版": {
-    "kind": "text",
-    "tag": "span",
-    "pages": [
-      "changelog.html"
-    ]
-  },
-  "即将发布": {
-    "kind": "text",
-    "tag": "div",
-    "pages": [
-      "changelog.html"
-    ]
-  },
-  "整份 PDF 翻译": {
+  "整份 PDF 翻译与图片翻译增强": {
     "kind": "text",
     "tag": "h3",
     "pages": [
       "changelog.html"
     ]
   },
-  "以下功能已完成开发，尚未随商店版本发布。": {
+  "本版新增整份 PDF 翻译，并重做了图片翻译的识别、遮盖与导出。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -242,6 +228,27 @@
     ]
   },
   "<b>本机解析</b>：文件只在本机解析，只有提取出的文字发给你选择的翻译平台；支持点数翻译与自带 Key。暂不支持扫描件和有密码的 PDF。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>框选翻译图片</b>：可以只框选要翻译的地方，矩形或圆形都行，框好后能拖动、调整大小；设置里可选右键后先框选。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>更准的图片译文位置</b>：按对话框、段落整段识别和翻译，支持日文漫画的竖排文字与注音假名；遮盖范围按图上的笔画校正。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>相近色背景与新图片</b>：译文底色默认取文字周围的相近色，也可选深色、白、黑或自定义颜色；结果可下载或复制成一张新图片，在本机合成。": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -467,7 +474,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.0.0</span> <span>已上架：免 Key 试用、账户与订阅服务现已开放。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.1.0</span> <span>已上架：整份 PDF 翻译，图片翻译支持框选与导出新图片。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -516,7 +523,7 @@
       "index.html"
     ]
   },
-  "四种翻译方式": {
+  "五种翻译方式": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -677,11 +684,12 @@
       "index.html"
     ]
   },
-  "整份 PDF 翻译 <span class=\"soon\">即将发布</span>": {
+  "整份 PDF 翻译": {
     "kind": "text",
     "tag": "h3",
     "pages": [
-      "index.html"
+      "index.html",
+      "privacy.html"
     ]
   },
   "在 Chrome 打开的 PDF 里，不选文字直接右键，整份文档在旁边的页面里翻译。译文按原位置盖回去，版面、图表和表格都不变。": {
@@ -1286,7 +1294,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-20 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-10-21 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1433,7 +1441,7 @@
       "privacy.html"
     ]
   },
-  "你翻译的 PDF 中提取的文字（尚未发布）": {
+  "你翻译的 PDF 中提取的文字": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1513,13 +1521,6 @@
   "视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 <a class=\"link\" href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 隐私政策</a>。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。": {
     "kind": "text",
     "tag": "p",
-    "pages": [
-      "privacy.html"
-    ]
-  },
-  "整份 PDF 翻译（尚未发布）": {
-    "kind": "text",
-    "tag": "h3",
     "pages": [
       "privacy.html"
     ]
@@ -1839,7 +1840,7 @@
       "privacy.html"
     ]
   },
-  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件（尚未发布）": {
+  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件": {
     "kind": "text",
     "tag": "td",
     "pages": [
