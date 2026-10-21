@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Beim Texterkennen lässt das Modell Positionen für Textblöcke wie Sprechblasen, Erzähltext, Titel und Absätze ausgeben und behandelt vertikalen Text (z. B. japanische Manga) sowie Furigana korrekt; Text im selben Block wird zusammen übersetzt und zusammen gesetzt. Wenn deaktiviert, entscheidet das Modell selbst, wie der Text aufgeteilt wird."
   },
+  "m_f39bc560023d1072": {
+    "message": "Auswahlform (Shift gedrückt halten, um ein Quadrat oder einen Kreis zu ziehen)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Rechteck"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Kreis"
+  },
+  "m_abb182985e092565": {
+    "message": "Auswahlform"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Ziehen Sie innerhalb des Rahmens, um ihn zu verschieben, oder am Rand, um die Größe zu ändern; halten Sie Shift gedrückt, um ein Quadrat oder einen Kreis zu zeichnen"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Form"
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

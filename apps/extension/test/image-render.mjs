@@ -192,4 +192,33 @@ found = R.inkBox(thought.data, 200, 200, { x: 70, y: 30, w: 60, h: 120 });
 assert.ok(found.x >= 76 && found.y >= 36 && found.y + found.h <= 144, `波浪线不并进来：${found.x},${found.y} ${found.w}×${found.h}`);
 console.log('✓ 按笔画校正：偏掉的框也能找回整段文字，描边、画面和远处的字不算进来');
 
+/* ---- 9. 圆形选区：只在圆内找字，文字排进内接矩形，预览也裁成圆 ---- */
+const circle = { region: 0, shape: 'ellipse', box: { x: 0.1, y: 0.1, w: 0.8, h: 0.8 } };
+const inner = R.textArea(circle, circle.box);
+assert.ok(near(inner.w, 0.8 * Math.SQRT1_2) && near(inner.x + inner.w / 2, 0.5), '遮盖铺满选区时，文字排在内接矩形里');
+assert.deepEqual(R.textArea({ ...circle, shape: undefined }, circle.box), circle.box, '矩形选区就是遮盖范围本身');
+const small = { x: 0.45, y: 0.45, w: 0.1, h: 0.1 };
+const kept = R.textArea(circle, small);
+assert.ok(['x', 'y', 'w', 'h'].every((k) => near(kept[k], small[k])), '遮盖范围已在圆内时不变');
+const shaped = R.overlayShape(circle, circle.box, { w: 200, h: 200 });
+assert.equal(shaped.clipPath, 'ellipse(50.000% 50.000% at 50.000% 50.000%)');
+assert.ok(/^\d/.test(shaped.padding) && shaped.padding.split(' ').length === 4);
+assert.equal(R.overlayShape({ ...circle, shape: undefined }, circle.box, { w: 200, h: 200 }), null);
+
+// 圆内两个字、外接框角落里还有一个字（圆外）：只认圆内的
+const disk = canvasOf(200, 200);
+disk.rect(84, 92, 14, 14); disk.rect(102, 92, 14, 14);
+disk.rect(6, 6, 14, 14);
+const ctxOf = (img, w) => ({ getImageData: (x, y, gw, gh) => {
+  const data = new Uint8ClampedArray(gw * gh * 4);
+  for (let row = 0; row < gh; row += 1) data.set(img.data.subarray(((y + row) * w + x) * 4, ((y + row) * w + x + gw) * 4), row * gw * 4);
+  return { data };
+} });
+const diskRegion = { region: 0, shape: 'ellipse', box: { x: 0, y: 0, w: 1, h: 1 } };
+const refined = R.refineCover(ctxOf(disk, 200), 200, 200, diskRegion);
+assert.ok(refined && refined.cover.x * 200 > 60, `圆外角落里的字不算：从 ${refined && (refined.cover.x * 200).toFixed(0)} 开始`);
+const asRect = R.refineCover(ctxOf(disk, 200), 200, 200, { ...diskRegion, shape: undefined });
+assert.ok(asRect.cover.x * 200 < 10, '同样的位置换成矩形选区就会算进来');
+console.log('✓ 圆形选区：只在圆内找字，文字排进内接矩形，预览裁成圆');
+
 console.log('全部通过');

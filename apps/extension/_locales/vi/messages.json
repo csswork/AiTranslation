@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Khi nhận dạng hình ảnh, yêu cầu mô hình cung cấp vị trí cho các khối văn bản như bong bóng hội thoại, lời dẫn, tiêu đề và đoạn văn, đồng thời xử lý đúng văn bản dọc (ví dụ: truyện tranh Nhật Bản) và furigana; văn bản trong cùng một khối được dịch và dàn trang cùng nhau. Khi tắt, mô hình tự quyết định cách phân chia văn bản."
   },
+  "m_f39bc560023d1072": {
+    "message": "Hình dạng vùng chọn (giữ Shift để kéo hình vuông hoặc hình tròn)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Hình chữ nhật"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Hình tròn"
+  },
+  "m_abb182985e092565": {
+    "message": "Hình dạng vùng chọn"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Kéo bên trong khung để di chuyển, kéo viền để thay đổi kích thước; giữ Shift để vẽ hình vuông hoặc hình tròn"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Hình dạng"
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

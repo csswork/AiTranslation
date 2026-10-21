@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Saat mengenali gambar, minta model memberikan posisi untuk blok teks seperti balon dialog, narasi, judul, dan paragraf, serta menangani teks vertikal (misalnya manga Jepang) dan furigana dengan benar; teks dalam blok yang sama diterjemahkan dan ditata bersama. Saat nonaktif, model memutuskan sendiri cara membagi teks."
   },
+  "m_f39bc560023d1072": {
+    "message": "Bentuk seleksi (tahan Shift untuk menyeret persegi atau lingkaran)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Persegi panjang"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Lingkaran"
+  },
+  "m_abb182985e092565": {
+    "message": "Bentuk seleksi"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Seret di dalam kotak untuk memindahkannya, seret tepi untuk mengubah ukuran; tahan Shift untuk menggambar persegi atau lingkaran"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Bentuk"
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

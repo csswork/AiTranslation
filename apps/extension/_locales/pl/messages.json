@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Podczas rozpoznawania obrazów model podaje pozycje bloków tekstu, takich jak dymki dialogowe, narracja, tytuły i akapity, oraz poprawnie obsługuje tekst pionowy (np. japońska manga) i furiganę; tekst w tym samym bloku jest tłumaczony i układany razem. Po wyłączeniu model sam decyduje o podziale tekstu."
   },
+  "m_f39bc560023d1072": {
+    "message": "Kształt zaznaczenia (przytrzymaj Shift, aby przeciągnąć kwadrat lub okrąg)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Prostokąt"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Okrąg"
+  },
+  "m_abb182985e092565": {
+    "message": "Kształt zaznaczenia"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Przeciągnij wewnątrz ramki, aby ją przesunąć, przeciągnij krawędź, aby zmienić rozmiar; przytrzymaj Shift, aby narysować kwadrat lub okrąg"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Kształt"
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

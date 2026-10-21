@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "When recognizing images, have the model provide positions for text blocks such as speech bubbles, narration, titles, and paragraphs, and correctly handle vertical text (e.g., Japanese manga) and furigana; text in the same block is translated and laid out together. When off, the model decides how to divide the text."
   },
+  "m_f39bc560023d1072": {
+    "message": "Selection shape (hold Shift to drag a square or circle)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Rectangle"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Circle"
+  },
+  "m_abb182985e092565": {
+    "message": "Selection shape"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Drag inside the box to move it, drag the border to resize; hold Shift to draw a square or circle"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Shape"
+  },
   "extensionName": {
     "message": "AI Translator"
   },

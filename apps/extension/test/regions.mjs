@@ -105,4 +105,25 @@ assert.ok(near(tb.x, 0.1) && near(tb.y, 0.1) && near(tb.w, 0.2) && near(tb.h, 0.
 assert.ok(near(groups[1].fontMax, 0.03), '字号上限按原文行高估算');
 console.log('✓ 每个选区合成一整段翻译，顺序与模型一致');
 
+/* ---- 圆形选区：只认圆内 ---- */
+const oval = { x: 0.2, y: 0.2, w: 0.4, h: 0.2, shape: 'ellipse' };
+assert.ok(G.inRegion(oval, 0.4, 0.3), '圆心在圆内');
+assert.ok(!G.inRegion(oval, 0.22, 0.22), '外接框的角落不在圆内');
+assert.ok(G.inRegion({ ...oval, shape: undefined }, 0.22, 0.22), '矩形选区的角落算在内');
+const ovalBatch = G.packRegions([oval], 1000, 1000)[0];
+assert.equal(ovalBatch.items[0].ellipse, true, '拼图时记下椭圆，裁图只拼圆内');
+const ow = ovalBatch.width, oh = ovalBatch.height;
+const ovalHits = G.unpackBlocks([
+  { text: 'center', box: { x: 0.4, y: 0.4, w: 0.2, h: 0.2 } },
+  { text: 'corner', box: { x: 0, y: 0, w: 10 / ow, h: 10 / oh } },
+], ovalBatch, [oval]);
+assert.deepEqual(ovalHits.map((b) => b.text), ['center'], '落在圆外（已涂白）的毛刺丢掉');
+assert.deepEqual(G.filterByRegions([
+  { text: 'in', box: { x: 0.38, y: 0.28, w: 0.04, h: 0.04 } },
+  { text: 'corner', box: { x: 0.2, y: 0.2, w: 0.03, h: 0.03 } },
+], [oval]).map((b) => b.text), ['in'], '读不到像素时也只挑圆内的');
+assert.equal(G.groupByRegion([{ text: 'Hi', region: 0, box: { x: 0.35, y: 0.27, w: 0.1, h: 0.05 } }], [oval])[0].shape,
+  'ellipse', '合并后的段记住是圆形选区');
+console.log('✓ 圆形选区：拼图只拼圆内，圆外的识别结果和文字不算');
+
 console.log('全部通过');

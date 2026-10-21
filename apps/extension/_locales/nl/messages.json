@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Laat het model bij het herkennen van afbeeldingen posities geven voor tekstblokken zoals tekstballonnen, vertelling, titels en alinea's, en correct omgaan met verticale tekst (bijv. Japanse manga) en furigana; tekst in hetzelfde blok wordt samen vertaald en samen opgemaakt. Indien uitgeschakeld, bepaalt het model zelf hoe de tekst wordt verdeeld."
   },
+  "m_f39bc560023d1072": {
+    "message": "Selectievorm (houd Shift ingedrukt om een vierkant of cirkel te slepen)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Rechthoek"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Cirkel"
+  },
+  "m_abb182985e092565": {
+    "message": "Selectievorm"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Sleep in het vak om het te verplaatsen, sleep de rand om het formaat te wijzigen; houd Shift ingedrukt om een vierkant of cirkel te tekenen"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Vorm"
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

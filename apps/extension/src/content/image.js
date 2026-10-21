@@ -225,6 +225,8 @@
       box-sizing: border-box;
       display: flex; flex-direction: column;
       max-width: 94vw; max-height: 94vh;
+      /* 竖长的图显示得窄，面板跟着变窄会把工具栏挤成两行；给个下限，图在中间 */
+      min-width: min(94vw, 660px);
       pointer-events: auto;
       background: #16181d; color: #e9eaee;
       border-radius: 14px; overflow: hidden;
@@ -235,23 +237,58 @@
       font-size: 14px; line-height: 1.6; letter-spacing: normal; text-align: start;
       animation: pop 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.1);
     }
+    /* 打开时程序把焦点放到面板上（让 Esc 生效），面板本身不需要焦点框；里面的控件各有自己的 */
+    .panel:focus, .panel:focus-visible { outline: none; }
     @keyframes pop { from { opacity: 0 } }
     @media (prefers-reduced-motion: reduce) { .panel { animation: none } }
 
-    .bar {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; row-gap: 6px;
-      padding: 9px 10px 9px 14px;
+    /* 顶部只放标题、状态和关闭；操作都在底部工具栏，按「看结果 / 框选」两套切换 */
+    .head {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 8px 8px 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       flex: none;
     }
-    .title { font-size: 13px; font-weight: 600; flex: 1 1 auto; white-space: nowrap; }
+    .title { font-size: 13px; font-weight: 600; flex: none; white-space: nowrap; }
     .meta {
-      font-size: 11.5px; color: rgba(233, 234, 238, 0.45);
-      flex: none; white-space: nowrap;
+      flex: 1 1 auto; min-width: 0;
+      font-size: 11.5px; color: rgba(233, 234, 238, 0.5);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    .tools {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px;
+      padding: 8px 10px 8px 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex: none;
+    }
+    .group { display: flex; align-items: center; gap: 6px; flex: none; }
+    .spacer { flex: 1 1 auto; }
+    .panel.picking .v, .panel:not(.picking) .p { display: none !important; }
+    .field { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(233, 234, 238, 0.55); }
+    .tip { font-size: 11.5px; color: rgba(233, 234, 238, 0.5); white-space: nowrap; }
+
+    /* 框选提示放在工具栏中间（形状和确认按钮之间的空位），不挡图片 */
+    .hint { flex: 1 1 220px; min-width: 0; font-size: 11.5px; line-height: 1.45; }
+    /* 每句一行，放不下就省略，完整内容在悬停提示里 */
+    .hint b, .hint span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hint b { font-weight: 500; color: #e9eaee; }
+    .hint span { color: rgba(233, 234, 238, 0.5); }
+
+    /* 形状：两个并排的切换按钮 */
+    .seg { display: inline-flex; padding: 2px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); }
+    .seg button {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 24px; padding: 0 9px; border-radius: 6px;
+      font-size: 12px; color: rgba(233, 234, 238, 0.7);
+    }
+    .seg button svg { width: 15px; height: 15px; }
+    .seg button[aria-pressed="true"] { color: #111; background: #f59e0b; }
+    .seg button:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
     button.act {
       all: unset; box-sizing: border-box; cursor: pointer; flex: none;
-      padding: 4px 10px; border-radius: 7px;
+      display: inline-flex; align-items: center; height: 28px;
+      padding: 0 11px; border-radius: 7px;
       font-size: 12px; font-weight: 500; color: rgba(233, 234, 238, 0.85);
       background: rgba(255, 255, 255, 0.08);
     }
@@ -259,7 +296,9 @@
     button.act:disabled { opacity: 0.45; cursor: default; background: rgba(255, 255, 255, 0.08); }
     button.act.primary { color: #111; background: #f59e0b; }
     button.act.primary:hover { background: #fbbf24; }
-    button.act.icon { padding: 0; width: 26px; height: 26px; display: grid; place-items: center; }
+    button.act.icon { padding: 0; width: 28px; height: 28px; display: grid; place-items: center; background: none; }
+    button.act.icon:hover { background: rgba(255, 255, 255, 0.1); }
+    button.act.icon svg { width: 16px; height: 16px; }
     button.act:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
 
     .body {
@@ -271,17 +310,21 @@
     .canvas img { display: block; max-width: 100%; height: auto; }
     /* 普通图片缩到窗口内；长图只按宽度显示、纵向滚动，
        否则会被高度压成一条，宽度小到看不清 */
-    .canvas:not(.tall) img { max-height: calc(94vh - 80px); }
+    .canvas:not(.tall) img { max-height: calc(94vh - 130px); }
     /* 长图必须给面板一个明确宽度：面板本来按内容收缩，
        长图的收缩计算会把它挤到很窄（实测只剩 186px）。 */
-    select.target, select.fill { font: inherit; max-width: 160px; color: inherit; background: #20232c; border: 1px solid #555; border-radius: 6px; padding: 3px; }
+    select {
+      font: inherit; font-size: 12px; height: 28px; max-width: 150px; padding: 0 6px;
+      color: #e9eaee; background: #20232c; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px;
+    }
+    select:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
     .panel.tall { width: min(94vw, 860px); }
     .panel.tall .body { align-items: flex-start; }
     .panel.tall .canvas { width: 100%; }
     .panel.tall .canvas img { width: 100%; }
     input.fill-color {
-      width: 26px; height: 24px; padding: 0; flex: none; cursor: pointer;
-      border: 1px solid #555; border-radius: 6px; background: none;
+      width: 28px; height: 28px; padding: 2px; flex: none; cursor: pointer; box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px; background: none;
     }
     .layer { position: absolute; inset: 0; }
     .hide-translation .layer, .picking .layer { display: none; }
@@ -289,7 +332,9 @@
     .box { position: absolute; box-sizing: border-box; min-width: 22px; min-height: 17px; }
     .box .fill {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+      /* safe：放不下时只往下溢出，字号适配才量得到溢出了多少（普通居中会往上下两边溢出，
+         上面那半既量不到也会被裁掉） */
+      display: flex; align-items: safe center; justify-content: safe center;
       padding: 1px 3px; overflow: hidden;
       font: 500 12.5px/1.2 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
       color: #fff; text-align: center;
@@ -298,6 +343,10 @@
     }
     ${Picker.STYLE}`;
 
+  const RECT_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>';
+  const ELLIPSE_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="8.5" ry="6.5"/></svg>';
   const CLOSE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
     'stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -322,30 +371,51 @@
     wrap.innerHTML = `
       <div class="backdrop"></div>
       <div class="panel" role="dialog" aria-modal="true" aria-label="图片翻译" tabindex="-1">
-        <div class="bar">
+        <div class="head">
           <span class="title">图片翻译</span>
           <span class="meta"></span>
-          <select class="target" title="目标语言"></select>
-          <select class="fill" title="译文背景">
-            <option value="auto">背景：相近色</option>
-            <option value="dark">背景：深色半透明</option>
-            <option value="white">背景：白色</option>
-            <option value="black">背景：黑色</option>
-            <option value="custom">背景：自定义</option>
-          </select>
-          <input class="fill-color" type="color" title="自定义背景色" hidden />
-          <button class="act pick" type="button" title="只翻译框出的区域">框选区域</button>
-          <button class="act primary done-pick" type="button" hidden>翻译选区</button>
-          <button class="act cancel-pick" type="button" hidden>取消</button>
-          <button class="act toggle" type="button">显示原图</button>
-          <button class="act save" type="button" title="下载带译文的图片">下载</button>
-          <button class="act copy" type="button" title="复制带译文的图片">复制图片</button>
           <button class="act icon close" type="button" title="关闭（Esc）" aria-label="关闭">
             ${CLOSE_ICON}
           </button>
         </div>
         <div class="body">
           <div class="canvas"><img alt="" /><div class="layer"></div><div class="pick-layer" hidden></div></div>
+        </div>
+        <div class="tools">
+          <div class="group v">
+            <select class="target" title="目标语言"></select>
+            <label class="field">背景
+              <select class="fill" title="译文背景">
+                <option value="auto">相近色</option>
+                <option value="dark">深色半透明</option>
+                <option value="white">白色</option>
+                <option value="black">黑色</option>
+                <option value="custom">自定义</option>
+              </select>
+            </label>
+            <input class="fill-color" type="color" title="自定义背景色" hidden />
+          </div>
+          <div class="group v">
+            <button class="act pick" type="button" title="只翻译框出的区域">框选区域</button>
+            <button class="act toggle" type="button">显示原图</button>
+          </div>
+          <div class="group p">
+            <span class="field">形状</span>
+            <div class="seg shape" role="group" aria-label="选区形状">
+              <button type="button" data-shape="rect" aria-pressed="true">${RECT_ICON}矩形</button>
+              <button type="button" data-shape="ellipse" aria-pressed="false">${ELLIPSE_ICON}圆形</button>
+            </div>
+          </div>
+          <div class="hint p" aria-live="polite"><b></b><span>拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆</span></div>
+          <span class="spacer v"></span>
+          <div class="group v">
+            <button class="act save" type="button" title="下载带译文的图片">下载</button>
+            <button class="act copy" type="button" title="复制带译文的图片">复制图片</button>
+          </div>
+          <div class="group p">
+            <button class="act cancel-pick" type="button">取消</button>
+            <button class="act primary done-pick" type="button">翻译选区</button>
+          </div>
         </div>
       </div>`;
     root.append(style);
@@ -362,10 +432,13 @@
       layer: q('.layer'),
       pickLayer: q('.pick-layer'),
       meta: q('.meta'),
+      hint: q('.hint b'),
       target: q('.target'),
       fill: q('.fill'),
       fillColor: q('.fill-color'),
       pick: q('.pick'),
+      shapes: [...root.querySelectorAll('.shape button')],
+      shapeValue: 'rect',
       donePick: q('.done-pick'),
       cancelPick: q('.cancel-pick'),
       toggle: q('.toggle'),
@@ -381,6 +454,7 @@
     for (const node of [panel.save, panel.copy]) node.dataset.title = node.title;
     panel.picker = Picker.create(panel.pickLayer, {
       max: Regions.MAX_REGIONS,
+      shape: () => panel.shapeValue,
       deleteLabel: t('删除这个选区'),
       onLimit: () => { panel.meta.textContent = t('最多框选 $1 个区域', [Regions.MAX_REGIONS]); },
     });
@@ -396,6 +470,14 @@
     panel.fillColor.addEventListener('input', applyFill);
     panel.fillColor.addEventListener('change', saveFill);
     panel.pick.addEventListener('click', () => setPicking(true));
+    for (const button of panel.shapes) {
+      button.addEventListener('click', () => {
+        setShape(button.dataset.shape);
+        if (!imageResult) return;
+        imageResult.settings.imageShape = panel.shapeValue;
+        AITrSettings.patchSettings({ imageShape: panel.shapeValue }).catch(() => {});
+      });
+    }
     panel.cancelPick.addEventListener('click', () => {
       // 「先框选」打开的窗口还没有任何译文，取消就是关掉
       if (!panel.blocks.length) { closePanel(); return; }
@@ -453,18 +535,24 @@
   function setPicking(on) {
     if (!panel) return;
     panel.picking = on;
+    // 工具栏两套按钮（看结果 / 框选）跟着 .picking 切换
+    panel.panel.classList.toggle('picking', on);
     panel.canvas.classList.toggle('picking', on);
     panel.pickLayer.hidden = !on;
-    for (const node of [panel.pick, panel.toggle, panel.save, panel.copy]) node.hidden = on;
-    panel.donePick.hidden = !on;
-    panel.cancelPick.hidden = !on;
     panel.target.disabled = on;
     if (on) {
       panel.picker.set(imageResult?.regions || []);
-      panel.meta.textContent = panel.blocks.length
+      panel.hint.textContent = panel.blocks.length
         ? t('拖动鼠标框出要翻译的区域，可以框多个')
         : t('框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图');
-    } else panel.meta.textContent = panel.metaText;
+      panel.hint.parentElement.title = `${panel.hint.textContent}\n${panel.hint.nextElementSibling.textContent}`;
+    }
+    panel.meta.textContent = panel.metaText;
+  }
+
+  function setShape(shape) {
+    panel.shapeValue = shape === 'ellipse' ? 'ellipse' : 'rect';
+    for (const button of panel.shapes) button.setAttribute('aria-pressed', String(button.dataset.shape === panel.shapeValue));
   }
 
   function setBusy(on) {
@@ -535,6 +623,7 @@
     panel.canvas.classList.remove('hide-translation');
     panel.toggle.textContent = t("显示原图");
     panel.fill.value = settings.imageFill;
+    setShape(settings.imageShape);
     panel.fillColor.value = settings.imageFillColor;
     panel.fillColor.hidden = settings.imageFill !== 'custom';
     // 读不到像素就没法合成新图
@@ -570,6 +659,12 @@
         fill.className = 'fill';
         fill.textContent = item.translation;
         fill.dir = 'auto';
+        // 圆形选区：铺底裁成圆，文字收进内接矩形（与导出的图片一致）
+        const shaped = Render.overlayShape(item, item.cover, natural);
+        if (shaped) {
+          fill.style.clipPath = shaped.clipPath;
+          fill.style.padding = shaped.padding;
+        }
         node.appendChild(fill);
         return node;
       })

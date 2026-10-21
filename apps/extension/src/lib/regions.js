@@ -25,6 +25,18 @@
 
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
+  /**
+   * 点是否落在选区里。椭圆选区（shape: 'ellipse'）内切于它的外接框；
+   * 坐标是 0-1 的相对值，椭圆在像素上的长短轴比例由原图宽高决定，按相对值算正好对得上。
+   */
+  function inRegion(r, x, y) {
+    if (x < r.x || x > r.x + r.w || y < r.y || y > r.y + r.h) return false;
+    if (r.shape !== 'ellipse') return true;
+    const dx = (x - (r.x + r.w / 2)) / (r.w / 2 || 1);
+    const dy = (y - (r.y + r.h / 2)) / (r.h / 2 || 1);
+    return dx * dx + dy * dy <= 1;
+  }
+
   /** 两个点（0-1 相对坐标）围成的矩形。 */
   function rectFrom(a, b) {
     const x0 = clamp01(Math.min(a.x, b.x));
@@ -51,7 +63,7 @@
         const sx = Math.round(r.x * width);
         const sy = Math.round(r.y * height);
         return {
-          index, sx, sy,
+          index, sx, sy, ellipse: r.shape === 'ellipse',
           sw: Math.max(1, Math.min(width - sx, Math.round(r.w * width))),
           sh: Math.max(1, Math.min(height - sy, Math.round(r.h * height))),
         };
@@ -115,6 +127,8 @@
         cx >= p.left && cx <= p.left + p.sw && cy >= p.top && cy <= p.top + p.sh);
       if (!part) continue;
       const r = regions[part.index];
+      // 椭圆外已经涂白，中心落在那里的是模型的毛刺
+      if (part.ellipse && !inRegion({ x: part.left, y: part.top, w: part.sw, h: part.sh, shape: 'ellipse' }, cx, cy)) continue;
       const x0 = clamp01((px0 - part.left) / part.sw);
       const x1 = clamp01((px1 - part.left) / part.sw);
       const y0 = clamp01((py0 - part.top) / part.sh);
@@ -138,7 +152,7 @@
       if (!item?.box) continue;
       const cx = item.box.x + item.box.w / 2;
       const cy = item.box.y + item.box.h / 2;
-      const index = regions.findIndex((r) => cx >= r.x && cx <= r.x + r.w && cy >= r.y && cy <= r.y + r.h);
+      const index = regions.findIndex((r) => inRegion(r, cx, cy));
       if (index < 0) continue;
       const r = regions[index];
       const x0 = Math.max(r.x, item.box.x);
@@ -198,7 +212,8 @@
         const parts = blocks.filter((b) => b.region === region && String(b.text || '').trim());
         if (!parts.length) return null;
         const merged = mergeLines(parts, box);
-        return { region, box, ...merged, fontMax: merged.fontMax || box.h * 0.5 };
+        return { region, box, ...merged, fontMax: merged.fontMax || box.h * 0.5,
+          ...(box.shape === 'ellipse' ? { shape: 'ellipse' } : {}) };
       })
       .filter((g) => g?.text);
   }
@@ -216,7 +231,15 @@
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (const p of batch.items) {
+      ctx.save();
+      if (p.ellipse) {
+        // 圆形选区：只把圆内的部分拼进去，圆外留白，模型也就看不到圆外的文字
+        ctx.beginPath();
+        ctx.ellipse((p.left + p.sw / 2) * scale, (p.top + p.sh / 2) * scale, (p.sw / 2) * scale, (p.sh / 2) * scale, 0, 0, Math.PI * 2);
+        ctx.clip();
+      }
       ctx.drawImage(source, p.sx, p.sy, p.sw, p.sh, p.left * scale, p.top * scale, p.sw * scale, p.sh * scale);
+      ctx.restore();
     }
     return canvas;
   }
@@ -252,6 +275,7 @@
   globalThis.AITrRegions = {
     MAX_REGIONS,
     GAP,
+    inRegion,
     rectFrom,
     packRegions,
     unpackBlocks,

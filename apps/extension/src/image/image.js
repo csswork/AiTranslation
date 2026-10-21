@@ -33,7 +33,7 @@
     stage: $('stage'), drop: $('drop'), file: $('file'), url: $('url'),
     canvas: $('canvas'), preview: $('preview'), overlay: $('overlay'),
     imageNote: $('imageNote'), clear: $('clear'),
-    regions: $('regions'), clearRegions: $('clearRegions'), picker: $('picker'),
+    regions: $('regions'), clearRegions: $('clearRegions'), picker: $('picker'), shape: $('shape'),
     fill: $('fill'), fillColor: $('fillColor'),
     blocks: $('blocks'), meta: $('meta'), copy: $('copy'),
     save: $('save'), copyImage: $('copyImage'),
@@ -158,6 +158,7 @@
       el.canvas.hidden = false;
       el.clear.hidden = false;
       el.regions.hidden = false;
+      el.shape.hidden = false;
       el.run.disabled = false;
       renderBlocks([]);
       el.rawWrap.hidden = true;
@@ -190,6 +191,7 @@
     el.drop.hidden = false;
     el.clear.hidden = true;
     el.regions.hidden = true;
+    el.shape.hidden = true;
     picker.set([]);
     setPicking(false);
     onRegions([]);
@@ -245,6 +247,12 @@
           const pr = ((cover.x + cover.w - item.box.x - item.box.w) / item.box.w) * 100;
           const pb = ((cover.y + cover.h - item.box.y - item.box.h) / item.box.h) * 100;
           fill.style.inset = `${-py}% ${-pr}% ${-pb}% ${-px}%`;
+        }
+        // 圆形选区：铺底裁成圆，文字收进内接矩形；padding 的百分比按方框（选区外接框）的宽度算
+        const shaped = R.overlayShape(item, cover, image?.natural, item.box.w);
+        if (shaped) {
+          fill.style.clipPath = shaped.clipPath;
+          fill.style.padding = shaped.padding;
         }
         if (image?.ctx && item.sample === undefined) {
           const { width, height } = image.size;
@@ -523,7 +531,7 @@
       regions,
       raw: raws.join('\n\n'),
       blocks: groups.map((g) => ({
-        text: g.text, box: g.box, textBox: g.textBox, rawBox: null, region: g.region, fontMax: g.fontMax,
+        text: g.text, box: g.box, textBox: g.textBox, rawBox: null, region: g.region, fontMax: g.fontMax, shape: g.shape,
       })),
     };
   }
@@ -549,6 +557,7 @@
 
   const picker = globalThis.AITrRegionPicker.create(el.picker, {
     max: Regions.MAX_REGIONS,
+    shape: () => el.shape.value,
     deleteLabel: t("删除这个选区"),
     onChange: onRegions,
     onLimit: () => setStatus(t("最多框选 $1 个区域", [Regions.MAX_REGIONS])),
@@ -558,6 +567,9 @@
   }));
 
   el.regions.addEventListener('click', () => setPicking(el.picker.hidden));
+  el.shape.addEventListener('change', () => {
+    S.patchSettings({ imageShape: el.shape.value }).then((next) => { settings = next; }).catch(() => {});
+  });
   el.clearRegions.addEventListener('click', () => picker.clear());
 
   el.fill.addEventListener('change', () => {
@@ -756,6 +768,7 @@
     );
     renderModelOptions();
     el.fill.value = settings.imageFill;
+    el.shape.value = settings.imageShape;
     el.fillColor.value = settings.imageFillColor;
     el.fillColor.hidden = settings.imageFill !== 'custom';
   })();

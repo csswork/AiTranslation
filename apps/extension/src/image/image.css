@@ -49,6 +49,7 @@ select, input[type="url"], input[type="text"], input:not([type]) {
   border: 1px solid var(--line); background: var(--bg);
 }
 select { cursor: pointer; }
+.pane-head select.small { flex: none; font-size: 12px; padding: 4px 6px; }
 .btn {
   font: inherit; font-size: 13px; font-weight: 530;
   padding: 7px 14px; border-radius: 9px; cursor: pointer;
@@ -131,7 +132,9 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 .box { position: absolute; box-sizing: border-box; pointer-events: auto; }
 .box .fill {
   position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
+  /* safe：放不下时只往下溢出，字号适配才量得到溢出了多少（普通居中会往上下两边溢出，
+     上面那半既量不到也会被裁掉） */
+  display: flex; align-items: safe center; justify-content: safe center;
   padding: 1px 3px; overflow: hidden;
   font: 500 12.5px/1.2 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   color: #fff; text-align: center;

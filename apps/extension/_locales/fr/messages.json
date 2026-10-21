@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Lors de la reconnaissance d'image, demander au modèle de fournir les positions des blocs de texte tels que bulles de dialogue, narration, titres et paragraphes, et de gérer correctement le texte vertical (par ex. les mangas japonais) et les furigana ; le texte d'un même bloc est traduit et mis en page ensemble. Lorsque cette option est désactivée, le modèle décide lui-même comment diviser le texte."
   },
+  "m_f39bc560023d1072": {
+    "message": "Forme de la sélection (maintenez Maj pour tracer un carré ou un cercle)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Rectangle"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Cercle"
+  },
+  "m_abb182985e092565": {
+    "message": "Forme de la sélection"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Faites glisser à l'intérieur du cadre pour le déplacer, faites glisser la bordure pour le redimensionner ; maintenez Shift pour dessiner un carré ou un cercle"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Forme"
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

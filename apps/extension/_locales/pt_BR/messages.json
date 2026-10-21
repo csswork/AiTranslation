@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Ao reconhecer imagens, faça o modelo fornecer as posições de blocos de texto como balões de fala, narração, títulos e parágrafos, e lidar corretamente com texto vertical (por exemplo, mangá japonês) e furigana; o texto do mesmo bloco é traduzido e diagramado junto. Quando desativado, o modelo decide como dividir o texto."
   },
+  "m_f39bc560023d1072": {
+    "message": "Forma da seleção (mantenha Shift pressionado para arrastar um quadrado ou círculo)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Retângulo"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Círculo"
+  },
+  "m_abb182985e092565": {
+    "message": "Forma da seleção"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Arraste dentro da caixa para movê-la, arraste a borda para redimensionar; mantenha Shift pressionado para desenhar um quadrado ou círculo"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Forma"
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },

@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Durante il riconoscimento delle immagini, chiedi al modello di fornire le posizioni dei blocchi di testo come fumetti, didascalie, titoli e paragrafi, gestendo correttamente anche il testo verticale (ad es. manga giapponesi) e i furigana; il testo dello stesso blocco viene tradotto e impaginato insieme. Se disattivato, il modello decide come suddividere il testo."
   },
+  "m_f39bc560023d1072": {
+    "message": "Forma della selezione (tieni premuto Shift per trascinare un quadrato o un cerchio)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Rettangolo"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Cerchio"
+  },
+  "m_abb182985e092565": {
+    "message": "Forma della selezione"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Trascina all'interno del riquadro per spostarlo, trascina il bordo per ridimensionarlo; tieni premuto Shift per disegnare un quadrato o un cerchio"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Forma"
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

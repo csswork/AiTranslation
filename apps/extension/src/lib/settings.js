@@ -126,6 +126,8 @@
     imageFillColor: '#ffffff',
     // 右键翻译图片：auto 直接识别整张图；select 先打开窗口让用户框选区域
     imageMode: 'auto',
+    // 框选的形状：矩形，或圆形（椭圆，按住 Shift 拖出正圆）
+    imageShape: 'rect',
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -154,6 +156,7 @@
       imageFill: IMAGE_FILLS.includes(input.imageFill) ? input.imageFill : DEFAULTS.imageFill,
       imageFillColor: /^#[0-9a-f]{6}$/i.test(input.imageFillColor) ? input.imageFillColor.toLowerCase() : DEFAULTS.imageFillColor,
       imageMode: input.imageMode === 'select' ? 'select' : 'auto',
+      imageShape: input.imageShape === 'ellipse' ? 'ellipse' : 'rect',
     };
     for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

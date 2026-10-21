@@ -1954,6 +1954,24 @@
   "m_590cdb5a16aa234e": {
     "message": "Görsel tanıma sırasında modelin konuşma balonları, anlatım, başlıklar ve paragraflar gibi metin bloklarının konumlarını belirtmesini sağlar; dikey metinleri (ör. Japon mangası) ve furiganayı da doğru şekilde işler; aynı bloktaki metin birlikte çevrilir ve birlikte düzenlenir. Kapalıyken metnin nasıl bölüneceğine model kendisi karar verir."
   },
+  "m_f39bc560023d1072": {
+    "message": "Seçim şekli (kare veya daire çizmek için Shift tuşunu basılı tutun)"
+  },
+  "m_88b75a101595a23a": {
+    "message": "Dikdörtgen"
+  },
+  "m_81639a8a9bce63fa": {
+    "message": "Daire"
+  },
+  "m_abb182985e092565": {
+    "message": "Seçim şekli"
+  },
+  "m_fd60ed31c5697acf": {
+    "message": "Taşımak için kutunun içinden sürükleyin, boyutlandırmak için kenarlığından sürükleyin; kare veya daire çizmek için Shift tuşunu basılı tutun"
+  },
+  "m_c2f71c1b10ef9d80": {
+    "message": "Şekil"
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

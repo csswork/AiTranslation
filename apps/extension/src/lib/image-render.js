@@ -352,6 +352,22 @@
     } catch {
       return null;
     }
+    const ellipse = ellipseOf(item);
+    if (ellipse) {
+      // 圆形选区：圆外的像素当透明，既不算底色也不算笔画
+      const ww = wx1 - wx0;
+      const cx = (ellipse.x + ellipse.w / 2) * width - wx0;
+      const cy = (ellipse.y + ellipse.h / 2) * height - wy0;
+      const rx = Math.max(1, (ellipse.w / 2) * width);
+      const ry = Math.max(1, (ellipse.h / 2) * height);
+      for (let y = 0; y < wy1 - wy0; y += 1) {
+        for (let x = 0; x < ww; x += 1) {
+          const dx = (x + 0.5 - cx) / rx;
+          const dy = (y + 0.5 - cy) / ry;
+          if (dx * dx + dy * dy > 1) data[((y * ww + x) << 2) + 3] = 0;
+        }
+      }
+    }
     const toWindow = (b) => ({ x: b.x * width - wx0, y: b.y * height - wy0, w: b.w * width, h: b.h * height });
     const otherHints = others
       .map((o) => (o.region != null ? o.box : o.textBox || o.box))
@@ -368,6 +384,48 @@
     const y1 = Math.min(bound.y + bound.h, (wy0 + found.y + found.h + pad) / height);
     if (x1 <= x0 || y1 <= y0) return null;
     return { cover: { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }, fontMax: found.glyph / height };
+  }
+
+  /** 圆形选区的外接框（0-1）；不是圆形选区时返回 null。 */
+  const ellipseOf = (item) => (item?.region != null && item.shape === 'ellipse' ? item.box : null);
+
+  /**
+   * 译文的排版范围：圆形选区里取遮盖范围和圆的内接矩形的交集，免得字落到圆外被裁掉；
+   * 交集太小（遮盖范围贴着圆边）时仍用遮盖范围。
+   */
+  function textArea(item, cover) {
+    const e = ellipseOf(item);
+    if (!e) return cover;
+    const k = Math.SQRT1_2;
+    const inner = { x: e.x + (e.w * (1 - k)) / 2, y: e.y + (e.h * (1 - k)) / 2, w: e.w * k, h: e.h * k };
+    const x0 = Math.max(cover.x, inner.x);
+    const y0 = Math.max(cover.y, inner.y);
+    const x1 = Math.min(cover.x + cover.w, inner.x + inner.w);
+    const y1 = Math.min(cover.y + cover.h, inner.y + inner.h);
+    if (x1 <= x0 || y1 <= y0 || (x1 - x0) * (y1 - y0) < cover.w * cover.h * 0.3) return cover;
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  }
+
+  /**
+   * 预览覆盖层（DOM）里圆形选区的样式：clip-path 把铺底裁成圆，padding 把文字收进内接矩形。
+   * @param base 覆盖层元素的包含块宽度（0-1）：padding 的百分比都按它的宽度算
+   * @returns {{clipPath:string, padding:string}|null}
+   */
+  function overlayShape(item, cover, natural, base = cover.w) {
+    const e = ellipseOf(item);
+    if (!e || !cover.w || !cover.h || !natural?.w) return null;
+    const pct = (v) => `${(v * 100).toFixed(3)}%`;
+    const clipPath = `ellipse(${pct(e.w / 2 / cover.w)} ${pct(e.h / 2 / cover.h)} at ` +
+      `${pct((e.x + e.w / 2 - cover.x) / cover.w)} ${pct((e.y + e.h / 2 - cover.y) / cover.h)})`;
+    const t = textArea(item, cover);
+    const across = base * natural.w;
+    const padding = [
+      ((t.y - cover.y) * natural.h) / across,
+      ((cover.x + cover.w - t.x - t.w) * natural.w) / across,
+      ((cover.y + cover.h - t.y - t.h) * natural.h) / across,
+      ((t.x - cover.x) * natural.w) / across,
+    ].map((v) => pct(Math.max(0, v))).join(' ');
+    return { clipPath, padding };
   }
 
   const toPixels = (box, width, height) => ({
@@ -506,24 +564,34 @@
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     for (const { b, rect, color } of jobs) {
+      ctx.save();
+      const ellipse = ellipseOf(b);
+      if (ellipse) {
+        // 圆形选区：铺底和文字都不出圆
+        const e = toPixels(ellipse, width, height);
+        ctx.beginPath();
+        ctx.ellipse(e.x + e.w / 2, e.y + e.h / 2, e.w / 2, e.h / 2, 0, 0, Math.PI * 2);
+        ctx.clip();
+      }
       ctx.fillStyle = color.bg;
       ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
-      const padX = Math.min(rect.w * 0.06, rect.h * 0.2, 12 * (width / 1000 + 1));
-      const padY = Math.min(rect.h * 0.08, 8 * (width / 1000 + 1));
+      // 文字排在圆的内接矩形里（矩形选区就是遮盖范围本身）
+      const area = ellipse ? toPixels(textArea(b, b.cover || coverBox(b, natural)), width, height) : rect;
+      const padX = Math.min(area.w * 0.06, area.h * 0.2, 12 * (width / 1000 + 1));
+      const padY = Math.min(area.h * 0.08, 8 * (width / 1000 + 1));
       const max = b.fontMax ? Math.max(6, b.fontMax * height) : Infinity;
-      const layout = layoutText(b.translation, rect.w - padX * 2, rect.h - padY * 2, measure,
+      const layout = layoutText(b.translation, area.w - padX * 2, area.h - padY * 2, measure,
         { min: Math.max(6, height / 400), max });
-      ctx.save();
       ctx.beginPath();
       ctx.rect(rect.x, rect.y, rect.w, rect.h);
       ctx.clip();
       ctx.font = fontAt(layout.size);
       ctx.fillStyle = color.fg;
       ctx.direction = RTL.test(b.translation) ? 'rtl' : 'ltr';
-      const first = rect.y + rect.h / 2 - (layout.lines.length - 1) * layout.lineHeight / 2;
+      const first = area.y + area.h / 2 - (layout.lines.length - 1) * layout.lineHeight / 2;
       layout.lines.forEach((line, i) => {
         const w = ctx.measureText(line.replace(HANGING, '')).width;
-        ctx.fillText(line, rect.x + (rect.w - w) / 2, first + i * layout.lineHeight);
+        ctx.fillText(line, area.x + (area.w - w) / 2, first + i * layout.lineHeight);
       });
       ctx.restore();
     }
@@ -582,6 +650,8 @@
     ringStrips,
     sampleAt,
     coverBox,
+    textArea,
+    overlayShape,
     inkBox,
     refineCover,
     wrap,
