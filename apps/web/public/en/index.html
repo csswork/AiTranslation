@@ -240,12 +240,12 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Image translation</h3>
-            <p>Right-click an image, read the text inside it, and place the translation back over the original at the detected positions.</p>
+            <p>Right-click an image to recognize the text in it, overlay the full translation directly over the original text, and save the result as a new image.</p>
             <ul>
-              <li>Long images are split into tiles before recognition, with the seams moved to the blank lines between text so a sentence is never cut in half</li>
-              <li>Images are scaled by total pixel count rather than by the longest edge, so the width of a long image is not squeezed away</li>
-              <li>Overlay the translation on the original image; you can also open the image panel to upload, paste an image, or enter an image URL</li>
-              <li>Switch the target language to reuse recognized text; re-recognize after changing the image</li>
+              <li>Dialogue, headings, and paragraphs are each translated as a whole block; vertical text and furigana in Japanese manga are also supported</li>
+              <li>The overlay position is corrected based on the strokes in the image, and the background color is automatically sampled from colors near the text; you can also switch to dark, white, black, or a custom color</li>
+              <li>You can select only the areas to translate: rectangles or circles that can be dragged and resized, with multiple selections recognized in one pass</li>
+              <li>Results can be downloaded or copied as a new image, composited locally; you can also open the image panel to upload, paste an image, or enter an image URL</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
