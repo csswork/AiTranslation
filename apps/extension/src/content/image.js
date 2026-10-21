@@ -839,7 +839,9 @@
       }
       perTile.push(Tiles.fromSquare(reply.blocks, grabbed.parts[i].frame));
     }
-    lastLines = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
+    // 按块识别出的每一块都是一段（一个对话框、一段话），块内换行合成整段再翻译
+    lastLines = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight)
+      .map((b) => ({ ...b, text: Regions.flatten(b.text) }));
     return lastLines;
   }
 

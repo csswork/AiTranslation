@@ -169,8 +169,16 @@
   function joinText(head, tail) {
     if (!head) return tail;
     if (!tail) return head;
+    // 行尾连字符断开的单词（exam- / ple）接回去
+    if (/[a-z]-$/i.test(head) && /^[a-z]/.test(tail)) return head.slice(0, -1) + tail;
     return CJK_EDGE.test(head.at(-1)) && CJK_EDGE.test(tail[0]) ? head + tail : `${head} ${tail}`;
   }
+
+  /**
+   * 一块文字合成整段：模型给的每一块（对话框、段落）里常带着换行（竖排的每一列、
+   * 横排的每一行），原样送去翻译会被逐行翻成几截，画回图上也会在换行处断开。
+   */
+  const flatten = (text) => String(text || '').split(/\s*\n\s*/).reduce((acc, line) => joinText(acc, line.trim()), '');
 
   const median = (values) => {
     const sorted = [...values].sort((a, b) => a - b);
@@ -195,7 +203,7 @@
    * 直接拿框高中位数当字号上限（相对整图高），两头都不至于差太多。
    */
   function mergeLines(parts, bound) {
-    const text = parts.reduce((acc, b) => joinText(acc, String(b.text).trim()), '');
+    const text = parts.reduce((acc, b) => joinText(acc, flatten(b.text)), '');
     const heights = parts.map((b) => b.box?.h).filter((h) => h > 0);
     return { text, textBox: unionBox(parts.map((b) => b.box), bound), fontMax: heights.length ? median(heights) : 0 };
   }
@@ -281,6 +289,7 @@
     unpackBlocks,
     filterByRegions,
     joinText,
+    flatten,
     unionBox,
     groupByRegion,
     stitch,

@@ -126,4 +126,18 @@ assert.equal(G.groupByRegion([{ text: 'Hi', region: 0, box: { x: 0.35, y: 0.27, 
   'ellipse', '合并后的段记住是圆形选区');
 console.log('✓ 圆形选区：拼图只拼圆内，圆外的识别结果和文字不算');
 
+/* ---- 块内换行合成整段 ---- */
+assert.equal(G.flatten('りんごは\n「一個」\nにんじんは\n「一本」'), 'りんごは「一個」にんじんは「一本」', '竖排各列直接相连');
+assert.equal(G.flatten('MEANWHILE,\nAT THE HARBOR...'), 'MEANWHILE, AT THE HARBOR...', '横排各行用空格连');
+assert.equal(G.flatten('an exam-\nple of  \n\n hyphenation'), 'an example of hyphenation', '连字符断词接回去，空行不留');
+assert.equal(G.flatten('안녕\n하세요'), '안녕 하세요');
+assert.equal(G.flatten('Pre-\nOrder'), 'Pre- Order', '下一行大写开头的不当断词');
+const merged = G.groupByRegion([
+  { text: 'WE\'RE\nTOO LATE!', region: 0, box: { x: 0.1, y: 0.1, w: 0.2, h: 0.1 } },
+  { text: 'THE SHIP\nLEFT', region: 0, box: { x: 0.1, y: 0.2, w: 0.2, h: 0.1 } },
+], [{ x: 0, y: 0, w: 0.5, h: 0.5 }]);
+assert.equal(merged[0].text, "WE'RE TOO LATE! THE SHIP LEFT", '选区里的每块、块里的每行都合成一整段');
+assert.ok(!merged[0].text.includes('\n'));
+console.log('✓ 块内换行合成整段：中日文直接相连，拉丁文字用空格，断词接回');
+
 console.log('全部通过');

@@ -487,7 +487,10 @@
    * 读不到像素（跨域）时只能按网址整张送检。
    */
   async function readWhole(read) {
-    if (!image.ctx) return read(image.sendSrc, image.size);
+    if (!image.ctx) {
+      const result = await read(image.sendSrc, image.size);
+      return { ...result, blocks: result.blocks.map((b) => ({ ...b, text: Regions.flatten(b.text) })) };
+    }
     const T = globalThis.AITrTiles;
     const { canvas } = image.ctx;
     const { parts, plan } = T.squareParts(canvas, canvas.width, canvas.height);
@@ -497,8 +500,10 @@
       results.push(await read(parts[i].image, parts[i].size));
     }
     const perTile = results.map((r, i) => T.fromSquare(r.blocks, parts[i].frame));
+    const blocks = parts.length > 1 ? T.mergeBlocks(perTile, plan, canvas.height) : perTile[0];
     return {
-      blocks: parts.length > 1 ? T.mergeBlocks(perTile, plan, canvas.height) : perTile[0],
+      // 按块识别出的每一块都是一段，块内换行合成整段再翻译
+      blocks: blocks.map((b) => ({ ...b, text: Regions.flatten(b.text) })),
       raw: results.map((r) => r.raw).join('\n\n'),
       scale: results[0].scale,
       // 切换坐标制式时在本地重算，要知道送检的是哪个正方形
