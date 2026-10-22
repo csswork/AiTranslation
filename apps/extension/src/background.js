@@ -24,6 +24,7 @@ const VIDEO_FILE = 'src/content/video.js';
 const OFFSCREEN_URL = 'src/offscreen/offscreen.html';
 // 必须与 manifest 的 content_scripts 保持一致
 const CONTENT_FILES = [
+  'src/lib/lifecycle.js',
   'src/lib/languages.js',
   'src/lib/messages.js',
   'src/lib/i18n.js',
@@ -137,9 +138,13 @@ function createMenu() {
   return menuTask;
 }
 
-chrome.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener(async (details) => {
   createMenu();
+  if (details.reason !== 'install' && details.reason !== 'update') return;
+  // 先记下已打开的标签页，再打开欢迎页：欢迎页会按 manifest 自动注入，不能再补一次
+  const openTabs = await tabsByContentScript();
   if (details.reason === 'install') onFirstInstall();
+  injectOpenTabs(openTabs);
 });
 
 /**
@@ -308,6 +313,44 @@ async function ensureContentScript(tabId) {
     return false;
   }
   return ping(tabId);
+}
+
+/** manifest 里每组内容脚本，及当前匹配它的标签页。 */
+async function tabsByContentScript() {
+  try {
+    const entries = chrome.runtime.getManifest().content_scripts || [];
+    return await Promise.all(entries.map(async (entry) => ({
+      entry,
+      tabs: await chrome.tabs.query({ url: entry.matches }).catch(() => []),
+    })));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * 新安装或更新后，已打开的页面里没有可用的内容脚本（更新后只剩联系不上扩展的旧脚本，
+ * 它们会自行撤掉，见 lifecycle.js），划词按钮要等刷新页面才出现。这里按 manifest 补注入一次。
+ * 已有可用脚本的标签页跳过；休眠的标签页重新载入时会自动注入；注入不了的页面（商店、chrome:// 等）忽略。
+ */
+async function injectOpenTabs(groups) {
+  const ready = new Map(); // tabId -> 是否已有可用脚本，每个标签页只 ping 一次
+  const hasScript = (tabId) => {
+    if (!ready.has(tabId)) ready.set(tabId, ping(tabId));
+    return ready.get(tabId);
+  };
+  const jobs = groups.flatMap(({ entry, tabs }) => tabs.map(async (tab) => {
+    if (tab.id == null || tab.discarded || (await hasScript(tab.id))) return;
+    try {
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id, allFrames: Boolean(entry.all_frames) },
+        files: entry.js,
+      });
+    } catch {
+      /* 没有权限注入的页面 */
+    }
+  }));
+  await Promise.all(jobs);
 }
 
 /* ---------------------------------------------------------------- 翻译流 */

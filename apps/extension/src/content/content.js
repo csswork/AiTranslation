@@ -11,6 +11,8 @@
   window.__aiTranslationContentLoaded = true;
 
   const Lang = globalThis.AITrLang;
+  // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
+  const { signal, onRetire } = globalThis.AITrLifecycle;
   const PORT_NAME = 'ai-translate-panel';
   const IS_TOP = (() => {
     try {
@@ -73,9 +75,9 @@
 
   // 右键前尽早把菜单状态更新好：菜单项是在右键那一刻确定的，
   // 所以主要靠 mouseup / selectionchange 提前上报，contextmenu 只是兜底。
-  document.addEventListener('mouseup', scheduleReport, true);
-  document.addEventListener('keyup', scheduleReport, true);
-  document.addEventListener('selectionchange', scheduleReport, true);
+  document.addEventListener('mouseup', scheduleReport, { capture: true, signal });
+  document.addEventListener('keyup', scheduleReport, { capture: true, signal });
+  document.addEventListener('selectionchange', scheduleReport, { capture: true, signal });
   document.addEventListener(
     'contextmenu',
     () => {
@@ -84,8 +86,9 @@
       // 右键之后多半要翻译（区域、图片也一样）：让后台预热到账户服务的连接，后台自己限频
       send({ type: 'hosted-warm' });
     },
-    true
+    { capture: true, signal }
   );
+  onRetire(() => clearTimeout(reportTimer));
 
   /* ---------------------------------------------------------------- 弹窗 */
 
@@ -381,12 +384,12 @@
         dom.panel.style.transform = 'none';
         dom.panel.style.left = `${x}px`;
         dom.panel.style.top = `${y}px`;
-      });
+      }, { signal });
       window.addEventListener('mouseup', () => {
         if (!origin) return;
         origin = null;
         dom.bar.classList.remove('dragging');
-      });
+      }, { signal });
     }
 
     function onKeydown(event) {
@@ -578,6 +581,12 @@
       dom.title.textContent = t('翻译成$1', [AITrLanguages.label(targetId)]);
       for (const option of dom.target.options) option.textContent = AITrLanguages.label(option.value);
     });
+    onRetire(() => {
+      open = false;
+      window.removeEventListener('keydown', onKeydown, true);
+      closePort();
+      dom?.host.remove();
+    });
     return { begin, append, finish, fail, hide, isOpen: () => open };
   })();
 
@@ -744,7 +753,7 @@
     }
 
     function maybeShow() {
-      if (!enabled) return;
+      if (!enabled || signal.aborted) return;
       // 弹窗开着时收起按钮，别叠在弹窗上
       try {
         if (panel && panel.isOpen()) {
@@ -775,7 +784,7 @@
         if (fromChip(event)) return;
         setTimeout(maybeShow, 10); // 等选区稳定下来
       },
-      true
+      { capture: true, signal }
     );
     document.addEventListener(
       'mousedown',
@@ -783,11 +792,12 @@
         if (fromChip(event)) return;
         hide();
       },
-      true
+      { capture: true, signal }
     );
-    document.addEventListener('keydown', hide, true);
-    window.addEventListener('scroll', hide, true);
-    window.addEventListener('resize', hide);
+    document.addEventListener('keydown', hide, { capture: true, signal });
+    window.addEventListener('scroll', hide, { capture: true, signal });
+    window.addEventListener('resize', hide, { signal });
+    onRetire(() => host?.remove());
 
     try {
       chrome.storage.onChanged.addListener((changes, area) => {

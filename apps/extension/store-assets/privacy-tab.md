@@ -70,18 +70,21 @@ any other tab, and never acts without a user gesture.
 **EN**
 
 ```
-All four entry points are right-click menu entries: "Translate to…" (selection),
-"Add a translate button for this region" (page), and "Translate text in this image" (image).
-The extension creates these items and updates their labels and visibility to follow the user's
-target language and selected provider.
+The extension's entry points live in the right-click menu: "Translate to …" (selected text),
+"Add a translate button for this region" (page element), "Translate text in this image" (image),
+"Translate entire PDF" (shown only in Chrome's built-in PDF viewer), and "Live video captions
+(experimental)" (shown only after the user turns on that experimental feature). The extension
+creates these items and updates their labels and visibility to follow the user's target
+language, selected provider and the current page.
 ```
 
 **中文**
 
 ```
-四个入口全部是右键菜单项：「翻译成…」（划词）、「为这个区域添加翻译按钮」（页面）、
-「翻译图片里的文字」（图片）。扩展需要创建这些菜单项，并按用户设置的目标语言和所选平台
-更新它们的标题与显隐。
+扩展的入口都在右键菜单里：「翻译成…」（选中的文字）、「为这个区域添加翻译按钮」（网页元素）、
+「翻译图片里的文字」（图片）、「翻译整个 PDF」（只在 Chrome 内置 PDF 阅读器里出现）、
+「视频实时字幕（实验）」（只在用户打开这个实验功能后出现）。扩展需要创建这些菜单项，并按用户的
+目标语言、所选平台和当前页面更新它们的标题与显隐。
 ```
 
 ### `storage`
@@ -89,18 +92,26 @@ target language and selected provider.
 **EN**
 
 ```
-Stores everything on the user's own device through chrome.storage.local: the user's API key,
-their preferences (target language, model, feature toggles), and the per-domain element
-translation rules they create. Nothing here is synced through a Chrome account and nothing is
-uploaded — the extension operates no server.
+Keeps the extension's state on the user's own device in chrome.storage.local: preferences
+(target language, provider, model, feature toggles), the user's own API keys if they use that
+mode, the per-domain element translation rules they create, and — for the hosted translation
+mode — the sign-in token issued by our account service plus a cached copy of the account status
+shown in the popup (username, credits, subscription). chrome.storage.session temporarily holds
+the PKCE verifier during sign-in and which tabs are PDF viewers; it is cleared when the browser
+closes. Nothing is synced through a Chrome account. API keys never leave the device except in
+requests to the provider the user chose; the sign-in token is sent only to our own account API
+at app.huaci.app.
 ```
 
 **中文**
 
 ```
-所有数据都通过 chrome.storage.local 保存在用户自己的设备上：API Key、偏好设置（目标语言、
-模型、各项开关），以及用户自己创建的元素翻译规则（按域名）。这些数据不随 Chrome 账号同步、
-不会上传——本扩展不运营任何服务器。
+扩展的状态都通过 chrome.storage.local 保存在用户自己的设备上：偏好设置（目标语言、平台、模型、
+各项开关）；用户选择自带 Key 时的 API Key；用户按域名创建的元素翻译规则；以及托管翻译模式所需的、
+由我们账户服务签发的登录令牌，和弹窗里显示的账户状态缓存（用户名、点数、订阅）。
+chrome.storage.session 只在登录过程中临时存放 PKCE 校验值，并记录哪些标签页是 PDF 阅读器，
+浏览器关闭即清除。这些数据都不随 Chrome 账号同步。API Key 只随请求发往用户选定的平台；
+登录令牌只发给我们自己的账户 API（app.huaci.app）。
 ```
 
 ### `scripting`
@@ -108,17 +119,19 @@ uploaded — the extension operates no server.
 **EN**
 
 ```
-Used to inject the content script on demand into the current tab, for pages that were already
-open before the extension was installed or updated. Injection only happens after the user
-triggers a translation or adds an element rule; the extension never injects into pages the user
-is not acting on.
+Used to inject the extension's own content script (the same files declared in the manifest;
+nothing is fetched remotely) in two situations: (1) once, right after the extension is installed
+or updated, into tabs that were already open, so the translate button works without reloading
+the page; (2) on demand into the current tab when the user triggers a translation or adds an
+element rule and the script is missing.
 ```
 
 **中文**
 
 ```
-用于按需向当前标签页注入内容脚本，服务对象是「安装或更新扩展之前就已打开」的页面。注入只在
-用户触发翻译或添加元素规则之后发生；扩展不会向用户没有操作的页面注入任何脚本。
+用于注入扩展自己的内容脚本（就是 manifest 里声明的那几份文件，不从远程加载任何代码），
+只有两种时机：(1) 扩展安装或更新后立即执行一次，给已经打开的标签页补注入，让用户不用刷新
+页面就能看到翻译按钮；(2) 用户触发翻译或添加元素规则、而当前标签页还没有脚本时，按需注入。
 ```
 
 ### Host permissions: `https://api.openai.com/*`, `https://api.deepseek.com/*`, `https://api-free.deepl.com/*`, `https://api.deepl.com/*`
@@ -141,15 +154,43 @@ endpoints.
 才会发出。DeepL 占两个域名，是因为它的免费版与付费版端点不同。
 ```
 
-### Host permission（来自内容脚本的 `<all_urls>`，后台通常显示为 "Read and change all your data on all websites"）
+### Host permissions: `https://app.huaci.app/*`, `https://huaci.app/*`, `https://www.huaci.app/*`, `http://localhost/*`
 
 **EN**
 
 ```
-Three reasons. (1) The user may select text on any page they read, so the extension has to be
+app.huaci.app is our own account service, used only for the optional hosted translation mode:
+signing in, the guest trial, checking credits and subscription, and sending the text or image
+the user chose to translate. huaci.app and www.huaci.app are our website, whose header shows the
+sign-in state. On these sites a small content script only tells the extension to re-check the
+sign-in state, and after the user signs out of the extension, it uses the tab URLs to find our
+own pages and asks them to refresh their sign-in state; no account data or cookies are passed.
+http://localhost is used only by the unpacked development build to reach a local backend; the
+published extension never contacts it.
+```
+
+**中文**
+
+```
+app.huaci.app 是我们自己的账户服务，只用于可选的托管翻译模式：登录、访客试用、查询点数与订阅，
+以及发送用户选择翻译的文字或图片。huaci.app 与 www.huaci.app 是我们的官网，页头显示登录状态。
+在这些站点上，一个小的内容脚本只负责通知扩展重新核对登录状态；用户在扩展里退出后，扩展按标签页
+的网址找到我们自己的页面，提示它们刷新登录状态，不传递账号数据或 Cookie。http://localhost 只供
+未打包的开发版连接本机后台，商店发布的版本不会访问。
+```
+
+### Host permission `<all_urls>`（`host_permissions` 与内容脚本都声明了它，后台通常显示为 "Read and change all your data on all websites"）
+
+**EN**
+
+```
+Four reasons. (1) The user may select text on any page they read, so the extension has to be
 present on any page. (2) Chrome decides which context menu items to show at the moment of the
 right-click, so the selection must be evaluated before it — to filter selections containing no letters while keeping every source language available. (3) Element translation rules are stored per domain
-and can point at any site the user chooses. The content script only reads the current selection
+and can point at any site the user chooses. (4) chrome.scripting.executeScript requires host
+permission for the tab, so right after an install or update the extension can inject the same
+content script into tabs that are already open; without it those pages show no translate button
+until reloaded. The content script only reads the current selection
 or the text of an element the user explicitly marked, sends it to the extension's own service
 worker, and does nothing else — it never scans, uploads or reports page content on its own.
 ```
@@ -157,8 +198,10 @@ worker, and does nothing else — it never scans, uploads or reports page conten
 **中文**
 
 ```
-三个原因。(1) 用户可能在任何他正在阅读的网页上划词，所以内容脚本必须存在于任意页面。
-(2) Chrome 是在右键按下的那一刻决定菜单项显隐的，因此在右键之前过滤纯数字、标点或表情组成的选区，任意语言的文字都保留翻译入口。(3) 元素翻译规则按域名保存，可以指向用户选择的任意站点。内容脚本只读取
+四个原因。(1) 用户可能在任何他正在阅读的网页上划词，所以内容脚本必须存在于任意页面。
+(2) Chrome 是在右键按下的那一刻决定菜单项显隐的，因此在右键之前过滤纯数字、标点或表情组成的选区，任意语言的文字都保留翻译入口。(3) 元素翻译规则按域名保存，可以指向用户选择的任意站点。(4) chrome.scripting.executeScript
+需要对应站点的主机权限：安装或更新后，扩展靠它给已经打开的标签页补注入同一份内容脚本，否则这些
+页面要刷新后才会出现翻译按钮。内容脚本只读取
 当前选区、或用户明确标记过的元素内的文字，并把它交给扩展自己的 service worker，此外不做任何事
 ——它不会自行扫描、上传或上报页面内容。
 ```
@@ -168,18 +211,18 @@ worker, and does nothing else — it never scans, uploads or reports page conten
 **EN**
 
 ```
-Only requested if the user enters a custom API base URL (a proxy or relay) in the advanced
-settings; Chrome shows the permission prompt when they click "Test connection". The extension
-requests that one specific origin — not all sites — and users behind a corporate relay could
-not use the extension without it.
+Kept for the custom API base URL (a proxy or relay) a user may enter in the advanced settings.
+Because the host permissions already include <all_urls>, Chrome normally shows no prompt; one
+appears only if the user has restricted the extension's site access, and then only for that one
+origin, when they click "Test connection".
 ```
 
 **中文**
 
 ```
-仅当用户在高级设置里填写自定义接口地址（代理或中转）时才会申请；授权弹窗在用户点击
-「测试连接」时出现。扩展申请的是那一个具体域名，而不是所有网站；没有它，处在企业代理后面的
-用户无法使用本扩展。
+保留给高级设置里的自定义接口地址（代理或中转）。由于主机权限已经包含 <all_urls>，Chrome
+通常不会再弹出授权；只有用户自己限制了扩展的站点访问时，才会在点击「测试连接」时弹出，
+而且只申请那一个域名。
 ```
 
 ## 3. 远程代码（Remote code）
@@ -329,9 +372,9 @@ https://www.huaci.app/privacy.html
 | 结论 | 依据 |
 | --- | --- |
 | 权限清单就是 activeTab / contextMenus / scripting / storage | `manifest.json` 的 `permissions` |
-| 四个 host permission + 可选 `https://*/*` | `manifest.json` 的 `host_permissions` / `optional_host_permissions` |
+| `<all_urls>` 加 8 条具体站点（本机开发、用户端、官网、四个翻译平台）的 host permission，另有可选 `https://*/*` | `manifest.json` 的 `host_permissions` / `optional_host_permissions` |
 | 内容脚本跑在所有站点 | `manifest.json` 的 `content_scripts.matches = ["<all_urls>"]` |
-| `activeTab` 确实必要（不是多余权限） | `src/background.js` 的 `ensureContentScript()` 用 `chrome.scripting.executeScript` 补注入；只有用户在右键/快捷键触发时拿到该标签页的临时权限才能成功，这也是我们实测时 executeScript 在无授权页面上报「must request permission」的原因 |
+| `activeTab` 确实必要（不是多余权限） | `src/background.js` 的 `ensureContentScript()` 用 `chrome.scripting.executeScript` 补注入；安装或更新时给已打开标签页的补注入靠 `host_permissions` 里的 `<all_urls>`（实测只有内容脚本的 `<all_urls>` 时 executeScript 会报「must request permission」）；用户把扩展的站点访问限制为「点击时」后，仍要靠右键/快捷键触发时拿到的临时权限才能补注入 |
 | 自定义地址是按具体 origin 申请，不是整站授权 | `src/options/options.js` 的 `chrome.permissions.request({ origins: [origin] })`，在「测试连接」点击里调用 |
 | 唯一出网位置 | `grep -rn "fetch(" src/` 只有 `src/lib/providers.js` 两处（OpenAI 兼容接口 + DeepL） |
 | 无远程代码 | `src/` 内无 `eval(` / `new Function(`；MV3 亦不允许远程托管脚本 |

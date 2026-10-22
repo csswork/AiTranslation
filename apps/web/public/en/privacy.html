@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-10-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -177,7 +177,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>Provide the translate entries in the right-click menu</td></tr>
                 <tr><td><code>storage</code></td><td>Stores the above settings and login token locally</td></tr>
-                <tr><td><code>scripting</code></td><td>Inject the needed script into the current page when you trigger a translation</td></tr>
+                <tr><td><code>scripting</code></td><td>After the extension is installed or updated, inject the translation script into already-open web pages; it is also injected on demand when you trigger translation</td></tr>
                 <tr><td><code>activeTab</code></td><td>Act only on the tab you are working in</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Reads audio from the current tab only when you enable video subtitle translation; recognized locally by default, sent to Google when you explicitly choose cloud recognition</td></tr>
                 <tr>
@@ -185,8 +185,8 @@
                   <td>Sends translation requests to your chosen platform when using your own API Key</td>
                 </tr>
                 <tr>
-                  <td>Optional access to your own API origin</td>
-                  <td>Requested only if you enter a custom API base URL (a proxy or relay), and only for that single origin. The prompt appears when you click "Test connection"; it never asks for all sites</td>
+                  <td>Access all websites (<code>&lt;all_urls&gt;</code>)</td>
+                  <td>After the extension is installed or updated, inject the translation script into already-open web pages so you can translate selected text without refreshing the page. The script only provides a translation entry point and does not scan, upload, or report page content on its own. Custom endpoint addresses (proxies or relays) that you enter also fall within this scope and no longer trigger a separate authorization prompt</td>
                 </tr>
                 <tr>
                   <td>Content script on all sites</td>

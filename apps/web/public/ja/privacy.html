@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>プライバシーポリシー</h2>
-        <p class="updated">最終更新：2026-10-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最終更新：2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -177,7 +177,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>右クリックメニューに翻訳の入口を提供</td></tr>
                 <tr><td><code>storage</code></td><td>上記の設定とログイントークンを本機に保存</td></tr>
-                <tr><td><code>scripting</code></td><td>翻訳を実行したときに、現在のページへ必要なスクリプトを注入</td></tr>
+                <tr><td><code>scripting</code></td><td>拡張機能のインストールまたは更新後、すでに開いているウェブページに翻訳スクリプトを追加注入します。翻訳を実行した際にも必要に応じて注入されます</td></tr>
                 <tr><td><code>activeTab</code></td><td>現在操作中のタブにのみ作用</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>動画字幕翻訳を有効にした場合にのみ現在のタブの音声を読み取ります。デフォルトでは本機で認識し、クラウド認識を自ら選択した場合は Google に送信されます</td></tr>
                 <tr>
@@ -185,8 +185,8 @@
                   <td>独自の Key を使用する場合、選択したプラットフォームへ翻訳リクエストを送信</td>
                 </tr>
                 <tr>
-                  <td>任意：自分の API ドメインへのアクセス</td>
-                  <td>カスタム API アドレス（プロキシまたは中継）を入力した場合にのみ要求され、対象はその 1 つのドメインだけです。「接続テスト」をクリックしたときに許可が求められ、すべてのサイトを要求することはありません</td>
+                  <td>すべてのサイトへのアクセス（<code>&lt;all_urls&gt;</code>）</td>
+                  <td>拡張機能のインストールまたは更新後、すでに開いているウェブページに翻訳スクリプトを追加注入するため、ページを再読み込みせずに選択テキストの翻訳を利用できます。スクリプトは翻訳の入口を提供するのみで、ページ内容を自ら走査、送信、報告することはありません。ユーザーが入力したカスタム API エンドポイント（プロキシまたは中継）もこの範囲に含まれ、個別の認可ダイアログは表示されません</td>
                 </tr>
                 <tr>
                   <td>コンテンツスクリプトがすべてのサイトに一致</td>

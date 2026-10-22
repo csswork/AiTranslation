@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Politique de confidentialité</h2>
-        <p class="updated">Dernière mise à jour : 2026-10-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Source Markdown</a></p>
+        <p class="updated">Dernière mise à jour : 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown originale</a></p>
       </div>
 
       <div class="policy">
@@ -177,7 +177,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>Fournir les entrées de traduction dans le menu contextuel</td></tr>
                 <tr><td><code>storage</code></td><td>Enregistre les paramètres ci-dessus et le jeton de connexion en local</td></tr>
-                <tr><td><code>scripting</code></td><td>Injecter le script nécessaire dans la page active lorsque vous déclenchez une traduction</td></tr>
+                <tr><td><code>scripting</code></td><td>Après l'installation ou la mise à jour de l'extension, injecte le script de traduction dans les pages déjà ouvertes ; il est également injecté à la demande lorsque vous déclenchez une traduction</td></tr>
                 <tr><td><code>activeTab</code></td><td>N’agit que sur l’onglet dans lequel vous travaillez</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lit le son de l'onglet actif uniquement lorsque vous activez la traduction des sous-titres vidéo ; reconnaissance locale par défaut, envoi à Google en cas de choix explicite de la reconnaissance cloud</td></tr>
                 <tr>
@@ -185,8 +185,8 @@
                   <td>Envoie les requêtes de traduction à la plateforme que vous avez choisie lorsque vous utilisez votre propre clé</td>
                 </tr>
                 <tr>
-                  <td>Facultatif : accès à votre propre domaine d’API</td>
-                  <td>Demandée uniquement si vous saisissez une adresse d’API personnalisée (proxy ou relais), et pour ce seul domaine ; l’autorisation est demandée lorsque vous cliquez sur « Tester la connexion », jamais pour tous les sites</td>
+                  <td>Accès à tous les sites (<code>&lt;all_urls&gt;</code>)</td>
+                  <td>Après l'installation ou la mise à jour de l'extension, injecte le script de traduction dans les pages déjà ouvertes, ce qui permet de traduire par sélection sans recharger la page. Le script ne fournit que le point d'entrée de traduction et n'analyse, ne téléverse ni ne signale de lui-même le contenu des pages. L'adresse d'interface personnalisée que vous saisissez (proxy ou relais) relève également de ce périmètre, sans autorisation supplémentaire distincte</td>
                 </tr>
                 <tr>
                   <td>Script de contenu sur tous les sites</td>

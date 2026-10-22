@@ -25,6 +25,8 @@
   const Regions = globalThis.AITrRegions;
   const Render = globalThis.AITrImageRender;
   const Picker = globalThis.AITrRegionPicker;
+  // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
+  const { signal, onRetire } = globalThis.AITrLifecycle;
 
   /** 返回不超过上述限制的缩放系数（不放大）。 */
   function sendScale(w, h) {
@@ -206,8 +208,8 @@
     maskTarget = null;
   }
 
-  window.addEventListener('scroll', positionMask, { capture: true, passive: true });
-  window.addEventListener('resize', positionMask);
+  window.addEventListener('scroll', positionMask, { capture: true, passive: true, signal });
+  window.addEventListener('resize', positionMask, { signal });
 
   /* ----------------------------------------------------------- 弹窗 */
 
@@ -898,6 +900,11 @@
       if (token === generation) showFailure(String(err?.message || err));
     }
   }
+
+  onRetire(() => {
+    closePanel();
+    panel?.host.remove();
+  });
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message?.type !== 'translate-image') return false;

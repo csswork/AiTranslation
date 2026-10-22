@@ -175,11 +175,25 @@
     return normalize(stored.settings);
   }
 
-  async function migrateSettings() {
-    await AITrLanguages.ready;
-    const stored = await chrome.storage.local.get('settings');
-    if (stored.settings?.schemaVersion === 2) return;
-    await saveSettings(normalize(stored.settings));
+  /**
+   * 先读后写的改动要排队：新安装时启动迁移与「默认用点数翻译」同时进行，
+   * 迁移若读到空配置、又晚一步写回，会把刚设好的平台覆盖成默认值。
+   * 只对同一个上下文（service worker）有效；设置页整份保存走 saveSettings。
+   */
+  let writeTask = Promise.resolve();
+  const queued = (task) => {
+    const next = writeTask.catch(() => {}).then(task);
+    writeTask = next;
+    return next;
+  };
+
+  function migrateSettings() {
+    return queued(async () => {
+      await AITrLanguages.ready;
+      const stored = await chrome.storage.local.get('settings');
+      if (stored.settings?.schemaVersion === 2) return;
+      await saveSettings(normalize(stored.settings));
+    });
   }
 
   async function saveSettings(next) {
@@ -188,9 +202,11 @@
     return settings;
   }
 
-  async function patchSettings(patch) {
-    const current = await loadSettings();
-    return saveSettings({ ...current, ...patch });
+  function patchSettings(patch) {
+    return queued(async () => {
+      const current = await loadSettings();
+      return saveSettings({ ...current, ...patch });
+    });
   }
 
   /** 把配置 + 平台默认值合成一份「可以直接发请求」的参数。 */

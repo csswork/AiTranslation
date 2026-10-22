@@ -1,7 +1,7 @@
 # Privacy Policy / 隐私政策
 
 **AI Selection Translator (AI 划词翻译)**
-Last updated / 最后更新：2026-10-21
+Last updated / 最后更新：2026-10-22
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
 
@@ -108,11 +108,11 @@ All extension and server source code is public under GPL-3.0, so you can verify 
 | --- | --- |
 | `contextMenus` | Provide the translate entries in the right-click menu |
 | `storage` | Save the settings and sign-in token above on your machine |
-| `scripting` | Inject the needed script into the current page when you trigger a translation |
+| `scripting` | After the extension is installed or updated, inject the translation script into pages that are already open; also inject on demand when you trigger a translation |
 | `activeTab` | Act only on the tab you are working in |
 | `tabCapture`, `offscreen` | Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to Google if you explicitly select cloud recognition |
 | Access to `api.openai.com`, `api.deepseek.com`, `api-free.deepl.com`, `api.deepl.com` | Send translation requests to the provider you selected when using your own key |
-| Optional access to your own API origin | Only if you enter a custom API base URL (a proxy or relay). Requested for that single origin when you click “Test connection”; never for all sites |
+| Access to all sites (`<all_urls>`) | After the extension is installed or updated, inject the translation script into pages that are already open, so selection translation works without reloading the page. The script only provides translation controls and never scans, uploads or reports page content on its own. A custom API base URL you enter (a proxy or relay) is covered too, so no separate permission prompt appears |
 | Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. In Chrome's built-in PDF viewer they also detect the PDF so the “Translate entire PDF” entry can be shown, and read the file only after you choose that entry. |
 
 ### Contact
@@ -222,11 +222,11 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | --- | --- |
 | `contextMenus` | 在右键菜单提供翻译入口 |
 | `storage` | 在本机保存上述设置与登录令牌 |
-| `scripting` | 在你触发翻译时向当前页面注入所需脚本 |
+| `scripting` | 安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入 |
 | `activeTab` | 仅作用于你当前操作的那个标签页 |
 | `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google |
 | 访问 `api.openai.com`、`api.deepseek.com`、`api-free.deepl.com`、`api.deepl.com` | 自带 Key 时向你选定的平台发送翻译请求 |
-| 可选：访问你自己的接口域名 | 仅当你填写了自定义接口地址（代理或中转）时申请，且只申请那一个域名；在点击「测试连接」时弹出授权，不会申请所有网站 |
+| 访问所有网站（`<all_urls>`） | 安装或更新扩展后，向已经打开的网页补注入翻译脚本，不用刷新页面就能划词翻译。脚本只提供翻译入口，不会自行扫描、上传或上报页面内容。你填写的自定义接口地址（代理或中转）也在此范围内，不再单独弹出授权 |
 | 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件 |
 
 ### 联系方式

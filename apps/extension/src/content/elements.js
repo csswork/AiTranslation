@@ -18,6 +18,8 @@
   }
 
   const Lang = globalThis.AITrLang;
+  // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
+  const { signal, onRetire } = globalThis.AITrLifecycle;
   const Rules = globalThis.AITrRules;
   const Selector = globalThis.AITrSelector;
   if (!Lang || !Rules || !Selector) return;
@@ -61,7 +63,7 @@
       if (layer && layer.contains(target)) return;
       lastTarget = target;
     },
-    true
+    { capture: true, signal }
   );
 
   /* ----------------------------------------------------------- 按钮 UI */
@@ -333,7 +335,7 @@
     clearTimeout(repositionTimer);
     repositionTimer = setTimeout(repositionShown, delay);
   }
-  window.addEventListener('resize', () => scheduleReposition());
+  window.addEventListener('resize', () => scheduleReposition(), { signal });
 
   /* ----------------------------------------------------------- 悬停 */
 
@@ -389,7 +391,7 @@
     if (on === listening) return;
     listening = on;
     const method = on ? 'addEventListener' : 'removeEventListener';
-    const options = { capture: true, passive: true };
+    const options = { capture: true, passive: true, signal };
     document[method]('mouseover', onMouseOver, options);
     document[method]('mousemove', onMouseMove, options);
     document[method]('mouseout', onMouseOut, options);
@@ -430,7 +432,7 @@
         setLayerHidden(false);
       }, SCROLL_SETTLE);
     },
-    { capture: true, passive: true }
+    { capture: true, passive: true, signal }
   );
 
   /* ------------------------------------------------------- 收集与替换 */
@@ -620,13 +622,14 @@
       if (document.body) {
         observer.observe(document.body, { attributes: true, attributeFilter: filter });
       }
+      onRetire(() => observer.disconnect());
     } catch {
       /* 忽略 */
     }
     try {
       window
         .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', schedule);
+        .addEventListener('change', schedule, { signal });
     } catch {
       /* 忽略 */
     }
@@ -637,6 +640,7 @@
     try {
       const observer = new ResizeObserver(() => scheduleReposition(120));
       observer.observe(document.body);
+      onRetire(() => observer.disconnect());
     } catch {
       /* 忽略 */
     }
@@ -680,6 +684,16 @@
   });
 
   /* ---------------------------------------------------------- 启动 */
+
+  onRetire(() => {
+    clearTimeout(repositionTimer);
+    clearTimeout(scrollTimer);
+    clearTimeout(themeTimer);
+    sizeObserver?.disconnect();
+    shown.clear();
+    hovered = null;
+    layer?.remove();
+  });
 
   reloadRules();
   watchLayout();

@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>隱私權政策</h2>
-        <p class="updated">最後更新：2026-10-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最後更新：2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -177,7 +177,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>在右鍵選單提供翻譯入口</td></tr>
                 <tr><td><code>storage</code></td><td>在本機儲存上述設定與登入權杖</td></tr>
-                <tr><td><code>scripting</code></td><td>在你觸發翻譯時，將所需指令碼注入目前頁面</td></tr>
+                <tr><td><code>scripting</code></td><td>安裝或更新擴充功能後，向已經開啟的網頁補注入翻譯腳本；你觸發翻譯時也會按需注入</td></tr>
                 <tr><td><code>activeTab</code></td><td>僅作用於你目前操作的那個分頁</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時讀取目前分頁的聲音；預設本機辨識，主動選擇雲端辨識時傳送給 Google</td></tr>
                 <tr>
@@ -185,8 +185,8 @@
                   <td>自帶 Key 時向你選定的平台傳送翻譯請求</td>
                 </tr>
                 <tr>
-                  <td>選用：存取你自己的 API 網域</td>
-                  <td>僅當你填寫了自訂 API 位址（代理或中繼）時申請，且只申請那一個網域；在點擊「測試連線」時彈出授權，不會申請所有網站</td>
+                  <td>存取所有網站（<code>&lt;all_urls&gt;</code>）</td>
+                  <td>安裝或更新擴充功能後，向已經開啟的網頁補注入翻譯腳本，不用重新整理頁面就能劃詞翻譯。腳本只提供翻譯入口，不會自行掃描、上傳或回報頁面內容。你填寫的自訂介面位址（代理或中轉）也在此範圍內，不再單獨彈出授權</td>
                 </tr>
                 <tr>
                   <td>內容指令碼符合所有網站</td>

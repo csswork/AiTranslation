@@ -13,6 +13,7 @@
     "offscreen"
   ],
   "host_permissions": [
+    "<all_urls>",
     "http://localhost/*",
     "https://app.huaci.app/*",
     "https://huaci.app/*",
@@ -44,6 +45,7 @@
         "<all_urls>"
       ],
       "js": [
+        "src/lib/lifecycle.js",
         "src/lib/languages.js",
         "src/lib/messages.js",
         "src/lib/i18n.js",

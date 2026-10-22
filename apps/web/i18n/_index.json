@@ -1294,7 +1294,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-21 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-10-22 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1784,7 +1784,7 @@
       "privacy.html"
     ]
   },
-  "在你触发翻译时向当前页面注入所需脚本": {
+  "安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1819,14 +1819,14 @@
       "privacy.html"
     ]
   },
-  "可选：访问你自己的接口域名": {
+  "访问所有网站（<code>&lt;all_urls&gt;</code>）": {
     "kind": "text",
     "tag": "td",
     "pages": [
       "privacy.html"
     ]
   },
-  "仅当你填写了自定义接口地址（代理或中转）时申请，且只申请那一个域名；在点击「测试连接」时弹出授权，不会申请所有网站": {
+  "安装或更新扩展后，向已经打开的网页补注入翻译脚本，不用刷新页面就能划词翻译。脚本只提供翻译入口，不会自行扫描、上传或上报页面内容。你填写的自定义接口地址（代理或中转）也在此范围内，不再单独弹出授权": {
     "kind": "text",
     "tag": "td",
     "pages": [

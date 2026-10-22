@@ -12,25 +12,31 @@
 | --- | --- | --- |
 | `listings/*.txt` | 24 种语言的完整长介绍 | 商品详情 → 对应语言 → 详细说明 |
 | `screenshots/01-selection-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 1 张） |
-| `screenshots/02-block-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 2 张） |
-| `screenshots/03-image-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 3 张） |
-| `screenshots/04-translate-panel.png` | 1280×800 PNG | 商品详情 → 截图（第 4 张） |
-| `screenshots/05-options.png` | 1280×800 PNG | 商品详情 → 截图（第 5 张） |
+| `screenshots/02-image-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 2 张） |
+| `screenshots/03-pdf-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 3 张） |
+| `screenshots/04-block-translate.png` | 1280×800 PNG | 商品详情 → 截图（第 4 张） |
+| `screenshots/05-translate-panel.png` | 1280×800 PNG | 商品详情 → 截图（第 5 张） |
 | `promo/promo-440x280.png` | 440×280 PNG | 商品详情 → 宣传图 → 小图（**必填**，没有它排序会靠后） |
 | `promo/promo-1400x560.png` | 1400×560 PNG | 商品详情 → 宣传图 → 横幅（可选，用于首页精选位） |
 | `video/ai-selection-translator-demo.mp4` | 1280×800 · 30fps · H.264 · 42.5s · 无音轨 | 先传到 YouTube，再把链接填进「商品详情 → 视频」 |
 
 官方规格见 <https://developer.chrome.com/docs/webstore/images>：
-截图要求 1280×800 或 640×400、直角、无留白（这五张是原始截图，均满足）；
-宣传图官方建议「以品牌图形为主、避免文字」，因此两张宣传图不含任何文案，只用了品牌色与图标。
+截图要求 1280×800 或 640×400、直角、无留白，24 位 PNG 不带透明通道（这五张均满足）；
+宣传图同样要求 JPEG 或 24 位 PNG（不带透明通道）。官方建议宣传图以品牌为主、少放文字，所以两张只放了名称、
+一句标语（横幅另有五个入口的小标签），其余用真实界面拼成的浮动卡片表达功能。
 
 ## 各张截图在演示什么
 
-1. **划词翻译** — 真实拖动选中英文句子 → 浮动「译」按钮 → 居中弹窗流式出译文，并展开了原文对照
-2. **整块元素翻译** — 为某个区域添加规则后，鼠标移上去点「译」，整块就地变成中文
-3. **图片翻译** — 上传一张英文告示牌照片，识别出 9 段文字并按住原位覆盖中文
-4. **翻译面板** — 独立页面里整段翻译，带字数、用时、目标语言
-5. **设置页** — 三个平台、API Key（本地存储）、模型、测试连接
+2.1.0 起的五张功能截图（2026-10-21）对应首页的「五个入口」，按同一版式套好：左边是编号、主题、大标题、
+一句说明和三个功能小标签，右边是装在浏览器窗口里的真实界面，再把最关键的那块界面放大浮出来。每张一个主题色。
+
+| 张 | 主题 | 主题色 | 大标题 | 浮出的界面 |
+| --- | --- | --- | --- | --- |
+| 1 | 划词翻译 | 靛紫 | 选中就翻 / 译文逐字就到 | 翻译弹窗：流式译文与展开的原文对照 |
+| 2 | 图片翻译 | 橙粉 | 图里的字 / 也能翻 | 主画面是整张拉面店海报译好的结果（相近色底、竖排招牌）；圆形浮层是圈住角标的框选 |
+| 3 | 整份 PDF 翻译（标 NEW） | 青绿 | 整份 PDF / 版面不走样 | 对照模式里的译文页 |
+| 4 | 网页区域翻译 | 蓝青 | 一整块网页 / 一点就中文 | 上下对比：英文段落带「译」按钮 → 就地换成中文 |
+| 5 | 翻译面板 | 紫红 | 整段贴进来 / 马上有译文 | 译文区 |
 
 ## 视频内容（42.5 秒，无声，靠字幕叙事）
 
@@ -46,13 +52,23 @@
 
 ```bash
 cd tools/capture
-node capture-screenshots.mjs     # 5 张截图 → out/shots/
+node capture-features.mjs        # 5 个功能的真实界面 → out/features/（8788 被占用时加 CAPTURE_PORT=8790）
+node compose-features.mjs        # 套版 → apps/extension/store-assets/screenshots/（可只做某几张：node compose-features.mjs 02 04）
 node record-video.mjs            # 录一遍流程 → out/video-raw/ + out/timeline.json
 /Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/compose_video.py
 ./scripts/encode out/video-frames 30 out/video/demo.mp4
 ```
 
-素材图片（文章页示意图、图片翻译样例）与宣传图：
+标题、说明、标签、主题色和浮出的范围都写在 `compose-features.mjs` 顶部的 `CARDS` 里，改文案只需改那里再重跑套版。
+图片翻译用的拉面店海报由 `node make-ramen.mjs` 生成（见 `apps/web/public/assets/README.md`）。
+
+宣传图（2026-10-21 起与功能截图同一套视觉，也用 `out/features/` 里的原始界面）：
+
+```bash
+node compose-promo.mjs           # promo-440x280.png 与 promo-1400x560.png → apps/extension/store-assets/promo/
+```
+
+素材图片（文章页示意图、旧版图片翻译样例）与旧版宣传图：
 
 ```bash
 /Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/make_assets.py
