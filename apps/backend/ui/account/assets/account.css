@@ -117,7 +117,73 @@ p { margin: 0 0 var(--s2); }
 [dir="rtl"] .lang select { background-position: left 1px top 55%, left 5px top 55%, 0 0; }
 .lang select option { color: var(--text); background: var(--surface); }
 .lang-go { font: inherit; font-size: .78rem; border: 0; background: none; color: var(--accent-ink); cursor: pointer; padding: 0 2px; }
-@media (max-width: 640px) { .lang select { max-width: 6em; } }
+@media (max-width: 640px) { .lang select, .lang-current { max-width: 6em; } }
+
+/* 有脚本时 <select> 换成弹出菜单（官网 main.js / 用户端 account.js「语言菜单」）：
+   整个胶囊就是按钮，菜单从按钮下方淡入、轻微下滑放大，选项依次浮现；减少动态效果时只淡入 */
+.lang.has-menu { position: relative; padding: 0; gap: 0; }
+.lang-trigger {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 100%; padding-inline: 9px 10px;
+  border: 0; border-radius: inherit; background: none; color: inherit;
+  font: inherit; font-size: .82rem; line-height: 1.2; cursor: pointer;
+}
+.lang-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lang-current { max-width: 8.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 下拉箭头：一个旋转 45° 的描边小方块，展开时翻转 */
+.lang-trigger::after {
+  content: ""; width: 5px; height: 5px; margin-top: -3px;
+  border: solid currentColor; border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg); opacity: .7;
+  transition: transform .25s cubic-bezier(.2, .8, .2, 1), margin .25s ease;
+}
+.lang.is-open .lang-trigger::after { transform: rotate(-135deg); margin-top: 3px; }
+.lang.is-open { color: var(--text); background: var(--surface-2); border-color: var(--line-strong); }
+
+.lang-menu {
+  position: absolute; z-index: 60; top: calc(100% + 8px); inset-inline-end: 0;
+  min-width: 13.5rem; max-height: min(75vh, 34rem); overflow-y: auto; overscroll-behavior: contain;
+  margin: 0; padding: 6px; list-style: none;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 1px 2px color-mix(in srgb, #000 8%, transparent), 0 18px 40px -12px color-mix(in srgb, #000 30%, transparent);
+  font-size: .88rem; cursor: default;
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px) scale(.96); transform-origin: top right;
+  transition: opacity .14s ease, transform .18s ease, visibility 0s linear .18s;
+}
+[dir="rtl"] .lang-menu { transform-origin: top left; }
+.lang.is-open .lang-menu {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .18s ease, transform .32s cubic-bezier(.16, 1, .3, 1), visibility 0s;
+}
+.lang-menu:focus { outline: none; }
+.lang-option {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .45rem .7rem; border-radius: 9px; cursor: pointer; white-space: nowrap; line-height: 1.4;
+  color: var(--text-2);
+  transition: background .12s ease, color .12s ease;
+}
+.lang-option.is-active { background: var(--surface-2); color: var(--text); }
+.lang-option[aria-selected="true"] { color: var(--accent-ink); font-weight: 600; }
+/* 当前选择右侧打勾 */
+.lang-option[aria-selected="true"]::after {
+  content: ""; flex: none; width: 9px; height: 5px; margin-top: -3px;
+  border: solid currentColor; border-width: 0 0 2px 2px; transform: rotate(-45deg);
+}
+.lang-option.is-auto { margin-top: 5px; }
+.lang-option.is-auto::before {
+  content: ""; position: absolute; inset-inline: .35rem; top: -4px;
+  border-top: 1px solid var(--line);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lang.is-open .lang-option { animation: lang-option-in .32s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--i) * 16ms + 30ms); }
+}
+@keyframes lang-option-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .lang-menu, .lang.is-open .lang-menu { transform: none; }
+  .lang-trigger::after { transition: none; }
+}
 
 /* 账户入口：官网（apps/web/public/styles.css）与用户端（apps/backend/ui/account/assets/account.css）相同。
    未登录是实心的「登录」按钮；已登录是首字母圆标 + 用户名的胶囊，首字母由用户名生成，不是头像。 */
@@ -179,7 +245,8 @@ p { margin: 0 0 var(--s2); }
   .nav-links a[data-nav-github] { display: none; }
   .lang { padding-inline: 7px 5px; }
   .lang svg { display: none; }
-  .lang select { max-width: 5.6em; }
+  .lang select, .lang-current { max-width: 5.6em; }
+  .lang-trigger { padding-inline: 7px 8px; }
   .nav-in { height: auto; min-height: 62px; flex-wrap: wrap; row-gap: .4rem; padding-block: .5rem; }
   .nav-links { --nav-gap: .8rem; flex-wrap: wrap; justify-content: flex-end; row-gap: .4rem; }
   .nav-links a { font-size: .88rem; }

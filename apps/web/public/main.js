@@ -13,6 +13,7 @@
  * 另外有安装按钮：装不了 Chrome 扩展的浏览器改去安装说明；
  * 账户入口：载入、切回页面及扩展通知时核对用户端的登录状态；
  * 配色切换：只在点击按钮、或系统切换明暗时才运行；
+ * 语言菜单：把 lang.js 画出的 <select> 换成带动画的弹出菜单；
  * 以及首屏示意图的译文逐段流出：载入时跑一次，几秒后就结束。
  */
 (() => {
@@ -206,6 +207,146 @@
   // 跟随系统时系统切了明暗：图标由 CSS 自己换，这里只更新按钮文字
   if (systemDark && systemDark.addEventListener) systemDark.addEventListener('change', syncThemeUi);
   syncThemeUi();
+
+  /* ------------------------------------------------------------ 语言菜单 */
+
+  /*
+   * 把语言 <select> 换成带动画的弹出菜单：原生下拉在各系统上样式不一，也没法配色。
+   * <select> 仍留在页面里（隐藏），选中后改它的值并派发 change，跳转逻辑照旧由 lang.js 处理。
+   * 菜单按 WAI-ARIA listbox 做键盘操作：方向键、Home/End、回车/空格选择、Esc 收起。
+   * lang.js 在 DOMContentLoaded 时才画出 <select>，这里排在它后面。
+   */
+  const enhanceLangMenu = () => {
+    const box = document.querySelector('.lang');
+    const select = box && box.querySelector('select');
+    if (!select || box.classList.contains('has-menu')) return;
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'lang-trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-label', select.getAttribute('aria-label') || 'Language');
+    const globe = box.querySelector(':scope > svg');
+    if (globe) trigger.appendChild(globe);
+    const currentLabel = document.createElement('span');
+    currentLabel.className = 'lang-current';
+    trigger.appendChild(currentLabel);
+
+    const menu = document.createElement('ul');
+    menu.className = 'lang-menu';
+    menu.id = 'lang-menu';
+    menu.tabIndex = -1;
+    menu.setAttribute('role', 'listbox');
+    menu.setAttribute('aria-label', trigger.getAttribute('aria-label'));
+    trigger.setAttribute('aria-controls', menu.id);
+
+    const items = [...select.options].map((option, i) => {
+      const item = document.createElement('li');
+      item.id = `lang-option-${option.value}`;
+      item.className = 'lang-option' + (option.value === 'auto' ? ' is-auto' : '');
+      item.setAttribute('role', 'option');
+      item.dataset.value = option.value;
+      item.style.setProperty('--i', i);
+      if (option.lang) item.lang = option.lang;
+      item.textContent = option.textContent;
+      menu.appendChild(item);
+      return item;
+    });
+
+    let active = -1;
+    const selectedIndex = () => Math.max(0, items.findIndex((item) => item.dataset.value === select.value));
+    const sync = () => {
+      const index = selectedIndex();
+      currentLabel.textContent = select.options[index].textContent;
+      currentLabel.lang = select.options[index].lang || '';
+      items.forEach((item, i) => item.setAttribute('aria-selected', String(i === index)));
+    };
+    const setActive = (index) => {
+      items.forEach((item) => item.classList.remove('is-active'));
+      active = (index + items.length) % items.length;
+      items[active].classList.add('is-active');
+      menu.setAttribute('aria-activedescendant', items[active].id);
+      // 只滚动菜单自身，不用 scrollIntoView（它会连带滚动整页）
+      const item = items[active];
+      if (item.offsetTop < menu.scrollTop) menu.scrollTop = item.offsetTop - 6;
+      else if (item.offsetTop + item.offsetHeight > menu.scrollTop + menu.clientHeight) {
+        menu.scrollTop = item.offsetTop + item.offsetHeight - menu.clientHeight + 6;
+      }
+    };
+    const isOpen = () => box.classList.contains('is-open');
+    const open = () => {
+      if (isOpen()) return;
+      box.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      setActive(selectedIndex());
+      menu.focus({ preventScroll: true });
+    };
+    const close = (refocus) => {
+      if (!isOpen()) return;
+      box.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (refocus) trigger.focus({ preventScroll: true });
+    };
+    const choose = (index) => {
+      const value = items[index].dataset.value;
+      close(true);
+      if (value === select.value) return;
+      select.value = value;
+      sync();
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+
+    // 外层是 <label>：点菜单项时浏览器会把点击转给里面的控件，这里拦下，避免菜单刚开就被关上
+    box.addEventListener('click', (event) => event.preventDefault());
+    trigger.addEventListener('click', () => (isOpen() ? close(true) : open()));
+    trigger.addEventListener('keydown', (event) => {
+      if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+        event.preventDefault();
+        open();
+      }
+    });
+    menu.addEventListener('keydown', (event) => {
+      const keys = {
+        ArrowDown: () => setActive(active + 1),
+        ArrowUp: () => setActive(active - 1),
+        Home: () => setActive(0),
+        End: () => setActive(items.length - 1),
+        Enter: () => choose(active),
+        ' ': () => choose(active),
+        Escape: () => close(true),
+      };
+      if (event.key === 'Tab') { close(false); return; }
+      if (!keys[event.key]) return;
+      event.preventDefault();
+      keys[event.key]();
+    });
+    menu.addEventListener('click', (event) => {
+      const item = event.target.closest('.lang-option');
+      if (item) choose(items.indexOf(item));
+    });
+    menu.addEventListener('mousemove', (event) => {
+      const item = event.target.closest('.lang-option');
+      if (item && items.indexOf(item) !== active) setActive(items.indexOf(item));
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (isOpen() && !box.contains(event.target)) close(false);
+    });
+    // 焦点移到页面其他地方时收起；切走窗口不算，回来时菜单还在
+    menu.addEventListener('focusout', () => {
+      setTimeout(() => {
+        if (document.hasFocus() && !box.contains(document.activeElement)) close(false);
+      });
+    });
+
+    select.hidden = true;
+    box.prepend(trigger);
+    box.appendChild(menu);
+    box.classList.add('has-menu');
+    sync();
+  };
+  if (document.querySelector('.lang select')) enhanceLangMenu();
+  else document.addEventListener('DOMContentLoaded', enhanceLangMenu);
 
   /* ------------------------------------------------ 首屏示意图：译文逐段流出 */
 
