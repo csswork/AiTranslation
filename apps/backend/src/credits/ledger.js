@@ -72,9 +72,20 @@ export async function voidRemaining(db, userId, reason) {
   }
 }
 
-/** 访客合并进正式账户：把访客剩余点数作为一笔 transfer 转入，每个访客只转一次。 */
+/**
+ * 访客合并进正式账户：把访客剩余点数作为一笔 transfer 转入，每个访客只转一次。
+ * 每个正式账户也只接收一个领到点数的访客：重装扩展、换浏览器或另领访客后再登录同一账户，
+ * 后来的访客不再转入（点数随访客删除），否则注册赠送之外可以反复叠加访客点数。
+ * 之前合并的访客点数即使已经用完也算接收过，必须在调用方的事务里、写入 merged_user_id 之前调用。
+ */
 export async function transferGuestCredits(db, guestId, memberId) {
+  await db.query('SELECT pg_advisory_xact_lock(hashtext($1))', [`guest-transfer:${memberId}`]);
   await db.query('SELECT pg_advisory_xact_lock(hashtext($1))', [`credits:${guestId}`]);
+  const { rows: [received] } = await db.query(
+    'SELECT 1 FROM guest_claims WHERE merged_user_id = $1 AND user_id IS DISTINCT FROM $2 AND granted_units > 0 LIMIT 1',
+    [memberId, guestId],
+  );
+  if (received) return 0n;
   const remaining = await creditBalance(db, guestId);
   await grant(db, memberId, 'transfer', remaining, `transfer:${guestId}`);
   return remaining;

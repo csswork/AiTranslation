@@ -172,6 +172,50 @@ test('注册：扩展登录时访客剩余点数转入正式账户；网页登�
   assert.equal((await api(app, '/me', { token: g3.token })).status, 200, '没有登录的访客会话保持独立');
 });
 
+test('每个正式账户只接收一个访客的点数：重装、换浏览器或另领访客后再登录，不再转入', async () => {
+  const { app, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
+  const email = 'twice@example.com';
+  const g1 = await guest(app, '198.51.100.60');
+  assert.equal((await extensionLogin(app, mailbox, email, g1.token)).transferred, '50.00');
+
+  // 重装扩展后没打开欢迎页（浏览器标记没机会核对），新访客照样发放，再从扩展登录同一账户
+  const g2 = await guest(app, '198.51.100.61');
+  assert.equal(g2.granted, '50.00');
+  const again = await extensionLogin(app, mailbox, email, g2.token);
+  assert.equal(again.transferred, '0.00');
+  assert.equal((await (await api(app, '/me', { token: again.token })).json()).credits.balance, '150.00', '注册 100 + 一个访客 50');
+  assert.equal((await api(app, '/me', { token: g2.token })).status, 401, '没转入点数的访客照样合并删除');
+
+  // 另一个浏览器：欢迎页关联后在网页登录同一账户
+  const g3 = await guest(app, '198.51.100.62');
+  const b = browser(app, config);
+  await b.get(`/welcome${linkOf(g3.welcomeUrl)}`);
+  await pool.query("UPDATE email_codes SET created_at = now() - interval '2 minutes'");
+  await b.post('/login/email', { email });
+  await b.post('/login/verify', { code: mailbox.last(email) });
+  assert.equal((await (await api(app, '/me', { token: g3.token })).json()).credits.balance, '150.00');
+
+  const { rows: [user] } = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+  const { rows: transfers } = await pool.query("SELECT amount_units FROM credit_ledger WHERE user_id = $1 AND entry_type = 'transfer'", [user.id]);
+  assert.deepEqual(transfers.map((t) => t.amount_units), ['25000']);
+  const { rows: [claims] } = await pool.query('SELECT COUNT(*)::int AS n FROM guest_claims WHERE merged_user_id = $1', [user.id]);
+  assert.equal(claims.n, 3, '三次转化都有记录');
+});
+
+test('第一个访客的点数用完后再合并新访客，也不再转入', async () => {
+  const { app, settings, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
+  await settings.set('guest_credits', '0.01');
+  const g1 = await guest(app, '198.51.100.70');
+  await api(app, '/translate', { method: 'POST', token: g1.token, body: { texts: ['x'.repeat(5)], target: 'en' } });
+  const email = 'spent@example.com';
+  assert.equal((await extensionLogin(app, mailbox, email, g1.token)).transferred, '0.00');
+  await settings.set('guest_credits', '50');
+  const g2 = await guest(app, '198.51.100.71');
+  assert.equal((await extensionLogin(app, mailbox, email, g2.token)).transferred, '0.00');
+  const { rows: [user] } = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+  assert.equal(await creditBalance(pool, user.id), 50000n, '只有注册赠送的 100 点');
+});
+
 test('不足展示精度的访客余额，经扩展或网页登录均完整转入并可继续使用', async () => {
   const { app, settings, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
   await settings.set('guest_credits', '0.01');
