@@ -139,3 +139,39 @@ test('用户与管理端：收入保持表格、支出和请求有日期图表�
   assert.match(global, /&lt;img src=x onerror=alert\(1\)&gt;/);
   assert.doesNotMatch(global, /<img src=x onerror/);
 });
+
+test('管理端按 REPORT_TIMEZONE 切分日期和显示时间，用户端保持 UTC', async () => {
+  const owner = await member('zoned');
+  const grant = await entry(owner, 'trial_grant', 50000, '2026-10-01T00:00:00Z');
+  // UTC 10/22 17:30 = 北京时间 10/23 01:30
+  const at = '2026-10-22T17:30:00Z';
+  const usage = await request(owner, at, { units: 500, chars: 500 });
+  await entry(owner, 'usage', -500, at, grant, usage);
+  const now = new Date('2026-10-23T03:00:00Z');
+  const dayOf = (activity) => activity.days.filter((d) => d.requests).map((d) => d.day);
+  const utc = await creditActivity(pool, owner, { period: '7d', now });
+  assert.deepEqual(dayOf(utc), ['2026-10-22']);
+  assert.equal(utc.timeZone, 'UTC');
+  const cn = await creditActivity(pool, owner, { period: '7d', now, timeZone: 'Asia/Shanghai' });
+  assert.deepEqual(dayOf(cn), ['2026-10-23']);
+  assert.equal(cn.days.at(-1).day, '2026-10-23', '北京时间的今天');
+  // 「本月」起点按北京时间 10/01 零点（UTC 9/30 16:00）：UTC 9/30 17:00 的记录算本月
+  const early = await request(owner, '2026-09-30T17:00:00Z');
+  await entry(owner, 'usage', -1, '2026-09-30T17:00:00Z', grant, early);
+  assert.equal((await creditActivity(pool, owner, { period: 'month', now, timeZone: 'Asia/Shanghai' })).totals.requests, 2n);
+  assert.equal((await creditActivity(pool, owner, { period: 'month', now })).totals.requests, 1n, 'UTC 的本月不含它');
+
+  const { app, config } = buildApp({ pool });
+  assert.equal(config.reportTimeZone, 'Asia/Shanghai');
+  await pool.query("UPDATE users SET created_at = '2026-10-22T17:30:00Z' WHERE id = $1", [owner]);
+  await pool.query('INSERT INTO admins (user_id) VALUES ($1)', [owner]);
+  const token = await createAdminSession(pool, owner);
+  await markVerified(pool, (await validateAdminSession(pool, token)).session.id);
+  const admin = browser(app, config, config.adminOrigin);
+  admin.jar.set('huaci_admin', token);
+  const detail = await admin.text(`/users/${owner}`);
+  assert.match(detail, /注册时间<\/dt><dd>2026\/10\/23 01:30:00</);
+  assert.match(detail, /<span class="overview-timezone">Asia\/Shanghai<\/span>/);
+  assert.match(detail, /页面时间均按 Asia\/Shanghai 显示/);
+  assert.match(await admin.text('/users'), /<td>2026\/10\/23<\/td>/);
+});

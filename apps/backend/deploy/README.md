@@ -26,7 +26,7 @@
 | `RESEND_API_KEY` / `MAIL_FROM` | 必填 | Resend API Key 与已验证的发件地址（如 `AI 划词翻译 <no-reply@huaci.app>`）；需在 Resend 为 huaci.app 配置 SPF / DKIM |
 | `SUPPORT_EMAIL` | 默认 `support@huaci.app` | 客服邮箱：页脚、套餐页、验证码邮件的回复地址；须能收信，并与 Creem 后台一致 |
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200.00 / 50.00 | 注册与访客赠送点数的默认值（不过期，最多两位小数）；管理员界面里的设置优先 |
-| `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 运营报表切分天和小时的时区 |
+| `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 管理端的时区：运营报表与点数图表按它切分天和小时，页面上的时间也按它显示（用户端仍按 UTC） |
 | `GEO_COUNTRY_HEADER` | 建议 `cf-ipcountry` | 反向代理提供的两位国家代码请求头；用于报表按国家统计，不保存 IP 或更细位置。不经 Cloudflare 时可用 nginx GeoIP2 模块设置类似请求头 |
 | `DEV_TRIAL_RESET` | 不得设置 | 本地测试专用：允许扩展开发工具重置本机网络的访客领取记录与浏览器标记；生产环境设置会拒绝启动 |
 | `ADMIN_REQUIRE_2FA` | 无需设置 | 生产环境始终要求管理端二步验证；只在本地开发用来打开 |

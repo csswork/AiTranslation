@@ -5,12 +5,15 @@ export const INCOME_TYPES = ['trial_grant', 'guest_grant', 'transfer', 'adjust',
 const FIELDS = ['spent_units', 'usage_units', 'void_units', 'requests', 'ok', 'failed', 'pending', 'chars'];
 
 // userId 必须由路由明确传入；只有管理端可显式传 null 读取全局数据。
-export async function creditActivity(db, userId, { period = 'month', now = new Date(), incomeType = '', limit = 100 } = {}) {
+// timeZone 决定按哪个时区切分自然日：用户端 UTC，管理端 REPORT_TIMEZONE。
+export async function creditActivity(db, userId, { period = 'month', now = new Date(), incomeType = '', limit = 100, timeZone = 'UTC' } = {}) {
   if (userId === undefined || userId === '') throw new Error('missing_activity_user');
-  const range = usagePeriod(period, now);
+  const range = usagePeriod(period, now, timeZone);
   incomeType = INCOME_TYPES.includes(incomeType) ? incomeType : '';
   limit = Number.isInteger(limit) ? Math.min(300, Math.max(1, limit)) : 100;
-  const scope = [userId, range.from, now];
+  // $2 是该时区的起始日期，换算成时刻；$4 是时区。
+  const scope = [userId, range.fromDay, now, timeZone];
+  const since = '($2::date::timestamp AT TIME ZONE $4)';
   const [income, expenses, events, ledgerDays, requestDays] = await Promise.all([
     db.query(
       `SELECT l.user_id, u.username, l.entry_type, l.amount_units, l.expires_at, l.reason, l.created_at
@@ -22,31 +25,31 @@ export async function creditActivity(db, userId, { period = 'month', now = new D
       `SELECT l.user_id, u.username, l.entry_type, l.amount_units, l.reason, l.created_at
        FROM credit_ledger l JOIN users u ON u.id = l.user_id
        WHERE ($1::uuid IS NULL OR l.user_id = $1) AND l.amount_units < 0
-         AND l.created_at >= $2 AND l.created_at <= $3
-       ORDER BY l.created_at DESC, l.id DESC LIMIT $4`, [...scope, limit]),
+         AND l.created_at >= ${since} AND l.created_at <= $3
+       ORDER BY l.created_at DESC, l.id DESC LIMIT $5`, [...scope, limit]),
     db.query(
       `SELECT e.user_id, u.username, e.kind, e.audience, e.chars, e.cost_units, e.model,
               e.input_tokens, e.output_tokens, e.cost_micros, e.latency_ms, e.target_lang, e.status, e.error, e.created_at
        FROM usage_events e JOIN users u ON u.id = e.user_id
-       WHERE ($1::uuid IS NULL OR e.user_id = $1) AND e.created_at >= $2 AND e.created_at <= $3
-       ORDER BY e.created_at DESC, e.id DESC LIMIT $4`, [...scope, limit]),
+       WHERE ($1::uuid IS NULL OR e.user_id = $1) AND e.created_at >= ${since} AND e.created_at <= $3
+       ORDER BY e.created_at DESC, e.id DESC LIMIT $5`, [...scope, limit]),
     db.query(
-      `SELECT to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day,
+      `SELECT to_char(created_at AT TIME ZONE $4, 'YYYY-MM-DD') AS day,
               SUM(-amount_units)::text AS spent_units,
               COALESCE(SUM(-amount_units) FILTER (WHERE entry_type = 'usage'), 0)::text AS usage_units,
               COALESCE(SUM(-amount_units) FILTER (WHERE entry_type <> 'usage'), 0)::text AS void_units
        FROM credit_ledger
-       WHERE ($1::uuid IS NULL OR user_id = $1) AND amount_units < 0 AND created_at >= $2 AND created_at <= $3
+       WHERE ($1::uuid IS NULL OR user_id = $1) AND amount_units < 0 AND created_at >= ${since} AND created_at <= $3
        GROUP BY 1 ORDER BY 1`, scope),
     db.query(
-      `SELECT to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS day,
+      `SELECT to_char(created_at AT TIME ZONE $4, 'YYYY-MM-DD') AS day,
               COUNT(*)::text AS requests,
               COUNT(*) FILTER (WHERE status = 'ok')::text AS ok,
               COUNT(*) FILTER (WHERE status = 'failed')::text AS failed,
               COUNT(*) FILTER (WHERE status = 'pending')::text AS pending,
               COALESCE(SUM(chars), 0)::text AS chars
        FROM usage_events
-       WHERE ($1::uuid IS NULL OR user_id = $1) AND created_at >= $2 AND created_at <= $3
+       WHERE ($1::uuid IS NULL OR user_id = $1) AND created_at >= ${since} AND created_at <= $3
        GROUP BY 1 ORDER BY 1`, scope),
   ]);
   const byDay = new Map();

@@ -11,7 +11,9 @@ export function activityCharts(ui, activity, { action, incomeType = '' }) {
   const compact = (value) => new Intl.NumberFormat(locale.htmlLang, { notation: 'compact', maximumFractionDigits: 2 }).format(value);
   const shortDate = new Intl.DateTimeFormat(locale.htmlLang, { timeZone: 'UTC', month: 'numeric', day: 'numeric' });
   const tooltipDate = new Intl.DateTimeFormat(locale.htmlLang, { timeZone: 'UTC', year: 'numeric', month: 'short', day: 'numeric' });
+  // 日期标签已是按 activity.timeZone 切分的日期，格式化时按 UTC 读取以免再次换算。
   const dayDate = (day) => new Date(`${day}T00:00:00Z`);
+  const zone = activity.timeZone || 'UTC';
   const series = (label, field, cls, credits = false) => ({ name: String(label), field, cls, kind: 'bar',
     // 只有 SVG 坐标转换成 Number，合计与悬停文字保留 BigInt 精度。
     values: days.map((day) => Number(day[field]) / (credits ? Number(UNITS_PER_CREDIT) : 1)),
@@ -20,7 +22,7 @@ export function activityCharts(ui, activity, { action, incomeType = '' }) {
   const chart = (items, total, totalField, value, extra = []) => timeChart({
     labels: days.map((day) => day.day), series: items, stacked: true, width: 490, height: 260,
     axisFormat: compact, labelFormat: (day) => shortDate.format(dayDate(day)),
-    interactive: true, tooltipDateFormat: (day) => `${tooltipDate.format(dayDate(day))} UTC`,
+    interactive: true, tooltipDateFormat: (day) => `${tooltipDate.format(dayDate(day))} ${zone}`,
     tooltipItems: (i) => [
       ...items.map((s) => ({ label: s.name, value: value(days[i][s.field]), tone: s.cls })),
       { label: String(total), value: value(days[i][totalField]), total: true },
@@ -37,7 +39,7 @@ export function activityCharts(ui, activity, { action, incomeType = '' }) {
       <button class="button" type="submit">${t('筛选')}</button>
       ${activity.period !== 'month' ? html`<a class="overview-reset" href="${action}${incomeType ? `?type=${incomeType}` : ''}">${t('清除筛选条件')}</a>` : ''}
     </form>
-    <span class="overview-timezone">UTC</span>
+    <span class="overview-timezone">${zone}</span>
   </div>
   <div class="overview-chart-grid">
     <section class="overview-chart" data-chart="credit-expenses">

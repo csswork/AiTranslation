@@ -33,6 +33,7 @@ const fail = (text) => ({ kind: 'error', text });
 
 export function adminRoutes({ config, pool, mailer, settings, creem = null, log = console }) {
   const app = new Hono();
+  views.setTimeZone(config.reportTimeZone);
   const secure = config.adminOrigin.startsWith('https://');
   const cookieName = secure ? '__Host-huaci_admin' : 'huaci_admin';
   const cookieBase = { httpOnly: true, secure, sameSite: 'Strict', path: '/' };
@@ -276,7 +277,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const [state, subs, activity, sessions, api, installs] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
-      creditActivity(pool, u.id, { period: c.req.query('period') }),
+      creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
       apiUsageForUser(pool, u.id, 30),
       installHistory(pool, u.id),
@@ -370,7 +371,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   /* ---------- A6 点数账本 ---------- */
 
   app.get('/ledger', requireAdmin, async (c) => {
-    const activity = await creditActivity(pool, null, { period: c.req.query('period'), incomeType: c.req.query('type'), limit: 300 });
+    const activity = await creditActivity(pool, null, { period: c.req.query('period'), incomeType: c.req.query('type'), limit: 300, timeZone: config.reportTimeZone });
     return page(c, () => views.ledgerPage({ admin: admin(c), activity }));
   });
 

@@ -26,8 +26,11 @@ const NAV = [
   { href: '/audit', label: '操作审计', key: 'audit' },
 ];
 
-const dt = (value) => (value ? new Date(value).toLocaleString('zh-CN', { hour12: false }) : '—');
-const d = (value) => (value ? new Date(value).toLocaleDateString('zh-CN') : '—');
+// 管理端所有时间按 REPORT_TIMEZONE 显示，与运营报表的日期切分一致（adminRoutes 启动时设置）。
+let timeZone = 'Asia/Shanghai';
+export const setTimeZone = (zone) => { timeZone = zone; };
+const dt = (value) => (value ? new Date(value).toLocaleString('zh-CN', { hour12: false, timeZone }) : '—');
+const d = (value) => (value ? new Date(value).toLocaleDateString('zh-CN', { timeZone }) : '—');
 const num = (value) => Number(value || 0).toLocaleString('zh-CN');
 const minor = (amount, currency) => new Intl.NumberFormat('zh-CN', { style: 'currency', currency: currency || 'USD' }).format(Number(amount || 0) / 100);
 const usd = (micros) => {
@@ -92,6 +95,7 @@ ${head}
   <main class="content">
     ${notice(note)}
     ${body}
+    ${admin ? html`<p class="fine admin-timezone" data-timezone="${timeZone}">页面时间均按 ${timeZone} 显示。</p>` : ''}
   </main>
 </div>
 </body>
