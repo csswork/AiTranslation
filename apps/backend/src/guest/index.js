@@ -62,7 +62,7 @@ export async function createGuest(pool, config, settings, address, { country = n
     const user = await createGuestUser(client);
     await grantGuest(client, granted, user.id);
     await client.query(
-      'INSERT INTO guest_claims (user_id, ip_hash, granted_units, outcome, country, ui_lang) VALUES ($1, $2, $3, $4, $5, $6)',
+      'INSERT INTO guest_claims (user_id, guest_id, ip_hash, granted_units, outcome, country, ui_lang) VALUES ($1, $1, $2, $3, $4, $5, $6)',
       [user.id, hash, grantedUnits, outcome, country, uiLang],
     );
     const token = await createSession(client, config, user.id, 'extension');
@@ -86,7 +86,10 @@ export async function mergeGuest(client, guestId, memberId, { moveSessions = fal
   const transferred = await transferGuestCredits(client, guestId, memberId);
   await client.query('UPDATE usage_events SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE usage_rejections SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
-  await client.query('UPDATE guest_claims SET merged_user_id = $2 WHERE user_id = $1', [guestId, memberId]);
+  await client.query(
+    'UPDATE guest_claims SET merged_user_id = $2, merged_at = now(), transferred_units = $3 WHERE user_id = $1',
+    [guestId, memberId, transferred],
+  );
   await client.query('UPDATE browser_marks SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   if (moveSessions) await client.query(
     `UPDATE sessions SET user_id = $2, web_session_id = $3 WHERE user_id = $1 AND client = 'extension'`,
@@ -134,14 +137,20 @@ export async function linkBrowser(pool, { linkCode, markValue }) {
     if (mark.kind === 'guest') {
       // 同一浏览器重装：扩展会话接回旧访客，这次新建的访客与它的点数作废（删除），不计入领取次数。
       await client.query(`UPDATE sessions SET user_id = $2 WHERE user_id = $1 AND client = 'extension'`, [guestId, mark.user_id]);
-      await client.query(`UPDATE guest_claims SET outcome = 'reinstall', granted_units = 0 WHERE user_id = $1`, [guestId]);
+      await client.query(
+        `UPDATE guest_claims SET outcome = 'reinstall', granted_units = 0, linked_user_id = $2 WHERE user_id = $1`,
+        [guestId, mark.user_id],
+      );
       await client.query('DELETE FROM users WHERE id = $1', [guestId]);
       return { outcome: 'restored', claim, userId: mark.user_id };
     }
 
     // 这个浏览器已经注册过（或旧账户已删除）：新访客的点数作废，提示登录；不凭 Cookie 自动登录正式账户。
     await voidRemaining(client, guestId, 'browser_already_claimed');
-    await client.query(`UPDATE guest_claims SET outcome = 'claimed_member', granted_units = 0 WHERE user_id = $1`, [guestId]);
+    await client.query(
+      `UPDATE guest_claims SET outcome = 'claimed_member', granted_units = 0, linked_user_id = $2 WHERE user_id = $1`,
+      [guestId, mark.user_id],
+    );
     if (!mark.user_id) await client.query('UPDATE browser_marks SET user_id = $2 WHERE id = $1', [mark.id, guestId]);
     return { outcome: 'already_member', claim, userId: guestId };
   });

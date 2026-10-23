@@ -202,6 +202,61 @@ test('每个正式账户只接收一个访客的点数：重装、换浏览器�
   assert.equal(claims.n, 3, '三次转化都有记录');
 });
 
+test('管理端用户详情列出与账户有关的每次安装：合并、重装接回、浏览器已注册，访客删除后仍可追溯', async () => {
+  const { app, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
+  const email = 'tracked@example.com';
+  const login = async (b) => {
+    await pool.query("UPDATE email_codes SET created_at = now() - interval '2 minutes'");
+    await b.post('/login/email', { email });
+    await b.post('/login/verify', { code: mailbox.last(email) });
+  };
+  // 浏览器 1：安装、重装（接回 g1），再在网页登录 → g1 合并转入 50
+  const b1 = browser(app, config);
+  const g1 = await guest(app, '198.51.100.80');
+  await b1.get(`/welcome${linkOf(g1.welcomeUrl)}`);
+  const g2 = await guest(app, '198.51.100.81');
+  assert.match(await b1.text(`/welcome${linkOf(g2.welcomeUrl)}`), /data-outcome="restored"/);
+  await login(b1);
+  // 浏览器 2：另一个访客合并进同一账户，不再转入
+  const b2 = browser(app, config);
+  const g3 = await guest(app, '198.51.100.82');
+  await b2.get(`/welcome${linkOf(g3.welcomeUrl)}`);
+  await login(b2);
+  // 浏览器 1 再装一次：已注册浏览器，新访客点数作废，访客保留
+  await b1.post('/logout');
+  const g4 = await guest(app, '198.51.100.83');
+  assert.match(await b1.text(`/welcome${linkOf(g4.welcomeUrl)}`), /data-outcome="already_member"/);
+
+  const { rows: [member] } = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+  const { installHistory } = await import('../src/admin/installs.js');
+  const history = await installHistory(pool, member.id);
+  assert.deepEqual(
+    history.rows.map((r) => [r.relation, r.outcome, r.transferred_units]).reverse(),
+    [['merged', 'granted', 25000n], ['via_merged', 'reinstall', null], ['merged', 'granted', 0n], ['linked', 'claimed_member', null]],
+  );
+  assert.deepEqual(history.summary, { installs: 4, merged: 2, transferredUnits: 25000n, notTransferred: 1 });
+  assert.ok(history.rows.every((r) => r.guest_id), '访客删除后仍保留原访客 ID');
+  assert.ok(history.rows.filter((r) => r.relation === 'merged').every((r) => r.merged_at), '记录合并时间');
+
+  // 还在的访客 g4：自己的安装，指向已注册的账户
+  const { rows: [g4user] } = await pool.query(`SELECT id FROM users WHERE kind = 'guest'`);
+  const own = await installHistory(pool, g4user.id);
+  assert.deepEqual(own.rows.map((r) => [r.relation, r.outcome, r.linked_username]), [['own', 'claimed_member', (await pool.query('SELECT username FROM users WHERE id = $1', [member.id])).rows[0].username]]);
+
+  // 管理端页面
+  await pool.query('INSERT INTO admins (user_id) VALUES ($1)', [member.id]);
+  const a = browser(app, config, config.adminOrigin);
+  await pool.query("UPDATE email_codes SET created_at = now() - interval '2 minutes'");
+  await a.post('/login', { email });
+  await a.post('/login/verify', { code: mailbox.last(email) });
+  const detail = await a.text(`/users/${member.id}`);
+  assert.match(detail, /data-installs="4"/);
+  assert.match(detail, /合并访客 2 个，转入 50\.00 点（1 个未转入/);
+  assert.equal((detail.match(/data-relation="/g) || []).length, 4);
+  assert.match(await a.text(`/users/${g4user.id}`), /浏览器已注册 <a href="\/users\//);
+  assert.match(await a.text(`/users?q=${encodeURIComponent(email)}`), /<td class="num">4<\/td>/);
+});
+
 test('第一个访客的点数用完后再合并新访客，也不再转入', async () => {
   const { app, settings, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
   await settings.set('guest_credits', '0.01');

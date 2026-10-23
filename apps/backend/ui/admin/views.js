@@ -572,10 +572,10 @@ export function usersPage({ admin, q, users }) {
     body: html`<h1>用户</h1>
 <form method="get" action="/users" class="search"><input name="q" value="${q}" placeholder="邮箱、用户名或用户 ID" dir="ltr"><button class="button" type="submit">搜索</button></form>
 <div class="table-wrap"><table>
-  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
+  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th class="num">安装</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
   <tbody>${users.map((u) => html`<tr>
     <td><a href="/users/${u.id}">${u.username}</a></td><td dir="ltr">${u.email || '—'}</td><td>${KIND[u.kind]}</td>
-    <td class="num">${displayCredits(u.balance_units)}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
+    <td class="num">${displayCredits(u.balance_units)}</td><td class="num">${u.installs ? num(u.installs) : '—'}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
   </tr>`)}</tbody>
 </table></div>
 ${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}`,
@@ -606,7 +606,44 @@ const requestDetails = (events, showUser = false) => html`<details class="card a
   </table></div>` : html`<p class="muted">暂无托管请求。</p>`}
 </details>`;
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, note }) {
+const shortId = (id) => (id ? String(id).slice(0, 8) : '');
+const installRelation = (r, u) => {
+  const merged = r.merged_username ? html`<a href="/users/${r.merged_user_id}">${r.merged_username}</a>` : '本账户';
+  if (r.relation === 'merged') return html`合并到${merged}${r.merged_at ? html` <span class="muted">${dt(r.merged_at)}</span>` : ''}`;
+  if (r.relation === 'via_merged') return html`重装接回访客 <code>${shortId(r.linked_user_id)}</code>，该访客已合并到本账户`;
+  if (r.relation === 'linked') {
+    return r.outcome === 'claimed_member' ? '同一浏览器已注册本账户，新访客点数作废' : html`重装后接回本访客`;
+  }
+  // own：访客自己的安装
+  if (r.outcome === 'reinstall') return html`重装，接回访客 ${r.linked_username ? html`<a href="/users/${r.linked_user_id}">${r.linked_username}</a>` : html`<code>${shortId(r.linked_user_id)}</code>`}`;
+  if (r.outcome === 'claimed_member') {
+    return html`浏览器已注册${r.linked_username ? html` <a href="/users/${r.linked_user_id}">${r.linked_username}</a>` : ''}，点数作废`;
+  }
+  return u.kind === 'guest' ? '当前访客' : '—';
+};
+const installsSection = (installs, u) => {
+  const { rows, summary } = installs;
+  return html`<section class="card" data-installs="${summary.installs}">
+  <h2>安装与访客记录</h2>
+  ${rows.length ? html`<p class="fine">共 ${summary.installs} 次安装${summary.merged ? html`；合并访客 ${summary.merged} 个，转入 ${displayCredits(summary.transferredUnits)} 点${summary.notTransferred ? html`（${summary.notTransferred} 个未转入：每个账户只接收一个访客的点数，或点数已用完）` : ''}` : ''}。网络是 IP 带密钥哈希的前 8 位，相同即同一网络。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>安装时间</th><th>访客</th><th>领取结果</th><th class="num">赠送</th><th class="num">转入</th><th>关系</th><th>网络</th><th>国家</th><th>界面语言</th></tr></thead>
+    <tbody>${rows.map((r) => html`<tr data-relation="${r.relation}">
+      <td>${dt(r.created_at)}</td>
+      <td dir="ltr">${r.guest_id ? html`<code>${shortId(r.guest_id)}</code>` : '—'}${r.guest_alive && r.guest_id !== u.id ? html` <a href="/users/${r.guest_id}">查看</a>` : ''}</td>
+      <td>${OUTCOME[r.outcome] || r.outcome}</td>
+      <td class="num">${displayCredits(r.granted_units)}</td>
+      <td class="num">${r.relation === 'merged' ? (r.transferred_units == null ? '—' : displayCredits(r.transferred_units)) : ''}</td>
+      <td>${installRelation(r, u)}</td>
+      <td dir="ltr"><code>${r.network}</code></td>
+      <td>${r.country ? country(r.country) : '—'}</td>
+      <td>${r.ui_lang ? language(r.ui_lang) : '—'}</td>
+    </tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">没有扩展安装记录${u.kind === 'member' ? '（只在网页注册，或在记录安装之前合并）' : ''}。</p>`}
+</section>`;
+};
+
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, note }) {
   return layout({
     title: u.username,
     admin,
@@ -656,6 +693,8 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, note 
   ${subs.length ? html`<div class="table-wrap"><table><thead><tr><th>方案</th><th>状态</th><th>本期结束</th><th>Creem 订阅</th><th>更新</th></tr></thead>
   <tbody>${subs.map((s) => html`<tr><td>${s.plan || '—'}</td><td>${s.status}</td><td>${d(s.current_period_end)}</td><td dir="ltr"><code>${s.provider_subscription_id}</code></td><td>${dt(s.updated_at)}</td></tr>`)}</tbody></table></div>` : html`<p class="muted">无</p>`}
 </section>
+
+${installsSection(installs, u)}
 
 ${activityCharts(activityUI, activity, { action: `/users/${u.id}` })}
 <section class="card">

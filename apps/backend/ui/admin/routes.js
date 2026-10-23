@@ -11,6 +11,7 @@ import {
   audit, createAdminSession, findAdminByEmail, markVerified, revokeAdminSession, validateAdminSession,
 } from '../../src/admin/auth.js';
 import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.js';
+import { installHistory } from '../../src/admin/installs.js';
 import { apiUsageByUser, apiUsageForUser, overview } from '../../src/admin/reports.js';
 import { newTotpSecret, openSecret, otpauthUrl, sealSecret, verifyTotp } from '../../src/admin/totp.js';
 import { deleteUser, deletionSummary } from '../../src/admin/users.js';
@@ -253,7 +254,10 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
               (SELECT status FROM subscriptions s WHERE s.user_id = u.id ORDER BY updated_at DESC LIMIT 1) AS sub_status,
               (SELECT COALESCE(SUM(g.amount_units + COALESCE((SELECT SUM(x.amount_units) FROM credit_ledger x WHERE x.grant_id = g.id), 0)), 0)
                  FROM credit_ledger g WHERE g.user_id = u.id AND g.grant_id IS NULL AND g.amount_units > 0
-                   AND (g.expires_at IS NULL OR g.expires_at > now()))::text AS balance_units
+                   AND (g.expires_at IS NULL OR g.expires_at > now()))::text AS balance_units,
+              (SELECT COUNT(*) FROM guest_claims c
+                 WHERE c.guest_id = u.id OR c.merged_user_id = u.id OR c.linked_user_id = u.id
+                    OR c.linked_user_id IN (SELECT m.guest_id FROM guest_claims m WHERE m.merged_user_id = u.id))::int AS installs
        FROM users u
        WHERE ($1 = '' AND u.kind = 'member') OR u.email = $1 OR u.username LIKE $2 OR u.id::text = $1
        ORDER BY u.created_at DESC LIMIT 100`,
@@ -269,15 +273,16 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
     if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, activity, sessions, api] = await Promise.all([
+    const [state, subs, activity, sessions, api, installs] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period') }),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
       apiUsageForUser(pool, u.id, 30),
+      installHistory(pool, u.id),
     ]);
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, note: takeNote(c),
     }));
   });
 
