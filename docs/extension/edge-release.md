@@ -76,9 +76,11 @@ node apps/extension/store-assets/edge/build-listings.mjs --check
 - 正式 Edge ID 的账户授权、PKCE 回调及网页/扩展双向登出。本地测试 ID 的授权请求被后台拒绝，未为测试放开生产白名单。
 - 使用真实用户 Key 的 BYOK 请求，以及实验语音识别。
 - Partner Center 仍被浏览器工具的已保存权限或管理策略拦截；新版 ZIP、23 种商店语言和截图尚未补交，未提交审核。
-- 微软开发者身份验证、正式 ID 配置与新版公开隐私政策部署。
+- 微软开发者身份验证及正式 ID 配置。
 
-官网说明已移除过期的「整份 PDF 尚未在 Chrome 商店发布」提示，并补齐 11 种语言；当前仅生成受 Vercel 登录保护的预览，尚未切换正式域名。Chrome 商店虽已显示 2.1.0，但公开完整说明仍沿用早期自带 Key 版本（包含「没有开发者服务器」）；需要另行更新 Chrome 商店文案和数据披露，本次没有操作 Chrome 开发者后台。
+官网说明已移除过期的「整份 PDF 尚未在 Chrome 商店发布」提示，并补齐 11 种语言。[PR #1](https://github.com/csswork/AiTranslation/pull/1) 已于 2026-10-25 合并，官网与 VPS 两条生产部署均通过；[正式隐私页](https://www.huaci.app/privacy.html) 已更新。线上中英文隐私页、用户端及管理端 `/healthz`、官网读取登录状态的 CORS 响应均核验通过。没有修改正式扩展 ID 白名单。
+
+Chrome 商店虽已显示 2.1.0，但公开完整说明仍沿用早期自带 Key 版本（包含「没有开发者服务器」）；需要另行更新 Chrome 商店文案和数据披露，本次没有操作 Chrome 开发者后台。
 
 `dist/extension/edge-store-materials-2.1.0.zip` 包含公开文案、Logo、审核说明及两张来自 Edge 的功能截图，供后续填写商店使用；它是商店资料包，不能作为扩展安装包上传。扩展 ZIP 仍为 `ai-translation-edge-2.1.0.zip`。
 
