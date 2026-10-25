@@ -1,4 +1,11 @@
 {
+  "跟随浏览器": "Seguir o navegador",
+  "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "O comando não foi registrado com sucesso. Recarregue a extensão na página de gerenciamento de extensões do navegador.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "O navegador atual não oferece suporte ao reconhecimento de voz no dispositivo. Use uma versão compatível do navegador ou mude para o reconhecimento na nuvem.",
+  "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "Não é necessário baixar pacotes de idioma, mas o áudio do vídeo será enviado ao serviço de reconhecimento de voz do navegador: o Chrome usa o Google e o Microsoft Edge usa o Microsoft Azure.",
+  "连不上浏览器的云端语音识别服务，请检查网络连接。": "Não foi possível conectar ao serviço de reconhecimento de voz na nuvem do navegador. Verifique sua conexão de rede.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "O navegador atual não oferece suporte ao reconhecimento de voz no dispositivo. Use uma versão compatível do navegador ou mude para o reconhecimento na nuvem nas configurações.",
+  "浏览器不允许在这个页面运行扩展脚本。": "O navegador não permite que scripts de extensão sejam executados nesta página.",
   "AI 划词翻译 · 视频字幕": "Tradutor de IA · Legendas de vídeo",
   "AI 划词翻译 · 设置": "Tradutor de IA · Configurações",
   "AI 划词翻译": "Tradutor de IA",

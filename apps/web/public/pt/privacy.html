@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidade</h2>
-        <p class="updated">Última atualização: 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Texto original em Markdown</a></p>
+        <p class="updated">Última atualização: 2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original em Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -115,10 +115,10 @@
           <p><b>Não é enviado</b>: conteúdo de páginas que você não traduziu ativamente, histórico de navegação, cookies, dados de formulários. A extensão não escaneia nem envia nada automaticamente em segundo plano.</p>
 
           <h3>Processamento de áudio das legendas de vídeo experimentais</h3>
-          <p>As legendas de vídeo ficam desativadas por padrão. Quando ativadas, o áudio da aba atual é reconhecido localmente por padrão, podendo ser necessário baixar o pacote de idioma do navegador; somente quando você optar ativamente por "usar reconhecimento na nuvem" o áudio será enviado ao serviço de reconhecimento de fala do Google, aplicando-se a <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>. O texto das legendas reconhecido é então enviado à plataforma de tradução escolhida ou aos nossos servidores, conforme o modo de tradução selecionado. Não recebemos nem armazenamos vídeos ou áudios, e não oferecemos transcrição de áudio e vídeo hospedada.</p>
+          <p>As legendas de vídeo ficam desativadas por padrão. Quando ativadas, o áudio da aba atual é reconhecido localmente por padrão, podendo ser necessário baixar o pacote de idioma do navegador; somente quando você optar ativamente por «usar reconhecimento na nuvem» o áudio será enviado ao serviço de reconhecimento de voz do navegador: o Chrome usa o Google (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>) e o Microsoft Edge usa o Microsoft Azure (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Declaração de Privacidade da Microsoft</a>). O reconhecimento local aplica-se apenas a versões de navegador e idiomas compatíveis; a extensão não alterna automaticamente para o reconhecimento na nuvem. O texto das legendas reconhecido é então enviado à plataforma de tradução ou ao nosso servidor conforme o modo de tradução selecionado. Não recebemos nem armazenamos vídeo ou áudio e não oferecemos transcrição hospedada de áudio e vídeo.</p>
 
           <h3>Tradução do PDF completo</h3>
-          <p>Este recurso ainda não foi lançado com a versão da Chrome Web Store. Ao selecionar "Traduzir o PDF inteiro" no leitor de PDF integrado do Chrome, a extensão relê o PDF aberto nessa aba a partir do mesmo site, usando o cache do navegador e os cookies do próprio site, assim como o leitor; você também pode selecionar ou arrastar um arquivo na página de tradução de PDF. O arquivo é analisado e exibido apenas no seu dispositivo e não é enviado para nós nem para a plataforma de tradução; somente o texto extraído dele é enviado em lotes, conforme a tabela acima. A página renderizada e a tradução são mantidas apenas na memória dessa página e descartadas ao fechá-la. "Baixar PDF" é gerado pela janela de impressão do navegador, e o arquivo é salvo no local que você escolher.</p>
+          <p>Quando você seleciona «Traduzir todo o PDF» no leitor de PDF integrado do navegador, a extensão relê o PDF aberto nessa aba a partir do mesmo site, usando o cache do navegador e os cookies do próprio site, tal como o leitor; você também pode selecionar ou arrastar um arquivo na página de tradução de PDF. O arquivo é analisado e exibido apenas no seu dispositivo, não sendo enviado para nós nem para a plataforma de tradução; somente o texto extraído dele é enviado em lotes, conforme a tabela acima. A página renderizada e a tradução são mantidas apenas na memória dessa página e descartadas ao fechá-la. «Baixar PDF» é gerado pela janela de impressão do navegador, e o arquivo é salvo no local que você escolher.</p>
 
           <h3>Dados da conta</h3>
           <p>Após registrar-se ou fazer login, armazenamos:</p>
@@ -179,7 +179,7 @@
                 <tr><td><code>storage</code></td><td>Salva as configurações acima e o token de login localmente</td></tr>
                 <tr><td><code>scripting</code></td><td>Após instalar ou atualizar a extensão, injeta o script de tradução nas páginas já abertas; também injeta sob demanda quando você aciona a tradução</td></tr>
                 <tr><td><code>activeTab</code></td><td>Atua somente na aba em que você está trabalhando</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lê o áudio da aba atual somente quando você ativa a tradução de legendas de vídeo; reconhecimento local por padrão, enviado ao Google quando o reconhecimento na nuvem é escolhido ativamente</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Lê o áudio da aba atual somente quando você ativa a tradução de legendas de vídeo; por padrão o reconhecimento é local e, ao optar ativamente pelo reconhecimento na nuvem, o áudio é enviado ao serviço de voz do navegador (Google no Chrome, Microsoft Azure no Edge)</td></tr>
                 <tr>
                   <td>Acesso a <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code> e <code>api.deepl.com</code></td>
                   <td>Ao usar sua própria API Key, envia solicitações de tradução à plataforma que você escolher</td>
@@ -190,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Script de conteúdo em todos os sites</td>
-                  <td>O usuário pode selecionar texto ou indicar uma área de tradução em qualquer página web; o script de conteúdo fornece a entrada de tradução e filtra apenas seleções sem texto. No leitor de PDF integrado do Chrome, o PDF também é reconhecido para exibir a entrada «Traduzir todo o PDF»; o arquivo só é lido depois que você escolhe essa entrada</td>
+                  <td>O usuário pode selecionar texto ou indicar uma área de tradução em qualquer página; o script de conteúdo fornece o ponto de entrada de tradução e filtra apenas seleções sem texto. No leitor de PDF integrado do navegador, o PDF também é reconhecido para exibir o ponto de entrada «Traduzir todo o PDF», e o arquivo só é lido depois que você escolhe esse ponto de entrada</td>
                 </tr>
               </tbody>
             </table>

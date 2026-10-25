@@ -39,6 +39,7 @@
 - 不手改生成文件来代替修改语言源、模板或构建器。占位符和各语言目录必须通过构建检查。
 - 安装包只包含 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。开发期 `i18n/`、脚本、测试、商店素材、模型、依赖、环境文件、网站和后端不能进入扩展 ZIP。
 - 打包产物放在根目录 `dist/extension/`。
+- Edge 商店发布准备见 `docs/extension/edge-release.md`；`npm run package:edge` 生成独立 ZIP。商店包由打包器在临时目录显式标记生产环境，不依赖商店注入 `update_url`；源码直接加载仍连接本机。新的商店扩展 ID 必须加入后台明确白名单，不能放开任意 ID。
 
 ## Vercel 网站
 

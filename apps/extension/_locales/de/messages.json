@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Browser folgen"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Der Befehl wurde nicht erfolgreich registriert. Bitte lade die Erweiterung auf der Erweiterungsverwaltungsseite des Browsers neu."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Der aktuelle Browser unterstützt keine geräteinterne Spracherkennung. Bitte verwende eine unterstützte Browserversion oder wechsle zur Cloud-Erkennung."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Es ist kein Download eines Sprachpakets nötig, aber der Ton des Videos wird an den Spracherkennungsdienst des Browsers gesendet: Chrome verwendet Google, Microsoft Edge verwendet Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Keine Verbindung zum Cloud-Spracherkennungsdienst des Browsers möglich. Bitte überprüfe deine Netzwerkverbindung."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Der aktuelle Browser unterstützt keine geräteinterne Spracherkennung. Bitte verwende eine unterstützte Browserversion oder wechsle in den Einstellungen zur Cloud-Erkennung."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Der Browser erlaubt es nicht, Erweiterungsskripte auf dieser Seite auszuführen."
+  },
   "m_55a050e5c488b946": {
     "message": "KI-Übersetzer · Video-Untertitel"
   },

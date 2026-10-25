@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>隱私權政策</h2>
-        <p class="updated">最後更新：2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最後更新：2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -115,10 +115,10 @@
           <p><b>不會傳送</b>：你未主動翻譯的頁面內容、瀏覽歷史、Cookie、表單資料。擴充功能不會在背景自動掃描或上傳任何東西。</p>
 
           <h3>實驗影片字幕的聲音處理</h3>
-          <p>影片字幕預設關閉。開啟後，預設在本機辨識目前分頁的聲音，可能需要下載瀏覽器語言包；只有你主動選擇「改用雲端辨識」時，聲音才會傳送至 Google 的語音辨識服務，適用 <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隱私權政策</a>。辨識後的字幕文字再按所選翻譯模式傳送給翻譯平台或我們的伺服器。我們不接收或保存影片、音訊，不提供託管音視訊轉寫。</p>
+          <p>影片字幕預設關閉。開啟後，預設在本機辨識目前分頁的聲音，可能需要下載瀏覽器語言套件；只有你主動選擇「改用雲端辨識」時，聲音才會傳送到瀏覽器的語音辨識服務：Chrome 使用 Google（<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google 隱私權政策</a>），Microsoft Edge 使用 Microsoft Azure（<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft 隱私權聲明</a>）。本機辨識僅適用於受支援的瀏覽器版本與語言；擴充功能不會自動切換到雲端辨識。辨識後的字幕文字再依所選翻譯模式傳送給翻譯平台或我們的伺服器。我們不接收或保存影片、音訊，不提供託管音視訊轉寫。</p>
 
           <h3>整份 PDF 翻譯</h3>
-          <p>此功能尚未隨 Chrome 商店版本發佈。你在 Chrome 內建 PDF 閱讀器裡選擇「翻譯整個 PDF」時，擴充功能會從同一網站重新讀取該分頁裡開啟的 PDF，和閱讀器一樣使用瀏覽器快取與該網站自己的 Cookie；你也可以在 PDF 翻譯頁選擇或拖入檔案。檔案只在你的裝置上解析和顯示，不會上傳給我們或翻譯平台；只有從中提取的文字會按上表分批傳送。渲染出的頁面和譯文只保存在該頁面的記憶體裡，關閉後即丟棄。「下載 PDF」透過瀏覽器的列印視窗產生，檔案保存在你選擇的位置。</p>
+          <p>你在瀏覽器內建 PDF 閱讀器中選擇「翻譯整個 PDF」時，擴充功能會從同一網站重新讀取該分頁中開啟的 PDF，和閱讀器一樣使用瀏覽器快取與該網站自己的 Cookie；你也可以在 PDF 翻譯頁選擇或拖入檔案。檔案只在你的裝置上解析和顯示，不會上傳給我們或翻譯平台；只有從中擷取的文字會按上表分批傳送。渲染出的頁面和譯文只儲存在該頁面的記憶體裡，關閉後即丟棄。「下載 PDF」透過瀏覽器的列印視窗產生，檔案儲存在你選擇的位置。</p>
 
           <h3>帳戶資料</h3>
           <p>註冊或登入後，我們儲存：</p>
@@ -179,7 +179,7 @@
                 <tr><td><code>storage</code></td><td>在本機儲存上述設定與登入權杖</td></tr>
                 <tr><td><code>scripting</code></td><td>安裝或更新擴充功能後，向已經開啟的網頁補注入翻譯腳本；你觸發翻譯時也會按需注入</td></tr>
                 <tr><td><code>activeTab</code></td><td>僅作用於你目前操作的那個分頁</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時讀取目前分頁的聲音；預設本機辨識，主動選擇雲端辨識時傳送給 Google</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>僅在你開啟影片字幕翻譯時讀取目前分頁的聲音；預設本機辨識，主動選擇雲端辨識時傳送給瀏覽器語音服務（Chrome 為 Google，Edge 為 Microsoft Azure）</td></tr>
                 <tr>
                   <td>存取 <code>api.openai.com</code>、<code>api.deepseek.com</code>、<code>api-free.deepl.com</code>、<code>api.deepl.com</code></td>
                   <td>自帶 Key 時向你選定的平台傳送翻譯請求</td>
@@ -190,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>內容指令碼符合所有網站</td>
-                  <td>使用者可能在任意網頁選中文字或指定翻譯區域；內容腳本提供翻譯入口，僅過濾不含文字的選區。在 Chrome 內建 PDF 閱讀器中還會識別 PDF，以顯示「翻譯整個 PDF」入口，只有你選擇該入口後才讀取檔案</td>
+                  <td>使用者可能在任意網頁選取文字或指定翻譯區域；內容腳本提供翻譯入口，僅過濾不含文字的選取範圍。在瀏覽器內建 PDF 閱讀器中還會辨識 PDF，以顯示「翻譯整個 PDF」入口，只有你選擇該入口後才讀取檔案</td>
                 </tr>
               </tbody>
             </table>

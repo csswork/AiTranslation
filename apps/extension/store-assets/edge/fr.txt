@@ -1,0 +1,49 @@
+Traduisez pendant que vous lisez : sélectionnez du texte, faites un clic droit et voyez la traduction apparaître sur la page.
+
+AI Translator est une extension open source pour Microsoft Edge permettant de traduire le texte sélectionné, des régions de pages web, des images et des documents PDF entiers. Utilisez la traduction hébergée sans clé API, ou connectez votre propre compte OpenAI, DeepSeek ou DeepL.
+
+CINQ FAÇONS DE TRADUIRE
+
+• Texte sélectionné : traduisez du texte dans n'importe quelle langue, y compris le chinois, dans une fenêtre contextuelle déplaçable. Diffusez le résultat en continu lorsque cela est pris en charge, développez l'original pour comparer, copiez la traduction ou changez la langue cible.
+• Régions de pages web : ajoutez un bouton de traduction à une partie choisie d'un site web. Les règles sont enregistrées par domaine et vous pouvez restaurer le texte original.
+• Images : reconnaissez le texte et superposez le texte traduit sur l'image. Traduisez une région sélectionnée, ajustez localement les zones de texte et exportez l'image traduite. La reconnaissance nécessite un modèle capable de vision ; le mode hébergé inclut la reconnaissance d'images.
+• PDF entiers : ouvrez un PDF dans le navigateur et choisissez la traduction du document entier depuis le menu contextuel. Le PDF est analysé localement ; seul le texte extrait est envoyé pour traduction. Comparez l'original et la traduction, conservez la mise en page, les figures et les tableaux, puis imprimez ou enregistrez au format PDF. Les pages numérisées sans texte extractible ne sont pas prises en charge par la traduction du document entier.
+• Panneau de traduction : collez un passage dans une vue dédiée source-et-traduction, choisissez une langue source et une langue cible, et traduisez-le sans sélection sur une page web.
+
+24 LANGUES
+
+Choisissez le chinois simplifié, le chinois traditionnel, l'anglais, l'espagnol, le portugais, le français, l'allemand, l'italien, le néerlandais, le russe, l'ukrainien, le polonais, le turc, l'arabe, l'hébreu, le persan, l'hindi, le bengali, l'ourdou, l'indonésien, le vietnamien, le thaï, le japonais ou le coréen. La langue de l'interface, la langue source et la langue cible sont indépendantes. La prise en charge par les fournisseurs varie selon la langue et la fonctionnalité. Les interfaces de droite à gauche sont prises en charge.
+
+COMPTES, ESSAI GRATUIT ET ABONNEMENTS FACULTATIFS
+
+La traduction hébergée ne nécessite aucune clé API. Une nouvelle installation éligible dans un navigateur reçoit un essai invité ; la connexion avec un code de vérification par e-mail ou Google fournit un compte et des crédits d'essai supplémentaires. Les crédits d'essai n'expirent pas. Votre solde, votre abonnement et votre utilisation sont partagés avec le centre utilisateur à l'adresse https://app.huaci.app/.
+
+Une fois les crédits d'essai épuisés, la traduction hébergée nécessite un abonnement actif. Les forfaits actuels sont de 3.99 US$ par mois ou 29.99 US$ par an, plus les taxes applicables. Les abonnements se renouvellent automatiquement jusqu'à annulation. Annulez le renouvellement futur dans le centre utilisateur ; l'accès continue jusqu'à la fin de la période payée. L'utilisation hébergée est soumise à des limites d'utilisation raisonnable et de prévention des abus. Creem traite les paiements. Confirmez le prix et les conditions actuels sur la page des forfaits avant l'achat : https://app.huaci.app/plans.
+
+L'installation de l'extension et l'utilisation de votre propre clé API sont gratuites. Le fournisseur d'API que vous choisissez peut facturer séparément. Un abonnement à cette extension n'est pas requis pour le mode avec votre propre clé. DeepL ne fournit pas de reconnaissance d'images.
+
+SOUS-TITRES VIDÉO EXPÉRIMENTAUX
+
+Les sous-titres vidéo facultatifs sont désactivés par défaut. La reconnaissance vocale dépend de la version du navigateur, de l'appareil et de la langue et peut être indisponible. La reconnaissance locale est utilisée lorsqu'elle est prise en charge ; elle ne bascule jamais silencieusement vers la reconnaissance cloud. Ce n'est que si vous choisissez explicitement la reconnaissance cloud que l'audio de l'onglet est envoyé au service vocal du navigateur (Microsoft Azure dans Edge). Le texte reconnu suit le mode de traduction que vous avez sélectionné. Nous ne fournissons pas de transcription audio/vidéo hébergée. Cette fonctionnalité expérimentale ne garantit pas que chaque vidéo puisse être traduite.
+
+CONFIDENTIALITÉ
+
+• Les requêtes avec votre propre clé vont directement au fournisseur ou au point de terminaison HTTPS que vous avez choisi. Votre clé reste dans le stockage local de l'extension et n'est pas synchronisée via votre compte de navigateur.
+• Le mode hébergé envoie le texte ou les images demandés via notre serveur à un fournisseur de modèle. Notre serveur ne conserve pas le texte original, les images ni les traductions.
+• Les fichiers PDF entiers sont traités localement et ne sont pas téléversés.
+• Les comptes conservent l'adresse e-mail, le nom d'utilisateur et les enregistrements nécessaires à l'authentification, à l'utilisation, aux crédits et à la facturation. Aucune publicité, aucun SDK de suivi ni empreinte numérique d'appareil.
+• Tout le code exécutable de l'extension est inclus dans le paquet. Le code source est disponible sous GPL-3.0.
+
+POUR COMMENCER
+
+Installez, sélectionnez votre langue cible préférée, puis utilisez l'essai hébergé ou configurez votre propre clé API dans les paramètres. Sélectionnez du texte sur une page web ordinaire et choisissez « Traduire vers… » dans le menu contextuel. Raccourci clavier : Alt+Shift+T, ou Command+Shift+Y sur macOS.
+
+Les pages protégées par le navigateur et les boutiques d'extensions ne permettent pas les superpositions de traduction. Les demandes de texte unique sont limitées à 6,000 caractères ; la traduction de PDF et de régions utilise des lots. Les points de terminaison d'API personnalisés nécessitent HTTPS et l'autorisation pour l'hôte choisi.
+
+Projet indépendant ; non affilié à Microsoft, OpenAI, DeepSeek ou DeepL. Les noms identifient des services compatibles et restent les marques de leurs propriétaires.
+
+Site web : https://huaci.app/
+Assistance : support@huaci.app
+Source et problèmes : https://github.com/csswork/AiTranslation
+Politique de confidentialité : https://huaci.app/privacy.html
+Conditions et remboursements : https://huaci.app/terms.html

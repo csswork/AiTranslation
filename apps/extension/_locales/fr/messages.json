@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Suivre le navigateur"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "La commande n'a pas été enregistrée correctement. Veuillez recharger l'extension sur la page de gestion des extensions du navigateur."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Le navigateur actuel ne prend pas en charge la reconnaissance vocale sur l'appareil. Veuillez utiliser une version de navigateur compatible ou passer à la reconnaissance cloud."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Aucun téléchargement de pack de langues n'est nécessaire, mais l'audio de la vidéo sera envoyé au service de reconnaissance vocale du navigateur : Chrome utilise Google et Microsoft Edge utilise Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Impossible de se connecter au service de reconnaissance vocale cloud du navigateur. Veuillez vérifier votre connexion réseau."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Le navigateur actuel ne prend pas en charge la reconnaissance vocale sur l'appareil. Veuillez utiliser une version de navigateur compatible ou passer à la reconnaissance cloud dans les paramètres."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Le navigateur n'autorise pas les scripts d'extension à s'exécuter sur cette page."
+  },
   "m_55a050e5c488b946": {
     "message": "Traducteur IA · Sous-titres vidéo"
   },

@@ -1,0 +1,49 @@
+Terjemahkan saat Anda membaca: pilih teks, klik kanan, dan lihat terjemahan muncul di halaman.
+
+AI Translator adalah ekstensi Microsoft Edge sumber terbuka untuk menerjemahkan teks yang dipilih, area halaman web, gambar, dan seluruh dokumen PDF. Gunakan terjemahan terkelola tanpa kunci API, atau hubungkan akun OpenAI, DeepSeek, atau DeepL Anda sendiri.
+
+LIMA CARA MENERJEMAHKAN
+
+• Teks yang dipilih: terjemahkan teks dalam bahasa apa pun, termasuk bahasa Mandarin, dalam popup yang dapat dipindahkan. Alirkan hasilnya jika didukung, perluas teks asli untuk perbandingan, salin terjemahan, atau ubah bahasa target.
+• Area halaman web: tambahkan tombol terjemahan ke bagian situs web yang dipilih. Aturan disimpan per domain, dan Anda dapat memulihkan teks asli.
+• Gambar: kenali teks dan timpa teks terjemahan pada gambar. Terjemahkan area yang dipilih, sesuaikan kotak teks secara lokal, dan ekspor gambar yang diterjemahkan. Pengenalan memerlukan model yang mendukung visi; mode terkelola mencakup pengenalan gambar.
+• Seluruh PDF: buka PDF di browser dan pilih terjemahan seluruh dokumen dari menu konteks. PDF diurai secara lokal; hanya teks yang diekstrak yang dikirim untuk diterjemahkan. Bandingkan asli dan terjemahan, pertahankan tata letak halaman, gambar, dan tabel, serta cetak atau simpan sebagai PDF. Halaman hasil pindai tanpa teks yang dapat diekstrak tidak didukung oleh terjemahan seluruh dokumen.
+• Panel terjemahan: tempelkan bagian teks ke tampilan sumber-dan-terjemahan khusus, pilih bahasa sumber dan target, lalu terjemahkan tanpa memilih di halaman web.
+
+24 BAHASA
+
+Pilih Tionghoa Sederhana, Tionghoa Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thai, Jepang, atau Korea. Bahasa antarmuka, bahasa sumber, dan target terjemahan bersifat independen. Dukungan penyedia bervariasi menurut bahasa dan fitur. Antarmuka kanan-ke-kiri didukung.
+
+AKUN, UJI COBA GRATIS, DAN LANGGANAN OPSIONAL
+
+Terjemahan terkelola tidak memerlukan kunci API. Instalasi browser baru yang memenuhi syarat menerima uji coba tamu; masuk dengan kode verifikasi email atau Google memberikan akun dan kredit uji coba tambahan. Kredit uji coba tidak kedaluwarsa. Saldo, langganan, dan penggunaan Anda dibagikan dengan pusat pengguna di https://app.huaci.app/.
+
+Setelah kredit uji coba habis, terjemahan terkelola memerlukan langganan aktif. Paket saat ini adalah US$3.99 per bulan atau US$29.99 per tahun, ditambah pajak yang berlaku. Langganan diperpanjang otomatis hingga dibatalkan. Batalkan perpanjangan mendatang di pusat pengguna; akses berlanjut hingga periode berbayar berakhir. Penggunaan terkelola tunduk pada batas penggunaan wajar dan pencegahan penyalahgunaan. Creem memproses pembayaran. Konfirmasikan harga dan ketentuan saat ini di halaman paket sebelum membeli: https://app.huaci.app/plans.
+
+Memasang ekstensi dan menggunakan kunci API Anda sendiri gratis. Penyedia API pilihan Anda dapat mengenakan biaya terpisah. Langganan ekstensi ini tidak diperlukan untuk mode bawa-kunci-sendiri. DeepL tidak menyediakan pengenalan gambar.
+
+TAKARIR VIDEO EKSPERIMENTAL
+
+Takarir video opsional nonaktif secara default. Pengenalan ucapan bergantung pada versi browser, perangkat, dan bahasa dan mungkin tidak tersedia. Pengenalan lokal digunakan jika didukung; tidak pernah beralih diam-diam ke pengenalan cloud. Hanya jika Anda secara eksplisit memilih pengenalan cloud, audio tab dikirim ke layanan ucapan browser (Microsoft Azure di Edge). Teks yang dikenali mengikuti mode terjemahan yang Anda pilih. Kami tidak menyediakan transkripsi audio/video terkelola. Fitur eksperimental ini bukan jaminan bahwa setiap video dapat diterjemahkan.
+
+PRIVASI
+
+• Permintaan bawa-kunci-sendiri langsung menuju ke penyedia pilihan Anda atau endpoint HTTPS. Kunci Anda tetap di penyimpanan lokal ekstensi dan tidak disinkronkan melalui akun browser Anda.
+• Mode terkelola mengirim teks atau gambar yang diminta melalui server kami ke penyedia model. Server kami tidak menyimpan teks asli, gambar, atau terjemahan.
+• Seluruh file PDF diproses secara lokal dan tidak diunggah.
+• Akun menyimpan alamat email, nama pengguna, dan catatan yang diperlukan untuk autentikasi, penggunaan, kredit, dan penagihan. Tidak ada iklan, SDK pelacakan, atau pengambilan sidik jari perangkat.
+• Semua kode ekstensi yang dapat dieksekusi disertakan dalam paket. Sumber tersedia di bawah GPL-3.0.
+
+MEMULAI
+
+Pasang, pilih bahasa target yang Anda inginkan, dan gunakan uji coba terkelola atau konfigurasikan kunci API Anda sendiri di pengaturan. Pilih teks di halaman web biasa dan pilih “Terjemahkan ke…” dari menu konteks. Pintasan keyboard: Alt+Shift+T, atau Command+Shift+Y di macOS.
+
+Halaman yang dilindungi browser dan toko ekstensi tidak mengizinkan hamparan terjemahan. Permintaan teks tunggal dibatasi hingga 6,000 karakter; terjemahan PDF dan area menggunakan batch. Endpoint API kustom memerlukan HTTPS dan izin untuk host yang dipilih.
+
+Proyek independen; tidak berafiliasi dengan Microsoft, OpenAI, DeepSeek, atau DeepL. Nama-nama tersebut mengidentifikasi layanan yang kompatibel dan tetap merupakan merek dagang pemiliknya.
+
+Situs web: https://huaci.app/
+Dukungan: support@huaci.app
+Sumber dan masalah: https://github.com/csswork/AiTranslation
+Kebijakan privasi: https://huaci.app/privacy.html
+Ketentuan dan pengembalian dana: https://huaci.app/terms.html

@@ -1,0 +1,49 @@
+## Übersetzen beim Lesen: Text auswählen, rechtsklicken und die Übersetzung auf der Seite erscheinen sehen.
+
+AI Translator ist eine Open-Source-Erweiterung für Microsoft Edge zum Übersetzen von ausgewähltem Text, Webseitenbereichen, Bildern und ganzen PDF-Dokumenten. Nutze gehostete Übersetzung ohne API-Schlüssel oder verbinde dein eigenes OpenAI-, DeepSeek- oder DeepL-Konto.
+
+FÜNF ARTEN ZU ÜBERSETZEN
+
+• Ausgewählter Text: Übersetze Text in jeder Sprache, einschließlich Chinesisch, in einem verschiebbaren Popup. Streame das Ergebnis, wo unterstützt, klappe das Original zum Vergleich aus, kopiere die Übersetzung oder ändere die Zielsprache.
+• Webseitenbereiche: Füge einen Übersetzungsbutton zu einem ausgewählten Teil einer Website hinzu. Regeln werden pro Domain gespeichert, und du kannst den Originaltext wiederherstellen.
+• Bilder: Erkenne Text und lege übersetzten Text über das Bild. Übersetze einen ausgewählten Bereich, passe Textboxen lokal an und exportiere das übersetzte Bild. Die Erkennung erfordert ein vision-fähiges Modell; der gehostete Modus umfasst Bilderkennung.
+• Ganze PDFs: Öffne ein PDF im Browser und wähle die Ganzdokument-Übersetzung aus dem Kontextmenü. Das PDF wird lokal geparst; nur extrahierter Text wird zur Übersetzung gesendet. Vergleiche Original und Übersetzung, behalte Seitenlayout, Abbildungen und Tabellen bei und drucke oder speichere als PDF. Gescannte Seiten ohne extrahierbaren Text werden von der Ganzdokument-Übersetzung nicht unterstützt.
+• Übersetzungsbereich: Füge eine Passage in eine dedizierte Ansicht für Quelle und Übersetzung ein, wähle eine Quell- und Zielsprache und übersetze sie ohne Webseitenauswahl.
+
+24 SPRACHEN
+
+Wähle Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch oder Koreanisch. Oberflächensprache, Quellsprache und Übersetzungsziel sind unabhängig voneinander. Die Anbieterunterstützung variiert je nach Sprache und Funktion. Rechts-nach-links-Oberflächen werden unterstützt.
+
+KONTEN, KOSTENLOSE TESTVERSION UND OPTIONALE ABONNEMENTS
+
+Gehostete Übersetzung erfordert keinen API-Schlüssel. Eine neue berechtigte Browserinstallation erhält eine Gast-Testversion; die Anmeldung mit einem E-Mail-Bestätigungscode oder Google stellt ein Konto und zusätzliche Testguthaben bereit. Testguthaben verfallen nicht. Dein Guthaben, Abonnement und deine Nutzung werden mit dem Nutzerzentrum unter https://app.huaci.app/ geteilt.
+
+Nachdem die Testguthaben aufgebraucht sind, erfordert gehostete Übersetzung ein aktives Abonnement. Aktuelle Tarife sind US$3.99 pro Monat oder US$29.99 pro Jahr, zuzüglich anwendbarer Steuern. Abonnements verlängern sich automatisch, bis sie gekündigt werden. Kündige die zukünftige Verlängerung im Nutzerzentrum; der Zugang bleibt bis zum Ende des bezahlten Zeitraums bestehen. Die gehostete Nutzung unterliegt Grenzen zur angemessenen Nutzung und Missbrauchsprävention. Creem wickelt Zahlungen ab. Bestätige den aktuellen Preis und die Bedingungen auf der Tarifseite vor dem Kauf: https://app.huaci.app/plans.
+
+Die Installation der Erweiterung und die Nutzung deines eigenen API-Schlüssels sind kostenlos. Dein ausgewählter API-Anbieter kann separat berechnen. Ein Abonnement dieser Erweiterung ist für den Bring-your-own-key-Modus nicht erforderlich. DeepL bietet keine Bilderkennung.
+
+EXPERIMENTELLE VIDEO-UNTERTITEL
+
+Optionale Video-Untertitel sind standardmäßig deaktiviert. Die Spracherkennung hängt von Browserversion, Gerät und Sprache ab und ist möglicherweise nicht verfügbar. Lokale Erkennung wird verwendet, wenn unterstützt; sie wechselt nie stillschweigend zur Cloud-Erkennung. Nur wenn du ausdrücklich Cloud-Erkennung wählst, wird Tab-Audio an den Browser-Sprachdienst (Microsoft Azure in Edge) gesendet. Erkannter Text folgt deinem ausgewählten Übersetzungsmodus. Wir bieten keine gehostete Audio-/Video-Transkription an. Diese experimentelle Funktion ist keine Garantie, dass jedes Video übersetzt werden kann.
+
+DATENSCHUTZ
+
+• Bring-your-own-key-Anfragen gehen direkt an deinen ausgewählten Anbieter oder HTTPS-Endpunkt. Dein Schlüssel bleibt im lokalen Speicher der Erweiterung und wird nicht über dein Browserkonto synchronisiert.
+• Der gehostete Modus sendet angeforderten Text oder Bilder über unseren Server an einen Modellanbieter. Unser Server speichert weder Originaltext, Bilder noch Übersetzungen.
+• Ganze PDF-Dateien werden lokal verarbeitet und nicht hochgeladen.
+• Konten speichern die E-Mail-Adresse, den Benutzernamen und die für Authentifizierung, Nutzung, Guthaben und Abrechnung erforderlichen Aufzeichnungen. Keine Werbung, Tracking-SDKs oder Geräte-Fingerprinting.
+• Der gesamte ausführbare Erweiterungscode ist im Paket enthalten. Der Quellcode ist unter GPL-3.0 verfügbar.
+
+ERSTE SCHRITTE
+
+Installiere, wähle deine bevorzugte Zielsprache und nutze die gehostete Testversion oder konfiguriere deinen eigenen API-Schlüssel in den Einstellungen. Wähle Text auf einer gewöhnlichen Webseite aus und wähle „Übersetzen nach…“ aus dem Kontextmenü. Tastenkürzel: Alt+Shift+T oder Command+Shift+Y unter macOS.
+
+Browsergeschützte Seiten und Erweiterungs-Stores erlauben keine Übersetzungs-Overlays. Einzelne Textanfragen sind auf 6,000 Zeichen begrenzt; PDF- und Bereichsübersetzung verwenden Stapelverarbeitung. Benutzerdefinierte API-Endpunkte erfordern HTTPS und die Berechtigung für den gewählten Host.
+
+Unabhängiges Projekt; nicht mit Microsoft, OpenAI, DeepSeek oder DeepL verbunden. Namen identifizieren kompatible Dienste und bleiben Marken ihrer Eigentümer.
+
+Website: https://huaci.app/
+Support: support@huaci.app
+Quellcode und Probleme: https://github.com/csswork/AiTranslation
+Datenschutzrichtlinie: https://huaci.app/privacy.html
+Bedingungen und Rückerstattungen: https://huaci.app/terms.html

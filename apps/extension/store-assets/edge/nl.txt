@@ -1,0 +1,49 @@
+Vertaal terwijl u leest: selecteer tekst, klik met de rechtermuisknop en zie de vertaling op de pagina verschijnen.
+
+AI Translator is een opensource-extensie voor Microsoft Edge voor het vertalen van geselecteerde tekst, delen van webpagina's, afbeeldingen en volledige PDF-documenten. Gebruik gehoste vertaling zonder API-sleutel, of koppel uw eigen OpenAI-, DeepSeek- of DeepL-account.
+
+VIJF MANIEREN OM TE VERTALEN
+
+• Geselecteerde tekst: vertaal tekst in elke taal, inclusief Chinees, in een verplaatsbare pop-up. Stream het resultaat waar ondersteund, klap het origineel uit ter vergelijking, kopieer de vertaling of wijzig de doeltaal.
+• Delen van webpagina's: voeg een vertaalknop toe aan een gekozen deel van een website. Regels worden per domein opgeslagen en u kunt de oorspronkelijke tekst herstellen.
+• Afbeeldingen: herken tekst en leg de vertaalde tekst over de afbeelding heen. Vertaal een geselecteerd gebied, pas tekstvakken lokaal aan en exporteer de vertaalde afbeelding. Herkenning vereist een model met beeldvermogen; de gehoste modus omvat beeldherkenning.
+• Volledige PDF's: open een PDF in de browser en kies volledige-documentvertaling in het contextmenu. De PDF wordt lokaal verwerkt; alleen geëxtraheerde tekst wordt ter vertaling verzonden. Vergelijk het origineel en de vertaling, behoud de paginalay-out, figuren en tabellen, en print of sla op als PDF. Gescande pagina's zonder extraheerbare tekst worden niet ondersteund door volledige-documentvertaling.
+• Vertaalpaneel: plak een passage in een aparte bron-en-vertaling-weergave, kies een bron- en doeltaal en vertaal deze zonder selectie op een webpagina.
+
+24 TALEN
+
+Kies Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thai, Japans of Koreaans. Interfacetaal, brontaal en vertaaldoel zijn onafhankelijk. Providerondersteuning verschilt per taal en functie. Interfaces van rechts naar links worden ondersteund.
+
+ACCOUNTS, GRATIS PROEFPERIODE EN OPTIONELE ABONNEMENTEN
+
+Gehoste vertaling vereist geen API-sleutel. Een nieuwe in aanmerking komende browserinstallatie ontvangt een gastproefperiode; aanmelden met een e-mailverificatiecode of Google biedt een account en extra proeftegoed. Proeftegoed verloopt niet. Uw saldo, abonnement en gebruik worden gedeeld met het gebruikerscentrum op https://app.huaci.app/.
+
+Nadat het proeftegoed is verbruikt, vereist gehoste vertaling een actief abonnement. De huidige plannen zijn US$3.99 per maand of US$29.99 per jaar, plus toepasselijke belastingen. Abonnementen worden automatisch verlengd totdat ze worden opgezegd. Zeg toekomstige verlenging op in het gebruikerscentrum; toegang blijft bestaan tot het betaalde periode eindigt. Gehost gebruik is onderworpen aan redelijk-gebruik- en misbruikpreventielimieten. Creem verwerkt betalingen. Bevestig de actuele prijs en voorwaarden op de plannenpagina vóór aankoop: https://app.huaci.app/plans.
+
+Het installeren van de extensie en het gebruik van uw eigen API-sleutel zijn gratis. Uw gekozen API-provider kan afzonderlijk kosten in rekening brengen. Een abonnement op deze extensie is niet vereist voor de bring-your-own-key-modus. DeepL biedt geen beeldherkenning.
+
+EXPERIMENTELE VIDEOONDERTITELS
+
+Optionele videondertitels zijn standaard uitgeschakeld. Spraakherkenning is afhankelijk van browserversie, apparaat en taal en is mogelijk niet beschikbaar. Lokale herkenning wordt gebruikt waar ondersteund; er wordt nooit stilzwijgend overgeschakeld naar cloudherkenning. Alleen als u expliciet cloudherkenning kiest, wordt tabaudio naar de browsersprachtdienst verzonden (Microsoft Azure in Edge). Herkende tekst volgt uw geselecteerde vertaalmodus. Wij bieden geen gehoste audio-/videotranscriptie. Deze experimentele functie is geen garantie dat elke video kan worden vertaald.
+
+PRIVACY
+
+• Bring-your-own-key-verzoeken gaan rechtstreeks naar uw gekozen provider of HTTPS-eindpunt. Uw sleutel blijft in de lokale extensieopslag en wordt niet gesynchroniseerd via uw browseraccount.
+• De gehoste modus verzendt gevraagde tekst of afbeeldingen via onze server naar een modelprovider. Onze server bewaart geen originele tekst, afbeeldingen of vertalingen.
+• Volledige PDF-bestanden worden lokaal verwerkt en niet geüpload.
+• Accounts bewaren het e-mailadres, de gebruikersnaam en gegevens die nodig zijn voor authenticatie, gebruik, tegoed en facturering. Geen advertenties, tracking-SDK's of apparaatvingerafdrukken.
+• Alle uitvoerbare extensiecode is opgenomen in het pakket. Bron beschikbaar onder GPL-3.0.
+
+AAN DE SLAG
+
+Installeer, selecteer uw voorkeurdoeltaal en gebruik de gehoste proefperiode of configureer uw eigen API-sleutel in de instellingen. Selecteer tekst op een gewone webpagina en kies "Vertalen naar…" in het contextmenu. Sneltoets: Alt+Shift+T, of Command+Shift+Y op macOS.
+
+Door de browser beschermde pagina's en extensiestores staan geen vertaaloverlays toe. Enkele tekstverzoeken zijn beperkt tot 6,000 tekens; PDF- en deelvertaling gebruiken batches. Aangepaste API-eindpunten vereisen HTTPS en toestemming voor de gekozen host.
+
+Onafhankelijk project; niet verbonden aan Microsoft, OpenAI, DeepSeek of DeepL. Namen identificeren compatibele diensten en blijven handelsmerken van hun eigenaren.
+
+Website: https://huaci.app/
+Ondersteuning: support@huaci.app
+Bron en issues: https://github.com/csswork/AiTranslation
+Privacybeleid: https://huaci.app/privacy.html
+Voorwaarden en terugbetalingen: https://huaci.app/terms.html

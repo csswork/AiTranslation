@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidad</h2>
-        <p class="updated">Última actualización: 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
+        <p class="updated">Última actualización: 2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -115,10 +115,10 @@
           <p><b>No se envía</b>: contenido de páginas que no hayas traducido manualmente, historial de navegación, cookies ni datos de formularios. La extensión no escanea ni sube nada automáticamente en segundo plano.</p>
 
           <h3>Procesamiento de audio de los subtítulos de vídeo experimentales</h3>
-          <p>Los subtítulos de vídeo están desactivados de forma predeterminada. Al activarlos, el sonido de la pestaña actual se reconoce de forma predeterminada en el dispositivo local, lo que puede requerir la descarga del paquete de idioma del navegador; solo cuando seleccionas activamente «usar reconocimiento en la nube», el sonido se envía al servicio de reconocimiento de voz de Google, sujeto a la <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad de Google</a>. El texto de los subtítulos reconocidos se envía después a la plataforma de traducción o a nuestro servidor según el modo de traducción seleccionado. No recibimos ni almacenamos vídeo ni audio, ni ofrecemos transcripción alojada de audio y vídeo.</p>
+          <p>Los subtítulos de vídeo están desactivados de forma predeterminada. Al activarlos, de forma predeterminada se reconoce localmente el audio de la pestaña actual, lo que puede requerir la descarga del paquete de idioma del navegador; solo cuando seleccionas manualmente «usar reconocimiento en la nube» se envía el audio al servicio de reconocimiento de voz del navegador: Chrome usa Google (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad de Google</a>), Microsoft Edge usa Microsoft Azure (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Declaración de privacidad de Microsoft</a>). El reconocimiento local solo está disponible en versiones de navegador e idiomas compatibles; la extensión no cambia automáticamente al reconocimiento en la nube. El texto de los subtítulos reconocidos se envía después a la plataforma de traducción o a nuestro servidor según el modo de traducción seleccionado. No recibimos ni almacenamos vídeo ni audio, y no ofrecemos transcripción alojada de audio y vídeo.</p>
 
           <h3>Traducción de PDF completo</h3>
-          <p>Esta función aún no se ha publicado con la versión de Chrome Web Store. Cuando seleccionas «Traducir todo el PDF» en el lector de PDF integrado de Chrome, la extensión vuelve a leer el PDF abierto en esa pestaña desde el mismo sitio web, usando la caché del navegador y las cookies propias de ese sitio, igual que el lector; también puedes seleccionar o arrastrar un archivo en la página de traducción de PDF. El archivo solo se procesa y muestra en tu dispositivo y no se sube a nosotros ni a la plataforma de traducción; solo el texto extraído se envía por lotes según la tabla anterior. La página renderizada y la traducción solo se conservan en la memoria de esa página y se descartan al cerrarla. «Descargar PDF» se genera mediante la ventana de impresión del navegador y el archivo se guarda en la ubicación que elijas.</p>
+          <p>Cuando seleccionas «Traducir todo el PDF» en el visor de PDF integrado del navegador, la extensión vuelve a leer desde el mismo sitio web el PDF abierto en esa pestaña y, al igual que el visor, utiliza la caché del navegador y las cookies propias de ese sitio; también puedes seleccionar o arrastrar un archivo en la página de traducción de PDF. El archivo solo se analiza y se muestra en tu dispositivo, no se sube a nosotros ni a la plataforma de traducción; únicamente el texto extraído de él se envía por lotes según la tabla anterior. La página renderizada y la traducción solo se conservan en la memoria de esa página y se descartan al cerrarla. «Descargar PDF» se genera mediante la ventana de impresión del navegador y el archivo se guarda en la ubicación que elijas.</p>
 
           <h3>Datos de la cuenta</h3>
           <p>Tras registrarte o iniciar sesión, guardamos:</p>
@@ -179,7 +179,7 @@
                 <tr><td><code>storage</code></td><td>Guarda la configuración anterior y el token de sesión en el dispositivo</td></tr>
                 <tr><td><code>scripting</code></td><td>Tras instalar o actualizar la extensión, se inyecta el script de traducción en las páginas ya abiertas; también se inyecta bajo demanda cuando activas la traducción</td></tr>
                 <tr><td><code>activeTab</code></td><td>Actúa solo en la pestaña en la que estás trabajando</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Solo lee el sonido de la pestaña actual cuando activas la traducción de subtítulos de vídeo; de forma predeterminada el reconocimiento es local, y se envía a Google cuando se selecciona activamente el reconocimiento en la nube</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Solo lee el audio de la pestaña actual cuando activas la traducción de subtítulos de vídeo; de forma predeterminada el reconocimiento es local y, si eliges manualmente el reconocimiento en la nube, se envía al servicio de voz del navegador (Google en Chrome, Microsoft Azure en Edge)</td></tr>
                 <tr>
                   <td>Acceso a <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Con tu propia API Key, envía solicitudes de traducción a la plataforma que elijas</td>
@@ -190,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Script de contenido en todos los sitios</td>
-                  <td>El usuario puede seleccionar texto o indicar un área de traducción en cualquier página web; el script de contenido ofrece el punto de entrada de traducción y solo filtra selecciones sin texto. En el lector de PDF integrado de Chrome también se reconoce el PDF para mostrar el punto de entrada «Traducir todo el PDF»; el archivo solo se lee después de que elijas ese punto de entrada</td>
+                  <td>El usuario puede seleccionar texto o designar un área de traducción en cualquier página web; el script de contenido proporciona el punto de entrada de traducción y solo filtra las selecciones que no contienen texto. En el visor de PDF integrado del navegador también se detecta el PDF para mostrar el punto de entrada «Traducir todo el PDF»; el archivo solo se lee después de que elijas ese punto de entrada</td>
                 </tr>
               </tbody>
             </table>

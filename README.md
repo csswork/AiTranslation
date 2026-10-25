@@ -56,6 +56,7 @@ npm run check:web             # 检查网站多语言产物
 npm run i18n:extension        # 本地刷新扩展文案
 npm run check:extension       # 检查扩展多语言产物
 npm run package:extension     # dist/extension/ai-translation-<version>.zip
+npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip（Edge 发布准备）
 npm run test:backend          # 后端测试（需要 PostgreSQL 的 huaci_test 库）
 npm run migrate:backend       # 执行后端数据库迁移
 npm run dev:backend           # http://localhost:8787 用户管理界面

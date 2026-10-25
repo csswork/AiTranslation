@@ -33,6 +33,7 @@ for (const locale of locales) {
   for (const [source, id] of Object.entries(ids)) {
     const message = catalog[source];
     if (typeof message !== 'string' || !message.trim()) throw new Error(`Missing ${locale.id}: ${source}`);
+    if (locale.id === 'bn' && /\p{Script=Devanagari}/u.test(message)) throw new Error(`Hindi text in Bengali catalog: ${source}. Refresh the local translations.`);
     if (slots(source) !== slots(message)) throw new Error(`Placeholder mismatch ${locale.id}: ${source}`);
     const placeholders = {};
     const nativeMessage = message.replace(/\$(\d+)/g, (_, n) => {

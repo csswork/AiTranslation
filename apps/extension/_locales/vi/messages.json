@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Theo trình duyệt"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Lệnh chưa được đăng ký thành công. Vui lòng tải lại tiện ích trên trang quản lý tiện ích của trình duyệt."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Vui lòng dùng phiên bản trình duyệt được hỗ trợ hoặc chuyển sang nhận dạng trên đám mây."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Không cần tải gói ngôn ngữ, nhưng âm thanh của video sẽ được gửi đến dịch vụ nhận dạng giọng nói của trình duyệt: Chrome sử dụng Google, Microsoft Edge sử dụng Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Không thể kết nối với dịch vụ nhận dạng giọng nói trên đám mây của trình duyệt. Vui lòng kiểm tra kết nối mạng."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Vui lòng dùng phiên bản trình duyệt được hỗ trợ hoặc chuyển sang nhận dạng trên đám mây trong phần cài đặt."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Trình duyệt không cho phép tập lệnh tiện ích chạy trên trang này."
+  },
   "m_55a050e5c488b946": {
     "message": "Trình dịch AI · Phụ đề video"
   },

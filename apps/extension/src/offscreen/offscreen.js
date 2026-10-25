@@ -1,6 +1,6 @@
 /**
  * offscreen 文档：截取标签页的声音 → 语音识别 → 断好句送回页面。
- * 默认用设备端识别（声音不出浏览器）；设置里打开「云端识别」时改用 Chrome 的云端识别。
+ * 默认用设备端识别（声音不出浏览器）；仅用户主动打开「云端识别」时使用浏览器的云端服务。
  *
  * 为什么放在这里：
  *   - Service Worker 没有 getUserMedia / AudioContext / SpeechRecognition；
@@ -48,7 +48,7 @@
           ? new VideoError(t("云端识别不支持$1", [session.name]))
           : langPackError('unavailable', session.name);
       case 'network':
-        return new VideoError(t("连不上云端语音识别服务（需要能访问 Google）"));
+        return new VideoError(t("连不上浏览器的云端语音识别服务，请检查网络连接。"));
       case 'audio-capture':
         return new VideoError(t("读不到标签页的声音"));
       case 'not-allowed':
@@ -183,7 +183,7 @@
       } else {
         if (!Speech.supported()) {
           throw new VideoError(
-            t("当前 Chrome 不支持设备端语音识别，请升级到最新版，或在设置里改用云端识别"),
+            t("当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别"),
             'open-options'
           );
         }

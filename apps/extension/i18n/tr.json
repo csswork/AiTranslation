@@ -1,4 +1,11 @@
 {
+  "跟随浏览器": "Tarayıcıyı takip et",
+  "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "Komut başarıyla kaydedilemedi. Lütfen tarayıcının uzantı yönetimi sayfasından uzantıyı yeniden yükleyin.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "Mevcut tarayıcı cihaz üzerinde konuşma tanımayı desteklemiyor. Lütfen desteklenen bir tarayıcı sürümü kullanın veya bulut tanımaya geçin.",
+  "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "Dil paketi indirmeye gerek yok, ancak videonun sesi tarayıcının konuşma tanıma hizmetine gönderilir: Chrome Google'ı, Microsoft Edge ise Microsoft Azure'u kullanır.",
+  "连不上浏览器的云端语音识别服务，请检查网络连接。": "Tarayıcının bulut konuşma tanıma hizmetine bağlanılamıyor. Lütfen ağ bağlantınızı kontrol edin.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "Mevcut tarayıcı cihaz üzerinde konuşma tanımayı desteklemiyor. Lütfen desteklenen bir tarayıcı sürümü kullanın veya ayarlardan bulut tanımaya geçin.",
+  "浏览器不允许在这个页面运行扩展脚本。": "Tarayıcı bu sayfada uzantı betiklerinin çalıştırılmasına izin vermiyor.",
   "AI 划词翻译 · 视频字幕": "AI çevirmen · Video altyazıları",
   "AI 划词翻译 · 设置": "AI çevirmen · Ayarlar",
   "AI 划词翻译": "AI çevirmen",

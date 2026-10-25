@@ -1,0 +1,49 @@
+Translate while you read: select text, right-click, and see the translation appear on the page.
+
+AI Translator is an open-source Microsoft Edge extension for translating selected text, webpage regions, images and whole PDF documents. Use hosted translation without an API key, or connect your own OpenAI, DeepSeek or DeepL account.
+
+FIVE WAYS TO TRANSLATE
+
+• Selected text: translate text in any language, including Chinese, in a movable popup. Stream the result where supported, expand the original for comparison, copy the translation, or change the target language.
+• Webpage regions: add a translation button to a chosen part of a website. Rules are saved by domain, and you can restore the original text.
+• Images: recognize text and overlay translated text on the image. Translate a selected region, adjust text boxes locally, and export the translated image. Recognition requires a vision-capable model; hosted mode includes image recognition.
+• Whole PDFs: open a PDF in the browser and choose whole-document translation from the context menu. The PDF is parsed locally; only extracted text is sent for translation. Compare the original and translation, retain page layout, figures and tables, and print or save as PDF. Scanned pages without extractable text are not supported by whole-document translation.
+• Translation panel: paste a passage into a dedicated source-and-translation view, choose a source and target language, and translate it without a webpage selection.
+
+24 LANGUAGES
+
+Choose Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese or Korean. Interface language, source language and translation target are independent. Provider support varies by language and feature. Right-to-left interfaces are supported.
+
+ACCOUNTS, FREE TRIAL AND OPTIONAL SUBSCRIPTIONS
+
+Hosted translation needs no API key. A new eligible browser installation receives a guest trial; signing in with an email verification code or Google provides an account and additional trial credits. Trial credits do not expire. Your balance, subscription and usage are shared with the user center at https://app.huaci.app/.
+
+After trial credits run out, hosted translation requires an active subscription. Current plans are US$3.99 per month or US$29.99 per year, plus applicable taxes. Subscriptions renew automatically until cancelled. Cancel future renewal in the user center; access continues until the paid period ends. Hosted use is subject to reasonable-use and abuse-prevention limits. Creem processes payments. Confirm the current price and terms on the plans page before purchase: https://app.huaci.app/plans.
+
+Installing the extension and using your own API key are free. Your selected API provider may charge separately. A subscription to this extension is not required for bring-your-own-key mode. DeepL does not provide image recognition.
+
+EXPERIMENTAL VIDEO CAPTIONS
+
+Optional video captions are off by default. Speech recognition depends on browser version, device and language and may be unavailable. Local recognition is used when supported; it never silently switches to cloud recognition. Only if you explicitly choose cloud recognition is tab audio sent to the browser speech service (Microsoft Azure in Edge). Recognized text follows your selected translation mode. We do not provide hosted audio/video transcription. This experimental feature is not a guarantee that every video can be translated.
+
+PRIVACY
+
+• Bring-your-own-key requests go directly to your selected provider or HTTPS endpoint. Your key stays in local extension storage and is not synced through your browser account.
+• Hosted mode sends requested text or images through our server to a model provider. Our server does not retain original text, images or translations.
+• Whole PDF files are processed locally and are not uploaded.
+• Accounts retain the email address, username and records needed for authentication, usage, credits and billing. No advertising, tracking SDKs or device fingerprinting.
+• All executable extension code is included in the package. Source is available under GPL-3.0.
+
+GETTING STARTED
+
+Install, select your preferred target language, and use the hosted trial or configure your own API key in settings. Select text on an ordinary webpage and choose “Translate to…” from the context menu. Keyboard shortcut: Alt+Shift+T, or Command+Shift+Y on macOS.
+
+Browser-protected pages and extension stores do not allow translation overlays. Single text requests are limited to 6,000 characters; PDF and region translation use batches. Custom API endpoints require HTTPS and permission for the chosen host.
+
+Independent project; not affiliated with Microsoft, OpenAI, DeepSeek or DeepL. Names identify compatible services and remain their owners' trademarks.
+
+Website: https://huaci.app/
+Support: support@huaci.app
+Source and issues: https://github.com/csswork/AiTranslation
+Privacy policy: https://huaci.app/privacy.html
+Terms and refunds: https://huaci.app/terms.html

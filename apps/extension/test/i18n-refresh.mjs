@@ -42,5 +42,26 @@ try {
   assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'i18n/fr.json'))).关闭, 'Fermer');
   await run(4);
   assert.equal(calls.length, 3, 'Repeated builds reuse the refreshed translations');
-  console.log('Local refresh: no-op cache, content edits and new UI messages passed');
+  write('i18n/locales.json', [{ id: 'en', prompt: 'English' }, { id: 'fr', prompt: 'French' }, { id: 'bn', prompt: 'Bengali' }]);
+  write('i18n/bn.json', { 翻译: 'अनुवाद', 关闭: 'বন্ধ করুন' });
+  const snapshots = JSON.parse(fs.readFileSync(path.join(dir, 'i18n/source-snapshot.json')));
+  snapshots.bn = { 翻译: 'Translate text', 关闭: 'Close' };
+  write('i18n/source-snapshot.json', snapshots);
+  let bengaliCalls = 0;
+  globalThis.fetch = async (_url, options) => {
+    const body = JSON.parse(options.body);
+    assert.ok(body.messages[0].content.includes('into Bengali'));
+    const items = JSON.parse(body.messages[1].content);
+    assert.deepEqual(items.map((item) => item.source), ['翻译'], 'Keep valid Bengali cached');
+    bengaliCalls++;
+    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({
+      translations: items.map(({ id }) => ({ id, text: bengaliCalls === 1 ? 'अनुवाद' : 'অনুবাদ করুন' })),
+    }) } }] }) };
+  };
+  await run(5);
+  assert.equal(bengaliCalls, 2, 'Repair cached Hindi and reject a Hindi model response before retrying');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'i18n/bn.json'))).翻译, 'অনুবাদ করুন');
+  await run(6);
+  assert.equal(bengaliCalls, 2, 'Repaired Bengali is cached on later builds');
+  console.log('Local refresh: cache, content edits, new messages and Bengali script repair passed');
 } finally { fs.rmSync(workspace, { recursive: true, force: true }); }

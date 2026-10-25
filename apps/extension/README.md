@@ -20,6 +20,8 @@ A Chrome extension for translating selected text, page regions, images, whole PD
 
 The options page opens automatically on first install.
 
+Microsoft Edge distribution is being prepared, not yet published. `npm run package:edge` from the repository root builds a separate production ZIP. See [Edge release](../../docs/extension/edge-release.md) for store registration, backend ID allowlisting, review materials and browser validation. Loading this source directory directly continues to use local development services.
+
 ## Configure
 
 Pick a provider on the options page and paste in an API key:

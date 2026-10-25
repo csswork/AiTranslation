@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Follow browser"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "The command was not registered successfully. Please reload the extension on the browser's extension management page."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "The browser does not allow extension scripts to run on this page."
+  },
   "m_55a050e5c488b946": {
     "message": "AI Translator · Video Captions"
   },
