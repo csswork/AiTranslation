@@ -32,7 +32,7 @@
 | `ADMIN_REQUIRE_2FA` | 无需设置 | 生产环境始终要求管理端二步验证；只在本地开发用来打开 |
 | `ADMIN_ORIGIN` | 建议 `https://admin.huaci.app` | 管理员界面地址，必须与 `APP_ORIGIN` 主机名不同；不设则不提供管理端。反向代理需把该主机名也转发到本服务 |
 | `SESSION_DAYS` | 默认 365 | 用户端与扩展滚动保留一年的登录状态，扩展使用时同步续期授权网页会话；网页访问或官网查询状态时刷新用户端 Cookie。已有环境若显式设为 `30`，需改为 `365` 并重启服务。管理端独立固定为登录验证成功后 30 天 |
-| `EXTENSION_IDS` | 生产必填 | 允许登录和调用扩展接口的 Chrome 扩展 ID，逗号分隔；生产环境为空时拒绝所有扩展，开发环境为空时接受任意扩展 |
+| `EXTENSION_IDS` | 生产必填 | 允许登录和调用扩展接口的 Chrome / Edge 商店扩展 ID，逗号分隔；新增 Edge ID 时保留 Chrome ID。必须是实际 32 位 a–p 扩展 ID，不是 Partner Center 产品 GUID。生产环境为空时拒绝所有扩展，开发环境为空时接受任意扩展 |
 | `HOSTED_DEEPSEEK_API_KEY` | 托管翻译必填 | 托管文字翻译与图片识别的模型 Key，只在服务端；不设则托管翻译返回 503 |
 | `HOSTED_MODEL` / `HOSTED_BASE_URL` | 默认 `deepseek-flash` / `https://api.deepseek.com` | 托管翻译主力模型与接口地址 |
 | `HOSTED_FALLBACK_API_KEY` | 建议设置 | 文字翻译的备用模型 Key（OpenAI 兼容，默认 Fireworks）；主力失败或超时时改用。图片识别固定使用 DeepSeek Flash，不向未验证视觉能力的备用模型发送图片 |

@@ -832,7 +832,7 @@
       "index.html"
     ]
   },
-  "默认在本机识别，需浏览器支持并下载语言包；也可主动切换到 Google 云端识别，此时声音会发给 Google。识别准确度和兼容性仍有限，不建议依赖它处理重要内容。托管服务只接收识别后的文字，不提供音视频上传与转写。": {
+  "默认在本机识别，需浏览器支持并下载语言包；也可主动切换到浏览器的云端识别，此时声音会发给浏览器语音服务（Chrome 为 Google，Edge 为 Microsoft Azure）。识别准确度和兼容性仍有限，不建议依赖它处理重要内容。托管服务只接收识别后的文字，不提供音视频上传与转写。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1294,7 +1294,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-22 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-10-25 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1518,14 +1518,14 @@
       "privacy.html"
     ]
   },
-  "视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 <a class=\"link\" href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 隐私政策</a>。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。": {
+  "视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到浏览器的语音识别服务：Chrome 使用 Google（<a class=\"link\" href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 隐私政策</a>），Microsoft Edge 使用 Microsoft Azure（<a class=\"link\" href=\"https://privacy.microsoft.com/privacystatement\" target=\"_blank\" rel=\"noopener\">Microsoft 隐私声明</a>）。本机识别仅适用于受支持的浏览器版本和语言；扩展不会自动切换到云端识别。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "privacy.html"
     ]
   },
-  "此功能尚未随 Chrome 商店版本发布。你在 Chrome 内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。": {
+  "你在浏览器内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1798,7 +1798,7 @@
       "privacy.html"
     ]
   },
-  "仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google": {
+  "仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给浏览器语音服务（Chrome 为 Google，Edge 为 Microsoft Azure）": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1840,7 +1840,7 @@
       "privacy.html"
     ]
   },
-  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件": {
+  "用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在浏览器内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件": {
     "kind": "text",
     "tag": "td",
     "pages": [

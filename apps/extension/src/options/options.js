@@ -319,7 +319,7 @@
 
   function renderBehavior() {
     const auto = document.createElement('option');
-    auto.value = 'auto'; auto.textContent = t('跟随 Chrome');
+    auto.value = 'auto'; auto.textContent = t('跟随浏览器');
     el.uiLanguage.replaceChildren(auto, ...S.targetList().map((item) => {
       const option = document.createElement('option');
       option.value = item.id; option.textContent = item.nativeLabel; return option;
@@ -359,7 +359,7 @@
       const commands = await chrome.commands.getAll();
       const found = commands.find((item) => item.name === 'translate-selection');
       if (!found) {
-        show(t("未注册"), t("命令没有注册成功，到 chrome://extensions 重新加载一次扩展。"));
+        show(t("未注册"), t("命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。"));
         return;
       }
       show(
@@ -423,7 +423,7 @@
       return;
     }
     if (!Speech.supported()) {
-      showLangState(t("当前 Chrome 不支持设备端语音识别，请升级到最新版，或改用云端识别。"), 'err');
+      showLangState(t("当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。"), 'err');
       return;
     }
     const lang = settings.videoLang;
@@ -634,7 +634,7 @@
 
   // 快捷键本身只能在 Chrome 自己的页面里改
   el.editShortcut.addEventListener('click', () => {
-    chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+    chrome.tabs.create({ url: AITrEnv.extensionsShortcuts });
   });
 
   // 设置完切回这个标签页时，自动刷新显示，省得手动刷新

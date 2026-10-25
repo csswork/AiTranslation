@@ -15,6 +15,7 @@
     "i18n:extension:watch": "node apps/extension/scripts/sync-extension-i18n.mjs --watch",
     "check:extension": "node apps/extension/scripts/build-extension-i18n.mjs --check",
     "package:extension": "bash package.sh",
+    "package:edge": "bash apps/extension/package.sh edge",
     "dev:web": "python3 -m http.server 8788 --directory apps/web/public",
     "dev:backend": "npm --prefix apps/backend run dev",
     "migrate:backend": "npm --prefix apps/backend run migrate"

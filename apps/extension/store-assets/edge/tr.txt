@@ -1,0 +1,49 @@
+Okurken çevir: metni seçin, sağ tıklayın ve çevirinin sayfada görünmesini izleyin.
+
+AI Translator, seçili metni, web sayfası bölgelerini, görselleri ve tüm PDF belgelerini çevirmek için açık kaynaklı bir Microsoft Edge uzantısıdır. API anahtarı olmadan barındırılan çeviriyi kullanın veya kendi OpenAI, DeepSeek ya da DeepL hesabınızı bağlayın.
+
+BEŞ ÇEVİRİ YÖNTEMİ
+
+• Seçili metin: Çince dahil herhangi bir dildeki metni taşınabilir bir açılır pencerede çevirin. Desteklendiği yerlerde sonucu akış halinde alın, karşılaştırma için orijinali genişletin, çeviriyi kopyalayın veya hedef dili değiştirin.
+• Web sayfası bölgeleri: Bir web sitesinin seçilen bir bölümüne çeviri düğmesi ekleyin. Kurallar alan adına göre kaydedilir ve orijinal metni geri yükleyebilirsiniz.
+• Görseller: Metni tanıyın ve çevrilmiş metni görselin üzerine yerleştirin. Seçili bir bölgeyi çevirin, metin kutularını yerel olarak ayarlayın ve çevrilmiş görseli dışa aktarın. Tanıma, görsel yeteneği olan bir model gerektirir; barındırılan mod görsel tanımayı içerir.
+• Tüm PDF'ler: Bir PDF'yi tarayıcıda açın ve bağlam menüsünden tüm belge çevirisini seçin. PDF yerel olarak ayrıştırılır; yalnızca çıkarılan metin çeviri için gönderilir. Orijinali ve çeviriyi karşılaştırın, sayfa düzenini, şekilleri ve tabloları koruyun ve yazdırın ya da PDF olarak kaydedin. Çıkarılabilir metni olmayan taranmış sayfalar tüm belge çevirisi tarafından desteklenmez.
+• Çeviri paneli: Bir pasajı özel bir kaynak ve çeviri görünümüne yapıştırın, bir kaynak ve hedef dil seçin ve web sayfası seçimi olmadan çevirin.
+
+24 DİL
+
+Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, İspanyolca, Portekizce, Fransızca, Almanca, İtalyanca, Hollandaca, Rusça, Ukraynaca, Lehçe, Türkçe, Arapça, İbranice, Farsça, Hintçe, Bengalce, Urduca, Endonezce, Vietnamca, Tayca, Japonca veya Korece seçin. Arayüz dili, kaynak dil ve çeviri hedefi birbirinden bağımsızdır. Sağlayıcı desteği dile ve özelliğe göre değişir. Sağdan sola arayüzler desteklenir.
+
+HESAPLAR, ÜCRETSİZ DENEME VE İSTEĞE BAĞLI ABONELİKLER
+
+Barındırılan çeviri API anahtarı gerektirmez. Yeni ve uygun bir tarayıcı kurulumu bir misafir denemesi alır; e-posta doğrulama kodu veya Google ile oturum açmak bir hesap ve ek deneme kredileri sağlar. Deneme kredilerinin süresi dolmaz. Bakiyeniz, aboneliğiniz ve kullanımınız https://app.huaci.app/ adresindeki kullanıcı merkeziyle paylaşılır.
+
+Deneme kredileri tükendikten sonra barındırılan çeviri etkin bir abonelik gerektirir. Mevcut planlar ayda 3.99 ABD doları veya yılda 29.99 ABD dolarıdır ve geçerli vergiler eklenir. Abonelikler iptal edilene kadar otomatik olarak yenilenir. Gelecekteki yenilemeyi kullanıcı merkezinden iptal edin; erişim ödenen dönemin sonuna kadar devam eder. Barındırılan kullanım, makul kullanım ve kötüye kullanımı önleme sınırlarına tabidir. Ödemeleri Creem işler. Satın almadan önce güncel fiyatı ve koşulları planlar sayfasında doğrulayın: https://app.huaci.app/plans.
+
+Uzantıyı yüklemek ve kendi API anahtarınızı kullanmak ücretsizdir. Seçtiğiniz API sağlayıcısı ayrıca ücret alabilir. Kendi anahtarını getir modu için bu uzantıya abonelik gerekmez. DeepL görsel tanıma sunmaz.
+
+DENEYSEL VİDEO ALTYAZILARI
+
+İsteğe bağlı video altyazıları varsayılan olarak kapalıdır. Konuşma tanıma tarayıcı sürümüne, cihaza ve dile bağlıdır ve kullanılamayabilir. Desteklendiğinde yerel tanıma kullanılır; hiçbir zaman sessizce bulut tanımaya geçmez. Yalnızca açıkça bulut tanımayı seçerseniz sekme sesi tarayıcı konuşma hizmetine (Edge'de Microsoft Azure) gönderilir. Tanınan metin, seçtiğiniz çeviri modunu izler. Barındırılan ses/video transkripsiyonu sunmuyoruz. Bu deneysel özellik, her videonun çevrilebileceğinin garantisi değildir.
+
+GİZLİLİK
+
+• Kendi anahtarını getir istekleri doğrudan seçtiğiniz sağlayıcıya veya HTTPS uç noktasına gider. Anahtarınız yerel uzantı depolamasında kalır ve tarayıcı hesabınız üzerinden senkronize edilmez.
+• Barındırılan mod, istenen metni veya görselleri sunucumuz aracılığıyla bir model sağlayıcısına gönderir. Sunucumuz orijinal metni, görselleri veya çevirileri saklamaz.
+• Tüm PDF dosyaları yerel olarak işlenir ve yüklenmez.
+• Hesaplar, kimlik doğrulama, kullanım, krediler ve faturalandırma için gereken e-posta adresini, kullanıcı adını ve kayıtları saklar. Reklam, izleme SDK'ları veya cihaz parmak izi alma yoktur.
+• Tüm yürütülebilir uzantı kodu pakete dahildir. Kaynak kodu GPL-3.0 altında mevcuttur.
+
+BAŞLARKEN
+
+Yükleyin, tercih ettiğiniz hedef dili seçin ve barındırılan denemeyi kullanın veya ayarlarda kendi API anahtarınızı yapılandırın. Sıradan bir web sayfasında metni seçin ve bağlam menüsünden "Şuna çevir…" seçeneğini seçin. Klavye kısayolu: Alt+Shift+T veya macOS'ta Command+Shift+Y.
+
+Tarayıcı tarafından korunan sayfalar ve uzantı mağazaları çeviri katmanlarına izin vermez. Tek metin istekleri 6,000 karakterle sınırlıdır; PDF ve bölge çevirisi toplu işlemler kullanır. Özel API uç noktaları HTTPS ve seçilen ana bilgisayar için izin gerektirir.
+
+Bağımsız proje; Microsoft, OpenAI, DeepSeek veya DeepL ile bağlantılı değildir. Adlar uyumlu hizmetleri tanımlar ve sahiplerinin ticari markaları olarak kalır.
+
+Web sitesi: https://huaci.app/
+Destek: support@huaci.app
+Kaynak ve sorunlar: https://github.com/csswork/AiTranslation
+Gizlilik politikası: https://huaci.app/privacy.html
+Koşullar ve iadeler: https://huaci.app/terms.html

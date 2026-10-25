@@ -29,6 +29,8 @@ const snapshot = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapsh
 const requested = arg('--locale');
 const queue = locales.filter((l) => !['en', 'zh-Hans'].includes(l.id) && (!requested || requested === l.id));
 const slots = (text) => [...new Set(text.match(/\$\d+/g) || [])].sort().join(',');
+// Bengali and Hindi are different languages and scripts; reject the historical Hindi fallback in bn.
+const wrongScript = (text, locale) => locale.id === 'bn' && /\p{Script=Devanagari}/u.test(text || '');
 async function translate(items, locale) {
   if (!key) throw new Error('New or changed messages need DEEPSEEK_API_KEY in .env.local or the environment.');
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -54,7 +56,7 @@ async function translate(items, locale) {
     const map = new Map((parsed.translations || []).map((item) => [item.id, item.text]));
     return items.map((item) => {
       const value = map.get(item.id);
-      return typeof value === 'string' && value.trim() && slots(value) === slots(item.source) ? value.trim() : null;
+      return typeof value === 'string' && value.trim() && slots(value) === slots(item.source) && !wrongScript(value, locale) ? value.trim() : null;
     });
   }
 }
@@ -74,7 +76,7 @@ async function run(locale) {
   const file = path.join(root, `i18n/${locale.id}.json`);
   const old = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
   const catalog = Object.fromEntries(Object.entries(old).filter(([key]) => Object.hasOwn(english, key)));
-  const todo = Object.entries(english).filter(([key]) => !catalog[key] || slots(key) !== slots(catalog[key]) || (snapshot[locale.id]?.[key] !== undefined && snapshot[locale.id][key] !== english[key]));
+  const todo = Object.entries(english).filter(([key]) => !catalog[key] || wrongScript(catalog[key], locale) || slots(key) !== slots(catalog[key]) || (snapshot[locale.id]?.[key] !== undefined && snapshot[locale.id][key] !== english[key]));
   for (let start = 0; start < todo.length; start += 45) {
     const items = todo.slice(start, start + 45).map(([source, en], id) => ({ id, source, english: en }));
     const values = await translate(items, locale);

@@ -17,12 +17,14 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     sent: [], // 发给 offscreen 的消息
     pdfTabs: [], // chrome.storage.session 里记录的 PDF 标签页
     activeTab: null,
+    createdTabs: [],
   };
 
   let pendingError = null;
   let pendingRead = false;
 
   const runtime = {
+    getURL: (path) => `chrome-extension://test-extension/${path}`,
     onInstalled: { addListener: (f) => (state.listeners.installed = f) },
     onStartup: { addListener: (f) => (state.listeners.startup = f) },
     onMessage: { addListener: (f) => (state.listeners.message = f) },
@@ -68,7 +70,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
         if (!state.items.has(id)) throw new Error('No such context menu item');
         Object.assign(state.items.get(id), props);
       },
-      onClicked: { addListener: () => {} },
+      onClicked: { addListener: (f) => (state.listeners.clicked = f) },
     },
     storage: {
       local: {
@@ -84,7 +86,8 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
         set: async (patch) => { state.pdfTabs = patch.pdfTabs; },
       },
     },
-    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab }] : []), sendMessage: async () => ({ ok: true }),
+    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7 }] : []), sendMessage: async () => ({ ok: true }),
+            create: async (properties) => { state.createdTabs.push(properties); return { id: 100 }; },
             connect: () => ({ postMessage(){}, disconnect(){}, onDisconnect:{addListener(){}}, onMessage:{addListener(){}} }),
             onRemoved: { addListener: () => {} },
             onActivated: { addListener: (f) => (state.listeners.activated = f) } },
@@ -306,6 +309,35 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
     '关闭总开关时要通知 offscreen 停掉所有字幕'
   );
   console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭），关掉时停掉在播字幕');
+}
+
+/* Edge PDF menu events can contain TAB_ID_NONE, rather than the outer browser tab. */
+{
+  const { state } = boot();
+  await settle();
+  const clicked = (tab) => state.listeners.clicked({ menuItemId: 'ai-translate-pdf' }, tab);
+  await clicked({ id: 0, index: 4, windowId: 3 });
+  assert.deepEqual(state.createdTabs.pop(), {
+    url: 'chrome-extension://test-extension/src/pdf/pdf.html?tab=0', openerTabId: 0, index: 5, windowId: 3,
+  }, 'A valid tab, including ID zero, keeps its exact source and window');
+
+  state.activeTab = 7;
+  state.listeners.message({ type: 'page-kind', pdf: true }, { tab: { id: 7, active: true }, frameId: 0 }, () => {});
+  await settle();
+  await clicked({ id: -1, index: -1, windowId: -1 });
+  assert.deepEqual(state.createdTabs.pop(), {
+    url: 'chrome-extension://test-extension/src/pdf/pdf.html?tab=7', openerTabId: 7, index: 3, windowId: 7,
+  }, 'An Edge PDF guest resolves to the active, previously identified outer PDF tab');
+
+  state.activeTab = 8;
+  await clicked({ id: -1 });
+  assert.deepEqual(state.createdTabs.pop(), { url: 'chrome-extension://test-extension/src/pdf/pdf.html' },
+    'An unrelated active page is never used as a PDF source');
+  state.activeTab = null;
+  await clicked(undefined);
+  assert.deepEqual(state.createdTabs.pop(), { url: 'chrome-extension://test-extension/src/pdf/pdf.html' },
+    'A missing browser tab opens the local file picker without an invalid opener');
+  console.log('✓ Edge PDF 负数标签 ID、精确源标签及安全文件选择回退');
 }
 
 console.log('\n全部通过');

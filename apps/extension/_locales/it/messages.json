@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Segui il browser"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Il comando non è stato registrato correttamente. Ricarica l'estensione dalla pagina di gestione delle estensioni del browser."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Il browser corrente non supporta il riconoscimento vocale sul dispositivo. Usa una versione del browser supportata oppure passa al riconoscimento cloud."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Non è necessario scaricare pacchetti linguistici, ma l'audio del video verrà inviato al servizio di riconoscimento vocale del browser: Chrome usa Google, Microsoft Edge usa Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Impossibile connettersi al servizio di riconoscimento vocale cloud del browser. Controlla la connessione di rete."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Il browser corrente non supporta il riconoscimento vocale sul dispositivo. Usa una versione del browser supportata oppure passa al riconoscimento cloud nelle impostazioni."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Il browser non consente l'esecuzione di script di estensione su questa pagina."
+  },
   "m_55a050e5c488b946": {
     "message": "Traduttore AI · Sottotitoli video"
   },

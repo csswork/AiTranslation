@@ -1,0 +1,33 @@
+{
+  "version": "2.1.0",
+  "website": "https://huaci.app/",
+  "supportEmail": "support@huaci.app",
+  "supportUrl": "https://github.com/csswork/AiTranslation/issues",
+  "privacyPolicy": "https://huaci.app/privacy.html",
+  "terms": "https://huaci.app/terms.html",
+  "category": "Productivity",
+  "visibility": "Public",
+  "singlePurpose": "Translate content explicitly requested by the user: selected text, webpage regions, text in images, locally extracted PDF text, and optional experimental video captions, into the user's chosen language.",
+  "permissions": {
+    "contextMenus": "Provide user-triggered translation commands for selected text, page regions, images, PDF documents and optional video captions. Commands are available in the relevant context only.",
+    "storage": "Store translation settings, language preferences, user-created region rules, bring-your-own-provider API keys and extension session credentials locally. API keys and session credentials are not synced through the browser account.",
+    "scripting": "Inject the packaged translation interface when the user requests a translation and restore packaged content-script functionality after an extension update. Scripts read the requested content and render translation overlays; no remotely hosted executable code is injected.",
+    "activeTab": "Access the active tab after an explicit extension action or keyboard command to obtain the selected text, open translation tools and authorize current-tab audio capture for optional video captions.",
+    "tabCapture": "Capture audio from the current tab only when the user explicitly starts experimental video captions. This does not capture the microphone. Recognition is local when supported. Only if the user enables cloud recognition is audio sent to Edge's browser speech service (Microsoft Azure). Recognized text is translated with the chosen provider or hosted service. Capture stops when captions are stopped.",
+    "offscreen": "Run a packaged offscreen document for the optional experimental video caption feature. The Manifest V3 service worker has no DOM or media APIs, so this document consumes the user-authorized tab audio stream and runs browser speech recognition. It is created with USER_MEDIA and does not display ads or execute remote code.",
+    "hostPermissions": "Content scripts on ordinary websites render translation controls and apply the user's saved region rules. The extension reads content for translation when requested by the user; it does not collect a browsing history. HTTPS connections to app.huaci.app provide accounts, trial credits and hosted translation. Provider requests go to the selected OpenAI, DeepSeek or DeepL API, or to a custom HTTPS endpoint explicitly configured by the user. Account synchronization scripts are restricted to the production account site and official website. Browser-protected pages remain inaccessible."
+  },
+  "remoteCode": false,
+  "remoteCodeExplanation": "All JavaScript, PDF parsing code, fonts and character maps used by the extension are bundled. Translation API responses are data and are not evaluated as executable code. Browser-managed speech recognition is a browser service, not downloaded extension code.",
+  "dataPractices": {
+    "personalInformation": "Account email and username; Google sign-in retains only the provider account identifier and verified email.",
+    "authenticationInformation": "Extension sessions and provider API keys are handled as authentication credentials. Provider API keys stay in local extension storage and are sent only to the configured provider.",
+    "websiteContent": "Requested text, images, extracted PDF text and recognized captions are processed for translation. Whole PDF files stay local. Audio is processed locally unless cloud recognition is explicitly enabled.",
+    "billingInformation": "Creem processes payment details directly. The backend retains payment object identifiers, status, amounts, currency and billing country, not card numbers.",
+    "location": "Hosted requests retain only the two-letter country code supplied by the network provider. Free-trial abuse prevention stores a one-way keyed hash of the network address rather than the address itself. No GPS, precise location or device fingerprinting.",
+    "usage": "Request counts, character counts, credits, subscription and abuse-prevention records are needed to provide hosted translation. No advertising, tracking SDKs or device fingerprinting. Our backend does not retain original text, images or translations.",
+    "instruction": "Match these facts to the exact category definitions shown in Partner Center. Do not select a no-data-collected declaration or state that every request goes directly to a third-party provider."
+  },
+  "testingNotes": "Version 2.1.0. Install in current desktop Microsoft Edge. A welcome page confirms guest trial credits on an eligible first installation. Open the extension settings to choose a target language and keep the hosted provider selected. An eligible installation can test text and image translation using guest trial credits without sign-in or API setup. On an ordinary webpage, select an English sentence and choose Translate to…; check streamed output, original comparison, target switching and copy. Right-click an image with text to test image translation. To test PDF translation, open a text-based PDF in the browser and use the whole-PDF context-menu command; only extracted text is sent. Account sign-in opens https://app.huaci.app/ in a regular tab. It uses email verification codes sent to an email address controlled by the tester, or Google OAuth; there is no shared reusable password. Signing in grants an account trial where eligible and confirms extension authorization in the same tab. Test logout in either the extension or the linked account page. A paid subscription is optional for basic testing; plans, renewal terms and cancellation are shown in the user center. Bring-your-own-key mode is also available and its API costs are charged by the chosen provider. Video captions are explicitly experimental, off by default, and depend on browser speech support; do not treat local recognition as supported on every Edge version. Cloud recognition is an explicit opt-in and uses the browser speech service. Contact support@huaci.app if trial access or any review-specific access needs assistance.",
+  "releaseNotes": "Initial Microsoft Edge release based on version 2.1.0: multilingual text, webpage region, image and whole-PDF translation; hosted trial and optional subscriptions; bring-your-own-key providers; production account isolation and Edge shortcut settings. Video captions remain optional and experimental."
+}

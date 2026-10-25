@@ -1,0 +1,49 @@
+Traduci mentre leggi: seleziona il testo, fai clic con il tasto destro e visualizza la traduzione sulla pagina.
+
+AI Translator è un'estensione open source per Microsoft Edge per tradurre testo selezionato, aree di pagine web, immagini e interi documenti PDF. Usa la traduzione ospitata senza chiave API oppure collega il tuo account OpenAI, DeepSeek o DeepL.
+
+CINQUE MODI PER TRADURRE
+
+• Testo selezionato: traduci testo in qualsiasi lingua, incluso il cinese, in un popup spostabile. Trasmetti il risultato in streaming dove supportato, espandi l'originale per il confronto, copia la traduzione o cambia la lingua di destinazione.
+• Aree di pagine web: aggiungi un pulsante di traduzione a una parte scelta di un sito web. Le regole vengono salvate per dominio e puoi ripristinare il testo originale.
+• Immagini: riconosci il testo e sovrapponi il testo tradotto all'immagine. Traduci un'area selezionata, regola le caselle di testo localmente ed esporta l'immagine tradotta. Il riconoscimento richiede un modello con capacità visive; la modalità ospitata include il riconoscimento delle immagini.
+• Interi PDF: apri un PDF nel browser e scegli la traduzione dell'intero documento dal menu contestuale. Il PDF viene analizzato localmente; solo il testo estratto viene inviato per la traduzione. Confronta l'originale e la traduzione, mantieni il layout delle pagine, figure e tabelle, e stampa o salva come PDF. Le pagine scansionate senza testo estraibile non sono supportate dalla traduzione dell'intero documento.
+• Pannello di traduzione: incolla un passaggio in una vista dedicata con sorgente e traduzione, scegli una lingua di origine e una di destinazione e traducilo senza selezionare una pagina web.
+
+24 LINGUE
+
+Scegli cinese semplificato, cinese tradizionale, inglese, spagnolo, portoghese, francese, tedesco, italiano, olandese, russo, ucraino, polacco, turco, arabo, ebraico, persiano, hindi, bengalese, urdu, indonesiano, vietnamita, thai, giapponese o coreano. La lingua dell'interfaccia, la lingua di origine e la lingua di destinazione della traduzione sono indipendenti. Il supporto del provider varia in base alla lingua e alla funzionalità. Le interfacce da destra a sinistra sono supportate.
+
+ACCOUNT, PROVA GRATUITA E ABBONAMENTI OPZIONALI
+
+La traduzione ospitata non richiede una chiave API. Una nuova installazione idonea del browser riceve una prova come ospite; accedendo con un codice di verifica via email o con Google si ottiene un account e crediti di prova aggiuntivi. I crediti di prova non scadono. Il tuo saldo, abbonamento e utilizzo sono condivisi con il centro utenti su https://app.huaci.app/.
+
+Dopo l'esaurimento dei crediti di prova, la traduzione ospitata richiede un abbonamento attivo. I piani attuali sono 3.99 USD al mese o 29.99 USD all'anno, più le imposte applicabili. Gli abbonamenti si rinnovano automaticamente fino alla cancellazione. Annulla il rinnovo futuro nel centro utenti; l'accesso continua fino alla fine del periodo pagato. L'uso ospitato è soggetto a limiti di uso ragionevole e di prevenzione degli abusi. Creem elabora i pagamenti. Conferma il prezzo e i termini attuali nella pagina dei piani prima dell'acquisto: https://app.huaci.app/plans.
+
+Installare l'estensione e usare la tua chiave API sono gratuiti. Il provider API scelto potrebbe addebitare costi separati. Un abbonamento a questa estensione non è necessario per la modalità bring-your-own-key. DeepL non fornisce il riconoscimento delle immagini.
+
+SOTTOTITOLI VIDEO SPERIMENTALI
+
+I sottotitoli video opzionali sono disattivati per impostazione predefinita. Il riconoscimento vocale dipende dalla versione del browser, dal dispositivo e dalla lingua e potrebbe non essere disponibile. Il riconoscimento locale viene utilizzato quando supportato; non passa mai silenziosamente al riconoscimento cloud. Solo se scegli esplicitamente il riconoscimento cloud, l'audio della scheda viene inviato al servizio vocale del browser (Microsoft Azure in Edge). Il testo riconosciuto segue la modalità di traduzione selezionata. Non forniamo trascrizione audio/video ospitata. Questa funzionalità sperimentale non garantisce che ogni video possa essere tradotto.
+
+PRIVACY
+
+• Le richieste bring-your-own-key vanno direttamente al provider scelto o all'endpoint HTTPS. La tua chiave rimane nell'archivio locale dell'estensione e non viene sincronizzata tramite il tuo account del browser.
+• La modalità ospitata invia il testo o le immagini richiesti tramite il nostro server a un provider di modelli. Il nostro server non conserva testo originale, immagini o traduzioni.
+• I file PDF interi vengono elaborati localmente e non vengono caricati.
+• Gli account conservano l'indirizzo email, il nome utente e i record necessari per autenticazione, utilizzo, crediti e fatturazione. Nessuna pubblicità, SDK di tracciamento o fingerprinting del dispositivo.
+• Tutto il codice eseguibile dell'estensione è incluso nel pacchetto. Il codice sorgente è disponibile sotto GPL-3.0.
+
+PER INIZIARE
+
+Installa, seleziona la lingua di destinazione preferita e usa la prova ospitata o configura la tua chiave API nelle impostazioni. Seleziona il testo su una pagina web normale e scegli "Traduci in…" dal menu contestuale. Scorciatoia da tastiera: Alt+Shift+T, o Command+Shift+Y su macOS.
+
+Le pagine protette dal browser e gli store delle estensioni non consentono sovrapposizioni di traduzione. Le singole richieste di testo sono limitate a 6,000 caratteri; la traduzione di PDF e aree utilizza batch. Gli endpoint API personalizzati richiedono HTTPS e autorizzazione per l'host scelto.
+
+Progetto indipendente; non affiliato a Microsoft, OpenAI, DeepSeek o DeepL. I nomi identificano servizi compatibili e rimangono marchi dei rispettivi proprietari.
+
+Sito web: https://huaci.app/
+Supporto: support@huaci.app
+Codice sorgente e problemi: https://github.com/csswork/AiTranslation
+Informativa sulla privacy: https://huaci.app/privacy.html
+Termini e rimborsi: https://huaci.app/terms.html

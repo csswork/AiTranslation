@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Datenschutzerklärung</h2>
-        <p class="updated">Zuletzt aktualisiert: 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown-Original</a></p>
+        <p class="updated">Zuletzt aktualisiert: 2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown-Original</a></p>
       </div>
 
       <div class="policy">
@@ -115,10 +115,10 @@
           <p><b>Nicht gesendet werden</b>: Seiteninhalte, die du nicht aktiv übersetzt, Browserverlauf, Cookies, Formulardaten. Die Erweiterung scannt oder überträgt nichts automatisch im Hintergrund.</p>
 
           <h3>Audioverarbeitung bei experimentellen Video-Untertiteln</h3>
-          <p>Video-Untertitel sind standardmäßig deaktiviert. Nach dem Aktivieren wird der Ton des aktuellen Tabs standardmäßig lokal erkannt; gegebenenfalls muss ein Sprachpaket des Browsers heruntergeladen werden. Nur wenn Sie aktiv „Cloud-Erkennung verwenden“ wählen, wird der Ton an den Spracherkennungsdienst von Google gesendet, wofür die <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google-Datenschutzerklärung</a> gilt. Der erkannte Untertiteltext wird anschließend je nach gewähltem Übersetzungsmodus an die Übersetzungsplattform oder unsere Server gesendet. Wir empfangen oder speichern keine Videos und Audiodaten und bieten keine gehostete Audio-/Video-Transkription an.</p>
+          <p>Video-Untertitel sind standardmäßig deaktiviert. Nach dem Aktivieren wird standardmäßig der Ton des aktuellen Tabs lokal erkannt; möglicherweise muss ein Sprachpaket des Browsers heruntergeladen werden. Nur wenn Sie aktiv „Cloud-Erkennung verwenden“ auswählen, wird der Ton an den Spracherkennungsdienst des Browsers gesendet: Chrome verwendet Google (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google-Datenschutzerklärung</a>), Microsoft Edge verwendet Microsoft Azure (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft-Datenschutzerklärung</a>). Die lokale Erkennung ist nur für unterstützte Browserversionen und Sprachen verfügbar; die Erweiterung wechselt nicht automatisch zur Cloud-Erkennung. Der erkannte Untertiteltext wird anschließend je nach gewähltem Übersetzungsmodus an die Übersetzungsplattform oder unsere Server gesendet. Wir empfangen oder speichern keine Videos oder Audiodateien und bieten keine gehostete Audio- und Videotranskription an.</p>
 
           <h3>Übersetzung ganzer PDF-Dateien</h3>
-          <p>Diese Funktion ist noch nicht mit der Chrome-Store-Version veröffentlicht. Wenn du im integrierten PDF-Reader von Chrome „Ganzes PDF übersetzen“ wählst, liest die Erweiterung das in diesem Tab geöffnete PDF von derselben Website erneut ein und nutzt dabei wie der Reader den Browsercache und die Cookies der Website; alternativ kannst du auf der PDF-Übersetzungsseite eine Datei auswählen oder hineinziehen. Dateien werden nur auf deinem Gerät verarbeitet und angezeigt und nicht an uns oder an Übersetzungsplattformen hochgeladen; nur der extrahierte Text wird gemäß der obigen Tabelle in Stapeln gesendet. Die gerenderte Seite und die Übersetzung werden nur im Speicher dieser Seite gehalten und beim Schließen verworfen. „PDF herunterladen“ erzeugt die Datei über den Druckdialog des Browsers und speichert sie am von dir gewählten Ort.</p>
+          <p>Wenn Sie im integrierten PDF-Reader des Browsers „Gesamtes PDF übersetzen“ auswählen, liest die Erweiterung das im Tab geöffnete PDF erneut von derselben Website und verwendet dabei wie der Reader den Browsercache und die Cookies dieser Website; alternativ können Sie auf der PDF-Übersetzungsseite eine Datei auswählen oder hineinziehen. Die Datei wird ausschließlich auf Ihrem Gerät analysiert und angezeigt und weder an uns noch an Übersetzungsplattformen hochgeladen; nur der daraus extrahierte Text wird gemäß der obigen Tabelle in Stapeln gesendet. Die gerenderte Seite und die Übersetzung werden nur im Arbeitsspeicher dieser Seite gehalten und beim Schließen verworfen. „PDF herunterladen“ erzeugt die Datei über den Druckdialog des Browsers; die Datei wird an dem von Ihnen gewählten Ort gespeichert.</p>
 
           <h3>Kontodaten</h3>
           <p>Nach Registrierung oder Anmeldung speichern wir:</p>
@@ -179,7 +179,7 @@
                 <tr><td><code>storage</code></td><td>Speichert die oben genannten Einstellungen und das Anmeldetoken lokal</td></tr>
                 <tr><td><code>scripting</code></td><td>Nach der Installation oder Aktualisierung der Erweiterung wird das Übersetzungsskript nachträglich in bereits geöffnete Webseiten injiziert; beim Auslösen einer Übersetzung erfolgt ebenfalls eine bedarfsgerechte Injektion</td></tr>
                 <tr><td><code>activeTab</code></td><td>Wirkt nur auf den Tab, in dem Sie gerade arbeiten</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Liest den Ton des aktuellen Tabs nur, wenn Sie die Video-Untertitelübersetzung aktivieren; standardmäßig lokale Erkennung, bei aktiver Wahl der Cloud-Erkennung Übermittlung an Google</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Liest den Ton des aktuellen Tabs nur, wenn Sie die Video-Untertitelübersetzung aktivieren; standardmäßig lokale Erkennung, bei aktiver Wahl der Cloud-Erkennung wird der Ton an den Sprachdienst des Browsers gesendet (bei Chrome an Google, bei Edge an Microsoft Azure)</td></tr>
                 <tr>
                   <td>Zugriff auf <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Sendet bei eigenem API Key Übersetzungsanfragen an die von Ihnen gewählte Plattform</td>
@@ -190,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Content-Skript auf allen Websites</td>
-                  <td>Nutzer können auf beliebigen Webseiten Text auswählen oder einen Übersetzungsbereich festlegen; das Content-Skript stellt den Übersetzungseinstieg bereit und filtert nur Auswahlen ohne Text heraus. Im integrierten PDF-Reader von Chrome wird zudem ein PDF erkannt, um den Einstieg „Gesamtes PDF übersetzen“ anzuzeigen; die Datei wird erst gelesen, nachdem du diesen Einstieg ausgewählt hast</td>
+                  <td>Nutzer können auf beliebigen Webseiten Text auswählen oder einen Übersetzungsbereich festlegen; das Content-Skript stellt den Übersetzungseinstieg bereit und filtert nur Auswahlen ohne Text heraus. Im integrierten PDF-Reader des Browsers wird zudem ein PDF erkannt, um den Einstieg „Gesamtes PDF übersetzen“ anzuzeigen; die Datei wird erst gelesen, nachdem Sie diesen Einstieg ausgewählt haben</td>
                 </tr>
               </tbody>
             </table>

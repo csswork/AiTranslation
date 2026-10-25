@@ -118,7 +118,7 @@
     // 视频字幕是实验功能，默认关闭：关着的时候入口、菜单项与设置都不出现
     videoEnabled: false,
     videoLang: 'en-US',
-    // 视频字幕默认在本机识别；打开后改用 Chrome 的云端识别，声音会发给 Google
+    // 视频字幕默认在本机识别；主动打开后声音发给浏览器云端服务（Chrome: Google；Edge: Azure）
     videoCloud: false,
     videoTranslate: true, // 把识别出的每一句翻译成目标语言，显示双语字幕
     // 图片译文的背景：默认取文字周围的相近色；也可固定深色半透明、白、黑或自定义颜色

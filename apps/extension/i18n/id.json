@@ -1,4 +1,11 @@
 {
+  "跟随浏览器": "Ikuti browser",
+  "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "Perintah gagal didaftarkan. Muat ulang ekstensi di halaman pengelolaan ekstensi browser.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "Browser saat ini tidak mendukung pengenalan suara di perangkat. Gunakan versi browser yang didukung, atau beralih ke pengenalan cloud.",
+  "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "Tidak perlu mengunduh paket bahasa, tetapi audio video akan dikirim ke layanan pengenalan suara browser: Chrome menggunakan Google, dan Microsoft Edge menggunakan Microsoft Azure.",
+  "连不上浏览器的云端语音识别服务，请检查网络连接。": "Tidak dapat terhubung ke layanan pengenalan suara cloud browser. Periksa koneksi jaringan Anda.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "Browser saat ini tidak mendukung pengenalan suara di perangkat. Gunakan versi browser yang didukung, atau beralih ke pengenalan cloud di pengaturan.",
+  "浏览器不允许在这个页面运行扩展脚本。": "Browser tidak mengizinkan skrip ekstensi berjalan di halaman ini.",
   "AI 划词翻译 · 视频字幕": "Penerjemah AI · Subtitle Video",
   "AI 划词翻译 · 设置": "Penerjemah AI · Pengaturan",
   "AI 划词翻译": "Penerjemah AI",

@@ -255,8 +255,22 @@ chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
 
 /** 在 PDF 标签页右边打开翻译页；字节由翻译页自己向该标签页的内容脚本要。 */
 async function openPdfTranslation(tab) {
-  const url = `${chrome.runtime.getURL(PDF_PAGE)}?tab=${tab.id}`;
-  await chrome.tabs.create({ url, index: tab.index + 1, openerTabId: tab.id, windowId: tab.windowId });
+  let source = tab;
+  // Edge's embedded PDF viewer can report TAB_ID_NONE (-1) in its menu event.
+  // Only use the active outer tab if our top-frame content script identified it as a PDF.
+  if (!Number.isInteger(source?.id) || source.id < 0) {
+    const [active] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    source = Number.isInteger(active?.id) && active.id >= 0 && (await pdfTabs()).has(active.id) ? active : null;
+  }
+  const properties = { url: chrome.runtime.getURL(PDF_PAGE) };
+  if (source) {
+    properties.url += `?tab=${source.id}`;
+    properties.openerTabId = source.id;
+    if (Number.isInteger(source.index) && source.index >= 0) properties.index = source.index + 1;
+    if (Number.isInteger(source.windowId) && source.windowId >= 0) properties.windowId = source.windowId;
+  }
+  // With no trusted source, open the local file picker rather than reading another page.
+  await chrome.tabs.create(properties);
 }
 
 /** 传统翻译接口识别不了图片，换到这类平台时把「翻译图片」藏起来。 */
@@ -581,7 +595,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     }
     return;
   }
-  if (info.menuItemId === PDF_MENU_ID && tab?.id) {
+  if (info.menuItemId === PDF_MENU_ID) {
     await openPdfTranslation(tab);
     return;
   }
@@ -949,7 +963,7 @@ async function onShortcut(command, tab) {
 
   // 先确保页面脚本在位，否则问不到选区（刚重载扩展、或标签页是旧的）
   if (!(await ensureContentScript(tabId))) {
-    shortcutLog(t("这个页面不允许注入脚本（例如 chrome:// 开头的页面）"));
+    shortcutLog(t("浏览器不允许在这个页面运行扩展脚本。"));
     return;
   }
 

@@ -1,7 +1,7 @@
 # Privacy Policy / 隐私政策
 
 **AI Selection Translator (AI 划词翻译)**
-Last updated / 最后更新：2026-10-22
+Last updated / 最后更新：2026-10-25
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
 
@@ -43,11 +43,11 @@ How these providers handle what they receive is governed by their own privacy po
 
 ### Audio processing for experimental video captions
 
-Video captions are off by default. When enabled, speech from the current tab is recognized on your device by default, which may require a browser language pack. Only if you explicitly select cloud recognition is audio sent to Google's speech recognition service, governed by the [Google Privacy Policy](https://policies.google.com/privacy). Recognized caption text is then sent to your chosen translation provider or our server according to the translation mode. We do not receive or store video or audio, and do not offer hosted audio or video transcription.
+Video captions are off by default. When enabled, speech from the current tab is recognized on your device by default, which may require a browser language pack. Only if you explicitly select cloud recognition is audio sent to your browser's speech recognition service: Google in Chrome ([Google Privacy Policy](https://policies.google.com/privacy)), or Microsoft Azure in Microsoft Edge ([Microsoft Privacy Statement](https://privacy.microsoft.com/privacystatement)). Local recognition is available only in supported browser versions and languages; the extension does not silently switch to cloud recognition. Recognized caption text is then sent to your chosen translation provider or our server according to the translation mode. We do not receive or store video or audio, and do not offer hosted audio or video transcription.
 
 ### Whole-PDF translation
 
-This feature is not yet available in the Chrome Web Store version. When you choose “Translate entire PDF” in Chrome's built-in PDF viewer, the extension reads the PDF open in that tab again from the same site, using the browser cache and that site's own cookies just as the viewer did. You can also choose or drop a file onto the PDF translation page. The file is opened and rendered on your device and is never uploaded to us or to a provider; only the text extracted from it is sent, in batches, as listed in the table above. Rendered pages and translations stay in that page's memory and are discarded when you close it. “Download PDF” uses your browser's print dialog, and the file is saved wherever you choose.
+When you choose “Translate entire PDF” in your browser's built-in PDF viewer, the extension reads the PDF open in that tab again from the same site, using the browser cache and that site's own cookies just as the viewer did. You can also choose or drop a file onto the PDF translation page. The file is opened and rendered on your device and is never uploaded to us or to a provider; only the text extracted from it is sent, in batches, as listed in the table above. Rendered pages and translations stay in that page's memory and are discarded when you close it. “Download PDF” uses your browser's print dialog, and the file is saved wherever you choose.
 
 ### Account data
 
@@ -110,10 +110,10 @@ All extension and server source code is public under GPL-3.0, so you can verify 
 | `storage` | Save the settings and sign-in token above on your machine |
 | `scripting` | After the extension is installed or updated, inject the translation script into pages that are already open; also inject on demand when you trigger a translation |
 | `activeTab` | Act only on the tab you are working in |
-| `tabCapture`, `offscreen` | Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to Google if you explicitly select cloud recognition |
+| `tabCapture`, `offscreen` | Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to the browser speech service (Google in Chrome; Microsoft Azure in Edge) if you explicitly select cloud recognition |
 | Access to `api.openai.com`, `api.deepseek.com`, `api-free.deepl.com`, `api.deepl.com` | Send translation requests to the provider you selected when using your own key |
 | Access to all sites (`<all_urls>`) | After the extension is installed or updated, inject the translation script into pages that are already open, so selection translation works without reloading the page. The script only provides translation controls and never scans, uploads or reports page content on its own. A custom API base URL you enter (a proxy or relay) is covered too, so no separate permission prompt appears |
-| Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. In Chrome's built-in PDF viewer they also detect the PDF so the “Translate entire PDF” entry can be shown, and read the file only after you choose that entry. |
+| Content script on all sites | Users may select text or mark a translation region on any page. Content scripts provide the controls and only filter selections containing no letters. In the browser's built-in PDF viewer they also detect the PDF so the “Translate entire PDF” entry can be shown, and read the file only after you choose that entry. |
 
 ### Contact
 
@@ -157,11 +157,11 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 
 ### 实验视频字幕的声音处理
 
-视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到 Google 的语音识别服务，适用 [Google 隐私政策](https://policies.google.com/privacy)。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。
+视频字幕默认关闭。开启后，默认在本机识别当前标签页的声音，可能需要下载浏览器语言包；只有你主动选择「改用云端识别」时，声音才会发送到浏览器的语音识别服务：Chrome 使用 Google（[Google 隐私政策](https://policies.google.com/privacy)），Microsoft Edge 使用 Microsoft Azure（[Microsoft 隐私声明](https://privacy.microsoft.com/privacystatement)）。本机识别仅适用于受支持的浏览器版本和语言；扩展不会自动切换到云端识别。识别后的字幕文字再按所选翻译模式发送给翻译平台或我们的服务器。我们不接收或保存视频、音频，不提供托管音视频转写。
 
 ### 整份 PDF 翻译
 
-此功能尚未随 Chrome 商店版本发布。你在 Chrome 内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。
+你在浏览器内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。
 
 ### 账户数据
 
@@ -224,10 +224,10 @@ AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发
 | `storage` | 在本机保存上述设置与登录令牌 |
 | `scripting` | 安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入 |
 | `activeTab` | 仅作用于你当前操作的那个标签页 |
-| `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给 Google |
+| `tabCapture`、`offscreen` | 仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给浏览器语音服务（Chrome 为 Google，Edge 为 Microsoft Azure） |
 | 访问 `api.openai.com`、`api.deepseek.com`、`api-free.deepl.com`、`api.deepl.com` | 自带 Key 时向你选定的平台发送翻译请求 |
 | 访问所有网站（`<all_urls>`） | 安装或更新扩展后，向已经打开的网页补注入翻译脚本，不用刷新页面就能划词翻译。脚本只提供翻译入口，不会自行扫描、上传或上报页面内容。你填写的自定义接口地址（代理或中转）也在此范围内，不再单独弹出授权 |
-| 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在 Chrome 内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件 |
+| 内容脚本匹配所有网站 | 用户可能在任意网页选中文字或指定翻译区域；内容脚本提供翻译入口，仅过滤不含文字的选区。在浏览器内置 PDF 阅读器里还会识别 PDF，以显示「翻译整个 PDF」入口，只有你选择该入口后才读取文件 |
 
 ### 联系方式
 

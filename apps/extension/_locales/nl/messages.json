@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Browser volgen"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Het commando is niet geregistreerd. Laad de extensie opnieuw op de extensiebeheerpagina van de browser."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "De huidige browser ondersteunt geen spraakherkenning op het apparaat. Gebruik een ondersteunde browserversie of schakel over op cloudherkenning."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Er hoeft geen taalpakket te worden gedownload, maar de audio van de video wordt naar de spraakherkenningsdienst van de browser verzonden: Chrome gebruikt Google en Microsoft Edge gebruikt Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Kan geen verbinding maken met de cloudspraakherkenningsdienst van de browser. Controleer je netwerkverbinding."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "De huidige browser ondersteunt geen spraakherkenning op het apparaat. Gebruik een ondersteunde browserversie of schakel in de instellingen over op cloudherkenning."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "De browser staat niet toe dat extensiescripts op deze pagina worden uitgevoerd."
+  },
   "m_55a050e5c488b946": {
     "message": "AI-vertaler · Videolabels"
   },

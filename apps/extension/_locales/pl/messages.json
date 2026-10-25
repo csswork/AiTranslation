@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Zgodnie z przeglądarką"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Polecenie nie zostało pomyślnie zarejestrowane. Przeładuj rozszerzenie na stronie zarządzania rozszerzeniami przeglądarki."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Ta przeglądarka nie obsługuje rozpoznawania mowy na urządzeniu. Użyj obsługiwanej wersji przeglądarki lub przełącz na rozpoznawanie w chmurze."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Pobieranie pakietu językowego nie jest potrzebne, ale dźwięk z filmu zostanie wysłany do usługi rozpoznawania mowy przeglądarki: Chrome używa Google, a Microsoft Edge używa Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Nie można połączyć się z usługą rozpoznawania mowy w chmurze przeglądarki. Sprawdź połączenie sieciowe."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Ta przeglądarka nie obsługuje rozpoznawania mowy na urządzeniu. Użyj obsługiwanej wersji przeglądarki lub przełącz na rozpoznawanie w chmurze w ustawieniach."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Przeglądarka nie pozwala na uruchamianie skryptów rozszerzenia na tej stronie."
+  },
   "m_55a050e5c488b946": {
     "message": "Tłumacz AI · Napisy do filmów"
   },

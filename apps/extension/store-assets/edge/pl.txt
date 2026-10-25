@@ -1,0 +1,49 @@
+Tłumacz podczas czytania: zaznacz tekst, kliknij prawym przyciskiem myszy i zobacz tłumaczenie pojawiające się na stronie.
+
+AI Translator to rozszerzenie open source do Microsoft Edge służące do tłumaczenia zaznaczonego tekstu, obszarów strony internetowej, obrazów i całych dokumentów PDF. Korzystaj z tłumaczenia hostowanego bez klucza API lub podłącz własne konto OpenAI, DeepSeek lub DeepL.
+
+PIĘĆ SPOSOBÓW TŁUMACZENIA
+
+• Zaznaczony tekst: tłumacz tekst w dowolnym języku, w tym chińskim, w przenośnym okienku. Przesyłaj wynik strumieniowo, gdy jest to obsługiwane, rozwiń oryginał do porównania, skopiuj tłumaczenie lub zmień język docelowy.
+• Obszary strony internetowej: dodaj przycisk tłumaczenia do wybranej części witryny. Reguły są zapisywane według domeny, a Ty możesz przywrócić oryginalny tekst.
+• Obrazy: rozpoznawaj tekst i nakładaj przetłumaczony tekst na obraz. Tłumacz zaznaczony obszar, dostosuj pola tekstowe lokalnie i wyeksportuj przetłumaczony obraz. Rozpoznawanie wymaga modelu z obsługą wizji; tryb hostowany obejmuje rozpoznawanie obrazów.
+• Całe pliki PDF: otwórz plik PDF w przeglądarce i wybierz tłumaczenie całego dokumentu z menu kontekstowego. Plik PDF jest przetwarzany lokalnie; do tłumaczenia wysyłany jest tylko wyodrębniony tekst. Porównaj oryginał i tłumaczenie, zachowaj układ stron, ryciny i tabele, a także drukuj lub zapisz jako PDF. Zeskanowane strony bez tekstu do wyodrębnienia nie są obsługiwane przez tłumaczenie całego dokumentu.
+• Panel tłumaczenia: wklej fragment do dedykowanego widoku źródła i tłumaczenia, wybierz język źródłowy i docelowy i przetłumacz go bez zaznaczania na stronie internetowej.
+
+24 JĘZYKI
+
+Wybierz chiński uproszczony, chiński tradycyjny, angielski, hiszpański, portugalski, francuski, niemiecki, włoski, niderlandzki, rosyjski, ukraiński, polski, turecki, arabski, hebrajski, perski, hindi, bengalski, urdu, indonezyjski, wietnamski, tajski, japoński lub koreański. Język interfejsu, język źródłowy i język docelowy tłumaczenia są niezależne. Obsługa przez dostawcę różni się w zależności od języka i funkcji. Interfejsy od prawej do lewej są obsługiwane.
+
+KONTA, BEZPŁATNY OKRES PRÓBNY I OPCJONALNE SUBSKRYPCJE
+
+Tłumaczenie hostowane nie wymaga klucza API. Nowa kwalifikująca się instalacja przeglądarki otrzymuje próbę gościnną; zalogowanie się za pomocą kodu weryfikacyjnego e-mail lub Google zapewnia konto i dodatkowe kredyty próbne. Kredyty próbne nie wygasają. Twoje saldo, subskrypcja i użycie są współdzielone z centrum użytkownika pod adresem https://app.huaci.app/.
+
+Po wyczerpaniu kredytów próbnych tłumaczenie hostowane wymaga aktywnej subskrypcji. Aktualne plany to 3.99 USD miesięcznie lub 29.99 USD rocznie, plus obowiązujące podatki. Subskrypcje odnawiają się automatycznie do momentu anulowania. Anuluj przyszłe odnowienie w centrum użytkownika; dostęp trwa do końca opłaconego okresu. Korzystanie hostowane podlega limitom rozsądnego użytkowania i zapobiegania nadużyciom. Płatności przetwarza Creem. Potwierdź aktualną cenę i warunki na stronie planów przed zakupem: https://app.huaci.app/plans.
+
+Instalacja rozszerzenia i korzystanie z własnego klucza API są bezpłatne. Wybrany przez Ciebie dostawca API może pobierać osobne opłaty. Subskrypcja tego rozszerzenia nie jest wymagana w trybie własnego klucza. DeepL nie zapewnia rozpoznawania obrazów.
+
+EKSPERYMENTALNE NAPISY DO FILMÓW
+
+Opcjonalne napisy do filmów są domyślnie wyłączone. Rozpoznawanie mowy zależy od wersji przeglądarki, urządzenia i języka i może być niedostępne. Rozpoznawanie lokalne jest używane, gdy jest obsługiwane; nigdy nie przełącza się po cichu na rozpoznawanie w chmurze. Tylko jeśli wyraźnie wybierzesz rozpoznawanie w chmurze, dźwięk karty jest wysyłany do usługi mowy przeglądarki (Microsoft Azure w Edge). Rozpoznany tekst podlega wybranemu trybowi tłumaczenia. Nie zapewniamy hostowanej transkrypcji audio/wideo. Ta eksperymentalna funkcja nie gwarantuje, że każdy film można przetłumaczyć.
+
+PRYWATNOŚĆ
+
+• Żądania w trybie własnego klucza trafiają bezpośrednio do wybranego dostawcy lub punktu końcowego HTTPS. Twój klucz pozostaje w lokalnej pamięci rozszerzenia i nie jest synchronizowany przez konto przeglądarki.
+• Tryb hostowany wysyła żądany tekst lub obrazy przez nasz serwer do dostawcy modelu. Nasz serwer nie zachowuje oryginalnego tekstu, obrazów ani tłumaczeń.
+• Całe pliki PDF są przetwarzane lokalnie i nie są przesyłane.
+• Konta zachowują adres e-mail, nazwę użytkownika i zapisy potrzebne do uwierzytelniania, użytkowania, kredytów i rozliczeń. Bez reklam, zestawów SDK śledzących ani fingerprintingu urządzeń.
+• Cały wykonywalny kod rozszerzenia jest zawarty w pakiecie. Źródło jest dostępne na licencji GPL-3.0.
+
+ROZPOCZĘCIE
+
+Zainstaluj, wybierz preferowany język docelowy i skorzystaj z hostowanej próby lub skonfiguruj własny klucz API w ustawieniach. Zaznacz tekst na zwykłej stronie internetowej i wybierz „Przetłumacz na…” z menu kontekstowego. Skrót klawiszowy: Alt+Shift+T lub Command+Shift+Y w systemie macOS.
+
+Strony chronione przez przeglądarkę i sklepy z rozszerzeniami nie pozwalają na nakładki tłumaczeń. Pojedyncze żądania tekstowe są ograniczone do 6,000 znaków; tłumaczenie plików PDF i obszarów używa partii. Niestandardowe punkty końcowe API wymagają HTTPS i uprawnień dla wybranego hosta.
+
+Niezależny projekt; niepowiązany z Microsoft, OpenAI, DeepSeek ani DeepL. Nazwy identyfikują kompatybilne usługi i pozostają znakami towarowymi ich właścicieli.
+
+Strona internetowa: https://huaci.app/
+Wsparcie: support@huaci.app
+Źródło i problemy: https://github.com/csswork/AiTranslation
+Polityka prywatności: https://huaci.app/privacy.html
+Warunki i zwroty: https://huaci.app/terms.html

@@ -1,0 +1,49 @@
+Dịch trong khi đọc: chọn văn bản, nhấp chuột phải và xem bản dịch xuất hiện trên trang.
+
+AI Translator là tiện ích mở rộng Microsoft Edge mã nguồn mở để dịch văn bản được chọn, vùng trang web, hình ảnh và toàn bộ tài liệu PDF. Sử dụng bản dịch được lưu trữ mà không cần khóa API, hoặc kết nối tài khoản OpenAI, DeepSeek hoặc DeepL của riêng bạn.
+
+NĂM CÁCH ĐỂ DỊCH
+
+• Văn bản được chọn: dịch văn bản ở bất kỳ ngôn ngữ nào, bao gồm tiếng Trung, trong một cửa sổ bật lên có thể di chuyển. Truyền phát kết quả ở nơi được hỗ trợ, mở rộng bản gốc để so sánh, sao chép bản dịch hoặc thay đổi ngôn ngữ đích.
+• Vùng trang web: thêm nút dịch vào một phần được chọn của trang web. Các quy tắc được lưu theo tên miền và bạn có thể khôi phục văn bản gốc.
+• Hình ảnh: nhận dạng văn bản và phủ văn bản đã dịch lên hình ảnh. Dịch một vùng được chọn, điều chỉnh hộp văn bản cục bộ và xuất hình ảnh đã dịch. Nhận dạng yêu cầu mô hình có khả năng thị giác; chế độ lưu trữ bao gồm nhận dạng hình ảnh.
+• Toàn bộ PDF: mở PDF trong trình duyệt và chọn dịch toàn bộ tài liệu từ menu ngữ cảnh. PDF được phân tích cục bộ; chỉ văn bản được trích xuất mới được gửi để dịch. So sánh bản gốc và bản dịch, giữ nguyên bố cục trang, hình ảnh và bảng, đồng thời in hoặc lưu dưới dạng PDF. Các trang quét không có văn bản có thể trích xuất không được hỗ trợ bởi tính năng dịch toàn bộ tài liệu.
+• Bảng dịch: dán một đoạn văn vào chế độ xem nguồn và bản dịch chuyên dụng, chọn ngôn ngữ nguồn và ngôn ngữ đích, rồi dịch mà không cần chọn trang web.
+
+24 NGÔN NGỮ
+
+Chọn tiếng Trung Giản thể, tiếng Trung Phồn thể, tiếng Anh, tiếng Tây Ban Nha, tiếng Bồ Đào Nha, tiếng Pháp, tiếng Đức, tiếng Ý, tiếng Hà Lan, tiếng Nga, tiếng Ukraina, tiếng Ba Lan, tiếng Thổ Nhĩ Kỳ, tiếng Ả Rập, tiếng Do Thái, tiếng Ba Tư, tiếng Hindi, tiếng Bengal, tiếng Urdu, tiếng Indonesia, tiếng Việt, tiếng Thái, tiếng Nhật hoặc tiếng Hàn. Ngôn ngữ giao diện, ngôn ngữ nguồn và ngôn ngữ đích dịch là độc lập. Hỗ trợ của nhà cung cấp khác nhau tùy theo ngôn ngữ và tính năng. Giao diện từ phải sang trái được hỗ trợ.
+
+TÀI KHOẢN, DÙNG THỬ MIỄN PHÍ VÀ ĐĂNG KÝ TÙY CHỌN
+
+Bản dịch được lưu trữ không cần khóa API. Một cài đặt trình duyệt mới đủ điều kiện sẽ nhận được bản dùng thử dành cho khách; đăng nhập bằng mã xác minh email hoặc Google sẽ cung cấp tài khoản và thêm tín dụng dùng thử. Tín dụng dùng thử không hết hạn. Số dư, đăng ký và mức sử dụng của bạn được chia sẻ với trung tâm người dùng tại https://app.huaci.app/.
+
+Sau khi tín dụng dùng thử hết, bản dịch được lưu trữ yêu cầu đăng ký đang hoạt động. Các gói hiện tại là 3.99 đô la Mỹ mỗi tháng hoặc 29.99 đô la Mỹ mỗi năm, cộng với thuế áp dụng. Đăng ký tự động gia hạn cho đến khi bị hủy. Hủy gia hạn trong tương lai trong trung tâm người dùng; quyền truy cập tiếp tục cho đến khi kết thúc thời gian đã trả. Việc sử dụng được lưu trữ tuân theo các giới hạn sử dụng hợp lý và phòng chống lạm dụng. Creem xử lý thanh toán. Xác nhận giá và điều khoản hiện tại trên trang gói trước khi mua: https://app.huaci.app/plans.
+
+Cài đặt tiện ích mở rộng và sử dụng khóa API của riêng bạn là miễn phí. Nhà cung cấp API bạn chọn có thể tính phí riêng. Đăng ký tiện ích mở rộng này không bắt buộc đối với chế độ mang khóa của riêng bạn. DeepL không cung cấp nhận dạng hình ảnh.
+
+PHỤ ĐỀ VIDEO THỬ NGHIỆM
+
+Phụ đề video tùy chọn bị tắt theo mặc định. Nhận dạng giọng nói phụ thuộc vào phiên bản trình duyệt, thiết bị và ngôn ngữ và có thể không khả dụng. Nhận dạng cục bộ được sử dụng khi được hỗ trợ; nó không bao giờ tự động chuyển sang nhận dạng đám mây. Chỉ khi bạn chọn rõ ràng nhận dạng đám mây thì âm thanh tab mới được gửi đến dịch vụ giọng nói của trình duyệt (Microsoft Azure trong Edge). Văn bản được nhận dạng tuân theo chế độ dịch bạn đã chọn. Chúng tôi không cung cấp dịch âm thanh/video được lưu trữ. Tính năng thử nghiệm này không đảm bảo rằng mọi video đều có thể được dịch.
+
+QUYỀN RIÊNG TƯ
+
+• Yêu cầu mang khóa của riêng bạn đi trực tiếp đến nhà cung cấp hoặc điểm cuối HTTPS bạn đã chọn. Khóa của bạn được lưu trong bộ nhớ cục bộ của tiện ích mở rộng và không được đồng bộ qua tài khoản trình duyệt của bạn.
+• Chế độ lưu trữ gửi văn bản hoặc hình ảnh được yêu cầu qua máy chủ của chúng tôi đến nhà cung cấp mô hình. Máy chủ của chúng tôi không lưu giữ văn bản gốc, hình ảnh hoặc bản dịch.
+• Toàn bộ tệp PDF được xử lý cục bộ và không được tải lên.
+• Tài khoản lưu giữ địa chỉ email, tên người dùng và hồ sơ cần thiết cho xác thực, sử dụng, tín dụng và thanh toán. Không có quảng cáo, SDK theo dõi hoặc lấy dấu vân tay thiết bị.
+• Tất cả mã thực thi của tiện ích mở rộng được bao gồm trong gói. Mã nguồn có sẵn theo GPL-3.0.
+
+BẮT ĐẦU
+
+Cài đặt, chọn ngôn ngữ đích ưa thích của bạn và sử dụng bản dùng thử được lưu trữ hoặc định cấu hình khóa API của riêng bạn trong cài đặt. Chọn văn bản trên một trang web thông thường và chọn “Dịch sang…” từ menu ngữ cảnh. Phím tắt: Alt+Shift+T, hoặc Command+Shift+Y trên macOS.
+
+Các trang được trình duyệt bảo vệ và cửa hàng tiện ích mở rộng không cho phép lớp phủ dịch. Yêu cầu văn bản đơn lẻ được giới hạn ở 6,000 ký tự; dịch PDF và vùng sử dụng theo lô. Điểm cuối API tùy chỉnh yêu cầu HTTPS và quyền cho máy chủ đã chọn.
+
+Dự án độc lập; không liên kết với Microsoft, OpenAI, DeepSeek hoặc DeepL. Các tên xác định các dịch vụ tương thích và vẫn là nhãn hiệu của chủ sở hữu tương ứng.
+
+Trang web: https://huaci.app/
+Hỗ trợ: support@huaci.app
+Mã nguồn và vấn đề: https://github.com/csswork/AiTranslation
+Chính sách quyền riêng tư: https://huaci.app/privacy.html
+Điều khoản và hoàn tiền: https://huaci.app/terms.html

@@ -1,5 +1,12 @@
 {
   "zh-Hant": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -470,6 +477,13 @@
     "形状": "Shape"
   },
   "es": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -940,6 +954,13 @@
     "形状": "Shape"
   },
   "pt": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -1410,6 +1431,13 @@
     "形状": "Shape"
   },
   "fr": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -1880,6 +1908,13 @@
     "形状": "Shape"
   },
   "de": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -2350,6 +2385,13 @@
     "形状": "Shape"
   },
   "it": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -2820,6 +2862,13 @@
     "形状": "Shape"
   },
   "nl": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -3290,6 +3339,13 @@
     "形状": "Shape"
   },
   "ru": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -3760,6 +3816,13 @@
     "形状": "Shape"
   },
   "uk": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -4230,6 +4293,13 @@
     "形状": "Shape"
   },
   "pl": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -4700,6 +4770,13 @@
     "形状": "Shape"
   },
   "tr": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -5170,6 +5247,13 @@
     "形状": "Shape"
   },
   "ar": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -5640,6 +5724,13 @@
     "形状": "Shape"
   },
   "he": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -6110,6 +6201,13 @@
     "形状": "Shape"
   },
   "fa": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -6580,6 +6678,13 @@
     "形状": "Shape"
   },
   "hi": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -7050,6 +7155,13 @@
     "形状": "Shape"
   },
   "bn": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -7520,6 +7632,13 @@
     "形状": "Shape"
   },
   "ur": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -7990,6 +8109,13 @@
     "形状": "Shape"
   },
   "id": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -8460,6 +8586,13 @@
     "形状": "Shape"
   },
   "vi": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -8930,6 +9063,13 @@
     "形状": "Shape"
   },
   "th": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -9400,6 +9540,13 @@
     "形状": "Shape"
   },
   "ja": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",
@@ -9870,6 +10017,13 @@
     "形状": "Shape"
   },
   "ko": {
+    "跟随浏览器": "Follow browser",
+    "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "The command was not registered successfully. Please reload the extension on the browser's extension management page.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition.",
+    "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "No language pack download is needed, but the video's audio will be sent to the browser's speech recognition service: Chrome uses Google, and Microsoft Edge uses Microsoft Azure.",
+    "连不上浏览器的云端语音识别服务，请检查网络连接。": "Cannot connect to the browser's cloud speech recognition service. Please check your network connection.",
+    "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "The current browser does not support on-device speech recognition. Please use a supported browser version, or switch to cloud recognition in settings.",
+    "浏览器不允许在这个页面运行扩展脚本。": "The browser does not allow extension scripts to run on this page.",
     "AI 划词翻译 · 视频字幕": "AI Translator · Video Captions",
     "AI 划词翻译 · 设置": "AI Translator · Settings",
     "AI 划词翻译": "AI Translator",

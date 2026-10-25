@@ -1,4 +1,11 @@
 {
+  "跟随浏览器": "Theo trình duyệt",
+  "命令没有注册成功，请到浏览器的扩展管理页重新加载扩展。": "Lệnh chưa được đăng ký thành công. Vui lòng tải lại tiện ích trên trang quản lý tiện ích của trình duyệt.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Vui lòng dùng phiên bản trình duyệt được hỗ trợ hoặc chuyển sang nhận dạng trên đám mây.",
+  "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。": "Không cần tải gói ngôn ngữ, nhưng âm thanh của video sẽ được gửi đến dịch vụ nhận dạng giọng nói của trình duyệt: Chrome sử dụng Google, Microsoft Edge sử dụng Microsoft Azure.",
+  "连不上浏览器的云端语音识别服务，请检查网络连接。": "Không thể kết nối với dịch vụ nhận dạng giọng nói trên đám mây của trình duyệt. Vui lòng kiểm tra kết nối mạng.",
+  "当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或在设置里改用云端识别": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Vui lòng dùng phiên bản trình duyệt được hỗ trợ hoặc chuyển sang nhận dạng trên đám mây trong phần cài đặt.",
+  "浏览器不允许在这个页面运行扩展脚本。": "Trình duyệt không cho phép tập lệnh tiện ích chạy trên trang này.",
   "AI 划词翻译 · 视频字幕": "Trình dịch AI · Phụ đề video",
   "AI 划词翻译 · 设置": "Trình dịch AI · Cài đặt",
   "AI 划词翻译": "Trình dịch AI",

@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Ikuti browser"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "Perintah gagal didaftarkan. Muat ulang ekstensi di halaman pengelolaan ekstensi browser."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "Browser saat ini tidak mendukung pengenalan suara di perangkat. Gunakan versi browser yang didukung, atau beralih ke pengenalan cloud."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Tidak perlu mengunduh paket bahasa, tetapi audio video akan dikirim ke layanan pengenalan suara browser: Chrome menggunakan Google, dan Microsoft Edge menggunakan Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Tidak dapat terhubung ke layanan pengenalan suara cloud browser. Periksa koneksi jaringan Anda."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "Browser saat ini tidak mendukung pengenalan suara di perangkat. Gunakan versi browser yang didukung, atau beralih ke pengenalan cloud di pengaturan."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "Browser tidak mengizinkan skrip ekstensi berjalan di halaman ini."
+  },
   "m_55a050e5c488b946": {
     "message": "Penerjemah AI · Subtitle Video"
   },

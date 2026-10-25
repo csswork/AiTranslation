@@ -82,6 +82,16 @@
     el.swap.disabled = source === AUTO;
   }
 
+  function renderProviderOptions() {
+    el.provider.replaceChildren(...S.providerList().map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = item.label;
+      option.selected = item.id === settings.provider;
+      return option;
+    }));
+  }
+
   /* ---------------------------------------------------------------- 状态 */
 
   function renderStatus() {
@@ -278,7 +288,7 @@
     el.meta.textContent = `${provider.label} · ${provider.model}`;
   });
 
-  AITrI18n.onChange(() => { renderTargetOptions(); renderStatus(); });
+  AITrI18n.onChange(() => { renderTargetOptions(); renderProviderOptions(); renderStatus(); });
 
   /* -------------------------------------------------------------- 初始化 */
 
@@ -297,15 +307,7 @@
     await chrome.storage.local.set({ [STORE_KEY]: choice, panelSource: source });
 
     renderTargetOptions();
-    el.provider.replaceChildren(
-      ...S.providerList().map((item) => {
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.textContent = label(item.id);
-        option.selected = item.id === settings.provider;
-        return option;
-      })
-    );
+    renderProviderOptions();
 
     const provider = S.resolveProvider(settings);
     el.meta.textContent = `${provider.label} · ${provider.model}`;

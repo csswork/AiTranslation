@@ -1,4 +1,25 @@
 {
+  "m_220e00eca1cbe353": {
+    "message": "Seguir o navegador"
+  },
+  "m_0e289f7338f51b09": {
+    "message": "O comando não foi registrado com sucesso. Recarregue a extensão na página de gerenciamento de extensões do navegador."
+  },
+  "m_f15ef0c30850f398": {
+    "message": "O navegador atual não oferece suporte ao reconhecimento de voz no dispositivo. Use uma versão compatível do navegador ou mude para o reconhecimento na nuvem."
+  },
+  "m_f4ca005cb7d0fe03": {
+    "message": "Não é necessário baixar pacotes de idioma, mas o áudio do vídeo será enviado ao serviço de reconhecimento de voz do navegador: o Chrome usa o Google e o Microsoft Edge usa o Microsoft Azure."
+  },
+  "m_9d83f1aa18b8d305": {
+    "message": "Não foi possível conectar ao serviço de reconhecimento de voz na nuvem do navegador. Verifique sua conexão de rede."
+  },
+  "m_9d19652a93bbcc07": {
+    "message": "O navegador atual não oferece suporte ao reconhecimento de voz no dispositivo. Use uma versão compatível do navegador ou mude para o reconhecimento na nuvem nas configurações."
+  },
+  "m_d339f73e6010a5a7": {
+    "message": "O navegador não permite que scripts de extensão sejam executados nesta página."
+  },
   "m_55a050e5c488b946": {
     "message": "Tradutor de IA · Legendas de vídeo"
   },

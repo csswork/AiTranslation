@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-10-22 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -115,10 +115,10 @@
           <p><b>Not sent</b>: page content you have not actively translated, browsing history, cookies, or form data. The extension does not automatically scan or upload anything in the background.</p>
 
           <h3>Audio handling for experimental video subtitles</h3>
-          <p>Video subtitles are off by default. When enabled, audio from the current tab is recognized locally by default, which may require downloading a browser language pack; audio is sent to Google's speech recognition service only when you explicitly choose "use cloud recognition," subject to the <a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. The recognized subtitle text is then sent to the translation platform or our servers according to the selected translation mode. We do not receive or store video or audio, and we do not provide hosted audio/video transcription.</p>
+          <p>Video subtitles are off by default. When enabled, audio from the current tab is recognized locally by default, which may require downloading a browser language pack; audio is sent to the browser's speech recognition service only when you explicitly choose "Use cloud recognition": Google for Chrome (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>), Microsoft Azure for Microsoft Edge (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft Privacy Statement</a>). Local recognition is available only on supported browser versions and languages; the extension does not switch to cloud recognition automatically. The recognized subtitle text is then sent to the translation platform or our servers according to the selected translation mode. We do not receive or store video or audio, and we do not provide hosted audio or video transcription.</p>
 
           <h3>Full PDF translation</h3>
-          <p>This feature has not yet been released with the Chrome store version. When you select "Translate the entire PDF" in Chrome's built-in PDF viewer, the extension re-reads the PDF open in that tab from the same website, using the browser cache and the website's own cookies just like the viewer; you can also select or drag a file into the PDF translation page. Files are parsed and displayed only on your device and are not uploaded to us or to the translation platform; only the text extracted from them is sent in batches as described in the table above. The rendered page and translation are kept only in that page's memory and are discarded when it is closed. "Download PDF" generates the file through the browser's print dialog, and the file is saved to the location you choose.</p>
+          <p>When you select "Translate entire PDF" in the browser's built-in PDF viewer, the extension re-reads the PDF open in that tab from the same website, using the browser cache and the website's own cookies just like the viewer does; you can also select or drag a file into the PDF translation page. Files are parsed and displayed only on your device and are never uploaded to us or to the translation platform; only the text extracted from them is sent in batches as described in the table above. The rendered page and translation are kept only in that page's memory and are discarded when it is closed. "Download PDF" is generated through the browser's print window, and the file is saved to the location you choose.</p>
 
           <h3>Account data</h3>
           <p>After registration or login, we store:</p>
@@ -179,7 +179,7 @@
                 <tr><td><code>storage</code></td><td>Stores the above settings and login token locally</td></tr>
                 <tr><td><code>scripting</code></td><td>After the extension is installed or updated, inject the translation script into already-open web pages; it is also injected on demand when you trigger translation</td></tr>
                 <tr><td><code>activeTab</code></td><td>Act only on the tab you are working in</td></tr>
-                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Reads audio from the current tab only when you enable video subtitle translation; recognized locally by default, sent to Google when you explicitly choose cloud recognition</td></tr>
+                <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Reads audio from the current tab only when you enable video subtitle translation; local recognition by default, sent to the browser's speech service when you explicitly choose cloud recognition (Google for Chrome, Microsoft Azure for Edge)</td></tr>
                 <tr>
                   <td>Access to <code>api.openai.com</code>, <code>api.deepseek.com</code>, <code>api-free.deepl.com</code>, <code>api.deepl.com</code></td>
                   <td>Sends translation requests to your chosen platform when using your own API Key</td>
@@ -190,7 +190,7 @@
                 </tr>
                 <tr>
                   <td>Content script on all sites</td>
-                  <td>The user may select text or specify a translation area on any web page; the content script provides a translation entry point and only filters selections that contain no text. In Chrome's built-in PDF viewer, it also recognizes PDFs to show a "Translate entire PDF" entry; the file is read only after you choose that entry</td>
+                  <td>Users may select text or designate a translation area on any web page; the content script provides the translation entry point and only filters out selections that contain no text. In the browser's built-in PDF viewer it also detects PDFs to show the "Translate entire PDF" entry, and the file is read only after you choose that entry</td>
                 </tr>
               </tbody>
             </table>
