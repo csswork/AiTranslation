@@ -13,7 +13,8 @@
     "test": "bash test/run.sh",
     "i18n": "node scripts/i18n.mjs --translate",
     "check:i18n": "node scripts/i18n.mjs --check",
-    "admin": "node scripts/admin.mjs"
+    "admin": "node scripts/admin.mjs",
+    "review": "node scripts/review.mjs"
   },
   "dependencies": {
     "@hono/node-server": "2.1.5",

@@ -14,7 +14,9 @@ export async function createSession(db, config, userId, client = 'web', { id = r
   await db.query('DELETE FROM sessions WHERE user_id = $1 AND (revoked_at IS NOT NULL OR expires_at <= now())', [userId]);
   await db.query(
     `INSERT INTO sessions (id, user_id, token_hash, client, expires_at, web_session_id)
-     VALUES ($1, $2, $3, $4, now() + make_interval(days => $5), $6)`,
+     SELECT $1, u.id, $3, $4,
+       LEAST(now() + make_interval(days => $5), r.expires_at, r.revoked_at), $6
+     FROM users u LEFT JOIN review_access r ON r.user_id = u.id WHERE u.id = $2`,
     [id, userId, hashToken(token), client, config.sessionDays, webSessionId],
   );
   return token;
@@ -25,11 +27,13 @@ export async function validateSession(db, config, token) {
   if (!token || token.length > 100) return null;
   const { rows: [row] } = await db.query(
     `SELECT s.id AS session_id, s.client, s.last_used_at, s.expires_at, s.web_session_id,
-            w.last_used_at AS web_last_used_at, w.expires_at AS web_expires_at,
+            w.last_used_at AS web_last_used_at, w.expires_at AS web_expires_at, r.expires_at AS review_expires_at,
             u.id, u.kind, u.email, u.username, u.email_verified_at, u.hosted_frozen_at, u.created_at
      FROM sessions s JOIN users u ON u.id = s.user_id
      LEFT JOIN sessions w ON w.id = s.web_session_id
+     LEFT JOIN review_access r ON r.user_id = u.id
      WHERE s.token_hash = $1 AND s.revoked_at IS NULL AND s.expires_at > now()
+       AND (r.user_id IS NULL OR (r.revoked_at IS NULL AND r.expires_at > now()))
        AND (s.web_session_id IS NULL OR (w.revoked_at IS NULL AND w.expires_at > now()))`,
     [hashToken(token)],
   );
@@ -37,19 +41,25 @@ export async function validateSession(db, config, token) {
   const {
     session_id: id, client, last_used_at: lastUsedAt, expires_at: expiresAt,
     web_session_id: webSessionId, web_last_used_at: webLastUsedAt, web_expires_at: webExpiresAt,
+    review_expires_at: reviewExpiresAt,
     ...user
   } = row;
   const now = Date.now();
+  const renewalTarget = Math.min(now + config.sessionDays * 86400_000, reviewExpiresAt ? new Date(reviewExpiresAt).getTime() : Infinity);
   const renewalDue = (lastUsed, expires) => now - new Date(lastUsed).getTime() > TOUCH_INTERVAL_MS
-    || new Date(expires).getTime() - now < config.sessionDays * 86400_000 - TOUCH_INTERVAL_MS;
+    || new Date(expires).getTime() < renewalTarget - TOUCH_INTERVAL_MS;
   const renewIds = [];
   if (renewalDue(lastUsedAt, expiresAt)) renewIds.push(id);
   // 扩展的有效使用也保留授权它的网页会话，避免只使用扩展的客户因父会话到期而掉线。
   if (webSessionId && renewalDue(webLastUsedAt, webExpiresAt)) renewIds.push(webSessionId);
   if (renewIds.length) {
     await db.query(
-      `UPDATE sessions SET last_used_at = now(), expires_at = GREATEST(expires_at, now() + make_interval(days => $2))
-       WHERE id = ANY($1::uuid[]) AND revoked_at IS NULL AND expires_at > now()`,
+      `UPDATE sessions s SET last_used_at = now(),
+         expires_at = LEAST(GREATEST(s.expires_at, now() + make_interval(days => $2)),
+           (SELECT r.expires_at FROM review_access r WHERE r.user_id = s.user_id))
+       WHERE s.id = ANY($1::uuid[]) AND s.revoked_at IS NULL AND s.expires_at > now()
+         AND NOT EXISTS (SELECT 1 FROM review_access r WHERE r.user_id = s.user_id
+           AND (r.revoked_at IS NOT NULL OR r.expires_at <= now()))`,
       [renewIds, config.sessionDays],
     );
   }
@@ -66,7 +76,9 @@ export async function listSessions(db, userId) {
   const { rows } = await db.query(
     `SELECT s.id, s.client, s.created_at, s.last_used_at, s.expires_at
      FROM sessions s LEFT JOIN sessions w ON w.id = s.web_session_id
+     LEFT JOIN review_access r ON r.user_id = s.user_id
      WHERE s.user_id = $1 AND s.revoked_at IS NULL AND s.expires_at > now()
+       AND (r.user_id IS NULL OR (r.revoked_at IS NULL AND r.expires_at > now()))
        AND (s.web_session_id IS NULL OR (w.revoked_at IS NULL AND w.expires_at > now()))
      ORDER BY s.last_used_at DESC`,
     [userId],

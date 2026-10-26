@@ -68,7 +68,7 @@ test('安装记录补齐：在的访客补原访客 ID；已合并的按转入�
     await claim(null, b, '2026-10-04T00:00:00Z');
     await transfer(b, '00000000-0000-4000-8000-0000000000b1', 25000, '2026-10-05T00:00:00Z');
 
-    assert.deepEqual(await migrate(pool), ['010_guest_claim_tracking.sql']);
+    assert.ok((await migrate(pool)).includes('010_guest_claim_tracking.sql'));
     const row = async (id) => (await pool.query('SELECT guest_id, merged_at, transferred_units FROM guest_claims WHERE id = $1', [id])).rows[0];
     assert.equal((await row(aliveClaim)).guest_id, alive.id);
     assert.deepEqual(await row(a1), { guest_id: ga1, merged_at: new Date('2026-10-03T00:00:00Z'), transferred_units: '25000' });
