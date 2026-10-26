@@ -12,6 +12,7 @@ import {
 } from '../../src/admin/auth.js';
 import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.js';
 import { installHistory } from '../../src/admin/installs.js';
+import { EXTENSION_STORES } from '../../src/auth/extension.js';
 import { apiUsageByUser, apiUsageForUser, overview } from '../../src/admin/reports.js';
 import { newTotpSecret, openSecret, otpauthUrl, sealSecret, verifyTotp } from '../../src/admin/totp.js';
 import { deleteUser, deletionSummary } from '../../src/admin/users.js';
@@ -250,6 +251,9 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
 
   app.get('/users', requireAdmin, async (c) => {
     const q = String(c.req.query('q') || '').trim().toLowerCase().slice(0, 254);
+    // 按浏览器筛选：用过该商店扩展的账户（Chrome、Edge 各对应一个正式扩展 ID）。
+    const browser = String(c.req.query('browser') || '').toLowerCase();
+    const browserId = Object.entries(EXTENSION_STORES).find(([, name]) => name.toLowerCase() === browser)?.[0] || null;
     const { rows: users } = await pool.query(
       `SELECT u.id, u.kind, u.email, u.username, u.created_at, u.hosted_frozen_at,
               (SELECT status FROM subscriptions s WHERE s.user_id = u.id ORDER BY updated_at DESC LIMIT 1) AS sub_status,
@@ -258,13 +262,15 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
                    AND (g.expires_at IS NULL OR g.expires_at > now()))::text AS balance_units,
               (SELECT COUNT(*) FROM guest_claims c
                  WHERE c.guest_id = u.id OR c.merged_user_id = u.id OR c.linked_user_id = u.id
-                    OR c.linked_user_id IN (SELECT m.guest_id FROM guest_claims m WHERE m.merged_user_id = u.id))::int AS installs
+                    OR c.linked_user_id IN (SELECT m.guest_id FROM guest_claims m WHERE m.merged_user_id = u.id))::int AS installs,
+              (SELECT array_agg(e.extension_id ORDER BY e.first_seen_at) FROM user_extensions e WHERE e.user_id = u.id) AS extension_ids
        FROM users u
-       WHERE ($1 = '' AND u.kind = 'member') OR u.email = $1 OR u.username LIKE $2 OR u.id::text = $1
+       WHERE (($1 = '' AND u.kind = 'member') OR u.email = $1 OR u.username LIKE $2 OR u.id::text = $1)
+         AND ($3::text IS NULL OR EXISTS (SELECT 1 FROM user_extensions e WHERE e.user_id = u.id AND e.extension_id = $3))
        ORDER BY u.created_at DESC LIMIT 100`,
-      [q, `%${q.replace(/[%_\\]/g, '\\$&')}%`],
+      [q, `%${q.replace(/[%_\\]/g, '\\$&')}%`, browserId],
     );
-    return page(c, () => views.usersPage({ admin: admin(c), q, users }));
+    return page(c, () => views.usersPage({ admin: admin(c), q, browser: browserId ? browser : '', users }));
   });
 
   const loadUser = async (id) => (UUID.test(id)
@@ -274,16 +280,17 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
     if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, activity, sessions, api, installs] = await Promise.all([
+    const [state, subs, activity, sessions, api, installs, extensions] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
       pool.query('SELECT COUNT(*)::int AS n FROM sessions WHERE user_id = $1 AND revoked_at IS NULL AND expires_at > now()', [u.id]),
       apiUsageForUser(pool, u.id, 30),
       installHistory(pool, u.id),
+      pool.query('SELECT extension_id, first_seen_at, last_seen_at FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [u.id]),
     ]);
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, note: takeNote(c),
     }));
   });
 

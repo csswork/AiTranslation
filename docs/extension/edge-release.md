@@ -73,7 +73,7 @@ node apps/extension/store-assets/edge/build-listings.mjs --check
 
 尚未验证或完成：
 
-- 正式 Edge ID 的账户授权、PKCE 回调及网页/扩展双向登出。本地测试 ID 的授权请求被后台拒绝，未为测试放开生产白名单。
+- 正式 Edge ID 的账户授权、PKCE 回调及网页/扩展双向登出（2026-10-26 已在服务端补齐，见下）。本地测试 ID 的授权请求被后台拒绝，未为测试放开生产白名单。
 - 使用真实用户 Key 的 BYOK 请求，以及实验语音识别。
 - Partner Center 仍被浏览器工具的已保存权限或管理策略拦截；新版 ZIP、23 种商店语言和截图尚未补交，未提交审核。
 - 微软开发者身份验证及正式 ID 配置。
@@ -83,6 +83,14 @@ node apps/extension/store-assets/edge/build-listings.mjs --check
 Chrome 商店虽已显示 2.1.0，但公开完整说明仍沿用早期自带 Key 版本（包含「没有开发者服务器」）；需要另行更新 Chrome 商店文案和数据披露，本次没有操作 Chrome 开发者后台。
 
 `dist/extension/edge-store-materials-2.1.0.zip` 包含公开文案、Logo、审核说明及两张来自 Edge 的功能截图，供后续填写商店使用；它是商店资料包，不能作为扩展安装包上传。扩展 ZIP 仍为 `ai-translation-edge-2.1.0.zip`。
+
+## 2026-10-26 正式 Edge ID
+
+Partner Center 的扩展 CRX ID 为 `mojcgjimlkkbohomcijkmoefpeekmohe`（产品 GUID `16469f92-…` 不是扩展 ID）。VPS `EXTENSION_IDS` 已在 Chrome ID 之后追加该 ID（修改前备份为 `/etc/huaci/backend.env.bak-20261026095352`），服务重启后健康检查正常。
+
+从外部核验：Edge 与 Chrome 来源的预检返回 204，授权页带着上下文跳到登录；未列入的 ID 预检 403、授权页 400。以审核账号对 Edge ID 走完 `/review-login` → 授权确认 → 回调 `chrome-extension://mojcgjimlkkbohomcijkmoefpeekmohe/src/auth/callback.html` → PKCE 换取扩展令牌 → `/me`（正式账户、1000.00 点）→ 扩展退出后关联网页会话一并退出。这是服务端接口验证，Edge 商店安装后的实机登录仍需在审核通过后复核。
+
+审核说明（Notes for certification）选择 “Yes”，内容为 `submission.json` 的 `testingNotes` 填入审核账号与访问密钥；凭据只在 Partner Center 填写，不进入仓库。
 
 ## 官方参考
 

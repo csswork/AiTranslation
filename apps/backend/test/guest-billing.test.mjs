@@ -422,3 +422,58 @@ test('DEV_TRIAL_RESET=1 时可重置本机网络的领取记录与浏览器标�
   assert.throws(() => testConfig({ NODE_ENV: 'production', APP_ORIGIN: 'https://app.example', MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 'r', MAIL_FROM: 'a@b.c', DEV_TRIAL_RESET: '1' }),
     /生产环境不能设置 DEV_TRIAL_RESET/);
 });
+
+test('扩展来源：按扩展 ID 记录 Chrome / Edge，访客合并后并入账户，管理端可筛选与查看', async () => {
+  const { app, mailbox } = buildApp({ pool, config, hosted: fakeHosted() });
+  const CHROME = 'hogimafgjmlpdlnepojgigjkhaccbcbj';
+  const EDGE = 'mojcgjimlkkbohomcijkmoefpeekmohe';
+  const from = (id) => ({ origin: `chrome-extension://${id}` });
+  const ext = (id, path, { method = 'POST', token, body, ip } = {}) => app.request(new URL(`/api/extension${path}`, config.appOrigin), {
+    method,
+    headers: { ...from(id), 'x-forwarded-for': ip || '198.51.100.90', 'content-type': 'application/json', ...(token ? { authorization: `Bearer ${token}` } : {}) },
+    body: method === 'GET' ? undefined : JSON.stringify(body || {}),
+  });
+  const login = async (id, email, guestToken) => {
+    const verifier = randomBytes(32).toString('base64url');
+    const challenge = createHash('sha256').update(verifier).digest('base64url');
+    const redirect = `chrome-extension://${id}/src/auth/callback.html`;
+    await pool.query("UPDATE email_codes SET created_at = now() - interval '2 minutes'");
+    const b = await signInWithEmail(app, config, mailbox, email);
+    await b.get(`/extension/authorize?redirect_uri=${encodeURIComponent(redirect)}&code_challenge=${challenge}&code_challenge_method=S256&state=s`);
+    const res = await b.post('/extension/authorize/confirm', { decision: 'approve' });
+    const code = new URL(res.headers.get('location')).searchParams.get('code');
+    return (await ext(id, '/token', { body: { code, code_verifier: verifier, redirect_uri: redirect, guest_token: guestToken } })).json();
+  };
+
+  // Edge 新安装的访客登录 → 合并；同一账户之后又在 Chrome 登录
+  const edgeGuest = await (await ext(EDGE, '/guest', { ip: '198.51.100.91' })).json();
+  await login(EDGE, 'both@example.com', edgeGuest.token);
+  await login(CHROME, 'both@example.com');
+  // 只用 Chrome 的访客
+  await ext(CHROME, '/guest', { ip: '198.51.100.92' });
+
+  const { rows: claims } = await pool.query('SELECT extension_id FROM guest_claims ORDER BY created_at');
+  assert.deepEqual(claims.map((c) => c.extension_id), [EDGE, CHROME]);
+  const { rows: [member] } = await pool.query("SELECT id FROM users WHERE email = 'both@example.com'");
+  const { rows: used } = await pool.query('SELECT extension_id FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [member.id]);
+  assert.deepEqual(used.map((e) => e.extension_id), [EDGE, CHROME], '访客的 Edge 记录并入正式账户，之后的 Chrome 登录也记录');
+  assert.equal((await pool.query(`SELECT COUNT(*)::int AS n FROM user_extensions e JOIN users u ON u.id = e.user_id WHERE u.kind = 'guest'`)).rows[0].n, 1);
+
+  await pool.query('INSERT INTO admins (user_id) VALUES ($1)', [member.id]);
+  const a = browser(app, config, config.adminOrigin);
+  await pool.query("UPDATE email_codes SET created_at = now() - interval '2 minutes'");
+  await a.post('/login', { email: 'both@example.com' });
+  await a.post('/login/verify', { code: mailbox.last('both@example.com') });
+  const detail = await a.text(`/users/${member.id}`);
+  assert.match(detail, /<dd data-extensions>Edge <span class="muted">首次 [^<]+<\/span><br>Chrome /);
+  assert.match(detail, /<td>Edge<\/td>\s*<td>已发放<\/td>/, '安装记录显示浏览器');
+  const edgeOnly = await a.text('/users?browser=edge');
+  assert.match(edgeOnly, /both@example\.com/);
+  assert.match(edgeOnly, /<td data-browsers>Edge · Chrome<\/td>/);
+  assert.match(edgeOnly, /<option value="edge" selected>Edge<\/option>/);
+  const { rows: [guestUser] } = await pool.query(`SELECT username FROM users WHERE kind = 'guest'`);
+  assert.doesNotMatch(await a.text(`/users?q=${guestUser.username}&browser=edge`), new RegExp(guestUser.username + '</a>'), 'Chrome 访客不在 Edge 筛选里');
+  assert.match(await a.text(`/users?q=${guestUser.username}&browser=chrome`), new RegExp(guestUser.username + '</a>'));
+  const overview = await a.text('/');
+  assert.match(overview, /安装来源[\s\S]*Edge[\s\S]*Chrome|安装来源[\s\S]*Chrome[\s\S]*Edge/);
+});

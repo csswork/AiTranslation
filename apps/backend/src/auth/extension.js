@@ -31,6 +31,41 @@ export function isAllowedExtension(id, config) {
   return !config.production;
 }
 
+/**
+ * 各商店正式扩展 ID（公开渠道标识）。管理端据此区分用户来自哪个浏览器；
+ * 新上架商店时在这里登记，同时加入生产 EXTENSION_IDS。不在表里的 ID（如本地开发版）显示为「其他」。
+ */
+export const EXTENSION_STORES = {
+  hogimafgjmlpdlnepojgigjkhaccbcbj: 'Chrome',
+  mojcgjimlkkbohomcijkmoefpeekmohe: 'Edge',
+};
+export const extensionStore = (id) => (id ? EXTENSION_STORES[id] || '其他' : null);
+
+/** 请求来源里的扩展 ID（chrome-extension://<ID>），格式不对时为 null。 */
+export const extensionIdFromOrigin = (origin) => String(origin || '').match(/^chrome-extension:\/\/([a-p]{32})$/)?.[1] || null;
+
+/** 记录账户用过这个扩展：建立扩展会话时调用，首次时间保留，最近时间更新。 */
+export async function recordExtension(db, userId, extensionId) {
+  if (!extensionId) return;
+  await db.query(
+    `INSERT INTO user_extensions (user_id, extension_id) VALUES ($1, $2)
+     ON CONFLICT (user_id, extension_id) DO UPDATE SET last_seen_at = now()`,
+    [userId, extensionId],
+  );
+}
+
+/** 访客合并或重装接回时，把访客的扩展记录并入目标账户（访客随后删除）。 */
+export async function moveExtensions(db, fromUserId, toUserId) {
+  await db.query(
+    `INSERT INTO user_extensions (user_id, extension_id, first_seen_at, last_seen_at)
+     SELECT $2, extension_id, first_seen_at, last_seen_at FROM user_extensions WHERE user_id = $1
+     ON CONFLICT (user_id, extension_id) DO UPDATE SET
+       first_seen_at = LEAST(user_extensions.first_seen_at, EXCLUDED.first_seen_at),
+       last_seen_at = GREATEST(user_extensions.last_seen_at, EXCLUDED.last_seen_at)`,
+    [fromUserId, toUserId],
+  );
+}
+
 export const isValidChallenge = (value) => typeof value === 'string' && /^[A-Za-z0-9_-]{43}$/.test(value);
 const isValidVerifier = (value) => typeof value === 'string' && /^[A-Za-z0-9._~-]{43,128}$/.test(value);
 

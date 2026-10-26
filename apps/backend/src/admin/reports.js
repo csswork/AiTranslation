@@ -45,7 +45,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
   const q = async (sql, params = []) => (await db.query(sql, params)).rows;
   const window = [from, now];
 
-  const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs,
+  const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers,
     installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
@@ -86,6 +86,9 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
        GROUP BY 1 ORDER BY requests DESC LIMIT 12`, window),
     q(`SELECT ui_lang AS key, COUNT(*)::int AS installs FROM guest_claims
        WHERE ui_lang IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC LIMIT 12`, window),
+    // 安装来源：按扩展 ID 区分商店（迁移 012 之前的记录为空，显示为未记录）。
+    q(`SELECT extension_id AS key, COUNT(*)::int AS installs, COUNT(*) FILTER (WHERE merged_user_id IS NOT NULL)::int AS registered
+       FROM guest_claims WHERE created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC`, window),
     q(`SELECT country AS key, COUNT(*)::int AS installs, COUNT(*) FILTER (WHERE merged_user_id IS NOT NULL)::int AS registered
        FROM guest_claims WHERE country IS NOT NULL AND created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY installs DESC`, window),
     q(`SELECT country AS key, COUNT(*)::int AS requests, COUNT(DISTINCT user_id)::int AS users, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
@@ -160,6 +163,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     targetLangs,
     sourceLangs,
     uiLangs,
+    browsers,
     countries: { installs: installCountries, usage: usageCountries, revenue: revenueCountries },
     revenue,
     heat,

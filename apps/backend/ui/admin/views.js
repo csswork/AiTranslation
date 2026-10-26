@@ -4,6 +4,7 @@
  */
 import { html, raw } from 'hono/html';
 import { renderSVG } from 'uqr';
+import { EXTENSION_STORES, extensionStore } from '../../src/auth/extension.js';
 import { displayCredits } from '../../src/credits/units.js';
 import { createI18n } from '../../src/i18n/index.js';
 import { INCOME_TYPES } from '../../src/usage/activity.js';
@@ -43,6 +44,9 @@ const pct = (part, whole) => (whole ? `${((part / whole) * 100).toFixed(1)}%` : 
 
 const KIND = { guest: '访客', member: '注册', subscriber: '订阅' };
 const ENTRY = { trial_grant: '注册赠送', guest_grant: '访客赠送', transfer: '访客转入', adjust: '管理员补发', usage: '托管扣点', refund: '失败返还', void: '作废' };
+// 扩展来源：Chrome / Edge 按正式扩展 ID 区分；迁移 012 之前的记录没有来源。
+const browserLabel = (id) => extensionStore(id) || '未记录';
+const browsersOf = (ids) => (ids?.length ? [...new Set(ids.map(browserLabel))].join(' · ') : '—');
 const OUTCOME = { granted: '已发放', ip_limited: '同网络超限', daily_cap: '当日总量已满', reinstall: '重装接回', claimed_member: '浏览器已注册' };
 
 // 配色切换与用户端相同：图标表示「点了会变成什么」，脚本（account.js）负责不刷新切换，没有脚本时提交给服务端。
@@ -283,6 +287,7 @@ ${money.expenses}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
   ${panel('订阅方案', planDonut, { note: '当前有效订阅' })}
+  ${panel('安装来源', r.browsers.length ? barList(r.browsers.map((b) => ({ label: browserLabel(b.key), value: b.installs, note: `${num(b.registered)} 注册` })), { cls: 'c2' }) : '', { note: '按扩展商店区分浏览器' })}
   ${panel('访客领取', r.outcomes.length ? barList(r.outcomes.map((o) => ({ label: OUTCOME[o.key] || o.key, value: o.n, note: `${displayCredits(o.credit_units)} 点` })), { cls: 'c3' }) : '')}
 </div></details>` : ''}
 </section>
@@ -568,18 +573,20 @@ ${expenses.length ? html`<section class="card">
 
 /* ---------- A3 / A6 用户 ---------- */
 
-export function usersPage({ admin, q, users }) {
+export function usersPage({ admin, q, browser = '', users }) {
   return layout({
     title: '用户',
     admin,
     active: 'users',
     body: html`<h1>用户</h1>
-<form method="get" action="/users" class="search"><input name="q" value="${q}" placeholder="邮箱、用户名或用户 ID" dir="ltr"><button class="button" type="submit">搜索</button></form>
+<form method="get" action="/users" class="search"><input name="q" value="${q}" placeholder="邮箱、用户名或用户 ID" dir="ltr">
+  <select name="browser" aria-label="浏览器"><option value="">全部浏览器</option>${Object.values(EXTENSION_STORES).map((name) => html`<option value="${name.toLowerCase()}"${browser === name.toLowerCase() ? html` selected` : ''}>${name}</option>`)}</select>
+  <button class="button" type="submit">搜索</button></form>
 <div class="table-wrap"><table>
-  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th class="num">安装</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
+  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th class="num">安装</th><th>浏览器</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
   <tbody>${users.map((u) => html`<tr>
     <td><a href="/users/${u.id}">${u.username}</a></td><td dir="ltr">${u.email || '—'}</td><td>${KIND[u.kind]}</td>
-    <td class="num">${displayCredits(u.balance_units)}</td><td class="num">${u.installs ? num(u.installs) : '—'}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
+    <td class="num">${displayCredits(u.balance_units)}</td><td class="num">${u.installs ? num(u.installs) : '—'}</td><td data-browsers>${browsersOf(u.extension_ids)}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
   </tr>`)}</tbody>
 </table></div>
 ${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}`,
@@ -631,10 +638,11 @@ const installsSection = (installs, u) => {
   <h2>安装与访客记录</h2>
   ${rows.length ? html`<p class="fine">共 ${summary.installs} 次安装${summary.merged ? html`；合并访客 ${summary.merged} 个，转入 ${displayCredits(summary.transferredUnits)} 点${summary.notTransferred ? html`（${summary.notTransferred} 个未转入：每个账户只接收一个访客的点数，或点数已用完）` : ''}` : ''}。网络是 IP 带密钥哈希的前 8 位，相同即同一网络。</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>安装时间</th><th>访客</th><th>领取结果</th><th class="num">赠送</th><th class="num">转入</th><th>关系</th><th>网络</th><th>国家</th><th>界面语言</th></tr></thead>
+    <thead><tr><th>安装时间</th><th>访客</th><th>浏览器</th><th>领取结果</th><th class="num">赠送</th><th class="num">转入</th><th>关系</th><th>网络</th><th>国家</th><th>界面语言</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-relation="${r.relation}">
       <td>${dt(r.created_at)}</td>
       <td dir="ltr">${r.guest_id ? html`<code>${shortId(r.guest_id)}</code>` : '—'}${r.guest_alive && r.guest_id !== u.id ? html` <a href="/users/${r.guest_id}">查看</a>` : ''}</td>
+      <td>${browserLabel(r.extension_id)}</td>
       <td>${OUTCOME[r.outcome] || r.outcome}</td>
       <td class="num">${displayCredits(r.granted_units)}</td>
       <td class="num">${r.relation === 'merged' ? (r.transferred_units == null ? '—' : displayCredits(r.transferred_units)) : ''}</td>
@@ -647,7 +655,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], note }) {
   return layout({
     title: u.username,
     admin,
@@ -664,6 +672,7 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
       <dt>类型</dt><dd>${KIND[u.kind]}</dd>
       <dt>邮箱</dt><dd dir="ltr">${u.email || '—'}${u.email_verified_at ? '（已验证）' : ''}</dd>
       <dt>注册时间</dt><dd>${dt(u.created_at)}</dd>
+      <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}</span>`) : '—'}</dd>
       <dt>有效会话</dt><dd>${sessions}</dd>
       <dt>托管服务</dt><dd>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结 · ${dt(u.hosted_frozen_at)}</span>` : '正常'}</dd>
     </dl>
