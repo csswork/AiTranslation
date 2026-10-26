@@ -475,5 +475,7 @@ test('扩展来源：按扩展 ID 记录 Chrome / Edge，访客合并后并入�
   assert.doesNotMatch(await a.text(`/users?q=${guestUser.username}&browser=edge`), new RegExp(guestUser.username + '</a>'), 'Chrome 访客不在 Edge 筛选里');
   assert.match(await a.text(`/users?q=${guestUser.username}&browser=chrome`), new RegExp(guestUser.username + '</a>'));
   const overview = await a.text('/');
-  assert.match(overview, /安装来源[\s\S]*Edge[\s\S]*Chrome|安装来源[\s\S]*Chrome[\s\S]*Edge/);
+  const sources = overview.match(/<div data-install-sources>[\s\S]*?<\/section>/)?.[0] || '';
+  assert.match(sources, /Chrome[\s\S]*Edge/, '来源占比按 Chrome、Edge 顺序');
+  assert.match(overview, /<h2>安装来源<\/h2>[\s\S]*?<svg/, '每日安装来源图表');
 });

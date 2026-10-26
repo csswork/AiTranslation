@@ -76,3 +76,52 @@ test('安装记录补齐：在的访客补原访客 ID；已合并的按转入�
     assert.deepEqual(await row(b1), { guest_id: null, merged_at: null, transferred_units: null });
   } finally { await pool.end(); }
 });
+
+test('历史安装归为 Chrome：只补 012 之前没有来源的记录与账户，之后的记录不受影响', async () => {
+  const pool = createPool(TEST_DATABASE_URL);
+  const CHROME = 'hogimafgjmlpdlnepojgigjkhaccbcbj';
+  const EDGE = 'mojcgjimlkkbohomcijkmoefpeekmohe';
+  try {
+    await pool.query('DROP SCHEMA public CASCADE; CREATE SCHEMA public');
+    await pool.query('CREATE TABLE schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())');
+    const dir = new URL('../migrations/', import.meta.url);
+    for (const name of fs.readdirSync(dir).filter(n => n.endsWith('.sql') && n < '013').sort()) {
+      await pool.query(fs.readFileSync(new URL(name, dir), 'utf8'));
+      await pool.query('INSERT INTO schema_migrations (name) VALUES ($1)', [name]);
+    }
+    await pool.query("UPDATE schema_migrations SET applied_at = '2026-10-26T12:00:00Z' WHERE name = '012_extension_source.sql'");
+    const user = async (kind, name, email = null) => (await pool.query('INSERT INTO users (kind, username, email) VALUES ($1, $2, $3) RETURNING id', [kind, name, email])).rows[0].id;
+    const claim = (userId, mergedId, at, ext = null) => pool.query(
+      "INSERT INTO guest_claims (user_id, guest_id, merged_user_id, merged_at, ip_hash, granted_units, outcome, created_at, extension_id) VALUES ($1, $1, $2, $3, 'h', 25000, 'granted', $4, $5) RETURNING id",
+      [userId, mergedId, mergedId ? '2026-10-22T00:00:00Z' : null, at, ext],
+    ).then((r) => r.rows[0].id);
+    const guest = await user('guest', 'guest_old');
+    const member = await user('member', 'member_old', 'old@example.com');
+    const extOnly = await user('member', 'ext_only', 'ext@example.com');
+    const fresh = await user('guest', 'guest_new');
+    const oldGuestClaim = await claim(guest, null, '2026-10-20T00:00:00Z');
+    const mergedClaim = await claim(null, member, '2026-10-21T00:00:00Z');
+    const newNull = await claim(fresh, null, '2026-10-27T00:00:00Z');
+    const newEdge = await claim(fresh, null, '2026-10-27T01:00:00Z', EDGE);
+    await pool.query(
+      "INSERT INTO sessions (user_id, token_hash, client, created_at, last_used_at, expires_at) VALUES ($1, 'x', 'extension', '2026-10-23T00:00:00Z', '2026-10-25T00:00:00Z', now() + interval '1 day')",
+      [extOnly],
+    );
+    await pool.query(`INSERT INTO user_extensions (user_id, extension_id, first_seen_at) VALUES ($1, $2, '2026-10-27T01:00:00Z')`, [fresh, EDGE]);
+
+    assert.deepEqual(await migrate(pool), ['013_backfill_chrome_source.sql']);
+    const ext = async (id) => (await pool.query('SELECT extension_id FROM guest_claims WHERE id = $1', [id])).rows[0].extension_id;
+    assert.equal(await ext(oldGuestClaim), CHROME);
+    assert.equal(await ext(mergedClaim), CHROME);
+    assert.equal(await ext(newNull), null, '012 之后的记录不归类');
+    assert.equal(await ext(newEdge), EDGE);
+    const { rows } = await pool.query('SELECT user_id, extension_id, first_seen_at, last_seen_at FROM user_extensions ORDER BY first_seen_at');
+    const byUser = Object.fromEntries(rows.map((r) => [`${r.user_id}:${r.extension_id}`, r]));
+    assert.deepEqual([byUser[`${guest}:${CHROME}`].first_seen_at, byUser[`${guest}:${CHROME}`].last_seen_at].map((d) => d.toISOString()), ['2026-10-20T00:00:00.000Z', '2026-10-20T00:00:00.000Z']);
+    assert.equal(byUser[`${member}:${CHROME}`].first_seen_at.toISOString(), '2026-10-22T00:00:00.000Z', '合并进来的账户按合并时间');
+    assert.deepEqual([byUser[`${extOnly}:${CHROME}`].first_seen_at, byUser[`${extOnly}:${CHROME}`].last_seen_at].map((d) => d.toISOString()), ['2026-10-23T00:00:00.000Z', '2026-10-25T00:00:00.000Z']);
+    assert.ok(!byUser[`${fresh}:${CHROME}`], '012 之后才出现的账户不归为 Chrome');
+    assert.ok(byUser[`${fresh}:${EDGE}`]);
+    assert.deepEqual(await migrate(pool), []);
+  } finally { await pool.end(); }
+});

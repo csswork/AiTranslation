@@ -233,6 +233,22 @@ export function overviewPage({ admin, r, geoConfigured, mapMode = 'usage' }) {
     : '';
   const money = financeSections(r);
 
+  // 安装来源：Chrome / Edge 按扩展商店区分，每日堆叠柱状图 + 占比。
+  const sourceOrder = [...Object.values(EXTENSION_STORES), '其他', '未记录'];
+  const sourceCls = { Chrome: 'c1', Edge: 'c2', 其他: 'c4', 未记录: 'c6' };
+  const sourceTotals = sourceOrder.map((name) => {
+    const rows = r.browsers.filter((b) => browserLabel(b.key) === name);
+    return { label: name, cls: sourceCls[name] || 'c5', value: rows.reduce((n, b) => n + b.installs, 0), registered: rows.reduce((n, b) => n + b.registered, 0) };
+  }).filter((t) => t.value > 0);
+  const sourceChart = timeChart({
+    labels, timeZone: r.timeZone, width: 660, stacked: true,
+    series: sourceTotals.map((t) => ({
+      name: t.label, cls: t.cls, kind: 'bar',
+      values: labels.map((day) => r.browserDays.filter((x) => x.day === day && browserLabel(x.key) === t.label).reduce((n, x) => n + x.installs, 0)),
+    })),
+  });
+  const sourceDonut = donut(sourceTotals.map((t) => ({ label: t.label, value: t.value, cls: t.cls })), { valueLabel: '安装' });
+
   const funnelSteps = [
     { label: '安装', value: r.funnel.installs },
     { label: '用过翻译', value: r.funnel.used },
@@ -283,11 +299,12 @@ ${money.expenses}
 <div class="panels dashboard-grid">
   ${panel('增长趋势', growth || emptyChart(), { span: 'main', note: '安装 · 注册 · 活跃 · 新订阅' })}
   ${panel('请求来自', audienceDonut || emptyChart('暂无托管请求'), { span: 'side', note: '按请求时的用户类型' })}
+  ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
+  ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
   ${panel('订阅方案', planDonut, { note: '当前有效订阅' })}
-  ${panel('安装来源', r.browsers.length ? barList(r.browsers.map((b) => ({ label: browserLabel(b.key), value: b.installs, note: `${num(b.registered)} 注册` })), { cls: 'c2' }) : '', { note: '按扩展商店区分浏览器' })}
   ${panel('访客领取', r.outcomes.length ? barList(r.outcomes.map((o) => ({ label: OUTCOME[o.key] || o.key, value: o.n, note: `${displayCredits(o.credit_units)} 点` })), { cls: 'c3' }) : '')}
 </div></details>` : ''}
 </section>
