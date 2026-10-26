@@ -12,6 +12,8 @@
 
 技术栈：Node.js 22、[Hono](https://hono.dev/)（服务端渲染 HTML，界面不需要浏览器脚本）、PostgreSQL（`pg`），Google 登录使用 [Arctic](https://arcticjs.dev/)。会话、验证码和账号模型由本应用自行实现，以满足资料最小化要求。
 
+商店审核专用账号使用独立的限期随机凭据，30 天内有效，可在命令行创建、轮换和撤销；不会改动普通邮箱验证码或 Google 登录。创建方式、权限和会话期限见 [商店审核账号](../../docs/backend/review-access.md)。
+
 ## 用户管理界面：第一批
 
 | 编号 | 已实现 | 尚未实现 |

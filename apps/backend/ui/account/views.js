@@ -159,6 +159,26 @@ export function loginPage(ui, { googleEnabled, oneTap = null, email = '', notice
   });
 }
 
+/** 面向商店审核人员的英文专用入口，不加入公开导航或普通登录页面。 */
+export function reviewLoginPage(ui, { error = null }) {
+  return layout(ui, {
+    title: 'Certification review access',
+    body: html`<section class="card auth" lang="en" dir="ltr">
+      <h1>Certification review access</h1>
+      <p class="muted">Use the temporary credentials supplied in the certification notes. This signs in to a regular user account.</p>
+      ${error ? html`<p role="alert">${error}</p>` : ''}
+      <form method="post" action="/review-login" class="stack" data-auth-form>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="username" required maxlength="254">
+        <label for="credential">Review access key</label>
+        <input id="credential" name="credential" type="password" autocomplete="current-password" required maxlength="100">
+        <button class="button primary" type="submit">Sign in</button>
+      </form>
+      <p class="fine">Access expires on the date supplied with your credentials. Contact support@huaci.app if access needs renewal.</p>
+    </section>`,
+  });
+}
+
 export function verifyPage(ui, { title, email, action, resendAction, backHref, notice = null, user = null, active = '' }) {
   const { t } = ui;
   return layout(ui, {

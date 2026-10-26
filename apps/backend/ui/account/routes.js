@@ -7,6 +7,7 @@ import { Hono } from 'hono';
 import { createAuthCode, extensionIdFromRedirect, isValidChallenge } from '../../src/auth/extension.js';
 import { finishGoogleAuth, startGoogleAuth } from '../../src/auth/google.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
+import { verifyReviewAccess } from '../../src/auth/review.js';
 import {
   createSession, listSessions, revokeOtherSessions, revokeSession, validateWebSession,
 } from '../../src/auth/sessions.js';
@@ -84,6 +85,7 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   const app = new Hono();
   // 每个来源地址每小时最多请求 20 次验证码（另有按邮箱的限制，见 email-codes）。
   const sendLimiter = createRateLimiter({ limit: 20, windowMs: 60 * 60 * 1000 });
+  const reviewLimiter = createRateLimiter({ limit: 10, windowMs: 15 * 60 * 1000 });
 
   const flash = (c, key) => setTemp(c, config, 'flash', key, 60);
   const takeFlash = (c) => {
@@ -175,6 +177,20 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     if (c.get('auth')) return c.redirect(returnTo || '/', 303);
     if (returnTo) setTemp(c, config, 'return_to', returnTo, 30 * 60);
     return render(c, views.loginPage, { googleEnabled: Boolean(google), oneTap: oneTapFor(c), notice: takeFlash(c) });
+  });
+
+  // 仅向审核人员提供此地址；普通注册、邮箱验证码和 Google 登录流程保持不变。
+  app.get('/review-login', (c) => {
+    if (c.get('auth')) return c.redirect('/', 303);
+    return render(c, views.reviewLoginPage, {});
+  });
+
+  app.post('/review-login', async (c) => {
+    if (!reviewLimiter(clientAddress(c, config))) return render(c, views.reviewLoginPage, { error: 'Too many attempts. Please try again in 15 minutes.' }, 429);
+    const body = await c.req.parseBody();
+    const userId = await verifyReviewAccess(pool, body.email, body.credential);
+    if (!userId) return render(c, views.reviewLoginPage, { error: 'Invalid or expired review credentials.' }, 401);
+    return signIn(c, userId);
   });
 
   app.post('/login/email', async (c) => {

@@ -73,6 +73,8 @@ sudoedit /etc/huaci/backend.env
 
 ## 上线前必须完成
 
+商店审核专用账号：部署迁移 `011_review_access.sql` 后，按 [审核账号说明](../../../docs/backend/review-access.md) 在服务器创建。明文凭据只写入操作者指定的 `0600` 私有文件，不进入部署产物或日志。回退到不识别审核期限的旧代码前先撤销全部审核账号会话。
+
 1. 开通 `support@huaci.app` 收信（例如 Cloudflare Email Routing 转发到个人邮箱），在 Resend 验证 huaci.app 并设置 `MAIL_TRANSPORT=resend`、`RESEND_API_KEY`、`MAIL_FROM`。
 2. 配置 `app.huaci.app` 与 `admin.huaci.app` 的 DNS 与 HTTPS 证书，反向代理把两个主机名都转发到本服务。
 3. 数据库备份与恢复演练。

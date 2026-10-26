@@ -29,6 +29,7 @@ try {
     const { user, created } = await findOrCreateUserByEmail(pool, config.trialCredits, email);
     if (created) console.log(`已建立账户：${email}`);
     const id = user.id;
+    if ((await pool.query('SELECT 1 FROM review_access WHERE user_id = $1', [id])).rowCount) throw new Error('审核账号不能授予管理员权限');
     await pool.query('INSERT INTO admins (user_id) VALUES ($1) ON CONFLICT DO NOTHING', [id]);
     await log('admin.grant', id);
     console.log(`已设为管理员：${email}。在 ${config.adminOrigin || 'ADMIN_ORIGIN'} 登录并绑定二步验证。`);
