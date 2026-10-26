@@ -14,7 +14,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
-import { isAllowedExtension, redeemAuthCode } from '../auth/extension.js';
+import { extensionIdFromOrigin, isAllowedExtension, recordExtension, redeemAuthCode } from '../auth/extension.js';
 import { createSession, revokeExtensionLogin, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
@@ -51,7 +51,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
 
   app.use('*', async (c, next) => {
     const origin = c.req.header('origin') || '';
-    const id = origin.match(/^chrome-extension:\/\/([a-p]{32})$/)?.[1];
+    const id = extensionIdFromOrigin(origin);
     const allowed = id && isAllowedExtension(id, config);
     if (c.req.method === 'OPTIONS') {
       if (!allowed) return c.body(null, 403);
@@ -85,7 +85,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     // 扩展可以带上自己的界面语言（24 种语言 ID 之一），只用于报表。
     const body = await readJson(c);
     const uiLang = LANGUAGES[body.uiLanguage] ? body.uiLanguage : null;
-    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang });
+    // 扩展 ID 区分来源商店（Chrome / Edge），只用于报表与管理端。
+    const extensionId = extensionIdFromOrigin(c.req.header('origin'));
+    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId });
     return c.json({
       token: result.token,
       tokenType: 'Bearer',
@@ -130,6 +132,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       transferred = await transaction(pool, (client) => mergeGuest(client, guest.user.id, userId));
     }
     const token = await createSession(pool, config, userId, 'extension', { webSessionId });
+    await recordExtension(pool, userId, extensionIdFromOrigin(c.req.header('origin')));
     return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred) });
   });
 

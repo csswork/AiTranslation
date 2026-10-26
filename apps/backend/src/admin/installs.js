@@ -13,7 +13,7 @@ export async function installHistory(db, userId, { limit = 100 } = {}) {
   const { rows } = await db.query(
     `WITH merged AS (SELECT guest_id FROM guest_claims WHERE merged_user_id = $1 AND guest_id IS NOT NULL)
      SELECT g.id, g.guest_id, g.outcome, g.granted_units::text, g.transferred_units::text, g.merged_at, g.created_at,
-            g.country, g.ui_lang, left(g.ip_hash, 8) AS network, g.user_id IS NOT NULL AS guest_alive,
+            g.country, g.ui_lang, g.extension_id, left(g.ip_hash, 8) AS network, g.user_id IS NOT NULL AS guest_alive,
             g.merged_user_id, mu.username AS merged_username, g.linked_user_id, lu.username AS linked_username,
             CASE
               WHEN g.merged_user_id = $1 THEN 'merged'
