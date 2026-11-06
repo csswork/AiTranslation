@@ -57,4 +57,16 @@ const request = { source: '新功能今天上线。', translation, start: 8, end
   console.log('✓ DeepL 明确不支持，缺 Key 引导设置，点数翻译经 service worker 转发');
 }
 
+/* 4. 长文只取选中位置附近：不超过 3600 字，选中部分仍然完整 */
+{
+  const before = 'a'.repeat(5000);
+  const translation = `${before}function${'b'.repeat(5000)}`;
+  const source = '原'.repeat(9000);
+  await P.alternatives({ source, translation, start: 5000, end: 5008, targetId: 'en', noteId: 'en', settings: S.normalize({ provider: 'hosted' }) });
+  const m = sent.at(-1);
+  assert.ok(m.translation.length <= 3600 && m.source.length <= 3600);
+  assert.equal(m.translation.slice(m.start, m.end), 'function');
+  console.log('✓ 长文按选中位置截取上下文，选中部分不变');
+}
+
 console.log('\n全部通过');

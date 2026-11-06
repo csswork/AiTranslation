@@ -562,5 +562,16 @@
   "已替换为「$1」": "Vervangen door \"$1\"",
   "已替换为「$1」。全文还有 $2 处「$3」": "Vervangen door \"$1\". Er staan nog $2 keer \"$3\" in de tekst.",
   "全部替换": "Alles vervangen",
-  "已替换 $1 处": "$1 keer vervangen"
+  "已替换 $1 处": "$1 keer vervangen",
+  "以后翻译「$1」会优先用这个译法": "Toekomstige vertalingen van \"$1\" gebruiken voortaan deze weergave",
+  "别处还有 $1 处「$2」": "Er zijn nog $1 andere instanties van \"$2\"",
+  "不要记住": "Niet onthouden",
+  "已取消这个用词偏好": "Deze woordvoorkeur is verwijderd",
+  "用词偏好": "Woordvoorkeuren",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "Als je in een vertaling op een woord klikt en de formulering wijzigt, wordt de vertaling van dat woord onthouden en voortaan bij voorkeur gebruikt bij het vertalen van tekst met hetzelfde bronwoord. Alleen opgeslagen in deze browser en met vertaalverzoeken naar de gekozen provider verzonden.",
+  "全部清除": "Alles wissen",
+  "原来是「$1」": "Was \"$1\"",
+  "共 $1 条": "$1 in totaal",
+  "还没有用词偏好": "Nog geen woordvoorkeuren",
+  "清除全部用词偏好？": "Alle woordvoorkeuren wissen?"
 }

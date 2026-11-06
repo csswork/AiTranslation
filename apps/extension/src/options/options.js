@@ -43,6 +43,9 @@
     manage: $('manage'),
     visionNote: $('visionNote'),
     ruleCount: $('ruleCount'),
+    termList: $('termList'),
+    termCount: $('termCount'),
+    termClear: $('termClear'),
     videoEnabled: $('videoEnabled'),
     videoOptions: $('videoOptions'),
     videoLang: $('videoLang'),
@@ -523,6 +526,7 @@
   // 弹窗里切换了平台也同步过来。
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') return;
+    if (changes[AITrTerms.KEY]) renderTerms();
     if (changes[ACCOUNT_KEY]) {
       account = changes[ACCOUNT_KEY].newValue || { signedIn: false };
       renderAccount();
@@ -635,6 +639,41 @@
     }
   }
 
+  /** 用词偏好（lib/terms.js）：列出、单条删除、全部清除。 */
+  async function renderTerms() {
+    const entries = await AITrTerms.list();
+    el.termList.replaceChildren(...entries.map((entry) => {
+      const item = document.createElement('li');
+      const pair = document.createElement('span');
+      pair.className = 'term-pair';
+      const source = document.createElement('b');
+      source.textContent = entry.source;
+      const arrow = document.createElement('span');
+      arrow.className = 'term-arrow';
+      arrow.textContent = '→';
+      const to = document.createElement('b');
+      to.textContent = entry.to;
+      to.lang = entry.target;
+      pair.append(source, arrow, to);
+      const meta = document.createElement('span');
+      meta.className = 'term-meta';
+      meta.textContent = [AITrLanguages.LANGUAGES[entry.target] ? AITrLanguages.label(entry.target) : entry.target,
+        entry.from ? t("原来是「$1」", [entry.from]) : ''].filter(Boolean).join(' · ');
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'btn ghost small';
+      remove.textContent = t("删除");
+      remove.addEventListener('click', () => AITrTerms.forget(entry.id));
+      item.append(pair, meta, remove);
+      return item;
+    }));
+    el.termCount.textContent = entries.length ? t("共 $1 条", [entries.length]) : t("还没有用词偏好");
+    el.termClear.hidden = !entries.length;
+  }
+  el.termClear.addEventListener('click', async () => {
+    if (confirm(t("清除全部用词偏好？"))) await AITrTerms.clear();
+  });
+
   // 快捷键本身只能在 Chrome 自己的页面里改
   el.editShortcut.addEventListener('click', () => {
     chrome.tabs.create({ url: AITrEnv.extensionsShortcuts });
@@ -703,6 +742,7 @@
     renderBehavior();
     renderShortcutKey();
     renderRuleCount();
+    renderTerms();
     renderVideoLang();
     renderLangState();
   })();

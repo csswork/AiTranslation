@@ -562,5 +562,16 @@
   "已替换为「$1」": "Đã thay thế bằng \"$1\"",
   "已替换为「$1」。全文还有 $2 处「$3」": "Đã thay thế bằng \"$1\". Toàn văn còn $2 chỗ \"$3\"",
   "全部替换": "Thay thế tất cả",
-  "已替换 $1 处": "Đã thay thế $1 chỗ"
+  "已替换 $1 处": "Đã thay thế $1 chỗ",
+  "以后翻译「$1」会优先用这个译法": "Các bản dịch \"$1\" sau này sẽ ưu tiên dùng cách dịch này",
+  "别处还有 $1 处「$2」": "Còn $1 chỗ khác có \"$2\"",
+  "不要记住": "Không ghi nhớ",
+  "已取消这个用词偏好": "Đã hủy tùy chọn cách dùng từ này",
+  "用词偏好": "Tùy chọn cách dùng từ",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "Sau khi bạn nhấp vào một từ trong bản dịch và đổi cách diễn đạt, cách dịch của từ đó sẽ được ghi nhớ; các lần dịch sau văn bản chứa cùng từ gốc sẽ ưu tiên dùng cách dịch này. Chỉ lưu trong trình duyệt này và được gửi kèm yêu cầu dịch đến nền tảng đã chọn.",
+  "全部清除": "Xóa tất cả",
+  "原来是「$1」": "Trước đây là \"$1\"",
+  "共 $1 条": "Tổng cộng $1 mục",
+  "还没有用词偏好": "Chưa có tùy chọn cách dùng từ nào",
+  "清除全部用词偏好？": "Xóa tất cả tùy chọn cách dùng từ?"
 }

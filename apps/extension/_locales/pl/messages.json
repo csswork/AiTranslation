@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Przyszłe tłumaczenia „$arg1$” będą preferować to brzmienie",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "W innych miejscach jest jeszcze $arg1$ wystąpień „$arg2$”",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Nie zapamiętuj"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Usunięto tę preferencję tłumaczenia"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Preferencje tłumaczenia"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Po kliknięciu słowa w tłumaczeniu i zmianie jego brzmienia tłumaczenie tego słowa zostanie zapamiętane i będzie preferowane w przyszłych tłumaczeniach tekstów zawierających to samo słowo źródłowe. Przechowywane tylko w tej przeglądarce i wysyłane z żądaniami tłumaczenia do wybranego dostawcy."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Wyczyść wszystko"
+  },
+  "m_7485128ba757a213": {
+    "message": "Wcześniej „$arg1$”",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "Łącznie: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Brak preferencji tłumaczenia"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Wyczyścić wszystkie preferencje tłumaczenia?"
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

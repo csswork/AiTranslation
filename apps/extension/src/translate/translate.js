@@ -49,6 +49,22 @@
   let source = AUTO;
   let controller = null;
   let translation = '';
+  /** 翻完的译文单元与它的目标语言：点译文里的词换说法（lib/word-picker.js）。 */
+  let unit = null;
+  let unitTarget = choice;
+  const picker = AITrWordPicker.create({
+    root: document,
+    mount: document.body,
+    units: () => (unit ? [unit] : []),
+    target: () => unitTarget,
+    cacheKey: () => settings.provider,
+    request: (args) => P.alternatives({
+      ...args, settings: S.normalize({ ...settings, target: unitTarget }), targetId: unitTarget, noteId: AITrI18n.locale(),
+    }),
+    remember: (entry) => AITrTerms.remember(entry),
+    forget: (entry) => AITrTerms.forget(entry.id),
+    onChange: (changed) => { translation = changed.out; },
+  });
   let autoTimer = 0;
   /** 上一次真正发出去的原文，用来避免自动翻译重复请求同一段内容。 */
   let lastSent = '';
@@ -153,6 +169,9 @@
     const provider = S.resolveProvider(requestSettings);
 
     translation = '';
+    unit = null;
+    picker.reset();
+    unitTarget = targetId;
     el.out.textContent = '';
     el.out.dir = S.TARGETS[targetId].dir;
     el.error.hidden = true;
@@ -181,6 +200,9 @@
         showError(t("模型没有返回任何内容，重试或换个模型试试"));
         return;
       }
+      // 翻完才按词切开，流式过程中保持纯文字
+      unit = { node: el.out, text, out: translation, machine: translation, src: null };
+      picker.paint(unit);
       const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
       el.meta.textContent = [provider.label, provider.model, label(targetId), `${seconds}s`].filter(Boolean).join(' · ');
     } catch (err) {
@@ -243,6 +265,8 @@
     controller = null;
     el.input.value = '';
     translation = '';
+    unit = null;
+    picker.reset();
     el.out.textContent = '';
     el.error.hidden = true;
     el.meta.textContent = '';

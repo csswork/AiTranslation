@@ -284,6 +284,40 @@
     let providerModel = '';
     let targetId = '';
     let providerId = '';
+    /** 当前这次翻译的译文单元（翻完才有）：点译文里的词换说法，见 lib/word-picker.js。 */
+    let unit = null;
+    let picker = null;
+
+    /** 换说法与用词偏好都经 service worker：内容脚本不直接请求接口，也不直接写偏好。 */
+    function createPicker(root) {
+      const ask = async (message) => {
+        let reply;
+        try {
+          reply = await chrome.runtime.sendMessage(message);
+        } catch {
+          reply = null;
+        }
+        if (!reply?.ok) throw new Error(reply?.error || t("翻译失败"));
+        return reply;
+      };
+      return AITrWordPicker.create({
+        root,
+        mount: root,
+        units: () => (unit ? [unit] : []),
+        target: () => targetId,
+        cacheKey: () => providerId,
+        request: async (args) => {
+          const reply = await AITrRequests.request({ type: 'alternatives', ...args, providerId, targetId, noteId: AITrI18n.locale() });
+          if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });
+          return { source: reply.source || '', options: reply.options || [] };
+        },
+        remember: async (entry) => (await ask({ type: 'terms-remember', ...entry })).entry,
+        forget: (entry) => ask({ type: 'terms-forget', id: entry.id }),
+        onChange: (changed) => {
+          translation = changed.out;
+        },
+      });
+    }
 
     function build() {
       const host = document.createElement('div');
@@ -326,6 +360,7 @@
         </div>`;
       while (wrap.firstChild) root.appendChild(wrap.firstChild);
       AITrI18n.localize(root);
+      picker = createPicker(root);
 
       const q = (sel) => root.querySelector(sel);
       dom = {
@@ -415,6 +450,7 @@
       if (!dom) return;
       open = false;
       window.removeEventListener('keydown', onKeydown, true);
+      picker?.close();
       dom.host.style.setProperty('display', 'none', 'important');
       closePort();
       lastReported = null; // 关闭后重新上报一次选区
@@ -490,6 +526,8 @@
       port = activePort;
       sourceText = message.text || '';
       translation = '';
+      unit = null;
+      picker?.reset();
       providerLabel = message.provider?.label || '';
       providerModel = message.provider?.model || '';
       providerId = message.provider?.id;
@@ -551,6 +589,11 @@
       if (!dom) return;
       dom.skeleton.hidden = true;
       setBusy(false);
+      // 翻完才按词切开：流式过程中每段都重排会很卡
+      if (translation.trim()) {
+        unit = { node: dom.result, text: sourceText, out: translation, machine: translation, src: dom.originalText };
+        picker.paint(unit);
+      }
       const seconds = elapsed ? ` · ${(elapsed / 1000).toFixed(1)}s` : '';
       dom.meta.textContent = `${[providerLabel, providerModel].filter(Boolean).join(' · ')}${seconds}`;
       releasePort();
@@ -585,6 +628,7 @@
       open = false;
       window.removeEventListener('keydown', onKeydown, true);
       closePort();
+      picker?.destroy();
       dom?.host.remove();
     });
     return { begin, append, finish, fail, hide, isOpen: () => open };

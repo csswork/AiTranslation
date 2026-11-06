@@ -307,8 +307,13 @@
    * 单段文字流式翻译（划词弹窗、翻译面板）：逐段产出译文，最后用服务端返回的余额更新缓存。
    * 服务端不支持流式时（旧版本）会一次性返回整段，同样可用。
    */
-  async function* translateStream({ text, target, source, signal }) {
-    const reply = await hostedRequest('/translate', { texts: [text], target, source: source || undefined, stream: true }, signal, { stream: true });
+  /** 用词偏好随请求发送（服务端只放进提示词，不保存）；最多 20 条。 */
+  const glossaryOf = (glossary) => (Array.isArray(glossary) && glossary.length
+    ? glossary.slice(0, 20).map(({ source, target }) => ({ source: String(source).slice(0, 100), target: String(target).slice(0, 100) }))
+    : undefined);
+
+  async function* translateStream({ text, target, source, glossary, signal }) {
+    const reply = await hostedRequest('/translate', { texts: [text], target, source: source || undefined, glossary: glossaryOf(glossary), stream: true }, signal, { stream: true });
     if (!reply.response) {
       if (!Array.isArray(reply.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
       if (reply.translations[0]) yield reply.translations[0];
@@ -325,8 +330,8 @@
     if (final.error) throw failure(502, final);
   }
 
-  async function translate({ texts, target, source, signal }) {
-    const data = await hostedRequest('/translate', { texts, target, source: source || undefined }, signal);
+  async function translate({ texts, target, source, glossary, signal }) {
+    const data = await hostedRequest('/translate', { texts, target, source: source || undefined, glossary: glossaryOf(glossary) }, signal);
     if (!Array.isArray(data.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
     return data.translations;
   }

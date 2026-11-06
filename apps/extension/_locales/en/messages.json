@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Future translations of \"$arg1$\" will prefer this rendering",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "There are $arg1$ more instances of \"$arg2$\" elsewhere",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Don't remember"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Removed this wording preference"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Wording preferences"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "After you click a word in a translation and change its wording, the translation for that word is remembered and preferred in future translations of text containing the same source word. Stored only in this browser and sent with translation requests to the selected provider."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Clear all"
+  },
+  "m_7485128ba757a213": {
+    "message": "Was \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "$arg1$ total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "No wording preferences yet"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Clear all wording preferences?"
+  },
   "extensionName": {
     "message": "AI Translator"
   },

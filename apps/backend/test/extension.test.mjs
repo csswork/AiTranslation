@@ -281,8 +281,8 @@ test('网页登出后，尚未兑换的扩展授权码也不能建立新会话',
 
 function fakeHosted({ fail = false } = {}) {
   const calls = [];
-  const hosted = async ({ texts, target }) => {
-    calls.push({ texts, target });
+  const hosted = async ({ texts, target, glossary }) => {
+    calls.push({ texts, target, glossary });
     const meta = { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', latencyMs: 5 };
     if (fail) throw Object.assign(new Error('model_500'), { code: 'http_500', meta });
     return {
@@ -461,6 +461,25 @@ test('其他译法：按原文段落字数扣点并记用量；失败返还；�
   await pool.query("UPDATE credit_ledger SET amount_units = 0 WHERE user_id = (SELECT id FROM users WHERE email = 'alt@example.com') AND entry_type = 'trial_grant'");
   res = await api(app, config, '/alternatives', { method: 'POST', token, body: request });
   assert.equal(res.status, 402, '余额不足不调用模型');
+});
+
+test('托管翻译带用词偏好：转给模型、不额外计费；格式不对拒绝', async () => {
+  const { hosted, calls } = fakeHosted();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'glossary@example.com');
+  const glossary = [{ source: '功能', target: 'feature' }];
+  let res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['新功能上线'], target: 'en', glossary } });
+  assert.equal(res.status, 200);
+  assert.equal((await res.json()).cost, '0.01', '只按原文字数计费');
+  assert.deepEqual(calls.at(-1).glossary, glossary);
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'en' } });
+  assert.deepEqual(calls.at(-1).glossary, [], '没带时为空');
+  for (const bad of [{ source: '', target: 'x' }, { source: 'x' }, { source: 'x'.repeat(101), target: 'y' }, 'x']) {
+    res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'en', glossary: [bad] } });
+    assert.equal(res.status, 400, JSON.stringify(bad));
+  }
+  res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['x'], target: 'en', glossary: Array.from({ length: 21 }, () => glossary[0]) } });
+  assert.equal(res.status, 400, '最多 20 条');
 });
 
 test('预热接口不需要登录、不返回内容', async () => {

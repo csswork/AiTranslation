@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "앞으로 \"$arg1$\"은(는) 이 번역을 우선 사용합니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "다른 곳에 \"$arg2$\"이(가) $arg1$개 더 있습니다",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "기억하지 않기"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "이 표현 선호를 취소했습니다"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "표현 선호"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "번역문에서 단어를 클릭해 표현을 바꾸면 해당 단어의 번역이 기억되어, 이후 같은 원문 단어가 포함된 텍스트를 번역할 때 우선 사용됩니다. 이 브라우저에만 저장되며 번역 시 요청과 함께 선택한 플랫폼으로 전송됩니다."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "모두 지우기"
+  },
+  "m_7485128ba757a213": {
+    "message": "이전: \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "총 $arg1$개",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "아직 표현 선호가 없습니다"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "모든 표현 선호를 지우시겠습니까?"
+  },
   "extensionName": {
     "message": "AI 번역"
   },

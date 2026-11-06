@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "以后翻译「$arg1$」会优先用这个译法",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "别处还有 $arg1$ 处「$arg2$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "不要记住"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "已取消这个用词偏好"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "用词偏好"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。"
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "全部清除"
+  },
+  "m_7485128ba757a213": {
+    "message": "原来是「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "共 $arg1$ 条",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "还没有用词偏好"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "清除全部用词偏好？"
+  },
   "extensionName": {
     "message": "AI 划词翻译"
   },

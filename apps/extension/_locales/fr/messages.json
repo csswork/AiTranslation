@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Les futures traductions de « $arg1$ » privilégieront cette formulation",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Il y a $arg1$ autres occurrences de « $arg2$ » ailleurs",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Ne pas mémoriser"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Préférence de formulation supprimée"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Préférences de formulation"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Après avoir cliqué sur un mot dans une traduction et modifié sa formulation, la traduction de ce mot est mémorisée et privilégiée lors des futures traductions de textes contenant le même mot source. Stockée uniquement dans ce navigateur et envoyée avec les requêtes de traduction au fournisseur sélectionné."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Tout effacer"
+  },
+  "m_7485128ba757a213": {
+    "message": "Était « $arg1$ »",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "$arg1$ au total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Aucune préférence de formulation pour l'instant"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Effacer toutes les préférences de formulation ?"
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

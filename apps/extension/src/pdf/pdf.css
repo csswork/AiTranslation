@@ -170,7 +170,7 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
 /* 打印 = 下载 PDF：每页一张纸，纸张尺寸由脚本写进 #pageSize */
 @media print {
   body { background: #fff; }
-  .top, .error, .empty, .sheet .tag { display: none !important; }
+  .top, .error, .empty, .sheet .tag, .wp-alt, .wp-toast { display: none !important; }
   .pages { display: block; padding: 0; }
   .row, .mode-compare .row, .mode-translated .row, .mode-original .row {
     max-width: none; width: 100vw; height: 100vh; gap: 0;

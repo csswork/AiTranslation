@@ -562,5 +562,16 @@
   "已替换为「$1」": "Reemplazado por «$1»",
   "已替换为「$1」。全文还有 $2 处「$3」": "Reemplazado por «$1». Quedan $2 apariciones de «$3» en el texto.",
   "全部替换": "Reemplazar todo",
-  "已替换 $1 处": "Se reemplazaron $1 apariciones"
+  "已替换 $1 处": "Se reemplazaron $1 apariciones",
+  "以后翻译「$1」会优先用这个译法": "En adelante, las traducciones de «$1» usarán esta opción de forma preferente",
+  "别处还有 $1 处「$2」": "Hay $1 instancias más de «$2» en otros lugares",
+  "不要记住": "No recordar",
+  "已取消这个用词偏好": "Se eliminó esta preferencia de redacción",
+  "用词偏好": "Preferencias de redacción",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "Cuando haces clic en una palabra de una traducción y cambias su redacción, se recuerda la traducción de esa palabra y se prefiere en futuras traducciones de textos que contengan la misma palabra de origen. Solo se guarda en este navegador y se envía con las solicitudes de traducción al proveedor seleccionado.",
+  "全部清除": "Borrar todo",
+  "原来是「$1」": "Antes era «$1»",
+  "共 $1 条": "$1 en total",
+  "还没有用词偏好": "Aún no hay preferencias de redacción",
+  "清除全部用词偏好？": "¿Borrar todas las preferencias de redacción?"
 }

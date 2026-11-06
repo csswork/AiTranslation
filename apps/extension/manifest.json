@@ -57,6 +57,7 @@
         "src/lib/text-shapes.js",
         "src/lib/region-picker.js",
         "src/lib/shape-editor.js",
+        "src/lib/word-picker.js",
         "src/content/content.js",
         "src/content/elements.js",
         "src/content/image.js",

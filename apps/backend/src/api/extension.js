@@ -6,6 +6,7 @@
  *   POST /logout     撤销当前扩展及其关联的网页登录
  *   GET  /ping       预热连接，不查库、不需要登录
  *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据。
+ *                    可带 glossary（扩展本机保存的用词偏好，最多 20 条）：只放进提示词，不保存、不计费。
  *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
  *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
  *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围）；文字随后走 /translate，按实际文字扣点
@@ -31,6 +32,20 @@ const MAX_ITEMS = 100;
 const MAX_CONTEXT = 4000;
 const MAX_SELECTED = 200;
 const MAX_IMAGE_BODY = 8 * 1024 * 1024;
+
+/** 用词偏好：[{ source, target }]，最多 20 条，每项 1–100 个字符。缺省为空；格式不对返回 null。 */
+function readGlossary(value) {
+  if (value == null) return [];
+  if (!Array.isArray(value) || value.length > 20) return null;
+  const out = [];
+  for (const item of value) {
+    const source = typeof item?.source === 'string' ? item.source.trim() : '';
+    const target = typeof item?.target === 'string' ? item.target.trim() : '';
+    if (!source || !target || source.length > 100 || target.length > 100) return null;
+    out.push({ source, target });
+  }
+  return out;
+}
 
 /** 只把图片输入交给模型，不在 VPS 上抓取用户提供的 URL。拒绝本地文件、SVG 与非图片数据。 */
 function validImage(image) {
@@ -292,6 +307,8 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const texts = Array.isArray(body.texts) ? body.texts : [];
     if (!texts.length || texts.length > MAX_ITEMS || texts.some((t) => typeof t !== 'string')) return c.json({ error: 'invalid_texts' }, 400);
     if (!LANGUAGES[body.target] || (body.source && !LANGUAGES[body.source])) return c.json({ error: 'invalid_language' }, 400);
+    const glossary = readGlossary(body.glossary);
+    if (!glossary) return c.json({ error: 'invalid_glossary' }, 400);
     const chars = countCharacters(texts);
     if (!chars) return c.json({ error: 'invalid_texts' }, 400);
     const charge = await startCharge(c, s, user, { chars, target: body.target, source: body.source || null });
@@ -309,7 +326,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       };
       const run = async () => {
         try {
-          const result = await hosted.stream({ text: texts[0], target: body.target, source: body.source || null }, (delta) => send({ delta }));
+          const result = await hosted.stream({ text: texts[0], target: body.target, source: body.source || null, glossary }, (delta) => send({ delta }));
           await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
           send({ done: true, cost: displayCredits(cost), ...(await status(user)) });
         } catch (err) {
@@ -337,7 +354,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
 
     let result;
     try {
-      result = await hosted({ texts, target: body.target, source: body.source || null });
+      result = await hosted({ texts, target: body.target, source: body.source || null, glossary });
     } catch (err) {
       await refundCredits(pool, eventId);
       await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });

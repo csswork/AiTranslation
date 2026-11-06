@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Künftige Übersetzungen von „$arg1$“ verwenden bevorzugt diese Variante",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Andernorts gibt es noch $arg1$ Vorkommen von „$arg2$“",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Nicht merken"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Diese Wording-Präferenz wurde entfernt"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Wording-Präferenzen"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Wenn du in einer Übersetzung auf ein Wort klickst und die Formulierung änderst, wird die Übersetzung dieses Wortes gemerkt und bei künftigen Übersetzungen von Texten mit demselben Ausgangswort bevorzugt. Wird nur in diesem Browser gespeichert und bei Übersetzungsanfragen an den ausgewählten Anbieter gesendet."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Alle löschen"
+  },
+  "m_7485128ba757a213": {
+    "message": "Ursprünglich „$arg1$“",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "Insgesamt $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Noch keine Wording-Präferenzen"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Alle Wording-Präferenzen löschen?"
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

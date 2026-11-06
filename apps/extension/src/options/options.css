@@ -156,6 +156,19 @@ select { cursor: pointer; }
   background: rgba(180, 83, 9, 0.1); border: 1px solid rgba(180, 83, 9, 0.22);
 }
 .actions { display: flex; gap: 12px; align-items: center; margin-top: 18px; }
+
+/* 用词偏好 */
+.terms { list-style: none; margin: 12px 0 0; padding: 0; max-height: 320px; overflow-y: auto; }
+.terms:empty { display: none; }
+.terms li {
+  display: grid; grid-template-columns: minmax(0, auto) 1fr auto; align-items: center; gap: 12px;
+  padding: 8px 0; border-top: 1px solid var(--line);
+}
+.terms li:first-child { border-top: 0; }
+.term-pair { display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.term-pair b { font-weight: 600; }
+.term-arrow { color: var(--muted); }
+.term-meta { color: var(--muted); font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .btn {
   font: inherit; font-size: 13px; font-weight: 530;
   padding: 7px 14px; border-radius: 9px; cursor: pointer;

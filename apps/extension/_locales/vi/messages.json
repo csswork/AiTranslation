@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Các bản dịch \"$arg1$\" sau này sẽ ưu tiên dùng cách dịch này",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Còn $arg1$ chỗ khác có \"$arg2$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Không ghi nhớ"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Đã hủy tùy chọn cách dùng từ này"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Tùy chọn cách dùng từ"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Sau khi bạn nhấp vào một từ trong bản dịch và đổi cách diễn đạt, cách dịch của từ đó sẽ được ghi nhớ; các lần dịch sau văn bản chứa cùng từ gốc sẽ ưu tiên dùng cách dịch này. Chỉ lưu trong trình duyệt này và được gửi kèm yêu cầu dịch đến nền tảng đã chọn."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Xóa tất cả"
+  },
+  "m_7485128ba757a213": {
+    "message": "Trước đây là \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "Tổng cộng $arg1$ mục",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Chưa có tùy chọn cách dùng từ nào"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Xóa tất cả tùy chọn cách dùng từ?"
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

@@ -562,5 +562,16 @@
   "已替换为「$1」": "Diganti dengan \"$1\"",
   "已替换为「$1」。全文还有 $2 处「$3」": "Diganti dengan \"$1\". Masih ada $2 kemunculan \"$3\" di teks.",
   "全部替换": "Ganti semua",
-  "已替换 $1 处": "$1 kemunculan diganti"
+  "已替换 $1 处": "$1 kemunculan diganti",
+  "以后翻译「$1」会优先用这个译法": "Terjemahan \"$1\" ke depannya akan mengutamakan padanan ini",
+  "别处还有 $1 处「$2」": "Ada $1 kemunculan lain dari \"$2\" di tempat lain",
+  "不要记住": "Jangan ingat",
+  "已取消这个用词偏好": "Preferensi padanan ini telah dihapus",
+  "用词偏好": "Preferensi padanan",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "Setelah Anda mengklik sebuah kata dalam terjemahan dan mengubah padanannya, padanan kata tersebut akan diingat dan diutamakan saat menerjemahkan teks yang mengandung kata sumber yang sama. Hanya disimpan di browser ini dan dikirim bersama permintaan terjemahan ke platform yang dipilih.",
+  "全部清除": "Hapus semua",
+  "原来是「$1」": "Sebelumnya \"$1\"",
+  "共 $1 条": "Total $1",
+  "还没有用词偏好": "Belum ada preferensi padanan",
+  "清除全部用词偏好？": "Hapus semua preferensi padanan?"
 }

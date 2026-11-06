@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Terjemahan \"$arg1$\" ke depannya akan mengutamakan padanan ini",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Ada $arg1$ kemunculan lain dari \"$arg2$\" di tempat lain",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Jangan ingat"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Preferensi padanan ini telah dihapus"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Preferensi padanan"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Setelah Anda mengklik sebuah kata dalam terjemahan dan mengubah padanannya, padanan kata tersebut akan diingat dan diutamakan saat menerjemahkan teks yang mengandung kata sumber yang sama. Hanya disimpan di browser ini dan dikirim bersama permintaan terjemahan ke platform yang dipilih."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Hapus semua"
+  },
+  "m_7485128ba757a213": {
+    "message": "Sebelumnya \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "Total $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Belum ada preferensi padanan"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Hapus semua preferensi padanan?"
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

@@ -563,7 +563,18 @@ globalThis.AITrMessageIds = {
   "已替换为「$1」": "m_8a291603f0d31818",
   "已替换为「$1」。全文还有 $2 处「$3」": "m_3761e5355d29ec62",
   "全部替换": "m_2357445f30da54fb",
-  "已替换 $1 处": "m_d19582948aa1d01d"
+  "已替换 $1 处": "m_d19582948aa1d01d",
+  "以后翻译「$1」会优先用这个译法": "m_865065676ea3e2d0",
+  "别处还有 $1 处「$2」": "m_82d8a58cef44c3a5",
+  "不要记住": "m_e7e4ae05f7cd5ee1",
+  "已取消这个用词偏好": "m_effb0ca4d7b79b4b",
+  "用词偏好": "m_7d0743c5edf5ee48",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "m_b513e2aca1b7e9aa",
+  "全部清除": "m_6ef0acce0f3b5151",
+  "原来是「$1」": "m_7485128ba757a213",
+  "共 $1 条": "m_db6573bce7783030",
+  "还没有用词偏好": "m_d06d4abf4f6454aa",
+  "清除全部用词偏好？": "m_bde30f16867a5a2b"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1129,5 +1140,16 @@ globalThis.AITrEnglish = {
   "已替换为「$1」": "Replaced with \"$1\"",
   "已替换为「$1」。全文还有 $2 处「$3」": "Replaced with \"$1\". There are $2 more instances of \"$3\" in the text.",
   "全部替换": "Replace all",
-  "已替换 $1 处": "Replaced $1 instances"
+  "已替换 $1 处": "Replaced $1 instances",
+  "以后翻译「$1」会优先用这个译法": "Future translations of \"$1\" will prefer this rendering",
+  "别处还有 $1 处「$2」": "There are $1 more instances of \"$2\" elsewhere",
+  "不要记住": "Don't remember",
+  "已取消这个用词偏好": "Removed this wording preference",
+  "用词偏好": "Wording preferences",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "After you click a word in a translation and change its wording, the translation for that word is remembered and preferred in future translations of text containing the same source word. Stored only in this browser and sent with translation requests to the selected provider.",
+  "全部清除": "Clear all",
+  "原来是「$1」": "Was \"$1\"",
+  "共 $1 条": "$1 total",
+  "还没有用词偏好": "No wording preferences yet",
+  "清除全部用词偏好？": "Clear all wording preferences?"
 };

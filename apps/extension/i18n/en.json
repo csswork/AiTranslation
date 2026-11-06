@@ -562,5 +562,16 @@
   "已替换为「$1」": "Replaced with \"$1\"",
   "已替换为「$1」。全文还有 $2 处「$3」": "Replaced with \"$1\". There are $2 more instances of \"$3\" in the text.",
   "全部替换": "Replace all",
-  "已替换 $1 处": "Replaced $1 instances"
+  "已替换 $1 处": "Replaced $1 instances",
+  "以后翻译「$1」会优先用这个译法": "Future translations of \"$1\" will prefer this rendering",
+  "别处还有 $1 处「$2」": "There are $1 more instances of \"$2\" elsewhere",
+  "不要记住": "Don't remember",
+  "已取消这个用词偏好": "Removed this wording preference",
+  "用词偏好": "Wording preferences",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "After you click a word in a translation and change its wording, the translation for that word is remembered and preferred in future translations of text containing the same source word. Stored only in this browser and sent with translation requests to the selected provider.",
+  "全部清除": "Clear all",
+  "原来是「$1」": "Was \"$1\"",
+  "共 $1 条": "$1 total",
+  "还没有用词偏好": "No wording preferences yet",
+  "清除全部用词偏好？": "Clear all wording preferences?"
 }

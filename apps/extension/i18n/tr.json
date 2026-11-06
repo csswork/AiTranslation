@@ -562,5 +562,16 @@
   "已替换为「$1」": "\"$1\" ile değiştirildi",
   "已替换为「$1」。全文还有 $2 处「$3」": "\"$1\" ile değiştirildi. Metinde $2 adet daha \"$3\" var.",
   "全部替换": "Tümünü değiştir",
-  "已替换 $1 处": "$1 öğe değiştirildi"
+  "已替换 $1 处": "$1 öğe değiştirildi",
+  "以后翻译「$1」会优先用这个译法": "\"$1\" için sonraki çevirilerde bu ifade tercih edilecek",
+  "别处还有 $1 处「$2」": "Başka yerlerde \"$2\" için $1 örnek daha var",
+  "不要记住": "Hatırlama",
+  "已取消这个用词偏好": "Bu ifade tercihi kaldırıldı",
+  "用词偏好": "İfade tercihleri",
+  "在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。 只保存在这个浏览器里，翻译时随请求发给所选平台。": "Bir çeviride bir kelimeye tıklayıp ifadesini değiştirdiğinizde, o kelimenin çevirisi hatırlanır ve aynı kaynak kelimeyi içeren metinlerin sonraki çevirilerinde tercih edilir. Yalnızca bu tarayıcıda saklanır ve çeviri istekleriyle birlikte seçilen sağlayıcıya gönderilir.",
+  "全部清除": "Tümünü temizle",
+  "原来是「$1」": "Önceden \"$1\" idi",
+  "共 $1 条": "Toplam $1",
+  "还没有用词偏好": "Henüz ifade tercihi yok",
+  "清除全部用词偏好？": "Tüm ifade tercihleri temizlensin mi?"
 }

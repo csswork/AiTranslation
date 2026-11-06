@@ -169,6 +169,19 @@
         </div>
       </section>
 
+      <section class="card" id="termsSection">
+        <h2>用词偏好</h2>
+        <p class="desc">
+          在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。
+          只保存在这个浏览器里，翻译时随请求发给所选平台。
+        </p>
+        <ul class="terms" id="termList"></ul>
+        <div class="actions">
+          <span class="test-result" id="termCount"></span>
+          <button id="termClear" class="btn ghost small" type="button" hidden>全部清除</button>
+        </div>
+      </section>
+
       <section class="card">
         <h2>图片翻译</h2>
         <p class="desc">在网页图片上右键，选「翻译图片里的文字」；也可以在扩展图标里打开「图片翻译」页。</p>
@@ -266,6 +279,7 @@
     <script src="../lib/credits.js"></script>
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
+    <script src="../lib/terms.js"></script>
     <script src="../lib/speech.js"></script>
     <script src="../lib/auth-ui.js"></script>
     <script src="options.js"></script>

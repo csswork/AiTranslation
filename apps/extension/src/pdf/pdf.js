@@ -434,12 +434,43 @@
       node.style.fontSize = `${node.dataset.size}cqw`;
       node.dir = dir;
       node.lang = target;
-      node.textContent = block.translated;
+      // 每个译文块是一个可以点词换说法的单元（lib/word-picker.js）
+      block.unit = { node, text: block.text, out: block.translated, machine: block.machine || block.translated, block, page };
+      picker.paint(block.unit);
       return node;
     }));
     page.fitted = false;
     fit(page);
   }
+
+  /** 换了说法的块：从原字号重新缩放到放得下。 */
+  function refit(node) {
+    const base = Number(node.dataset.size);
+    let size = base;
+    node.style.fontSize = `${size}cqw`;
+    while (node.scrollHeight > node.clientHeight + 1 && size > base * MIN_FONT_RATIO) {
+      size *= 0.9;
+      node.style.fontSize = `${size}cqw`;
+    }
+  }
+
+  // 点译文里的词换说法，换过的记成用词偏好（lib/terms.js）
+  const picker = AITrWordPicker.create({
+    root: document,
+    mount: document.body,
+    units: () => pages.flatMap((page) => (page.blocks || []).map((block) => block.unit).filter((item) => item?.node.isConnected)),
+    target: () => target,
+    cacheKey: () => settings.provider,
+    request: (args) => P.alternatives({
+      ...args, settings: S.normalize({ ...settings, target }), targetId: target, noteId: AITrI18n.locale(),
+    }),
+    remember: (entry) => AITrTerms.remember(entry),
+    forget: (entry) => AITrTerms.forget(entry.id),
+    onChange: (changed) => {
+      changed.block.translated = changed.out;
+      refit(changed.node);
+    },
+  });
 
   /** 译文比原文长时逐步缩小字号，直到放进原文的位置。字号按页宽比例，缩放、打印都不用重算。 */
   function fit(page) {
@@ -473,6 +504,7 @@
         }
         group.forEach((index, k) => {
           blocks[index].translated = String(result[k] ?? '').trim() || blocks[index].text;
+          blocks[index].machine = blocks[index].translated;
         });
         paint(page);
       }
@@ -543,9 +575,14 @@
     if (!doc) return;
     const wasStarted = started;
     stop();
+    picker.reset();
     for (const page of pages) {
       page.status = 'pending';
-      for (const block of page.blocks || []) delete block.translated;
+      for (const block of page.blocks || []) {
+        delete block.translated;
+        delete block.machine;
+        delete block.unit;
+      }
       page.overlay.replaceChildren();
     }
     started = false;

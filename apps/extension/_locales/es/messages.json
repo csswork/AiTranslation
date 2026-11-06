@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "En adelante, las traducciones de «$arg1$» usarán esta opción de forma preferente",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Hay $arg1$ instancias más de «$arg2$» en otros lugares",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "No recordar"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Se eliminó esta preferencia de redacción"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Preferencias de redacción"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Cuando haces clic en una palabra de una traducción y cambias su redacción, se recuerda la traducción de esa palabra y se prefiere en futuras traducciones de textos que contengan la misma palabra de origen. Solo se guarda en este navegador y se envía con las solicitudes de traducción al proveedor seleccionado."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Borrar todo"
+  },
+  "m_7485128ba757a213": {
+    "message": "Antes era «$arg1$»",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "$arg1$ en total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Aún no hay preferencias de redacción"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "¿Borrar todas las preferencias de redacción?"
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Le traduzioni future di \"$arg1$\" useranno preferibilmente questa resa",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Ci sono altre $arg1$ occorrenze di \"$arg2$\" altrove",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Non ricordare"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Preferenza di resa rimossa"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Preferenze di resa"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Dopo aver cliccato una parola in una traduzione e averne cambiato la resa, la traduzione di quella parola viene memorizzata e preferita nelle traduzioni future di testi contenenti la stessa parola di origine. Salvata solo in questo browser e inviata con le richieste di traduzione al provider selezionato."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Cancella tutto"
+  },
+  "m_7485128ba757a213": {
+    "message": "Prima era \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "$arg1$ in totale",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Nessuna preferenza di resa"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Cancellare tutte le preferenze di resa?"
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

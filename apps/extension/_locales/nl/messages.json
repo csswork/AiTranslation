@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "Toekomstige vertalingen van \"$arg1$\" gebruiken voortaan deze weergave",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Er zijn nog $arg1$ andere instanties van \"$arg2$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Niet onthouden"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Deze woordvoorkeur is verwijderd"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "Woordvoorkeuren"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Als je in een vertaling op een woord klikt en de formulering wijzigt, wordt de vertaling van dat woord onthouden en voortaan bij voorkeur gebruikt bij het vertalen van tekst met hetzelfde bronwoord. Alleen opgeslagen in deze browser en met vertaalverzoeken naar de gekozen provider verzonden."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Alles wissen"
+  },
+  "m_7485128ba757a213": {
+    "message": "Was \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "$arg1$ in totaal",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Nog geen woordvoorkeuren"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Alle woordvoorkeuren wissen?"
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

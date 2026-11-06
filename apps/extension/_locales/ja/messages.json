@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "今後「$arg1$」の翻訳にはこの訳語が優先的に使われます",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "他に「$arg2$」が$arg1$件あります",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "記憶しない"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "この訳語の設定を解除しました"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "訳語の設定"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "翻訳内の単語をクリックして言い回しを変更すると、その単語の訳語が記憶され、同じ原文の単語を含む今後の翻訳で優先的に使われます。このブラウザにのみ保存され、翻訳時に選択したプラットフォームへリクエストとともに送信されます。"
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "すべて削除"
+  },
+  "m_7485128ba757a213": {
+    "message": "元は「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "全$arg1$件",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "訳語の設定はまだありません"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "訳語の設定をすべて削除しますか？"
+  },
   "extensionName": {
     "message": "AI翻訳"
   },

@@ -8,6 +8,7 @@ A Chrome extension for translating selected text, page regions, images, whole PD
 - **Temporary target changes:** the selection popup retranslates the original text. Its star button explicitly saves the current target as the default. The text panel remembers its own source/target choices, and swaps only when a source has been selected.
 - **Images:** changing the target reuses recognized source text; changing the image clears that cache.
 - **Whole PDFs:** in Chrome's built-in PDF viewer, right-click with nothing selected → **Translate entire PDF** opens a translation page next to the PDF (or drop any PDF file onto that page). Translations are laid over the original positions, so layout, figures and tables stay in place; view side by side, translation only or original only, and save the result through the print dialog (**Save as PDF**). Not yet released to the store. See [PDF translation](../../docs/extension/pdf-translation.md).
+- **Better wording:** in the reading page, selection popup, translation panel and PDF page, click a word in the translation (or drag over a few words) to see alternative renderings, or type your own. Replacements are remembered as wording preferences on this device (for example 功能 → *feature*) and applied to later translations that contain the same source term; manage them in Settings. Not yet released. See [alternatives and wording preferences](../../docs/extension/word-alternatives.md).
 - **Bilingual reading:** on an ordinary web page, right-click with nothing selected → **Read this article bilingually**. A scan animation runs over the page while the article's title and body are detected (Mozilla Readability, on the device), then a clean reading page opens next to the tab with each original paragraph aligned beside its translation. Switch between side by side, stacked, translation only and original only; theme, font, size, line height, width and dimming are adjustable and remembered. Not yet released. See [bilingual reading](../../docs/extension/reader.md).
 - **Regions:** translation uses a fixed target for all batches, preserves originals, and supports restoring the source. Failed batches restore completed portions rather than leaving mixed languages.
 - **RTL:** Arabic, Hebrew, Persian and Urdu interfaces use right-to-left layout. Original and translated text have independent direction; opening an overlay does not change the host page's direction.
@@ -90,6 +91,8 @@ src/
     tiles.js               Long-image tiling for vision models
     pdf-layout.js          Groups PDF text fragments into lines, paragraphs and table cells
     article.js             Turns the detected article into plain-text blocks and translation batches
+    word-picker.js         Click-a-word alternatives popup shared by the reader, selection popup, panel and PDF page
+    terms.js               Wording preferences stored on this device and applied to later translations
     captions.js, speech.js Caption segmentation and on-device speech language packs
   options/                 Options page
   popup/                   Toolbar popup (status at a glance + quick provider switch)

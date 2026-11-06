@@ -8,6 +8,7 @@ import './lib/i18n.js';
 import './lib/env.js';
 import './lib/lang.js';
 import './lib/settings.js';
+import './lib/terms.js';
 import './lib/providers.js';
 import './lib/account.js';
 
@@ -50,6 +51,7 @@ const CONTENT_FILES = [
   'src/lib/text-shapes.js',
   'src/lib/region-picker.js',
   'src/lib/shape-editor.js',
+  'src/lib/word-picker.js',
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
@@ -712,7 +714,7 @@ chrome.runtime.onConnect.addListener((port) => {
     started = true;
     try {
       for await (const chunk of AITrAccount.translateStream({
-        text: String(message?.text || ''), target: message?.target, source: message?.source, signal: controller.signal,
+        text: String(message?.text || ''), target: message?.target, source: message?.source, glossary: message?.glossary, signal: controller.signal,
       })) post({ type: 'delta', chunk });
       post({ type: 'done' });
     } catch (err) {
@@ -741,6 +743,14 @@ chrome.runtime.onConnect.addListener((port) => {
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
         reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts }) };
+      } else if (message.type === 'alternatives') {
+        // 划词弹窗里点译文的词：内容脚本不能直接请求接口，由这里代发
+        const result = await AITrProviders.alternatives({
+          source: String(message.source || ''), translation: String(message.translation || ''),
+          start: Number(message.start), end: Number(message.end),
+          settings, targetId: settings.target, noteId: message.noteId, signal: controller.signal,
+        });
+        reply = { ok: true, source: result.source, options: result.options };
       } else if (message.type === 'translate-caption') {
         const start = Date.now();
         const text = await AITrProviders.translateCaption({ ...options, text: message.text, context: message.context });
@@ -790,6 +800,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'ping') {
     sendResponse({ ok: true });
     return false;
+  }
+
+  // 用词偏好：划词弹窗里换了说法后记下来（只存在本机，见 lib/terms.js）。只接受本扩展的页面与内容脚本
+  if ((type === 'terms-remember' || type === 'terms-forget') && sender.id === chrome.runtime.id) {
+    const task = type === 'terms-remember'
+      ? AITrTerms.remember({ source: message.source, from: message.from, to: message.to, target: message.target })
+      : AITrTerms.forget(String(message.id || '')).then(() => null);
+    task.then((entry) => sendResponse({ ok: true, entry }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err) }));
+    return true;
   }
 
   // 双语阅读：只接受本扩展注入到顶层框架的识别脚本
@@ -960,7 +980,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
   if (type === 'hosted-translate' && fromExtensionPage) {
-    AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source })
+    AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source, glossary: message.glossary })
       .then((texts) => sendResponse({ ok: true, texts }))
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
     return true;

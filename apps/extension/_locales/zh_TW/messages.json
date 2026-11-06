@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "之後翻譯「$arg1$」時會優先採用這個譯法",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "其他地方還有 $arg1$ 處「$arg2$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "不要記住"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "已取消這個用詞偏好"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "用詞偏好"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "在譯文中點選詞語並更改說法後，會記住該詞的譯法；之後翻譯含有相同原文詞語的文字時會優先採用。僅儲存在此瀏覽器中，翻譯時會隨請求傳送給所選平台。"
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "全部清除"
+  },
+  "m_7485128ba757a213": {
+    "message": "原本是「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "共 $arg1$ 筆",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "尚無用詞偏好"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "要清除全部用詞偏好嗎？"
+  },
   "extensionName": {
     "message": "AI 劃詞翻譯"
   },

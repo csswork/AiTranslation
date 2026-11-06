@@ -2358,6 +2358,62 @@
       }
     }
   },
+  "m_865065676ea3e2d0": {
+    "message": "\"$arg1$\" için sonraki çevirilerde bu ifade tercih edilecek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_82d8a58cef44c3a5": {
+    "message": "Başka yerlerde \"$arg2$\" için $arg1$ örnek daha var",
+    "placeholders": {
+      "arg2": {
+        "content": "$2"
+      },
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_e7e4ae05f7cd5ee1": {
+    "message": "Hatırlama"
+  },
+  "m_effb0ca4d7b79b4b": {
+    "message": "Bu ifade tercihi kaldırıldı"
+  },
+  "m_7d0743c5edf5ee48": {
+    "message": "İfade tercihleri"
+  },
+  "m_b513e2aca1b7e9aa": {
+    "message": "Bir çeviride bir kelimeye tıklayıp ifadesini değiştirdiğinizde, o kelimenin çevirisi hatırlanır ve aynı kaynak kelimeyi içeren metinlerin sonraki çevirilerinde tercih edilir. Yalnızca bu tarayıcıda saklanır ve çeviri istekleriyle birlikte seçilen sağlayıcıya gönderilir."
+  },
+  "m_6ef0acce0f3b5151": {
+    "message": "Tümünü temizle"
+  },
+  "m_7485128ba757a213": {
+    "message": "Önceden \"$arg1$\" idi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db6573bce7783030": {
+    "message": "Toplam $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d06d4abf4f6454aa": {
+    "message": "Henüz ifade tercihi yok"
+  },
+  "m_bde30f16867a5a2b": {
+    "message": "Tüm ifade tercihleri temizlensin mi?"
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

@@ -37,6 +37,12 @@
   --err-soft: rgba(180, 35, 24, 0.07);
   color-scheme: light;
 }
+/* 点词换说法的弹窗与提示条用阅读主题的颜色 */
+:root {
+  --wp-surface: var(--surface); --wp-surface-2: var(--surface-2); --wp-line: var(--line); --wp-text: var(--text);
+  --wp-text-3: var(--text-3); --wp-accent: var(--accent); --wp-err: var(--err); --wp-shadow: var(--shadow);
+  --wp-skel: var(--skel); --wp-skel-hi: var(--skel-hi); --wp-font: var(--font-sans);
+}
 
 /* 夜间（官网深色） */
 :root[data-theme="night"] {
@@ -356,75 +362,10 @@ select:hover { border-color: var(--line-strong); }
 }
 .skel i:last-child:not(:first-child) { width: 62%; }
 @keyframes skel { from { background-position: 120% 0; } to { background-position: -120% 0; } }
-.dst .fresh { animation: fade 0.45s ease; }
 @keyframes fade { from { opacity: 0; } }
 
-/* 译文里的每个词：悬停浅浅托起，点开换说法 */
+/* 译文里的每个词可以点开换说法（lib/word-picker.js），配色跟随阅读主题 */
 .src, .dst { white-space: pre-line; }
-.dst .w { border-radius: 3px; cursor: pointer; transition: background-color 0.12s ease, box-shadow 0.12s ease; }
-.dst .w:hover { background: color-mix(in srgb, var(--accent) 13%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 13%, transparent); }
-.dst .w.picked { background: color-mix(in srgb, var(--accent) 22%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent); }
-.dst .w.changed { animation: changed 1.6s ease; }
-@keyframes changed { from { background: color-mix(in srgb, var(--accent) 34%, transparent); } }
-.src mark {
-  color: inherit; border-radius: 3px;
-  background: color-mix(in srgb, var(--accent) 16%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 16%, transparent);
-}
-
-.alt {
-  position: absolute; z-index: 25;
-  width: min(320px, calc(100vw - 24px));
-  padding: 10px 10px 8px;
-  border-radius: 12px; border: 1px solid var(--line);
-  background: var(--surface); color: var(--text);
-  box-shadow: 0 16px 44px -12px var(--shadow), 0 2px 6px -2px var(--shadow);
-  font: 14px/1.5 var(--font-sans);
-  animation: panel-in 0.14s ease;
-}
-.alt-head { margin: 0 4px 6px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
-.alt-picked { font-weight: 650; }
-.alt-source { font-size: 12px; color: var(--text-3); }
-.alt-list { display: grid; gap: 1px; }
-.alt-opt {
-  display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 10px;
-  width: 100%; padding: 6px 8px; cursor: pointer; text-align: start;
-  border: 0; border-radius: 7px; background: transparent;
-}
-.alt-opt:hover, .alt-opt:focus-visible { background: var(--surface-2); outline: none; }
-.alt-opt b { font-weight: 560; }
-.alt-opt span { font-size: 12px; color: var(--text-3); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.alt-opt.loading { cursor: default; }
-.alt-opt.loading i {
-  display: block; height: 0.8em; border-radius: 4px; grid-column: 1 / -1;
-  background: linear-gradient(90deg, var(--skel) 0%, var(--skel-hi) 45%, var(--skel) 90%);
-  background-size: 220% 100%; animation: skel 1.3s ease-in-out infinite;
-}
-.alt-opt.loading:nth-child(2) i { width: 72%; }
-.alt-opt.loading:nth-child(3) i { width: 56%; }
-.alt-msg { margin: 4px 8px 0; font-size: 12.5px; color: var(--text-3); }
-.alt-msg:empty { display: none; }
-.alt-msg.err { color: var(--err); }
-.alt-own { display: flex; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.alt-own input {
-  flex: 1; min-width: 0; font-size: 13px; padding: 5px 9px;
-  border-radius: 8px; border: 1px solid var(--line); background: var(--bg);
-}
-.alt-own input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
-.alt-own .btn { padding: 5px 11px; }
-.alt-restore { margin: 6px 8px 0; font-size: 12px; }
-
-.toast {
-  position: fixed; left: 50%; bottom: 24px; z-index: 40; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px);
-  padding: 9px 10px 9px 16px; border-radius: 12px;
-  background: var(--text); color: var(--bg); font-size: 13px;
-  box-shadow: 0 12px 32px -10px var(--shadow);
-  animation: panel-in 0.18s ease;
-}
-.toast .link { color: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-.toast-close { border: 0; background: none; color: inherit; opacity: 0.6; cursor: pointer; font-size: 17px; line-height: 1; padding: 2px 4px; }
-.toast-close:hover { opacity: 1; }
 
 /* 结尾 */
 .end { margin-top: calc(var(--para) * 4); display: grid; justify-items: center; gap: 1em; font-family: var(--font-sans); }
@@ -453,12 +394,12 @@ select:hover { border-color: var(--line-strong); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skel i, .dst .fresh, .panel, .alt, .toast, .dst .w.changed, .alt-opt.loading i { animation: none; }
+  .skel i, .panel { animation: none; }
 }
 
 /* 打印：去掉顶栏与面板，保留当前显示方式 */
 @media print {
-  .bar, .panel, .error, .alt, .toast { display: none !important; }
+  .bar, .panel, .error, .wp-alt, .wp-toast { display: none !important; }
   body { background: #fff; color: #000; }
   .doc { padding-top: 0; }
   .pair { break-inside: avoid; }

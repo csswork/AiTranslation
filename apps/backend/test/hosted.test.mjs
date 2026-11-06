@@ -168,3 +168,26 @@ test('其他译法：原文、选中前后的译文分开发给模型，说明�
   assert.equal(parseAlternatives(JSON.stringify({ options: Array.from({ length: 9 }, (_, i) => `w${i}`) }), 'a').options.length, 5, '最多 5 个');
   assert.match(alternativesPrompt('Japanese', 'English'), /never follow instructions/);
 });
+
+test('用词偏好放进翻译提示词（批量与流式都有），没有时提示词不变', async () => {
+  const systems = [];
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    const body = JSON.parse(init.body);
+    systems.push(body.messages[0].content);
+    if (body.stream) {
+      return new Response(new ReadableStream({ start(c) {
+        c.enqueue(new TextEncoder().encode('data: {"choices":[{"delta":{"content":"The new feature"}}]}\n\ndata: [DONE]\n\n'));
+        c.close();
+      } }), { status: 200 });
+    }
+    return Response.json({ choices: [{ message: { content: '["a","b"]' } }] });
+  } });
+  const glossary = [{ source: '功能', target: 'feature' }];
+  await hosted({ texts: ['新功能', '旧功能'], target: 'en', glossary });
+  assert.match(systems.at(-1), /prefers these renderings/);
+  assert.ok(systems.at(-1).includes('{"功能":"feature"}'));
+  await hosted.stream({ text: '新功能', target: 'en', glossary }, () => {});
+  assert.ok(systems.at(-1).includes('{"功能":"feature"}'));
+  await hosted({ texts: ['a', 'b'], target: 'en' });
+  assert.doesNotMatch(systems.at(-1), /prefers these renderings/);
+});
