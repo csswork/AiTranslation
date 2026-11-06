@@ -38,15 +38,15 @@
     .layer.on { opacity: 1; }
     .veil {
       position: absolute; inset: 0;
-      background: color-mix(in srgb, var(--paper) 30%, transparent);
-      backdrop-filter: saturate(.55);
+      background: color-mix(in srgb, var(--paper) 22%, transparent);
+      backdrop-filter: saturate(.6);
     }
     .beam {
       position: absolute; left: 0; right: 0; top: 0; height: 38vh;
       transform: translateY(-40vh);
       background:
         repeating-linear-gradient(0deg, color-mix(in srgb, var(--accent) 9%, transparent) 0 1px, transparent 1px 5px),
-        linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 12%, transparent) 78%, color-mix(in srgb, var(--accent) 28%, transparent));
+        linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 16%, transparent) 75%, color-mix(in srgb, var(--accent) 38%, transparent));
       -webkit-mask-image: linear-gradient(180deg, transparent, #000 65%);
       mask-image: linear-gradient(180deg, transparent, #000 65%);
       animation: sweep 1.5s cubic-bezier(.45, .05, .35, 1) infinite;
@@ -155,13 +155,15 @@
     const copy = document.cloneNode(true);
     const result = new Readability(copy, { charThreshold: 300, serializer: (node) => node }).parse();
     if (!result?.content) return { readerable, article: null };
-    const title = A.clean(result.title || document.title || '');
-    const { blocks, truncated } = A.toBlocks(result.content, { base: document.baseURI, title });
+    const siteName = A.clean(result.siteName || '');
+    const title = pickTitle(A.clean(result.title || document.title || ''), siteName);
+    const byline = A.clean(result.byline || '');
+    const { blocks, truncated } = A.toBlocks(result.content, { base: document.baseURI, title, byline });
     const article = {
       url: location.href,
       title,
-      byline: A.clean(result.byline || '').slice(0, 200),
-      siteName: A.clean(result.siteName || location.hostname).slice(0, 120),
+      byline: byline.slice(0, 200),
+      siteName: (siteName || location.hostname).slice(0, 120),
       publishedTime: String(result.publishedTime || '').slice(0, 40),
       lang: String(result.lang || document.documentElement.lang || '').slice(0, 20),
       dir: result.dir === 'rtl' ? 'rtl' : 'ltr',
@@ -170,6 +172,23 @@
       truncated,
     };
     return { readerable, article };
+  }
+
+  /**
+   * 标题去掉站点名后缀（「标题 — 站点」「标题 | 站点」）。Readability 不认「—」等分隔符，
+   * 页面上的 h1 与它相符时直接用 h1。
+   */
+  function pickTitle(title, siteName) {
+    for (const h1 of document.querySelectorAll('h1')) {
+      const text = A.clean(h1.textContent || '');
+      if (text.length >= 4 && text.length < title.length && title.toLowerCase().includes(text.toLowerCase())) return text;
+    }
+    if (siteName) {
+      const parts = title.split(/\s+[|\-–—»·:]\s+/);
+      const rest = parts.filter((part) => part.toLowerCase() !== siteName.toLowerCase());
+      if (rest.length && rest.length < parts.length) return rest.join(' – ');
+    }
+    return title;
   }
 
   /** 在当前看得见的页面上找到被识别为正文的元素，画出点亮框。 */
@@ -204,7 +223,26 @@
       && other.rect.top >= item.rect.top && other.rect.bottom <= item.rect.bottom
       && other.rect.left >= item.rect.left && other.rect.right <= item.rect.right
       && (other.rect.width * other.rect.height) < (item.rect.width * item.rect.height)));
-    return { title, marks };
+    return { title, marks: merge(marks) };
+  }
+
+  /** 紧挨着、左右对齐的几块（列表项、连续短段）合成一个框，免得框线叠成一片。 */
+  function merge(marks) {
+    const boxes = marks
+      .map(({ rect, kind }) => ({ kind, left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }))
+      .sort((a, b) => a.top - b.top);
+    const out = [];
+    for (const box of boxes) {
+      const last = out[out.length - 1];
+      if (last && box.kind === 'text' && last.kind === 'text' && box.top - last.bottom < 10
+        && Math.abs(box.left - last.left) < 8 && Math.abs(box.right - last.right) < 60) {
+        last.bottom = Math.max(last.bottom, box.bottom);
+        last.right = Math.max(last.right, box.right);
+      } else {
+        out.push({ ...box });
+      }
+    }
+    return out.map((box) => ({ kind: box.kind, rect: { ...box, width: box.right - box.left, height: box.bottom - box.top } }));
   }
 
   function paintMarks(overlay, { title, marks }) {

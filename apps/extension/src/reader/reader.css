@@ -123,7 +123,7 @@ a.brand[href]:hover .site { color: var(--accent-ink); }
 .tools { display: flex; align-items: center; gap: 8px; flex: none; }
 
 select {
-  font-size: 13px; cursor: pointer; max-width: 11em;
+  font-size: 13px; cursor: pointer; max-width: 14em;
   padding: 5px 26px 5px 10px; border-radius: 8px;
   border: 1px solid var(--line); background-color: var(--surface);
   appearance: none;
@@ -136,9 +136,9 @@ select:hover { border-color: var(--line-strong); }
 .btn {
   font-size: 13px; font-weight: 550; cursor: pointer;
   padding: 5px 13px; border-radius: 8px;
-  color: var(--bg); background: var(--text); border: 1px solid transparent;
+  color: var(--accent-ink); background: var(--surface); border: 1px solid var(--line);
 }
-.btn:hover { opacity: 0.88; }
+.btn:hover { border-color: var(--line-strong); background: var(--surface-2); }
 .icon-btn {
   display: grid; place-items: center; width: 34px; height: 32px; padding: 0; cursor: pointer;
   border-radius: 8px; border: 1px solid var(--line); background: var(--surface);
@@ -235,7 +235,7 @@ select:hover { border-color: var(--line-strong); }
   font-size: var(--size);
   line-height: var(--leading);
   font-family: var(--font-body, var(--font-sans));
-  width: min(calc(var(--measure) * 2 + var(--gap)), calc(100% - 48px));
+  width: min(calc(var(--measure) * 2 + var(--gap)), calc(100% - 112px));
   margin: 0 auto;
   padding: 5vh 0 14vh;
 }

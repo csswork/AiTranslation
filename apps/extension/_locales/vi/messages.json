@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Tự động nhận dạng và dịch trực tiếp. Khi bỏ chọn, văn bản tìm thấy sẽ được vẽ trên ảnh trước; bạn có thể di chuyển, xóa, sửa hoặc thêm hình dạng, sau đó nhấn \"Dịch\" để dịch. Bạn cũng có thể chuyển đổi trong cửa sổ bật lên."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Đọc bài viết này song ngữ"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Tiêu đề"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "Đang mở chế độ đọc song ngữ…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Không mở được trang đọc. Vui lòng làm mới trang và thử lại."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Đang nhận diện tiêu đề và nội dung của bài viết này…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "Không tìm thấy nội dung nào có thể đọc trên trang này."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "Trang này có vẻ không phải là một bài viết hoàn chỉnh (phát hiện $arg1$ đoạn văn). Vẫn mở chứ?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Vẫn mở"
+  },
+  "m_979591d25732afe3": {
+    "message": "Đã nhận diện $arg1$ đoạn nội dung",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Mở trang gốc"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Nguyên văn và bản dịch song song hai bên"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Bản dịch ngay dưới mỗi đoạn văn"
+  },
+  "m_135122779e12bf61": {
+    "message": "Kiểu đọc"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Theo chế độ sáng hoặc tối của hệ thống"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Giảm cỡ chữ"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Cỡ chữ"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Tăng cỡ chữ"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Giảm giãn dòng"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Giãn dòng"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Tăng giãn dòng"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "Đọc song ngữ · Dịch bằng AI khi bôi đen"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "Đọc song ngữ"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Song song"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Trên dưới"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Chủ đề"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Màu giấy"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Màu kem"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Bảo vệ mắt"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Ban đêm"
+  },
+  "m_078838da4218490b": {
+    "message": "Phông chữ"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Không chân"
+  },
+  "m_8059e059b3192500": {
+    "message": "Có chân"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Khải thư"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "Độ rộng nội dung"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Hẹp"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Vừa"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Rộng"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Làm mờ"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Không làm mờ"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Khôi phục mặc định"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Cài đặt dịch"
+  },
+  "m_40780706515733f6": {
+    "message": "Bài viết này không còn nữa"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "Nội dung đọc chỉ được lưu trong phiên trình duyệt hiện tại. Vui lòng quay lại trang gốc, nhấp chuột phải vào vùng trống và chọn \"Đọc bài viết này song ngữ\" để mở lại."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Thử lại"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "Đang dịch $arg1$/$arg2$ đoạn · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Đã dịch xong · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Đã dừng: đã dịch $arg1$/$arg2$ đoạn",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Bản gốc:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "Bài viết quá dài nên chỉ hiển thị phần đầu."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

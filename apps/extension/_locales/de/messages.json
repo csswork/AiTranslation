@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Automatisch erkennen und direkt übersetzen. Wenn deaktiviert, wird der gefundene Text zuerst im Bild eingezeichnet; du kannst Formen verschieben, löschen, bearbeiten oder hinzufügen und dann auf „Übersetzen“ klicken. Du kannst dies auch im Popup umschalten."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Diesen Artikel zweisprachig lesen"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Titel"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "Zweisprachige Leseansicht wird geöffnet…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Die Leseseite kann nicht geöffnet werden. Bitte lade die Seite neu und versuche es erneut."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Titel und Text dieses Artikels werden erkannt…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "Auf dieser Seite wurde kein lesbarer Text gefunden."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "Diese Seite sieht nicht wie ein vollständiger Artikel aus ($arg1$ Absätze erkannt). Trotzdem öffnen?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Trotzdem öffnen"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ Absätze erkannt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Originalseite öffnen"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Original und Übersetzung nebeneinander"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Übersetzung direkt unter jedem Absatz"
+  },
+  "m_135122779e12bf61": {
+    "message": "Lesestil"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Helles oder dunkles Design des Systems übernehmen"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Schriftgröße verkleinern"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Schriftgröße"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Schriftgröße vergrößern"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Zeilenabstand verringern"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Zeilenabstand"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Zeilenabstand vergrößern"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "Zweisprachiges Lesen · KI-Übersetzung für markierten Text"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "Zweisprachiges Lesen"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Nebeneinander"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Untereinander"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Design"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Papier"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Beige"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Augenschonend"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Nacht"
+  },
+  "m_078838da4218490b": {
+    "message": "Schriftart"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Serifenlos"
+  },
+  "m_8059e059b3192500": {
+    "message": "Serifen"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Kai"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "Textbreite"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Schmal"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Mittel"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Breit"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Gedimmt"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Nicht gedimmt"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Standard wiederherstellen"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Übersetzungseinstellungen"
+  },
+  "m_40780706515733f6": {
+    "message": "Dieser Artikel ist nicht mehr verfügbar"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "Der Lesetext wird nur in der aktuellen Browsersitzung gespeichert. Bitte kehre zur Originalseite zurück, klicke mit der rechten Maustaste auf eine leere Stelle und wähle „Diesen Artikel zweisprachig lesen“, um ihn erneut zu öffnen."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Erneut versuchen"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "$arg1$/$arg2$ Absätze werden übersetzt · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Übersetzung abgeschlossen · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Gestoppt: $arg1$/$arg2$ Absätze übersetzt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Original:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "Der Artikel ist zu lang, daher wird nur der Anfang angezeigt."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

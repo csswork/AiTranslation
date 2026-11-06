@@ -16,6 +16,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     offscreen: false, // offscreen 文档在不在（决定要不要发消息过去）
     sent: [], // 发给 offscreen 的消息
     pdfTabs: [], // chrome.storage.session 里记录的 PDF 标签页
+    session: {}, // chrome.storage.session 的其他内容（双语阅读的文章）
     activeTab: null,
     createdTabs: [],
     tabMessages: [], // 发给页面内容脚本的消息
@@ -25,6 +26,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   let pendingRead = false;
 
   const runtime = {
+    id: 'test-extension',
     getURL: (path) => `chrome-extension://test-extension/${path}`,
     onInstalled: { addListener: (f) => (state.listeners.installed = f) },
     onStartup: { addListener: (f) => (state.listeners.startup = f) },
@@ -83,8 +85,16 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
       },
       onChanged: { addListener: (f) => (state.listeners.storage = f) },
       session: {
-        get: async () => ({ pdfTabs: state.pdfTabs }),
-        set: async (patch) => { state.pdfTabs = patch.pdfTabs; },
+        get: async (key) => {
+          const all = { pdfTabs: state.pdfTabs, ...state.session };
+          return typeof key === 'string' ? (key in all ? { [key]: all[key] } : {}) : all;
+        },
+        set: async (patch) => {
+          if ('pdfTabs' in patch) state.pdfTabs = patch.pdfTabs;
+          const { pdfTabs, ...rest } = patch;
+          Object.assign(state.session, rest);
+        },
+        remove: async (keys) => { for (const key of [].concat(keys)) delete state.session[key]; },
       },
     },
     tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7 }] : []), sendMessage: async (tabId, message, options) => { state.tabMessages.push({ tabId, message, options }); return { ok: true }; },
@@ -123,7 +133,8 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 4, '不靠任何事件，启动时就应建好四个常驻菜单项');
+  assert.equal(state.items.size, 5, '不靠任何事件，启动时就应建好五个常驻菜单项');
+  assert.equal(state.items.get('ai-reader').visible, true, '普通网页里显示「双语阅读这篇文章」');
   assert.ok(state.items.has('ai-translate-selection'));
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
@@ -145,7 +156,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 4, '划词项 + 元素项 + PDF 项 + 图片项，共四个（视频字幕默认关闭）');
+  assert.equal(state.items.size, 5, '划词项 + 双语阅读 + 元素项 + PDF 项 + 图片项，共五个（视频字幕默认关闭）');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -155,7 +166,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 4);
+  assert.equal(state.items.size, 5);
   assert.equal(state.items.get('ai-translate-selection').visible, true,
     '选中中文时，保留翻译入口');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
@@ -189,7 +200,11 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 
   // 各项两两不得共享 contexts：任何重叠都会让两项同时出现，
   // 被 Chrome 折叠成二级子菜单，反而更难点。
-  // PDF 项与元素项同为 'page'，靠显隐互斥（见 3c），不参与这里的检查
+  // PDF 项与元素项同为 'page'，靠显隐互斥（见 3c），不参与这里的检查。
+  // 双语阅读项也是 'page'：与区域按钮同时出现（收进扩展名下的子菜单），同样不参与
+  const reader = state.items.get('ai-reader');
+  assert.deepEqual(reader.contexts, ['page'], '双语阅读只在没选中文字、不在图片或链接上时出现');
+  assert.equal(reader.title, '双语阅读这篇文章');
   const pdfItem = state.items.get('ai-translate-pdf');
   // 内置阅读器的正文在子框架的插件里，右键时只匹配 'frame'
   assert.deepEqual(pdfItem.contexts, ['page', 'frame']);
@@ -235,7 +250,11 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.installed({ reason: 'update' });
   await settle();
-  const items = () => [state.items.get('ai-translate-element').visible, state.items.get('ai-translate-pdf').visible];
+  const items = () => {
+    const element = state.items.get('ai-translate-element').visible;
+    assert.equal(state.items.get('ai-reader').visible, element, '双语阅读项跟区域按钮一起显隐');
+    return [element, state.items.get('ai-translate-pdf').visible];
+  };
   state.listeners.message({ type: 'page-kind', pdf: true }, { tab: { id: 7, active: true }, frameId: 0 }, () => {});
   await settle();
   assert.deepEqual(items(), [false, true], '当前 PDF 标签页：只显示 PDF 项');
@@ -256,6 +275,39 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.deepEqual(items(), [false, true], '重建后仍按当前 PDF 标签页显示');
   console.log('✓ PDF 标签页里右键空白处出现「翻译整个 PDF」，与区域按钮互斥');
+}
+
+/* --- 3d. 双语阅读：点菜单注入识别脚本；识别结果存进会话存储，在右边打开阅读页 --- */
+{
+  const { state, chrome } = boot();
+  await settle();
+  const injected = [];
+  chrome.scripting.executeScript = async (details) => { injected.push(details); return [{ result: { ok: true } }]; };
+  chrome.tabs.sendMessage = async () => ({ ok: true }); // ping：内容脚本已在
+  await state.listeners.clicked({ menuItemId: 'ai-reader', frameId: 0 }, { id: 12, index: 3, windowId: 2 });
+  assert.deepEqual(injected[0].target, { tabId: 12, frameIds: [0] }, '只注入顶层框架');
+  assert.deepEqual(injected[0].files, ['src/vendor/readability/Readability.js', 'src/vendor/readability/Readability-readerable.js', 'src/lib/article.js', 'src/content/reader.js']);
+  assert.equal(typeof injected[1].func, 'function', '随后启动扫描');
+
+  const article = { url: 'https://example.com/a', title: 'T', blocks: [{ type: 'p', text: 'Hello world' }] };
+  const reply = (message, sender) => new Promise((resolve) => {
+    const async = state.listeners.message(message, sender, resolve);
+    if (!async) resolve(undefined);
+  });
+  assert.equal(await reply({ type: 'reader-open', article }, { id: 'test-extension', tab: { id: 12 }, frameId: 2 }), undefined, '子框架发来的不处理');
+  const ok = await reply({ type: 'reader-open', article }, { id: 'test-extension', tab: { id: 12, index: 3, windowId: 2 }, frameId: 0 });
+  assert.deepEqual(ok, { ok: true });
+  const created = state.createdTabs.at(-1);
+  const id = new URL(created.url).searchParams.get('id');
+  assert.ok(created.url.startsWith('chrome-extension://test-extension/src/reader/reader.html?id='));
+  assert.deepEqual([created.index, created.windowId, created.openerTabId], [4, 2, 12], '开在来源标签页右边');
+  assert.deepEqual(state.session[`reader:${id}`], article, '文章存进会话存储');
+  const bad = await reply({ type: 'reader-open', article: { title: 'x' } }, { id: 'test-extension', tab: { id: 12 }, frameId: 0 });
+  assert.equal(bad.ok, false, '格式不对的文章拒收');
+  for (let i = 0; i < 10; i++) await reply({ type: 'reader-open', article }, { id: 'test-extension', tab: { id: 12 }, frameId: 0 });
+  assert.equal(Object.keys(state.session).filter((key) => key.startsWith('reader:')).length, 8, '最多保留 8 篇');
+  assert.equal(state.session.readerIds.length, 8);
+  console.log('✓ 双语阅读：只注入顶层框架，文章存会话存储，阅读页开在右边，旧文章自动清理');
 }
 
 /* --- 3b. 空选区不藏菜单：内置 PDF 阅读器里内容脚本读不到选区，
@@ -290,7 +342,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   const video = state.items.get('ai-translate-video');
   assert.ok(video, '打开总开关后应出现视频菜单项');
-  assert.equal(state.items.size, 5, '打开后共五个菜单项');
+  assert.equal(state.items.size, 6, '打开后共六个菜单项');
   assert.deepEqual(video.contexts, ['video']);
   assert.equal(video.visible, true);
   assert.equal(state.duplicateErrors, 0);
@@ -305,7 +357,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
   await settle();
   assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
-  assert.equal(state.items.size, 4);
+  assert.equal(state.items.size, 5);
   assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
   assert.ok(
     state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),

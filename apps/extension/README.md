@@ -8,6 +8,7 @@ A Chrome extension for translating selected text, page regions, images, whole PD
 - **Temporary target changes:** the selection popup retranslates the original text. Its star button explicitly saves the current target as the default. The text panel remembers its own source/target choices, and swaps only when a source has been selected.
 - **Images:** changing the target reuses recognized source text; changing the image clears that cache.
 - **Whole PDFs:** in Chrome's built-in PDF viewer, right-click with nothing selected → **Translate entire PDF** opens a translation page next to the PDF (or drop any PDF file onto that page). Translations are laid over the original positions, so layout, figures and tables stay in place; view side by side, translation only or original only, and save the result through the print dialog (**Save as PDF**). Not yet released to the store. See [PDF translation](../../docs/extension/pdf-translation.md).
+- **Bilingual reading:** on an ordinary web page, right-click with nothing selected → **Read this article bilingually**. A scan animation runs over the page while the article's title and body are detected (Mozilla Readability, on the device), then a clean reading page opens next to the tab with each original paragraph aligned beside its translation. Switch between side by side, stacked, translation only and original only; theme, font, size, line height, width and dimming are adjustable and remembered. Not yet released. See [bilingual reading](../../docs/extension/reader.md).
 - **Regions:** translation uses a fixed target for all batches, preserves originals, and supports restoring the source. Failed batches restore completed portions rather than leaving mixed languages.
 - **RTL:** Arabic, Hebrew, Persian and Urdu interfaces use right-to-left layout. Original and translated text have independent direction; opening an overlay does not change the host page's direction.
 - **Provider capabilities:** DeepL language support is checked against the configured API. Unsupported pairs return an error without switching to a different language. Vision requires a vision-capable provider/model.
@@ -60,6 +61,8 @@ Select text → right-click → **Translate to your target language**. You can a
 
 In Chrome's built-in PDF viewer, selected text uses the same right-click item; with nothing selected, right-click → **Translate entire PDF**.
 
+On other pages, right-click with nothing selected → **Read this article bilingually** (it appears together with **Add a translation button to this region**, so Chrome groups both under the extension's name).
+
 ## Layout
 
 ```
@@ -72,6 +75,7 @@ src/
     elements.js            Region (element) translation buttons from saved rules
     image.js               In-page image translation overlay
     pdf.js                 Built-in PDF viewer: reports PDF tabs and hands the file's bytes to the PDF page
+    reader.js              Bilingual reading: scan animation + article detection, injected on demand
     video.js               Experimental video caption overlay, injected on demand
   lib/
     providers.js           OpenAI-compatible, DeepL and hosted requests, SSE parsing, error mapping
@@ -85,6 +89,7 @@ src/
     rules.js, selector.js  Region translation rules and reusable CSS selectors
     tiles.js               Long-image tiling for vision models
     pdf-layout.js          Groups PDF text fragments into lines, paragraphs and table cells
+    article.js             Turns the detected article into plain-text blocks and translation batches
     captions.js, speech.js Caption segmentation and on-device speech language packs
   options/                 Options page
   popup/                   Toolbar popup (status at a glance + quick provider switch)
@@ -92,6 +97,8 @@ src/
   image/                   Image translation page
   pdf/                     Whole-PDF translation page: render, translate in place, compare, print to PDF
   vendor/pdfjs/            Mozilla pdf.js 6.3.289 (legacy build, Apache-2.0), unmodified; see its README
+  reader/                  Bilingual reading page: aligned original and translation, reading styles
+  vendor/readability/      Mozilla Readability 0.6.0 (Apache-2.0), unmodified; see its README
   manage/                  Region translation rule management (not the VPS admin interface)
   offscreen/               Offscreen document for tab audio capture and speech recognition
 icons/                     Icons

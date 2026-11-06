@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Read this article bilingually"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Title"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "Opening bilingual reading…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Can't open the reading page. Please refresh the page and try again."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Identifying the title and body of this article…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "No readable body text was found on this page."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "This page doesn't look like a complete article ($arg1$ paragraphs detected). Open anyway?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Open anyway"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ paragraphs detected",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Open original page"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Original and translation side by side"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Translation directly below each paragraph"
+  },
+  "m_135122779e12bf61": {
+    "message": "Reading style"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Follow system light or dark mode"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Decrease font size"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Font size"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Increase font size"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Decrease line spacing"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Line spacing"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Increase line spacing"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "Bilingual reading · AI selection translation"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "Bilingual reading"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Side by side"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Stacked"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Theme"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Paper"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Beige"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Eye care"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Night"
+  },
+  "m_078838da4218490b": {
+    "message": "Font"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Sans-serif"
+  },
+  "m_8059e059b3192500": {
+    "message": "Serif"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Kai"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "Content width"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Narrow"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Medium"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Wide"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Dimmed"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Not dimmed"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Restore defaults"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Translation settings"
+  },
+  "m_40780706515733f6": {
+    "message": "This article is no longer available"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "Reading content is only kept in the current browser session. Please return to the original page, right-click on an empty area, and select \"Read this article bilingually\" to reopen it."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Retry"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "Translating $arg1$/$arg2$ paragraphs · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Translation complete · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Stopped: $arg1$/$arg2$ paragraphs translated",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Original:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "The article is too long, so only the beginning is shown."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

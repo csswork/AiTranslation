@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Automatisch herkennen en direct vertalen. Als dit niet is aangevinkt, wordt de gevonden tekst eerst op de afbeelding getekend; je kunt vormen verplaatsen, verwijderen, bewerken of toevoegen en daarna op 'Vertalen' klikken om te vertalen. Je kunt dit ook in de pop-up wisselen."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Lees dit artikel tweetalig"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Titel"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "Tweetalig lezen openen…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Kan de leespagina niet openen. Vernieuw de pagina en probeer het opnieuw."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Titel en tekst van dit artikel worden herkend…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "Op deze pagina is geen leesbare tekst gevonden."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "Deze pagina lijkt geen volledig artikel te zijn ($arg1$ alinea's gedetecteerd). Toch openen?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Toch openen"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ alinea's gedetecteerd",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Originele pagina openen"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Origineel en vertaling naast elkaar"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Vertaling direct onder elke alinea"
+  },
+  "m_135122779e12bf61": {
+    "message": "Leesstijl"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Volg de lichte of donkere modus van het systeem"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Lettergrootte verkleinen"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Lettergrootte"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Lettergrootte vergroten"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Regelafstand verkleinen"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Regelafstand"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Regelafstand vergroten"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "Tweetalig lezen · AI-tekstselectie vertalen"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "Tweetalig lezen"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Naast elkaar"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Onder elkaar"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Thema"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Papier"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Beige"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Oogvriendelijk"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Nacht"
+  },
+  "m_078838da4218490b": {
+    "message": "Lettertype"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Schreefloos"
+  },
+  "m_8059e059b3192500": {
+    "message": "Met schreef"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Kai"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "Tekstbreedte"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Smal"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Gemiddeld"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Breed"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Gedimd"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Niet gedimd"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Standaardwaarden herstellen"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Vertaalinstellingen"
+  },
+  "m_40780706515733f6": {
+    "message": "Dit artikel is niet meer beschikbaar"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "Leesinhoud wordt alleen in de huidige browsersessie bewaard. Ga terug naar de originele pagina, klik met de rechtermuisknop op een lege plek en kies \"Lees dit artikel tweetalig\" om het opnieuw te openen."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Opnieuw proberen"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "$arg1$/$arg2$ alinea's vertalen · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Vertaling voltooid · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Gestopt: $arg1$/$arg2$ alinea's vertaald",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Origineel:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "Het artikel is te lang, dus alleen het begin wordt weergegeven."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

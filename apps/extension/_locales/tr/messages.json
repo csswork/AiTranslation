@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Otomatik tanıyıp doğrudan çevir. İşaret kaldırıldığında bulunan metin önce görüntü üzerinde çizilir; şekilleri taşıyabilir, silebilir, düzenleyebilir veya yeni ekleyebilirsin, ardından çevirmek için \"Çevir\"e tıkla. Açılır pencereden de değiştirebilirsin."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Bu makaleyi iki dilli oku"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Başlık"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "İki dilli okuma açılıyor…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Okuma sayfası açılamıyor. Lütfen sayfayı yenileyip tekrar deneyin."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Bu makalenin başlığı ve metni belirleniyor…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "Bu sayfada okunabilecek metin bulunamadı."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "Bu sayfa tam bir makaleye benzemiyor ($arg1$ paragraf metin algılandı). Yine de açılsın mı?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Yine de aç"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ paragraf metin algılandı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Orijinal sayfayı aç"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Orijinal ve çeviri yan yana"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Çeviri her paragrafın hemen altında"
+  },
+  "m_135122779e12bf61": {
+    "message": "Okuma stili"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Sistemin açık veya koyu temasını izle"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Yazı tipini küçült"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Yazı tipi boyutu"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Yazı tipini büyüt"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Satır aralığını azalt"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Satır aralığı"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Satır aralığını artır"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "İki dilli okuma · AI seçim çevirisi"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "İki dilli okuma"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Yan yana"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Alt alta"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Tema"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Kağıt"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Bej"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Göz dostu"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Gece"
+  },
+  "m_078838da4218490b": {
+    "message": "Yazı tipi"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Sans-serif"
+  },
+  "m_8059e059b3192500": {
+    "message": "Serif"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Kai"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "İçerik genişliği"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Dar"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Orta"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Geniş"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Soluk"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Soluk değil"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Varsayılanlara dön"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Çeviri ayarları"
+  },
+  "m_40780706515733f6": {
+    "message": "Bu makale artık mevcut değil"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "Okuma içeriği yalnızca geçerli tarayıcı oturumunda saklanır. Lütfen orijinal sayfaya dönün, boş bir alana sağ tıklayın ve yeniden açmak için \"Bu makaleyi iki dilli oku\" seçeneğini seçin."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Tekrar dene"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "$arg1$/$arg2$ paragraf çevriliyor · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Çeviri tamamlandı · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Durduruldu: $arg1$/$arg2$ paragraf çevrildi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Orijinal:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "Makale çok uzun, bu yüzden yalnızca başlangıcı gösteriliyor."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

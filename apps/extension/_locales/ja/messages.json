@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "自動認識してすぐに翻訳します。チェックを外すと、見つかったテキストが先に画像上に描画され、形状の移動・削除・編集・追加ができます。「翻訳」をクリックすると翻訳されます。ポップアップでも切り替えられます。"
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "この記事をバイリンガルで読む"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "タイトル"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "バイリンガル表示を開いています…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "閲覧ページを開けませんでした。ページを更新してからもう一度お試しください。"
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "この記事のタイトルと本文を識別しています…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "このページには閲覧できる本文が見つかりませんでした。"
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "このページは完全な記事ではないようです（$arg1$ 段落のテキストを検出）。それでも開きますか？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "それでも開く"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ 段落の本文を検出しました",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "元のページを開く"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "原文と訳文を左右に並べて表示"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "各段落の原文のすぐ下に訳文を表示"
+  },
+  "m_135122779e12bf61": {
+    "message": "閲覧スタイル"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "システムのライト/ダークモードに従う"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "文字サイズを小さくする"
+  },
+  "m_f71561b5af0abced": {
+    "message": "文字サイズ"
+  },
+  "m_8b247b82f012c614": {
+    "message": "文字サイズを大きくする"
+  },
+  "m_531e630f46177ee5": {
+    "message": "行間を狭くする"
+  },
+  "m_40026aada6d82f50": {
+    "message": "行間"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "行間を広くする"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "バイリンガル閲覧 · AI 選択翻訳"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "バイリンガル閲覧"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "左右並列"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "上下"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "テーマ"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "紙色"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "ベージュ"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "目に優しい"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "ナイト"
+  },
+  "m_078838da4218490b": {
+    "message": "フォント"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "サンセリフ"
+  },
+  "m_8059e059b3192500": {
+    "message": "セリフ"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "楷書"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "本文幅"
+  },
+  "m_a614dba65d38606b": {
+    "message": "狭い"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "標準"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "広い"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "淡色表示"
+  },
+  "m_d65288412eb510d9": {
+    "message": "淡色表示なし"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "既定に戻す"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "翻訳設定"
+  },
+  "m_40780706515733f6": {
+    "message": "この記事はもう存在しません"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "閲覧内容は現在のブラウザセッションにのみ保存されます。元のページに戻り、空白部分を右クリックして「この記事をバイリンガルで読む」を選択し、再度開いてください。"
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "再試行"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "$arg1$/$arg2$ 段落を翻訳中 · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "翻訳完了 · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "停止しました：$arg1$/$arg2$ 段落を翻訳済み",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "原文："
+  },
+  "m_ed4d1221d736665a": {
+    "message": "記事が長すぎるため、冒頭のみ表示しています。"
+  },
   "extensionName": {
     "message": "AI翻訳"
   },

@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。"
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "双语阅读这篇文章"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "标题"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "正在打开双语阅读…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "无法打开阅读页，请刷新页面后重试。"
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "正在识别这篇文章的标题与正文…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "此页面未找到可阅读的正文。"
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "此页面似乎不是一篇完整的文章（识别到 $arg1$ 段文字）。仍要打开吗？",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "仍然打开"
+  },
+  "m_979591d25732afe3": {
+    "message": "已识别 $arg1$ 段正文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "打开原网页"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "原文与译文左右并排"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "每段原文下方紧跟译文"
+  },
+  "m_135122779e12bf61": {
+    "message": "阅读样式"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "跟随系统的浅色或深色"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "减小字号"
+  },
+  "m_f71561b5af0abced": {
+    "message": "字号"
+  },
+  "m_8b247b82f012c614": {
+    "message": "增大字号"
+  },
+  "m_531e630f46177ee5": {
+    "message": "减小行距"
+  },
+  "m_40026aada6d82f50": {
+    "message": "行距"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "增大行距"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "双语阅读 · AI 划词翻译"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "双语阅读"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "并排"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "上下"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "主题"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "纸色"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "米黄"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "护眼"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "夜间"
+  },
+  "m_078838da4218490b": {
+    "message": "字体"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "无衬线"
+  },
+  "m_8059e059b3192500": {
+    "message": "衬线"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "楷体"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "版心"
+  },
+  "m_a614dba65d38606b": {
+    "message": "窄"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "适中"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "宽"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "淡化"
+  },
+  "m_d65288412eb510d9": {
+    "message": "不淡化"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "恢复默认"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "翻译设置"
+  },
+  "m_40780706515733f6": {
+    "message": "这篇文章已不存在"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "阅读内容仅保存在当前浏览器会话中。请回到原网页，在空白处右键选择「双语阅读这篇文章」重新打开。"
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "重试"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "正在翻译 $arg1$/$arg2$ 段 · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "翻譯完成 · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "已停止：已翻譯 $arg1$/$arg2$ 段",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "原文："
+  },
+  "m_ed4d1221d736665a": {
+    "message": "文章太長，僅顯示前面的部分。"
+  },
   "extensionName": {
     "message": "AI 劃詞翻譯"
   },

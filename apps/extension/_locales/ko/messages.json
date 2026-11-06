@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "자동으로 인식한 후 바로 번역합니다. 선택을 해제하면 찾은 텍스트를 먼저 이미지 위에 표시하며, 모양을 이동, 삭제, 수정하거나 새로 추가할 수 있고 「번역」을 클릭하면 번역합니다. 팝업에서도 전환할 수 있습니다."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "이 글을 이중 언어로 읽기"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "제목"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "이중 언어 읽기를 여는 중…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "읽기 페이지를 열 수 없습니다. 페이지를 새로 고친 후 다시 시도하세요."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "이 글의 제목과 본문을 인식하는 중…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "이 페이지에서 읽을 수 있는 본문을 찾지 못했습니다."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "이 페이지는 완전한 글처럼 보이지 않습니다($arg1$개 문단 감지됨). 그래도 열까요?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "그래도 열기"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$개 문단 감지됨",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "원본 페이지 열기"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "원문과 번역문 나란히 보기"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "각 문단 바로 아래에 번역문 표시"
+  },
+  "m_135122779e12bf61": {
+    "message": "읽기 스타일"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "시스템의 라이트 또는 다크 모드 따르기"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "글자 크기 줄이기"
+  },
+  "m_f71561b5af0abced": {
+    "message": "글자 크기"
+  },
+  "m_8b247b82f012c614": {
+    "message": "글자 크기 키우기"
+  },
+  "m_531e630f46177ee5": {
+    "message": "줄 간격 줄이기"
+  },
+  "m_40026aada6d82f50": {
+    "message": "줄 간격"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "줄 간격 늘리기"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "이중 언어 읽기 · AI 선택 번역"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "이중 언어 읽기"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "나란히"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "위아래"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "테마"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "종이색"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "미색"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "눈 보호"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "야간"
+  },
+  "m_078838da4218490b": {
+    "message": "글꼴"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "산세리프"
+  },
+  "m_8059e059b3192500": {
+    "message": "세리프"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "해서체"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "본문 너비"
+  },
+  "m_a614dba65d38606b": {
+    "message": "좁게"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "보통"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "넓게"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "흐리게"
+  },
+  "m_d65288412eb510d9": {
+    "message": "흐리지 않게"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "기본값 복원"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "번역 설정"
+  },
+  "m_40780706515733f6": {
+    "message": "이 글은 더 이상 존재하지 않습니다"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "읽기 내용은 현재 브라우저 세션에만 저장됩니다. 원본 페이지로 돌아가 빈 곳을 마우스 오른쪽 버튼으로 클릭하고 「이 글을 이중 언어로 읽기」를 선택해 다시 여세요."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "다시 시도"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "$arg1$/$arg2$개 문단 번역 중 · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "번역 완료 · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "중지됨: $arg1$/$arg2$개 문단 번역됨",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "원문:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "글이 너무 길어 앞부분만 표시됩니다."
+  },
   "extensionName": {
     "message": "AI 번역"
   },

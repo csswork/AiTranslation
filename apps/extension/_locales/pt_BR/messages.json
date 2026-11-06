@@ -2093,6 +2093,187 @@
   "m_3c823b1068259eaf": {
     "message": "Reconhece e traduz automaticamente. Quando desmarcado, o texto encontrado é primeiro desenhado na imagem; você pode mover, excluir, editar ou adicionar formas e, em seguida, clicar em \"Traduzir\" para traduzir. Você também pode alternar isso no pop-up."
   },
+  "m_d7d2fca0978b2d0f": {
+    "message": "Ler este artigo bilíngue"
+  },
+  "m_c3405f8c7d9d392a": {
+    "message": "Título"
+  },
+  "m_c9cbd80ee1400623": {
+    "message": "Abrindo leitura bilíngue…"
+  },
+  "m_e012a4cf8afcd96d": {
+    "message": "Não foi possível abrir a página de leitura. Atualize a página e tente novamente."
+  },
+  "m_bf84db16adeefa8a": {
+    "message": "Identificando o título e o corpo deste artigo…"
+  },
+  "m_d1b01354f901acff": {
+    "message": "Nenhum texto legível foi encontrado nesta página."
+  },
+  "m_19872ce3f7fdc9c5": {
+    "message": "Esta página não parece ser um artigo completo ($arg1$ parágrafos detectados). Abrir mesmo assim?",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_60706e5dd35f5b2e": {
+    "message": "Abrir mesmo assim"
+  },
+  "m_979591d25732afe3": {
+    "message": "$arg1$ parágrafos detectados",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b179b0654798a039": {
+    "message": "Abrir página original"
+  },
+  "m_d20a8cce9d3d1021": {
+    "message": "Original e tradução lado a lado"
+  },
+  "m_d2ed9fcf6e331e64": {
+    "message": "Tradução logo abaixo de cada parágrafo"
+  },
+  "m_135122779e12bf61": {
+    "message": "Estilo de leitura"
+  },
+  "m_ca3c38872e3cd07d": {
+    "message": "Seguir o modo claro ou escuro do sistema"
+  },
+  "m_f9a21b596d67d9c4": {
+    "message": "Diminuir tamanho da fonte"
+  },
+  "m_f71561b5af0abced": {
+    "message": "Tamanho da fonte"
+  },
+  "m_8b247b82f012c614": {
+    "message": "Aumentar tamanho da fonte"
+  },
+  "m_531e630f46177ee5": {
+    "message": "Diminuir espaçamento entre linhas"
+  },
+  "m_40026aada6d82f50": {
+    "message": "Espaçamento entre linhas"
+  },
+  "m_84792fb8b6bc363f": {
+    "message": "Aumentar espaçamento entre linhas"
+  },
+  "m_4784ff5e0ffac0b8": {
+    "message": "Leitura bilíngue · Tradução de seleção com IA"
+  },
+  "m_4edb4bf1ad4235ad": {
+    "message": "Leitura bilíngue"
+  },
+  "m_74d6f84ae58de855": {
+    "message": "Lado a lado"
+  },
+  "m_8284260058ddb4d7": {
+    "message": "Empilhado"
+  },
+  "m_788db1cfec2a3db5": {
+    "message": "Tema"
+  },
+  "m_6d6f19d5fa513681": {
+    "message": "Papel"
+  },
+  "m_a8a4d2e9b183fc5c": {
+    "message": "Bege"
+  },
+  "m_8d026a85ad27d8d5": {
+    "message": "Proteção ocular"
+  },
+  "m_df2cedace72a3ebf": {
+    "message": "Noturno"
+  },
+  "m_078838da4218490b": {
+    "message": "Fonte"
+  },
+  "m_26ae4ba26a7ff8d5": {
+    "message": "Sem serifa"
+  },
+  "m_8059e059b3192500": {
+    "message": "Com serifa"
+  },
+  "m_bba1d7806df9e64d": {
+    "message": "Kai"
+  },
+  "m_314d180d3e600a0e": {
+    "message": "Largura do conteúdo"
+  },
+  "m_a614dba65d38606b": {
+    "message": "Estreita"
+  },
+  "m_fe4e7b3d04416dba": {
+    "message": "Média"
+  },
+  "m_8dd966ad496e83c7": {
+    "message": "Larga"
+  },
+  "m_cb4b6ef6ea552711": {
+    "message": "Esmaecido"
+  },
+  "m_d65288412eb510d9": {
+    "message": "Não esmaecido"
+  },
+  "m_ba2e93e73037c71e": {
+    "message": "Restaurar padrões"
+  },
+  "m_a2d7ec91766fec01": {
+    "message": "Configurações de tradução"
+  },
+  "m_40780706515733f6": {
+    "message": "Este artigo não está mais disponível"
+  },
+  "m_3a72f19a1a353617": {
+    "message": "O conteúdo da leitura é mantido apenas na sessão atual do navegador. Volte à página original, clique com o botão direito em uma área vazia e selecione \"Ler este artigo bilíngue\" para reabri-lo."
+  },
+  "m_b8784c8dd5636ff2": {
+    "message": "Tentar novamente"
+  },
+  "m_9bae947f7b153f56": {
+    "message": "Traduzindo $arg1$/$arg2$ parágrafos · $arg3$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2064cb8d0b366371": {
+    "message": "Tradução concluída · $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6d51d43a9a4e97a6": {
+    "message": "Parado: $arg1$/$arg2$ parágrafos traduzidos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_457f372b01cb1fee": {
+    "message": "Original:"
+  },
+  "m_ed4d1221d736665a": {
+    "message": "O artigo é muito longo, então apenas o início é exibido."
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },

@@ -135,11 +135,12 @@
    * @param {Node} root  Readability 返回的正文节点
    * @param {{ base?: string, title?: string }} options
    */
-  function toBlocks(root, { base = '', title = '' } = {}) {
+  function toBlocks(root, { base = '', title = '', byline = '' } = {}) {
     const blocks = [];
     let chars = 0;
     let full = false;
     const titleKey = clean(title).toLowerCase();
+    const bylineKey = clean(byline).toLowerCase();
 
     const push = (block) => {
       if (full) return;
@@ -150,6 +151,8 @@
     const pushText = (type, text, extra = {}) => {
       const value = clean(text);
       if (!value) return;
+      // 正文开头的署名行（「By 某某 · 日期」）跳过：阅读页顶部已经单独显示作者
+      if (type === 'p' && blocks.length < 2 && bylineKey && value.length < 160 && value.toLowerCase().includes(bylineKey)) return;
       for (const part of type === 'code' ? [value] : split(value)) push({ type, text: part, ...extra });
     };
 
