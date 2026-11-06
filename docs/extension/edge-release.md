@@ -14,7 +14,7 @@ Chrome 仍使用 `npm run package:extension`，输出文件名保持不变。两
 
 `scripts/prepare-store-package.mjs` 只在临时目录把 `src/lib/env.js` 中的 `@store-package` 标记设为生产；商店包不依赖 `update_url` 才能连接生产账户服务。源码直接加载继续使用 localhost。生产包移除账户内容脚本与回调页的 localhost 来源；不能因此扩大到任意网页。
 
-商店包已有必需的 `<all_urls>` 权限，因此移除被其覆盖的 `optional_host_permissions`，避免 Chromium 的重复权限警告；不增加任何权限，自定义 HTTPS 接口仍按原逻辑检查访问权限。
+`manifest.json` 不声明 `optional_host_permissions`：必需的 `<all_urls>` 已覆盖自定义 HTTPS 接口，重复声明只会让 Chromium 报警告。自定义接口仍按原逻辑先检查访问权限，用户限制了站点访问时在「测试连接」里只申请那一个域名。
 
 Edge 同样使用 `chrome.*` 扩展接口和 `chrome-extension://` 回调。快捷键管理链接依据浏览器选择 `edge://extensions/shortcuts`；认证权限依据固定服务地址和服务端校验，不依赖浏览器 User-Agent。
 

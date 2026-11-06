@@ -206,25 +206,6 @@ worker, and does nothing else — it never scans, uploads or reports page conten
 ——它不会自行扫描、上传或上报页面内容。
 ```
 
-### Optional host permission `https://*/*`
-
-**EN**
-
-```
-Kept for the custom API base URL (a proxy or relay) a user may enter in the advanced settings.
-Because the host permissions already include <all_urls>, Chrome normally shows no prompt; one
-appears only if the user has restricted the extension's site access, and then only for that one
-origin, when they click "Test connection".
-```
-
-**中文**
-
-```
-保留给高级设置里的自定义接口地址（代理或中转）。由于主机权限已经包含 <all_urls>，Chrome
-通常不会再弹出授权；只有用户自己限制了扩展的站点访问时，才会在点击「测试连接」时弹出，
-而且只申请那一个域名。
-```
-
 ## 3. 远程代码（Remote code）
 
 **选 "No, I am not using remote code."** —— 这一条对本扩展是明确成立的。
@@ -372,7 +353,7 @@ https://www.huaci.app/privacy.html
 | 结论 | 依据 |
 | --- | --- |
 | 权限清单就是 activeTab / contextMenus / scripting / storage | `manifest.json` 的 `permissions` |
-| `<all_urls>` 加 8 条具体站点（本机开发、用户端、官网、四个翻译平台）的 host permission，另有可选 `https://*/*` | `manifest.json` 的 `host_permissions` / `optional_host_permissions` |
+| `<all_urls>` 加 8 条具体站点（本机开发、用户端、官网、四个翻译平台）的 host permission，没有可选主机权限 | `manifest.json` 的 `host_permissions` |
 | 内容脚本跑在所有站点 | `manifest.json` 的 `content_scripts.matches = ["<all_urls>"]` |
 | `activeTab` 确实必要（不是多余权限） | `src/background.js` 的 `ensureContentScript()` 用 `chrome.scripting.executeScript` 补注入；安装或更新时给已打开标签页的补注入靠 `host_permissions` 里的 `<all_urls>`（实测只有内容脚本的 `<all_urls>` 时 executeScript 会报「must request permission」）；用户把扩展的站点访问限制为「点击时」后，仍要靠右键/快捷键触发时拿到的临时权限才能补注入 |
 | 自定义地址是按具体 origin 申请，不是整站授权 | `src/options/options.js` 的 `chrome.permissions.request({ origins: [origin] })`，在「测试连接」点击里调用 |

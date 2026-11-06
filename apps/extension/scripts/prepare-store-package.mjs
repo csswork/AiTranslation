@@ -24,9 +24,6 @@ export function prepareStorePackage(root, staging, target = 'chrome') {
   // The stores manage their own update URL. Production authentication never accepts localhost.
   delete manifest.update_url;
   manifest.host_permissions = manifest.host_permissions.filter((origin) => !origin.startsWith('http://localhost'));
-  // Required all-site access already covers custom HTTPS providers. Chromium ignores
-  // this redundant optional declaration and reports it as a manifest warning.
-  if (manifest.host_permissions.includes('<all_urls>')) delete manifest.optional_host_permissions;
   for (const script of manifest.content_scripts) {
     script.matches = script.matches.filter((origin) => !origin.startsWith('http://localhost'));
   }

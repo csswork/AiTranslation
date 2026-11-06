@@ -23,7 +23,7 @@ try {
     assert.deepEqual(fs.readdirSync(staging).sort(), ['LICENSE', '_locales', 'icons', 'manifest.json', 'src']);
     const manifest = JSON.parse(fs.readFileSync(path.join(staging, 'manifest.json'), 'utf8'));
     assert.equal(manifest.update_url, undefined);
-    assert.equal(manifest.optional_host_permissions, undefined, 'All-site access already covers custom HTTPS providers');
+    assert.equal(manifest.optional_host_permissions, undefined, 'All-site access already covers custom HTTPS providers; a redundant optional permission is only a Chromium warning');
     assert.equal(manifest.web_accessible_resources.length, 1);
     assert.deepEqual(manifest.web_accessible_resources[0].matches, ['https://app.huaci.app/*']);
     const accountScript = manifest.content_scripts.find((script) => script.js.includes('src/content/account.js'));
