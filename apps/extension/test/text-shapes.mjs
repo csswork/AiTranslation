@@ -88,6 +88,7 @@ console.log('✓ 字不到图片短边 1.5% 的小字丢掉');
   const found = S.findShapes(noisy, W, H, [blocks[0]]);
   assert.equal(found.small, 0, '正常大小的字不能因为周围的纹理被当成小字');
   assert.equal(found.shapes.length, 1);
+  assert.equal(found.shapes[0].fallback, false, '按笔画勾形状，不退回模型的矩形');
   assert.ok(found.shapes[0].glyph * H >= 15, `字号按框里的字量：${found.shapes[0].glyph * H}`);
   for (const [x, y, w, h] of first) assert.ok(inShape(found.shapes[0], (x + w / 2) / W, (y + h / 2) / H));
   console.log('✓ 周围有细碎纹理时字号仍按框里的字量，不误判成小字');

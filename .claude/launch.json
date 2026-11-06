@@ -4,37 +4,14 @@
     {
       "name": "backend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "--prefix",
-        "apps/backend",
-        "run",
-        "dev"
-      ],
+      "runtimeArgs": ["--prefix", "apps/backend", "run", "dev"],
       "port": 8787
     },
     {
       "name": "web",
       "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8788",
-        "--directory",
-        "apps/web/public"
-      ],
+      "runtimeArgs": ["-m", "http.server", "8788", "--directory", "apps/web/public"],
       "port": 8788
-    },
-    {
-      "name": "manga-test",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8799",
-        "--directory",
-        "/private/tmp/claude-501/-Users-haibo-dev-AiTranslation/66eb2c8b-fb39-4845-b1ae-2dde92bbbdc4/scratchpad/manga"
-      ],
-      "port": 8799
     }
   ]
 }
