@@ -603,7 +603,7 @@
     panel.editor.set(shapes);
     panel.donePick.textContent = t('翻译');
     panel.hint.textContent = t('检查识别出的文字形状，确认后点「翻译」');
-    panel.hintNote.textContent = t('拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除');
+    panel.hintNote.textContent = t('拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除');
     panel.hint.parentElement.title = `${panel.hint.textContent}\n${panel.hintNote.textContent}`;
   }
 

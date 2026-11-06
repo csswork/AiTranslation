@@ -2081,6 +2081,9 @@
   "m_b87fd43cee3f912b": {
     "message": "Na automatische herkenning wordt de gevonden tekst eerst op de afbeelding getekend. Je kunt vormen verplaatsen, verwijderen, wijzigen of toevoegen en daarna vertalen zodra je het hebt bevestigd."
   },
+  "m_32f40298bbc0bf4e": {
+    "message": "Sleep een vorm om hem te verplaatsen; als je een hoekpunt sleept, bewegen nabije punten mee, houd Alt ingedrukt om slechts één punt te verplaatsen; dubbelklik op een rand om een hoekpunt toe te voegen, dubbelklik op een hoekpunt om het te verwijderen; sleep op een lege plek om een nieuwe vorm te maken; druk op Delete om de selectie te verwijderen"
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

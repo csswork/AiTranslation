@@ -493,5 +493,6 @@
   "调整识别出的文字形状后重新翻译": "Pas de herkende tekstvormen aan en vertaal opnieuw",
   "正在识别改动过的形状…": "Gewijzigde vormen worden herkend…",
   "翻译前先显示识别出的文字形状": "Toon herkende tekstvormen voordat je vertaalt",
-  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Na automatische herkenning wordt de gevonden tekst eerst op de afbeelding getekend. Je kunt vormen verplaatsen, verwijderen, wijzigen of toevoegen en daarna vertalen zodra je het hebt bevestigd."
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Na automatische herkenning wordt de gevonden tekst eerst op de afbeelding getekend. Je kunt vormen verplaatsen, verwijderen, wijzigen of toevoegen en daarna vertalen zodra je het hebt bevestigd.",
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Sleep een vorm om hem te verplaatsen; als je een hoekpunt sleept, bewegen nabije punten mee, houd Alt ingedrukt om slechts één punt te verplaatsen; dubbelklik op een rand om een hoekpunt toe te voegen, dubbelklik op een hoekpunt om het te verwijderen; sleep op een lege plek om een nieuwe vorm te maken; druk op Delete om de selectie te verwijderen"
 }

@@ -1,6 +1,7 @@
 /**
  * 自动识别的文字形状编辑器：翻译前让用户检查、调整识别出的形状。
- *   - 按住形状拖动是移动；选中后拖动顶点改形状；
+ *   - 按住形状拖动是移动；选中后拖动顶点改形状，附近的顶点按距离跟着动
+ *     （越近动得越多，按住 Alt 只动这一个点）；
  *   - 双击边线加一个顶点，双击顶点删掉它（至少留三个）；
  *   - 在空白处拖出新形状（矩形或椭圆，按住 Shift 是正方形 / 正圆）；
  *   - 选中后点右上角的 × 或按 Delete 删除。
@@ -42,7 +43,13 @@
       font: 600 13px/1 -apple-system, sans-serif; color: #fff; background: #ef4444;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
     }
-    .edit-del:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }`;
+    .edit-del:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
+    /* 拖动顶点时的影响范围：圈里的顶点跟着动 */
+    .edit-reach {
+      position: absolute; box-sizing: border-box; border-radius: 50%; pointer-events: none;
+      border: 1px dashed rgba(251, 191, 36, 0.9); background: rgba(251, 191, 36, 0.08);
+      transform: translate(-50%, -50%);
+    }`;
 
   const NS = 'http://www.w3.org/2000/svg';
   /** 新画的形状至少要有这么大（屏幕像素），点一下不算。 */
@@ -66,6 +73,31 @@
     const mx = Math.min(Math.max(dx, -b.x), 1 - b.x - b.w);
     const my = Math.min(Math.max(dy, -b.y), 1 - b.y - b.h);
     return polygons.map((poly) => poly.map(([x, y]) => [x + mx, y + my]));
+  }
+
+  /**
+   * 拖动一个顶点，附近的顶点按距离跟着动：权重从 1 平滑降到 0（影响半径以外不动），
+   * 拖一下就能把一段边整体推过去，不用一个点一个点地挪。
+   * @param {number[][]} origin 开始拖动时的点列（0-1）
+   * @param {number} radius 影响半径（屏幕像素）；0 表示只动这一个点
+   * @param {{w:number,h:number}} size 图层的屏幕像素尺寸，距离按屏幕像素算
+   */
+  function dragVertex(origin, index, dx, dy, radius, size = { w: 1, h: 1 }) {
+    const [vx, vy] = origin[index];
+    return origin.map(([x, y], i) => {
+      let weight = i === index ? 1 : 0;
+      if (i !== index && radius > 0) {
+        const d = Math.hypot((x - vx) * size.w, (y - vy) * size.h) / radius;
+        if (d < 1) weight = (1 - d * d) ** 2;
+      }
+      return weight ? [clamp01(x + dx * weight), clamp01(y + dy * weight)] : [x, y];
+    });
+  }
+
+  /** 影响半径：形状外接框长边的三成，限制在 24 到 140 像素之间。 */
+  function reachFor(poly, size) {
+    const b = boundsOf([poly]);
+    return Math.min(140, Math.max(24, Math.max(b.w * size.w, b.h * size.h) * 0.3));
   }
 
   /** 在离 point 最近的那条边上插一个顶点（插在投影点上）。 */
@@ -175,6 +207,15 @@
         del.addEventListener('click', () => remove(i));
         extras.push(del);
       });
+      if (drag?.mode === 'vertex' && drag.radius > 0 && drag.moved) {
+        const [x, y] = shapes[drag.index].polygons[drag.poly][drag.vertex];
+        const reach = document.createElement('div');
+        reach.className = 'edit-reach';
+        reach.style.left = `${x * 100}%`;
+        reach.style.top = `${y * 100}%`;
+        reach.style.width = reach.style.height = `${drag.radius * 2}px`;
+        extras.push(reach);
+      }
       if (drag?.draft) {
         const polygon = document.createElementNS(NS, 'polygon');
         polygon.setAttribute('class', 'draft');
@@ -217,7 +258,11 @@
       const at = point(event);
       const index = Number(target?.dataset?.shape ?? -1);
       if (target.classList?.contains('edit-handle')) {
-        drag = { mode: 'vertex', index, poly: Number(target.dataset.poly), vertex: Number(target.dataset.vertex) };
+        const poly = Number(target.dataset.poly);
+        const origin = shapes[index].polygons[poly].map((p) => [...p]);
+        const r = layer.getBoundingClientRect();
+        drag = { mode: 'vertex', index, poly, vertex: Number(target.dataset.vertex), origin, start: at,
+          size: { w: r.width, h: r.height }, reach: reachFor(origin, { w: r.width, h: r.height }) };
       } else if (index >= 0) {
         active = index;
         drag = { mode: 'move', index, start: at, origin: shapes[index].polygons };
@@ -241,7 +286,9 @@
         s.dirty = true;
       } else if (drag.mode === 'vertex') {
         const s = shapes[drag.index];
-        s.polygons[drag.poly][drag.vertex] = at;
+        // 按住 Alt 只动这一个点
+        drag.radius = event.altKey ? 0 : drag.reach;
+        s.polygons[drag.poly] = dragVertex(drag.origin, drag.vertex, at[0] - drag.start[0], at[1] - drag.start[1], drag.radius, drag.size);
         s.dirty = true;
       } else {
         const { rect, points } = draftFrom(drag.start, at, event.shiftKey);
@@ -314,6 +361,6 @@
   }
 
   globalThis.AITrShapeEditor = {
-    STYLE, create, boundsOf, movePolygons, insertVertex, removeVertex, rectPoints, ellipsePoints,
+    STYLE, create, boundsOf, movePolygons, dragVertex, reachFor, insertVertex, removeVertex, rectPoints, ellipsePoints,
   };
 })();

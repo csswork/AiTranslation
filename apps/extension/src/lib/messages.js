@@ -494,7 +494,8 @@ globalThis.AITrMessageIds = {
   "调整识别出的文字形状后重新翻译": "m_d152c41cb442abd8",
   "正在识别改动过的形状…": "m_ce29990ef5ae0758",
   "翻译前先显示识别出的文字形状": "m_fbbdaa4e5e845a13",
-  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "m_b87fd43cee3f912b"
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "m_b87fd43cee3f912b",
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "m_32f40298bbc0bf4e"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -991,5 +992,6 @@ globalThis.AITrEnglish = {
   "调整识别出的文字形状后重新翻译": "Adjust the recognized text shapes, then translate again",
   "正在识别改动过的形状…": "Recognizing modified shapes…",
   "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
-  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed."
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
 };

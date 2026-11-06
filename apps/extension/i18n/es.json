@@ -493,5 +493,6 @@
   "调整识别出的文字形状后重新翻译": "Ajusta las formas de texto reconocidas y vuelve a traducir",
   "正在识别改动过的形状…": "Reconociendo las formas modificadas…",
   "翻译前先显示识别出的文字形状": "Mostrar las formas de texto reconocidas antes de traducir",
-  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Tras el reconocimiento automático, el texto detectado se dibuja primero sobre la imagen. Puedes mover, eliminar, modificar o añadir formas, y luego traducir una vez confirmado."
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Tras el reconocimiento automático, el texto detectado se dibuja primero sobre la imagen. Puedes mover, eliminar, modificar o añadir formas, y luego traducir una vez confirmado.",
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Arrastra una forma para moverla; al arrastrar un vértice se mueven los puntos cercanos, mantén Alt para mover solo un punto; haz doble clic en un borde para añadir un vértice, haz doble clic en un vértice para eliminarlo; arrastra en un espacio vacío para crear una nueva forma; pulsa Delete para eliminar la selección"
 }

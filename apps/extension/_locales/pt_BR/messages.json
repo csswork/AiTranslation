@@ -2081,6 +2081,9 @@
   "m_b87fd43cee3f912b": {
     "message": "Após o reconhecimento automático, o texto detectado é desenhado na imagem primeiro. Você pode mover, excluir, modificar ou adicionar formas e, depois de confirmar, traduzir."
   },
+  "m_32f40298bbc0bf4e": {
+    "message": "Arraste uma forma para movê-la; arrastar um vértice move os pontos próximos junto, segure Alt para mover apenas um ponto; clique duas vezes em uma aresta para adicionar um vértice, clique duas vezes em um vértice para excluí-lo; arraste em um espaço vazio para criar uma nova forma; pressione Delete para remover a seleção"
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },
