@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Clear all wording preferences?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Appearance: Follow system"
+  },
+  "m_b457489127582217": {
+    "message": "Saved articles"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Appearance"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Follow system"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Light"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Dark"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Color scheme"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "No saved articles yet. Click \"Save\" in the top bar to keep the article and its translation in this browser, so you won't need to translate it again next time."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Reading content is only kept in the current browser session. Go back to the original page, right-click on an empty area, and choose \"Read this article bilingually\" to reopen it; saved articles are under \"Saved\" on the right."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Appearance: Light"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Appearance: Dark"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Saved in the list on the right; future translations and changes will sync automatically"
+  },
+  "m_443173f31b06674d": {
+    "message": "Save the article and its translation in this browser, so you won't need to translate it again next time"
+  },
+  "m_23e221f13587a833": {
+    "message": "Save failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ articles",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Delete \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Delete failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "Deleted \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Undo"
+  },
   "extensionName": {
     "message": "AI Translator"
   },

@@ -12,7 +12,9 @@ function h(tag, attrs = {}, ...children) {
     tagName: tag.toUpperCase(),
     childNodes: children.flat().map((child) => (typeof child === 'string' ? { nodeType: 3, nodeValue: child } : child)),
     getAttribute: (name) => (name in attrs ? attrs[name] : null),
+    removeChild(child) { node.childNodes.splice(node.childNodes.indexOf(child), 1); },
   };
+  for (const child of node.childNodes) child.parentNode = node;
   Object.defineProperty(node, 'textContent', {
     get() {
       const walk = (n) => (n.nodeType === 3 ? n.nodeValue : n.childNodes.map(walk).join(''));
@@ -149,6 +151,42 @@ function h(tag, attrs = {}, ...children) {
   assert.equal(A.translatable('OK'), true);
   assert.equal(A.translatable('中文'), true);
   console.log('✓ 切批不超过 20 段、2000 字；纯数字与符号不送去翻译');
+}
+
+/* --- 8. 广告：容器在识别前去掉，广告标签与统计像素不进正文 --- */
+{
+  const page = h('body', {},
+    h('header', { class: 'masthead' }, 'Site'),
+    h('div', { class: 'ad-slot' }, 'Advertisement'),
+    h('div', { id: 'div-gpt-ad-123' }),
+    h('ins', { class: 'adsbygoogle' }),
+    h('div', { 'data-ad-unit': 'x' }, 'Buy now'),
+    h('aside', { class: 'sidebar-sponsored' }, 'Sponsored links'),
+    h('div', { class: 'taboola-feed' }, 'You may like'),
+    h('section', { 'aria-label': 'Advertisement' }, 'x'),
+    h('div', { class: 'article-body has-ads' }, 'Long article text '.repeat(40)),
+    h('div', { class: 'add-to-cart load-more' }, 'Real content'),
+  );
+  const removed = A.stripAds(page);
+  assert.equal(removed, 7);
+  assert.deepEqual(page.childNodes.map((n) => n.getAttribute('class')), ['masthead', 'article-body has-ads', 'add-to-cart load-more'],
+    '文字很多的容器（整篇正文）保留；head、add-to-cart 等不误删');
+
+  const { blocks } = A.toBlocks(h('div', {},
+    h('p', {}, 'Real paragraph one.'),
+    h('p', {}, 'ADVERTISEMENT'),
+    h('p', {}, 'Story continues below advertisement'),
+    h('div', {}, 'Advertisement - Scroll to continue reading'),
+    h('p', {}, '广告'),
+    h('h3', {}, 'Sponsored'),
+    h('p', {}, 'Ads are everywhere, and this sentence is about them.'),
+    h('img', { src: 'https://example.com/pixel.gif', width: '1', height: '1' }),
+    h('img', { src: 'https://securepubads.g.doubleclick.net/x.png' }),
+    h('img', { src: 'https://example.com/photo.jpg' }),
+  ), { base: 'https://example.com/' });
+  assert.deepEqual(blocks.map((b) => b.text || b.src), ['Real paragraph one.', 'Ads are everywhere, and this sentence is about them.', 'https://example.com/photo.jpg']);
+  assert.equal(A.isAdLabel('Sponsored by Acme Corp'), false, '有具体内容的不算广告标签');
+  console.log('✓ 广告容器在识别前去掉；广告标签、统计像素、广告服务器图片不进正文；正文不误删');
 }
 
 console.log('\n全部通过');

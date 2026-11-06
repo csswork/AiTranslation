@@ -7,6 +7,8 @@
  *   翻译：按批调用当前平台（含点数翻译），从上往下逐批填入译文；换目标语言或平台会重翻。
  *   换说法：译文按词切开（Intl.Segmenter），点一个词或选中一段，请当前平台给出几种可以直接替换的说法，
  *         也可以自己改写；换完可以把全文其他相同的地方一起替换。
+ *   保存：顶栏「保存」把文章连同译文（含换过的说法）存进 IndexedDB（library.js），右侧「已保存」列出，
+ *         可以打开（?saved=<id>，不用再翻译）或删除；已保存的文章之后的译文与改动自动同步。
  *   样式：主题、字体、字号、行距、版心、淡化存进 chrome.storage.local 的 readerStyle，
  *         所有阅读页共用，默认取 huaci.app 的外观。
  *
@@ -21,10 +23,12 @@
 
   const STYLE_KEY = 'readerStyle';
   const DEFAULTS = Object.freeze({
-    theme: 'auto', font: 'sans', size: 16, leading: 1.75, width: 'medium', dim: 'none', mode: 'side',
+    palette: 'paper', scheme: 'system', font: 'sans', size: 16, leading: 1.75, width: 'medium', dim: 'none', mode: 'side',
   });
   const CHOICES = {
-    theme: ['auto', 'paper', 'white', 'sepia', 'green', 'night'],
+    palette: ['paper', 'white', 'sepia', 'green'],
+    /** 外观：跟随系统 / 浅色 / 深色。顶栏按钮按这个顺序轮换。 */
+    scheme: ['system', 'light', 'dark'],
     font: ['sans', 'serif', 'kai'],
     width: ['narrow', 'medium', 'wide'],
     dim: ['none', 'original', 'translated'],
@@ -39,7 +43,10 @@
     bar: $('bar'), source: $('source'), site: $('site'), status: $('status'),
     progressWrap: $('progressWrap'), progress: $('progress'),
     modes: $('modes'), target: $('target'), provider: $('provider'), run: $('run'),
-    styleButton: $('styleButton'), panel: $('panel'), themes: $('themes'),
+    styleButton: $('styleButton'), panel: $('panel'), themes: $('themes'), schemeButton: $('schemeButton'),
+    save: $('save'), saveLabel: $('saveLabel'), libraryButton: $('libraryButton'), libraryCount: $('libraryCount'),
+    library: $('library'), libraryList: $('libraryList'), libraryEmpty: $('libraryEmpty'), libraryTotal: $('libraryTotal'),
+    libraryClose: $('libraryClose'),
     size: $('size'), sizeOut: $('sizeOut'), leading: $('leading'), leadingOut: $('leadingOut'),
     reset: $('reset'), settingsLink: $('settings'),
     error: $('error'), errorText: $('errorText'),
@@ -62,6 +69,12 @@
 
   function normalizeStyle(value) {
     const next = { ...DEFAULTS };
+    // 旧版只有一个「主题」：auto、night 是明暗，其余是配色（浅色）
+    if (value?.theme && !value.palette && !value.scheme) {
+      value = { ...value,
+        palette: ['white', 'sepia', 'green'].includes(value.theme) ? value.theme : 'paper',
+        scheme: value.theme === 'auto' ? 'system' : value.theme === 'night' ? 'dark' : 'light' };
+    }
     for (const [key, list] of Object.entries(CHOICES)) {
       if (list.includes(value?.[key])) next[key] = value[key];
     }
@@ -74,7 +87,8 @@
 
   function applyStyle() {
     const root = document.documentElement;
-    root.dataset.theme = style.theme;
+    root.dataset.palette = style.palette;
+    root.dataset.scheme = currentScheme();
     root.dataset.font = style.font;
     root.dataset.width = style.width;
     root.dataset.dim = style.dim;
@@ -86,8 +100,12 @@
       button.setAttribute('aria-pressed', String(button.dataset.mode === style.mode));
     }
     for (const button of el.themes.querySelectorAll('button')) {
-      button.setAttribute('aria-pressed', String(button.dataset.value === style.theme));
+      button.setAttribute('aria-pressed', String(button.dataset.value === style.palette));
     }
+    const schemeLabel = { system: t("外观：跟随系统"), light: t("外观：浅色"), dark: t("外观：深色") }[style.scheme];
+    el.schemeButton.dataset.scheme = style.scheme;
+    el.schemeButton.title = schemeLabel;
+    el.schemeButton.setAttribute('aria-label', schemeLabel);
     for (const group of el.panel.querySelectorAll('[data-pref]')) {
       for (const button of group.querySelectorAll('button')) {
         button.setAttribute('aria-pressed', String(button.dataset.value === style[group.dataset.pref]));
@@ -98,6 +116,13 @@
     el.leading.value = String(style.leading);
     el.leadingOut.textContent = style.leading.toFixed(2);
   }
+
+  const systemDark = matchMedia('(prefers-color-scheme: dark)');
+  const currentScheme = () => (style.scheme === 'system' ? (systemDark.matches ? 'dark' : 'light') : style.scheme);
+  // 跟随系统时，系统切换明暗立即生效
+  systemDark.addEventListener('change', () => {
+    if (style.scheme === 'system') document.documentElement.dataset.scheme = currentScheme();
+  });
 
   function setStyle(patch) {
     style = normalizeStyle({ ...style, ...patch });
@@ -442,6 +467,7 @@
             item.done = true;
             paint(item);
           });
+          schedulePersist();
         } catch (err) {
           if (controller.signal.aborted || err?.name === 'AbortError') return;
           // 缺 Key、点数不足、限频会让每一批都失败：整体停下，已翻好的保留
@@ -488,7 +514,161 @@
     }),
     remember: (entry) => AITrTerms.remember(entry),
     forget: (entry) => AITrTerms.forget(entry.id),
+    onChange: () => schedulePersist(),
   });
+
+  /* ---------------------------------------------------------------- 保存 */
+
+  const L = globalThis.AITrLibrary;
+  /** 这篇文章已保存时的 id 与首次保存时间；之后的译文与改动自动同步过去。 */
+  let savedId = null;
+  let savedAt = 0;
+  let persistTimer = 0;
+  let undoTimer = 0;
+
+  function renderSave() {
+    el.save.hidden = !article;
+    el.save.setAttribute('aria-pressed', String(Boolean(savedId)));
+    el.saveLabel.textContent = savedId ? t("已保存") : t("保存");
+    el.save.title = savedId ? t("已保存在右侧列表里，之后的译文与改动会自动同步") : t("连同译文保存在这个浏览器里，之后打开不用再翻译");
+  }
+
+  async function persist() {
+    clearTimeout(persistTimer);
+    if (!savedId || !article) return;
+    try {
+      const meta = await L.save({
+        id: savedId, article, target, provider: settings.provider, savedAt,
+        outs: units.map((item) => (item.done ? item.out : '')),
+        machines: units.map((item) => (item.done ? item.machine : '')),
+      });
+      savedAt = meta.savedAt;
+      renderLibrary();
+    } catch (err) {
+      showError(t("保存失败：$1", [String(err?.message || err)]));
+    }
+  }
+
+  function schedulePersist() {
+    if (!savedId) return;
+    clearTimeout(persistTimer);
+    persistTimer = setTimeout(persist, 600);
+  }
+
+  /** 已保存的译文填回翻译单元（只填还没翻的）。 */
+  function restore(outs = [], machines = []) {
+    units.forEach((item, i) => {
+      if (item.done || typeof outs[i] !== 'string' || !outs[i]) return;
+      item.out = outs[i];
+      item.machine = typeof machines[i] === 'string' && machines[i] ? machines[i] : outs[i];
+      item.done = true;
+      paint(item);
+    });
+  }
+
+  function formatSaved(time) {
+    try {
+      return new Intl.DateTimeFormat(AITrI18n.locale(), { dateStyle: 'medium' }).format(new Date(time));
+    } catch {
+      return '';
+    }
+  }
+
+  function toggleLibrary(open = el.library.hidden) {
+    el.library.hidden = !open;
+    el.libraryButton.setAttribute('aria-expanded', String(open));
+    if (open) renderLibrary();
+  }
+
+  async function renderLibrary() {
+    let items = [];
+    try {
+      items = await L.list();
+    } catch {
+      items = [];
+    }
+    el.libraryCount.hidden = !items.length;
+    el.libraryCount.textContent = String(items.length);
+    el.libraryTotal.textContent = items.length ? t("$1 篇", [items.length]) : '';
+    el.libraryEmpty.hidden = items.length > 0;
+    if (el.library.hidden) return;
+    el.libraryList.replaceChildren(...items.map((item) => {
+      const row = make('li', `library-item${item.id === savedId ? ' current' : ''}`);
+      const open = make('a', 'library-open');
+      open.href = `?saved=${encodeURIComponent(item.id)}`;
+      if (item.id === savedId) open.setAttribute('aria-current', 'page');
+      const title = make('span', 'library-title', item.title || item.url);
+      const meta = make('span', 'library-meta', [item.siteName, formatSaved(item.savedAt),
+        AITrLanguages.LANGUAGES[item.target] ? label(item.target) : ''].filter(Boolean).join(' · '));
+      open.append(title, meta);
+      const remove = make('button', 'library-del', '×');
+      remove.type = 'button';
+      remove.title = t("删除");
+      remove.setAttribute('aria-label', t("删除「$1」", [item.title || item.url]));
+      remove.addEventListener('click', () => removeSaved(item, row));
+      row.append(open, remove);
+      return row;
+    }));
+  }
+
+  /** 删除后在原位置留一行「撤销」，几秒后消失。 */
+  async function removeSaved(item, row) {
+    let record = null;
+    try {
+      record = await L.get(item.id);
+      await L.remove(item.id);
+    } catch (err) {
+      showError(t("删除失败：$1", [String(err?.message || err)]));
+      return;
+    }
+    const wasCurrent = item.id === savedId;
+    if (wasCurrent) {
+      savedId = null;
+      renderSave();
+    }
+    const undo = make('li', 'library-item undo');
+    undo.append(make('span', 'library-meta', t("已删除「$1」", [item.title || item.url])));
+    const button = make('button', 'link', t("撤销"));
+    button.type = 'button';
+    button.addEventListener('click', async () => {
+      clearTimeout(undoTimer);
+      if (record) {
+        await L.save({ ...record.content, provider: record.meta.provider, savedAt: record.meta.savedAt });
+        if (wasCurrent) {
+          savedId = item.id;
+          savedAt = record.meta.savedAt;
+          renderSave();
+          schedulePersist();
+        }
+      }
+      renderLibrary();
+    });
+    undo.appendChild(button);
+    row.replaceWith(undo);
+    const left = el.libraryList.querySelectorAll('.library-item:not(.undo)').length;
+    el.libraryCount.hidden = !left;
+    el.libraryCount.textContent = String(left);
+    el.libraryTotal.textContent = left ? t("$1 篇", [left]) : '';
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(() => renderLibrary(), 6000);
+  }
+
+  el.save.addEventListener('click', async () => {
+    if (savedId) {
+      toggleLibrary(true);
+      return;
+    }
+    savedId = crypto.randomUUID();
+    savedAt = Date.now();
+    renderSave();
+    await persist();
+    toggleLibrary(true);
+  });
+  el.libraryButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleLibrary();
+  });
+  el.libraryClose.addEventListener('click', () => toggleLibrary(false));
 
   /* ---------------------------------------------------------------- 控件 */
 
@@ -519,8 +699,12 @@
     button.addEventListener('click', () => setStyle({ mode: button.dataset.mode }));
   }
   for (const button of el.themes.querySelectorAll('button')) {
-    button.addEventListener('click', () => setStyle({ theme: button.dataset.value }));
+    button.addEventListener('click', () => setStyle({ palette: button.dataset.value }));
   }
+  el.schemeButton.addEventListener('click', () => {
+    const order = CHOICES.scheme;
+    setStyle({ scheme: order[(order.indexOf(style.scheme) + 1) % order.length] });
+  });
   for (const group of el.panel.querySelectorAll('[data-pref]')) {
     for (const button of group.querySelectorAll('button')) {
       button.addEventListener('click', () => setStyle({ [group.dataset.pref]: button.dataset.value }));
@@ -545,6 +729,11 @@
     if (!el.panel.hidden && !el.panel.contains(event.target)) togglePanel(false);
   });
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !el.library.hidden && el.panel.hidden) {
+      toggleLibrary(false);
+      el.libraryButton.focus();
+      return;
+    }
     if (event.key === 'Escape' && !el.panel.hidden) {
       togglePanel(false);
       el.styleButton.focus();
@@ -559,6 +748,11 @@
     settings = await S.patchSettings({ provider: el.provider.value });
     restart();
   });
+
+  // 已保存侧栏贴在顶栏下面：顶栏在窄屏会换行，按实际高度算
+  new ResizeObserver(() => {
+    document.documentElement.style.setProperty('--bar-h', `${el.bar.offsetHeight}px`);
+  }).observe(el.bar);
 
   // 滚动后顶栏加一道底边
   const sentinel = make('div');
@@ -580,18 +774,33 @@
   renderTargetOptions();
   renderProviderOptions();
 
-  const id = new URLSearchParams(location.search).get('id') || '';
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id') || '';
+  const savedParam = params.get('saved') || '';
   let stored = null;
-  if (/^[\w-]{8,64}$/.test(id)) {
+  let record = null;
+  if (/^[\w-]{8,64}$/.test(savedParam)) {
+    // 打开已保存的文章：连同当时的目标语言与译文
+    try {
+      record = await L.get(savedParam);
+    } catch {
+      record = null;
+    }
+    stored = record?.content?.article || null;
+  } else if (/^[\w-]{8,64}$/.test(id)) {
     try {
       stored = (await chrome.storage.session.get(`reader:${id}`))[`reader:${id}`] || null;
     } catch {
       stored = null;
     }
   }
+  renderLibrary();
   if (!stored || !Array.isArray(stored.blocks)) {
     el.empty.hidden = false;
     el.modes.hidden = true;
+    renderSave();
+    // 会话里的文章已经失效时，顺手把已保存的文章列出来
+    if ((await L.list().catch(() => [])).length) toggleLibrary(true);
     return;
   }
 
@@ -606,10 +815,34 @@
     blocks: stored.blocks,
     truncated: Boolean(stored.truncated),
   };
+  // 同一网址已经保存过：标成已保存；内容和目标语言都没变时直接用保存的译文，不再重翻
+  if (!record && article.url) {
+    try {
+      const meta = await L.findByUrl(article.url);
+      if (meta) {
+        const found = await L.get(meta.id);
+        record = found && JSON.stringify(found.content.article.blocks) === JSON.stringify(article.blocks) && found.content.target === target
+          ? found : { meta, content: null };
+      }
+    } catch {
+      record = null;
+    }
+  }
+  if (record) {
+    savedId = record.meta.id;
+    savedAt = record.meta.savedAt;
+    if (record.content && S.TARGETS[record.content.target]) {
+      target = record.content.target;
+      el.target.value = target;
+    }
+  }
   document.title = `${article.title || article.siteName} · ${t("双语阅读")}`;
   el.site.textContent = article.siteName || (article.url ? new URL(article.url).hostname : t("双语阅读"));
   if (article.url) el.source.href = article.url;
   el.doc.hidden = false;
   renderArticle();
+  if (record?.content) restore(record.content.outs, record.content.machines);
+  renderSave();
+  renderProgress();
   runAll();
 })();

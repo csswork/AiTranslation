@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Wyczyścić wszystkie preferencje tłumaczenia?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Wygląd: zgodnie z systemem"
+  },
+  "m_b457489127582217": {
+    "message": "Zapisane artykuły"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Wygląd"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Zgodnie z systemem"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Jasny"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Ciemny"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Schemat kolorów"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Brak zapisanych artykułów. Kliknij „Zapisz” na górnym pasku, aby zachować artykuł wraz z tłumaczeniem w tej przeglądarce, dzięki czemu następnym razem nie będzie trzeba go tłumaczyć."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Treść do czytania jest przechowywana tylko w bieżącej sesji przeglądarki. Wróć na oryginalną stronę, kliknij prawym przyciskiem myszy puste miejsce i wybierz „Czytaj ten artykuł dwujęzycznie”, aby otworzyć go ponownie; zapisane artykuły znajdują się po prawej stronie w sekcji „Zapisane”."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Wygląd: jasny"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Wygląd: ciemny"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Zapisano na liście po prawej stronie; przyszłe tłumaczenia i zmiany będą synchronizowane automatycznie"
+  },
+  "m_443173f31b06674d": {
+    "message": "Zapisz artykuł wraz z tłumaczeniem w tej przeglądarce, dzięki czemu następnym razem nie będzie trzeba go tłumaczyć"
+  },
+  "m_23e221f13587a833": {
+    "message": "Zapisywanie nie powiodło się: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ artykułów",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Usuń „$arg1$”",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Usuwanie nie powiodło się: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "Usunięto „$arg1$”",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Cofnij"
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

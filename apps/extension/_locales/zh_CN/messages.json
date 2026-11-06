@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "清除全部用词偏好？"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "外观：跟随系统"
+  },
+  "m_b457489127582217": {
+    "message": "已保存的文章"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "外观"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "跟随系统"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "浅色"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "深色"
+  },
+  "m_2ae75e16812360be": {
+    "message": "配色"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "还没有保存的文章。点顶栏的「保存」，连同译文一起留在这个浏览器里，之后打开不用再翻译。"
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "阅读内容只保存在当前浏览器会话里。请回到原网页，在空白处右键选择「双语阅读这篇文章」重新打开；保存过的文章在右侧「已保存」里。"
+  },
+  "m_dc04a654b5670b09": {
+    "message": "外观：浅色"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "外观：深色"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "已保存在右侧列表里，之后的译文与改动会自动同步"
+  },
+  "m_443173f31b06674d": {
+    "message": "连同译文保存在这个浏览器里，之后打开不用再翻译"
+  },
+  "m_23e221f13587a833": {
+    "message": "保存失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ 篇",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "删除「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "删除失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "已删除「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "撤销"
+  },
   "extensionName": {
     "message": "AI 划词翻译"
   },

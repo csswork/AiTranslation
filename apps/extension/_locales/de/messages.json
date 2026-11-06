@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Alle Wording-Präferenzen löschen?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Darstellung: Systemeinstellung folgen"
+  },
+  "m_b457489127582217": {
+    "message": "Gespeicherte Artikel"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Darstellung"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Systemeinstellung folgen"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Hell"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Dunkel"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Farbschema"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Noch keine gespeicherten Artikel. Klicke in der oberen Leiste auf „Speichern“, um den Artikel samt Übersetzung in diesem Browser zu behalten, damit du ihn beim nächsten Mal nicht erneut übersetzen musst."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Der Lesinhalt wird nur in der aktuellen Browsersitzung gespeichert. Gehe zurück zur Originalseite, klicke mit der rechten Maustaste auf eine leere Stelle und wähle „Diesen Artikel zweisprachig lesen“, um ihn erneut zu öffnen; gespeicherte Artikel findest du rechts unter „Gespeichert“."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Darstellung: Hell"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Darstellung: Dunkel"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "In der Liste rechts gespeichert; künftige Übersetzungen und Änderungen werden automatisch synchronisiert"
+  },
+  "m_443173f31b06674d": {
+    "message": "Den Artikel samt Übersetzung in diesem Browser speichern, damit du ihn beim nächsten Mal nicht erneut übersetzen musst"
+  },
+  "m_23e221f13587a833": {
+    "message": "Speichern fehlgeschlagen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ Artikel",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "„$arg1$“ löschen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Löschen fehlgeschlagen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "„$arg1$“ gelöscht",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Rückgängig"
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

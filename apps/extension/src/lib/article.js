@@ -37,6 +37,78 @@
     'form', 'nav', 'iframe', 'object', 'embed', 'svg', 'canvas', 'video', 'audio', 'source', 'track', 'link', 'meta']);
   const HEADINGS = { h1: 'h2', h2: 'h2', h3: 'h3', h4: 'h4', h5: 'h4', h6: 'h4' };
 
+  /* ---------------------------------------------------------------- 广告 */
+
+  /** class / id 里的广告词：整个词是广告词，或以 ad- / -ad 等形式出现（不误伤 head、load、shadow、add-to-cart）。 */
+  const AD_TOKEN = new RegExp([
+    '^(?:ad|ads|adv|advert|adverts|advertisement|advertisements|advertising|adslot|adslots|adunit|adunits|adbox|adwrap|adblock|adsense|adsbygoogle|dfp|sponsor|sponsors|sponsored|sponsorship|promoted|taboola|outbrain|mgid|revcontent|zergnet|teads)$',
+    '^(?:ad|ads|advert|adslot|adunit|dfp|gpt|google[-_]?ad|sponsor|sponsored|taboola|outbrain|teads)[-_]',
+    '[-_](?:ad|ads|advert|advertisement|adslot|adunit|dfp|sponsor|sponsored|taboola|outbrain)$',
+    '[-_](?:ad|ads)[-_]',
+  ].join('|'), 'i');
+  /** 广告与推荐联盟的图片地址。 */
+  const AD_HOSTS = /(?:^|\.)(?:doubleclick\.net|googlesyndication\.com|googleadservices\.com|adservice\.google\.[a-z.]+|adnxs\.com|amazon-adsystem\.com|criteo\.(?:com|net)|pubmatic\.com|rubiconproject\.com|taboola\.com|outbrain\.com|mgid\.com|revcontent\.com|teads\.tv|moatads\.com|scorecardresearch\.com)$/i;
+  /** 广告标签里会出现的词（各语言），以及这类标签里常见的填充词。 */
+  const AD_WORDS = new Set(['advertisement', 'advertisements', 'advert', 'adverts', 'advertising', 'ad', 'ads', 'sponsored', 'sponsor',
+    'promoted', 'promotion', 'anzeige', 'werbung', 'publicité', 'publicite', 'publicidad', 'pubblicità', 'pubblicita', 'реклама', 'reklama',
+    'annonce', 'advertentie', 'iklan', 'โฆษณา']);
+  const AD_FILLER = new Set(['continue', 'continues', 'continued', 'reading', 'read', 'below', 'story', 'article', 'scroll', 'to', 'skip',
+    'the', 'with', 'content', 'feedback', 'by', 'our', 'partner', 'partners', 'from', 'report', 'this', 'after', 'and', 'main', 'for',
+    'more', 'paid', 'post', 'video', 'here', 'close', 'x', 'weiter', 'nach', 'der', 'unter', 'suite', 'après', 'la', 'continúa', 'sigue']);
+  const AD_LABEL_CJK = /^(?:广告|廣告|推广|推廣|赞助|贊助|广告位|廣告位|赞助内容|贊助內容|赞助商|商业推广|广告推荐|広告|スポンサー|スポンサーリンク|광고|pr)$/i;
+
+  /** 这段文字整个就是广告标签（「Advertisement」「Story continues below advertisement」「广告」），而不是提到广告的正文。 */
+  function isAdLabel(text) {
+    const value = String(text || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (!value || value.length > 80) return false;
+    if (AD_LABEL_CJK.test(value.replace(/[\s:：·•\-—–|()（）[\]【】「」]/g, ''))) return true;
+    const tokens = value.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+    return tokens.some((token) => AD_WORDS.has(token)) && tokens.every((token) => AD_WORDS.has(token) || AD_FILLER.has(token));
+  }
+
+  function isAdElement(node) {
+    const tag = String(node?.tagName || '').toLowerCase();
+    if (!tag || ['html', 'body', 'main', 'article', 'h1'].includes(tag)) return false;
+    const attr = (name) => node.getAttribute?.(name) || '';
+    if (attr('data-ad') || attr('data-ad-slot') || attr('data-ad-unit') || attr('data-ad-client') || attr('data-google-query-id')
+      || attr('data-adunit') || attr('data-ad-name')) return true;
+    const tokens = `${attr('class')} ${attr('id')}`.split(/\s+/).filter(Boolean);
+    if (tokens.some((token) => AD_TOKEN.test(token))) return true;
+    const label = attr('aria-label') || attr('data-label');
+    if (label && isAdLabel(label)) return true;
+    if (tag === 'iframe' || tag === 'img') {
+      try {
+        if (AD_HOSTS.test(new URL(attr('src'), 'https://x.invalid/').hostname)) return true;
+      } catch { /* 无效地址 */ }
+    }
+    return false;
+  }
+
+  /**
+   * 在页面副本上去掉广告容器（Readability 识别之前）。为免误删正文，文字很多或含大标题的元素保留。
+   * 返回去掉了几个。
+   */
+  function stripAds(root) {
+    let removed = 0;
+    const visit = (node) => {
+      for (const child of Array.from(node?.childNodes || [])) {
+        if (child.nodeType !== 1) continue;
+        if (isAdElement(child)) {
+          const text = String(child.textContent || '');
+          const hasTitle = Array.from(child.querySelectorAll?.('h1') || []).length > 0;
+          if (text.replace(/\s+/g, '').length <= 400 && !hasTitle) {
+            child.parentNode.removeChild(child);
+            removed += 1;
+            continue;
+          }
+        }
+        visit(child);
+      }
+    };
+    visit(root);
+    return removed;
+  }
+
   const tagOf = (node) => String(node?.tagName || '').toLowerCase();
   const kids = (node) => Array.from(node?.childNodes || []);
 
@@ -64,10 +136,15 @@
       const last = srcset.split(',').map((part) => part.trim().split(/\s+/)[0]).filter(Boolean).pop();
       candidates.push(last);
     }
+    // 统计像素与广告图：宽或高只有几个像素，或来自广告服务器
+    const width = Number(node.getAttribute?.('width'));
+    const height = Number(node.getAttribute?.('height'));
+    if ((width && width <= 3) || (height && height <= 3)) return '';
     for (const raw of candidates) {
       if (!raw || /^data:/i.test(raw)) continue;
       try {
         const url = new URL(raw, base || undefined);
+        if (AD_HOSTS.test(url.hostname)) return '';
         if (url.protocol === 'http:' || url.protocol === 'https:') return url.href;
       } catch {
         /* 下一个候选 */
@@ -150,7 +227,7 @@
     };
     const pushText = (type, text, extra = {}) => {
       const value = clean(text);
-      if (!value) return;
+      if (!value || isAdLabel(value)) return;
       // 正文开头的署名行（「By 某某 · 日期」）跳过：阅读页顶部已经单独显示作者
       if (type === 'p' && blocks.length < 2 && bylineKey && value.length < 160 && value.toLowerCase().includes(bylineKey)) return;
       for (const part of type === 'code' ? [value] : split(value)) push({ type, text: part, ...extra });
@@ -254,7 +331,7 @@
           const text = inlineText(child);
           // 正文开头重复的大标题跳过：阅读页顶部已经单独显示
           if (!blocks.length && text.toLowerCase() === titleKey) continue;
-          if (text) push({ type: HEADINGS[tag], text: text.slice(0, MAX_BLOCK_CHARS) });
+          if (text && !isAdLabel(text)) push({ type: HEADINGS[tag], text: text.slice(0, MAX_BLOCK_CHARS) });
         } else if (tag === 'p') {
           pushText('p', inlineText(child));
           for (const img of findImages(child)) { const block = image(img); if (block) push(block); }
@@ -368,5 +445,5 @@
     return out;
   }
 
-  globalThis.AITrArticle = { toBlocks, parts, assess, batches, translatable, clean, split, weight, MAX_CHARS };
+  globalThis.AITrArticle = { toBlocks, parts, assess, batches, translatable, clean, split, weight, stripAds, isAdLabel, isAdElement, MAX_CHARS };
 })();

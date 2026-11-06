@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Effacer toutes les préférences de formulation ?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Apparence : Suivre le système"
+  },
+  "m_b457489127582217": {
+    "message": "Articles enregistrés"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Apparence"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Suivre le système"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Clair"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Sombre"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Palette de couleurs"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Aucun article enregistré pour l'instant. Cliquez sur « Enregistrer » dans la barre supérieure pour conserver l'article et sa traduction dans ce navigateur, afin de ne pas avoir à le retraduire la prochaine fois."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Le contenu de lecture n'est conservé que dans la session actuelle du navigateur. Revenez à la page d'origine, faites un clic droit sur une zone vide et choisissez « Lire cet article en bilingue » pour le rouvrir ; les articles enregistrés se trouvent dans « Enregistrés » à droite."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Apparence : Clair"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Apparence : Sombre"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Enregistré dans la liste à droite ; les futures traductions et modifications seront synchronisées automatiquement"
+  },
+  "m_443173f31b06674d": {
+    "message": "Enregistrer l'article et sa traduction dans ce navigateur, afin de ne pas avoir à le retraduire la prochaine fois"
+  },
+  "m_23e221f13587a833": {
+    "message": "Échec de l'enregistrement : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ articles",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Supprimer « $arg1$ »",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Échec de la suppression : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "« $arg1$ » supprimé",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Annuler"
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

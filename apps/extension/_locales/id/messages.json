@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Hapus semua preferensi padanan?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Tampilan: Ikuti sistem"
+  },
+  "m_b457489127582217": {
+    "message": "Artikel tersimpan"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Tampilan"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Ikuti sistem"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Terang"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Gelap"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Skema warna"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Belum ada artikel tersimpan. Klik \"Simpan\" di bilah atas untuk menyimpan artikel beserta terjemahannya di browser ini, sehingga lain kali tidak perlu diterjemahkan lagi."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Konten bacaan hanya disimpan dalam sesi browser saat ini. Kembali ke halaman asli, klik kanan di area kosong, lalu pilih \"Baca artikel ini secara bilingual\" untuk membukanya kembali; artikel yang tersimpan ada di \"Tersimpan\" di sebelah kanan."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Tampilan: Terang"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Tampilan: Gelap"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Tersimpan di daftar sebelah kanan; terjemahan dan perubahan berikutnya akan disinkronkan otomatis"
+  },
+  "m_443173f31b06674d": {
+    "message": "Simpan artikel beserta terjemahannya di browser ini, sehingga lain kali tidak perlu diterjemahkan lagi"
+  },
+  "m_23e221f13587a833": {
+    "message": "Gagal menyimpan: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ artikel",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Hapus \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Gagal menghapus: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "\"$arg1$\" telah dihapus",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Urungkan"
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

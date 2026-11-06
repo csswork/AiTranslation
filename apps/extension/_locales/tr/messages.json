@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Tüm ifade tercihleri temizlensin mi?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Görünüm: Sistemi takip et"
+  },
+  "m_b457489127582217": {
+    "message": "Kaydedilen makaleler"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Görünüm"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Sistemi takip et"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Açık"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Koyu"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Renk şeması"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Henüz kaydedilmiş makale yok. Üst çubuktaki \"Kaydet\"e tıklayarak makaleyi çevirisiyle birlikte bu tarayıcıda saklayın; bir dahaki sefere tekrar çevirmeniz gerekmez."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Okuma içeriği yalnızca geçerli tarayıcı oturumunda saklanır. Özgün sayfaya dönün, boş bir alana sağ tıklayıp \"Bu makaleyi iki dilli oku\"yu seçerek yeniden açın; kaydedilen makaleler sağdaki \"Kaydedilenler\" altında."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Görünüm: Açık"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Görünüm: Koyu"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Sağdaki listeye kaydedildi; sonraki çeviriler ve değişiklikler otomatik olarak eşitlenecek"
+  },
+  "m_443173f31b06674d": {
+    "message": "Makaleyi çevirisiyle birlikte bu tarayıcıda saklayın; bir dahaki sefere tekrar çevirmeniz gerekmez"
+  },
+  "m_23e221f13587a833": {
+    "message": "Kaydetme başarısız: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ makale",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "\"$arg1$\" öğesini sil",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Silme başarısız: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "\"$arg1$\" silindi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Geri al"
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

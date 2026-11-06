@@ -153,6 +153,8 @@
     }
     // Readability 会改动传入的文档，只在副本上跑
     const copy = document.cloneNode(true);
+    // 先去掉广告容器、广告标签和推荐联盟模块，免得混进正文
+    A.stripAds(copy.body || copy);
     const result = new Readability(copy, { charThreshold: 300, serializer: (node) => node }).parse();
     if (!result?.content) return { readerable, article: null };
     const siteName = A.clean(result.siteName || '');

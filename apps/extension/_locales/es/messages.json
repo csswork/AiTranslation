@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "¿Borrar todas las preferencias de redacción?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Apariencia: Seguir el sistema"
+  },
+  "m_b457489127582217": {
+    "message": "Artículos guardados"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Apariencia"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Seguir el sistema"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Claro"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Oscuro"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Esquema de colores"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Aún no hay artículos guardados. Haz clic en «Guardar» en la barra superior para conservar el artículo junto con su traducción en este navegador, así no tendrás que volver a traducirlo la próxima vez."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "El contenido de lectura solo se conserva en la sesión actual del navegador. Vuelve a la página original, haz clic derecho en un área vacía y elige «Leer este artículo de forma bilingüe» para volver a abrirlo; los artículos guardados están en «Guardados» a la derecha."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Apariencia: Claro"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Apariencia: Oscuro"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Guardado en la lista de la derecha; las futuras traducciones y cambios se sincronizarán automáticamente"
+  },
+  "m_443173f31b06674d": {
+    "message": "Guardar el artículo junto con su traducción en este navegador, así no tendrás que volver a traducirlo la próxima vez"
+  },
+  "m_23e221f13587a833": {
+    "message": "Error al guardar: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ artículos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Eliminar «$arg1$»",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Error al eliminar: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "Se eliminó «$arg1$»",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Deshacer"
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

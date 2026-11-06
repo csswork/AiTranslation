@@ -2414,6 +2414,88 @@
   "m_bde30f16867a5a2b": {
     "message": "Xóa tất cả tùy chọn cách dùng từ?"
   },
+  "m_87a22eff3e79cff3": {
+    "message": "Giao diện: Theo hệ thống"
+  },
+  "m_b457489127582217": {
+    "message": "Bài viết đã lưu"
+  },
+  "m_86a63f23a076b11e": {
+    "message": "Giao diện"
+  },
+  "m_217cfe7db1e3d10a": {
+    "message": "Theo hệ thống"
+  },
+  "m_aa0819dfc4d8d782": {
+    "message": "Sáng"
+  },
+  "m_a6b75d0680322a61": {
+    "message": "Tối"
+  },
+  "m_2ae75e16812360be": {
+    "message": "Bảng màu"
+  },
+  "m_e803b2658c07dd17": {
+    "message": "Chưa có bài viết nào được lưu. Nhấp vào \"Lưu\" trên thanh trên cùng để giữ bài viết cùng bản dịch trong trình duyệt này, lần sau mở sẽ không cần dịch lại."
+  },
+  "m_b3aa1e9393fea4fb": {
+    "message": "Nội dung đọc chỉ được lưu trong phiên trình duyệt hiện tại. Hãy quay lại trang gốc, nhấp chuột phải vào vùng trống và chọn \"Đọc bài viết này song ngữ\" để mở lại; các bài viết đã lưu nằm trong mục \"Đã lưu\" ở bên phải."
+  },
+  "m_dc04a654b5670b09": {
+    "message": "Giao diện: Sáng"
+  },
+  "m_79df26ccfdb29827": {
+    "message": "Giao diện: Tối"
+  },
+  "m_3c5fc1315a00a282": {
+    "message": "Đã lưu trong danh sách bên phải, các bản dịch và thay đổi sau này sẽ tự động đồng bộ"
+  },
+  "m_443173f31b06674d": {
+    "message": "Lưu bài viết cùng bản dịch trong trình duyệt này, lần sau mở sẽ không cần dịch lại"
+  },
+  "m_23e221f13587a833": {
+    "message": "Lưu thất bại: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86b11ead55130c4b": {
+    "message": "$arg1$ bài",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_dbbcd0d453793ca2": {
+    "message": "Xóa \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6322fbad8347ddbb": {
+    "message": "Xóa thất bại: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8eb4a2a5652f58d0": {
+    "message": "Đã xóa \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_926a50b98ece2667": {
+    "message": "Hoàn tác"
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },
