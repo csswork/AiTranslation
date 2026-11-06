@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "The article is too long, so only the beginning is shown."
   },
+  "m_762155dbd4b75a66": {
+    "message": "The model did not return any usable alternative translations. Try again or switch to a different model."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ does not offer alternative translations. You can rewrite it yourself, or switch to Points Translation or an LLM platform.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Alternative translations"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Rewrite it yourself…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Rewrite it yourself"
+  },
+  "m_131b13aa265996df": {
+    "message": "Replace"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Restore the original translation of this passage"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Translation complete · $arg1$ · Click a word in the translation to phrase it differently",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "The selected text is too long. Please select a word or phrase."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Looking for alternative translations…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Original: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "No better phrasing found. You can rewrite it yourself below."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Replaced with \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Replaced with \"$arg1$\". There are $arg2$ more instances of \"$arg3$\" in the text.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Replace all"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "Replaced $arg1$ instances",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI Translator"
   },

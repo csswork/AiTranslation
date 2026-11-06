@@ -92,6 +92,23 @@
 
     <div class="error" id="error" hidden><p id="errorText"></p></div>
 
+    <div class="alt" id="alt" role="dialog" aria-label="其他译法" hidden>
+      <p class="alt-head"><span class="alt-picked" id="altPicked"></span><span class="alt-source" id="altSource"></span></p>
+      <div class="alt-list" id="altList" role="listbox" aria-label="其他译法"></div>
+      <p class="alt-msg" id="altMsg" aria-live="polite"></p>
+      <form class="alt-own" id="altOwn">
+        <input id="altInput" type="text" maxlength="200" placeholder="自己改写…" aria-label="自己改写" autocomplete="off" />
+        <button type="submit" class="btn">替换</button>
+      </form>
+      <button type="button" class="link alt-restore" id="altRestore" hidden>恢复这一段的原译文</button>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      <span id="toastText"></span>
+      <button type="button" class="link" id="toastAction"></button>
+      <button type="button" class="toast-close" id="toastClose" aria-label="关闭">×</button>
+    </div>
+
     <main class="doc" id="doc" hidden>
       <header class="head">
         <p class="meta" id="meta"></p>

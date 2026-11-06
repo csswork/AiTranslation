@@ -547,7 +547,23 @@ globalThis.AITrMessageIds = {
   "已译完 · $1": "m_2064cb8d0b366371",
   "已停止：$1/$2 段已翻译": "m_6d51d43a9a4e97a6",
   "原文：": "m_457f372b01cb1fee",
-  "文章太长，只显示了前面的部分。": "m_ed4d1221d736665a"
+  "文章太长，只显示了前面的部分。": "m_ed4d1221d736665a",
+  "模型没有返回可用的其他译法，重试或换个模型试试": "m_762155dbd4b75a66",
+  "$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。": "m_e9594f5166ef86af",
+  "其他译法": "m_38610c02adb6459c",
+  "自己改写…": "m_edf75f203b086da7",
+  "自己改写": "m_cfc33a457b79c11b",
+  "替换": "m_131b13aa265996df",
+  "恢复这一段的原译文": "m_bbe8dcab753317b6",
+  "已译完 · $1 · 点译文里的词可以换一种说法": "m_66341f0f709c78aa",
+  "选中的文字太长，请选一个词或短语。": "m_3efa1381d346ed29",
+  "正在找其他译法…": "m_bb923eb970f63d37",
+  "原文：$1": "m_2124856718426d4d",
+  "没有找到更合适的说法，可以在下面自己改写。": "m_46c91473da29b475",
+  "已替换为「$1」": "m_8a291603f0d31818",
+  "已替换为「$1」。全文还有 $2 处「$3」": "m_3761e5355d29ec62",
+  "全部替换": "m_2357445f30da54fb",
+  "已替换 $1 处": "m_d19582948aa1d01d"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1097,5 +1113,21 @@ globalThis.AITrEnglish = {
   "已译完 · $1": "Translation complete · $1",
   "已停止：$1/$2 段已翻译": "Stopped: $1/$2 paragraphs translated",
   "原文：": "Original:",
-  "文章太长，只显示了前面的部分。": "The article is too long, so only the beginning is shown."
+  "文章太长，只显示了前面的部分。": "The article is too long, so only the beginning is shown.",
+  "模型没有返回可用的其他译法，重试或换个模型试试": "The model did not return any usable alternative translations. Try again or switch to a different model.",
+  "$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。": "$1 does not offer alternative translations. You can rewrite it yourself, or switch to Points Translation or an LLM platform.",
+  "其他译法": "Alternative translations",
+  "自己改写…": "Rewrite it yourself…",
+  "自己改写": "Rewrite it yourself",
+  "替换": "Replace",
+  "恢复这一段的原译文": "Restore the original translation of this passage",
+  "已译完 · $1 · 点译文里的词可以换一种说法": "Translation complete · $1 · Click a word in the translation to phrase it differently",
+  "选中的文字太长，请选一个词或短语。": "The selected text is too long. Please select a word or phrase.",
+  "正在找其他译法…": "Looking for alternative translations…",
+  "原文：$1": "Original: $1",
+  "没有找到更合适的说法，可以在下面自己改写。": "No better phrasing found. You can rewrite it yourself below.",
+  "已替换为「$1」": "Replaced with \"$1\"",
+  "已替换为「$1」。全文还有 $2 处「$3」": "Replaced with \"$1\". There are $2 more instances of \"$3\" in the text.",
+  "全部替换": "Replace all",
+  "已替换 $1 处": "Replaced $1 instances"
 };

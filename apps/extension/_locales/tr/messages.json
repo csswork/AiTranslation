@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "Makale çok uzun, bu yüzden yalnızca başlangıcı gösteriliyor."
   },
+  "m_762155dbd4b75a66": {
+    "message": "Model kullanılabilir alternatif çeviri döndürmedi. Tekrar deneyin veya farklı bir model seçin."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ alternatif çeviri sunmaz. Kendiniz yeniden yazabilir veya Puan Çevirisi ya da bir LLM platformuna geçebilirsiniz.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Alternatif çeviriler"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Kendiniz yeniden yazın…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Kendiniz yeniden yazın"
+  },
+  "m_131b13aa265996df": {
+    "message": "Değiştir"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Bu bölümün orijinal çevirisini geri yükle"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Çeviri tamamlandı · $arg1$ · Farklı ifade etmek için çevirideki bir kelimeye tıklayın",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "Seçilen metin çok uzun. Lütfen bir kelime veya ifade seçin."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Alternatif çeviriler aranıyor…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Orijinal: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Daha uygun bir ifade bulunamadı. Aşağıda kendiniz yeniden yazabilirsiniz."
+  },
+  "m_8a291603f0d31818": {
+    "message": "\"$arg1$\" ile değiştirildi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "\"$arg1$\" ile değiştirildi. Metinde $arg2$ adet daha \"$arg3$\" var.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Tümünü değiştir"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "$arg1$ öğe değiştirildi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

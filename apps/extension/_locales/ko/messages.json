@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "글이 너무 길어 앞부분만 표시됩니다."
   },
+  "m_762155dbd4b75a66": {
+    "message": "모델이 사용 가능한 다른 번역을 반환하지 않았습니다. 다시 시도하거나 다른 모델로 전환해 보세요."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$은(는) 다른 번역을 제공하지 않습니다. 직접 고쳐 쓰거나 포인트 번역 또는 LLM 플랫폼으로 전환할 수 있습니다.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "다른 번역"
+  },
+  "m_edf75f203b086da7": {
+    "message": "직접 고쳐 쓰기…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "직접 고쳐 쓰기"
+  },
+  "m_131b13aa265996df": {
+    "message": "바꾸기"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "이 부분의 원래 번역 복원"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "번역 완료 · $arg1$ · 번역문의 단어를 클릭하면 다르게 표현할 수 있습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "선택한 텍스트가 너무 깁니다. 단어나 구를 선택하세요."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "다른 번역을 찾는 중…"
+  },
+  "m_2124856718426d4d": {
+    "message": "원문: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "더 나은 표현을 찾지 못했습니다. 아래에서 직접 고쳐 쓸 수 있습니다."
+  },
+  "m_8a291603f0d31818": {
+    "message": "\"$arg1$\"(으)로 바꿨습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "\"$arg1$\"(으)로 바꿨습니다. 전체에 \"$arg3$\"이(가) $arg2$곳 더 있습니다",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg3": {
+        "content": "$3"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "모두 바꾸기"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "$arg1$곳 바꿈",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI 번역"
   },

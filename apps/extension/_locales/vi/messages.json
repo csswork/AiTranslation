@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "Bài viết quá dài nên chỉ hiển thị phần đầu."
   },
+  "m_762155dbd4b75a66": {
+    "message": "Mô hình không trả về bản dịch thay thế nào khả dụng. Hãy thử lại hoặc chuyển sang mô hình khác."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ không cung cấp bản dịch thay thế. Bạn có thể tự viết lại, hoặc chuyển sang Dịch điểm hoặc nền tảng LLM.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Bản dịch thay thế"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Tự viết lại…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Tự viết lại"
+  },
+  "m_131b13aa265996df": {
+    "message": "Thay thế"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Khôi phục bản dịch gốc của đoạn này"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Đã dịch xong · $arg1$ · Nhấp vào một từ trong bản dịch để diễn đạt theo cách khác",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "Văn bản đã chọn quá dài. Vui lòng chọn một từ hoặc cụm từ."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Đang tìm bản dịch thay thế…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Nguyên văn: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Không tìm thấy cách diễn đạt nào phù hợp hơn. Bạn có thể tự viết lại bên dưới."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Đã thay thế bằng \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Đã thay thế bằng \"$arg1$\". Toàn văn còn $arg2$ chỗ \"$arg3$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Thay thế tất cả"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "Đã thay thế $arg1$ chỗ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

@@ -33,7 +33,7 @@
 - 账号与托管请求由扩展 service worker 处理，只发送到明确配置的 VPS API 地址；不得让网页内容脚本提交任意 URL 进行代请求。
 - 整份 PDF 翻译（随 2.1.0 打包，见 `docs/extension/pdf-translation.md`）：`src/content/pdf.js` 只在内置 PDF 阅读器的顶层文档同源读取当前文件，只回应扩展页面的连接；`src/pdf/` 在本机解析，只有提取出的文字走现有翻译链路，文件不上传。`src/vendor/pdfjs/` 是原样引入的 pdf.js legacy 构建（版本与保留文件见其 README），不手改，升级按上述文档整目录替换；该目录已从界面文案提取与语法检查中排除。
 - 图片翻译（增强部分随 2.1.0 打包，见 `docs/extension/image-translation.md`）：识图提示词在扩展 `src/lib/providers.js` 与后台 `src/translation/hosted.js` 各有一份，改动时两边保持一致；送检前补白成正方形、识图温度 0。框选、按笔画校正和导出新图都在本机完成，导出不申请 `downloads` 权限。
-- 双语阅读（未发布，见 `docs/extension/reader.md`）：右键「双语阅读这篇文章」时才向顶层框架注入 `src/vendor/readability/`、`src/lib/article.js` 与 `src/content/reader.js`，不加进常驻内容脚本；正文在页面副本上识别，整理成纯文字块与 http(s) 图片地址，经后台存入 `storage.session` 后由 `src/reader/` 渲染，阅读页只用 `textContent` 写入，不把网页 HTML 带进扩展页面。`src/vendor/readability/` 原样引入，不手改。
+- 双语阅读（未发布，见 `docs/extension/reader.md`）：右键「双语阅读这篇文章」时才向顶层框架注入 `src/vendor/readability/`、`src/lib/article.js` 与 `src/content/reader.js`，不加进常驻内容脚本；正文在页面副本上识别，整理成纯文字块与 http(s) 图片地址，经后台存入 `storage.session` 后由 `src/reader/` 渲染，阅读页只用 `textContent` 写入，不把网页 HTML 带进扩展页面。`src/vendor/readability/` 原样引入，不手改。阅读页点译文的词可换说法：提示词在扩展 `src/lib/providers.js` 与后台 `src/translation/hosted.js` 各有一份（`alternativesPrompt`），改动时两边保持一致（`test/alternatives.mjs` 会对照）；托管模式走后台 `/api/extension/alternatives`，按原文段落字数扣点；DeepL 不支持。
 - 界面语言、源语言和目标语言独立。界面本地化只作用于扩展拥有的界面，不修改宿主网站内容或文字方向。
 - 24 种语言注册表、英文基准与界面译文在 `apps/extension/i18n/`；`_locales/`、`src/locales/` 和生成的语言索引是运行时产物。
 - 界面译文在本地开发或打包时刷新。已有译文未变化时复用，不调用翻译 API；缺失或过期译文必须在发布前解决。

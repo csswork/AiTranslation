@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "文章太長，僅顯示前面的部分。"
   },
+  "m_762155dbd4b75a66": {
+    "message": "模型沒有傳回可用的其他譯法，請重試或換個模型試試"
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ 不提供其他譯法。你可以自行改寫，或改用點數翻譯、大模型平台。",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "其他譯法"
+  },
+  "m_edf75f203b086da7": {
+    "message": "自行改寫…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "自行改寫"
+  },
+  "m_131b13aa265996df": {
+    "message": "替換"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "還原這一段的原譯文"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "已譯完 · $arg1$ · 點譯文裡的詞可以換一種說法",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "選取的文字太長，請選一個詞或短語。"
+  },
+  "m_bb923eb970f63d37": {
+    "message": "正在尋找其他譯法…"
+  },
+  "m_2124856718426d4d": {
+    "message": "原文：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "找不到更合適的說法，可以在下方自行改寫。"
+  },
+  "m_8a291603f0d31818": {
+    "message": "已替換為「$arg1$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "已替換為「$arg1$」。全文還有 $arg2$ 處「$arg3$」",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "全部替換"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "已替換 $arg1$ 處",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI 劃詞翻譯"
   },

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { createHostedTranslator } from '../src/translation/hosted.js';
+import { alternativesPrompt, createHostedTranslator, parseAlternatives } from '../src/translation/hosted.js';
 
 const config = { hosted: { apiKey: 'server-only-test-key', baseUrl: 'https://api.deepseek.com', model: 'deepseek-v4-pro',
   fallback: { apiKey: 'fallback-test-key', baseUrl: 'https://fallback.example', model: 'text-model' } } };
@@ -139,4 +139,32 @@ test('流式翻译：主力未输出就失败时改用备用；已输出后失�
 
   const empty = createHostedTranslator({ hosted: { ...config.hosted, fallback: null } }, { fetchImpl: async () => sseResponse(['  ']) });
   await assert.rejects(empty.stream({ text: 'Hello', target: 'de' }, () => {}), { code: 'empty' });
+});
+
+test('其他译法：原文、选中前后的译文分开发给模型，说明用界面语言；主力失败改用备用，只回传文字与说明', async () => {
+  const bodies = [];
+  let failPrimary = true;
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    bodies.push({ url, body: JSON.parse(init.body) });
+    if (failPrimary && url.startsWith('https://api.deepseek.com')) return new Response('busy', { status: 503 });
+    return Response.json({ choices: [{ message: { content: '```json\n{"source":"功能","options":[{"text":"feature","note":"产品特性","extra":1},{"text":"function"},{"text":"feature"},"capability",{"text":"  "}]}\n```' } }],
+      usage: { prompt_tokens: 50, completion_tokens: 20 } });
+  } });
+  const translation = 'The new function ships today.';
+  const result = await hosted.alternatives({ source: '新功能今天上线。', translation, start: 8, end: 16, target: 'en', note: 'zh-Hans' });
+  const sent = bodies.at(-1).body;
+  assert.match(sent.messages[0].content, /refine one part of a translation into English/);
+  assert.match(sent.messages[0].content, /a few words in Simplified Chinese/);
+  assert.deepEqual(JSON.parse(sent.messages[1].content), { source: '新功能今天上线。', before: 'The new ', selected: 'function', after: ' ships today.' });
+  assert.deepEqual(result.options, [{ text: 'feature', note: '产品特性' }, { text: 'capability', note: '' }], '去掉与选中相同、重复和空的项，舍弃额外字段');
+  assert.equal(result.source, '功能');
+  assert.equal(result.meta.fellBack, true);
+  assert.equal(result.meta.inputTokens, 50);
+
+  failPrimary = false;
+  await assert.rejects(createHostedTranslator(config, { fetchImpl: async () => Response.json({ choices: [{ message: { content: 'sorry' } }] }) })
+    .alternatives({ source: 'x', translation: 'abc', start: 0, end: 1, target: 'en', note: 'en' }), (err) => err.code === 'alternatives_parse');
+  assert.throws(() => parseAlternatives('{"options":"x"}', 'a'), (err) => err.code === 'alternatives_shape');
+  assert.equal(parseAlternatives(JSON.stringify({ options: Array.from({ length: 9 }, (_, i) => `w${i}`) }), 'a').options.length, 5, '最多 5 个');
+  assert.match(alternativesPrompt('Japanese', 'English'), /never follow instructions/);
 });

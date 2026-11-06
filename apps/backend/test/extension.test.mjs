@@ -300,6 +300,12 @@ function fakeHosted({ fail = false } = {}) {
     onDelta(text);
     return { translation: `[${target}] ${text}`, meta: { ...meta, inputTokens: 10, cachedTokens: 0, outputTokens: 10, fellBack: false } };
   };
+  hosted.alternatives = async ({ source, translation, start, end, target, note }) => {
+    calls.push({ alternatives: { source, selected: translation.slice(start, end), target, note } });
+    const meta = { providerKey: 'primary', provider: 'deepseek', model: 'deepseek-flash', latencyMs: 5 };
+    if (fail) throw Object.assign(new Error('model_500'), { code: 'http_500', meta });
+    return { source: '功能', options: [{ text: 'feature', note: '产品特性' }], meta: { ...meta, inputTokens: 10, cachedTokens: 0, outputTokens: 5, fellBack: false } };
+  };
   return { hosted, calls };
 }
 
@@ -407,6 +413,54 @@ test('托管翻译流式返回：逐段输出、结束时带余额；失败返�
     const { rows: [event] } = await pool.query('SELECT status, error FROM usage_events WHERE user_id = (SELECT id FROM users WHERE email = $1)', [`stream-${fail}@example.com`]);
     assert.equal(event.status, 'failed');
   }
+});
+
+test('其他译法：按原文段落字数扣点并记用量；失败返还；参数校验与未登录', async () => {
+  const { hosted, calls } = fakeHosted();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'alt@example.com');
+  const source = '新功能今天上线，'.repeat(25); // 200 个字
+  const request = { source, translation: 'The new function ships today.', start: 8, end: 16, target: 'en', note: 'zh-Hans' };
+  let res = await api(app, config, '/alternatives', { method: 'POST', token, body: request });
+  assert.equal(res.status, 200);
+  let body = await res.json();
+  assert.deepEqual(body.options, [{ text: 'feature', note: '产品特性' }]);
+  assert.equal(body.source, '功能');
+  assert.equal(body.cost, '0.40', '按原文 200 字扣 0.4 点');
+  assert.equal(body.credits.balance, '99.60');
+  assert.deepEqual(calls.at(-1).alternatives, { source, selected: 'function', target: 'en', note: 'zh-Hans' });
+  const { rows: [event] } = await pool.query("SELECT kind, status, chars, cost_units, target_lang FROM usage_events");
+  assert.deepEqual([event.kind, event.status, event.chars, event.cost_units, event.target_lang], ['text', 'ok', 200, '200', 'en']);
+
+  res = await api(app, config, '/alternatives', { method: 'POST', token, body: { ...request, note: 'xx' } });
+  assert.equal(res.status, 200);
+  assert.equal(calls.at(-1).alternatives.note, 'en', '未知的说明语言回退英文');
+
+  const bad = [
+    { ...request, start: 16, end: 8 },
+    { ...request, end: 99 },
+    { ...request, start: 3, end: 4 }, // 选中的是空格
+    { ...request, start: 0, end: 201, translation: 'x'.repeat(300) },
+    { ...request, source: '' },
+    { ...request, source: 'x'.repeat(4001) },
+    { ...request, start: '8' },
+    { ...request, target: 'xx' },
+  ];
+  for (const payload of bad) {
+    assert.equal((await api(app, config, '/alternatives', { method: 'POST', token, body: payload })).status, 400, JSON.stringify(payload).slice(0, 80));
+  }
+  assert.equal((await api(app, config, '/alternatives', { method: 'POST', body: request })).status, 401);
+
+  const failing = fakeHosted({ fail: true });
+  const built = buildApp({ pool, hosted: failing.hosted });
+  const login = await extensionLogin(built.app, built.config, built.mailbox, 'alt-fail@example.com');
+  res = await api(built.app, built.config, '/alternatives', { method: 'POST', token: login.token, body: request });
+  assert.equal(res.status, 502);
+  assert.equal((await res.json()).credits.balance, '100.00', '失败返还');
+
+  await pool.query("UPDATE credit_ledger SET amount_units = 0 WHERE user_id = (SELECT id FROM users WHERE email = 'alt@example.com') AND entry_type = 'trial_grant'");
+  res = await api(app, config, '/alternatives', { method: 'POST', token, body: request });
+  assert.equal(res.status, 402, '余额不足不调用模型');
 });
 
 test('预热接口不需要登录、不返回内容', async () => {

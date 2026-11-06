@@ -965,6 +965,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
     return true;
   }
+  if (type === 'hosted-alternatives' && fromExtensionPage) {
+    const { source, translation, start, end, target, note } = message;
+    AITrAccount.alternatives({ source, translation, start, end, target, note })
+      .then((result) => sendResponse({ ok: true, ...result }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
+    return true;
+  }
   if (type === 'hosted-read-image' && fromExtensionPage) {
     AITrAccount.readImageText({ image: message.image, purpose: message.purpose })
       .then((raw) => sendResponse({ ok: true, raw }))

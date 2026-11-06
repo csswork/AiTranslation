@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "O artigo é muito longo, então apenas o início é exibido."
   },
+  "m_762155dbd4b75a66": {
+    "message": "O modelo não retornou outras traduções utilizáveis. Tente novamente ou mude para outro modelo."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ não oferece outras traduções. Você pode reescrever por conta própria ou mudar para Tradução por Pontos ou uma plataforma de LLM.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Outras traduções"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Reescreva por conta própria…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Reescrever por conta própria"
+  },
+  "m_131b13aa265996df": {
+    "message": "Substituir"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Restaurar a tradução original deste trecho"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Tradução concluída · $arg1$ · Clique em uma palavra da tradução para mudar a forma de dizer",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "O texto selecionado é muito longo. Selecione uma palavra ou frase."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Procurando outras traduções…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Original: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Nenhuma forma melhor encontrada. Você pode reescrever abaixo."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Substituído por \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Substituído por \"$arg1$\". Há mais $arg2$ ocorrências de \"$arg3$\" no texto.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Substituir tudo"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "$arg1$ ocorrências substituídas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },

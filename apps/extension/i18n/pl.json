@@ -546,5 +546,21 @@
   "已译完 · $1": "Tłumaczenie ukończone · $1",
   "已停止：$1/$2 段已翻译": "Zatrzymano: przetłumaczono $1/$2 akapitów",
   "原文：": "Oryginał:",
-  "文章太长，只显示了前面的部分。": "Artykuł jest zbyt długi, więc wyświetlany jest tylko jego początek."
+  "文章太长，只显示了前面的部分。": "Artykuł jest zbyt długi, więc wyświetlany jest tylko jego początek.",
+  "模型没有返回可用的其他译法，重试或换个模型试试": "Model nie zwrócił żadnych użytecznych tłumaczeń alternatywnych. Spróbuj ponownie lub przełącz się na inny model.",
+  "$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。": "$1 nie oferuje tłumaczeń alternatywnych. Możesz przepisać tekst samodzielnie lub przełączyć się na tłumaczenie punktowe albo platformę LLM.",
+  "其他译法": "Tłumaczenia alternatywne",
+  "自己改写…": "Przepisz samodzielnie…",
+  "自己改写": "Przepisz samodzielnie",
+  "替换": "Zastąp",
+  "恢复这一段的原译文": "Przywróć oryginalne tłumaczenie tego fragmentu",
+  "已译完 · $1 · 点译文里的词可以换一种说法": "Tłumaczenie ukończone · $1 · Kliknij słowo w tłumaczeniu, aby ująć je inaczej",
+  "选中的文字太长，请选一个词或短语。": "Zaznaczony tekst jest za długi. Zaznacz słowo lub frazę.",
+  "正在找其他译法…": "Szukam tłumaczeń alternatywnych…",
+  "原文：$1": "Oryginał: $1",
+  "没有找到更合适的说法，可以在下面自己改写。": "Nie znaleziono lepszego sformułowania. Możesz przepisać tekst samodzielnie poniżej.",
+  "已替换为「$1」": "Zastąpiono „$1”",
+  "已替换为「$1」。全文还有 $2 处「$3」": "Zastąpiono „$1”. W tekście jest jeszcze $2 wystąpień „$3”.",
+  "全部替换": "Zastąp wszystko",
+  "已替换 $1 处": "Zastąpiono $1 wystąpień"
 }

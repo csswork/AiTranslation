@@ -546,5 +546,21 @@
   "已译完 · $1": "Tradução concluída · $1",
   "已停止：$1/$2 段已翻译": "Parado: $1/$2 parágrafos traduzidos",
   "原文：": "Original:",
-  "文章太长，只显示了前面的部分。": "O artigo é muito longo, então apenas o início é exibido."
+  "文章太长，只显示了前面的部分。": "O artigo é muito longo, então apenas o início é exibido.",
+  "模型没有返回可用的其他译法，重试或换个模型试试": "O modelo não retornou outras traduções utilizáveis. Tente novamente ou mude para outro modelo.",
+  "$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。": "$1 não oferece outras traduções. Você pode reescrever por conta própria ou mudar para Tradução por Pontos ou uma plataforma de LLM.",
+  "其他译法": "Outras traduções",
+  "自己改写…": "Reescreva por conta própria…",
+  "自己改写": "Reescrever por conta própria",
+  "替换": "Substituir",
+  "恢复这一段的原译文": "Restaurar a tradução original deste trecho",
+  "已译完 · $1 · 点译文里的词可以换一种说法": "Tradução concluída · $1 · Clique em uma palavra da tradução para mudar a forma de dizer",
+  "选中的文字太长，请选一个词或短语。": "O texto selecionado é muito longo. Selecione uma palavra ou frase.",
+  "正在找其他译法…": "Procurando outras traduções…",
+  "原文：$1": "Original: $1",
+  "没有找到更合适的说法，可以在下面自己改写。": "Nenhuma forma melhor encontrada. Você pode reescrever abaixo.",
+  "已替换为「$1」": "Substituído por \"$1\"",
+  "已替换为「$1」。全文还有 $2 处「$3」": "Substituído por \"$1\". Há mais $2 ocorrências de \"$3\" no texto.",
+  "全部替换": "Substituir tudo",
+  "已替换 $1 处": "$1 ocorrências substituídas"
 }

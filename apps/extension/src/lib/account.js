@@ -331,11 +331,18 @@
     return data.translations;
   }
 
+  /** 其他译法（双语阅读里点译文的词）：服务端按原文段落字数扣点。 */
+  async function alternatives({ source, translation, start, end, target, note, signal }) {
+    const data = await hostedRequest('/alternatives', { source, translation, start, end, target, note }, signal);
+    if (!Array.isArray(data.options)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
+    return { source: typeof data.source === 'string' ? data.source : '', options: data.options };
+  }
+
   async function readImageText({ image, purpose, signal }) {
     const data = await hostedRequest('/read-image', { image, ...(purpose === 'regions' ? { purpose } : {}) }, signal);
     if (typeof data.raw !== 'string') throw new AccountError(t('识别失败'), 'invalid_response');
     return data.raw;
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, readImageText, warm };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, alternatives, readImageText, warm };
 })();

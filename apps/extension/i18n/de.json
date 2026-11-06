@@ -546,5 +546,21 @@
   "已译完 · $1": "Übersetzung abgeschlossen · $1",
   "已停止：$1/$2 段已翻译": "Gestoppt: $1/$2 Absätze übersetzt",
   "原文：": "Original:",
-  "文章太长，只显示了前面的部分。": "Der Artikel ist zu lang, daher wird nur der Anfang angezeigt."
+  "文章太长，只显示了前面的部分。": "Der Artikel ist zu lang, daher wird nur der Anfang angezeigt.",
+  "模型没有返回可用的其他译法，重试或换个模型试试": "Das Modell hat keine brauchbaren alternativen Übersetzungen zurückgegeben. Versuche es erneut oder wechsle zu einem anderen Modell.",
+  "$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。": "$1 bietet keine alternativen Übersetzungen. Du kannst selbst umformulieren oder zu Punkte-Übersetzung oder einer LLM-Plattform wechseln.",
+  "其他译法": "Alternative Übersetzungen",
+  "自己改写…": "Selbst umformulieren…",
+  "自己改写": "Selbst umformulieren",
+  "替换": "Ersetzen",
+  "恢复这一段的原译文": "Die ursprüngliche Übersetzung dieses Abschnitts wiederherstellen",
+  "已译完 · $1 · 点译文里的词可以换一种说法": "Übersetzung abgeschlossen · $1 · Klicke auf ein Wort in der Übersetzung, um es anders zu formulieren",
+  "选中的文字太长，请选一个词或短语。": "Der ausgewählte Text ist zu lang. Bitte wähle ein Wort oder einen Ausdruck.",
+  "正在找其他译法…": "Suche nach alternativen Übersetzungen…",
+  "原文：$1": "Original: $1",
+  "没有找到更合适的说法，可以在下面自己改写。": "Keine passendere Formulierung gefunden. Du kannst sie unten selbst umformulieren.",
+  "已替换为「$1」": "Ersetzt durch „$1“",
+  "已替换为「$1」。全文还有 $2 处「$3」": "Ersetzt durch „$1“. Im Text gibt es noch $2 weitere Vorkommen von „$3“.",
+  "全部替换": "Alle ersetzen",
+  "已替换 $1 处": "$1 Vorkommen ersetzt"
 }

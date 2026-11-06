@@ -5,6 +5,8 @@
  *         后台存进 chrome.storage.session（reader:<id>），本页按 ?id= 读取。
  *   排版：每段原文与译文放在同一行（.pair）里，左右并排时顶端对齐，也可上下对照、只看一边。
  *   翻译：按批调用当前平台（含点数翻译），从上往下逐批填入译文；换目标语言或平台会重翻。
+ *   换说法：译文按词切开（Intl.Segmenter），点一个词或选中一段，请当前平台给出几种可以直接替换的说法，
+ *         也可以自己改写；换完可以把全文其他相同的地方一起替换。
  *   样式：主题、字体、字号、行距、版心、淡化存进 chrome.storage.local 的 readerStyle，
  *         所有阅读页共用，默认取 huaci.app 的外观。
  *
@@ -43,6 +45,9 @@
     error: $('error'), errorText: $('errorText'),
     doc: $('doc'), meta: $('meta'), titlePair: $('titlePair'), body: $('body'), endNote: $('endNote'),
     empty: $('empty'),
+    alt: $('alt'), altPicked: $('altPicked'), altSource: $('altSource'), altList: $('altList'), altMsg: $('altMsg'),
+    altOwn: $('altOwn'), altInput: $('altInput'), altRestore: $('altRestore'),
+    toast: $('toast'), toastText: $('toastText'), toastAction: $('toastAction'), toastClose: $('toastClose'),
   };
   const label = (id) => AITrLanguages.label(id);
   const langInfo = (id) => AITrLanguages.LANGUAGES[id] || { dir: 'ltr' };
@@ -51,7 +56,7 @@
   let settings = S.normalize(null);
   let target = settings.target;
   let article = null;
-  /** 翻译单元：{ text, node, done, out } —— node 是放译文的元素。 */
+  /** 翻译单元：{ text, node, src, done, out, machine } —— node 放译文，src 是对应的原文元素，machine 是平台给的原译文。 */
   let units = [];
   let runController = null;
   let started = false;
@@ -165,7 +170,7 @@
       setStatus(t("正在翻译 $1/$2 段 · $3", [done, total, label(target)]));
       setProgress(total ? done / total : 0);
     } else if (done === total) {
-      setStatus(t("已译完 · $1", [label(target)]));
+      setStatus(t("已译完 · $1 · 点译文里的词可以换一种说法", [label(target)]));
       setProgress(null);
     } else if (started) {
       setStatus(t("已停止：$1/$2 段已翻译", [done, total]));
@@ -214,11 +219,12 @@
   }
 
   /** 登记一个翻译单元；没有可翻译文字（编号、符号）的直接照抄原文。 */
-  function unit(node, text) {
-    const item = { text, node, done: false, out: '' };
+  function unit(node, text, src = null) {
+    const item = { text, node, src, done: false, out: '', machine: '' };
+    node.dataset.unit = String(units.length);
     if (!A.translatable(text)) {
       item.done = true;
-      item.out = text;
+      item.out = item.machine = text;
       node.textContent = text;
     } else {
       skeleton(node, text);
@@ -227,13 +233,44 @@
     return item;
   }
 
+  let segmenter = null;
+  function words(text) {
+    if (!segmenter || segmenter.locale !== target) {
+      try {
+        segmenter = { locale: target, impl: new Intl.Segmenter(target, { granularity: 'word' }) };
+      } catch {
+        segmenter = { locale: target, impl: new Intl.Segmenter(undefined, { granularity: 'word' }) };
+      }
+    }
+    return segmenter.impl.segment(text);
+  }
+
+  /** 译文按词切开：每个词一个 span（记下在译文里的起止位置），空格与标点保持纯文字。 */
+  function paintWords(item, { fresh = false, changed = null } = {}) {
+    const fragment = document.createDocumentFragment();
+    for (const { segment, index, isWordLike } of words(item.out)) {
+      if (!isWordLike) { fragment.append(segment); continue; }
+      const span = make('span', 'w', segment);
+      span.dataset.s = String(index);
+      span.dataset.e = String(index + segment.length);
+      if (changed && index < changed[1] && index + segment.length > changed[0]) span.classList.add('changed');
+      fragment.appendChild(span);
+    }
+    if (fresh) {
+      const wrap = make('span', 'fresh');
+      wrap.appendChild(fragment);
+      item.node.replaceChildren(wrap);
+    } else {
+      item.node.replaceChildren(fragment);
+    }
+  }
+
   function paint(item) {
     if (!item.done) {
       skeleton(item.node, item.text);
       return;
     }
-    const span = make('span', 'fresh', item.out);
-    item.node.replaceChildren(span);
+    paintWords(item, { fresh: true });
   }
 
   function renderHead() {
@@ -242,10 +279,11 @@
     el.titlePair.replaceChildren();
     const title = article.title || article.siteName || '';
     el.titlePair.append(source(make('div')), translated(make('div')));
-    el.titlePair.firstChild.appendChild(make('h1', '', title));
+    const srcTitle = make('h1', '', title);
+    el.titlePair.firstChild.appendChild(srcTitle);
     const h1 = make('h1');
     el.titlePair.lastChild.appendChild(h1);
-    unit(h1, title);
+    unit(h1, title, srcTitle);
   }
 
   function formatDate(value) {
@@ -266,7 +304,7 @@
     const dst = translated(make(tag, extra?.className));
     for (const node of [src, dst]) extra?.decorate?.(node);
     pair.append(src, dst);
-    unit(dst, text);
+    unit(dst, text, src);
     return pair;
   }
 
@@ -288,10 +326,11 @@
     media.appendChild(img);
     pair.appendChild(media);
     if (block.text) {
-      pair.append(source(make('figcaption', 'cap', block.text)));
+      const src = source(make('figcaption', 'cap', block.text));
+      pair.append(src);
       const dst = translated(make('figcaption', 'cap'));
       pair.appendChild(dst);
-      unit(dst, block.text);
+      unit(dst, block.text, src);
     }
     return pair;
   }
@@ -299,18 +338,20 @@
   function tablePair(block) {
     const pair = make('div', 'pair table');
     pair.dataset.type = 'table';
+    const srcCells = [];
     const build = (side) => {
       const wrap = make('div', 'table-wrap');
       const table = make('table');
       const body = make('tbody');
       block.rows.forEach((row, r) => {
         const tr = make('tr');
-        for (const cell of row) {
+        if (side === 'src') srcCells[r] = [];
+        row.forEach((cell, col) => {
           const td = make(r === 0 ? 'th' : 'td');
-          if (side === 'src') td.textContent = cell;
-          else if (cell) unit(td, cell);
+          if (side === 'src') { td.textContent = cell; srcCells[r][col] = td; }
+          else if (cell) unit(td, cell, srcCells[r]?.[col] || null);
           tr.appendChild(td);
-        }
+        });
         body.appendChild(tr);
       });
       table.appendChild(body);
@@ -433,6 +474,7 @@
           }
           group.forEach((item, k) => {
             item.out = String(result[k] ?? '').trim() || item.text;
+            item.machine = item.out;
             item.done = true;
             paint(item);
           });
@@ -452,6 +494,7 @@
   }
 
   function stop() {
+    closeAlt();
     runController?.abort();
     runController = null;
     renderProgress();
@@ -465,6 +508,243 @@
     renderArticle();
     runAll();
   }
+
+  /* ---------------------------------------------------------------- 换说法 */
+
+  /** 当前打开的换说法弹窗：{ item, start, end, selected, controller }。 */
+  let picking = null;
+  /** 同一段、同一位置、同一译文只请求一次（点数翻译每次都扣点）。 */
+  const altCache = new Map();
+  let toastTimer = 0;
+
+  /** 元素在译文单元里的字符位置。node 的文字与 item.out 一一对应。 */
+  function offsetIn(item, container, offset) {
+    const range = document.createRange();
+    range.setStart(item.node, 0);
+    range.setEnd(container, offset);
+    return range.toString().length;
+  }
+
+  function unitOf(node) {
+    const host = node?.nodeType === 1 ? node.closest('[data-unit]') : node?.parentElement?.closest('[data-unit]');
+    const item = host ? units[Number(host.dataset.unit)] : null;
+    return item?.done && item.node === host ? item : null;
+  }
+
+  /** 在原文里标出模型说的对应词（只标第一处），关掉弹窗时还原。 */
+  function markSource(item, term) {
+    if (!item.src || !term) return;
+    const text = item.src.textContent;
+    const at = text.toLowerCase().indexOf(term.toLowerCase());
+    if (at < 0) return;
+    const mark = make('mark', '', text.slice(at, at + term.length));
+    item.src.replaceChildren(text.slice(0, at), mark, text.slice(at + term.length));
+  }
+
+  function unmarkSource(item) {
+    if (item?.src?.querySelector('mark')) item.src.textContent = item.src.textContent;
+  }
+
+  function closeAlt() {
+    if (!picking) return;
+    picking.controller.abort();
+    picking.item.node.querySelectorAll('.w.picked').forEach((span) => span.classList.remove('picked'));
+    unmarkSource(picking.item);
+    picking = null;
+    el.alt.hidden = true;
+  }
+
+  /** 弹窗放在选中文字下方，放不下就放上方；跟着页面一起滚动。 */
+  function placeAlt(rect) {
+    const width = el.alt.offsetWidth;
+    const height = el.alt.offsetHeight;
+    const left = Math.max(12, Math.min(rect.left, innerWidth - width - 12));
+    const below = rect.bottom + 8;
+    const top = below + height > innerHeight - 12 && rect.top - height - 8 > 12 ? rect.top - height - 8 : below;
+    el.alt.style.left = `${left + scrollX}px`;
+    el.alt.style.top = `${top + scrollY}px`;
+  }
+
+  function altMessage(text, error = false) {
+    el.altMsg.textContent = text || '';
+    el.altMsg.classList.toggle('err', error);
+  }
+
+  function renderOptions(options) {
+    el.altList.replaceChildren(...options.map((option) => {
+      const button = make('button', 'alt-opt');
+      button.type = 'button';
+      button.setAttribute('role', 'option');
+      const value = make('b', '', option.text);
+      value.lang = target;
+      value.dir = langInfo(target).dir || 'ltr';
+      button.append(value, make('span', '', option.note || ''));
+      if (option.note) button.title = option.note;
+      button.addEventListener('click', () => applyAlt(option.text));
+      return button;
+    }));
+  }
+
+  function renderLoading() {
+    el.altList.replaceChildren(...[0, 1, 2].map(() => {
+      const row = make('div', 'alt-opt loading');
+      row.appendChild(make('i'));
+      return row;
+    }));
+  }
+
+  async function openAlt(item, start, end, rect) {
+    // 去掉两端空白，选中部分从词边界开始算
+    while (start < end && /\s/.test(item.out[start])) start++;
+    while (end > start && /\s/.test(item.out[end - 1])) end--;
+    if (end <= start) return;
+    // 双击选词会连着触发两次：同一处已经开着就不再请求
+    if (picking && picking.item === item && picking.start === start && picking.end === end) return;
+    closeAlt();
+    if (end - start > 200) {
+      showToast(t("选中的文字太长，请选一个词或短语。"));
+      return;
+    }
+    const selected = item.out.slice(start, end);
+    const controller = new AbortController();
+    picking = { item, start, end, selected, controller };
+    for (const span of item.node.querySelectorAll('.w')) {
+      if (Number(span.dataset.s) < end && Number(span.dataset.e) > start) span.classList.add('picked');
+    }
+    el.altPicked.textContent = selected;
+    el.altPicked.lang = target;
+    el.altSource.textContent = '';
+    el.altInput.value = selected;
+    el.altRestore.hidden = item.out === item.machine;
+    altMessage(t("正在找其他译法…"));
+    renderLoading();
+    el.alt.hidden = false;
+    placeAlt(rect);
+
+    const key = JSON.stringify([units.indexOf(item), start, end, item.out, target, settings.provider]);
+    try {
+      // 缓存的是请求本身：关掉弹窗再点同一处，等的是同一个请求，不会重复扣点
+      let request = altCache.get(key);
+      if (!request) {
+        request = P.alternatives({
+          source: item.text, translation: item.out, start, end,
+          settings: S.normalize({ ...settings, target }), targetId: target, noteId: AITrI18n.locale(),
+        });
+        altCache.set(key, request);
+        request.catch(() => altCache.delete(key));
+      }
+      const result = await request;
+      if (picking?.controller !== controller) return;
+      if (result.source) {
+        el.altSource.textContent = t("原文：$1", [result.source]);
+        markSource(item, result.source);
+      }
+      renderOptions(result.options);
+      altMessage(result.options.length ? '' : t("没有找到更合适的说法，可以在下面自己改写。"));
+      placeAlt(rect);
+      el.altList.querySelector('button')?.focus({ preventScroll: true });
+    } catch (err) {
+      if (picking?.controller !== controller || err?.name === 'AbortError') return;
+      el.altList.replaceChildren();
+      altMessage(String(err?.message || err) || t("翻译失败"), err?.action !== 'unsupported');
+      placeAlt(rect);
+      el.altInput.focus({ preventScroll: true });
+      el.altInput.select();
+    }
+  }
+
+  /** 西文按整词匹配，中日韩、泰文等不分词的文字按字面匹配。 */
+  function termPattern(term) {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Thai}]/u.test(term)) return new RegExp(escaped, 'gu');
+    return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'gu');
+  }
+
+  function applyAlt(replacement) {
+    if (!picking) return;
+    const { item, start, end, selected } = picking;
+    const value = String(replacement || '').replace(/\s+/g, ' ').trim();
+    if (!value || value === selected) { closeAlt(); return; }
+    closeAlt();
+    item.out = item.out.slice(0, start) + value + item.out.slice(end);
+    paintWords(item, { changed: [start, start + value.length] });
+
+    // 同一个词在全文别处也这样译的，提议一起换掉（术语前后一致）
+    const pattern = termPattern(selected);
+    const others = units.filter((other) => other.done && other.out.match(pattern));
+    const count = others.reduce((sum, other) => sum + other.out.match(pattern).length, 0);
+    if (!count) {
+      showToast(t("已替换为「$1」", [value]));
+      return;
+    }
+    showToast(t("已替换为「$1」。全文还有 $2 处「$3」", [value, count, selected]), t("全部替换"), () => {
+      for (const other of others) {
+        const changed = [];
+        other.out = other.out.replace(pattern, (match, offset) => { changed.push(offset); return value; });
+        paintWords(other, { changed: [Math.min(...changed), Math.max(...changed) + value.length] });
+      }
+      showToast(t("已替换 $1 处", [count]));
+    });
+  }
+
+  function showToast(text, actionLabel = '', action = null) {
+    clearTimeout(toastTimer);
+    el.toastText.textContent = text;
+    el.toastAction.hidden = !action;
+    el.toastAction.textContent = actionLabel;
+    el.toastAction.onclick = action ? () => { action(); } : null;
+    el.toast.hidden = false;
+    toastTimer = setTimeout(() => { el.toast.hidden = true; }, action ? 9000 : 3000);
+  }
+  el.toastClose.addEventListener('click', () => { clearTimeout(toastTimer); el.toast.hidden = true; });
+
+  // 点一个词，或在一段译文里选中几个词
+  el.doc.addEventListener('click', (event) => {
+    const selection = getSelection();
+    if (selection && !selection.isCollapsed && selection.rangeCount) {
+      const range = selection.getRangeAt(0);
+      const item = unitOf(range.startContainer);
+      if (!item || unitOf(range.endContainer) !== item) return;
+      const start = offsetIn(item, range.startContainer, range.startOffset);
+      const end = offsetIn(item, range.endContainer, range.endOffset);
+      const rect = range.getBoundingClientRect();
+      selection.removeAllRanges();
+      openAlt(item, start, end, rect);
+      return;
+    }
+    const word = event.target.closest?.('.dst .w');
+    if (!word) return;
+    const item = unitOf(word);
+    if (!item) return;
+    event.stopPropagation();
+    if (event.detail > 1) return;
+    if (picking?.item === item && picking.start === Number(word.dataset.s) && picking.end === Number(word.dataset.e)) { closeAlt(); return; }
+    openAlt(item, Number(word.dataset.s), Number(word.dataset.e), word.getBoundingClientRect());
+  });
+  el.altOwn.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyAlt(el.altInput.value);
+  });
+  el.altRestore.addEventListener('click', () => {
+    if (!picking) return;
+    const { item } = picking;
+    closeAlt();
+    item.out = item.machine;
+    paintWords(item, { changed: [0, item.out.length] });
+  });
+  el.alt.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    const buttons = [...el.altList.querySelectorAll('button')];
+    if (!buttons.length) return;
+    event.preventDefault();
+    const at = buttons.indexOf(document.activeElement);
+    const next = event.key === 'ArrowDown' ? (at + 1) % buttons.length : (at - 1 + buttons.length) % buttons.length;
+    buttons[next].focus();
+  });
+  document.addEventListener('mousedown', (event) => {
+    if (picking && !el.alt.contains(event.target) && !event.target.closest?.('.dst .w')) closeAlt();
+  });
+  window.addEventListener('resize', closeAlt);
 
   /* ---------------------------------------------------------------- 控件 */
 
@@ -521,6 +801,12 @@
     if (!el.panel.hidden && !el.panel.contains(event.target)) togglePanel(false);
   });
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && picking) {
+      const word = picking.item.node.querySelector('.w.picked');
+      closeAlt();
+      word?.focus?.();
+      return;
+    }
     if (event.key === 'Escape' && !el.panel.hidden) {
       togglePanel(false);
       el.styleButton.focus();

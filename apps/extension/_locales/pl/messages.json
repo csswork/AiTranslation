@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "Artykuł jest zbyt długi, więc wyświetlany jest tylko jego początek."
   },
+  "m_762155dbd4b75a66": {
+    "message": "Model nie zwrócił żadnych użytecznych tłumaczeń alternatywnych. Spróbuj ponownie lub przełącz się na inny model."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ nie oferuje tłumaczeń alternatywnych. Możesz przepisać tekst samodzielnie lub przełączyć się na tłumaczenie punktowe albo platformę LLM.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Tłumaczenia alternatywne"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Przepisz samodzielnie…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Przepisz samodzielnie"
+  },
+  "m_131b13aa265996df": {
+    "message": "Zastąp"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Przywróć oryginalne tłumaczenie tego fragmentu"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Tłumaczenie ukończone · $arg1$ · Kliknij słowo w tłumaczeniu, aby ująć je inaczej",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "Zaznaczony tekst jest za długi. Zaznacz słowo lub frazę."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Szukam tłumaczeń alternatywnych…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Oryginał: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Nie znaleziono lepszego sformułowania. Możesz przepisać tekst samodzielnie poniżej."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Zastąpiono „$arg1$”",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Zastąpiono „$arg1$”. W tekście jest jeszcze $arg2$ wystąpień „$arg3$”.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Zastąp wszystko"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "Zastąpiono $arg1$ wystąpień",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

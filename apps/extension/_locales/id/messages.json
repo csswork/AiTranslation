@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "Artikel terlalu panjang, jadi hanya bagian awal yang ditampilkan."
   },
+  "m_762155dbd4b75a66": {
+    "message": "Model tidak mengembalikan terjemahan alternatif yang dapat digunakan. Coba lagi atau ganti ke model lain."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ tidak menyediakan terjemahan alternatif. Anda dapat menulis ulang sendiri, atau beralih ke Terjemahan Poin atau platform LLM.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Terjemahan alternatif"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Tulis ulang sendiri…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Tulis ulang sendiri"
+  },
+  "m_131b13aa265996df": {
+    "message": "Ganti"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Pulihkan terjemahan asli bagian ini"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Terjemahan selesai · $arg1$ · Klik kata dalam terjemahan untuk mengubah frasanya",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "Teks yang dipilih terlalu panjang. Pilih satu kata atau frasa."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Mencari terjemahan alternatif…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Asli: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Tidak ditemukan frasa yang lebih baik. Anda dapat menulis ulang sendiri di bawah."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Diganti dengan \"$arg1$\"",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Diganti dengan \"$arg1$\". Masih ada $arg2$ kemunculan \"$arg3$\" di teks.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Ganti semua"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "$arg1$ kemunculan diganti",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

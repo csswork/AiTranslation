@@ -7,6 +7,7 @@
  *   GET  /ping       预热连接，不查库、不需要登录
  *   POST /translate  托管文字翻译：订阅用户不扣点，其他用户预扣点数、失败返还；每次记录统计元数据。
  *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
+ *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
  *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围）；文字随后走 /translate，按实际文字扣点
  *
  * 认证用 Authorization: Bearer <扩展会话令牌>，不用 Cookie，所以不受站内表单的同源校验约束；
@@ -26,6 +27,9 @@ import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
 
 const MAX_ITEMS = 100;
+/** 其他译法：原文段落与译文的长度上限，选中部分最长 200 个 UTF-16 单位。 */
+const MAX_CONTEXT = 4000;
+const MAX_SELECTED = 200;
 const MAX_IMAGE_BODY = 8 * 1024 * 1024;
 
 /** 只把图片输入交给模型，不在 VPS 上抓取用户提供的 URL。拒绝本地文件、SVG 与非图片数据。 */
@@ -232,16 +236,11 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     return c.json({ raw: result.raw, ...(await status(user)) });
   });
 
-  app.post('/translate', requireExtension, async (c) => {
-    const s = await settings.all();
-    const { user } = c.get('auth');
-    const body = await readJson(c);
-    const texts = Array.isArray(body.texts) ? body.texts : [];
-    if (!texts.length || texts.length > MAX_ITEMS || texts.some((t) => typeof t !== 'string')) return c.json({ error: 'invalid_texts' }, 400);
-    if (!LANGUAGES[body.target] || (body.source && !LANGUAGES[body.source])) return c.json({ error: 'invalid_language' }, 400);
-    const chars = countCharacters(texts);
-    if (!chars) return c.json({ error: 'invalid_texts' }, 400);
-
+  /**
+   * 托管文字请求（翻译、其他译法）共用的前置检查与预扣：可用性、冻结、长度、限频、订阅合理用量、余额。
+   * 通过时返回 { eventId, cost, record }（record 写回用量元数据）；被拒时返回 { response }，并记一条 usage_rejections。
+   */
+  async function startCharge(c, s, user, { chars, target, source }) {
     const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
     const audience = subscribed ? 'subscriber' : user.kind;
     /** 记录一次被拒绝的请求并返回对应的响应（不调用模型、不扣点、不保存原文）。 */
@@ -249,10 +248,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       if (rejectionLogLimiter(`${user.id}:${reason}`)) {
         await pool.query(
           `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost_units, target_lang, country) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-          [user.id, reason, audience, chars, cost, body.target, requestCountry(c, config)],
+          [user.id, reason, audience, chars, cost, target, requestCountry(c, config)],
         );
       }
-      return c.json({ error: reason, ...extra }, status);
+      return { response: c.json({ error: reason, ...extra }, status) };
     };
 
     if (!hosted || !s.hosted_enabled) return reject('hosted_unavailable', 503);
@@ -268,7 +267,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       await client.query(
         `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang)
          VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8)`,
-        [eventId, user.id, chars, cost, audience, requestCountry(c, config), body.target, body.source || null],
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);
@@ -283,6 +282,21 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         meta?.outputTokens ?? null, meta?.inputTokens != null ? estimateCostMicros(s, meta.providerKey, meta) : null,
         meta?.latencyMs ?? null, fields.error ?? null],
     );
+    return { eventId, cost, record };
+  }
+
+  app.post('/translate', requireExtension, async (c) => {
+    const s = await settings.all();
+    const { user } = c.get('auth');
+    const body = await readJson(c);
+    const texts = Array.isArray(body.texts) ? body.texts : [];
+    if (!texts.length || texts.length > MAX_ITEMS || texts.some((t) => typeof t !== 'string')) return c.json({ error: 'invalid_texts' }, 400);
+    if (!LANGUAGES[body.target] || (body.source && !LANGUAGES[body.source])) return c.json({ error: 'invalid_language' }, 400);
+    const chars = countCharacters(texts);
+    if (!chars) return c.json({ error: 'invalid_texts' }, 400);
+    const charge = await startCharge(c, s, user, { chars, target: body.target, source: body.source || null });
+    if (charge.response) return charge.response;
+    const { eventId, cost, record } = charge;
 
     // 单段文字可以流式返回（划词弹窗、翻译面板），边生成边显示；扣点、返还与记录和一次性返回相同。
     // 客户端中途断开时继续读完模型输出并照常结算，与一次性返回的行为一致。
@@ -332,6 +346,38 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     }
     await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
     return c.json({ translations: result.translations, cost: displayCredits(cost), ...(await status(user)) });
+  });
+
+  // 其他译法：模型要同时看原文段落与整段译文，按原文段落字数扣点（与重新翻译这一段相同），失败返还。
+  app.post('/alternatives', requireExtension, async (c) => {
+    const s = await settings.all();
+    const { user } = c.get('auth');
+    const body = await readJson(c);
+    const { source, translation, start, end } = body;
+    if (typeof source !== 'string' || typeof translation !== 'string' || !source.trim()
+      || source.length > MAX_CONTEXT || translation.length > MAX_CONTEXT
+      || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end > translation.length
+      || end - start < 1 || end - start > MAX_SELECTED || !translation.slice(start, end).trim()) {
+      return c.json({ error: 'invalid_request' }, 400);
+    }
+    if (!LANGUAGES[body.target]) return c.json({ error: 'invalid_language' }, 400);
+    const note = LANGUAGES[body.note] ? body.note : 'en';
+    if (!hosted?.alternatives) return c.json({ error: 'hosted_unavailable' }, 503);
+    const chars = countCharacters([source]);
+    const charge = await startCharge(c, s, user, { chars, target: body.target, source: null });
+    if (charge.response) return charge.response;
+    const { eventId, cost, record } = charge;
+    let result;
+    try {
+      result = await hosted.alternatives({ source, translation, start, end, target: body.target, note });
+    } catch (err) {
+      await refundCredits(pool, eventId);
+      await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });
+      log.warn(`其他译法失败：${err.code || err.message}`);
+      return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
+    }
+    await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
+    return c.json({ source: result.source, options: result.options, cost: displayCredits(cost), ...(await status(user)) });
   });
 
   return app;

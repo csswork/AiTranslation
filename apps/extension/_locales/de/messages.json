@@ -2274,6 +2274,90 @@
   "m_ed4d1221d736665a": {
     "message": "Der Artikel ist zu lang, daher wird nur der Anfang angezeigt."
   },
+  "m_762155dbd4b75a66": {
+    "message": "Das Modell hat keine brauchbaren alternativen Übersetzungen zurückgegeben. Versuche es erneut oder wechsle zu einem anderen Modell."
+  },
+  "m_e9594f5166ef86af": {
+    "message": "$arg1$ bietet keine alternativen Übersetzungen. Du kannst selbst umformulieren oder zu Punkte-Übersetzung oder einer LLM-Plattform wechseln.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_38610c02adb6459c": {
+    "message": "Alternative Übersetzungen"
+  },
+  "m_edf75f203b086da7": {
+    "message": "Selbst umformulieren…"
+  },
+  "m_cfc33a457b79c11b": {
+    "message": "Selbst umformulieren"
+  },
+  "m_131b13aa265996df": {
+    "message": "Ersetzen"
+  },
+  "m_bbe8dcab753317b6": {
+    "message": "Die ursprüngliche Übersetzung dieses Abschnitts wiederherstellen"
+  },
+  "m_66341f0f709c78aa": {
+    "message": "Übersetzung abgeschlossen · $arg1$ · Klicke auf ein Wort in der Übersetzung, um es anders zu formulieren",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3efa1381d346ed29": {
+    "message": "Der ausgewählte Text ist zu lang. Bitte wähle ein Wort oder einen Ausdruck."
+  },
+  "m_bb923eb970f63d37": {
+    "message": "Suche nach alternativen Übersetzungen…"
+  },
+  "m_2124856718426d4d": {
+    "message": "Original: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_46c91473da29b475": {
+    "message": "Keine passendere Formulierung gefunden. Du kannst sie unten selbst umformulieren."
+  },
+  "m_8a291603f0d31818": {
+    "message": "Ersetzt durch „$arg1$“",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_3761e5355d29ec62": {
+    "message": "Ersetzt durch „$arg1$“. Im Text gibt es noch $arg2$ weitere Vorkommen von „$arg3$“.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_2357445f30da54fb": {
+    "message": "Alle ersetzen"
+  },
+  "m_d19582948aa1d01d": {
+    "message": "$arg1$ Vorkommen ersetzt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },
