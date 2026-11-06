@@ -19,6 +19,17 @@ const IMAGE_MENU_ID = 'ai-translate-image';
 const VIDEO_MENU_ID = 'ai-translate-video';
 const PDF_MENU_ID = 'ai-translate-pdf';
 const PDF_PAGE = 'src/pdf/pdf.html';
+const READER_MENU_ID = 'ai-reader';
+const READER_PAGE = 'src/reader/reader.html';
+/** 双语阅读的识别脚本不常驻，点菜单时才注入顶层框架（核心内容脚本已由 ensureContentScript 保证）。 */
+const READER_FILES = [
+  'src/vendor/readability/Readability.js',
+  'src/vendor/readability/Readability-readerable.js',
+  'src/lib/article.js',
+  'src/content/reader.js',
+];
+/** 会话存储里最多留几篇待读文章：刷新阅读页还能读到，又不会占满 10MB 配额。 */
+const READER_KEEP = 8;
 const PORT_NAME = 'ai-translate-panel';
 const VIDEO_FILE = 'src/content/video.js';
 const OFFSCREEN_URL = 'src/offscreen/offscreen.html';
@@ -96,6 +107,14 @@ function createMenu() {
     // ——有选中文字时只出划词项，没有时只出这一项。
     // 这样任何时刻都只有一项可见（不会被折叠成二级子菜单），
     // 而且不依赖内容脚本上报，没有时序问题。
+    // 与区域按钮同为 'page'：没选中文字、也不在图片或链接上右键时出现，两项会收进扩展名下的子菜单。
+    // PDF 标签页里有自己的对照阅读（翻译整个 PDF），这一项跟区域按钮一起隐藏。
+    await create({
+      id: READER_MENU_ID,
+      title: t("双语阅读这篇文章"),
+      contexts: ['page'],
+      visible: !pdfActive,
+    });
     await create({
       id: ELEMENT_MENU_ID,
       title: t("为这个区域添加翻译按钮"),
@@ -238,6 +257,7 @@ async function syncPageMenus(tabId) {
   const pdf = tabId != null && (await pdfTabs()).has(tabId);
   try {
     await chrome.contextMenus.update(ELEMENT_MENU_ID, { visible: !pdf });
+    await chrome.contextMenus.update(READER_MENU_ID, { visible: !pdf });
     await chrome.contextMenus.update(PDF_MENU_ID, { visible: pdf });
   } catch {
     await createMenu(); // 重建时已按当前标签页决定显隐
@@ -272,6 +292,52 @@ async function openPdfTranslation(tab) {
     if (Number.isInteger(source.windowId) && source.windowId >= 0) properties.windowId = source.windowId;
   }
   // With no trusted source, open the local file picker rather than reading another page.
+  await chrome.tabs.create(properties);
+}
+
+/* -------------------------------------------------------------- 双语阅读 */
+
+/** 在页面上播放扫描动画并识别正文；识别完成后由页面发回 reader-open。 */
+async function startReader(tab) {
+  if (!Number.isInteger(tab?.id) || tab.id < 0) return;
+  if (!(await ensureContentScript(tab.id))) return;
+  try {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id, frameIds: [0] }, files: READER_FILES });
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id, frameIds: [0] },
+      func: () => globalThis.AITrReaderScan?.start(),
+    });
+  } catch (err) {
+    console.warn("[AI Translator] Could not start reader:", err?.message);
+  }
+}
+
+/**
+ * 把识别好的文章存进会话存储，在来源标签页右边打开阅读页。
+ * 文章只含纯文字与 http(s) 图片地址；阅读页按类型重建元素，不执行网页内容。
+ */
+async function openReader(tab, article) {
+  if (!article || typeof article !== 'object' || !Array.isArray(article.blocks)) throw new Error('Invalid article');
+  if (JSON.stringify(article).length > 4_000_000) throw new Error('Article too large');
+  const id = crypto.randomUUID();
+  const stored = await chrome.storage.session.get('readerIds').catch(() => ({}));
+  const ids = (Array.isArray(stored.readerIds) ? stored.readerIds : []).filter((item) => typeof item === 'string');
+  ids.push(id);
+  const expired = ids.splice(0, Math.max(0, ids.length - READER_KEEP));
+  if (expired.length) await chrome.storage.session.remove(expired.map((item) => `reader:${item}`)).catch(() => {});
+  const save = () => chrome.storage.session.set({ [`reader:${id}`]: article, readerIds: ids });
+  try {
+    await save();
+  } catch {
+    // 配额满了：清掉旧文章再存一次
+    const old = ids.filter((item) => item !== id);
+    await chrome.storage.session.remove(old.map((item) => `reader:${item}`)).catch(() => {});
+    ids.splice(0, ids.length, id);
+    await save();
+  }
+  const properties = { url: chrome.runtime.getURL(`${READER_PAGE}?id=${id}`), openerTabId: tab.id };
+  if (Number.isInteger(tab.index) && tab.index >= 0) properties.index = tab.index + 1;
+  if (Number.isInteger(tab.windowId) && tab.windowId >= 0) properties.windowId = tab.windowId;
   await chrome.tabs.create(properties);
 }
 
@@ -602,6 +668,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     await openPdfTranslation(tab);
     return;
   }
+  if (info.menuItemId === READER_MENU_ID) {
+    await startReader(tab);
+    return;
+  }
   if (info.menuItemId === ELEMENT_MENU_ID && tab?.id) {
     if (!(await ensureContentScript(tab.id))) return;
     try {
@@ -720,6 +790,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'ping') {
     sendResponse({ ok: true });
     return false;
+  }
+
+  // 双语阅读：只接受本扩展注入到顶层框架的识别脚本
+  if (type === 'reader-open') {
+    const tab = sender.tab;
+    if (sender.id !== chrome.runtime.id || !tab || (sender.frameId ?? 0) !== 0) return false;
+    openReader(tab, message.article)
+      .then(() => sendResponse({ ok: true }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err) }));
+    return true;
   }
 
   // 只采信顶层框架的上报：PDF 阅读器内部还嵌着同地址的子框架
