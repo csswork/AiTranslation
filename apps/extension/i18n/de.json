@@ -485,5 +485,13 @@
   "正在勾出文字形状…": "Textformen werden nachgezeichnet…",
   "没有找到需要翻译的文字": "Kein zu übersetzender Text gefunden",
   "找到 $1 处文字": "$1 Textbereiche gefunden",
-  "忽略 $1 处小字": "$1 kleine Textbereiche ignoriert"
+  "忽略 $1 处小字": "$1 kleine Textbereiche ignoriert",
+  "删除这个形状": "Diese Form löschen",
+  "检查识别出的文字形状，确认后点「翻译」": "Prüfe die erkannten Textformen und klicke dann auf „Übersetzen“",
+  "拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Ziehe eine Form, um sie zu verschieben, ziehe einen Eckpunkt, um sie umzuformen; doppelklicke auf eine Kante, um einen Eckpunkt hinzuzufügen, doppelklicke auf einen Eckpunkt, um ihn zu löschen; ziehe auf freier Fläche, um eine neue Form zu zeichnen; drücke Delete, um die ausgewählte Form zu entfernen",
+  "调整形状": "Formen anpassen",
+  "调整识别出的文字形状后重新翻译": "Passe die erkannten Textformen an und übersetze dann erneut",
+  "正在识别改动过的形状…": "Geänderte Formen werden erkannt…",
+  "翻译前先显示识别出的文字形状": "Erkannte Textformen vor dem Übersetzen anzeigen",
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Nach der automatischen Erkennung wird der gefundene Text zuerst auf dem Bild eingezeichnet. Du kannst Formen verschieben, löschen, ändern oder hinzufügen und dann nach Bestätigung übersetzen."
 }

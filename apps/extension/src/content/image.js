@@ -25,6 +25,7 @@
   const Regions = globalThis.AITrRegions;
   const Render = globalThis.AITrImageRender;
   const Shapes = globalThis.AITrTextShapes;
+  const Editor = globalThis.AITrShapeEditor;
   const Picker = globalThis.AITrRegionPicker;
   // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
   const { signal, onRetire } = globalThis.AITrLifecycle;
@@ -331,15 +332,9 @@
     }
     .layer { position: absolute; inset: 0; }
     .hide-translation .layer, .picking .layer { display: none; }
-    /* 自动识别测试阶段：只画出找到的文字形状 */
+    /* 自动识别的结果：按文字形状铺底色、写译文，画在一张与图片等大的画布上 */
     .shapes { position: absolute; inset: 0; pointer-events: none; }
-    .shapes svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .shapes polygon { stroke-width: 2px; stroke-linejoin: round; pointer-events: auto; }
-    /* 编号放在形状左上角的外面，不挡住第一个字 */
-    .shapes .num {
-      position: absolute; padding: 1px 5px; border-radius: 4px; line-height: 1.4; transform: translate(-70%, -70%);
-      font: 600 11px/1.4 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #111;
-    }
+    .shapes canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
     .hide-translation .shapes, .picking .shapes { display: none; }
 
     .box { position: absolute; box-sizing: border-box; min-width: 22px; min-height: 17px; }
@@ -354,7 +349,8 @@
       background: rgba(17, 20, 26, 0.82);
       border-radius: 2px;
     }
-    ${Picker.STYLE}`;
+    ${Picker.STYLE}
+    ${Editor.STYLE}`;
 
   const RECT_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>';
@@ -392,7 +388,7 @@
           </button>
         </div>
         <div class="body">
-          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="pick-layer" hidden></div></div>
+          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="pick-layer" hidden></div><div class="edit-layer" hidden></div></div>
         </div>
         <div class="tools">
           <div class="group v">
@@ -443,11 +439,13 @@
       canvas: q('.canvas'),
       img: q('.canvas img'),
       layer: q('.layer'),
-      // 自动识别测试阶段画文字形状的那层（panel.shapes 是框选的形状按钮）
+      // 自动识别结果画在这层（panel.shapes 是框选的形状按钮）
       shapeLayer: q('.shapes'),
       pickLayer: q('.pick-layer'),
+      editLayer: q('.edit-layer'),
       meta: q('.meta'),
       hint: q('.hint b'),
+      hintNote: q('.hint span'),
       target: q('.target'),
       fill: q('.fill'),
       fillColor: q('.fill-color'),
@@ -462,9 +460,17 @@
       close: q('.close'),
       open: false,
       picking: false,
+      editing: false,
       blocks: [],
+      // 自动识别翻译好的各段（按形状覆盖），与 blocks 二选一
+      shapeItems: null,
       metaText: '',
     };
+    panel.hintNoteText = panel.hintNote.textContent;
+    panel.editor = Editor.create(panel.editLayer, {
+      shape: () => panel.shapeValue,
+      deleteLabel: t('删除这个形状'),
+    });
     // 原图跨域时下载、复制按钮的提示会换掉，留一份原来的
     for (const node of [panel.save, panel.copy]) node.dataset.title = node.title;
     panel.picker = Picker.create(panel.pickLayer, {
@@ -475,8 +481,10 @@
     });
 
     panel.target.addEventListener('change', () => {
-      // 自动识别的测试阶段只画了形状，还没有可翻译的内容
-      if (imageResult && (imageResult.merged || imageResult.groups)) translateBlocks(imageResult, panel.target.value);
+      if (!imageResult) return;
+      // 自动识别的结果换语言只重新翻译，不用重新识别
+      if (imageResult.shapes) translateShapes(imageResult, imageResult.shapes, panel.target.value);
+      else if (imageResult.merged || imageResult.groups) translateBlocks(imageResult, panel.target.value);
     });
     panel.fill.addEventListener('change', () => {
       panel.fillColor.hidden = panel.fill.value !== 'custom';
@@ -485,7 +493,11 @@
     });
     panel.fillColor.addEventListener('input', applyFill);
     panel.fillColor.addEventListener('change', saveFill);
-    panel.pick.addEventListener('click', () => setPicking(true));
+    // 自动识别的结果：调整识别出的形状后重新翻译；其他情况是手动框选
+    panel.pick.addEventListener('click', () => {
+      if (imageResult?.shapes) setEditing(true, imageResult.shapes);
+      else setPicking(true);
+    });
     for (const button of panel.shapes) {
       button.addEventListener('click', () => {
         setShape(button.dataset.shape);
@@ -495,8 +507,8 @@
       });
     }
     panel.cancelPick.addEventListener('click', () => {
-      // 「先框选」打开的窗口还没有任何译文，取消就是关掉
-      if (!panel.blocks.length) { closePanel(); return; }
+      // 「先框选」或「先显示形状」打开的窗口还没有任何译文，取消就是关掉
+      if (!panel.blocks.length && !panel.shapeItems) { closePanel(); return; }
       generation += 1;
       controller?.abort();
       setBusy(false);
@@ -504,6 +516,7 @@
     });
     panel.donePick.addEventListener('click', () => {
       if (!imageResult) return;
+      if (panel.editing) { translateEdited(imageResult, panel.editor.shapes); return; }
       const regions = panel.picker.regions;
       if (regions.length) { translateRegions(imageResult, regions); return; }
       // 选区全删掉了，或者「先框选」时一个没框：翻译整张图
@@ -527,6 +540,12 @@
   }
 
   function onKeydown(event) {
+    // 调整形状时 Delete / Backspace 删掉选中的形状
+    if (panel?.editing && (event.key === 'Delete' || event.key === 'Backspace') && panel.editor.removeActive()) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     if (event.key === 'Escape' && panel?.open) {
       event.stopPropagation();
       // 框选时 Esc 只退出框选，不关掉整个窗口
@@ -551,6 +570,10 @@
   function setPicking(on) {
     if (!panel) return;
     panel.picking = on;
+    panel.editing = false;
+    panel.editLayer.hidden = true;
+    panel.donePick.textContent = t('翻译选区');
+    panel.hintNote.textContent = panel.hintNoteText;
     // 工具栏两套按钮（看结果 / 框选）跟着 .picking 切换
     panel.panel.classList.toggle('picking', on);
     panel.canvas.classList.toggle('picking', on);
@@ -566,6 +589,24 @@
     panel.meta.textContent = panel.metaText;
   }
 
+  /**
+   * 调整自动识别出的文字形状：和框选共用一套工具栏（形状、提示、取消、确认），
+   * 图上换成形状编辑器。
+   */
+  function setEditing(on, shapes = []) {
+    if (!panel) return;
+    setPicking(on);
+    if (!on) return;
+    panel.editing = true;
+    panel.pickLayer.hidden = true;
+    panel.editLayer.hidden = false;
+    panel.editor.set(shapes);
+    panel.donePick.textContent = t('翻译');
+    panel.hint.textContent = t('检查识别出的文字形状，确认后点「翻译」');
+    panel.hintNote.textContent = t('拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除');
+    panel.hint.parentElement.title = `${panel.hint.textContent}\n${panel.hintNote.textContent}`;
+  }
+
   function setShape(shape) {
     panel.shapeValue = shape === 'ellipse' ? 'ellipse' : 'rect';
     for (const button of panel.shapes) button.setAttribute('aria-pressed', String(button.dataset.shape === panel.shapeValue));
@@ -575,11 +616,13 @@
     if (!panel) return;
     panel.donePick.disabled = on;
     panel.pickLayer.style.pointerEvents = on ? 'none' : '';
+    panel.editLayer.style.pointerEvents = on ? 'none' : '';
   }
 
   /** 预览的背景色：按选项和每个框采到的相近色重新上色，不用重新采样。 */
   function applyFill() {
     if (!panel) return;
+    if (panel.shapeItems) { drawShapeOverlay(); return; }
     const mode = panel.fill.value;
     const custom = panel.fillColor.value;
     panel.layer.querySelectorAll('.box').forEach((node, i) => {
@@ -638,6 +681,9 @@
     panel.panel.classList.toggle('tall', tall);
     panel.canvas.classList.remove('hide-translation');
     panel.shapeLayer.replaceChildren();
+    panel.shapeItems = null;
+    panel.pick.textContent = imageResult?.shapes ? t('调整形状') : t('框选区域');
+    panel.pick.title = imageResult?.shapes ? t('调整识别出的文字形状后重新翻译') : t('只翻译框出的区域');
     panel.toggle.textContent = t("显示原图");
     panel.fill.value = settings.imageFill;
     setShape(settings.imageShape);
@@ -701,7 +747,7 @@
 
   /** 合成带译文的新图，下载或复制到剪贴板。全部在本机完成。 */
   async function exportImage(toClipboard) {
-    if (!imageResult || !panel?.blocks.length) return;
+    if (!imageResult || (!panel?.blocks.length && !panel?.shapeItems?.length)) return;
     const { grabbed, targetId } = imageResult;
     const button = toClipboard ? panel.copy : panel.save;
     const label = button.textContent;
@@ -711,8 +757,10 @@
     };
     button.disabled = true;
     try {
-      const canvas = Render.renderImage(grabbed.source, grabbed.natural, panel.blocks,
-        { fill: panel.fill.value, custom: panel.fillColor.value });
+      const options = { fill: panel.fill.value, custom: panel.fillColor.value };
+      const canvas = panel.shapeItems
+        ? Render.renderShapes(grabbed.source, grabbed.natural, panel.shapeItems, options)
+        : Render.renderImage(grabbed.source, grabbed.natural, panel.blocks, options);
       const blob = await Render.toBlob(canvas, { forClipboard: toClipboard });
       if (toClipboard) {
         await Render.copy(blob);
@@ -774,7 +822,8 @@
         .filter((b) => b.translation && b.translation.trim() !== b.text.trim());
       hideMask();
       result.targetId = targetId;
-      imageResult = result;
+      // 手动框选的结果：不再是按形状覆盖的那套
+      imageResult = { ...result, shapes: null };
       const scope = result.groups ? t('$1 个选区', [result.regions.length]) : '';
       openPanel({ grabbed, blocks, targetId, settings,
         meta: [AITrLanguages.label(targetId), scope, String(blocks.length)].filter(Boolean).join(' · ') });
@@ -885,9 +934,11 @@
     const blocks = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
     if (mask) mask.label.textContent = t('正在勾出文字形状…');
     // 读不到像素（跨域图）时按原图尺寸退回模型的矩形
-    return grabbed.ctx
+    const found = grabbed.ctx
       ? Shapes.findShapes(grabbed.ctx, grabbed.width, grabbed.height, blocks, grabbed.natural)
       : Shapes.findShapes(null, grabbed.natural.w, grabbed.natural.h, blocks, grabbed.natural);
+    // 识别出的原始文字块留着：读不到像素时，改过的形状要从这里挑文字
+    return { ...found, blocks };
   }
 
   function shapesMeta({ shapes, small }) {
@@ -896,39 +947,128 @@
       .filter(Boolean).join(' · ');
   }
 
-  /** 相邻的形状用不同颜色，挨在一起也分得清。 */
-  const SHAPE_COLORS = ['#f59e0b', '#22d3ee', '#f472b6', '#a3e635', '#a78bfa', '#fb7185'];
-
-  /** 把文字形状画在原图上：编号标在左上角，悬停显示模型识别出的原文。 */
-  function drawShapes(shapes, natural) {
-    const NS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', `0 0 ${natural.w} ${natural.h}`);
-    svg.setAttribute('preserveAspectRatio', 'none');
-    const labels = [];
-    shapes.forEach((shape, i) => {
-      const color = SHAPE_COLORS[i % SHAPE_COLORS.length];
-      for (const points of shape.polygons) {
-        const polygon = document.createElementNS(NS, 'polygon');
-        polygon.setAttribute('points', points.map(([x, y]) => `${(x * natural.w).toFixed(1)},${(y * natural.h).toFixed(1)}`).join(' '));
-        polygon.setAttribute('fill', `${color}33`);
-        polygon.setAttribute('stroke', color);
-        polygon.setAttribute('vector-effect', 'non-scaling-stroke');
-        if (shape.fallback) polygon.setAttribute('stroke-dasharray', '6 4');
-        const title = document.createElementNS(NS, 'title');
-        title.textContent = `${i + 1}. ${shape.text}`;
-        polygon.appendChild(title);
-        svg.appendChild(polygon);
+  /**
+   * 按文字形状翻译：每个形状的原文合成一段送去翻译，译文按形状排版后画在图上。
+   * 竖排的原文译成中日韩文时译文也竖排。成功后才把结果记为当前结果。
+   */
+  async function translateShapes(result, shapes, targetId, token = ++generation) {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    const { grabbed, settings } = result;
+    const worth = shapes
+      .map((shape) => ({ ...shape, source: Regions.flatten(shape.text) }))
+      .filter((shape) => shape.source && Lang.shouldOffer(shape.source));
+    if (!worth.length) {
+      report(shapes.length ? t("图中没有需要翻译的文字") : t("图中没有识别到文字"));
+      return;
+    }
+    if (panel) panel.target.disabled = true;
+    const busy = t('正在翻译 $1 段…', [worth.length]);
+    if (mask) mask.label.textContent = busy;
+    if (panel?.open) panel.meta.textContent = busy;
+    try {
+      const reply = await AITrRequests.request({
+        type: 'translate-batch', texts: worth.map((shape) => shape.source),
+        targetId, providerId: settings.provider,
+      }, { signal });
+      if (token !== generation) return;
+      if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
+      const items = worth
+        .map((shape, i) => ({ ...shape, translation: String(reply.texts[i] || '').trim() }))
+        .filter((shape) => shape.translation && shape.translation !== shape.source.trim())
+        .map((shape) => ({ ...shape, sample: sampleShape(grabbed, shape.bounds) }));
+      hideMask();
+      imageResult = { ...result, shapes, targetId, regions: null, groups: null };
+      openPanel({ grabbed, blocks: [], targetId, settings,
+        meta: [AITrLanguages.label(targetId), String(items.length)].join(' · ') });
+      panel.shapeItems = Render.layoutShapes(items, grabbed.natural, targetId);
+      drawShapeOverlay();
+    } catch (err) {
+      if (token !== generation) return;
+      if (panel?.open) {
+        panel.meta.textContent = String(err?.message || err);
+        panel.target.value = imageResult?.targetId || settings.target;
       }
-      const num = document.createElement('div');
-      num.className = 'num';
-      num.textContent = String(i + 1);
-      num.style.left = `${shape.bounds.x * 100}%`;
-      num.style.top = `${shape.bounds.y * 100}%`;
-      num.style.background = color;
-      labels.push(num);
-    });
-    panel.shapeLayer.replaceChildren(svg, ...labels);
+      showFailure(String(err?.message || err));
+    } finally {
+      if (token === generation && panel && !panel.picking) panel.target.disabled = false;
+    }
+  }
+
+  /** 形状周围的相近色（读不到像素时为 null，按深色半透明铺）。 */
+  function sampleShape(grabbed, bounds) {
+    if (!grabbed.ctx || !bounds) return null;
+    const { width, height } = grabbed;
+    return Render.sampleAt(grabbed.ctx, {
+      x: bounds.x * width, y: bounds.y * height, w: bounds.w * width, h: bounds.h * height,
+    }, width, height);
+  }
+
+  /** 把按形状排好的译文画到图片上方的画布里；换背景色时重画。 */
+  function drawShapeOverlay() {
+    if (!panel?.shapeItems || !imageResult) return;
+    const { natural } = imageResult.grabbed;
+    // 预览画布不必比原图大，也不必太大：长边最多 2400 像素，按比例缩放
+    const scale = Math.min(1, 2400 / Math.max(natural.w, natural.h));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(natural.w * scale));
+    canvas.height = Math.max(1, Math.round(natural.h * scale));
+    Render.drawShapes(canvas.getContext('2d'), panel.shapeItems, scale,
+      { fill: panel.fill.value, custom: panel.fillColor.value });
+    panel.shapeLayer.replaceChildren(canvas);
+  }
+
+  /**
+   * 用户调整过形状后翻译：没动过的形状直接用识别出的原文；改过、新画的形状
+   * 按新形状裁图重新识别（读不到像素时从整图识别结果里挑中心落在形状里的）。
+   */
+  async function translateEdited(result, edited) {
+    const token = ++generation;
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    const { grabbed, settings } = result;
+    const changed = edited.filter((shape) => shape.dirty || !shape.text);
+    setBusy(true);
+    try {
+      let filled = edited.map((shape) => ({ ...shape, bounds: Editor.boundsOf(shape.polygons) }));
+      if (changed.length) {
+        panel.meta.textContent = t('正在识别改动过的形状…');
+        const regions = changed.map((shape) => ({ ...Editor.boundsOf(shape.polygons), shape: 'polygon', polygons: shape.polygons }));
+        const found = grabbed.ctx
+          ? await Regions.readRegions({
+            source: grabbed.source, natural: grabbed.natural, regions, scaleFor: sendScale,
+            read: async (image, imageSize) => {
+              const reply = await AITrRequests.request({ type: 'read-image', image, imageSize,
+                providerId: settings.provider }, { signal });
+              if (!reply?.ok) throw new Error(reply?.error || t('识别失败'));
+              return reply.blocks;
+            },
+          })
+          : Regions.filterByRegions(result.blocks || [], regions);
+        if (token !== generation) return;
+        const groups = Regions.groupByRegion(found, regions);
+        // 量不出字号（形状里没有清楚的笔画）时，按其他形状的字号中位数
+        const known = filled.filter((shape) => !shape.dirty && shape.glyph > 0).map((shape) => shape.glyph).sort((a, b) => a - b);
+        const typical = known.length ? known[known.length >> 1] : 0.025;
+        filled = filled.map((shape) => {
+          const k = edited.findIndex((s) => s.id === shape.id);
+          const index = changed.findIndex((s) => s.id === edited[k].id);
+          if (index < 0) return shape;
+          const group = groups.find((g) => g.region === index);
+          const glyph = Shapes.measureGlyph(grabbed.ctx, grabbed.width, grabbed.height, shape.bounds) || shape.glyph || typical;
+          return { ...shape, text: group?.text || '', vertical: group ? group.vertical : Boolean(shape.vertical), glyph };
+        });
+      }
+      const shapes = filled.filter((shape) => String(shape.text || '').trim())
+        .map(({ dirty, created, ...shape }) => shape);
+      await translateShapes({ ...result, shapes }, shapes, panel.target.value, token);
+    } catch (err) {
+      if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
+    } finally {
+      if (token === generation) setBusy(false);
+    }
   }
 
   /** 弹窗里翻译整张图：识别过就直接用，「先框选」时还没识别就先识别。 */
@@ -953,8 +1093,8 @@
     }
   }
 
-  /** mode 来自右键子菜单：auto 直接识别整张图；select 先打开窗口让用户框选。 */
-  async function translateImage(srcUrl, mode) {
+  /** 右键翻译图片：按设置里的默认入口，自动识别并翻译，或先打开窗口让用户框选。 */
+  async function translateImage(srcUrl) {
     const img = findImage(srcUrl);
     if (!img) return;
     const token = ++generation;
@@ -970,7 +1110,7 @@
       if (token !== generation) return;
       if (!grabbed) { showFailure(t("这张图还没加载完")); return; }
       const result = { grabbed, merged: null, settings, regions: null, groups: null, targetId: settings.target };
-      if (mode === 'select') {
+      if (settings.imageMode === 'select') {
         // 先框选：直接打开窗口露出原图，用户框完再识别，不白识别整张图
         hideMask();
         imageResult = result;
@@ -978,14 +1118,20 @@
         setPicking(true);
         return;
       }
-      // 自动识别：先找出各段文字，按笔画勾成互不重叠的多边形。
-      // 下一步按这些形状逐块识别、翻译、覆盖；现在先停在这里画出形状，用来检查识别效果。
+      // 自动识别：先找出各段文字并按笔画勾成互不重叠的形状，再按形状翻译、覆盖
       const found = await detectShapes(result, signal, token);
       if (!found) return;
-      hideMask();
-      imageResult = result;
-      openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: shapesMeta(found) });
-      drawShapes(found.shapes, grabbed.natural);
+      const detected = { ...result, shapes: found.shapes, blocks: found.blocks };
+      if (!found.shapes.length) { showFailure(t("图中没有识别到文字")); return; }
+      if (settings.imageReview) {
+        // 设置里打开了「翻译前先显示形状」：用户检查、调整后再点「翻译」
+        hideMask();
+        imageResult = detected;
+        openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: shapesMeta(found) });
+        setEditing(true, found.shapes);
+        return;
+      }
+      await translateShapes(detected, found.shapes, settings.target, token);
     } catch (err) {
       if (token === generation) showFailure(String(err?.message || err));
     }
@@ -998,7 +1144,7 @@
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message?.type !== 'translate-image') return false;
-    translateImage(message.srcUrl, message.mode === 'select' ? 'select' : 'auto');
+    translateImage(message.srcUrl);
     return false;
   });
 })();

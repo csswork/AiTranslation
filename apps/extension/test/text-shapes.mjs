@@ -94,6 +94,17 @@ console.log('✓ 字不到图片短边 1.5% 的小字丢掉');
   console.log('✓ 周围有细碎纹理时字号仍按框里的字量，不误判成小字');
 }
 
+/* ---- 文字框的边框不算字：铺底色不能把边框盖掉 ---- */
+{
+  const frame = [[30, 30, 260, 2], [30, 128, 260, 2], [30, 30, 2, 100], [288, 30, 2, 100]];
+  const framed = canvas(W, H, [...first.filter(([, y]) => y < 100), ...frame]);
+  const found = S.findShapes(framed, W, H, [{ text: 'framed', box: rel(38, 38, 200, 60) }]);
+  assert.equal(found.shapes.length, 1);
+  const bounds = found.shapes[0].bounds;
+  assert.ok(bounds.x * W > 31 && (bounds.x + bounds.w) * W < 289, `形状不含边框：${bounds.x * W}-${(bounds.x + bounds.w) * W}`);
+  console.log('✓ 文字框的边框不勾进形状');
+}
+
 /* ---- 读不到像素：退回模型的矩形，重叠部分仍然分清归属 ---- */
 const blind = S.findShapes(null, W, H, blocks);
 assert.equal(blind.shapes.length, 2);

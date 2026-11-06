@@ -33,6 +33,8 @@
     streamHelp: $('streamHelp'),
     showOriginal: $('showOriginal'),
     floating: $('floating'),
+    imageMode: $('imageMode'),
+    imageReview: $('imageReview'),
     shortcut: $('shortcut'),
     shortcutKey: $('shortcutKey'),
     shortcutHint: $('shortcutHint'),
@@ -337,6 +339,8 @@
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
     el.floating.checked = settings.floating;
+    el.imageMode.value = settings.imageMode;
+    el.imageReview.checked = settings.imageReview;
     el.shortcut.checked = settings.shortcut;
   }
 
@@ -576,6 +580,8 @@
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
+  el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
+  el.imageReview.addEventListener('change', () => save({ imageReview: el.imageReview.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
 
   el.videoEnabled.addEventListener('change', async () => {

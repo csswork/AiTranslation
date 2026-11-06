@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Elimina questa forma"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Controlla le forme di testo riconosciute, poi fai clic su \"Traduci\""
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Trascina una forma per spostarla, trascina un vertice per ridimensionarla; fai doppio clic su un bordo per aggiungere un vertice, fai doppio clic su un vertice per eliminarlo; trascina su uno spazio vuoto per disegnare una nuova forma; premi Delete per rimuovere la forma selezionata"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Regola le forme"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Regola le forme di testo riconosciute, poi traduci di nuovo"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Riconoscimento delle forme modificate…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Mostra le forme di testo riconosciute prima di tradurre"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Dopo il riconoscimento automatico, il testo rilevato viene disegnato prima sull'immagine. Puoi spostare, eliminare, modificare o aggiungere forme, poi tradurre una volta confermato."
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

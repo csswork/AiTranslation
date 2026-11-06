@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Hapus bentuk ini"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Periksa bentuk teks yang dikenali, lalu klik \"Terjemahkan\""
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Seret bentuk untuk memindahkannya, seret titik sudut untuk mengubah bentuknya; klik dua kali pada tepi untuk menambah titik sudut, klik dua kali pada titik sudut untuk menghapusnya; seret di area kosong untuk menggambar bentuk baru; tekan Delete untuk menghapus bentuk yang dipilih"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Sesuaikan bentuk"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Sesuaikan bentuk teks yang dikenali lalu terjemahkan lagi"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Mengenali bentuk yang diubah…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Tampilkan bentuk teks yang dikenali sebelum menerjemahkan"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Setelah pengenalan otomatis, teks yang ditemukan digambar terlebih dahulu pada gambar. Anda dapat memindahkan, menghapus, mengubah, atau menambah bentuk, lalu terjemahkan setelah dikonfirmasi."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

@@ -140,4 +140,21 @@ assert.equal(merged[0].text, "WE'RE TOO LATE! THE SHIP LEFT", '选区里的每�
 assert.ok(!merged[0].text.includes('\n'));
 console.log('✓ 块内换行合成整段：中日文直接相连，拉丁文字用空格，断词接回');
 
+/* ---- 多边形选区：中心落在形状里才算，拼图时按形状裁 ---- */
+{
+  const tri = { x: 0.1, y: 0.1, w: 0.4, h: 0.4, shape: 'polygon', polygons: [[[0.1, 0.1], [0.5, 0.1], [0.1, 0.5]]] };
+  assert.equal(G.inRegion(tri, 0.15, 0.15), true);
+  assert.equal(G.inRegion(tri, 0.45, 0.45), false, '外接框里、三角形外');
+  const [batch] = G.packRegions([tri], 1000, 1000);
+  assert.deepEqual(batch.items[0].polygons[0][1], [400, 0], '点换成拼图块内的像素坐标');
+  const blocks = [
+    { text: 'in', box: { x: 0.05, y: 0.05, w: 0.1, h: 0.1 } },
+    { text: 'out', box: { x: 0.8, y: 0.8, w: 0.1, h: 0.1 } },
+  ];
+  assert.deepEqual(G.unpackBlocks(blocks, batch, [tri]).map((b) => b.text), ['in']);
+  const groups = G.groupByRegion([{ text: '縦', box: tri, region: 0, vertical: true }], [tri]);
+  assert.equal(groups[0].vertical, true, '竖排标记跟着合并');
+  console.log('✓ 多边形选区：判断、拼图坐标、还原与竖排标记');
+}
+
 console.log('全部通过');

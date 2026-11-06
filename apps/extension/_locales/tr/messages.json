@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Bu şekli sil"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Tanınan metin şekillerini kontrol edin, ardından \"Çevir\"e tıklayın"
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Şekli taşımak için sürükleyin, şekli değiştirmek için bir köşeyi sürükleyin; köşe eklemek için bir kenara çift tıklayın, köşeyi silmek için çift tıklayın; yeni şekil çizmek için boş alana sürükleyin; seçili şekli kaldırmak için Delete tuşuna basın"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Şekilleri ayarla"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Tanınan metin şekillerini ayarlayıp yeniden çevirin"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Değiştirilen şekiller tanınıyor…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Çevirmeden önce tanınan metin şekillerini göster"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Otomatik tanımadan sonra bulunan metin önce görüntü üzerinde çizilir. Şekilleri taşıyabilir, silebilir, değiştirebilir veya yeni şekil ekleyebilirsiniz; onayladıktan sonra çevirin."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

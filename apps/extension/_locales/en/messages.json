@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Delete this shape"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Check the recognized text shapes, then click \"Translate\""
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Drag a shape to move it, drag a vertex to reshape it; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to draw a new shape; press Delete to remove the selected shape"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Adjust shapes"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Adjust the recognized text shapes, then translate again"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Recognizing modified shapes…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Show recognized text shapes before translating"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

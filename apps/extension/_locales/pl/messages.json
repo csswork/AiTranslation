@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Usuń ten kształt"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Sprawdź rozpoznane kształty tekstu, a następnie kliknij „Przetłumacz”"
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Przeciągnij kształt, aby go przesunąć, przeciągnij wierzchołek, aby zmienić kształt; kliknij dwukrotnie krawędź, aby dodać wierzchołek, kliknij dwukrotnie wierzchołek, aby go usunąć; przeciągnij po pustym obszarze, aby narysować nowy kształt; naciśnij Delete, aby usunąć zaznaczony kształt"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Dostosuj kształty"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Dostosuj rozpoznane kształty tekstu, a następnie przetłumacz ponownie"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Rozpoznawanie zmodyfikowanych kształtów…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Pokaż rozpoznane kształty tekstu przed tłumaczeniem"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Po automatycznym rozpoznaniu wykryty tekst jest najpierw rysowany na obrazie. Możesz przesuwać, usuwać, modyfikować lub dodawać kształty, a następnie przetłumaczyć po potwierdzeniu."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

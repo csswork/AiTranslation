@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Dit vorm verwijderen"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Controleer de herkende tekstvormen en klik op 'Vertalen'"
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Sleep een vorm om deze te verplaatsen, sleep een hoekpunt om de vorm te wijzigen; dubbelklik op een rand om een hoekpunt toe te voegen, dubbelklik op een hoekpunt om het te verwijderen; sleep op een lege plek om een nieuwe vorm te tekenen; druk op Delete om de geselecteerde vorm te verwijderen"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Vormen aanpassen"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Pas de herkende tekstvormen aan en vertaal opnieuw"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Gewijzigde vormen worden herkend…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Toon herkende tekstvormen voordat je vertaalt"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Na automatische herkenning wordt de gevonden tekst eerst op de afbeelding getekend. Je kunt vormen verplaatsen, verwijderen, wijzigen of toevoegen en daarna vertalen zodra je het hebt bevestigd."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

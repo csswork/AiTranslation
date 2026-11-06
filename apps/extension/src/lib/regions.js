@@ -31,10 +31,24 @@
    */
   function inRegion(r, x, y) {
     if (x < r.x || x > r.x + r.w || y < r.y || y > r.y + r.h) return false;
+    if (r.shape === 'polygon') return inPolygons(r.polygons, x, y);
     if (r.shape !== 'ellipse') return true;
     const dx = (x - (r.x + r.w / 2)) / (r.w / 2 || 1);
     const dy = (y - (r.y + r.h / 2)) / (r.h / 2 || 1);
     return dx * dx + dy * dy <= 1;
+  }
+
+  /** 点是否落在多边形里（奇偶规则）；polygons 是若干个点列，落在任何一个里就算。 */
+  function inPolygons(polygons, x, y) {
+    return (polygons || []).some((poly) => {
+      let hit = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i, i += 1) {
+        const [xi, yi] = poly[i];
+        const [xj, yj] = poly[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+      }
+      return hit;
+    });
   }
 
   /** 两个点（0-1 相对坐标）围成的矩形。 */
@@ -64,6 +78,10 @@
         const sy = Math.round(r.y * height);
         return {
           index, sx, sy, ellipse: r.shape === 'ellipse',
+          // 多边形选区（自动识别的文字形状）：点换成拼图块内的像素坐标
+          polygons: r.shape === 'polygon'
+            ? r.polygons.map((poly) => poly.map(([x, y]) => [x * width - sx, y * height - sy]))
+            : null,
           sw: Math.max(1, Math.min(width - sx, Math.round(r.w * width))),
           sh: Math.max(1, Math.min(height - sy, Math.round(r.h * height))),
         };
@@ -129,6 +147,7 @@
       const r = regions[part.index];
       // 椭圆外已经涂白，中心落在那里的是模型的毛刺
       if (part.ellipse && !inRegion({ x: part.left, y: part.top, w: part.sw, h: part.sh, shape: 'ellipse' }, cx, cy)) continue;
+      if (part.polygons && !inPolygons(part.polygons, cx - part.left, cy - part.top)) continue;
       const x0 = clamp01((px0 - part.left) / part.sw);
       const x1 = clamp01((px1 - part.left) / part.sw);
       const y0 = clamp01((py0 - part.top) / part.sh);
@@ -221,6 +240,8 @@
         if (!parts.length) return null;
         const merged = mergeLines(parts, box);
         return { region, box, ...merged, fontMax: merged.fontMax || box.h * 0.5,
+          // 多数块是竖排就当竖排
+          vertical: parts.filter((b) => b.vertical).length * 2 > parts.length,
           ...(box.shape === 'ellipse' ? { shape: 'ellipse' } : {}) };
       })
       .filter((g) => g?.text);
@@ -244,6 +265,14 @@
         // 圆形选区：只把圆内的部分拼进去，圆外留白，模型也就看不到圆外的文字
         ctx.beginPath();
         ctx.ellipse((p.left + p.sw / 2) * scale, (p.top + p.sh / 2) * scale, (p.sw / 2) * scale, (p.sh / 2) * scale, 0, 0, Math.PI * 2);
+        ctx.clip();
+      } else if (p.polygons) {
+        // 多边形同理：只拼形状里面的部分
+        ctx.beginPath();
+        for (const poly of p.polygons) {
+          poly.forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo']((p.left + x) * scale, (p.top + y) * scale));
+          ctx.closePath();
+        }
         ctx.clip();
       }
       ctx.drawImage(source, p.sx, p.sy, p.sw, p.sh, p.left * scale, p.top * scale, p.sw * scale, p.sh * scale);
@@ -284,6 +313,7 @@
     MAX_REGIONS,
     GAP,
     inRegion,
+    inPolygons,
     rectFrom,
     packRegions,
     unpackBlocks,

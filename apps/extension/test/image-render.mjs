@@ -221,4 +221,28 @@ const asRect = R.refineCover(ctxOf(disk, 200), 200, 200, { ...diskRegion, shape:
 assert.ok(asRect.cover.x * 200 < 10, '同样的位置换成矩形选区就会算进来');
 console.log('✓ 圆形选区：只在圆内找字，文字排进内接矩形，预览裁成圆');
 
+/* ---- 按形状排版：原文竖排、译成中日韩文时竖排；放不下时加宽，仍放不下就溢出 ---- */
+{
+  const measure = (text, size) => [...text].length * size * 0.55;
+  const image = { w: 1000, h: 1000 };
+  const rect = { x: 600, y: 100, w: 90, h: 200 };
+  const v = R.layoutShape('今天天气真好，去散步吧', rect, image, measure, { vertical: true, glyph: 30 });
+  assert.equal(v.vertical, true);
+  assert.ok(v.lines.length >= 2, '竖排按列断开');
+  assert.ok(v.lines.every((col) => !/^[，。]/.test(col)), '标点不放在列首');
+  assert.ok(v.size <= 30, '不比原文字大');
+  // 译文横排但形状很窄（竖排的一列）：加宽后字号不至于缩得太小
+  const narrow = R.layoutShape('The kitten followed us all the way', { x: 480, y: 100, w: 40, h: 200 }, image, measure, { glyph: 24 });
+  assert.ok(narrow.size >= 24 * 0.7, `字号 ${narrow.size}`);
+  assert.ok(narrow.box.w > 40, '比形状宽，允许溢出');
+  assert.ok(Math.abs(narrow.box.x + narrow.box.w / 2 - 500) < 1, '以形状中心为中心');
+  // 靠着图片边缘：排好的框挪回图片以内
+  const edge = R.layoutShape('A long English sentence that needs space', { x: 960, y: 20, w: 30, h: 30 }, image, measure, { glyph: 20 });
+  assert.ok(edge.box.x >= 0 && edge.box.x + edge.box.w <= image.w + 0.5);
+  assert.equal(R.VERTICAL_FORMS['「'], '﹁');
+  assert.equal(R.verticalTarget('zh-Hant'), true);
+  assert.equal(R.verticalTarget('en'), false, '拉丁文字不竖排');
+  console.log('✓ 按形状排版：竖排、加宽、溢出与贴边');
+}
+
 console.log('全部通过');

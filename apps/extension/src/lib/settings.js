@@ -124,6 +124,10 @@
     // 图片译文的背景：默认取文字周围的相近色；也可固定深色半透明、白、黑或自定义颜色
     imageFill: 'auto',
     imageFillColor: '#ffffff',
+    // 右键翻译图片：auto 自动识别并翻译；select 先打开窗口让用户框选区域
+    imageMode: 'auto',
+    // 自动识别后先显示找到的文字形状，用户调整后再翻译（默认直接翻译）
+    imageReview: false,
     // 框选的形状：矩形，或圆形（椭圆，按住 Shift 拖出正圆）
     imageShape: 'rect',
     openai: { apiKey: '', model: '', baseUrl: '' },
@@ -153,6 +157,8 @@
       videoTranslate: input.videoTranslate !== false,
       imageFill: IMAGE_FILLS.includes(input.imageFill) ? input.imageFill : DEFAULTS.imageFill,
       imageFillColor: /^#[0-9a-f]{6}$/i.test(input.imageFillColor) ? input.imageFillColor.toLowerCase() : DEFAULTS.imageFillColor,
+      imageMode: input.imageMode === 'select' ? 'select' : 'auto',
+      imageReview: input.imageReview === true,
       imageShape: input.imageShape === 'ellipse' ? 'ellipse' : 'rect',
     };
     for (const id of KEY_PROVIDERS) {

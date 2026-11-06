@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Diese Form löschen"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Prüfe die erkannten Textformen und klicke dann auf „Übersetzen“"
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Ziehe eine Form, um sie zu verschieben, ziehe einen Eckpunkt, um sie umzuformen; doppelklicke auf eine Kante, um einen Eckpunkt hinzuzufügen, doppelklicke auf einen Eckpunkt, um ihn zu löschen; ziehe auf freier Fläche, um eine neue Form zu zeichnen; drücke Delete, um die ausgewählte Form zu entfernen"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Formen anpassen"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Passe die erkannten Textformen an und übersetze dann erneut"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Geänderte Formen werden erkannt…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Erkannte Textformen vor dem Übersetzen anzeigen"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Nach der automatischen Erkennung wird der gefundene Text zuerst auf dem Bild eingezeichnet. Du kannst Formen verschieben, löschen, ändern oder hinzufügen und dann nach Bestätigung übersetzen."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

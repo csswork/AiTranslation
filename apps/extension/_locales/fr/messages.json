@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Supprimer cette forme"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Vérifiez les formes de texte reconnues, puis cliquez sur « Traduire »"
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Faites glisser une forme pour la déplacer, un sommet pour la redessiner ; double-cliquez sur un bord pour ajouter un sommet, sur un sommet pour le supprimer ; faites glisser dans un espace vide pour dessiner une nouvelle forme ; appuyez sur Suppr pour supprimer la forme sélectionnée"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Ajuster les formes"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Ajustez les formes de texte reconnues, puis retraduisez"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Reconnaissance des formes modifiées…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Afficher les formes de texte reconnues avant de traduire"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Après la reconnaissance automatique, le texte détecté est d'abord dessiné sur l'image. Vous pouvez déplacer, supprimer, modifier ou ajouter des formes, puis traduire après confirmation."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

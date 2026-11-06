@@ -486,7 +486,15 @@ globalThis.AITrMessageIds = {
   "正在勾出文字形状…": "m_be2e36b6b5522ea5",
   "没有找到需要翻译的文字": "m_5b88a17476f43fad",
   "找到 $1 处文字": "m_ee19d19e33308a6b",
-  "忽略 $1 处小字": "m_f86b4edd1ae6411e"
+  "忽略 $1 处小字": "m_f86b4edd1ae6411e",
+  "删除这个形状": "m_6410b72053e5c275",
+  "检查识别出的文字形状，确认后点「翻译」": "m_f01e545d40d45afc",
+  "拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "m_447b0508f47e23ab",
+  "调整形状": "m_b764f3c7c5fd6d7d",
+  "调整识别出的文字形状后重新翻译": "m_d152c41cb442abd8",
+  "正在识别改动过的形状…": "m_ce29990ef5ae0758",
+  "翻译前先显示识别出的文字形状": "m_fbbdaa4e5e845a13",
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "m_b87fd43cee3f912b"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -975,5 +983,13 @@ globalThis.AITrEnglish = {
   "正在勾出文字形状…": "Tracing text shapes…",
   "没有找到需要翻译的文字": "No text found to translate",
   "找到 $1 处文字": "Found $1 text areas",
-  "忽略 $1 处小字": "Ignored $1 small text areas"
+  "忽略 $1 处小字": "Ignored $1 small text areas",
+  "删除这个形状": "Delete this shape",
+  "检查识别出的文字形状，确认后点「翻译」": "Check the recognized text shapes, then click \"Translate\"",
+  "拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it, drag a vertex to reshape it; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to draw a new shape; press Delete to remove the selected shape",
+  "调整形状": "Adjust shapes",
+  "调整识别出的文字形状后重新翻译": "Adjust the recognized text shapes, then translate again",
+  "正在识别改动过的形状…": "Recognizing modified shapes…",
+  "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed."
 };

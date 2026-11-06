@@ -485,5 +485,13 @@
   "正在勾出文字形状…": "Đang tìm hình dạng chữ…",
   "没有找到需要翻译的文字": "Không tìm thấy văn bản cần dịch",
   "找到 $1 处文字": "Đã tìm thấy $1 vùng văn bản",
-  "忽略 $1 处小字": "Đã bỏ qua $1 vùng chữ nhỏ"
+  "忽略 $1 处小字": "Đã bỏ qua $1 vùng chữ nhỏ",
+  "删除这个形状": "Xóa hình này",
+  "检查识别出的文字形状，确认后点「翻译」": "Kiểm tra các hình văn bản đã nhận diện, sau đó nhấn \"Dịch\"",
+  "拖动形状可移动，拖动顶点可改形状；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Kéo hình để di chuyển, kéo đỉnh để thay đổi hình dạng; nhấp đúp vào cạnh để thêm đỉnh, nhấp đúp vào đỉnh để xóa; kéo ở vùng trống để vẽ hình mới; nhấn Delete để xóa hình đã chọn",
+  "调整形状": "Điều chỉnh hình dạng",
+  "调整识别出的文字形状后重新翻译": "Điều chỉnh các hình văn bản đã nhận diện rồi dịch lại",
+  "正在识别改动过的形状…": "Đang nhận diện các hình đã thay đổi…",
+  "翻译前先显示识别出的文字形状": "Hiển thị các hình văn bản đã nhận diện trước khi dịch",
+  "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Sau khi nhận diện tự động, văn bản tìm thấy sẽ được vẽ trên ảnh trước. Bạn có thể di chuyển, xóa, sửa hoặc thêm hình dạng, rồi xác nhận để dịch."
 }

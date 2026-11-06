@@ -16,10 +16,6 @@ const t = (...args) => AITrI18n.t(...args);
 const MENU_ID = 'ai-translate-selection';
 const ELEMENT_MENU_ID = 'ai-translate-element';
 const IMAGE_MENU_ID = 'ai-translate-image';
-// 「翻译图片」的两个子菜单：鼠标移到上面展开，直接选识别方式
-const IMAGE_AUTO_MENU_ID = 'ai-translate-image-auto';
-const IMAGE_SELECT_MENU_ID = 'ai-translate-image-select';
-const IMAGE_MODES = { [IMAGE_AUTO_MENU_ID]: 'auto', [IMAGE_SELECT_MENU_ID]: 'select' };
 const VIDEO_MENU_ID = 'ai-translate-video';
 const PDF_MENU_ID = 'ai-translate-pdf';
 const PDF_PAGE = 'src/pdf/pdf.html';
@@ -42,6 +38,7 @@ const CONTENT_FILES = [
   'src/lib/image-render.js',
   'src/lib/text-shapes.js',
   'src/lib/region-picker.js',
+  'src/lib/shape-editor.js',
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
@@ -124,21 +121,8 @@ function createMenu() {
       id: IMAGE_MENU_ID,
       title: t("翻译图片里的文字"),
       contexts: ['image'],
-      // 识图只有 LLM 平台能做，一开始就按当前平台决定；父项藏起来，子项一起消失
+      // 识图只有 LLM 平台能做，一开始就按当前平台决定
       visible: AITrSettings.supportsVision(settings.provider),
-    });
-    // 子项必须在父项之后建；contexts 与父项相同，否则在图片上右键时子项不出现
-    await create({
-      id: IMAGE_AUTO_MENU_ID,
-      parentId: IMAGE_MENU_ID,
-      title: t("自动识别整张图"),
-      contexts: ['image'],
-    });
-    await create({
-      id: IMAGE_SELECT_MENU_ID,
-      parentId: IMAGE_MENU_ID,
-      title: t("框选要翻译的区域"),
-      contexts: ['image'],
     });
     // 'video' 与上面三项都不重叠：'page' 本来就不含视频。
     // 视频实时字幕是默认关闭的实验功能：没打开就根本不建这一项，
@@ -600,13 +584,13 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     await toggleVideoCaptions({ tabId: tab.id, frameId: info.frameId ?? 0, srcUrl: info.srcUrl || '' });
     return;
   }
-  const imageMode = IMAGE_MODES[info.menuItemId];
-  if (imageMode && tab?.id) {
+  // 自动识别还是先框选，由页面按设置里的默认入口决定
+  if (info.menuItemId === IMAGE_MENU_ID && tab?.id) {
     if (!(await ensureContentScript(tab.id))) return;
     try {
       await chrome.tabs.sendMessage(
         tab.id,
-        { type: 'translate-image', srcUrl: info.srcUrl, mode: imageMode },
+        { type: 'translate-image', srcUrl: info.srcUrl },
         { frameId: info.frameId ?? 0 }
       );
     } catch (err) {

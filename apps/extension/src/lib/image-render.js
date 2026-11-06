@@ -168,7 +168,7 @@
    * @param {Uint8ClampedArray} data 窗口的 RGBA 像素
    * @param {{x,y,w,h}} hint 窗口内的提示范围（像素）：模型给的框，或用户画的选区
    * @param {Array<{x,y,w,h}>} [others] 窗口内其他文字块的提示范围：更靠近它们的笔画归它们
-   * @param {boolean} [withMask] 同时返回选中笔画的格子（cell 边长、cw × ch、mask），用来勾出不规则的文字形状
+   * @param {boolean} [withMask] 同时返回选中笔画的格子（cell 边长、cw × ch、mask）和字高 textSize，用来勾出不规则的文字形状
    * @returns {{x,y,w,h,glyph:number}|null} 窗口内像素坐标；glyph 是单个字的大致尺寸
    */
   function inkBox(data, width, height, hint, others = [], withMask = false) {
@@ -336,9 +336,29 @@
       glyph: glyph * cell,
     };
     if (withMask) {
+      // 文字框的边框、对话框描边不算字：勾进形状的话，铺底色会把边框盖掉。
+      // 边框是比字大得多、笔画几乎都贴着外接框四边的一圈（抗锯齿让线变粗时也不算「稀疏」）
+      const rim = (p) => {
+        let edge = 0;
+        for (let y = p.y0; y <= p.y1; y += 1) {
+          for (let x = p.x0; x <= p.x1; x += 1) {
+            if (label[y * cw + x] !== p.id) continue;
+            if (x - p.x0 < 3 || p.x1 - x < 3 || y - p.y0 < 3 || p.y1 - y < 3) edge += 1;
+          }
+        }
+        return edge / Math.max(1, p.cells) > 0.85;
+      };
+      const outlines = new Set(parts.filter((p) => taken.has(p.id) && Math.max(...dims(p)) > glyph * 3 && (sparse(p) || rim(p)))
+        .map((p) => p.id));
       const mask = new Uint8Array(cw * ch);
-      for (let i = 0; i < mask.length; i += 1) if (label[i] >= 0 && taken.has(label[i])) mask[i] = 1;
-      Object.assign(found, { cell, cw, ch, mask });
+      for (let i = 0; i < mask.length; i += 1) if (label[i] >= 0 && taken.has(label[i]) && !outlines.has(label[i])) mask[i] = 1;
+      // 字高：选中各块短边的四分之三分位。字挨得紧时笔画会连成整个词、好几个字，
+      // 长边量的是词宽；短边才接近一行的字高（竖排是一列的字宽）
+      // 标点、噪点这类比半个字还小的块不算
+      const mins = parts.filter((p) => taken.has(p.id) && !sparse(p) && Math.max(...dims(p)) >= glyph * 0.5)
+        .map((p) => Math.min(...dims(p))).sort((a, b) => a - b);
+      const textSize = mins.length ? mins[Math.floor(mins.length * 0.75)] * cell : glyph * cell;
+      Object.assign(found, { cell, cw, ch, mask, textSize });
     }
     return found;
   }
@@ -615,6 +635,177 @@
     return canvas;
   }
 
+  /* ------------------------------------------------- 按文字形状覆盖 */
+
+  /** 竖排时换成竖排专用的标点和括号，画在画布上才不会横躺着。 */
+  const VERTICAL_FORMS = {
+    '，': '︐', '、': '︑', '。': '︒', '：': '︓', '；': '︔', '！': '︕', '？': '︖',
+    '「': '﹁', '」': '﹂', '『': '﹃', '』': '﹄', '（': '︵', '）': '︶', '(': '︵', ')': '︶',
+    '【': '︻', '】': '︼', '《': '︽', '》': '︾', '〈': '︿', '〉': '﹀', '［': '﹇', '］': '﹈',
+    '｛': '︷', '｝': '︸', '…': '︙', '‥': '︰', '—': '︱', '–': '︲', 'ー': '丨', '～': '≀', '~': '≀',
+    '“': '﹁', '”': '﹂', '‘': '﹃', '’': '﹄',
+  };
+  /** 竖排每个字占的高度（相对字号）。 */
+  const VERTICAL_ADVANCE = 1.05;
+  /** 原文竖排时，只有这些目标语言的译文也竖排：拉丁、阿拉伯等文字竖着写没法读。 */
+  const VERTICAL_TARGETS = /^(zh|ja|ko)/;
+  const verticalTarget = (targetId) => VERTICAL_TARGETS.test(String(targetId || ''));
+
+  /** 竖排按字数断列：每列放得下几个字；标点照样不放在列首。 */
+  function wrapVertical(text, height, size) {
+    const count = (str, sz) => graphemes(str).length * sz * VERTICAL_ADVANCE;
+    return wrap(String(text).replace(/\s+/g, ' ').trim(), height, size, count);
+  }
+
+  /**
+   * 译文的排版：从原文字号开始往下找，能放进形状的外接框就用；放不下时先往两边加宽
+   * （竖排是多加几列），仍放不下就用最小字号、允许溢出。排好的框以形状中心为中心，
+   * 并挪回图片以内。全部是原图像素。
+   * @param {{x,y,w,h}} rect 形状的外接框（像素）
+   * @param {{w,h}} image 原图尺寸
+   * @param {(text:string, size:number)=>number} measure 横排文字宽度
+   * @returns {{size:number, lines:string[], vertical:boolean, box:{x,y,w,h}}}
+   */
+  function layoutShape(text, rect, image, measure, { vertical = false, glyph = 0, min = 10 } = {}) {
+    const lineHeight = LINE_HEIGHT;
+    const max = Math.max(min, glyph > 0 ? glyph : Math.min(rect.w, rect.h) / 2);
+    // 用空格分词的文字（英文等）不能把一个词拆到两行：拆了就算放不下，宁可加宽
+    const words = String(text).trim().split(/\s+/).filter(Boolean);
+    const intact = (lines) => words.length < 2 ||
+      words.every((word) => lines.some((line) => line.split(/\s+/).includes(word)));
+    const attempt = (size, width) => {
+      if (vertical) {
+        const lines = wrapVertical(text, rect.h, size);
+        const w = lines.length * size * lineHeight;
+        const h = Math.max(...lines.map((l) => graphemes(l.replace(HANGING, '')).length)) * size * VERTICAL_ADVANCE;
+        return { size, lines, w, h, ok: w <= width + 0.5 && h <= rect.h + 0.5 };
+      }
+      const lines = wrap(text, width, size, measure);
+      const w = Math.max(0, ...lines.map((l) => measure(l.replace(HANGING, ''), size)));
+      const h = lines.length * size * lineHeight;
+      return { size, lines, w, h, ok: w <= width + 0.5 && h <= rect.h + 0.5 && intact(lines) };
+    };
+    // 在给定宽度里二分找能放下的最大字号
+    const best = (width) => {
+      const top = attempt(max, width);
+      if (top.ok) return top;
+      let lo = min;
+      let hi = max;
+      let found = null;
+      for (let i = 0; i < 14 && hi - lo > 0.25; i += 1) {
+        const mid = (lo + hi) / 2;
+        const tried = attempt(mid, width);
+        if (tried.ok) { found = tried; lo = mid; } else hi = mid;
+      }
+      return found || { ...attempt(min, width), ok: false };
+    };
+    // 字号缩到原文的七成还放不下，就加宽；最多加到图宽的九成
+    const limit = Math.max(rect.w, image.w * 0.9);
+    let chosen = null;
+    let widest = null;
+    for (const factor of [1, 1.4, 2, 2.8, 4]) {
+      const width = Math.min(limit, rect.w * factor);
+      const tried = best(width);
+      widest = tried;
+      if (tried.ok && (!chosen || tried.size > chosen.size)) chosen = tried;
+      if (tried.ok && tried.size >= max * 0.7) break;
+      if (width >= limit) break;
+    }
+    // 怎么加宽都放不下：用最宽的那次（最小字号），允许溢出
+    chosen ||= widest;
+    const cx = rect.x + rect.w / 2;
+    const cy = rect.y + rect.h / 2;
+    const w = chosen.w;
+    const h = chosen.h;
+    const x = Math.min(Math.max(0, cx - w / 2), Math.max(0, image.w - w));
+    const y = Math.min(Math.max(0, cy - h / 2), Math.max(0, image.h - h));
+    return { size: chosen.size, lines: chosen.lines, vertical, box: { x, y, w, h } };
+  }
+
+  /** 按形状排好每段译文（原图像素）。items 里要有 polygons、bounds、translation、glyph、vertical。 */
+  function layoutShapes(items, natural, targetId) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const measure = (text, size) => {
+      ctx.font = `500 ${size}px ${FONT}`;
+      return ctx.measureText(text).width;
+    };
+    const vertical = verticalTarget(targetId);
+    return items.map((item) => ({
+      ...item,
+      natural,
+      layout: layoutShape(item.translation, toPixels(item.bounds, natural.w, natural.h), natural, measure, {
+        vertical: vertical && item.vertical,
+        glyph: (item.glyph || 0) * natural.h,
+        min: Math.max(10, natural.h / 160),
+      }),
+    }));
+  }
+
+  /**
+   * 把覆盖和译文画到画布上：底色按识别出的形状铺，译文按排好的位置画，
+   * 溢出形状的部分描一圈底色的边，压在画面上也看得清。
+   * @param {number} scale 画布像素 / 原图像素
+   */
+  function drawShapes(ctx, items, scale, { fill = 'auto', custom = '' } = {}) {
+    ctx.save();
+    ctx.scale(scale, scale);
+    // 先铺完所有底色再写字，免得后铺的底色盖住前一段溢出的字
+    const colored = items.map((item) => ({ item, color: paint(fill, custom, item.sample) }));
+    for (const { item, color } of colored) {
+      ctx.beginPath();
+      for (const poly of item.polygons) {
+        poly.forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x * item.natural.w, y * item.natural.h));
+        ctx.closePath();
+      }
+      ctx.fillStyle = color.bg;
+      ctx.fill();
+    }
+    ctx.lineJoin = 'round';
+    for (const { item, color } of colored) {
+      const { size, lines, vertical, box } = item.layout;
+      ctx.font = `500 ${size}px ${FONT}`;
+      ctx.fillStyle = color.fg;
+      ctx.strokeStyle = color.bg;
+      ctx.lineWidth = size * 0.22;
+      ctx.textBaseline = 'middle';
+      const put = (text, x, y) => {
+        ctx.strokeText(text, x, y);
+        ctx.fillText(text, x, y);
+      };
+      if (vertical) {
+        // 竖排：从右往左一列列写，每列从上往下
+        ctx.textAlign = 'center';
+        const column = size * LINE_HEIGHT;
+        lines.forEach((line, i) => {
+          const x = box.x + box.w - (i + 0.5) * column;
+          graphemes(line).forEach((ch, j) => put(VERTICAL_FORMS[ch] || ch, x, box.y + (j + 0.5) * size * VERTICAL_ADVANCE));
+        });
+      } else {
+        ctx.textAlign = 'left';
+        ctx.direction = RTL.test(item.translation) ? 'rtl' : 'ltr';
+        const lineHeight = size * LINE_HEIGHT;
+        lines.forEach((line, i) => {
+          const w = ctx.measureText(line.replace(HANGING, '')).width;
+          put(line, box.x + (box.w - w) / 2, box.y + (i + 0.5) * lineHeight);
+        });
+      }
+    }
+    ctx.restore();
+  }
+
+  /** 合成按文字形状覆盖的新图，与预览用同一套画法。 */
+  function renderShapes(source, natural, items, options) {
+    const { width, height } = exportSize(natural.w, natural.h);
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(source, 0, 0, width, height);
+    drawShapes(ctx, items, width / natural.w, options);
+    return canvas;
+  }
+
   /** 画布 → 图片文件。剪贴板只认 PNG；下载时大图用 JPEG，免得文件动辄几十 MB。 */
   function toBlob(canvas, { forClipboard = false } = {}) {
     const png = forClipboard || canvas.width * canvas.height <= 4000000;
@@ -675,6 +866,13 @@
     layoutText,
     exportSize,
     renderImage,
+    VERTICAL_FORMS,
+    verticalTarget,
+    wrapVertical,
+    layoutShape,
+    layoutShapes,
+    drawShapes,
+    renderShapes,
     toBlob,
     fileName,
     download,

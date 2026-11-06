@@ -2057,6 +2057,30 @@
       }
     }
   },
+  "m_6410b72053e5c275": {
+    "message": "Xóa hình này"
+  },
+  "m_f01e545d40d45afc": {
+    "message": "Kiểm tra các hình văn bản đã nhận diện, sau đó nhấn \"Dịch\""
+  },
+  "m_447b0508f47e23ab": {
+    "message": "Kéo hình để di chuyển, kéo đỉnh để thay đổi hình dạng; nhấp đúp vào cạnh để thêm đỉnh, nhấp đúp vào đỉnh để xóa; kéo ở vùng trống để vẽ hình mới; nhấn Delete để xóa hình đã chọn"
+  },
+  "m_b764f3c7c5fd6d7d": {
+    "message": "Điều chỉnh hình dạng"
+  },
+  "m_d152c41cb442abd8": {
+    "message": "Điều chỉnh các hình văn bản đã nhận diện rồi dịch lại"
+  },
+  "m_ce29990ef5ae0758": {
+    "message": "Đang nhận diện các hình đã thay đổi…"
+  },
+  "m_fbbdaa4e5e845a13": {
+    "message": "Hiển thị các hình văn bản đã nhận diện trước khi dịch"
+  },
+  "m_b87fd43cee3f912b": {
+    "message": "Sau khi nhận diện tự động, văn bản tìm thấy sẽ được vẽ trên ảnh trước. Bạn có thể di chuyển, xóa, sửa hoặc thêm hình dạng, rồi xác nhận để dịch."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

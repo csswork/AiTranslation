@@ -310,7 +310,7 @@
    * @param {number} height 画布高
    * @param {Array<{text:string, box:{x,y,w,h}}>} blocks 0-1 相对坐标
    * @param {{w:number,h:number}} [natural] 原图尺寸：小字门槛按原图像素算
-   * @returns {{shapes: Array<{index, text, box, polygons: number[][][], bounds, glyph, fallback}>, small: number}}
+   * @returns {{shapes: Array<{index, text, box, polygons: number[][][], bounds, glyph, vertical, fallback}>, small: number}}
    *   polygons 是 0-1 相对坐标的点列；glyph 是单个字的高度（相对图高）
    */
   function findShapes(ctx, width, height, blocks, natural = { w: width, h: height }) {
@@ -353,7 +353,8 @@
           }
         }
       }
-      const glyph = found ? found.glyph : Math.min(px.w, px.h);
+      // 字高按选中笔画的短边量（字挨在一起时长边量的是整个词）；排版字号、扩张距离都按它
+      const glyph = found ? Math.min(found.glyph, found.textSize || found.glyph) : Math.min(px.w, px.h);
       // 只丢真正的小字：模型框本身很小（单行小字），而且量出来的字也小。
       // 字号可能量偏（画面纹理、笔画粘连），所以不单凭它判断
       const boxSide = Math.min(px.w, px.h);
@@ -497,11 +498,32 @@
         polygons,
         bounds: { x: x0, y: y0, w: Math.max(...xs) - x0, h: Math.max(...ys) - y0 },
         glyph: item.glyph / height,
+        vertical: item.block.vertical === true,
         fallback: item.fallback,
       });
     }
     return { shapes, small };
   }
 
-  globalThis.AITrTextShapes = { GRID, findShapes, outline, simplify };
+  /**
+   * 量一块范围里单个字的大小（相对图高）：用户新画或改过的形状没有模型给的字号。
+   * 读不到像素或找不到笔画时返回 0。
+   */
+  function measureGlyph(ctx, width, height, box) {
+    if (!ctx || !box) return 0;
+    const x0 = Math.max(0, Math.floor(box.x * width));
+    const y0 = Math.max(0, Math.floor(box.y * height));
+    const x1 = Math.min(width, Math.ceil((box.x + box.w) * width));
+    const y1 = Math.min(height, Math.ceil((box.y + box.h) * height));
+    if (x1 - x0 < 6 || y1 - y0 < 6) return 0;
+    try {
+      const { data } = ctx.getImageData(x0, y0, x1 - x0, y1 - y0);
+      const found = globalThis.AITrImageRender.inkBox(data, x1 - x0, y1 - y0, { x: 0, y: 0, w: x1 - x0, h: y1 - y0 });
+      return found ? found.glyph / height : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  globalThis.AITrTextShapes = { GRID, findShapes, measureGlyph, outline, simplify };
 })();
