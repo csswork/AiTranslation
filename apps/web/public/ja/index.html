@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ja/changelog.html#v2-1-0"><span class="mono release-ver" data-extension-version>v2.1.0</span> <span>公開済み：PDF 全体翻訳、画像翻訳の範囲指定と新規画像のエクスポートに対応。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ja/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
-        <p class="hero-sub">Chrome 拡張機能です。テキスト、Web ページの領域、または画像を選択するだけで、使い慣れた言語に翻訳できます。24 種類の UI 言語と翻訳先言語は個別に選択でき、ご自身の OpenAI、DeepSeek、または DeepL の API Key で利用を開始できます。</p>
+        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome にインストール </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
@@ -94,7 +94,7 @@
           <li><b>オープンソース</b> GPL-3.0 · 24 言語</li>
           <li>Chrome 116+</li>
           <li>訳文を保存しない · サードパーティの統計なし</li>
-          <li>5 つの翻訳方法</li>
+          <li>六种翻译方式</li>
         </ul>
       </div>
 
@@ -206,22 +206,49 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>5つの入口はすべて右クリックメニューにあります</h2>
+          <h2>六个入口，都在右键菜单里</h2>
           <p>タブを切り替える必要も、コピー＆ペーストする必要もありません。読めない部分がある場所で、そのまま翻訳が行われます。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
+            <h3>双语阅读<span class="new">新功能</span></h3>
+            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <ul>
+              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
+              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
+              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
+              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">02</p>
             <h3>選択翻訳</h3>
             <p>テキストを選択して右クリックで翻訳すると、訳文が中央のポップアップに表示されます。ストリーミング出力に対応するプラットフォームでは、文字ごとに表示されます。一時的に翻訳先言語を変更すると、原文から再翻訳されます。</p>
             <ul>
               <li>中国語、短い語句、混在言語も翻訳可能。数字のみ、句読点、絵文字には翻訳入口を表示しない</li>
               <li>ポップアップは中央に表示され、ドラッグ可能です。<span class="mono">Esc</span> または背景のクリックで閉じられ、カーソルを追いかける小さなバブルではありません</li>
-              <li>折りたたみ可能な原文パネルで、照らし合わせて読めます</li>
+              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
               <li>キーボードショートカットもあります：<span class="mono">Alt+Shift+T</span>（macOS では <span class="mono">Command+Shift+Y</span>）</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-selection.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -234,21 +261,22 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">02</p>
+            <p class="no">03</p>
             <h3>画像翻訳</h3>
             <p>画像を右クリックすると、画像内の文字を認識し、翻訳文を元の位置に重ねて表示し、新しい画像として保存できます。</p>
             <ul>
-              <li>吹き出し、見出し、段落はそれぞれ段落単位で翻訳し、日本語漫画の縦書き文字やルビにも対応します</li>
-              <li>画像上の筆画に合わせて覆う位置を補正し、背景色は文字周囲の近似色を自動で取得します。濃色、白、黒、カスタム色にも変更できます</li>
+              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
+              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
+              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
               <li>翻訳する範囲だけを選択できます。矩形または円形で指定でき、ドラッグやサイズ変更が可能で、複数の選択範囲を一度に認識します</li>
               <li>結果は新しい画像としてダウンロードまたはコピーでき、合成はお使いの端末上で行います。画像パネルを開いて画像をアップロード、貼り付け、または画像アドレスを入力することもできます</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -261,21 +289,21 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">03</p>
+            <p class="no">04</p>
             <h3>PDF 全体の翻訳</h3>
             <p>Chrome で開いた PDF 内で、テキストを選択せずに右クリックすると、文書全体が隣のページで翻訳されます。訳文は元の位置に重ねて表示され、レイアウト、図表、表は変わりません。</p>
             <ul>
-              <li>原文と訳文を並べて対照表示、訳文のみまたは原文のみの表示も可能</li>
+              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
               <li>表はセルごとに翻訳され、行・列と罫線はそのまま維持されます。収まらない訳文は自動的に文字サイズが縮小されます</li>
               <li>ブラウザの印刷から PDF として保存でき、訳文は選択・検索可能なテキストです</li>
               <li>ファイルは本機でのみ解析され、抽出されたテキストのみが翻訳プラットフォームに送信されます。ローカルの PDF は翻訳ページに直接ドラッグできます。スキャン文書には未対応です</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -288,11 +316,11 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">04</p>
+            <p class="no">05</p>
             <h3>要素翻訳</h3>
             <p>ページ上の任意の領域を右クリックして、翻訳ボタンを割り当てます。クリックすると、その領域内のテキストが選択した言語にその場で置き換わり、もう一度クリックすると原文に戻ります。</p>
             <ul>
@@ -301,7 +329,7 @@
               <li>保存したルールは管理ページで 1 件ずつ確認・削除できます</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-element.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -314,20 +342,20 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">05</p>
+            <p class="no">06</p>
             <h3>翻訳パネル</h3>
             <p>独立したページで、左に原文を貼り、右に訳文が表示されます。ウェブページ上にない段落を扱うのに適しています。</p>
             <ul>
               <li>24 種類のターゲット言語から選択可能で、世界の主要言語をカバー</li>
               <li>ソース言語は自動認識または手動指定が可能で、ターゲット言語は個別に選択でき、パネルは前回の選択を記憶します</li>
-              <li>プロバイダと対象言語はツールバーにあり、いつでも切り替えて再翻訳できます</li>
+              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-panel.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>

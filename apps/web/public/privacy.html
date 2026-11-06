@@ -79,7 +79,7 @@
         <p class="kicker">Privacy policy</p>
         <h2>隐私政策</h2>
         <p class="updated">
-          最后更新：2026-10-25 · <a class="link" href="#english">English version below</a> ·
+          最后更新：2026-11-06 · <a class="link" href="#english">English version below</a> ·
           <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a>
         </p>
       </div>
@@ -109,6 +109,9 @@
                 <tr><td>你在翻译面板输入的文字</td><td>点击翻译时</td><td>同上</td><td>同上</td></tr>
                 <tr><td>视频字幕的识别文字</td><td>开启视频字幕翻译时</td><td>同上</td><td>同上</td></tr>
                 <tr><td>你翻译的 PDF 中提取的文字</td><td>使用「翻译整个 PDF」，或在 PDF 翻译页打开文件时</td><td>同上</td><td>同上</td></tr>
+                <tr><td>你打开双语阅读的文章正文（整理后的文字、图注与表格文字）</td><td>使用「双语阅读这篇文章」时</td><td>同上</td><td>同上</td></tr>
+                <tr><td>与待翻译文字相关的用词偏好（原文词语与你选的译法）</td><td>翻译含有这些词语的文字时，随翻译请求一并发送</td><td>同上</td><td>同上（只用于这次翻译，不保存）</td></tr>
+                <tr><td>要换说法的那一段原文、译文与选中的部分</td><td>在译文里点词查看其他译法时</td><td>你选择的平台（DeepL 不提供此功能）</td><td>我们的服务器，再转给模型服务商</td></tr>
                 <tr><td>你选择翻译的图片</td><td>使用图片翻译时</td><td>你选择的视觉平台</td><td>我们的服务器，再转给 DeepSeek</td></tr>
               </tbody>
             </table>
@@ -138,6 +141,12 @@
 
           <h3>整份 PDF 翻译</h3>
           <p>你在浏览器内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。</p>
+
+          <h3>双语阅读</h3>
+          <p>只有你在网页上选择「双语阅读这篇文章」时，扩展才在这个页面上运行识别脚本：在页面的副本上找出标题和正文，去掉导航、广告和推荐模块，整理成纯文字段落；原网页不会被改动。只有整理后的文字（含图注、表格文字）会按上表分批发送。阅读页里的图片由你的浏览器直接从原网站加载，不附带来源页面信息。识别出的文章暂存在浏览器的会话存储里，关闭浏览器后清除；你点「保存」的文章连同译文保存在本机（见下文），不会上传。</p>
+
+          <h3>换说法与用词偏好</h3>
+          <p>在译文里点一个词查看其他译法时，会把这一段的原文、译文和你选中的部分发给所选平台，与重新翻译这一段相同。你换过的说法会作为用词偏好保存在本机；之后要翻译的文字里出现相同的原文词语时，相关条目（最多 20 条）会随翻译请求一并发送，让译文沿用你的说法。点数翻译时，我们的服务器只把它们用于这次请求，不保存。你可以在设置页查看、删除或清空用词偏好。</p>
 
           <h3>账户数据</h3>
           <p>注册或登录后，我们保存：</p>
@@ -176,14 +185,16 @@
           <p>没有广告 Cookie，也没有第三方统计 Cookie。</p>
 
           <h3>只保存在你本机的内容</h3>
-          <p>以下数据通过 <code>chrome.storage.local</code> 保存在<b>你这台设备上</b>，不走 Chrome 账号同步：</p>
+          <p>以下数据保存在<b>你这台设备上</b>（<code>chrome.storage.local</code>；保存的文章在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：</p>
           <ul>
             <li><b>API Key</b>——仅用于在请求头中向你选择的平台鉴权，不会发给我们</li>
             <li><b>扩展的登录令牌</b>——仅发给 <code>app.huaci.app</code>，用于点数翻译与账户状态</li>
             <li><b>偏好设置</b>——目标语言、使用的模型、各项开关</li>
             <li><b>区域翻译规则</b>——你手动添加的「域名 + CSS 选择器」</li>
+            <li><b>用词偏好</b>——你在译文里换过的说法（原文词语与译法）；翻译时相关条目随请求发送，见上文</li>
+            <li><b>保存的文章</b>——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除</li>
           </ul>
-          <p>你可以随时在设置页清空这些数据，或直接卸载扩展（卸载会一并删除）。</p>
+          <p>你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。</p>
 
           <h3>保存期限与删除</h3>
           <p>
@@ -212,7 +223,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>在右键菜单提供翻译入口</td></tr>
                 <tr><td><code>storage</code></td><td>在本机保存上述设置与登录令牌</td></tr>
-                <tr><td><code>scripting</code></td><td>安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入</td></tr>
+                <tr><td><code>scripting</code></td><td>安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入，包括选择「双语阅读这篇文章」时识别正文的脚本</td></tr>
                 <tr><td><code>activeTab</code></td><td>仅作用于你当前操作的那个标签页</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>仅在你开启视频字幕翻译时读取当前标签页的声音；默认本机识别，主动选择云端识别时发给浏览器语音服务（Chrome 为 Google，Edge 为 Microsoft Azure）</td></tr>
                 <tr>
@@ -264,6 +275,9 @@
                 <tr><td>Text typed into the translation panel</td><td>Clicking Translate</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Recognized video caption text</td><td>With video caption translation on</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Text extracted from a PDF you translate</td><td>Using “Translate entire PDF”, or opening a file on the PDF translation page</td><td>Same</td><td>Same</td></tr>
+                <tr><td>The article text for bilingual reading (cleaned-up paragraphs, captions and table text)</td><td>Choosing “Read this article bilingually”</td><td>Same</td><td>Same</td></tr>
+                <tr><td>Wording preferences relevant to the text being translated (source terms and the renderings you chose)</td><td>Translating text that contains those terms, sent along with the translation request</td><td>Same</td><td>Same (used only for that request, not stored)</td></tr>
+                <tr><td>The paragraph, its translation and the part you selected, when asking for other wordings</td><td>Clicking a word in a translation to see alternatives</td><td>Your chosen provider (DeepL does not offer this)</td><td>Our server, then a model provider</td></tr>
                 <tr><td>The image you choose to translate</td><td>Image translation</td><td>Your chosen vision provider</td><td>Our server, then DeepSeek</td></tr>
               </tbody>
             </table>
@@ -290,6 +304,12 @@
 
           <h3>Whole-PDF translation</h3>
           <p>When you choose “Translate entire PDF” in your browser's built-in PDF viewer, the extension reads the PDF open in that tab again from the same site, using the browser cache and that site's own cookies just as the viewer did. You can also choose or drop a file onto the PDF translation page. The file is opened and rendered on your device and is never uploaded to us or to a provider; only the text extracted from it is sent, in batches, as listed in the table above. Rendered pages and translations stay in that page's memory and are discarded when you close it. “Download PDF” uses your browser's print dialog, and the file is saved wherever you choose.</p>
+
+          <h3>Bilingual reading</h3>
+          <p>Only when you choose “Read this article bilingually” on a page does the extension run its detection script there: it finds the title and body in a copy of the page, drops navigation, ads and recommendation modules, and turns the article into plain-text paragraphs; the page itself is not changed. Only that cleaned-up text (including captions and table text) is sent, in batches, as listed in the table above. Images on the reading page are loaded by your browser directly from the original site, without referrer information. The detected article is kept in the browser's session storage and cleared when you close the browser; articles you choose to save are kept on your device with their translations (see below) and are never uploaded.</p>
+
+          <h3>Other wordings and wording preferences</h3>
+          <p>When you click a word in a translation to see other wordings, that paragraph's original text, its translation and the part you selected are sent to your chosen provider, just like translating the paragraph again. Wordings you choose are saved on your device as wording preferences; when text you translate later contains the same source term, the relevant entries (up to 20) are sent along with the translation request so the translation follows your wording. With credit translation, our server uses them only for that request and does not store them. You can view, delete or clear your wording preferences on the options page.</p>
 
           <h3>Account data</h3>
           <p>When you sign up or sign in, we keep:</p>
@@ -330,14 +350,16 @@
           <p>No advertising or third-party analytics cookies.</p>
 
           <h3>What stays on your machine</h3>
-          <p>The following is stored on <b>your device</b> via <code>chrome.storage.local</code> and is not synced through your Chrome account:</p>
+          <p>The following is stored on <b>your device</b> (<code>chrome.storage.local</code>; saved articles in the extension's own IndexedDB) and is not synced through your Chrome account:</p>
           <ul>
             <li><b>API key</b>: used only to authenticate requests to the provider you chose; never sent to us</li>
             <li><b>Extension sign-in token</b>: sent only to <code>app.huaci.app</code>, for credit translation and account status</li>
             <li><b>Preferences</b>: target language, model, feature toggles</li>
             <li><b>Region translation rules</b>: the “domain + CSS selector” entries you added</li>
+            <li><b>Wording preferences</b>: wordings you chose in translations (source terms and renderings); relevant entries are sent with translation requests, see above</li>
+            <li><b>Saved articles</b>: articles and translations you saved in bilingual reading; kept only on your device and deletable from the reading page's side panel</li>
           </ul>
-          <p>You can clear all of it from the options page at any time, or uninstall the extension (which removes it all).</p>
+          <p>You can clear all of it from the options page at any time (saved articles are deleted from the reading page's side panel), or uninstall the extension (which removes it all).</p>
 
           <h3>Retention and deletion</h3>
           <p>
@@ -366,7 +388,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>Provide the translate entries in the right-click menu</td></tr>
                 <tr><td><code>storage</code></td><td>Save the settings and sign-in token above on your machine</td></tr>
-                <tr><td><code>scripting</code></td><td>After the extension is installed or updated, inject the translation script into pages that are already open; also inject on demand when you trigger a translation</td></tr>
+                <tr><td><code>scripting</code></td><td>After the extension is installed or updated, inject the translation script into pages that are already open; also inject on demand when you trigger a translation, including the article-detection script when you choose “Read this article bilingually”</td></tr>
                 <tr><td><code>activeTab</code></td><td>Act only on the tab you are working in</td></tr>
                 <tr><td><code>tabCapture</code>, <code>offscreen</code></td><td>Read current-tab audio only when video captions are enabled; recognition is local by default, or sent to the browser speech service (Google in Chrome; Microsoft Azure in Edge) if you explicitly select cloud recognition</td></tr>
                 <tr>

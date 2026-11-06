@@ -192,6 +192,76 @@
       "changelog.html"
     ]
   },
+  "双语阅读、点词换说法与图片翻译增强": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "本版新增双语阅读，译文可以逐词换说法并记住你的用词，图片翻译改为按文字形状识别和排版。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>双语阅读</b>：在网页上不选文字直接右键「双语阅读这篇文章」，页面上扫描识别出标题和正文，在旁边打开干净的阅读页，原文与译文逐段对齐。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>去掉干扰</b>：导航、侧栏、广告位和推荐模块不进阅读页，也不会送去翻译。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>阅读样式</b>：并排、上下对照、只看译文或只看原文；外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调，并会记住。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>保存文章</b>：连同译文保存在本机，右侧列表随时打开，不用再翻译、不再扣点；不需要时可以删除。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>点词换说法</b>：在阅读页、划词弹窗、翻译面板和 PDF 翻译页里，点译文里的词或选中几个词，就能看到其他译法，也可以自己改写；别处相同的词可以一起替换。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>用词偏好</b>：换过的说法记在本机，之后翻译含有同一原文词语的文字时优先使用；可在设置页查看和删除。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>图片按文字形状翻译</b>：自动识别各段文字并按笔画勾出形状，译文排在原位附近，形状之间不再互相遮挡；日文漫画的竖排文字译成中文、日文或韩文时保持竖排。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>翻译前先看形状</b>：取消「直接翻译」后，可以先移动、删改或新画文字形状，再点翻译；右键菜单合并为一个「翻译图片里的文字」，自动识别还是先框选由设置决定。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
   "整份 PDF 翻译与图片翻译增强": {
     "kind": "text",
     "tag": "h3",
@@ -474,7 +544,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.1.0</span> <span>已上架：整份 PDF 翻译，图片翻译支持框选与导出新图片。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -488,7 +558,7 @@
       "index.html"
     ]
   },
-  "一个 Chrome 扩展。选中文字、整块网页区域，或一张图片，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。": {
+  "一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -523,7 +593,7 @@
       "index.html"
     ]
   },
-  "五种翻译方式": {
+  "六种翻译方式": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -572,7 +642,7 @@
       "index.html"
     ]
   },
-  "五个入口，都在右键菜单里": {
+  "六个入口，都在右键菜单里": {
     "kind": "text",
     "tag": "h2",
     "pages": [
@@ -582,6 +652,55 @@
   "不用切换标签页，不用复制粘贴。看不懂的那一段在哪，翻译就发生在哪。": {
     "kind": "text",
     "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "双语阅读<span class=\"new\">新功能</span>": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "连同译文保存在本机，右侧随时打开，不用再翻译": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "<strong>演示视频占位</strong> <span class=\"mono\">assets/demo-reader.mp4</span>": {
+    "kind": "text",
+    "tag": "div",
     "pages": [
       "index.html"
     ]
@@ -614,7 +733,7 @@
       "index.html"
     ]
   },
-  "可折叠的原文面板，对照着读": {
+  "可折叠的原文面板，对照着读；点译文里的词能换一种说法": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -649,14 +768,21 @@
       "index.html"
     ]
   },
-  "对话框、标题、段落各按整段翻译，日文漫画的竖排文字和注音假名也能处理": {
+  "对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡": {
     "kind": "text",
     "tag": "li",
     "pages": [
       "index.html"
     ]
   },
-  "按图上的笔画校正遮盖位置，底色自动取文字周围的相近色，也可换成深色、白、黑或自定义颜色": {
+  "日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -699,7 +825,7 @@
       "index.html"
     ]
   },
-  "原文和译文并排对照，也可以只看译文或只看原文": {
+  "原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -804,7 +930,7 @@
       "index.html"
     ]
   },
-  "平台和目标语言就在工具栏上，随时切换重译": {
+  "平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法": {
     "kind": "text",
     "tag": "li",
     "pages": [
@@ -1294,7 +1420,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-10-25 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-11-06 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1455,6 +1581,62 @@
       "privacy.html"
     ]
   },
+  "你打开双语阅读的文章正文（整理后的文字、图注与表格文字）": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "使用「双语阅读这篇文章」时": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "与待翻译文字相关的用词偏好（原文词语与你选的译法）": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "翻译含有这些词语的文字时，随翻译请求一并发送": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "同上（只用于这次翻译，不保存）": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "要换说法的那一段原文、译文与选中的部分": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "在译文里点词查看其他译法时": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "你选择的平台（DeepL 不提供此功能）": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
   "你选择翻译的图片": {
     "kind": "text",
     "tag": "td",
@@ -1526,6 +1708,34 @@
     ]
   },
   "你在浏览器内置 PDF 阅读器里选择「翻译整个 PDF」时，扩展会从同一网站重新读取该标签页里打开的 PDF，和阅读器一样使用浏览器缓存与该网站自己的 Cookie；你也可以在 PDF 翻译页选择或拖入文件。文件只在你的设备上解析和显示，不会上传给我们或翻译平台；只有从中提取的文字会按上表分批发送。渲染出的页面和译文只保存在该页面的内存里，关闭后即丢弃。「下载 PDF」通过浏览器的打印窗口生成，文件保存在你选择的位置。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "双语阅读": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "只有你在网页上选择「双语阅读这篇文章」时，扩展才在这个页面上运行识别脚本：在页面的副本上找出标题和正文，去掉导航、广告和推荐模块，整理成纯文字段落；原网页不会被改动。只有整理后的文字（含图注、表格文字）会按上表分批发送。阅读页里的图片由你的浏览器直接从原网站加载，不附带来源页面信息。识别出的文章暂存在浏览器的会话存储里，关闭浏览器后清除；你点「保存」的文章连同译文保存在本机（见下文），不会上传。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "换说法与用词偏好": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "在译文里点一个词查看其他译法时，会把这一段的原文、译文和你选中的部分发给所选平台，与重新翻译这一段相同。你换过的说法会作为用词偏好保存在本机；之后要翻译的文字里出现相同的原文词语时，相关条目（最多 20 条）会随翻译请求一并发送，让译文沿用你的说法。点数翻译时，我们的服务器只把它们用于这次请求，不保存。你可以在设置页查看、删除或清空用词偏好。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1651,7 +1861,7 @@
       "privacy.html"
     ]
   },
-  "以下数据通过 <code>chrome.storage.local</code> 保存在<b>你这台设备上</b>，不走 Chrome 账号同步：": {
+  "以下数据保存在<b>你这台设备上</b>（<code>chrome.storage.local</code>；保存的文章在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1686,7 +1896,21 @@
       "privacy.html"
     ]
   },
-  "你可以随时在设置页清空这些数据，或直接卸载扩展（卸载会一并删除）。": {
+  "<b>用词偏好</b>——你在译文里换过的说法（原文词语与译法）；翻译时相关条目随请求发送，见上文": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "<b>保存的文章</b>——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1784,7 +2008,7 @@
       "privacy.html"
     ]
   },
-  "安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入": {
+  "安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入，包括选择「双语阅读这篇文章」时识别正文的脚本": {
     "kind": "text",
     "tag": "td",
     "pages": [

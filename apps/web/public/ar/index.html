@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ar/changelog.html#v2-1-0"><span class="mono release-ver" data-extension-version>v2.1.0</span> <span>متوفر الآن: ترجمة ملف PDF كامل، وترجمة الصور مع دعم التحديد الإطاري وتصدير صورة جديدة.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ar/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>حدِّد، ثم انقر بزر الفأرة الأيمن،<br /><span class="dim">ثم واصل القراءة.</span></h1>
-        <p class="hero-sub">إضافة Chrome. حدّد نصًا أو منطقة كاملة من صفحة ويب أو صورة، لتُترجم إلى اللغة التي تعرفها. يمكن اختيار 24 لغة للواجهة واللغة الهدف بشكل مستقل، وابدأ باستخدام API Key الخاص بك من OpenAI أو DeepSeek أو DeepL.</p>
+        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> التثبيت في Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض الشيفرة المصدرية</a></div>
@@ -94,7 +94,7 @@
           <li><b>مفتوح المصدر</b> GPL-3.0 · 24 لغة</li>
           <li>Chrome 116+</li>
           <li>لا تخزين للترجمات · بلا إحصاءات من أطراف ثالثة</li>
-          <li>خمس طرق للترجمة</li>
+          <li>六种翻译方式</li>
         </ul>
       </div>
 
@@ -206,22 +206,49 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>خمسة مداخل، جميعها في قائمة النقر بزر الفأرة الأيمن</h2>
+          <h2>六个入口，都在右键菜单里</h2>
           <p>بلا تبديل بين علامات التبويب، وبلا نسخ أو لصق. وحيثما كان المقطع الذي لا تفهمه، تحدث الترجمة هناك.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
+            <h3>双语阅读<span class="new">新功能</span></h3>
+            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <ul>
+              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
+              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
+              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
+              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">02</p>
             <h3>ترجمة التحديد</h3>
             <p>بعد تحديد النص، انقر بزر الفأرة الأيمن للترجمة، وتظهر الترجمة في نافذة منبثقة في الوسط؛ والمنصات التي تدعم البث يمكنها عرضها كلمة بكلمة. عند تغيير اللغة الهدف مؤقتًا، تتم إعادة الترجمة من النص الأصلي.</p>
             <ul>
               <li>يمكن ترجمة الصينية والكلمات القصيرة والنصوص المختلطة اللغات؛ ولا يظهر مدخل الترجمة للأرقام فقط أو علامات الترقيم أو الرموز التعبيرية</li>
               <li>النافذة المنبثقة في الوسط ويمكن سحبها، وتُغلَق بـ<span class="mono">Esc</span> أو بالنقر على الخلفية؛ وليست فقاعة صغيرة تلاحق مؤشر الفأرة</li>
-              <li>لوحة للنص الأصلي قابلة للطي، للقراءة بالمقارنة</li>
+              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
               <li>وهناك اختصار لوحة مفاتيح أيضًا: <span class="mono">Alt+Shift+T</span> (وعلى macOS: <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-selection.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -234,21 +261,22 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">02</p>
+            <p class="no">03</p>
             <h3>ترجمة الصور</h3>
             <p>انقر بزر الفأرة الأيمن على صورة، وتعرّف على النص الموجود فيها، ثم أعد رسم الترجمة الكاملة فوق موضع النص الأصلي، مع إمكانية حفظها كصورة جديدة.</p>
             <ul>
-              <li>تُترجم مربعات الحوار والعناوين والفقرات كلاً منها كفقرة كاملة، كما يمكن معالجة النص العمودي والكانا الإضافية في المانغا اليابانية</li>
-              <li>يُصحَّح موضع التغطية وفق الخطوط في الصورة، ويُؤخذ لون الخلفية تلقائياً من لون قريب حول النص، ويمكن أيضاً اختيار لون داكن أو أبيض أو أسود أو لون مخصص</li>
+              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
+              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
+              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
               <li>يمكن تحديد المنطقة المراد ترجمتها فقط: مستطيل أو دائرة، مع إمكانية السحب وتغيير الحجم، وتعرّف واحد على عدة مناطق محددة</li>
               <li>يمكن تنزيل النتيجة أو نسخها كصورة جديدة، وتُركَّب محلياً على الجهاز؛ كما يمكن فتح لوحة الصور، ورفع صورة أو لصقها أو إدخال عنوان الصورة</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -261,21 +289,21 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">03</p>
+            <p class="no">04</p>
             <h3>ترجمة ملف PDF كامل</h3>
             <p>في ملف PDF المفتوح في Chrome، انقر بزر الفأرة الأيمن دون تحديد نص، لتُترجم الوثيقة كاملة في صفحة مجاورة. تُعاد الترجمة إلى مواضعها الأصلية، مع بقاء التخطيط والرسوم والجداول دون تغيير.</p>
             <ul>
-              <li>النص الأصلي والترجمة جنبًا إلى جنب، ويمكن أيضًا عرض الترجمة فقط أو النص الأصلي فقط</li>
+              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
               <li>تُترجم الجداول خلية بخلية، مع الحفاظ على الصفوف والأعمدة وخطوط الجدول كما هي؛ وتُصغَّر الترجمة تلقائيًا إذا لم تتسع لها الخلية</li>
               <li>عبر الطباعة من المتصفح والحفظ كملف PDF، تكون الترجمة نصًا قابلًا للتحديد والبحث</li>
               <li>يُحلَّل الملف محليًا فقط، ويُرسَل النص المستخرج وحده إلى منصة الترجمة؛ ويمكن سحب ملف PDF محلي مباشرة إلى صفحة الترجمة. المستندات الممسوحة ضوئيًا غير مدعومة حاليًا</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -288,11 +316,11 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">04</p>
+            <p class="no">05</p>
             <h3>ترجمة العناصر</h3>
             <p>انقر بزر الفأرة الأيمن على منطقة في الصفحة لإضافة زر ترجمة لها. عند النقر عليه، يُستبدل النص داخل المنطقة في موضعه باللغة المختارة، وعند النقر مرة أخرى تُستعاد النسخة الأصلية.</p>
             <ul>
@@ -301,7 +329,7 @@
               <li>يمكن مراجعة القواعد المحفوظة وحذفها واحدة تلو الأخرى من صفحة الإدارة</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-element.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -314,20 +342,20 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">05</p>
+            <p class="no">06</p>
             <h3>لوحة الترجمة</h3>
             <p>صفحة مستقلة، يُلصق فيها النص الأصلي على اليسار وتظهر الترجمة على اليمين؛ مناسبة للفقرات التي ليست على صفحة ويب.</p>
             <ul>
               <li>24 لغة هدف متاحة، تغطي اللغات الرئيسية حول العالم</li>
               <li>يمكن اكتشاف لغة المصدر تلقائيًا أو تحديدها يدويًا، وتُختار لغة الهدف بشكل مستقل، وتتذكر اللوحة آخر اختيار</li>
-              <li>المنصة واللغة الهدف في شريط الأدوات، بدِّلهما وأعد الترجمة متى شئت</li>
+              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-panel.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>

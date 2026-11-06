@@ -519,7 +519,13 @@ main, .nav, .foot { position: relative; z-index: 1; }
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 600; letter-spacing: -.01em;
 }
-/* 尚未发布的功能：标题后面的小标签 */
+/* 标题后面的小标签：尚未发布（soon）、本版新功能（new） */
+.feature h3 .new {
+  display: inline-block; vertical-align: middle; margin-inline-start: .55rem;
+  padding: .12rem .6rem; border-radius: 999px;
+  font: 600 .78rem/1.5 var(--font-sans); letter-spacing: .02em;
+  color: #fff; background: var(--accent);
+}
 .feature h3 .soon {
   display: inline-block; vertical-align: middle; margin-inline-start: .45rem;
   padding: .12rem .6rem; border: 1px solid var(--line-strong); border-radius: 999px;

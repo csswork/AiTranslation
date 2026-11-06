@@ -31,6 +31,7 @@ function h(tag, attrs = {}, ...children) {
     h('p', {}, 'Hello ', h('em', {}, 'brave'), ' world', h('sup', {}, '1'), '.'),
     h('h2', {}, 'Section ', h('a', { href: '#' }, 'one')),
     h('p', {}, 'Line one', h('br'), 'line two'),
+    h('p', {}, 'Wrapped in the\n        HTML source,\n  not a real break.'),
     h('p', {}, '中文', h('strong', {}, '加粗'), '不补空格'),
     h('h5', {}, 'Small heading'),
   ), { title: 'The Title' });
@@ -38,6 +39,7 @@ function h(tag, attrs = {}, ...children) {
     ['p', 'Hello brave world1.'],
     ['h2', 'Section one'],
     ['p', 'Line one\nline two'],
+    ['p', 'Wrapped in the HTML source, not a real break.'],
     ['p', '中文加粗不补空格'],
     ['h4', 'Small heading'],
   ]);

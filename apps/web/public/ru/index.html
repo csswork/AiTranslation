@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ru/changelog.html#v2-1-0"><span class="mono release-ver" data-extension-version>v2.1.0</span> <span>Уже доступно: перевод целых PDF-файлов, перевод изображений с выделением области и экспортом нового изображения.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ru/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Выделите, щёлкните правой кнопкой,<br /><span class="dim">и читайте дальше.</span></h1>
-        <p class="hero-sub">Расширение для Chrome. Выделите текст, целую область веб-страницы или изображение — и получите перевод на знакомый вам язык. 24 языка интерфейса и целевых языка выбираются независимо; для начала достаточно собственного API Key OpenAI, DeepSeek или DeepL.</p>
+        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Установить в Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Посмотреть исходный код</a></div>
@@ -94,7 +94,7 @@
           <li><b>Открытый исходный код</b> GPL-3.0 · 24 языка</li>
           <li>Chrome 116+</li>
           <li>Без хранения переводов · без сторонней аналитики</li>
-          <li>Пять способов перевода</li>
+          <li>六种翻译方式</li>
         </ul>
       </div>
 
@@ -206,22 +206,49 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>Пять точек входа, все в контекстном меню</h2>
+          <h2>六个入口，都在右键菜单里</h2>
           <p>Без переключения вкладок и без копирования. Там, где находится непонятный вам фрагмент, там и происходит перевод.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
+            <h3>双语阅读<span class="new">新功能</span></h3>
+            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <ul>
+              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
+              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
+              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
+              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">02</p>
             <h3>Перевод выделенного текста</h3>
             <p>После выделения текста вызовите перевод через контекстное меню — перевод отобразится во всплывающем окне по центру; платформы с потоковым выводом показывают текст по мере поступления. При временной смене целевого языка перевод выполняется заново по исходному тексту.</p>
             <ul>
               <li>Переводятся китайский, короткие слова и смешанные языки; для чистых цифр, знаков препинания и эмодзи кнопка перевода не отображается</li>
               <li>Всплывающее окно расположено по центру и перетаскивается, закрывается по <span class="mono">Esc</span> или щелчку по фону; это не пузырёк, бегающий за курсором</li>
-              <li>Сворачиваемая панель оригинала, чтобы читать в параллель</li>
+              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
               <li>Есть и сочетание клавиш: <span class="mono">Alt+Shift+T</span> (в macOS — <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-selection.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -234,21 +261,22 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">02</p>
+            <p class="no">03</p>
             <h3>Перевод изображений</h3>
             <p>Щёлкните правой кнопкой мыши по изображению, распознайте текст на нём и наложите перевод целиком на место оригинала, сохранив результат как новое изображение.</p>
             <ul>
-              <li>Диалоги, заголовки и абзацы переводятся целиком; поддерживается вертикальный текст и фуригана в японской манге</li>
-              <li>Положение маски корректируется по штрихам на изображении, цвет фона автоматически подбирается близким к цвету вокруг текста; можно выбрать тёмный, белый, чёрный или свой цвет</li>
+              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
+              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
+              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
               <li>Можно выделить только нужные области: прямоугольник или круг, с перетаскиванием и изменением размера, несколько областей распознаются за один раз</li>
               <li>Результат можно скачать или скопировать как новое изображение, синтез выполняется локально; также можно открыть панель изображений, загрузить, вставить изображение или ввести адрес изображения</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -261,21 +289,21 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">03</p>
+            <p class="no">04</p>
             <h3>Перевод целых PDF-файлов</h3>
             <p>В PDF, открытом в Chrome, щёлкните правой кнопкой без выделения текста — весь документ переводится на соседней странице. Перевод накладывается на исходные позиции, вёрстка, схемы и таблицы не меняются.</p>
             <ul>
-              <li>Оригинал и перевод рядом, можно смотреть только перевод или только оригинал</li>
+              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
               <li>Таблицы переводятся по ячейкам, строки, столбцы и линии таблицы сохраняются; не помещающийся перевод автоматически уменьшается</li>
               <li>Через печать браузера сохраняется как PDF, перевод — выделяемый и доступный для поиска текст</li>
               <li>Файл обрабатывается только локально, на платформу перевода отправляется лишь извлечённый текст; локальный PDF можно перетащить прямо на страницу перевода. Сканы пока не поддерживаются</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -288,11 +316,11 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">04</p>
+            <p class="no">05</p>
             <h3>Перевод элементов</h3>
             <p>Нажмите правой кнопкой мыши на любую область страницы, чтобы закрепить на ней кнопку перевода. Одно нажатие — текст в области заменяется на выбранный язык, повторное нажатие возвращает исходный текст.</p>
             <ul>
@@ -301,7 +329,7 @@
               <li>Сохранённые правила можно просматривать и удалять по одному на странице управления</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-element.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -314,20 +342,20 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">05</p>
+            <p class="no">06</p>
             <h3>Панель перевода</h3>
             <p>Отдельная страница: слева оригинал, справа перевод — для работы с текстами, которых нет на веб-странице.</p>
             <ul>
               <li>Доступны 24 целевых языка, охватывающих основные языки мира</li>
               <li>Исходный язык определяется автоматически или задаётся вручную, целевой язык выбирается отдельно, панель запоминает последний выбор</li>
-              <li>Платформа и целевой язык — на панели инструментов; переключайте и переводите заново в любой момент</li>
+              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-panel.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>

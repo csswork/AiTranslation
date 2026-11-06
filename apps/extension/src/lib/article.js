@@ -110,6 +110,8 @@
   }
 
   const tagOf = (node) => String(node?.tagName || '').toLowerCase();
+  /** 文字节点里的换行只是 HTML 源码的排版，和空格一样；真正的换行只来自 <br>。 */
+  const textOf = (node) => String(node.nodeValue || '').replace(/\s+/g, ' ');
   const kids = (node) => Array.from(node?.childNodes || []);
 
   /** 合并空白，保留 <br> 带来的换行。 */
@@ -159,7 +161,7 @@
     const visit = (current) => {
       for (const child of kids(current)) {
         if (child.nodeType === TEXT) {
-          out += child.nodeValue || '';
+          out += textOf(child);
           continue;
         }
         if (child.nodeType !== ELEMENT) continue;
@@ -267,7 +269,7 @@
         const nested = [];
         const collect = (current) => {
           for (const child of kids(current)) {
-            if (child.nodeType === TEXT) { own += child.nodeValue || ''; continue; }
+            if (child.nodeType === TEXT) { own += textOf(child); continue; }
             if (child.nodeType !== ELEMENT) continue;
             const childTag = tagOf(child);
             if (childTag === 'ul' || childTag === 'ol') nested.push(child);
@@ -312,7 +314,7 @@
     function visit(node, depth = 0) {
       for (const child of kids(node)) {
         if (full) return;
-        if (child.nodeType === TEXT) { buffer += child.nodeValue || ''; continue; }
+        if (child.nodeType === TEXT) { buffer += textOf(child); continue; }
         if (child.nodeType !== ELEMENT) continue;
         const tag = tagOf(child);
         if (SKIP.has(tag)) continue;

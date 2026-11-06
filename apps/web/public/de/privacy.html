@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Datenschutzerklärung</h2>
-        <p class="updated">Zuletzt aktualisiert: 2026-10-25 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown-Original</a></p>
+        <p class="updated">最后更新：2026-11-06 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -99,6 +99,9 @@
                 <tr><td>Der Text, den Sie im Übersetzungsbereich eingeben</td><td>Beim Klick auf Übersetzen</td><td>Wie oben</td><td>Wie oben</td></tr>
                 <tr><td>den erkannten Text von Video-Untertiteln</td><td>wenn die Video-Untertitelübersetzung aktiviert ist</td><td>Wie oben</td><td>Wie oben</td></tr>
                 <tr><td>Aus dem von dir übersetzten PDF extrahierter Text</td><td>Bei Verwendung von „Ganzes PDF übersetzen“ oder beim Öffnen einer Datei auf der PDF-Übersetzungsseite</td><td>Wie oben</td><td>Wie oben</td></tr>
+                <tr><td>你打开双语阅读的文章正文（整理后的文字、图注与表格文字）</td><td>使用「双语阅读这篇文章」时</td><td>Wie oben</td><td>Wie oben</td></tr>
+                <tr><td>与待翻译文字相关的用词偏好（原文词语与你选的译法）</td><td>翻译含有这些词语的文字时，随翻译请求一并发送</td><td>Wie oben</td><td>同上（只用于这次翻译，不保存）</td></tr>
+                <tr><td>要换说法的那一段原文、译文与选中的部分</td><td>在译文里点词查看其他译法时</td><td>你选择的平台（DeepL 不提供此功能）</td><td>unseren Server, der sie an den Modellanbieter weiterleitet</td></tr>
                 <tr><td>Das von Ihnen zum Übersetzen ausgewählte Bild</td><td>Bei der Bildübersetzung</td><td>Die von Ihnen gewählte visuelle Plattform</td><td>Unser Server, der es an DeepSeek weiterleitet</td></tr>
               </tbody>
             </table>
@@ -119,6 +122,12 @@
 
           <h3>Übersetzung ganzer PDF-Dateien</h3>
           <p>Wenn Sie im integrierten PDF-Reader des Browsers „Gesamtes PDF übersetzen“ auswählen, liest die Erweiterung das im Tab geöffnete PDF erneut von derselben Website und verwendet dabei wie der Reader den Browsercache und die Cookies dieser Website; alternativ können Sie auf der PDF-Übersetzungsseite eine Datei auswählen oder hineinziehen. Die Datei wird ausschließlich auf Ihrem Gerät analysiert und angezeigt und weder an uns noch an Übersetzungsplattformen hochgeladen; nur der daraus extrahierte Text wird gemäß der obigen Tabelle in Stapeln gesendet. Die gerenderte Seite und die Übersetzung werden nur im Arbeitsspeicher dieser Seite gehalten und beim Schließen verworfen. „PDF herunterladen“ erzeugt die Datei über den Druckdialog des Browsers; die Datei wird an dem von Ihnen gewählten Ort gespeichert.</p>
+
+          <h3>双语阅读</h3>
+          <p>只有你在网页上选择「双语阅读这篇文章」时，扩展才在这个页面上运行识别脚本：在页面的副本上找出标题和正文，去掉导航、广告和推荐模块，整理成纯文字段落；原网页不会被改动。只有整理后的文字（含图注、表格文字）会按上表分批发送。阅读页里的图片由你的浏览器直接从原网站加载，不附带来源页面信息。识别出的文章暂存在浏览器的会话存储里，关闭浏览器后清除；你点「保存」的文章连同译文保存在本机（见下文），不会上传。</p>
+
+          <h3>换说法与用词偏好</h3>
+          <p>在译文里点一个词查看其他译法时，会把这一段的原文、译文和你选中的部分发给所选平台，与重新翻译这一段相同。你换过的说法会作为用词偏好保存在本机；之后要翻译的文字里出现相同的原文词语时，相关条目（最多 20 条）会随翻译请求一并发送，让译文沿用你的说法。点数翻译时，我们的服务器只把它们用于这次请求，不保存。你可以在设置页查看、删除或清空用词偏好。</p>
 
           <h3>Kontodaten</h3>
           <p>Nach Registrierung oder Anmeldung speichern wir:</p>
@@ -147,14 +156,16 @@
           <p>Es gibt keine Werbe-Cookies und keine Cookies von Drittanbieter-Statistiken.</p>
 
           <h3>Inhalte, die nur auf Ihrem Gerät gespeichert werden</h3>
-          <p>Die folgenden Daten werden über <code>chrome.storage.local</code> <b>auf diesem Gerät</b> gespeichert und nicht über das Chrome-Konto synchronisiert:</p>
+          <p>以下数据保存在<b>你这台设备上</b>（<code>chrome.storage.local</code>；保存的文章在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：</p>
           <ul>
             <li><b>API Key</b> – wird ausschließlich zur Authentifizierung gegenüber der von dir gewählten Plattform im Anfrage-Header verwendet und nicht an uns gesendet</li>
             <li><b>Anmeldetoken der Erweiterung</b> – wird ausschließlich an <code>app.huaci.app</code> gesendet, für Punktübersetzungen und den Kontostatus</li>
             <li><b>Einstellungen</b> – Zielsprache, verwendetes Modell, einzelne Schalter</li>
             <li><b>Regeln für Bereichsübersetzung</b> – die von dir manuell hinzugefügten „Domain + CSS-Selektor“-Paare</li>
+            <li><b>用词偏好</b>——你在译文里换过的说法（原文词语与译法）；翻译时相关条目随请求发送，见上文</li>
+            <li><b>保存的文章</b>——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除</li>
           </ul>
-          <p>Sie können diese Daten jederzeit auf der Einstellungsseite löschen oder die Erweiterung einfach deinstallieren (dabei werden sie mit entfernt).</p>
+          <p>你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。</p>
 
           <h3>Speicherdauer und Löschung</h3>
           <p>Konto, Punkte, Bestellungen und Nutzungsprotokolle werden bis zur Löschung deines Kontos gespeichert; gesetzlich aufzubewahrende Transaktionsdaten (z. B. steuerliche) werden wie vorgeschrieben aufbewahrt. Für den Export oder die Löschung deines Kontos und der zugehörigen Daten sende eine E-Mail an <a class="link" href="mailto:support@huaci.app">support@huaci.app</a>; wir bearbeiten dies innerhalb von 30 Tagen.</p>
@@ -177,7 +188,7 @@
               <tbody>
                 <tr><td><code>contextMenus</code></td><td>Stellt die Übersetzungseinträge im Kontextmenü bereit</td></tr>
                 <tr><td><code>storage</code></td><td>Speichert die oben genannten Einstellungen und das Anmeldetoken lokal</td></tr>
-                <tr><td><code>scripting</code></td><td>Nach der Installation oder Aktualisierung der Erweiterung wird das Übersetzungsskript nachträglich in bereits geöffnete Webseiten injiziert; beim Auslösen einer Übersetzung erfolgt ebenfalls eine bedarfsgerechte Injektion</td></tr>
+                <tr><td><code>scripting</code></td><td>安装或更新扩展后，向已经打开的网页补注入翻译脚本；你触发翻译时也会按需注入，包括选择「双语阅读这篇文章」时识别正文的脚本</td></tr>
                 <tr><td><code>activeTab</code></td><td>Wirkt nur auf den Tab, in dem Sie gerade arbeiten</td></tr>
                 <tr><td><code>tabCapture</code>、<code>offscreen</code></td><td>Liest den Ton des aktuellen Tabs nur, wenn Sie die Video-Untertitelübersetzung aktivieren; standardmäßig lokale Erkennung, bei aktiver Wahl der Cloud-Erkennung wird der Ton an den Sprachdienst des Browsers gesendet (bei Chrome an Google, bei Edge an Microsoft Azure)</td></tr>
                 <tr>

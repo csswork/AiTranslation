@@ -12,7 +12,7 @@
 
 扩展的整份 PDF 翻译（`src/pdf/`）在本机用原样引入的 pdf.js（`src/vendor/pdfjs/`）解析和渲染，只有提取出的文字走现有翻译链路（自带 Key 或托管文字翻译），文件不上传、后端无需改动。随扩展 2.1.0 打包，待上传商店；实现与限制见 [PDF 翻译](extension/pdf-translation.md)。
 
-扩展的双语阅读（`src/reader/`）在网页上用原样引入的 Mozilla Readability（`src/vendor/readability/`）识别正文，整理成纯文字段落后在扩展自己的阅读页里逐段对照翻译，同样走现有翻译链路、后端无需改动；尚未打包发布，见 [双语阅读](extension/reader.md)。
+扩展的双语阅读（`src/reader/`）在网页上用原样引入的 Mozilla Readability（`src/vendor/readability/`）识别正文，整理成纯文字段落后在扩展自己的阅读页里逐段对照翻译，同样走现有翻译链路；随扩展 2.2.0 发布，见 [双语阅读](extension/reader.md)。点词换说法与用词偏好见 [点词换说法与用词偏好](extension/word-alternatives.md)。
 
 扩展的图片翻译在 2.0.0 之后增加了框选（矩形 / 圆形）、相近色背景、按笔画校正遮盖位置、按文字块识别和导出新图片，同样随 2.1.0 打包、待上传商店；送检前补白成正方形、框选拼图、按笔画校正等实现与实测见 [图片翻译](extension/image-translation.md)。
 

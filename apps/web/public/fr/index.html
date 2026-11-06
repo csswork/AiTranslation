@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/fr/changelog.html#v2-1-0"><span class="mono release-ver" data-extension-version>v2.1.0</span> <span>Disponible : traduction de PDF complet, traduction d'images avec sélection et export vers une nouvelle image.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/fr/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Sélectionnez, faites un clic droit,<br /><span class="dim">puis continuez à lire.</span></h1>
-        <p class="hero-sub">Une extension Chrome. Sélectionnez du texte, une zone entière d'une page web ou une image pour la traduire dans la langue que vous maîtrisez. 24 langues d'interface et langues cibles sont sélectionnables indépendamment ; utilisez votre propre clé API OpenAI, DeepSeek ou DeepL pour commencer.</p>
+        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Installer sur Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
@@ -94,7 +94,7 @@
           <li><b>Open source</b> GPL-3.0 · 24 langues</li>
           <li>Chrome 116+</li>
           <li>Aucune traduction stockée · Aucune statistique tierce</li>
-          <li>Cinq modes de traduction</li>
+          <li>六种翻译方式</li>
         </ul>
       </div>
 
@@ -206,22 +206,49 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>Cinq points d'entrée, tous dans le menu contextuel</h2>
+          <h2>六个入口，都在右键菜单里</h2>
           <p>Pas besoin de changer d’onglet ni de copier-coller. Là où se trouve le passage que vous ne comprenez pas, la traduction s’y produit.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
+            <h3>双语阅读<span class="new">新功能</span></h3>
+            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <ul>
+              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
+              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
+              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
+              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+            </ul>
+          </div>
+          <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
+            <div class="frame-bar" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="addr"></span>
+            </div>
+            <div class="frame-body">
+              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature slide flip" data-slide>
+      <div class="wrap">
+        <div class="feature-grid">
+          <div class="feature-copy reveal">
+            <p class="no">02</p>
             <h3>Traduction par sélection</h3>
             <p>Après avoir sélectionné du texte, faites un clic droit pour traduire ; la traduction s'affiche dans une fenêtre centrée et, sur les plateformes prenant en charge le flux, s'affiche caractère par caractère. Changer temporairement de langue cible relance la traduction à partir du texte original.</p>
             <ul>
               <li>Le chinois, les termes courts et les langues mixtes peuvent être traduits ; les chiffres seuls, la ponctuation et les emojis n'affichent pas d'entrée de traduction</li>
               <li>La fenêtre est centrée et déplaçable, se ferme avec <span class="mono">Esc</span> ou un clic sur l’arrière-plan — pas une petite bulle qui suit le curseur</li>
-              <li>Un panneau de texte source repliable pour lire en regard de la traduction</li>
+              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
               <li>Un raccourci clavier existe aussi : <span class="mono">Alt+Shift+T</span> (sur macOS : <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-selection.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -234,21 +261,22 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">02</p>
+            <p class="no">03</p>
             <h3>Traduction d’images</h3>
             <p>Faites un clic droit sur une image, reconnaissez le texte qu'elle contient, puis superposez la traduction complète à l'emplacement du texte original et enregistrez le résultat sous forme de nouvelle image.</p>
             <ul>
-              <li>Les bulles de dialogue, les titres et les paragraphes sont traduits chacun comme un bloc entier ; le texte vertical et les furigana des mangas japonais sont également pris en charge</li>
-              <li>La position du masque est ajustée selon les traits de l'image ; la couleur de fond reprend automatiquement une teinte proche de celle entourant le texte, et peut aussi être remplacée par du sombre, du blanc, du noir ou une couleur personnalisée</li>
+              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
+              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
+              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
               <li>Vous pouvez sélectionner uniquement les zones à traduire : rectangle ou cercle, avec déplacement et redimensionnement, et reconnaissance de plusieurs sélections en une seule fois</li>
               <li>Le résultat peut être téléchargé ou copié sous forme de nouvelle image, composée localement ; vous pouvez aussi ouvrir le panneau d'images, importer ou coller une image, ou saisir l'URL d'une image</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-image.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -261,21 +289,21 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">03</p>
+            <p class="no">04</p>
             <h3>Traduction de PDF entier</h3>
             <p>Dans un PDF ouvert dans Chrome, sans sélectionner de texte, faites un clic droit : le document entier est traduit dans une page adjacente. La traduction est superposée à l'emplacement d'origine ; la mise en page, les graphiques et les tableaux restent inchangés.</p>
             <ul>
-              <li>Original et traduction côte à côte, ou affichage de la traduction seule ou de l'original seul</li>
+              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
               <li>Les tableaux sont traduits cellule par cellule, lignes, colonnes et bordures restant identiques ; la taille de police des traductions trop longues est réduite automatiquement</li>
               <li>Enregistrez au format PDF via l'impression du navigateur : la traduction est un texte sélectionnable et recherchable</li>
               <li>Le fichier est analysé uniquement en local ; seul le texte extrait est envoyé à la plateforme de traduction ; un PDF local peut être glissé directement dans la page de traduction. Les documents numérisés ne sont pas pris en charge pour le moment</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-pdf.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -288,11 +316,11 @@
       </div>
     </article>
 
-    <article class="feature slide flip" data-slide>
+    <article class="feature slide" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">04</p>
+            <p class="no">05</p>
             <h3>Traduction d’éléments</h3>
             <p>Faites un clic droit sur une zone de la page pour y attacher un bouton de traduction. Un clic remplace le texte de la zone par la langue choisie, un second clic restaure le texte original.</p>
             <ul>
@@ -301,7 +329,7 @@
               <li>Les règles enregistrées peuvent être consultées et supprimées une par une depuis la page de gestion</li>
             </ul>
           </div>
-          <div class="frame parallax-slow" data-video="/assets/demo-element.mp4">
+          <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
@@ -314,20 +342,20 @@
       </div>
     </article>
 
-    <article class="feature slide" data-slide>
+    <article class="feature slide flip" data-slide>
       <div class="wrap">
         <div class="feature-grid">
           <div class="feature-copy reveal">
-            <p class="no">05</p>
+            <p class="no">06</p>
             <h3>Panneau de traduction</h3>
             <p>Une page autonome : le texte source à gauche, la traduction à droite, idéale pour les passages qui ne se trouvent pas sur une page web.</p>
             <ul>
               <li>24 langues cibles disponibles, couvrant les principales langues mondiales</li>
               <li>La langue source peut être détectée automatiquement ou spécifiée manuellement, la langue cible est choisie indépendamment, le panneau mémorise le dernier choix</li>
-              <li>La plateforme et la langue cible sont dans la barre d’outils ; vous pouvez changer et retraduire à tout moment</li>
+              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
             </ul>
           </div>
-          <div class="frame parallax-fast" data-video="/assets/demo-panel.mp4">
+          <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
             <div class="frame-bar" aria-hidden="true">
               <i></i><i></i><i></i>
               <span class="addr"></span>
