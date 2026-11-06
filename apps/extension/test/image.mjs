@@ -152,6 +152,17 @@ od = await P.readImageText({ image: 'x', settings, model: 'm' });
 ok(od.blocks[0].box, 0.1, 0.2, 0.6, 0.03);
 console.log('✓ readImageText 默认 xyxy，可显式指定 yxyx');
 
+// 自动识别先只找文字范围：换一份提示词（整块框住、忽略小字），坐标换算不变
+reply(JSON.stringify([{ text: 'A', box: [100, 200, 700, 230] }]));
+od = await P.readImageText({ image: 'x', settings, model: 'm', purpose: 'regions' });
+assert.match(captured.body.messages[0].content, /Ignore small text/);
+assert.match(captured.body.messages[0].content, /furigana/);
+ok(od.blocks[0].box, 0.1, 0.2, 0.6, 0.03);
+reply(JSON.stringify([]));
+await P.readImageText({ image: 'x', settings, model: 'm' });
+assert.doesNotMatch(captured.body.messages[0].content, /Ignore small text/, '普通识图仍用原提示词');
+console.log('✓ 找文字范围用单独的提示词，忽略小字');
+
 // 点数模式同样支持识图：后台直接使用账户服务，扩展页面只能通过后台固定消息调用。
 assert.equal(S.supportsVision('hosted'), true);
 const hostedSettings = S.normalize({ ...settings, provider: 'hosted' });
@@ -169,6 +180,8 @@ chrome.runtime = { sendMessage: async (message) => { sent = message; return { ok
 out = await P.readImageText({ image: 'page-image', settings: hostedSettings, order: 'yxyx' });
 assert.deepEqual(sent, { type: 'hosted-read-image', image: 'page-image' });
 ok(out.blocks[0].box, 0.2, 0.1, 0.03, 0.6);
+await P.readImageText({ image: 'page-image', settings: hostedSettings, purpose: 'regions' });
+assert.deepEqual(sent, { type: 'hosted-read-image', image: 'page-image', purpose: 'regions' }, '找文字范围时把用途交给后台');
 chrome.runtime.sendMessage = async () => ({ ok: false, error: 'insufficient credits', action: 'open-options' });
 await assert.rejects(P.readImageText({ image: 'x', settings: hostedSettings }), err => err.action === 'open-options');
 console.log('✓ 点数模式无需自带 Key，识图在后台调用，坐标和错误处理完整保留');

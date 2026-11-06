@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Bir web sayfasındaki görsele sağ tıklayın, fareyi \"Görseldeki metni çevir\" üzerine getirin ve ardından \"Tüm görseli otomatik algıla\" veya \"Çevrilecek alanı seç\" seçeneğini belirleyin; açılır pencerede iki mod arasında geçiş de yapabilirsiniz. \"Görsel çevirisi\" sayfasını uzantı simgesinden de açabilirsiniz."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Çevrilecek metin bulunamadı. Çevirmek istediğiniz alanı kendiniz çerçeveleyebilirsiniz."
+  },
+  "m_d336925eec6575b0": {
+    "message": "$arg1$ metin alanı otomatik olarak belirlendi. Bunları ayarlayabilir, silebilir veya yeni çerçeve ekleyebilirsiniz.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ küçük metin alanı yoksayıldı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Metin alanları bulunuyor $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Görseldeki metin alanları bulunuyor…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Metin şekilleri izleniyor…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Çevrilecek metin bulunamadı"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "$arg1$ metin alanı bulundu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "$arg1$ küçük metin alanı yok sayıldı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },

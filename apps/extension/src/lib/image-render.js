@@ -168,9 +168,10 @@
    * @param {Uint8ClampedArray} data 窗口的 RGBA 像素
    * @param {{x,y,w,h}} hint 窗口内的提示范围（像素）：模型给的框，或用户画的选区
    * @param {Array<{x,y,w,h}>} [others] 窗口内其他文字块的提示范围：更靠近它们的笔画归它们
+   * @param {boolean} [withMask] 同时返回选中笔画的格子（cell 边长、cw × ch、mask），用来勾出不规则的文字形状
    * @returns {{x,y,w,h,glyph:number}|null} 窗口内像素坐标；glyph 是单个字的大致尺寸
    */
-  function inkBox(data, width, height, hint, others = []) {
+  function inkBox(data, width, height, hint, others = [], withMask = false) {
     const bg = dominantColor([{ data }]);
     if (!bg || width < 4 || height < 4) return null;
     // 格子边长：窗口长边分成约 240 格，几百万像素的窗口也只要几毫秒
@@ -201,7 +202,7 @@
     const stack = [];
     for (let start = 0; start < ink.length; start += 1) {
       if (!ink[start] || label[start] >= 0) continue;
-      const part = { x0: cw, y0: ch, x1: -1, y1: -1, cells: 0, edge: false, r: 0, g: 0, b: 0, n: 0 };
+      const part = { id: parts.length, x0: cw, y0: ch, x1: -1, y1: -1, cells: 0, edge: false, r: 0, g: 0, b: 0, n: 0 };
       label[start] = parts.length;
       stack.push(start);
       while (stack.length) {
@@ -249,8 +250,16 @@
     if (!keep.length) return null;
 
     // 单个字的大致尺寸：各块长边的四分之三分位（注音假名和笔画断开的汉字会偏小），
-    // 不算描边和圆圈
-    const sizes = (keep.some((p) => !sparse(p)) ? keep.filter((p) => !sparse(p)) : keep)
+    // 不算描边和圆圈。只看中心落在提示框里的块：窗口放宽后常带进树林、星空这类
+    // 满是细碎小点的画面，全算进来字号会被拉到只有几个像素
+    const hintCenter = (p) => {
+      const cx = ((p.x0 + p.x1 + 1) / 2) * cell;
+      const cy = ((p.y0 + p.y1 + 1) / 2) * cell;
+      return cx >= hint.x && cx <= hint.x + hint.w && cy >= hint.y && cy <= hint.y + hint.h;
+    };
+    const solid = keep.some((p) => !sparse(p)) ? keep.filter((p) => !sparse(p)) : keep;
+    const inside = solid.filter(hintCenter);
+    const sizes = (inside.length ? inside : solid)
       .map((p) => Math.max(...dims(p))).sort((a, b) => a - b);
     const glyph = sizes[Math.floor(sizes.length * 0.75)];
     // 单个字的块不会太大：横竖都比字大得多的是画面、圆圈或描边；
@@ -301,6 +310,7 @@
       x1: Math.max(...chosen.map((p) => p.x1)), y1: Math.max(...chosen.map((p) => p.y1)),
     };
     const gap = glyph * 0.8;
+    const taken = new Set(chosen.map((p) => p.id));
     let rest = keep.filter((p) => !chosen.includes(p));
     for (let grew = true; grew;) {
       grew = false;
@@ -312,18 +322,25 @@
         box.y0 = Math.min(box.y0, p.y0);
         box.x1 = Math.max(box.x1, p.x1);
         box.y1 = Math.max(box.y1, p.y1);
+        taken.add(p.id);
         grew = true;
         return false;
       });
     }
     const x = box.x0 * cell;
     const y = box.y0 * cell;
-    return {
+    const found = {
       x, y,
       w: Math.min(width, (box.x1 + 1) * cell) - x,
       h: Math.min(height, (box.y1 + 1) * cell) - y,
       glyph: glyph * cell,
     };
+    if (withMask) {
+      const mask = new Uint8Array(cw * ch);
+      for (let i = 0; i < mask.length; i += 1) if (label[i] >= 0 && taken.has(label[i])) mask[i] = 1;
+      Object.assign(found, { cell, cw, ch, mask });
+    }
+    return found;
   }
 
   /**

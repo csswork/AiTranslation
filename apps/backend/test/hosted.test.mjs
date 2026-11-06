@@ -40,6 +40,20 @@ test('识图按文字块识别（说明竖排与注音）；识图温度为 0、
   assert.deepEqual(blocks, [{ text: 'りんごは「一個」', box: [700, 30, 960, 210] }], '舍弃模型的其他字段');
 });
 
+test('找文字范围用单独的提示词：整块框住、忽略小字，返回格式与识图相同', async () => {
+  let body;
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    body = JSON.parse(init.body);
+    return Response.json({ choices: [{ message: { content: '[{"text":"Hi","box":[1,2,3,4]}]' } }] });
+  } });
+  const result = JSON.parse((await hosted.readImageText({ image, purpose: 'regions' })).raw);
+  assert.match(body.messages[0].content, /Ignore small text/);
+  assert.equal(body.temperature, 0);
+  assert.deepEqual(result, [{ text: 'Hi', box: [1, 2, 3, 4] }]);
+  await hosted.readImageText({ image, purpose: 'anything-else' });
+  assert.doesNotMatch(body.messages[0].content, /Ignore small text/, '未知用途按普通识图处理');
+});
+
 test('空图、错误坐标与非 JSON 回复；错误不包含识别内容，不向未验证视觉能力的备用服务商发送图片', async () => {
   let content = '[]', status = 200, calls = 0;
   const hosted = createHostedTranslator(config, { fetchImpl: async () => {

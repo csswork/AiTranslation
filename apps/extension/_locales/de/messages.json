@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Klicken Sie mit der rechten Maustaste auf ein Bild auf einer Webseite, fahren Sie mit der Maus über „Text im Bild übersetzen“ und wählen Sie dann „Gesamtes Bild automatisch erkennen“ oder „Zu übersetzenden Bereich auswählen“; Sie können im Popup auch zwischen beiden Modi wechseln. Sie können die Seite „Bildübersetzung“ auch über das Erweiterungssymbol öffnen."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Es wurde kein zu übersetzender Text gefunden. Du kannst den Bereich, der übersetzt werden soll, selbst einrahmen."
+  },
+  "m_d336925eec6575b0": {
+    "message": "$arg1$ Textbereiche automatisch erkannt. Du kannst sie anpassen, löschen oder Rahmen hinzufügen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ kleine Textbereiche ignoriert",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Textbereiche werden gesucht $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Textbereiche im Bild werden gesucht…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Textformen werden nachgezeichnet…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Kein zu übersetzender Text gefunden"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "$arg1$ Textbereiche gefunden",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "$arg1$ kleine Textbereiche ignoriert",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

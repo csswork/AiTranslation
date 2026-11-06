@@ -477,7 +477,16 @@ globalThis.AITrMessageIds = {
   "形状": "m_c2f71c1b10ef9d80",
   "自动识别整张图": "m_776239e5078dbd3f",
   "框选要翻译的区域": "m_6465091579c4941f",
-  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "m_00097f532a77285a"
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "m_00097f532a77285a",
+  "没有找到需要翻译的文字，可以自己框出要翻译的区域": "m_e1a0704dcfe82799",
+  "自动框出 $1 处文字，可以调整、删除或补框": "m_d336925eec6575b0",
+  "已忽略 $1 处小字": "m_7474f557610bebf3",
+  "正在找出文字范围 $1/$2…": "m_840a265804081796",
+  "正在找出图中的文字范围…": "m_4c97163c40fb46b3",
+  "正在勾出文字形状…": "m_be2e36b6b5522ea5",
+  "没有找到需要翻译的文字": "m_5b88a17476f43fad",
+  "找到 $1 处文字": "m_ee19d19e33308a6b",
+  "忽略 $1 处小字": "m_f86b4edd1ae6411e"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -957,5 +966,14 @@ globalThis.AITrEnglish = {
   "形状": "Shape",
   "自动识别整张图": "Automatically detect the entire image",
   "框选要翻译的区域": "Select the area to translate",
-  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Right-click an image on a webpage, hover over \"Translate text in image\", then choose \"Automatically detect the entire image\" or \"Select the area to translate\"; you can also switch between the two modes in the popup. You can also open the \"Image translation\" page from the extension icon."
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Right-click an image on a webpage, hover over \"Translate text in image\", then choose \"Automatically detect the entire image\" or \"Select the area to translate\"; you can also switch between the two modes in the popup. You can also open the \"Image translation\" page from the extension icon.",
+  "没有找到需要翻译的文字，可以自己框出要翻译的区域": "No text to translate was found. You can draw a box around the area you want translated.",
+  "自动框出 $1 处文字，可以调整、删除或补框": "Automatically detected $1 text areas. You can adjust, delete, or add boxes.",
+  "已忽略 $1 处小字": "Ignored $1 small text areas",
+  "正在找出文字范围 $1/$2…": "Finding text areas $1/$2…",
+  "正在找出图中的文字范围…": "Finding text areas in the image…",
+  "正在勾出文字形状…": "Tracing text shapes…",
+  "没有找到需要翻译的文字": "No text found to translate",
+  "找到 $1 处文字": "Found $1 text areas",
+  "忽略 $1 处小字": "Ignored $1 small text areas"
 };

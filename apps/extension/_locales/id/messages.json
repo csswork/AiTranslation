@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Klik kanan pada gambar di halaman web, arahkan kursor ke \"Terjemahkan teks dalam gambar\", lalu pilih \"Deteksi otomatis seluruh gambar\" atau \"Pilih area yang akan diterjemahkan\"; kedua mode juga dapat dialihkan di popup. Anda juga dapat membuka halaman \"Terjemahan gambar\" dari ikon ekstensi."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Tidak ditemukan teks untuk diterjemahkan. Anda dapat menggambar kotak di area yang ingin diterjemahkan."
+  },
+  "m_d336925eec6575b0": {
+    "message": "Terdeteksi otomatis $arg1$ area teks. Anda dapat menyesuaikan, menghapus, atau menambahkan kotak.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ area teks kecil diabaikan",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Menemukan area teks $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Menemukan area teks dalam gambar…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Sedang melacak bentuk teks…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Tidak ada teks yang perlu diterjemahkan"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "Ditemukan $arg1$ area teks",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "Mengabaikan $arg1$ area teks kecil",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

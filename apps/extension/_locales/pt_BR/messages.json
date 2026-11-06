@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Clique com o botão direito em uma imagem na página, passe o mouse sobre \"Traduzir texto na imagem\" e escolha \"Detectar automaticamente a imagem inteira\" ou \"Selecionar a área a traduzir\"; você também pode alternar entre os dois modos na janela pop-up. Você também pode abrir a página \"Tradução de imagens\" pelo ícone da extensão."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Nenhum texto para traduzir foi encontrado. Você pode desenhar uma caixa ao redor da área que deseja traduzir."
+  },
+  "m_d336925eec6575b0": {
+    "message": "$arg1$ áreas de texto detectadas automaticamente. Você pode ajustar, excluir ou adicionar caixas.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ áreas de texto pequeno ignoradas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Encontrando áreas de texto $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Encontrando áreas de texto na imagem…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Traçando formas de texto…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Nenhum texto encontrado para traduzir"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "$arg1$ áreas de texto encontradas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "$arg1$ áreas de texto pequeno ignoradas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Tradutor de IA"
   },

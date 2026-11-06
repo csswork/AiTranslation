@@ -40,6 +40,7 @@ const CONTENT_FILES = [
   'src/lib/tiles.js',
   'src/lib/regions.js',
   'src/lib/image-render.js',
+  'src/lib/text-shapes.js',
   'src/lib/region-picker.js',
   'src/content/content.js',
   'src/content/elements.js',
@@ -682,7 +683,7 @@ chrome.runtime.onConnect.addListener((port) => {
       const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
       const options = { settings, signal: controller.signal };
       if (message.type === 'read-image') {
-        const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, model: AITrSettings.visionModel(settings.provider) });
+        const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
         reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts }) };
@@ -778,6 +779,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const result = await AITrProviders.readImageText({
           image: message.image,
           imageSize: message.imageSize,
+          purpose: message.purpose,
           settings,
           model: AITrSettings.visionModel(settings.provider),
         });
@@ -900,7 +902,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (type === 'hosted-read-image' && fromExtensionPage) {
-    AITrAccount.readImageText({ image: message.image })
+    AITrAccount.readImageText({ image: message.image, purpose: message.purpose })
       .then((raw) => sendResponse({ ok: true, raw }))
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
     return true;

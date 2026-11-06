@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Kliknij obraz prawym przyciskiem myszy na stronie internetowej, najedź kursorem na „Przetłumacz tekst na obrazie”, a następnie wybierz „Automatycznie wykryj cały obraz” lub „Zaznacz obszar do przetłumaczenia”; oba tryby można też przełączać w oknie podręcznym. Stronę „Tłumaczenie obrazów” możesz również otworzyć z ikony rozszerzenia."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Nie znaleziono tekstu do przetłumaczenia. Możesz samodzielnie zaznaczyć obszar, który chcesz przetłumaczyć."
+  },
+  "m_d336925eec6575b0": {
+    "message": "Automatycznie wykryto $arg1$ obszarów tekstu. Możesz je dostosować, usunąć lub dodać nowe.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "Zignorowano $arg1$ obszarów drobnego tekstu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Wyszukiwanie obszarów tekstu $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Wyszukiwanie obszarów tekstu na obrazie…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Śledzenie kształtów tekstu…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Nie znaleziono tekstu do przetłumaczenia"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "Znaleziono $arg1$ obszarów tekstu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "Pominięto $arg1$ obszarów drobnego tekstu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

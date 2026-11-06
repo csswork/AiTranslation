@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Right-click an image on a webpage, hover over \"Translate text in image\", then choose \"Automatically detect the entire image\" or \"Select the area to translate\"; you can also switch between the two modes in the popup. You can also open the \"Image translation\" page from the extension icon."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "No text to translate was found. You can draw a box around the area you want translated."
+  },
+  "m_d336925eec6575b0": {
+    "message": "Automatically detected $arg1$ text areas. You can adjust, delete, or add boxes.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "Ignored $arg1$ small text areas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Finding text areas $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Finding text areas in the image…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Tracing text shapes…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "No text found to translate"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "Found $arg1$ text areas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "Ignored $arg1$ small text areas",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI Translator"
   },

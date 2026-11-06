@@ -476,5 +476,14 @@
   "形状": "Vorm",
   "自动识别整张图": "Automatisch de hele afbeelding detecteren",
   "框选要翻译的区域": "Selecteer het gebied dat je wilt vertalen",
-  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Klik met de rechtermuisknop op een afbeelding op een webpagina, beweeg de muis over \"Tekst in afbeelding vertalen\" en kies \"Automatisch de hele afbeelding detecteren\" of \"Selecteer het gebied dat je wilt vertalen\"; je kunt in de pop-up ook tussen beide modi wisselen. Je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram."
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Klik met de rechtermuisknop op een afbeelding op een webpagina, beweeg de muis over \"Tekst in afbeelding vertalen\" en kies \"Automatisch de hele afbeelding detecteren\" of \"Selecteer het gebied dat je wilt vertalen\"; je kunt in de pop-up ook tussen beide modi wisselen. Je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram.",
+  "没有找到需要翻译的文字，可以自己框出要翻译的区域": "Geen tekst gevonden om te vertalen. Je kunt zelf een kader trekken rond het gebied dat je wilt vertalen.",
+  "自动框出 $1 处文字，可以调整、删除或补框": "Automatisch $1 tekstgebieden gedetecteerd. Je kunt kaders aanpassen, verwijderen of toevoegen.",
+  "已忽略 $1 处小字": "$1 kleine tekstgebieden genegeerd",
+  "正在找出文字范围 $1/$2…": "Tekstgebieden zoeken $1/$2…",
+  "正在找出图中的文字范围…": "Tekstgebieden in de afbeelding zoeken…",
+  "正在勾出文字形状…": "Tekstvormen traceren…",
+  "没有找到需要翻译的文字": "Geen tekst gevonden om te vertalen",
+  "找到 $1 处文字": "$1 tekstgebieden gevonden",
+  "忽略 $1 处小字": "$1 kleine tekstgebieden genegeerd"
 }

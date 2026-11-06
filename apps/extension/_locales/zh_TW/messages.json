@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "在网页图片上点击右键，将鼠标移到「翻译图片里的文字」，再选择「自动识别整张图」或「框选要翻译的区域」；两种方式在弹窗里也能互相切换。也可以从扩展图标打开「图片翻译」页面。"
   },
+  "m_e1a0704dcfe82799": {
+    "message": "沒有找到需要翻譯的文字，可以自行框選要翻譯的區域"
+  },
+  "m_d336925eec6575b0": {
+    "message": "自動框選出 $arg1$ 處文字，可以調整、刪除或補框",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "已忽略 $arg1$ 處小字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "正在找出文字範圍 $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "正在找出圖中的文字範圍…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "正在勾出文字形状…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "没有找到需要翻译的文字"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "找到 $arg1$ 处文字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "忽略 $arg1$ 处小字",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI 劃詞翻譯"
   },

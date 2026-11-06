@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Nhấp chuột phải vào hình ảnh trên trang web, di chuột đến \"Dịch văn bản trong hình ảnh\", rồi chọn \"Tự động nhận diện toàn bộ hình ảnh\" hoặc \"Chọn vùng cần dịch\"; bạn cũng có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên. Bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Không tìm thấy văn bản cần dịch, bạn có thể tự khoanh vùng khu vực muốn dịch"
+  },
+  "m_d336925eec6575b0": {
+    "message": "Đã tự động khoanh vùng $arg1$ chỗ văn bản, bạn có thể điều chỉnh, xóa hoặc thêm khung",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "Đã bỏ qua $arg1$ chỗ chữ nhỏ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Đang tìm phạm vi văn bản $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Đang tìm phạm vi văn bản trong ảnh…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Đang tìm hình dạng chữ…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Không tìm thấy văn bản cần dịch"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "Đã tìm thấy $arg1$ vùng văn bản",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "Đã bỏ qua $arg1$ vùng chữ nhỏ",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

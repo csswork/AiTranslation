@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Fai clic con il pulsante destro del mouse su un'immagine in una pagina web, passa il mouse su \"Traduci il testo nell'immagine\", quindi scegli \"Rileva automaticamente l'intera immagine\" o \"Seleziona l'area da tradurre\"; puoi anche passare da una modalità all'altra nella finestra popup. Puoi anche aprire la pagina \"Traduzione immagini\" dall'icona dell'estensione."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Nessun testo da tradurre trovato. Puoi tracciare un riquadro attorno all'area che vuoi tradurre."
+  },
+  "m_d336925eec6575b0": {
+    "message": "Rilevate automaticamente $arg1$ aree di testo. Puoi regolarle, eliminarle o aggiungerne altre.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "Ignorate $arg1$ aree di testo piccolo",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Ricerca delle aree di testo $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Ricerca delle aree di testo nell'immagine…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Tracciamento delle forme del testo…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Nessun testo da tradurre trovato"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "Trovate $arg1$ aree di testo",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "Ignorate $arg1$ aree di testo piccolo",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

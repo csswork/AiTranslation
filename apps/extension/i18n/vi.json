@@ -476,5 +476,14 @@
   "形状": "Hình dạng",
   "自动识别整张图": "Tự động nhận diện toàn bộ hình ảnh",
   "框选要翻译的区域": "Chọn vùng cần dịch",
-  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Nhấp chuột phải vào hình ảnh trên trang web, di chuột đến \"Dịch văn bản trong hình ảnh\", rồi chọn \"Tự động nhận diện toàn bộ hình ảnh\" hoặc \"Chọn vùng cần dịch\"; bạn cũng có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên. Bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích."
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Nhấp chuột phải vào hình ảnh trên trang web, di chuột đến \"Dịch văn bản trong hình ảnh\", rồi chọn \"Tự động nhận diện toàn bộ hình ảnh\" hoặc \"Chọn vùng cần dịch\"; bạn cũng có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên. Bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích.",
+  "没有找到需要翻译的文字，可以自己框出要翻译的区域": "Không tìm thấy văn bản cần dịch, bạn có thể tự khoanh vùng khu vực muốn dịch",
+  "自动框出 $1 处文字，可以调整、删除或补框": "Đã tự động khoanh vùng $1 chỗ văn bản, bạn có thể điều chỉnh, xóa hoặc thêm khung",
+  "已忽略 $1 处小字": "Đã bỏ qua $1 chỗ chữ nhỏ",
+  "正在找出文字范围 $1/$2…": "Đang tìm phạm vi văn bản $1/$2…",
+  "正在找出图中的文字范围…": "Đang tìm phạm vi văn bản trong ảnh…",
+  "正在勾出文字形状…": "Đang tìm hình dạng chữ…",
+  "没有找到需要翻译的文字": "Không tìm thấy văn bản cần dịch",
+  "找到 $1 处文字": "Đã tìm thấy $1 vùng văn bản",
+  "忽略 $1 处小字": "Đã bỏ qua $1 vùng chữ nhỏ"
 }

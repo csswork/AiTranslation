@@ -54,6 +54,7 @@
         "src/lib/tiles.js",
         "src/lib/regions.js",
         "src/lib/image-render.js",
+        "src/lib/text-shapes.js",
         "src/lib/region-picker.js",
         "src/content/content.js",
         "src/content/elements.js",

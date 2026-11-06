@@ -476,5 +476,14 @@
   "形状": "Forme",
   "自动识别整张图": "Détecter automatiquement toute l'image",
   "框选要翻译的区域": "Sélectionner la zone à traduire",
-  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Faites un clic droit sur une image d'une page web, survolez « Traduire le texte de l'image », puis choisissez « Détecter automatiquement toute l'image » ou « Sélectionner la zone à traduire » ; vous pouvez aussi basculer entre les deux modes dans la fenêtre contextuelle. Vous pouvez également ouvrir la page « Traduction d'images » depuis l'icône de l'extension."
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Faites un clic droit sur une image d'une page web, survolez « Traduire le texte de l'image », puis choisissez « Détecter automatiquement toute l'image » ou « Sélectionner la zone à traduire » ; vous pouvez aussi basculer entre les deux modes dans la fenêtre contextuelle. Vous pouvez également ouvrir la page « Traduction d'images » depuis l'icône de l'extension.",
+  "没有找到需要翻译的文字，可以自己框出要翻译的区域": "Aucun texte à traduire n'a été trouvé. Vous pouvez délimiter vous-même la zone à traduire.",
+  "自动框出 $1 处文字，可以调整、删除或补框": "$1 zones de texte détectées automatiquement. Vous pouvez les ajuster, les supprimer ou en ajouter.",
+  "已忽略 $1 处小字": "$1 petites zones de texte ignorées",
+  "正在找出文字范围 $1/$2…": "Recherche des zones de texte $1/$2…",
+  "正在找出图中的文字范围…": "Recherche des zones de texte dans l'image…",
+  "正在勾出文字形状…": "Traçage des formes de texte…",
+  "没有找到需要翻译的文字": "Aucun texte à traduire trouvé",
+  "找到 $1 处文字": "$1 zones de texte trouvées",
+  "忽略 $1 处小字": "$1 petites zones de texte ignorées"
 }

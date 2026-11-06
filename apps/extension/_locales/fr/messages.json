@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Faites un clic droit sur une image d'une page web, survolez « Traduire le texte de l'image », puis choisissez « Détecter automatiquement toute l'image » ou « Sélectionner la zone à traduire » ; vous pouvez aussi basculer entre les deux modes dans la fenêtre contextuelle. Vous pouvez également ouvrir la page « Traduction d'images » depuis l'icône de l'extension."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Aucun texte à traduire n'a été trouvé. Vous pouvez délimiter vous-même la zone à traduire."
+  },
+  "m_d336925eec6575b0": {
+    "message": "$arg1$ zones de texte détectées automatiquement. Vous pouvez les ajuster, les supprimer ou en ajouter.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ petites zones de texte ignorées",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Recherche des zones de texte $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Recherche des zones de texte dans l'image…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Traçage des formes de texte…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Aucun texte à traduire trouvé"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "$arg1$ zones de texte trouvées",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "$arg1$ petites zones de texte ignorées",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

@@ -24,6 +24,7 @@
   const Tiles = globalThis.AITrTiles;
   const Regions = globalThis.AITrRegions;
   const Render = globalThis.AITrImageRender;
+  const Shapes = globalThis.AITrTextShapes;
   const Picker = globalThis.AITrRegionPicker;
   // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
   const { signal, onRetire } = globalThis.AITrLifecycle;
@@ -330,6 +331,16 @@
     }
     .layer { position: absolute; inset: 0; }
     .hide-translation .layer, .picking .layer { display: none; }
+    /* 自动识别测试阶段：只画出找到的文字形状 */
+    .shapes { position: absolute; inset: 0; pointer-events: none; }
+    .shapes svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .shapes polygon { stroke-width: 2px; stroke-linejoin: round; pointer-events: auto; }
+    /* 编号放在形状左上角的外面，不挡住第一个字 */
+    .shapes .num {
+      position: absolute; padding: 1px 5px; border-radius: 4px; line-height: 1.4; transform: translate(-70%, -70%);
+      font: 600 11px/1.4 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #111;
+    }
+    .hide-translation .shapes, .picking .shapes { display: none; }
 
     .box { position: absolute; box-sizing: border-box; min-width: 22px; min-height: 17px; }
     .box .fill {
@@ -381,7 +392,7 @@
           </button>
         </div>
         <div class="body">
-          <div class="canvas"><img alt="" /><div class="layer"></div><div class="pick-layer" hidden></div></div>
+          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="pick-layer" hidden></div></div>
         </div>
         <div class="tools">
           <div class="group v">
@@ -432,6 +443,8 @@
       canvas: q('.canvas'),
       img: q('.canvas img'),
       layer: q('.layer'),
+      // 自动识别测试阶段画文字形状的那层（panel.shapes 是框选的形状按钮）
+      shapeLayer: q('.shapes'),
       pickLayer: q('.pick-layer'),
       meta: q('.meta'),
       hint: q('.hint b'),
@@ -462,7 +475,8 @@
     });
 
     panel.target.addEventListener('change', () => {
-      if (imageResult) translateBlocks(imageResult, panel.target.value);
+      // 自动识别的测试阶段只画了形状，还没有可翻译的内容
+      if (imageResult && (imageResult.merged || imageResult.groups)) translateBlocks(imageResult, panel.target.value);
     });
     panel.fill.addEventListener('change', () => {
       panel.fillColor.hidden = panel.fill.value !== 'custom';
@@ -623,6 +637,7 @@
     panel.canvas.classList.toggle('tall', tall);
     panel.panel.classList.toggle('tall', tall);
     panel.canvas.classList.remove('hide-translation');
+    panel.shapeLayer.replaceChildren();
     panel.toggle.textContent = t("显示原图");
     panel.fill.value = settings.imageFill;
     setShape(settings.imageShape);
@@ -847,6 +862,75 @@
     return lastLines;
   }
 
+  /**
+   * 自动识别的第一步：让模型找出值得翻译的文字块（忽略小字），再按笔画勾成互不重叠的多边形。
+   * 长图同样分块识别再合并。被新的操作打断时返回 null。
+   */
+  async function detectShapes(result, signal, token) {
+    const { grabbed, settings } = result;
+    const total = grabbed.parts.length;
+    const perTile = [];
+    for (let i = 0; i < total; i += 1) {
+      if (mask) mask.label.textContent = total > 1 ? t('正在找出文字范围 $1/$2…', [i + 1, total]) : t('正在找出图中的文字范围…');
+      const reply = await AITrRequests.request({ type: 'read-image', purpose: 'regions',
+        image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
+      if (token !== generation) return null;
+      if (!reply?.ok) {
+        throw new Error(grabbed.byUrl
+          ? t("这张图取不到（可能是站点防盗链）。可以复制图片后粘贴到「图片翻译」面板")
+          : reply?.error || t('识别失败'));
+      }
+      perTile.push(Tiles.fromSquare(reply.blocks, grabbed.parts[i].frame));
+    }
+    const blocks = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
+    if (mask) mask.label.textContent = t('正在勾出文字形状…');
+    // 读不到像素（跨域图）时按原图尺寸退回模型的矩形
+    return grabbed.ctx
+      ? Shapes.findShapes(grabbed.ctx, grabbed.width, grabbed.height, blocks, grabbed.natural)
+      : Shapes.findShapes(null, grabbed.natural.w, grabbed.natural.h, blocks, grabbed.natural);
+  }
+
+  function shapesMeta({ shapes, small }) {
+    if (!shapes.length) return t('没有找到需要翻译的文字');
+    return [t('找到 $1 处文字', [shapes.length]), small ? t('忽略 $1 处小字', [small]) : '']
+      .filter(Boolean).join(' · ');
+  }
+
+  /** 相邻的形状用不同颜色，挨在一起也分得清。 */
+  const SHAPE_COLORS = ['#f59e0b', '#22d3ee', '#f472b6', '#a3e635', '#a78bfa', '#fb7185'];
+
+  /** 把文字形状画在原图上：编号标在左上角，悬停显示模型识别出的原文。 */
+  function drawShapes(shapes, natural) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${natural.w} ${natural.h}`);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    const labels = [];
+    shapes.forEach((shape, i) => {
+      const color = SHAPE_COLORS[i % SHAPE_COLORS.length];
+      for (const points of shape.polygons) {
+        const polygon = document.createElementNS(NS, 'polygon');
+        polygon.setAttribute('points', points.map(([x, y]) => `${(x * natural.w).toFixed(1)},${(y * natural.h).toFixed(1)}`).join(' '));
+        polygon.setAttribute('fill', `${color}33`);
+        polygon.setAttribute('stroke', color);
+        polygon.setAttribute('vector-effect', 'non-scaling-stroke');
+        if (shape.fallback) polygon.setAttribute('stroke-dasharray', '6 4');
+        const title = document.createElementNS(NS, 'title');
+        title.textContent = `${i + 1}. ${shape.text}`;
+        polygon.appendChild(title);
+        svg.appendChild(polygon);
+      }
+      const num = document.createElement('div');
+      num.className = 'num';
+      num.textContent = String(i + 1);
+      num.style.left = `${shape.bounds.x * 100}%`;
+      num.style.top = `${shape.bounds.y * 100}%`;
+      num.style.background = color;
+      labels.push(num);
+    });
+    panel.shapeLayer.replaceChildren(svg, ...labels);
+  }
+
   /** 弹窗里翻译整张图：识别过就直接用，「先框选」时还没识别就先识别。 */
   async function translateWhole(result) {
     const base = { ...result, regions: null, groups: null };
@@ -894,9 +978,14 @@
         setPicking(true);
         return;
       }
-      const merged = await recognizeWhole(result, signal, token);
-      if (!merged) return;
-      await translateBlocks({ ...result, merged }, settings.target, token);
+      // 自动识别：先找出各段文字，按笔画勾成互不重叠的多边形。
+      // 下一步按这些形状逐块识别、翻译、覆盖；现在先停在这里画出形状，用来检查识别效果。
+      const found = await detectShapes(result, signal, token);
+      if (!found) return;
+      hideMask();
+      imageResult = result;
+      openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: shapesMeta(found) });
+      drawShapes(found.shapes, grabbed.natural);
     } catch (err) {
       if (token === generation) showFailure(String(err?.message || err));
     }

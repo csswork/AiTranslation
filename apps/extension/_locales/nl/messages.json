@@ -2002,6 +2002,61 @@
   "m_00097f532a77285a": {
     "message": "Klik met de rechtermuisknop op een afbeelding op een webpagina, beweeg de muis over \"Tekst in afbeelding vertalen\" en kies \"Automatisch de hele afbeelding detecteren\" of \"Selecteer het gebied dat je wilt vertalen\"; je kunt in de pop-up ook tussen beide modi wisselen. Je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram."
   },
+  "m_e1a0704dcfe82799": {
+    "message": "Geen tekst gevonden om te vertalen. Je kunt zelf een kader trekken rond het gebied dat je wilt vertalen."
+  },
+  "m_d336925eec6575b0": {
+    "message": "Automatisch $arg1$ tekstgebieden gedetecteerd. Je kunt kaders aanpassen, verwijderen of toevoegen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_7474f557610bebf3": {
+    "message": "$arg1$ kleine tekstgebieden genegeerd",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_840a265804081796": {
+    "message": "Tekstgebieden zoeken $arg1$/$arg2$…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_4c97163c40fb46b3": {
+    "message": "Tekstgebieden in de afbeelding zoeken…"
+  },
+  "m_be2e36b6b5522ea5": {
+    "message": "Tekstvormen traceren…"
+  },
+  "m_5b88a17476f43fad": {
+    "message": "Geen tekst gevonden om te vertalen"
+  },
+  "m_ee19d19e33308a6b": {
+    "message": "$arg1$ tekstgebieden gevonden",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f86b4edd1ae6411e": {
+    "message": "$arg1$ kleine tekstgebieden genegeerd",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },
