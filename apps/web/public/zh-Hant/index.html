@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
-<meta name="description" content="開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
+<meta name="description" content="開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/" />
 <meta property="og:title" content="AI 劃詞翻譯" />
-<meta property="og:description" content="選取文字，按右鍵，然後接著讀。24 種介面與目標語言，支援文字、網頁區域與圖片翻譯。自帶 Key 或免 Key 點數翻譯均可。" />
+<meta property="og:description" content="選取文字，右鍵，然後接著讀。整篇文章逐段對照的雙語閱讀，以及文字、圖片、PDF 與網頁區域翻譯；24 種介面與目標語言。自帶 Key 或免 Key 點數翻譯均可。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI 劃詞翻譯：選取，按右鍵，然後繼續閱讀。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome 翻譯擴充功能，支援劃詞、網頁區域、圖片與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,18 +83,19 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/zh-Hant/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/zh-Hant/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：雙語閱讀，把網頁文章變成逐段對照的閱讀頁。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
-        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+        <p class="hero-sub">一個 Chrome 擴充功能。選中文字、整塊網頁區域、一張圖片，或整篇文章，就能譯成你熟悉的語言。24 種介面與目標語言可獨立選擇，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可開始。</p>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> 安裝到 Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">安裝到 Chrome</span> <span data-for-browser="edge" hidden>安裝到 Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <p class="install-note" data-install-note hidden>這個瀏覽器無法安裝 Chrome 擴充功能：請在電腦上使用 Chrome、Edge 等 Chromium 核心瀏覽器開啟本頁。</p>
         <ul class="hero-meta">
           <li><b>開源</b> GPL-3.0 · 24 種語言</li>
-          <li>Chrome 116+</li>
+          <li>Chrome / Edge 116+</li>
           <li>不儲存譯文 · 無第三方統計</li>
-          <li>六种翻译方式</li>
+          <li>六種翻譯方式</li>
         </ul>
       </div>
 
@@ -206,19 +207,19 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>六个入口，都在右键菜单里</h2>
+          <h2>六個入口，都在右鍵選單裡</h2>
           <p>不用切換分頁，不用複製貼上。看不懂的那一段在哪裡，翻譯就發生在哪裡。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
-            <h3>双语阅读<span class="new">新功能</span></h3>
-            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <h3>雙語閱讀<span class="new">新功能</span></h3>
+            <p>在網頁上不選文字直接右鍵，掃描識別出標題和正文，在旁邊打開一個乾淨的閱讀頁：原文與譯文逐段對齊，導航、廣告和推薦模組都不進來。</p>
             <ul>
-              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
-              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
-              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
-              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+              <li>左右並排時每段頂端對齊，也能上下對照、只看譯文或只看原文</li>
+              <li>點譯文裡的任意一個詞，看幾種其他譯法或自己改寫；換過的說法會記住，之後翻譯優先使用</li>
+              <li>外觀可選淺色、深色或跟隨系統，配色、字體、字號、行距與版心都能調</li>
+              <li>連同譯文保存在本機，右側隨時打開，不用再翻譯</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><strong>演示影片預留位置</strong> <span class="mono">assets/demo-reader.mp4</span></div>
             </div>
           </div>
         </div>
@@ -244,7 +245,7 @@
             <ul>
               <li>中文、短詞和混合語言都可以翻譯；純數字、標點和表情不顯示翻譯入口</li>
               <li>彈出視窗置中且可拖曳，按 <span class="mono">Esc</span> 或點擊背景即可關閉，不是追著游標跑的小氣泡</li>
-              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
+              <li>可摺疊的原文面板，對照著讀；點譯文裡的詞能換一種說法</li>
               <li>也有鍵盤快速鍵：<span class="mono">Alt+Shift+T</span>（macOS 為 <span class="mono">Command+Shift+Y</span>）</li>
             </ul>
           </div>
@@ -269,9 +270,9 @@
             <h3>圖片翻譯</h3>
             <p>在圖片上按右鍵，辨識圖中的文字，將整段譯文貼回原文位置覆蓋，還能存成一張新圖片。</p>
             <ul>
-              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
-              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
-              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
+              <li>對話框、標題、段落各按整段翻譯，按筆畫勾出每段文字的形狀，譯文排在原位附近、互不遮擋</li>
+              <li>日文漫畫的直排文字譯成中文、日文或韓文時保持直排，注音假名不會混進譯文</li>
+              <li>可以先看辨識出的文字形狀，移動、刪改或新畫後再翻譯；底色自動取文字周圍的相近色</li>
               <li>可以只框選要翻譯的地方：矩形或圓形，能拖曳、調整大小，多個選區一次辨識</li>
               <li>結果可下載或複製成新圖片，在本機合成；也可開啟圖片面板，上傳、貼上圖片或輸入圖片網址</li>
             </ul>
@@ -297,7 +298,7 @@
             <h3>整份 PDF 翻譯</h3>
             <p>在 Chrome 開啟的 PDF 裡，不選文字直接按右鍵，整份文件在旁邊的頁面裡翻譯。譯文按原位置覆蓋回去，版面、圖表與表格都不變。</p>
             <ul>
-              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
+              <li>原文和譯文並排對照，也可以只看譯文或只看原文；點譯文裡的詞能換一種說法</li>
               <li>表格逐格翻譯，行列與表格線保持原樣；放不下的譯文自動縮小字號</li>
               <li>透過瀏覽器列印另存為 PDF，譯文是可選取、可搜尋的文字</li>
               <li>檔案只在本機解析，只有擷取出的文字傳送給翻譯平台；本機 PDF 可以直接拖進翻譯頁。暫不支援掃描件</li>
@@ -352,7 +353,7 @@
             <ul>
               <li>24 種目標語言可選，覆蓋全球主流語言</li>
               <li>來源語言可自動識別或手動指定，目標語言獨立選擇，面板記住上次選擇</li>
-              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
+              <li>平台和目標語言就在工具列上，隨時切換重譯；譯好的詞可以點開換說法</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -510,16 +511,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>從 Chrome 線上應用程式商店安裝</h2>
-        <p>需要 Chrome 116 或更高版本，Edge 等 Chromium 核心瀏覽器同樣適用。</p>
+        <h2>從 Chrome 或 Edge 商店安裝</h2>
+        <p>Chrome 應用商店與 Microsoft Edge 載入項商店皆已上架，需要 116 或更高版本；Brave 等其他 Chromium 核心瀏覽器可從 Chrome 應用商店安裝。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>開啟商店頁面</b> <span>在電腦上開啟<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 應用程式商店頁面</a>。</span></div>
+          <div><b>開啟商店頁面</b> <span>在電腦上開啟<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 應用商店頁面</a>，Edge 使用者開啟<a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 載入項商店頁面</a>。</span></div>
         </div>
         <div class="step">
-          <div><b>新增至 Chrome</b> <span>點「新增至 Chrome」並確認。</span></div>
+          <div><b>新增擴充功能</b> <span>點「新增至 Chrome」或 Edge 的「取得」，並確認。</span></div>
         </div>
         <div class="step">
           <div><b>固定到工具列</b> <span>點拼圖圖示，把擴充功能固定到工具列。</span></div>
@@ -531,6 +532,7 @@
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">開啟 Chrome 線上應用程式商店</a>
+        <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">開啟 Edge 載入項商店</a>
         <p>也可以從 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 原始碼</a>以開發者模式載入 <span class="mono">apps/extension</span>。</p>
       </div>
 
@@ -543,7 +545,7 @@
     <div class="cta reveal">
       <h2>裝好之後，就忘了它</h2>
       <p>直到下一次，你又選取了一段看不懂的文字。</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">新增至 Chrome</a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">新增至 Chrome</span><span data-for-browser="edge" hidden>新增至 Edge</span></a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
     </div>
   </section>
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · ページ上の外国語も、選択して右クリックするだけで読めます</title>
-<meta name="description" content="オープンソースの Chrome 翻訳拡張機能です。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key を持ち込むことも、ログイン後にキー不要で試用またはサブスクリプションすることもできます。" />
+<meta name="description" content="オープンソースの Chrome / Edge 翻訳拡張機能です。バイリンガル読書、選択テキスト、画像、PDF 全体、Web ページ領域、独立翻訳パネルに対応し、24 種類の UI 言語と翻訳先言語を提供します。独自の API Key を持ち込むことも、ログインして Key 不要の試用やサブスクリプションを利用することもできます。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content="https://huaci.app/ja/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み進められます。24 種類のインターフェース言語とターゲット言語に対応し、テキスト、Web ページ領域、画像の翻訳をサポートします。独自キーまたはキー不要のポイント翻訳のいずれも利用できます。" />
+<meta property="og:description" content="テキストを選択し、右クリックして、そのまま読み進めます。記事全体を段落ごとに対照表示するバイリンガル読書に加え、テキスト、画像、PDF、Web ページ領域の翻訳に対応します。24 種類の UI 言語と翻訳先言語。独自 Key または Key 不要のポイント翻訳のいずれも利用できます。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator：選択して、右クリックして、そのまま読み続ける。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ja/#app","name":"AI Selection Translator","url":"https://huaci.app/ja/","description":"オープンソースの Chrome 翻訳拡張機能です。選択テキスト、Web ページ領域、画像、独立した翻訳パネルに対応し、24 種類のインターフェース言語とターゲット言語を提供します。独自の API Key を持ち込むことも、ログイン後にキー不要で試用またはサブスクリプションすることもできます。","image":"https://huaci.app/assets/og.png","inLanguage":"ja","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ja/#app","name":"AI Selection Translator","url":"https://huaci.app/ja/","description":"オープンソースの Chrome / Edge 翻訳拡張機能です。バイリンガル読書、選択テキスト、画像、PDF 全体、Web ページ領域、独立翻訳パネルに対応し、24 種類の UI 言語と翻訳先言語を提供します。独自の API Key を持ち込むことも、ログインして Key 不要の試用やサブスクリプションを利用することもできます。","image":"https://huaci.app/assets/og.png","inLanguage":"ja","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,18 +83,19 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ja/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ja/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：バイリンガル読書で、ウェブ記事を段落ごとに対照できる読書ページに変えます。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選択して、右クリック、<br /><span class="dim">そしてそのまま読み続ける。</span></h1>
-        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
-        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+        <p class="hero-sub">Chrome 拡張機能です。テキスト、ウェブページの領域全体、1 枚の画像、または記事全体を選択すると、使い慣れた言語に翻訳できます。24 種類のインターフェース言語と翻訳先言語は個別に選択でき、自身の OpenAI、DeepSeek、DeepL の API Key ですぐに始められます。</p>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Chrome にインストール </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Chrome にインストール</span> <span data-for-browser="edge" hidden>Edge にインストール</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
         <p class="install-note" data-install-note hidden>このブラウザには Chrome 拡張機能をインストールできません。パソコンで Chrome、Edge などの Chromium ベースのブラウザを使用して本ページを開いてください。</p>
         <ul class="hero-meta">
           <li><b>オープンソース</b> GPL-3.0 · 24 言語</li>
-          <li>Chrome 116+</li>
+          <li>Chrome / Edge 116+</li>
           <li>訳文を保存しない · サードパーティの統計なし</li>
-          <li>六种翻译方式</li>
+          <li>6 つの翻訳方法</li>
         </ul>
       </div>
 
@@ -206,19 +207,19 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>六个入口，都在右键菜单里</h2>
+          <h2>6 つの入口はすべて右クリックメニューにあります</h2>
           <p>タブを切り替える必要も、コピー＆ペーストする必要もありません。読めない部分がある場所で、そのまま翻訳が行われます。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
-            <h3>双语阅读<span class="new">新功能</span></h3>
-            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <h3>バイリンガル読書<span class="new">新機能</span></h3>
+            <p>ウェブページ上で文字を選択せずに右クリックすると、見出しと本文をスキャンして認識し、隣にクリーンな読書ページを開きます。原文と訳文が段落ごとに対応し、ナビゲーション、広告、おすすめモジュールは含まれません。</p>
             <ul>
-              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
-              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
-              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
-              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+              <li>左右並列では各段落の先頭が揃い、上下対照、訳文のみ、原文のみも選択できます</li>
+              <li>訳文内の任意の単語をクリックすると、他の訳し方を確認したり自分で書き換えたりできます。言い換えた表現は記憶され、以降の翻訳で優先的に使用されます</li>
+              <li>外観はライト、ダーク、システム追従から選択でき、配色、フォント、文字サイズ、行間、本文幅を調整できます</li>
+              <li>訳文とともに本機に保存され、右側からいつでも開けます。再翻訳は不要です</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><strong>デモ動画プレースホルダー</strong> <span class="mono">assets/demo-reader.mp4</span></div>
             </div>
           </div>
         </div>
@@ -244,7 +245,7 @@
             <ul>
               <li>中国語、短い語句、混在言語も翻訳可能。数字のみ、句読点、絵文字には翻訳入口を表示しない</li>
               <li>ポップアップは中央に表示され、ドラッグ可能です。<span class="mono">Esc</span> または背景のクリックで閉じられ、カーソルを追いかける小さなバブルではありません</li>
-              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
+              <li>折りたたみ可能な原文パネルで見比べながら読める。訳文内の単語をクリックすると別の言い方に切り替わる</li>
               <li>キーボードショートカットもあります：<span class="mono">Alt+Shift+T</span>（macOS では <span class="mono">Command+Shift+Y</span>）</li>
             </ul>
           </div>
@@ -269,9 +270,9 @@
             <h3>画像翻訳</h3>
             <p>画像を右クリックすると、画像内の文字を認識し、翻訳文を元の位置に重ねて表示し、新しい画像として保存できます。</p>
             <ul>
-              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
-              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
-              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
+              <li>吹き出し、見出し、段落はそれぞれまとまりごとに翻訳し、文字の形を線で囲んで抽出し、訳文は元の位置の近くに重ならないよう配置される</li>
+              <li>日本語漫画の縦書き文字を中国語、日本語、韓国語に翻訳する際は縦書きを維持し、ルビが訳文に混入しない</li>
+              <li>認識された文字の形を先に確認し、移動・削除・修正または新規描画してから翻訳できる。背景色は文字周囲の近い色を自動で取得する</li>
               <li>翻訳する範囲だけを選択できます。矩形または円形で指定でき、ドラッグやサイズ変更が可能で、複数の選択範囲を一度に認識します</li>
               <li>結果は新しい画像としてダウンロードまたはコピーでき、合成はお使いの端末上で行います。画像パネルを開いて画像をアップロード、貼り付け、または画像アドレスを入力することもできます</li>
             </ul>
@@ -297,7 +298,7 @@
             <h3>PDF 全体の翻訳</h3>
             <p>Chrome で開いた PDF 内で、テキストを選択せずに右クリックすると、文書全体が隣のページで翻訳されます。訳文は元の位置に重ねて表示され、レイアウト、図表、表は変わりません。</p>
             <ul>
-              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
+              <li>原文と訳文を並べて対照でき、訳文のみまたは原文のみの表示も可能。訳文内の単語をクリックすると別の言い方に切り替わる</li>
               <li>表はセルごとに翻訳され、行・列と罫線はそのまま維持されます。収まらない訳文は自動的に文字サイズが縮小されます</li>
               <li>ブラウザの印刷から PDF として保存でき、訳文は選択・検索可能なテキストです</li>
               <li>ファイルは本機でのみ解析され、抽出されたテキストのみが翻訳プラットフォームに送信されます。ローカルの PDF は翻訳ページに直接ドラッグできます。スキャン文書には未対応です</li>
@@ -352,7 +353,7 @@
             <ul>
               <li>24 種類のターゲット言語から選択可能で、世界の主要言語をカバー</li>
               <li>ソース言語は自動認識または手動指定が可能で、ターゲット言語は個別に選択でき、パネルは前回の選択を記憶します</li>
-              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
+              <li>プラットフォームと目標言語はツールバー上にあり、いつでも切り替えて再翻訳できる。翻訳済みの単語はクリックして別の言い方に切り替えられる</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -510,16 +511,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Chrome ウェブストアからインストール</h2>
-        <p>Chrome 116 以降が必要です。Edge など Chromium ベースのブラウザでも同様に利用できます。</p>
+        <h2>Chrome または Edge ストアからインストール</h2>
+        <p>Chrome ウェブストアと Microsoft Edge アドオンストアの両方で公開されています。バージョン 116 以上が必要です。Brave など他の Chromium ベースのブラウザでは、Chrome ウェブストアからインストールできます。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>ストアページを開く</b> <span>パソコンで<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome ウェブストアのページ</a>を開きます。</span></div>
+          <div><b>ストアページを開く</b> <span>パソコンで<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome ウェブストアのページ</a>を開きます。Edge ユーザーは<a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge アドオンストアのページ</a>を開きます。</span></div>
         </div>
         <div class="step">
-          <div><b>Chrome に追加</b> <span>「Chrome に追加」をクリックして確認します。</span></div>
+          <div><b>拡張機能を追加</b> <span>「Chrome に追加」または Edge の「取得」をクリックし、確認します。</span></div>
         </div>
         <div class="step">
           <div><b>ツールバーに固定</b> <span>パズルアイコンをクリックし、拡張機能をツールバーに固定します。</span></div>
@@ -531,6 +532,7 @@
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome ウェブストアを開く</a>
+        <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge アドオンストアを開く</a>
         <p><a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub のソース</a>から開発者モードで <span class="mono">apps/extension</span> を読み込むこともできます。</p>
       </div>
 
@@ -543,7 +545,7 @@
     <div class="cta reveal">
       <h2>インストールしたら、あとは忘れてしまってください</h2>
       <p>そして次に、あなたが読めない文字列を選ぶときまで。</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome に追加</a> <a class="btn btn-ghost" href="/ja/changelog.html">更新履歴</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Chrome に追加</span><span data-for-browser="edge" hidden>Edge に追加</span></a> <a class="btn btn-ghost" href="/ja/changelog.html">更新履歴</a></div>
     </div>
   </section>
 

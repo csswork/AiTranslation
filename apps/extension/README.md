@@ -40,7 +40,7 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Version **2.1.0 is live on the Chrome Web Store** (whole-PDF translation, image region selection and export); **2.2.0** (bilingual reading, word alternatives and wording preferences, shape-based image translation) is in preparation. Accounts, hosted trials and subscriptions are available through the account service at `app.huaci.app`; bring-your-own-key providers remain available in settings.
+Version **2.1.0 is live on the [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) and [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe)** (whole-PDF translation, image region selection and export); **2.2.0** (bilingual reading, word alternatives and wording preferences, shape-based image translation) is in preparation. Accounts, hosted trials and subscriptions are available through the account service at `app.huaci.app`; bring-your-own-key providers remain available in settings.
 
 Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
 

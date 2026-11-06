@@ -1,6 +1,6 @@
 # Microsoft Edge Add-ons 发布
 
-状态：Edge 首次发布准备中，已完成开发者注册并创建商店草稿；尚未完成账户验证或提交审核。基于扩展 2.1.0；不能把安装包检查通过表述成 Edge 实机验收通过。
+状态：**已上架 Microsoft Edge 加载项商店**（2026-11-06 确认商店页可安装，基于扩展 2.1.0）：<https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe>，扩展 ID `mojcgjimlkkbohomcijkmoefpeekmohe`。官网首页、安装区块与更新日志已加入 Edge 入口：Edge 访问时首屏按钮改指向 Edge 商店（`main.js` 的 `data-edge-href`）。之后的版本（2.2.0 起）需同时用 `npm run package:edge` 打包并提交 Edge 审核。
 
 ## 安装包与环境
 

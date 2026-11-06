@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Understand foreign text on any page with a right-click</title>
-<meta name="description" content="Open-source Chrome translation extension supporting selection translation, webpage regions, images, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in for a key-free trial or subscription." />
+<meta name="description" content="Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://huaci.app/en/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Select text, right-click, and keep reading. 24 interface and target languages, with support for text, webpage region, and image translation. Bring your own Key or use key-free credit-based translation." />
+<meta property="og:description" content="Select text, right-click, and keep reading. Paragraph-by-paragraph bilingual reading for entire articles, plus translation of text, images, PDFs, and webpage regions; 24 interface and target languages. Bring your own Key or use Key-free credit-based translation." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: select, right-click, keep reading." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"AI Selection Translator","url":"https://huaci.app/en/","description":"Open-source Chrome translation extension supporting selection translation, webpage regions, images, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in for a key-free trial or subscription.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"AI Selection Translator","url":"https://huaci.app/en/","description":"Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,18 +83,19 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/en/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/en/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>New: bilingual reading turns web articles into a paragraph-by-paragraph reading page.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Select, right-click,<br /><span class="dim">then keep reading.</span></h1>
-        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
-        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+        <p class="hero-sub">A Chrome extension. Select text, a whole page region, an image, or an entire article, and translate it into a language you know. 24 interface and target languages can be chosen independently; start with your own OpenAI, DeepSeek, or DeepL API Key.</p>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Install on Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">View source</a></div>
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Install for Chrome</span> <span data-for-browser="edge" hidden>Install for Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">View source</a></div>
         <p class="install-note" data-install-note hidden>This browser cannot install Chrome extensions: open this page on a computer using a Chromium-based browser such as Chrome or Edge.</p>
         <ul class="hero-meta">
           <li><b>Open source</b> GPL-3.0 · 24 languages</li>
-          <li>Chrome 116+</li>
+          <li>Chrome / Edge 116+</li>
           <li>No translation storage · No third-party analytics</li>
-          <li>六种翻译方式</li>
+          <li>Six translation modes</li>
         </ul>
       </div>
 
@@ -206,19 +207,19 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>六个入口，都在右键菜单里</h2>
+          <h2>Six entry points, all in the right-click menu</h2>
           <p>No tab switching, no copy-paste. Wherever the part you cannot read is, that is where the translation happens.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
-            <h3>双语阅读<span class="new">新功能</span></h3>
-            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <h3>Bilingual reading<span class="new">New</span></h3>
+            <p>Without selecting any text on a webpage, right-click to scan and identify headings and body text, and open a clean reading page alongside: source and translation aligned paragraph by paragraph, with navigation, ads, and recommendation modules excluded.</p>
             <ul>
-              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
-              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
-              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
-              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+              <li>In side-by-side mode each paragraph is top-aligned; you can also use stacked view, translation only, or source only</li>
+              <li>Click any word in the translation to see several alternative translations or write your own; rephrased wording is remembered and preferred in later translations</li>
+              <li>Appearance can be light, dark, or follow the system; colors, fonts, font size, line spacing, and content width are all adjustable</li>
+              <li>Saved locally together with the translation, openable anytime from the right side, with no re-translation</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><strong>Demo video placeholder</strong> <span class="mono">assets/demo-reader.mp4</span></div>
             </div>
           </div>
         </div>
@@ -244,7 +245,7 @@
             <ul>
               <li>Chinese, short phrases, and mixed-language text can all be translated; pure numbers, punctuation, and emoji do not show the translation entry point</li>
               <li>The popup is centered and draggable, closes with <span class="mono">Esc</span> or a click on the backdrop — not a little bubble chasing your cursor</li>
-              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
+              <li>Collapsible source panel for side-by-side reading; click a word in the translation to see an alternative wording</li>
               <li>There is a keyboard shortcut too: <span class="mono">Alt+Shift+T</span> (<span class="mono">Command+Shift+Y</span> on macOS)</li>
             </ul>
           </div>
@@ -269,9 +270,9 @@
             <h3>Image translation</h3>
             <p>Right-click an image to recognize the text in it, overlay the full translation directly over the original text, and save the result as a new image.</p>
             <ul>
-              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
-              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
-              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
+              <li>Dialogs, headings, and paragraphs are each translated as a whole; the shape of every text segment is outlined stroke by stroke, and translations are placed near their original positions without overlapping</li>
+              <li>Vertical text in Japanese manga stays vertical when translated into Chinese, Japanese, or Korean; furigana is not mixed into the translation</li>
+              <li>You can review the detected text shapes first, then move, delete, edit, or draw new ones before translating; background color is automatically sampled from the surrounding area</li>
               <li>You can select only the areas to translate: rectangles or circles that can be dragged and resized, with multiple selections recognized in one pass</li>
               <li>Results can be downloaded or copied as a new image, composited locally; you can also open the image panel to upload, paste an image, or enter an image URL</li>
             </ul>
@@ -297,7 +298,7 @@
             <h3>Full PDF translation</h3>
             <p>In a PDF opened in Chrome, right-click without selecting any text and the entire document is translated in a side panel. Translations are overlaid in place, preserving layout, figures, and tables.</p>
             <ul>
-              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
+              <li>Source and translation are shown side by side, or you can view only the translation or only the source; click a word in the translation to see an alternative wording</li>
               <li>Tables are translated cell by cell, preserving rows, columns, and table lines; text that does not fit is automatically reduced in font size</li>
               <li>Save as PDF via browser print; the translation is selectable and searchable text</li>
               <li>Files are parsed locally; only the extracted text is sent to the translation platform. Local PDFs can be dragged directly into the translation page. Scanned documents are not supported yet</li>
@@ -352,7 +353,7 @@
             <ul>
               <li>24 target languages available, covering major global languages</li>
               <li>The source language can be auto-detected or specified manually, the target language is selected independently, and the panel remembers the last selection</li>
-              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
+              <li>Platform and target language are right on the toolbar, so you can switch and retranslate at any time; translated words can be clicked to see alternative wordings</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -510,16 +511,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Install from the Chrome Web Store</h2>
-        <p>Requires Chrome 116 or later; Chromium-based browsers such as Edge are also supported.</p>
+        <h2>Install from the Chrome or Edge store</h2>
+        <p>Available in both the Chrome Web Store and the Microsoft Edge Add-ons store; version 116 or later is required. Other Chromium-based browsers such as Brave can install from the Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Open the store page</b> <span>On your computer, open the <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store page</a>.</span></div>
+          <div><b>Open the store page</b> <span>On your computer, open the <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store page</a>; Edge users should open the <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge Add-ons store page</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Add to Chrome</b> <span>Click "Add to Chrome" and confirm.</span></div>
+          <div><b>Add the extension</b> <span>Click "Add to Chrome" or "Get" in Edge, then confirm.</span></div>
         </div>
         <div class="step">
           <div><b>Pin to the toolbar</b> <span>Click the puzzle icon and pin the extension to the toolbar.</span></div>
@@ -531,6 +532,7 @@
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Open the Chrome Web Store</a>
+        <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Open the Edge Add-ons store</a>
         <p>You can also load <span class="mono">apps/extension</span> in developer mode from the <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub source code</a>.</p>
       </div>
 
@@ -543,7 +545,7 @@
     <div class="cta reveal">
       <h2>Install it, then forget about it</h2>
       <p>Until the next time you select a passage you cannot read.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Add to Chrome</a> <a class="btn btn-ghost" href="/en/changelog.html">Changelog</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Add to Chrome</span><span data-for-browser="edge" hidden>Add to Edge</span></a> <a class="btn btn-ghost" href="/en/changelog.html">Changelog</a></div>
     </div>
   </section>
 

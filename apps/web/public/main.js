@@ -43,6 +43,7 @@
    * 由用户自己点「添加至 Chrome」。首屏按钮在 HTML 里默认就指向商店（没有脚本也能用），这里只处理例外：
    * Firefox、Safari 等装不了 Chrome 扩展，手机上的 Chrome 也不支持扩展——这些情况改为跳到页面下方的
    * 安装说明，并在按钮下方提示换用电脑上的 Chromium 内核浏览器（Chrome、Edge、Brave、Opera…）。
+   * Edge 有自己的加载项商店，按钮改指向那里（data-edge-href）。
    */
   const isChromium = (() => {
     const brands = navigator.userAgentData && navigator.userAgentData.brands;
@@ -50,6 +51,19 @@
     return /\b(Chrome|Chromium|CriOS|Edg)\//.test(navigator.userAgent) && !/\bFirefox\//.test(navigator.userAgent);
   })();
   const isMobile = (navigator.userAgentData && navigator.userAgentData.mobile) || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isEdge = (() => {
+    const brands = navigator.userAgentData && navigator.userAgentData.brands;
+    if (brands && brands.length) return brands.some((b) => /Microsoft Edge/.test(b.brand));
+    return /\bEdg\//.test(navigator.userAgent);
+  })();
+
+  // Edge 也上架了自己的加载项商店：Edge 用户直接去那里，按钮文字换成「安装到 Edge」
+  if (isEdge && !isMobile) {
+    document.querySelectorAll('[data-install][data-edge-href]').forEach((button) => {
+      button.href = button.dataset.edgeHref;
+      button.querySelectorAll('[data-for-browser]').forEach((label) => { label.hidden = label.dataset.forBrowser !== 'edge'; });
+    });
+  }
 
   if (!isChromium || isMobile) {
     document.querySelectorAll('[data-install]').forEach((button) => {

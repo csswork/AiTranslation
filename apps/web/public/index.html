@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI 划词翻译 · 网页里的外文，选中右键就读懂</title>
-<meta name="description" content="开源 Chrome 翻译扩展，支持划词、网页区域、图片与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。" />
+<meta name="description" content="开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="zh_CN" />
 <meta property="og:url" content="https://huaci.app/" />
 <meta property="og:title" content="AI 划词翻译" />
-<meta property="og:description" content="选中文字，右键，然后接着读。24 种界面与目标语言，支持文字、网页区域与图片翻译。自带 Key 或免 Key 点数翻译均可。" />
+<meta property="og:description" content="选中文字，右键，然后接着读。整篇文章逐段对照的双语阅读，以及文字、图片、PDF 与网页区域翻译；24 种界面与目标语言。自带 Key 或免 Key 点数翻译均可。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI 划词翻译：选中，右键，然后接着读。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 划词翻译","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"AI 划词翻译","url":"https://huaci.app/","description":"开源 Chrome 翻译扩展，支持划词、网页区域、图片与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 划词翻译","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"AI 划词翻译","url":"https://huaci.app/","description":"开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -95,19 +95,21 @@
         <p class="hero-sub">
           一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。
         </p>
-        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install>
+          <a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>
-            安装到 Chrome
+            <span data-for-browser="chrome">安装到 Chrome</span>
+            <span data-for-browser="edge" hidden>安装到 Edge</span>
           </a>
           <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">查看源码</a>
         </div>
         <p class="install-note" data-install-note hidden>这个浏览器装不了 Chrome 扩展：请在电脑上用 Chrome、Edge 等 Chromium 内核浏览器打开本页。</p>
         <ul class="hero-meta">
           <li><b>开源</b> GPL-3.0 · 24 种语言</li>
-          <li>Chrome 116+</li>
+          <li>Chrome / Edge 116+</li>
           <li>不存译文 · 无第三方统计</li>
           <li>六种翻译方式</li>
         </ul>
@@ -555,21 +557,21 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>从 Chrome 应用商店安装</h2>
-        <p>需要 Chrome 116 或更高版本，Edge 等 Chromium 内核浏览器同样适用。</p>
+        <h2>从 Chrome 或 Edge 商店安装</h2>
+        <p>Chrome 应用商店与 Microsoft Edge 加载项商店都已上架，需要 116 或更高版本；Brave 等其他 Chromium 内核浏览器可从 Chrome 应用商店安装。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
           <div>
             <b>打开商店页面</b>
-            <span>在电脑上打开<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 应用商店页面</a>。</span>
+            <span>在电脑上打开<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 应用商店页面</a>，Edge 用户打开<a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 加载项商店页面</a>。</span>
           </div>
         </div>
         <div class="step">
           <div>
-            <b>添加至 Chrome</b>
-            <span>点「添加至 Chrome」并确认。</span>
+            <b>添加扩展</b>
+            <span>点「添加至 Chrome」或 Edge 的「获取」，并确认。</span>
           </div>
         </div>
         <div class="step">
@@ -588,6 +590,7 @@
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">打开 Chrome 应用商店</a>
+        <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">打开 Edge 加载项商店</a>
         <p>也可以从 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 源码</a>以开发者模式加载 <span class="mono">apps/extension</span>。</p>
       </div>
 
@@ -603,7 +606,7 @@
       <h2>装上它，然后忘了它</h2>
       <p>直到下一次，你又选中了一段看不懂的文字。</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">添加到 Chrome</a>
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">添加到 Chrome</span><span data-for-browser="edge" hidden>添加到 Edge</span></a>
         <a class="btn btn-ghost" href="changelog.html">更新日志</a>
       </div>
     </div>

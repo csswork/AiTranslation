@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AI Selection Translator · Понимайте иностранный текст на любой странице одним щелчком правой кнопки</title>
-<meta name="description" content="Открытое расширение для Chrome с переводом: перевод выделенного текста, областей страницы, изображений и отдельная панель перевода; 24 языка интерфейса и целевых языков. Можно использовать свой API Key либо войти и пользоваться пробным доступом без ключа или подпиской." />
+<meta name="description" content="Открытое расширение для перевода в Chrome / Edge: двуязычное чтение, перевод выделенного текста, изображений, целых PDF-файлов, областей веб-страницы и отдельная панель перевода; 24 языка интерфейса и целевых языка. Можно использовать собственный API Key либо войти и пользоваться пробным периодом без Key или по подписке." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -30,14 +30,14 @@
 <meta property="og:locale" content="ru_RU" />
 <meta property="og:url" content="https://huaci.app/ru/" />
 <meta property="og:title" content="AI Selection Translator" />
-<meta property="og:description" content="Выделите текст, нажмите правую кнопку мыши и продолжайте читать. 24 языка интерфейса и целевых языков, перевод текста, областей страницы и изображений. Со своим ключом или по баллам без ключа." />
+<meta property="og:description" content="Выделите текст, вызовите контекстное меню и продолжайте читать. Двуязычное чтение с пословным сопоставлением абзацев всей статьи, а также перевод текста, изображений, PDF и областей веб-страницы; 24 языка интерфейса и целевых языка. Собственный Key или перевод по баллам без Key." />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AI Selection Translator: выделить, щёлкнуть правой кнопкой и читать дальше." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ru/#app","name":"AI Selection Translator","url":"https://huaci.app/ru/","description":"Открытое расширение для Chrome с переводом: перевод выделенного текста, областей страницы, изображений и отдельная панель перевода; 24 языка интерфейса и целевых языков. Можно использовать свой API Key либо войти и пользоваться пробным доступом без ключа или подпиской.","image":"https://huaci.app/assets/og.png","inLanguage":"ru","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI Selection Translator","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ru/#app","name":"AI Selection Translator","url":"https://huaci.app/ru/","description":"Открытое расширение для перевода в Chrome / Edge: двуязычное чтение, перевод выделенного текста, изображений, целых PDF-файлов, областей веб-страницы и отдельная панель перевода; 24 языка интерфейса и целевых языка. Можно использовать собственный API Key либо войти и пользоваться пробным периодом без Key или по подписке.","image":"https://huaci.app/assets/og.png","inLanguage":"ru","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,18 +83,19 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/ru/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/ru/changelog.html#v2-2-0"><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>Новое: двуязычное чтение превращает статьи из интернета в страницу чтения с построчным сопоставлением.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Выделите, щёлкните правой кнопкой,<br /><span class="dim">и читайте дальше.</span></h1>
-        <p class="hero-sub">一个 Chrome 扩展。选中文字、整块网页区域、一张图片，或整篇文章，就能译成你熟悉的语言。24 种界面与目标语言可独立选择，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可开始。</p>
-        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）。
+        <p class="hero-sub">Расширение для Chrome. Выделите текст, область веб-страницы, изображение или целую статью — и получите перевод на знакомый язык. 24 языка интерфейса и целевые языки выбираются независимо; достаточно собственного API Key OpenAI, DeepSeek или DeepL.</p>
+        <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Установить в Chrome </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Посмотреть исходный код</a></div>
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Установить в Chrome</span> <span data-for-browser="edge" hidden>Установить в Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Исходный код</a></div>
         <p class="install-note" data-install-note hidden>В этом браузере нельзя установить расширения Chrome: откройте эту страницу на компьютере в браузере на базе Chromium, например Chrome или Edge.</p>
         <ul class="hero-meta">
           <li><b>Открытый исходный код</b> GPL-3.0 · 24 языка</li>
-          <li>Chrome 116+</li>
+          <li>Chrome / Edge 116+</li>
           <li>Без хранения переводов · без сторонней аналитики</li>
-          <li>六种翻译方式</li>
+          <li>Шесть способов перевода</li>
         </ul>
       </div>
 
@@ -206,19 +207,19 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>六个入口，都在右键菜单里</h2>
+          <h2>Шесть точек входа — все в контекстном меню</h2>
           <p>Без переключения вкладок и без копирования. Там, где находится непонятный вам фрагмент, там и происходит перевод.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
-            <h3>双语阅读<span class="new">新功能</span></h3>
-            <p>在网页上不选文字直接右键，扫描识别出标题和正文，在旁边打开一个干净的阅读页：原文与译文逐段对齐，导航、广告和推荐模块都不进来。</p>
+            <h3>Двуязычное чтение<span class="new">Новая функция</span></h3>
+            <p>На веб-странице без выделения текста нажмите правой кнопкой — заголовки и основной текст распознаются, рядом открывается чистая страница чтения: оригинал и перевод выровнены по абзацам, навигация, реклама и рекомендации не попадают на неё.</p>
             <ul>
-              <li>左右并排时每段顶端对齐，也能上下对照、只看译文或只看原文</li>
-              <li>点译文里的任意一个词，看几种其他译法或自己改写；换过的说法会记住，之后翻译优先使用</li>
-              <li>外观可选浅色、深色或跟随系统，配色、字体、字号、行距与版心都能调</li>
-              <li>连同译文保存在本机，右侧随时打开，不用再翻译</li>
+              <li>При расположении рядом абзацы выровнены по верхнему краю; возможен также режим друг под другом, только перевод или только оригинал</li>
+              <li>Нажмите на любое слово в переводе, чтобы увидеть другие варианты или вписать свой; изменённые формулировки запоминаются и используются приоритетно в дальнейшем переводе</li>
+              <li>Тема — светлая, тёмная или системная; цвета, шрифт, размер, межстрочный интервал и ширина текста настраиваются</li>
+              <li>Сохраняется вместе с переводом локально, открывается справа в любой момент, повторный перевод не нужен</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>演示视频占位</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-reader.mp4</span></div>
             </div>
           </div>
         </div>
@@ -244,7 +245,7 @@
             <ul>
               <li>Переводятся китайский, короткие слова и смешанные языки; для чистых цифр, знаков препинания и эмодзи кнопка перевода не отображается</li>
               <li>Всплывающее окно расположено по центру и перетаскивается, закрывается по <span class="mono">Esc</span> или щелчку по фону; это не пузырёк, бегающий за курсором</li>
-              <li>可折叠的原文面板，对照着读；点译文里的词能换一种说法</li>
+              <li>Сворачиваемая панель оригинала для параллельного чтения; нажатие на слово в переводе показывает другой вариант формулировки</li>
               <li>Есть и сочетание клавиш: <span class="mono">Alt+Shift+T</span> (в macOS — <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
@@ -269,9 +270,9 @@
             <h3>Перевод изображений</h3>
             <p>Щёлкните правой кнопкой мыши по изображению, распознайте текст на нём и наложите перевод целиком на место оригинала, сохранив результат как новое изображение.</p>
             <ul>
-              <li>对话框、标题、段落各按整段翻译，按笔画勾出每段文字的形状，译文排在原位附近、互不遮挡</li>
-              <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排，注音假名不会混进译文</li>
-              <li>可以先看识别出的文字形状，移动、删改或新画后再翻译；底色自动取文字周围的相近色</li>
+              <li>Диалоги, заголовки и абзацы переводятся целиком; по штрихам обводится форма каждого фрагмента текста, перевод размещается рядом с исходным местом без наложений</li>
+              <li>Вертикальный текст в японских комиксах при переводе на китайский, японский или корейский сохраняет вертикальное направление; фуригана не попадает в перевод</li>
+              <li>Сначала можно проверить распознанные формы текста, переместить, удалить, изменить или дорисовать их, затем перевести; цвет фона автоматически подбирается близким к цвету вокруг текста</li>
               <li>Можно выделить только нужные области: прямоугольник или круг, с перетаскиванием и изменением размера, несколько областей распознаются за один раз</li>
               <li>Результат можно скачать или скопировать как новое изображение, синтез выполняется локально; также можно открыть панель изображений, загрузить, вставить изображение или ввести адрес изображения</li>
             </ul>
@@ -297,7 +298,7 @@
             <h3>Перевод целых PDF-файлов</h3>
             <p>В PDF, открытом в Chrome, щёлкните правой кнопкой без выделения текста — весь документ переводится на соседней странице. Перевод накладывается на исходные позиции, вёрстка, схемы и таблицы не меняются.</p>
             <ul>
-              <li>原文和译文并排对照，也可以只看译文或只看原文；点译文里的词能换一种说法</li>
+              <li>Оригинал и перевод располагаются рядом для сравнения; можно также смотреть только перевод или только оригинал; нажатие на слово в переводе показывает другой вариант формулировки</li>
               <li>Таблицы переводятся по ячейкам, строки, столбцы и линии таблицы сохраняются; не помещающийся перевод автоматически уменьшается</li>
               <li>Через печать браузера сохраняется как PDF, перевод — выделяемый и доступный для поиска текст</li>
               <li>Файл обрабатывается только локально, на платформу перевода отправляется лишь извлечённый текст; локальный PDF можно перетащить прямо на страницу перевода. Сканы пока не поддерживаются</li>
@@ -352,7 +353,7 @@
             <ul>
               <li>Доступны 24 целевых языка, охватывающих основные языки мира</li>
               <li>Исходный язык определяется автоматически или задаётся вручную, целевой язык выбирается отдельно, панель запоминает последний выбор</li>
-              <li>平台和目标语言就在工具栏上，随时切换重译；译好的词可以点开换说法</li>
+              <li>Платформа и целевой язык доступны на панели инструментов, их можно в любой момент переключить и перевести заново; для переведённых слов можно открыть другие варианты формулировки</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -510,16 +511,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Установка из Chrome Web Store</h2>
-        <p>Требуется Chrome 116 или новее; подходят также браузеры на движке Chromium, например Edge.</p>
+        <h2>Установка из магазина Chrome или Edge</h2>
+        <p>Расширение опубликовано в Chrome Web Store и в магазине надстроек Microsoft Edge; требуется версия 116 или выше. В других браузерах на базе Chromium, например Brave, установка возможна из Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Откройте страницу магазина</b> <span>На компьютере откройте <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">страницу Chrome Web Store</a>.</span></div>
+          <div><b>Откройте страницу магазина</b> <span>На компьютере откройте <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">страницу Chrome Web Store</a>; пользователям Edge — <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">страницу магазина надстроек Edge</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Добавьте в Chrome</b> <span>Нажмите «Добавить в Chrome» и подтвердите.</span></div>
+          <div><b>Добавьте расширение</b> <span>Нажмите «Добавить в Chrome» или «Получить» в Edge и подтвердите.</span></div>
         </div>
         <div class="step">
           <div><b>Закрепите на панели инструментов</b> <span>Нажмите значок пазла и закрепите расширение на панели инструментов.</span></div>
@@ -531,6 +532,7 @@
 
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Открыть Chrome Web Store</a>
+        <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Открыть магазин надстроек Edge</a>
         <p>Также можно загрузить <span class="mono">apps/extension</span> в режиме разработчика из <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">исходного кода на GitHub</a>.</p>
       </div>
 
@@ -543,7 +545,7 @@
     <div class="cta reveal">
       <h2>Установите — и забудьте</h2>
       <p>До следующего раза, когда вы снова выделите непонятный вам текст.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Добавить в Chrome</a> <a class="btn btn-ghost" href="/ru/changelog.html">История изменений</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Добавить в Chrome</span><span data-for-browser="edge" hidden>Добавить в Edge</span></a> <a class="btn btn-ghost" href="/ru/changelog.html">История изменений</a></div>
     </div>
   </section>
 
