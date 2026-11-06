@@ -48,7 +48,6 @@
     langState: $('langState'),
     videoCloud: $('videoCloud'),
     videoTranslate: $('videoTranslate'),
-    imageMode: $('imageMode'),
     videoTarget: $('videoTarget'),
     welcome: $('welcome'),
     useOwnKey: $('useOwnKey'),
@@ -339,7 +338,6 @@
     el.showOriginal.checked = settings.showOriginal;
     el.floating.checked = settings.floating;
     el.shortcut.checked = settings.shortcut;
-    el.imageMode.value = settings.imageMode;
   }
 
   /**
@@ -579,7 +577,6 @@
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
-  el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
 
   el.videoEnabled.addEventListener('change', async () => {
     await save({ videoEnabled: el.videoEnabled.checked });

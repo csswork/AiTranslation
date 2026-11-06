@@ -473,5 +473,8 @@
   "圆形": "Cirkel",
   "选区形状": "Selectievorm",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Sleep in het vak om het te verplaatsen, sleep de rand om het formaat te wijzigen; houd Shift ingedrukt om een vierkant of cirkel te tekenen",
-  "形状": "Vorm"
+  "形状": "Vorm",
+  "自动识别整张图": "Automatisch de hele afbeelding detecteren",
+  "框选要翻译的区域": "Selecteer het gebied dat je wilt vertalen",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Klik met de rechtermuisknop op een afbeelding op een webpagina, beweeg de muis over \"Tekst in afbeelding vertalen\" en kies \"Automatisch de hele afbeelding detecteren\" of \"Selecteer het gebied dat je wilt vertalen\"; je kunt in de pop-up ook tussen beide modi wisselen. Je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram."
 }

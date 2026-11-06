@@ -473,5 +473,8 @@
   "圆形": "Hình tròn",
   "选区形状": "Hình dạng vùng chọn",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Kéo bên trong khung để di chuyển, kéo viền để thay đổi kích thước; giữ Shift để vẽ hình vuông hoặc hình tròn",
-  "形状": "Hình dạng"
+  "形状": "Hình dạng",
+  "自动识别整张图": "Tự động nhận diện toàn bộ hình ảnh",
+  "框选要翻译的区域": "Chọn vùng cần dịch",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Nhấp chuột phải vào hình ảnh trên trang web, di chuột đến \"Dịch văn bản trong hình ảnh\", rồi chọn \"Tự động nhận diện toàn bộ hình ảnh\" hoặc \"Chọn vùng cần dịch\"; bạn cũng có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên. Bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích."
 }

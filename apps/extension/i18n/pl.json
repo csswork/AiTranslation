@@ -473,5 +473,8 @@
   "圆形": "Okrąg",
   "选区形状": "Kształt zaznaczenia",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Przeciągnij wewnątrz ramki, aby ją przesunąć, przeciągnij krawędź, aby zmienić rozmiar; przytrzymaj Shift, aby narysować kwadrat lub okrąg",
-  "形状": "Kształt"
+  "形状": "Kształt",
+  "自动识别整张图": "Automatycznie wykryj cały obraz",
+  "框选要翻译的区域": "Zaznacz obszar do przetłumaczenia",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Kliknij obraz prawym przyciskiem myszy na stronie internetowej, najedź kursorem na „Przetłumacz tekst na obrazie”, a następnie wybierz „Automatycznie wykryj cały obraz” lub „Zaznacz obszar do przetłumaczenia”; oba tryby można też przełączać w oknie podręcznym. Stronę „Tłumaczenie obrazów” możesz również otworzyć z ikony rozszerzenia."
 }

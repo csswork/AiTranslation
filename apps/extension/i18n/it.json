@@ -473,5 +473,8 @@
   "圆形": "Cerchio",
   "选区形状": "Forma della selezione",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Trascina all'interno del riquadro per spostarlo, trascina il bordo per ridimensionarlo; tieni premuto Shift per disegnare un quadrato o un cerchio",
-  "形状": "Forma"
+  "形状": "Forma",
+  "自动识别整张图": "Rileva automaticamente l'intera immagine",
+  "框选要翻译的区域": "Seleziona l'area da tradurre",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Fai clic con il pulsante destro del mouse su un'immagine in una pagina web, passa il mouse su \"Traduci il testo nell'immagine\", quindi scegli \"Rileva automaticamente l'intera immagine\" o \"Seleziona l'area da tradurre\"; puoi anche passare da una modalità all'altra nella finestra popup. Puoi anche aprire la pagina \"Traduzione immagini\" dall'icona dell'estensione."
 }

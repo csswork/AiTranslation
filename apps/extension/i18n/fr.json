@@ -473,5 +473,8 @@
   "圆形": "Cercle",
   "选区形状": "Forme de la sélection",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Faites glisser à l'intérieur du cadre pour le déplacer, faites glisser la bordure pour le redimensionner ; maintenez Shift pour dessiner un carré ou un cercle",
-  "形状": "Forme"
+  "形状": "Forme",
+  "自动识别整张图": "Détecter automatiquement toute l'image",
+  "框选要翻译的区域": "Sélectionner la zone à traduire",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Faites un clic droit sur une image d'une page web, survolez « Traduire le texte de l'image », puis choisissez « Détecter automatiquement toute l'image » ou « Sélectionner la zone à traduire » ; vous pouvez aussi basculer entre les deux modes dans la fenêtre contextuelle. Vous pouvez également ouvrir la page « Traduction d'images » depuis l'icône de l'extension."
 }

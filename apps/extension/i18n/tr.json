@@ -473,5 +473,8 @@
   "圆形": "Daire",
   "选区形状": "Seçim şekli",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Taşımak için kutunun içinden sürükleyin, boyutlandırmak için kenarlığından sürükleyin; kare veya daire çizmek için Shift tuşunu basılı tutun",
-  "形状": "Şekil"
+  "形状": "Şekil",
+  "自动识别整张图": "Tüm görseli otomatik algıla",
+  "框选要翻译的区域": "Çevrilecek alanı seç",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Bir web sayfasındaki görsele sağ tıklayın, fareyi \"Görseldeki metni çevir\" üzerine getirin ve ardından \"Tüm görseli otomatik algıla\" veya \"Çevrilecek alanı seç\" seçeneğini belirleyin; açılır pencerede iki mod arasında geçiş de yapabilirsiniz. \"Görsel çevirisi\" sayfasını uzantı simgesinden de açabilirsiniz."
 }

@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Forma"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Rileva automaticamente l'intera immagine"
+  },
+  "m_6465091579c4941f": {
+    "message": "Seleziona l'area da tradurre"
+  },
+  "m_00097f532a77285a": {
+    "message": "Fai clic con il pulsante destro del mouse su un'immagine in una pagina web, passa il mouse su \"Traduci il testo nell'immagine\", quindi scegli \"Rileva automaticamente l'intera immagine\" o \"Seleziona l'area da tradurre\"; puoi anche passare da una modalità all'altra nella finestra popup. Puoi anche aprire la pagina \"Traduzione immagini\" dall'icona dell'estensione."
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

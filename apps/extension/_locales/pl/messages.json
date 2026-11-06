@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Kształt"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Automatycznie wykryj cały obraz"
+  },
+  "m_6465091579c4941f": {
+    "message": "Zaznacz obszar do przetłumaczenia"
+  },
+  "m_00097f532a77285a": {
+    "message": "Kliknij obraz prawym przyciskiem myszy na stronie internetowej, najedź kursorem na „Przetłumacz tekst na obrazie”, a następnie wybierz „Automatycznie wykryj cały obraz” lub „Zaznacz obszar do przetłumaczenia”; oba tryby można też przełączać w oknie podręcznym. Stronę „Tłumaczenie obrazów” możesz również otworzyć z ikony rozszerzenia."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

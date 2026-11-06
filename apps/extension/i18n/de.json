@@ -473,5 +473,8 @@
   "圆形": "Kreis",
   "选区形状": "Auswahlform",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Ziehen Sie innerhalb des Rahmens, um ihn zu verschieben, oder am Rand, um die Größe zu ändern; halten Sie Shift gedrückt, um ein Quadrat oder einen Kreis zu zeichnen",
-  "形状": "Form"
+  "形状": "Form",
+  "自动识别整张图": "Gesamtes Bild automatisch erkennen",
+  "框选要翻译的区域": "Zu übersetzenden Bereich auswählen",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Klicken Sie mit der rechten Maustaste auf ein Bild auf einer Webseite, fahren Sie mit der Maus über „Text im Bild übersetzen“ und wählen Sie dann „Gesamtes Bild automatisch erkennen“ oder „Zu übersetzenden Bereich auswählen“; Sie können im Popup auch zwischen beiden Modi wechseln. Sie können die Seite „Bildübersetzung“ auch über das Erweiterungssymbol öffnen."
 }

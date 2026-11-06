@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Forma"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Detectar automáticamente toda la imagen"
+  },
+  "m_6465091579c4941f": {
+    "message": "Seleccionar el área a traducir"
+  },
+  "m_00097f532a77285a": {
+    "message": "Haz clic derecho en una imagen de la página web, pasa el cursor sobre «Traducir el texto de la imagen» y elige «Detectar automáticamente toda la imagen» o «Seleccionar el área a traducir»; también puedes cambiar entre ambos modos en la ventana emergente. También puedes abrir la página «Traducción de imágenes» desde el icono de la extensión."
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

@@ -18,6 +18,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     pdfTabs: [], // chrome.storage.session 里记录的 PDF 标签页
     activeTab: null,
     createdTabs: [],
+    tabMessages: [], // 发给页面内容脚本的消息
   };
 
   let pendingError = null;
@@ -86,7 +87,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
         set: async (patch) => { state.pdfTabs = patch.pdfTabs; },
       },
     },
-    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7 }] : []), sendMessage: async () => ({ ok: true }),
+    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7 }] : []), sendMessage: async (tabId, message, options) => { state.tabMessages.push({ tabId, message, options }); return { ok: true }; },
             create: async (properties) => { state.createdTabs.push(properties); return { id: 100 }; },
             connect: () => ({ postMessage(){}, disconnect(){}, onDisconnect:{addListener(){}}, onMessage:{addListener(){}} }),
             onRemoved: { addListener: () => {} },
@@ -122,7 +123,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 4, '不靠任何事件，启动时就应建好四个常驻菜单项');
+  assert.equal(state.items.size, 6, '不靠任何事件，启动时就应建好四个常驻菜单项，外加图片项的两个子菜单');
   assert.ok(state.items.has('ai-translate-selection'));
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
@@ -144,7 +145,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 4, '划词项 + 元素项 + PDF 项 + 图片项，共四个（视频字幕默认关闭）');
+  assert.equal(state.items.size, 6, '划词项 + 元素项 + PDF 项 + 图片项（含两个子菜单），视频字幕默认关闭');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -154,7 +155,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 4);
+  assert.equal(state.items.size, 6);
   assert.equal(state.items.get('ai-translate-selection').visible, true,
     '选中中文时，保留翻译入口');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
@@ -204,6 +205,13 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   assert.ok(!elem.contexts.includes('link'),
     '元素项必须让出 link：<a><img></a> 的上下文同时含 image 与 link');
   assert.equal(image.title, '翻译图片里的文字');
+  // 两种识别方式做成子菜单：鼠标移到父项上展开，直接选，不用再去设置里切换
+  const imageChildren = [...state.items.values()].filter((item) => item.parentId === 'ai-translate-image');
+  assert.deepEqual(imageChildren.map((item) => [item.id, item.title]), [
+    ['ai-translate-image-auto', '自动识别整张图'],
+    ['ai-translate-image-select', '框选要翻译的区域'],
+  ]);
+  for (const child of imageChildren) assert.deepEqual(child.contexts, ['image'], '子项的 contexts 必须与父项一致');
   console.log('✓ 四个菜单项的 contexts 两两不重叠（不会被折叠成子菜单）');
 
   // 换到只能翻文本的平台时，「翻译图片」要自动消失
@@ -287,7 +295,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   const video = state.items.get('ai-translate-video');
   assert.ok(video, '打开总开关后应出现视频菜单项');
-  assert.equal(state.items.size, 5, '打开后共五个菜单项');
+  assert.equal(state.items.size, 7, '打开后多出视频菜单项');
   assert.deepEqual(video.contexts, ['video']);
   assert.equal(video.visible, true);
   assert.equal(state.duplicateErrors, 0);
@@ -302,13 +310,31 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
   await settle();
   assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
-  assert.equal(state.items.size, 4);
+  assert.equal(state.items.size, 6);
   assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
   assert.ok(
     state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),
     '关闭总开关时要通知 offscreen 停掉所有字幕'
   );
   console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭），关掉时停掉在播字幕');
+}
+
+/* --- 图片子菜单：点哪一项就把对应的识别方式带给内容脚本，父项本身不发起翻译 --- */
+{
+  const { state } = boot();
+  await settle();
+  const click = (menuItemId) => state.listeners.clicked(
+    { menuItemId, srcUrl: 'https://example.com/a.png', frameId: 2 }, { id: 5 });
+  const sentImage = () => state.tabMessages.filter((m) => m.message.type === 'translate-image');
+  await click('ai-translate-image');
+  assert.equal(sentImage().length, 0, '父项只用来展开子菜单');
+  await click('ai-translate-image-auto');
+  await click('ai-translate-image-select');
+  assert.deepEqual(sentImage().map(({ tabId, message, options }) => [tabId, message.mode, message.srcUrl, options.frameId]), [
+    [5, 'auto', 'https://example.com/a.png', 2],
+    [5, 'select', 'https://example.com/a.png', 2],
+  ]);
+  console.log('✓ 图片子菜单把「自动识别 / 框选」直接带给页面');
 }
 
 /* Edge PDF menu events can contain TAB_ID_NONE, rather than the outer browser tab. */

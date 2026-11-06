@@ -473,5 +473,8 @@
   "圆形": "Lingkaran",
   "选区形状": "Bentuk seleksi",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Seret di dalam kotak untuk memindahkannya, seret tepi untuk mengubah ukuran; tahan Shift untuk menggambar persegi atau lingkaran",
-  "形状": "Bentuk"
+  "形状": "Bentuk",
+  "自动识别整张图": "Deteksi otomatis seluruh gambar",
+  "框选要翻译的区域": "Pilih area yang akan diterjemahkan",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Klik kanan pada gambar di halaman web, arahkan kursor ke \"Terjemahkan teks dalam gambar\", lalu pilih \"Deteksi otomatis seluruh gambar\" atau \"Pilih area yang akan diterjemahkan\"; kedua mode juga dapat dialihkan di popup. Anda juga dapat membuka halaman \"Terjemahan gambar\" dari ikon ekstensi."
 }

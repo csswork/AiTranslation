@@ -869,7 +869,8 @@
     }
   }
 
-  async function translateImage(srcUrl) {
+  /** mode 来自右键子菜单：auto 直接识别整张图；select 先打开窗口让用户框选。 */
+  async function translateImage(srcUrl, mode) {
     const img = findImage(srcUrl);
     if (!img) return;
     const token = ++generation;
@@ -885,7 +886,7 @@
       if (token !== generation) return;
       if (!grabbed) { showFailure(t("这张图还没加载完")); return; }
       const result = { grabbed, merged: null, settings, regions: null, groups: null, targetId: settings.target };
-      if (settings.imageMode === 'select') {
+      if (mode === 'select') {
         // 先框选：直接打开窗口露出原图，用户框完再识别，不白识别整张图
         hideMask();
         imageResult = result;
@@ -908,7 +909,7 @@
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message?.type !== 'translate-image') return false;
-    translateImage(message.srcUrl);
+    translateImage(message.srcUrl, message.mode === 'select' ? 'select' : 'auto');
     return false;
   });
 })();

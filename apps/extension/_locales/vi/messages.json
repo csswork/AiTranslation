@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Hình dạng"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Tự động nhận diện toàn bộ hình ảnh"
+  },
+  "m_6465091579c4941f": {
+    "message": "Chọn vùng cần dịch"
+  },
+  "m_00097f532a77285a": {
+    "message": "Nhấp chuột phải vào hình ảnh trên trang web, di chuột đến \"Dịch văn bản trong hình ảnh\", rồi chọn \"Tự động nhận diện toàn bộ hình ảnh\" hoặc \"Chọn vùng cần dịch\"; bạn cũng có thể chuyển đổi giữa hai chế độ trong cửa sổ bật lên. Bạn cũng có thể mở trang \"Dịch hình ảnh\" từ biểu tượng tiện ích."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

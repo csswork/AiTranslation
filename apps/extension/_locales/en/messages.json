@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Shape"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Automatically detect the entire image"
+  },
+  "m_6465091579c4941f": {
+    "message": "Select the area to translate"
+  },
+  "m_00097f532a77285a": {
+    "message": "Right-click an image on a webpage, hover over \"Translate text in image\", then choose \"Automatically detect the entire image\" or \"Select the area to translate\"; you can also switch between the two modes in the popup. You can also open the \"Image translation\" page from the extension icon."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

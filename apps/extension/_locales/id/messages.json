@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Bentuk"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Deteksi otomatis seluruh gambar"
+  },
+  "m_6465091579c4941f": {
+    "message": "Pilih area yang akan diterjemahkan"
+  },
+  "m_00097f532a77285a": {
+    "message": "Klik kanan pada gambar di halaman web, arahkan kursor ke \"Terjemahkan teks dalam gambar\", lalu pilih \"Deteksi otomatis seluruh gambar\" atau \"Pilih area yang akan diterjemahkan\"; kedua mode juga dapat dialihkan di popup. Anda juga dapat membuka halaman \"Terjemahan gambar\" dari ikon ekstensi."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

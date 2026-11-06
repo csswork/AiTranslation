@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Form"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Gesamtes Bild automatisch erkennen"
+  },
+  "m_6465091579c4941f": {
+    "message": "Zu übersetzenden Bereich auswählen"
+  },
+  "m_00097f532a77285a": {
+    "message": "Klicken Sie mit der rechten Maustaste auf ein Bild auf einer Webseite, fahren Sie mit der Maus über „Text im Bild übersetzen“ und wählen Sie dann „Gesamtes Bild automatisch erkennen“ oder „Zu übersetzenden Bereich auswählen“; Sie können im Popup auch zwischen beiden Modi wechseln. Sie können die Seite „Bildübersetzung“ auch über das Erweiterungssymbol öffnen."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

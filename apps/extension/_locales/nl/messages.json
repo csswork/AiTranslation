@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Vorm"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Automatisch de hele afbeelding detecteren"
+  },
+  "m_6465091579c4941f": {
+    "message": "Selecteer het gebied dat je wilt vertalen"
+  },
+  "m_00097f532a77285a": {
+    "message": "Klik met de rechtermuisknop op een afbeelding op een webpagina, beweeg de muis over \"Tekst in afbeelding vertalen\" en kies \"Automatisch de hele afbeelding detecteren\" of \"Selecteer het gebied dat je wilt vertalen\"; je kunt in de pop-up ook tussen beide modi wisselen. Je kunt de pagina \"Afbeeldingsvertaling\" ook openen via het extensiepictogram."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

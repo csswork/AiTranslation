@@ -474,7 +474,10 @@ globalThis.AITrMessageIds = {
   "圆形": "m_81639a8a9bce63fa",
   "选区形状": "m_abb182985e092565",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "m_fd60ed31c5697acf",
-  "形状": "m_c2f71c1b10ef9d80"
+  "形状": "m_c2f71c1b10ef9d80",
+  "自动识别整张图": "m_776239e5078dbd3f",
+  "框选要翻译的区域": "m_6465091579c4941f",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "m_00097f532a77285a"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -951,5 +954,8 @@ globalThis.AITrEnglish = {
   "圆形": "Circle",
   "选区形状": "Selection shape",
   "拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆": "Drag inside the box to move it, drag the border to resize; hold Shift to draw a square or circle",
-  "形状": "Shape"
+  "形状": "Shape",
+  "自动识别整张图": "Automatically detect the entire image",
+  "框选要翻译的区域": "Select the area to translate",
+  "在网页图片上右键，把鼠标移到「翻译图片里的文字」，再选「自动识别整张图」或「框选要翻译的区域」； 两种方式在弹窗里也能互相切换。也可以在扩展图标里打开「图片翻译」页。": "Right-click an image on a webpage, hover over \"Translate text in image\", then choose \"Automatically detect the entire image\" or \"Select the area to translate\"; you can also switch between the two modes in the popup. You can also open the \"Image translation\" page from the extension icon."
 };

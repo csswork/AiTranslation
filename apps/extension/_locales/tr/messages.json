@@ -1993,6 +1993,15 @@
   "m_c2f71c1b10ef9d80": {
     "message": "Şekil"
   },
+  "m_776239e5078dbd3f": {
+    "message": "Tüm görseli otomatik algıla"
+  },
+  "m_6465091579c4941f": {
+    "message": "Çevrilecek alanı seç"
+  },
+  "m_00097f532a77285a": {
+    "message": "Bir web sayfasındaki görsele sağ tıklayın, fareyi \"Görseldeki metni çevir\" üzerine getirin ve ardından \"Tüm görseli otomatik algıla\" veya \"Çevrilecek alanı seç\" seçeneğini belirleyin; açılır pencerede iki mod arasında geçiş de yapabilirsiniz. \"Görsel çevirisi\" sayfasını uzantı simgesinden de açabilirsiniz."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },
