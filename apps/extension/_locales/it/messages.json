@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Trascina una forma per spostarla; trascinando un vertice si spostano anche i punti vicini, tieni premuto Alt per spostare un solo punto; fai doppio clic su un bordo per aggiungere un vertice, fai doppio clic su un vertice per eliminarlo; trascina sullo spazio vuoto per creare una nuova forma; premi Delete per rimuovere la selezione"
   },
+  "m_214dca055ac1d803": {
+    "message": "Traduci direttamente dopo il riconoscimento; se deselezionato, mostra prima le forme del testo riconosciuto, poi fai clic su «Traduci» per confermare"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Traduci direttamente"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Riconosci e traduci automaticamente in modo diretto. Se deselezionato, il testo trovato viene prima disegnato sull'immagine; puoi spostare, eliminare, modificare o aggiungere forme, poi fai clic su «Traduci» per tradurre. Puoi anche cambiare questa opzione nel popup."
+  },
   "extensionName": {
     "message": "Traduttore AI"
   },

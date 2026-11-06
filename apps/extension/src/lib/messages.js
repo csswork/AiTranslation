@@ -495,7 +495,10 @@ globalThis.AITrMessageIds = {
   "正在识别改动过的形状…": "m_ce29990ef5ae0758",
   "翻译前先显示识别出的文字形状": "m_fbbdaa4e5e845a13",
   "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "m_b87fd43cee3f912b",
-  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "m_32f40298bbc0bf4e"
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "m_32f40298bbc0bf4e",
+  "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "m_214dca055ac1d803",
+  "直接翻译": "m_7eb7fb2d7e781fd5",
+  "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "m_3c823b1068259eaf"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -993,5 +996,8 @@ globalThis.AITrEnglish = {
   "正在识别改动过的形状…": "Recognizing modified shapes…",
   "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
   "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+  "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+  "直接翻译": "Translate directly",
+  "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
 };

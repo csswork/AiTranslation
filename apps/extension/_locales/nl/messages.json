@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Sleep een vorm om hem te verplaatsen; als je een hoekpunt sleept, bewegen nabije punten mee, houd Alt ingedrukt om slechts één punt te verplaatsen; dubbelklik op een rand om een hoekpunt toe te voegen, dubbelklik op een hoekpunt om het te verwijderen; sleep op een lege plek om een nieuwe vorm te maken; druk op Delete om de selectie te verwijderen"
   },
+  "m_214dca055ac1d803": {
+    "message": "Direct vertalen na herkenning; als dit niet is aangevinkt, worden eerst de herkende tekstvormen getoond en daarna klik je op 'Vertalen' om te bevestigen"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Direct vertalen"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Automatisch herkennen en direct vertalen. Als dit niet is aangevinkt, wordt de gevonden tekst eerst op de afbeelding getekend; je kunt vormen verplaatsen, verwijderen, bewerken of toevoegen en daarna op 'Vertalen' klikken om te vertalen. Je kunt dit ook in de pop-up wisselen."
+  },
   "extensionName": {
     "message": "AI-vertaler"
   },

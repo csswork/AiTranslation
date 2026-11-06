@@ -494,5 +494,8 @@
   "正在识别改动过的形状…": "Rozpoznawanie zmodyfikowanych kształtów…",
   "翻译前先显示识别出的文字形状": "Pokaż rozpoznane kształty tekstu przed tłumaczeniem",
   "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Po automatycznym rozpoznaniu wykryty tekst jest najpierw rysowany na obrazie. Możesz przesuwać, usuwać, modyfikować lub dodawać kształty, a następnie przetłumaczyć po potwierdzeniu.",
-  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Przeciągnij kształt, aby go przesunąć; przeciąganie wierzchołka przesuwa pobliskie punkty, przytrzymaj Alt, aby przesunąć tylko jeden punkt; kliknij dwukrotnie krawędź, aby dodać wierzchołek, kliknij dwukrotnie wierzchołek, aby go usunąć; przeciągnij w puste miejsce, aby utworzyć nowy kształt; naciśnij Delete, aby usunąć zaznaczenie"
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Przeciągnij kształt, aby go przesunąć; przeciąganie wierzchołka przesuwa pobliskie punkty, przytrzymaj Alt, aby przesunąć tylko jeden punkt; kliknij dwukrotnie krawędź, aby dodać wierzchołek, kliknij dwukrotnie wierzchołek, aby go usunąć; przeciągnij w puste miejsce, aby utworzyć nowy kształt; naciśnij Delete, aby usunąć zaznaczenie",
+  "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Tłumacz bezpośrednio po rozpoznaniu; gdy opcja jest odznaczona, najpierw pokaż rozpoznane kształty tekstu, a następnie kliknij „Przetłumacz”, aby potwierdzić",
+  "直接翻译": "Tłumacz bezpośrednio",
+  "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatycznie rozpoznawaj i tłumacz bezpośrednio. Gdy opcja jest odznaczona, znaleziony tekst jest najpierw rysowany na obrazie; możesz przesuwać, usuwać, edytować lub dodawać kształty, a następnie kliknąć „Przetłumacz”, aby przetłumaczyć. Możesz też przełączyć to w oknie podręcznym."
 }

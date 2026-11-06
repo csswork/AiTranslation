@@ -495,7 +495,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "es": {
     "跟随浏览器": "Follow browser",
@@ -993,7 +996,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "pt": {
     "跟随浏览器": "Follow browser",
@@ -1491,7 +1497,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "fr": {
     "跟随浏览器": "Follow browser",
@@ -1989,7 +1998,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "de": {
     "跟随浏览器": "Follow browser",
@@ -2487,7 +2499,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "it": {
     "跟随浏览器": "Follow browser",
@@ -2985,7 +3000,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "nl": {
     "跟随浏览器": "Follow browser",
@@ -3483,7 +3501,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "ru": {
     "跟随浏览器": "Follow browser",
@@ -3981,7 +4002,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "uk": {
     "跟随浏览器": "Follow browser",
@@ -4479,7 +4503,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "pl": {
     "跟随浏览器": "Follow browser",
@@ -4977,7 +5004,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "tr": {
     "跟随浏览器": "Follow browser",
@@ -5475,7 +5505,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "ar": {
     "跟随浏览器": "Follow browser",
@@ -5973,7 +6006,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "he": {
     "跟随浏览器": "Follow browser",
@@ -6471,7 +6507,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "fa": {
     "跟随浏览器": "Follow browser",
@@ -6969,7 +7008,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "hi": {
     "跟随浏览器": "Follow browser",
@@ -7467,7 +7509,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "bn": {
     "跟随浏览器": "Follow browser",
@@ -7965,7 +8010,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "ur": {
     "跟随浏览器": "Follow browser",
@@ -8463,7 +8511,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "id": {
     "跟随浏览器": "Follow browser",
@@ -8961,7 +9012,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "vi": {
     "跟随浏览器": "Follow browser",
@@ -9459,7 +9513,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "th": {
     "跟随浏览器": "Follow browser",
@@ -9957,7 +10014,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "ja": {
     "跟随浏览器": "Follow browser",
@@ -10455,7 +10515,10 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   },
   "ko": {
     "跟随浏览器": "Follow browser",
@@ -10953,6 +11016,9 @@
     "正在识别改动过的形状…": "Recognizing modified shapes…",
     "翻译前先显示识别出的文字形状": "Show recognized text shapes before translating",
     "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "After auto-recognition, the detected text is drawn on the image first. You can move, delete, modify, or add shapes, then translate once confirmed.",
-    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
+    "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection",
+    "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm",
+    "直接翻译": "Translate directly",
+    "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
   }
 }

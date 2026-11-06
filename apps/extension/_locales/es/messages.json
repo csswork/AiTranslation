@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Arrastra una forma para moverla; al arrastrar un vértice se mueven los puntos cercanos, mantén Alt para mover solo un punto; haz doble clic en un borde para añadir un vértice, haz doble clic en un vértice para eliminarlo; arrastra en un espacio vacío para crear una nueva forma; pulsa Delete para eliminar la selección"
   },
+  "m_214dca055ac1d803": {
+    "message": "Traducir directamente tras el reconocimiento; si está desmarcado, primero se muestran las formas del texto reconocido y luego haz clic en «Traducir» para confirmar"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Traducir directamente"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Reconocer y traducir automáticamente de forma directa. Si está desmarcado, primero se dibuja en la imagen el texto encontrado; puedes mover, eliminar, editar o añadir formas, y tras hacer clic en «Traducir» se traduce. También puedes cambiarlo en la ventana emergente."
+  },
   "extensionName": {
     "message": "Traductor IA"
   },

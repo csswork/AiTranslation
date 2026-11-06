@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Seret bentuk untuk memindahkannya; menyeret titik sudut akan menggerakkan titik-titik di sekitarnya, tahan Alt untuk menggerakkan satu titik saja; klik dua kali pada tepi untuk menambah titik sudut, klik dua kali pada titik sudut untuk menghapusnya; seret di area kosong untuk membuat bentuk baru; tekan Delete untuk menghapus pilihan"
   },
+  "m_214dca055ac1d803": {
+    "message": "Terjemahkan langsung setelah pengenalan; jika tidak dicentang, tampilkan dulu bentuk teks yang dikenali, lalu klik \"Terjemahkan\" untuk mengonfirmasi"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Terjemahkan langsung"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Kenali secara otomatis lalu terjemahkan langsung. Jika tidak dicentang, teks yang ditemukan akan digambar dulu pada gambar; Anda dapat memindahkan, menghapus, mengubah, atau menambah bentuk, lalu klik \"Terjemahkan\" untuk menerjemahkan. Anda juga dapat mengubahnya di popup."
+  },
   "extensionName": {
     "message": "Penerjemah AI"
   },

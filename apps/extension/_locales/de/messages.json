@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Ziehe eine Form, um sie zu verschieben; beim Ziehen eines Eckpunkts bewegen sich nahe Punkte mit, halte Alt gedrückt, um nur einen Punkt zu bewegen; doppelklicke auf eine Kante, um einen Eckpunkt hinzuzufügen, doppelklicke auf einen Eckpunkt, um ihn zu löschen; ziehe auf leeren Bereich, um eine neue Form zu erstellen; drücke Delete, um die Auswahl zu entfernen"
   },
+  "m_214dca055ac1d803": {
+    "message": "Nach der Erkennung direkt übersetzen; wenn deaktiviert, zuerst die erkannten Textformen anzeigen und dann auf „Übersetzen“ klicken"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Direkt übersetzen"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Automatisch erkennen und direkt übersetzen. Wenn deaktiviert, wird der gefundene Text zuerst im Bild eingezeichnet; du kannst Formen verschieben, löschen, bearbeiten oder hinzufügen und dann auf „Übersetzen“ klicken. Du kannst dies auch im Popup umschalten."
+  },
   "extensionName": {
     "message": "KI-Übersetzer"
   },

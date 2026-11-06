@@ -269,6 +269,8 @@
     .spacer { flex: 1 1 auto; }
     .panel.picking .v, .panel:not(.picking) .p { display: none !important; }
     .field { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(233, 234, 238, 0.55); }
+    .direct { flex: none; cursor: pointer; color: rgba(233, 234, 238, 0.8); }
+    .direct input { margin: 0; width: 14px; height: 14px; cursor: pointer; accent-color: #f59e0b; }
     .tip { font-size: 11.5px; color: rgba(233, 234, 238, 0.5); white-space: nowrap; }
 
     /* 框选提示放在工具栏中间（形状和确认按钮之间的空位），不挡图片 */
@@ -310,11 +312,14 @@
       display: flex; align-items: center; justify-content: center;
       padding: 14px; background: #0e1014;
     }
-    .canvas { position: relative; line-height: 0; }
-    .canvas img { display: block; max-width: 100%; height: auto; }
-    /* 普通图片缩到窗口内；长图只按宽度显示、纵向滚动，
+    /* 画布尺寸按原图比例预先算好（sizeCanvas），图片还没加载完也先占好位置，
+       窗口不会在图片载入后再跳一下。普通图片缩到窗口内；长图只按宽度显示、纵向滚动，
        否则会被高度压成一条，宽度小到看不清 */
-    .canvas:not(.tall) img { max-height: calc(94vh - 130px); }
+    .canvas { position: relative; line-height: 0; flex: none; }
+    .canvas img { display: block; width: 100%; height: 100%; }
+    /* 换图时新图载入前什么都不显示，不让上一张图露出来 */
+    .canvas.loading { background: rgba(255, 255, 255, 0.04); }
+    .canvas.loading > * { visibility: hidden; }
     /* 长图必须给面板一个明确宽度：面板本来按内容收缩，
        长图的收缩计算会把它挤到很窄（实测只剩 186px）。 */
     select {
@@ -325,7 +330,6 @@
     .panel.tall { width: min(94vw, 860px); }
     .panel.tall .body { align-items: flex-start; }
     .panel.tall .canvas { width: 100%; }
-    .panel.tall .canvas img { width: 100%; }
     input.fill-color {
       width: 28px; height: 28px; padding: 2px; flex: none; cursor: pointer; box-sizing: border-box;
       border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px; background: none;
@@ -416,6 +420,9 @@
             </div>
           </div>
           <div class="hint p" aria-live="polite"><b></b><span>拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆</span></div>
+          <label class="field direct" hidden title="识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」">
+            <input class="direct-check" type="checkbox" />直接翻译
+          </label>
           <span class="spacer v"></span>
           <div class="group v">
             <button class="act save" type="button" title="下载带译文的图片">下载</button>
@@ -450,6 +457,8 @@
       fill: q('.fill'),
       fillColor: q('.fill-color'),
       pick: q('.pick'),
+      direct: q('.direct'),
+      directCheck: q('.direct-check'),
       shapes: [...root.querySelectorAll('.shape button')],
       shapeValue: 'rect',
       donePick: q('.done-pick'),
@@ -493,10 +502,12 @@
     });
     panel.fillColor.addEventListener('input', applyFill);
     panel.fillColor.addEventListener('change', saveFill);
-    // 自动识别的结果：调整识别出的形状后重新翻译；其他情况是手动框选
-    panel.pick.addEventListener('click', () => {
-      if (imageResult?.shapes) setEditing(true, imageResult.shapes);
-      else setPicking(true);
+    panel.pick.addEventListener('click', () => setPicking(true));
+    // 自动识别后直接翻译（默认），还是先显示文字形状、点「翻译」再翻译；选择会保存，下次沿用
+    panel.directCheck.addEventListener('change', () => {
+      const review = !panel.directCheck.checked;
+      if (imageResult) imageResult.settings.imageReview = review;
+      AITrSettings.patchSettings({ imageReview: review }).catch(() => {});
     });
     for (const button of panel.shapes) {
       button.addEventListener('click', () => {
@@ -519,6 +530,8 @@
       if (panel.editing) { translateEdited(imageResult, panel.editor.shapes); return; }
       const regions = panel.picker.regions;
       if (regions.length) { translateRegions(imageResult, regions); return; }
+      // 自动识别的结果已经整张翻译过：一个没框就退出框选
+      if (imageResult.shapes && panel.shapeItems) { setPicking(false); return; }
       // 选区全删掉了，或者「先框选」时一个没框：翻译整张图
       if (imageResult.groups || !imageResult.merged) {
         translateWhole(imageResult);
@@ -660,6 +673,27 @@
   /** 高宽比超过这个值就按长图处理。 */
   const TALL_RATIO = 1.6;
 
+  /**
+   * 按原图比例算好画布尺寸，图片载入前就占好位置。
+   * 普通图片缩进窗口（宽 94vw、高 94vh，减去边框、内边距、标题栏和工具栏约 130px），不放大；
+   * 长图宽度铺满面板，高度按比例，纵向滚动。
+   */
+  function sizeCanvas() {
+    const natural = panel?.natural;
+    if (!natural?.w || !natural?.h) return;
+    const style = panel.canvas.style;
+    style.aspectRatio = `${natural.w} / ${natural.h}`;
+    if (panel.canvas.classList.contains('tall')) {
+      style.width = '';
+      style.height = '';
+      return;
+    }
+    const scale = Math.min(1, (innerWidth * 0.94 - 30) / natural.w, (innerHeight * 0.94 - 130) / natural.h);
+    style.width = `${Math.max(1, Math.round(natural.w * scale))}px`;
+    style.height = `${Math.max(1, Math.round(natural.h * scale))}px`;
+  }
+  window.addEventListener('resize', () => { if (panel?.open) sizeCanvas(); }, { signal });
+
   function openPanel({ grabbed, blocks, meta, targetId, settings }) {
     if (!panel) buildPanel();
     if (!panel.host.isConnected) {
@@ -672,18 +706,30 @@
       return option;
     }));
     const { natural } = grabbed;
-    panel.img.src = grabbed.display;
     panel.metaText = meta;
     setPicking(false);
     setBusy(false);
     const tall = Boolean(natural && natural.h / Math.max(1, natural.w) > TALL_RATIO);
     panel.canvas.classList.toggle('tall', tall);
     panel.panel.classList.toggle('tall', tall);
+    panel.natural = natural;
+    sizeCanvas();
+    // 换了一张图：新图载入前藏起画布里的内容，上一张图不会先露出来
+    if (panel.img.getAttribute('src') !== grabbed.display) {
+      panel.canvas.classList.add('loading');
+      panel.img.removeAttribute('src');
+      const src = grabbed.display;
+      panel.img.src = src;
+      // 等解码完再一起露出来（缓存里的图也要解码）；期间又换了图就不管这次
+      const done = () => { if (panel.img.getAttribute('src') === src) panel.canvas.classList.remove('loading'); };
+      panel.img.decode().then(done, done);
+    }
     panel.canvas.classList.remove('hide-translation');
     panel.shapeLayer.replaceChildren();
     panel.shapeItems = null;
-    panel.pick.textContent = imageResult?.shapes ? t('调整形状') : t('框选区域');
-    panel.pick.title = imageResult?.shapes ? t('调整识别出的文字形状后重新翻译') : t('只翻译框出的区域');
+    // 「直接翻译」只对自动识别有意义
+    panel.direct.hidden = !imageResult?.shapes;
+    panel.directCheck.checked = !settings.imageReview;
     panel.toggle.textContent = t("显示原图");
     panel.fill.value = settings.imageFill;
     setShape(settings.imageShape);

@@ -494,5 +494,8 @@
   "正在识别改动过的形状…": "Riconoscimento delle forme modificate…",
   "翻译前先显示识别出的文字形状": "Mostra le forme di testo riconosciute prima di tradurre",
   "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Dopo il riconoscimento automatico, il testo rilevato viene disegnato prima sull'immagine. Puoi spostare, eliminare, modificare o aggiungere forme, poi tradurre una volta confermato.",
-  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Trascina una forma per spostarla; trascinando un vertice si spostano anche i punti vicini, tieni premuto Alt per spostare un solo punto; fai doppio clic su un bordo per aggiungere un vertice, fai doppio clic su un vertice per eliminarlo; trascina sullo spazio vuoto per creare una nuova forma; premi Delete per rimuovere la selezione"
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Trascina una forma per spostarla; trascinando un vertice si spostano anche i punti vicini, tieni premuto Alt per spostare un solo punto; fai doppio clic su un bordo per aggiungere un vertice, fai doppio clic su un vertice per eliminarlo; trascina sullo spazio vuoto per creare una nuova forma; premi Delete per rimuovere la selezione",
+  "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Traduci direttamente dopo il riconoscimento; se deselezionato, mostra prima le forme del testo riconosciuto, poi fai clic su «Traduci» per confermare",
+  "直接翻译": "Traduci direttamente",
+  "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Riconosci e traduci automaticamente in modo diretto. Se deselezionato, il testo trovato viene prima disegnato sull'immagine; puoi spostare, eliminare, modificare o aggiungere forme, poi fai clic su «Traduci» per tradurre. Puoi anche cambiare questa opzione nel popup."
 }

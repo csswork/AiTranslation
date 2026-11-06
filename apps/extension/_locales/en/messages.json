@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Drag a shape to move it; dragging a vertex moves nearby points with it, hold Alt to move only one point; double-click an edge to add a vertex, double-click a vertex to delete it; drag on empty space to create a new shape; press Delete to remove the selection"
   },
+  "m_214dca055ac1d803": {
+    "message": "Translate directly after recognition; when unchecked, first show the recognized text shapes, then click \"Translate\" to confirm"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Translate directly"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Automatically recognize and translate directly. When unchecked, the found text is first drawn on the image; you can move, delete, edit, or add shapes, then click \"Translate\" to translate. You can also switch this in the popup."
+  },
   "extensionName": {
     "message": "AI Translator"
   },

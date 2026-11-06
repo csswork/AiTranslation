@@ -34,7 +34,7 @@
     showOriginal: $('showOriginal'),
     floating: $('floating'),
     imageMode: $('imageMode'),
-    imageReview: $('imageReview'),
+    imageDirect: $('imageDirect'),
     shortcut: $('shortcut'),
     shortcutKey: $('shortcutKey'),
     shortcutHint: $('shortcutHint'),
@@ -340,7 +340,7 @@
     el.showOriginal.checked = settings.showOriginal;
     el.floating.checked = settings.floating;
     el.imageMode.value = settings.imageMode;
-    el.imageReview.checked = settings.imageReview;
+    el.imageDirect.checked = !settings.imageReview;
     el.shortcut.checked = settings.shortcut;
   }
 
@@ -581,7 +581,7 @@
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
-  el.imageReview.addEventListener('change', () => save({ imageReview: el.imageReview.checked }));
+  el.imageDirect.addEventListener('change', () => save({ imageReview: !el.imageDirect.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
 
   el.videoEnabled.addEventListener('change', async () => {

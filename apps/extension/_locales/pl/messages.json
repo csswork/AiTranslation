@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Przeciągnij kształt, aby go przesunąć; przeciąganie wierzchołka przesuwa pobliskie punkty, przytrzymaj Alt, aby przesunąć tylko jeden punkt; kliknij dwukrotnie krawędź, aby dodać wierzchołek, kliknij dwukrotnie wierzchołek, aby go usunąć; przeciągnij w puste miejsce, aby utworzyć nowy kształt; naciśnij Delete, aby usunąć zaznaczenie"
   },
+  "m_214dca055ac1d803": {
+    "message": "Tłumacz bezpośrednio po rozpoznaniu; gdy opcja jest odznaczona, najpierw pokaż rozpoznane kształty tekstu, a następnie kliknij „Przetłumacz”, aby potwierdzić"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Tłumacz bezpośrednio"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Automatycznie rozpoznawaj i tłumacz bezpośrednio. Gdy opcja jest odznaczona, znaleziony tekst jest najpierw rysowany na obrazie; możesz przesuwać, usuwać, edytować lub dodawać kształty, a następnie kliknąć „Przetłumacz”, aby przetłumaczyć. Możesz też przełączyć to w oknie podręcznym."
+  },
   "extensionName": {
     "message": "Tłumacz AI"
   },

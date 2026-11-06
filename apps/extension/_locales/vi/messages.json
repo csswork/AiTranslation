@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Kéo hình để di chuyển; kéo một đỉnh sẽ di chuyển các điểm gần đó theo, giữ Alt để chỉ di chuyển một điểm; nhấp đúp vào cạnh để thêm đỉnh, nhấp đúp vào đỉnh để xóa; kéo trên vùng trống để tạo hình mới; nhấn Delete để xóa vùng chọn"
   },
+  "m_214dca055ac1d803": {
+    "message": "Dịch trực tiếp sau khi nhận dạng; khi bỏ chọn, trước tiên hiển thị hình dạng văn bản đã nhận dạng, sau đó nhấn \"Dịch\" để xác nhận"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Dịch trực tiếp"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Tự động nhận dạng và dịch trực tiếp. Khi bỏ chọn, văn bản tìm thấy sẽ được vẽ trên ảnh trước; bạn có thể di chuyển, xóa, sửa hoặc thêm hình dạng, sau đó nhấn \"Dịch\" để dịch. Bạn cũng có thể chuyển đổi trong cửa sổ bật lên."
+  },
   "extensionName": {
     "message": "Trình dịch AI"
   },

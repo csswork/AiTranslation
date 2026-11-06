@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Faites glisser une forme pour la déplacer ; en faisant glisser un sommet, les points voisins suivent, maintenez Alt pour ne déplacer qu'un seul point ; double-cliquez sur un bord pour ajouter un sommet, double-cliquez sur un sommet pour le supprimer ; faites glisser dans un espace vide pour créer une nouvelle forme ; appuyez sur Delete pour supprimer la sélection"
   },
+  "m_214dca055ac1d803": {
+    "message": "Traduire directement après reconnaissance ; si décoché, afficher d'abord les formes du texte reconnu, puis cliquer sur « Traduire » pour confirmer"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Traduire directement"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Reconnaître et traduire automatiquement. Si décoché, le texte trouvé est d'abord dessiné sur l'image ; vous pouvez déplacer, supprimer, modifier ou ajouter des formes, puis cliquer sur « Traduire » pour lancer la traduction. Ce réglage est aussi modifiable dans la fenêtre contextuelle."
+  },
   "extensionName": {
     "message": "Traducteur IA"
   },

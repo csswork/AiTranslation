@@ -494,5 +494,8 @@
   "正在识别改动过的形状…": "Değiştirilen şekiller tanınıyor…",
   "翻译前先显示识别出的文字形状": "Çevirmeden önce tanınan metin şekillerini göster",
   "自动识别后先在图上画出找到的文字，可以移动、删除、修改或新增形状，确认后再翻译。": "Otomatik tanımadan sonra bulunan metin önce görüntü üzerinde çizilir. Şekilleri taşıyabilir, silebilir, değiştirebilir veya yeni şekil ekleyebilirsiniz; onayladıktan sonra çevirin.",
-  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Şekli sürükleyerek taşıyın; bir köşe noktasını sürüklerken yakındaki noktalar da hareket eder, yalnızca tek noktayı hareket ettirmek için Alt tuşunu basılı tutun; köşe noktası eklemek için kenara çift tıklayın, silmek için köşe noktasına çift tıklayın; yeni şekil oluşturmak için boş alana sürükleyin; seçimi kaldırmak için Delete tuşuna basın"
+  "拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除": "Şekli sürükleyerek taşıyın; bir köşe noktasını sürüklerken yakındaki noktalar da hareket eder, yalnızca tek noktayı hareket ettirmek için Alt tuşunu basılı tutun; köşe noktası eklemek için kenara çift tıklayın, silmek için köşe noktasına çift tıklayın; yeni şekil oluşturmak için boş alana sürükleyin; seçimi kaldırmak için Delete tuşuna basın",
+  "识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」": "Tanındıktan sonra doğrudan çevir; işaret kaldırıldığında önce tanınan metin şekillerini göster, onaylamak için \"Çevir\"e tıkla",
+  "直接翻译": "Doğrudan çevir",
+  "自动识别后直接翻译。取消勾选时先在图上画出找到的文字，可以移动、删除、修改或新增形状，点「翻译」后再翻译。弹窗里也能切换。": "Otomatik tanıyıp doğrudan çevir. İşaret kaldırıldığında bulunan metin önce görüntü üzerinde çizilir; şekilleri taşıyabilir, silebilir, düzenleyebilir veya yeni ekleyebilirsin, ardından çevirmek için \"Çevir\"e tıkla. Açılır pencereden de değiştirebilirsin."
 }

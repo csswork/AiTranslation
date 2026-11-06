@@ -2084,6 +2084,15 @@
   "m_32f40298bbc0bf4e": {
     "message": "Şekli sürükleyerek taşıyın; bir köşe noktasını sürüklerken yakındaki noktalar da hareket eder, yalnızca tek noktayı hareket ettirmek için Alt tuşunu basılı tutun; köşe noktası eklemek için kenara çift tıklayın, silmek için köşe noktasına çift tıklayın; yeni şekil oluşturmak için boş alana sürükleyin; seçimi kaldırmak için Delete tuşuna basın"
   },
+  "m_214dca055ac1d803": {
+    "message": "Tanındıktan sonra doğrudan çevir; işaret kaldırıldığında önce tanınan metin şekillerini göster, onaylamak için \"Çevir\"e tıkla"
+  },
+  "m_7eb7fb2d7e781fd5": {
+    "message": "Doğrudan çevir"
+  },
+  "m_3c823b1068259eaf": {
+    "message": "Otomatik tanıyıp doğrudan çevir. İşaret kaldırıldığında bulunan metin önce görüntü üzerinde çizilir; şekilleri taşıyabilir, silebilir, düzenleyebilir veya yeni ekleyebilirsin, ardından çevirmek için \"Çevir\"e tıkla. Açılır pencereden de değiştirebilirsin."
+  },
   "extensionName": {
     "message": "AI çevirmen"
   },
