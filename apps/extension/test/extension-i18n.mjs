@@ -34,4 +34,10 @@ stored = { uiLanguage: 'ur' };
 await context.AITrI18n.reload();
 assert.equal(context.AITrI18n.locale(), 'ur');
 assert.equal(context.AITrI18n.t('翻译'), read('i18n/ur.json')['翻译']);
-console.log('24 complete catalogs, source freshness, placeholders and runtime language loading passed');
+// 繁体中文不能混入只在简体里使用的字；台湾同样常用的字（群、台、干、游）不算
+const { simplifiedIn } = await import('../scripts/simplified-chars.mjs');
+assert.equal(simplifiedIn('双语阅读这篇文章'), '双语阅读这');
+assert.equal(simplifiedIn('雙語閱讀這篇文章，社群平台、干擾、游標'), '');
+const hant = Object.entries(read('i18n/zh-Hant.json')).filter(([, value]) => simplifiedIn(value));
+assert.deepEqual(hant, [], 'Traditional Chinese catalog contains simplified-only characters');
+console.log('24 complete catalogs, source freshness, placeholders and runtime language loading, Traditional Chinese script passed');

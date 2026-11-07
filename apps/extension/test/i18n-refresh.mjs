@@ -10,7 +10,7 @@ fs.mkdirSync(dir, { recursive: true });
 const write = (name, value) => fs.writeFileSync(path.join(dir, name), JSON.stringify(value));
 try {
   for (const name of ['scripts', 'i18n', 'src']) fs.mkdirSync(path.join(dir, name));
-  for (const name of ['translate-extension-i18n.mjs', 'extension-messages.mjs']) fs.copyFileSync(path.join(repo, 'scripts', name), path.join(dir, 'scripts', name));
+  for (const name of ['translate-extension-i18n.mjs', 'extension-messages.mjs', 'simplified-chars.mjs']) fs.copyFileSync(path.join(repo, 'scripts', name), path.join(dir, 'scripts', name));
   write('i18n/locales.json', [{ id: 'en', prompt: 'English' }, { id: 'fr', prompt: 'French' }]);
   write('i18n/en.json', { 翻译: 'Translate' });
   write('i18n/fr.json', { 翻译: 'Traduire' });

@@ -4,6 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { sourceMessages } from './extension-messages.mjs';
+import { simplifiedIn } from './simplified-chars.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
@@ -34,6 +35,7 @@ for (const locale of locales) {
     const message = catalog[source];
     if (typeof message !== 'string' || !message.trim()) throw new Error(`Missing ${locale.id}: ${source}`);
     if (locale.id === 'bn' && /\p{Script=Devanagari}/u.test(message)) throw new Error(`Hindi text in Bengali catalog: ${source}. Refresh the local translations.`);
+    if (locale.id === 'zh-Hant' && simplifiedIn(message)) throw new Error(`Simplified characters (${simplifiedIn(message)}) in Traditional Chinese catalog: ${source}. Refresh the local translations.`);
     if (slots(source) !== slots(message)) throw new Error(`Placeholder mismatch ${locale.id}: ${source}`);
     const placeholders = {};
     const nativeMessage = message.replace(/\$(\d+)/g, (_, n) => {
