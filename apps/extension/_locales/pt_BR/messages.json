@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "O pacote de idiomas $arg1$ → $arg2$ ainda não está instalado neste dispositivo. Baixe-o em Tradução local nas Configurações.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Falha na tradução local: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "A tradução local não oferece suporte à tradução de $arg1$ para $arg2$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "A tradução local não oferece suporte a este idioma de destino."
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "Não foi possível detectar o idioma de origem. Selecione-o manualmente no painel de tradução."
+  },
+  "m_7facdf72db979717": {
+    "message": "A tradução local não retornou nenhuma tradução."
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Tradução local"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Grátis, traduzido no seu navegador, o texto nunca sai do seu dispositivo"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Traduza no seu dispositivo usando o modelo de tradução integrado do navegador: grátis, sem necessidade de API Key, e seu texto nunca é enviado a nenhum servidor."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "O idioma de origem é detectado automaticamente durante a tradução. Cada par de idiomas precisa baixar o pacote de idiomas uma vez; depois disso, funciona offline."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Somente texto; tradução de imagens e clicar para reformular não são suportados. A qualidade da tradução de parágrafos longos e conteúdo especializado é inferior à de grandes modelos."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Baixar pacote de idiomas"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "Baixado e pronto para usar."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "Baixando…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "Este par de idiomas ainda não é suportado pelo navegador."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Ainda não baixado."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "Baixando… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Preparando…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● Nenhuma Key necessária"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Não suportado pelo navegador"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Usando tradução local no momento; nenhum crédito é consumido."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Traduzido no seu dispositivo, sem necessidade de API Key"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "Este navegador não oferece suporte à tradução local. Clique aqui para trocar de plataforma."
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "Este navegador não oferece suporte à tradução no dispositivo. É necessária uma versão desktop mais recente do Chrome ou Edge."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "Se um pacote de idioma ainda não baixado for necessário durante a tradução, você será solicitado a baixá-lo aqui."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "Este navegador não oferece suporte à tradução no dispositivo. É necessária uma versão desktop mais recente do Chrome ou Edge."
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

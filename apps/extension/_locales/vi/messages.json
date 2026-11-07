@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "Thiết bị này chưa có gói ngôn ngữ \"$arg1$ → $arg2$\", vui lòng tải xuống trong mục Dịch trên máy ở trang cài đặt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Dịch trên máy thất bại: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "Dịch trên máy không hỗ trợ dịch từ $arg1$ sang $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "Dịch trên máy không hỗ trợ ngôn ngữ đích này"
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "Không nhận diện được ngôn ngữ gốc, vui lòng chọn thủ công ngôn ngữ gốc trong bảng dịch"
+  },
+  "m_7facdf72db979717": {
+    "message": "Dịch trên máy không trả về bản dịch"
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Dịch trên máy"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Miễn phí, dịch ngay trong trình duyệt, văn bản không rời khỏi thiết bị"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Dịch ngay trên thiết bị bằng mô hình dịch tích hợp sẵn của trình duyệt: miễn phí, không cần API Key, văn bản gốc không được gửi đến bất kỳ máy chủ nào."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "Tự động nhận diện ngôn ngữ gốc khi dịch. Mỗi cặp ngôn ngữ chỉ cần tải gói ngôn ngữ một lần, sau đó có thể dùng khi ngoại tuyến."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Chỉ dịch được văn bản, không hỗ trợ dịch hình ảnh và nhấp từ để đổi cách diễn đạt; chất lượng bản dịch cho đoạn dài và nội dung chuyên ngành thấp hơn so với mô hình lớn."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Tải gói ngôn ngữ"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "Đã tải xuống, có thể sử dụng ngay."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "Đang tải xuống…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "Trình duyệt tạm thời chưa hỗ trợ cặp ngôn ngữ này."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Chưa tải xuống."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "Đang tải xuống… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Đang chuẩn bị…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● Không cần Key"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Trình duyệt không hỗ trợ"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Đang dùng dịch trên máy, không tiêu tốn điểm."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Dịch trên thiết bị, không cần API Key"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "Trình duyệt hiện tại không hỗ trợ dịch trên máy, nhấp vào đây để đổi nền tảng"
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "Trình duyệt này không hỗ trợ dịch trên thiết bị. Cần phiên bản Chrome hoặc Edge dành cho máy tính mới hơn."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "Nếu gói ngôn ngữ chưa được tải xuống cần dùng khi dịch, bạn sẽ được nhắc tải xuống tại đây."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "Trình duyệt này không hỗ trợ dịch trên thiết bị. Cần phiên bản Chrome hoặc Edge dành cho máy tính mới hơn."
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

@@ -11,6 +11,8 @@
    *   mt  —— 传统机器翻译接口。文本进文本出，上面这些都没有。
    *   hosted —— 托管翻译：登录账户后用点数，由我们的服务完成翻译，不需要 API Key。
    *            支持文字和图片；模型及 Key 由服务端管理。
+   *   local —— 本机翻译：浏览器内置的 Translator API（见 local.js），免费、文字不出本机。
+   *            只能文本进文本出，语言包要先下载；浏览器不支持时不出现在平台列表里。
    * 请求形态完全不同，不少功能要按形态决定可用与否。
    */
   const PROVIDERS = {
@@ -19,6 +21,17 @@
       label: k("点数翻译"),
       kind: 'hosted',
       hint: k("免费试用，或订阅后无限使用，不需要 API Key"),
+      defaultBaseUrl: '',
+      defaultModel: '',
+      models: [],
+      keyUrl: '',
+      keyPrefix: '',
+    },
+    local: {
+      id: 'local',
+      label: k("本机翻译"),
+      kind: 'local',
+      hint: k("免费，在浏览器里翻译，文字不离开本机"),
       defaultBaseUrl: '',
       defaultModel: '',
       models: [],
@@ -65,9 +78,11 @@
     },
   };
 
-  const PROVIDER_ORDER = ['hosted', 'openai', 'deepseek', 'deepl'];
+  const PROVIDER_ORDER = ['hosted', 'local', 'openai', 'deepseek', 'deepl'];
   /** 需要用户自带 API Key 的平台（各自保存一份 Key / 模型 / 地址配置）。 */
-  const KEY_PROVIDERS = PROVIDER_ORDER.filter((id) => PROVIDERS[id].kind !== 'hosted');
+  const KEY_PROVIDERS = PROVIDER_ORDER.filter((id) => !['hosted', 'local'].includes(PROVIDERS[id].kind));
+  /** 平台名：品牌名（ChatGPT、DeepSeek、DeepL）原样显示；「点数翻译」「本机翻译」是界面文案，要翻译。 */
+  const providerLabel = (def) => (['hosted', 'local'].includes(def.kind) ? t(def.label) : def.label);
 
   /**
    * 语言 id → DeepL 的 target_lang 代码。
@@ -218,8 +233,7 @@
     const conf = settings[def.id] || {};
     return {
       id: def.id,
-      // 品牌名（ChatGPT、DeepSeek、DeepL）原样显示；「点数翻译」是界面文案，要翻译
-      label: def.kind === 'hosted' ? t(def.label) : def.label,
+      label: providerLabel(def),
       keyUrl: def.keyUrl,
       apiKey: str(conf.apiKey),
       kind: def.kind || 'llm',
@@ -248,13 +262,19 @@
   const deeplCode = (languageId) => DEEPL_CODES[languageId] || '';
 
   const isHosted = (id) => providerKind(id) === 'hosted';
+  const isLocal = (id) => providerKind(id) === 'local';
+  /** 浏览器是否提供内置 Translator（Chrome 138+ 桌面版、Edge 148+）。 */
+  const localSupported = () => typeof globalThis.Translator === 'function';
 
-  const providerList = () => PROVIDER_ORDER.map((id) => ({
-    id,
-    kind: PROVIDERS[id].kind,
-    label: isHosted(id) ? t(PROVIDERS[id].label) : PROVIDERS[id].label,
-    hint: t(PROVIDERS[id].hint),
-  }));
+  // 不支持本机翻译的浏览器不列出它；已经选了它的用户仍然保留，翻译时提示原因。
+  const providerList = (current) => PROVIDER_ORDER
+    .filter((id) => !isLocal(id) || localSupported() || id === current)
+    .map((id) => ({
+      id,
+      kind: PROVIDERS[id].kind,
+      label: providerLabel(PROVIDERS[id]),
+      hint: t(PROVIDERS[id].hint),
+    }));
   const targetList = () => AITrLanguages.list();
   const videoLang = (settings) => {
     const value = VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
@@ -267,6 +287,8 @@
     PROVIDER_ORDER,
     KEY_PROVIDERS,
     isHosted,
+    isLocal,
+    localSupported,
     VISION_MODELS,
     visionModel,
     DEEPL_CODES,

@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "Das Sprachpaket $arg1$ → $arg2$ ist auf diesem Gerät noch nicht installiert. Lade es in den Einstellungen unter Lokale Übersetzung herunter.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Lokale Übersetzung fehlgeschlagen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "Die lokale Übersetzung unterstützt keine Übersetzung von $arg1$ nach $arg2$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "Die lokale Übersetzung unterstützt diese Zielsprache nicht."
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "Die Ausgangssprache konnte nicht erkannt werden. Bitte wähle sie im Übersetzungsfenster manuell aus."
+  },
+  "m_7facdf72db979717": {
+    "message": "Die lokale Übersetzung hat keine Übersetzung zurückgegeben."
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Lokale Übersetzung"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Kostenlos, Übersetzung im Browser, Text verlässt dein Gerät nicht"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Übersetze auf deinem Gerät mit dem integrierten Übersetzungsmodell des Browsers: kostenlos, kein API Key erforderlich, und dein Text wird nie an einen Server gesendet."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "Die Ausgangssprache wird beim Übersetzen automatisch erkannt. Für jedes Sprachpaar muss einmalig ein Sprachpaket heruntergeladen werden, danach funktioniert es auch offline."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Nur Text; Bildübersetzung und Klick-zum-Umformulieren werden nicht unterstützt. Die Übersetzungsqualität bei langen Absätzen und Fachinhalten ist geringer als bei großen Modellen."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Sprachpaket herunterladen"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "Heruntergeladen und einsatzbereit."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "Wird heruntergeladen…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "Dieses Sprachpaar wird vom Browser noch nicht unterstützt."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Noch nicht heruntergeladen."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "Wird heruntergeladen… $arg1$ %",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Wird vorbereitet…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● Kein Key erforderlich"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Vom Browser nicht unterstützt"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Derzeit wird die lokale Übersetzung verwendet; es werden keine Punkte verbraucht."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Auf deinem Gerät übersetzt, kein API Key erforderlich"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "Dieser Browser unterstützt keine lokale Übersetzung. Klicke hier, um die Plattform zu wechseln."
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "Dieser Browser unterstützt keine Übersetzung auf dem Gerät. Eine neuere Desktop-Version von Chrome oder Edge ist erforderlich."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "Wenn beim Übersetzen ein noch nicht heruntergeladenes Sprachpaket benötigt wird, wirst du hier zum Herunterladen aufgefordert."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "Dieser Browser unterstützt keine Übersetzung auf dem Gerät. Eine neuere Desktop-Version von Chrome oder Edge ist erforderlich."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

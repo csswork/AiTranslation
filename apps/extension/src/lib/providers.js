@@ -14,6 +14,16 @@
     }
   }
 
+  /** 本机翻译（浏览器内置 Translator，见 local.js）：错误统一转成 TranslateError，保留用户可操作的建议。 */
+  async function localTranslate(args) {
+    try {
+      return await globalThis.AITrLocal.translate(args);
+    } catch (err) {
+      if (err?.name === 'AbortError') throw err;
+      throw new TranslateError(String(err?.message || err), err?.action);
+    }
+  }
+
   /**
    * OpenAI 的推理模型（gpt-5.x / gpt-6 / o 系列 / codex）。
    * 注意 chatgpt-4o-latest、gpt-4o-mini 这类不算，它们走 temperature。
@@ -322,6 +332,13 @@
       return;
     }
 
+    // 本机翻译：一次性返回；用词偏好与 DeepL 一样在译文里替换
+    if (provider.kind === 'local') {
+      const [out] = await localTranslate({ texts: [text], targetId: targetId || settings.target, sourceId, signal });
+      if (out) yield terms.length ? globalThis.AITrTerms.applyTo(text, out, terms) : out;
+      return;
+    }
+
     // 传统翻译接口：一次性返回，没有流式可言
     if (provider.kind === 'mt') {
       const [out] = await deeplTranslate({
@@ -441,6 +458,11 @@
       return hostedTranslate({ texts, target: targetId || settings.target, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, signal });
     }
 
+    if (provider.kind === 'local') {
+      const out = await localTranslate({ texts, targetId: targetId || settings.target, signal });
+      return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
+    }
+
     // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
     if (provider.kind === 'mt') {
       const out = await deeplTranslate({
@@ -538,7 +560,7 @@
     const provider = S.resolveProvider(settings);
     const target = targetId || settings.target;
     const note = AITrLanguages.LANGUAGES[noteId] ? noteId : 'en';
-    if (provider.kind === 'mt') {
+    if (provider.kind === 'mt' || provider.kind === 'local') {
       throw new TranslateError(t("$1 不提供其他译法。可以自己改写，或换成点数翻译、大模型平台。", [provider.label]), 'unsupported');
     }
     if (provider.kind === 'hosted') {
@@ -600,6 +622,11 @@
 
     if (provider.kind === 'hosted') {
       const [out] = await hostedTranslate({ texts: [text], target: settings.target, signal });
+      return String(out || '').trim();
+    }
+
+    if (provider.kind === 'local') {
+      const [out] = await localTranslate({ texts: [text], targetId: settings.target, signal });
       return String(out || '').trim();
     }
 
@@ -729,7 +756,7 @@
     const regions = purpose === 'regions';
     const S = globalThis.AITrSettings;
     const base = S.resolveProvider(settings, providerId);
-    if (base.kind === 'mt') {
+    if (base.kind === 'mt' || base.kind === 'local') {
       throw new TranslateError(
         t("$1 只能翻译文本，识别不了图片里的文字。请切换到 ChatGPT 或 DeepSeek", [base.label]),
         'open-options'
@@ -881,6 +908,16 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     if (provider.kind === 'hosted') throw new TranslateError(t("点数翻译不需要测试连接，登录后即可使用"));
+    if (provider.kind === 'local') {
+      const english = settings.target === 'en';
+      const [sample] = await localTranslate({
+        texts: [english ? '你好！这是一次连接测试。' : 'Hello! This is a connection test.'],
+        sourceId: english ? 'zh-Hans' : 'en',
+        targetId: settings.target,
+      });
+      if (!sample) throw new TranslateError(t("本机翻译没有返回译文"));
+      return { model: provider.label, sample: sample.trim().slice(0, 60) };
+    }
     if (!provider.apiKey) {
       throw new TranslateError(t("请先填写 $1 的 API Key", [provider.label]));
     }

@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "Het taalpakket $arg1$ → $arg2$ is nog niet op dit apparaat geïnstalleerd. Download het via Lokaal vertalen in Instellingen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Lokaal vertalen mislukt: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "Lokaal vertalen ondersteunt niet vertalen van $arg1$ naar $arg2$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "Lokaal vertalen ondersteunt deze doeltaal niet."
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "De brontaal kon niet worden herkend. Selecteer deze handmatig in het vertaalpaneel."
+  },
+  "m_7facdf72db979717": {
+    "message": "Lokaal vertalen heeft geen vertaling opgeleverd."
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Lokaal vertalen"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Gratis, vertaald in je browser, tekst verlaat je apparaat nooit"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Vertaal op je apparaat met het ingebouwde vertaalmodel van de browser: gratis, geen API Key nodig en je tekst wordt nooit naar een server verzonden."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "De brontaal wordt automatisch herkend tijdens het vertalen. Elk taalpaar vereist eenmalig een gedownload taalpakket, daarna werkt het ook offline."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Alleen tekst; afbeeldingsvertaling en klik-om-te-herformuleren worden niet ondersteund. De vertaalkwaliteit voor lange alinea's en gespecialiseerde inhoud is lager dan bij grote modellen."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Taalpakket downloaden"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "Gedownload en klaar voor gebruik."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "Bezig met downloaden…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "Dit taalpaar wordt nog niet door de browser ondersteund."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Nog niet gedownload."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "Bezig met downloaden… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Voorbereiden…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● Geen Key nodig"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Niet ondersteund door browser"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Momenteel wordt lokaal vertalen gebruikt; er worden geen punten verbruikt."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Vertaald op je apparaat, geen API Key nodig"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "Deze browser ondersteunt geen lokaal vertalen. Klik hier om van platform te wisselen."
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "Deze browser ondersteunt geen vertaling op het apparaat. Er is een nieuwere desktopversie van Chrome of Edge vereist."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "Als er tijdens het vertalen een taalpakket nodig is dat nog niet is gedownload, wordt u hier gevraagd om het te downloaden."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "Deze browser ondersteunt geen vertaling op het apparaat. Er is een nieuwere desktopversie van Chrome of Edge vereist."
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

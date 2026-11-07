@@ -9,6 +9,7 @@ import './lib/env.js';
 import './lib/lang.js';
 import './lib/settings.js';
 import './lib/terms.js';
+import './lib/local.js';
 import './lib/providers.js';
 import './lib/account.js';
 
@@ -503,7 +504,7 @@ async function startTranslation({ tabId, text, providerId, targetId }) {
     targetId: settings.target,
     targets: AITrSettings.targetList(),
     provider: { id: provider.id, label: provider.label, model: provider.model },
-    providers: AITrSettings.providerList(),
+    providers: AITrSettings.providerList(settings.provider),
     showOriginal: settings.showOriginal,
   });
 
@@ -773,7 +774,9 @@ async function finishLogin(callbackUrl, callbackTab) {
   const { returnTabId } = await AITrAccount.completeLogin(callbackUrl);
   await chrome.storage.local.set({ onboarding: 'done' });
   const settings = await AITrSettings.loadSettings();
-  if (!AITrSettings.isHosted(settings.provider) && !AITrSettings.KEY_PROVIDERS.some((id) => settings[id]?.apiKey)) {
+  // 已选本机翻译的用户不改：它不需要 Key，本来就能用
+  if (!AITrSettings.isHosted(settings.provider) && !AITrSettings.isLocal(settings.provider)
+    && !AITrSettings.KEY_PROVIDERS.some((id) => settings[id]?.apiKey)) {
     await AITrSettings.patchSettings({ provider: 'hosted' });
   }
   const returnTab = returnTabId != null ? await chrome.tabs.get(returnTabId).catch(() => null) : null;

@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "The $arg1$ → $arg2$ language pack isn't installed on this device yet. Download it from Local translation in Settings.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Local translation failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "Local translation doesn't support translating from $arg1$ to $arg2$.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "Local translation doesn't support this target language."
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "Couldn't detect the source language. Please select it manually in the translation panel."
+  },
+  "m_7facdf72db979717": {
+    "message": "Local translation returned no translation."
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Local translation"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Free, translated in your browser, text never leaves your device"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Translate on your device using the browser's built-in translation model: free, no API Key required, and your text is never sent to any server."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "The source language is detected automatically when translating. Each language pair needs its language pack downloaded once, after which it works offline."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Text only; image translation and click-to-rephrase aren't supported. Translation quality for long paragraphs and specialized content is lower than with large models."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Download language pack"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "Downloaded and ready to use."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "Downloading…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "This language pair isn't supported by the browser yet."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Not downloaded yet."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "Downloading… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Preparing…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● No Key required"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Not supported by browser"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Currently using local translation; no credits are used."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Translated on your device, no API Key required"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "This browser doesn't support local translation. Click here to switch platforms."
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "This browser doesn't support on-device translation. A newer desktop version of Chrome or Edge is required."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "If a language pack that hasn't been downloaded yet is needed during translation, you'll be prompted to download it here."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "This browser doesn't support on-device translation. A newer desktop version of Chrome or Edge is required."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

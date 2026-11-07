@@ -2570,6 +2570,110 @@
       }
     }
   },
+  "m_40e1884b921acce3": {
+    "message": "Bu cihazda henüz \"$arg1$ → $arg2$\" dil paketi yüklü değil. Ayarlar'daki Yerel çeviri bölümünden indirin.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_aa136ec6f12d29ee": {
+    "message": "Yerel çeviri başarısız oldu: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b03a6465921499ac": {
+    "message": "Yerel çeviri $arg1$ dilinden $arg2$ diline çeviriyi desteklemiyor.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_7607751de532ef00": {
+    "message": "Yerel çeviri bu hedef dili desteklemiyor."
+  },
+  "m_9df580b18d5c5b59": {
+    "message": "Kaynak dil belirlenemedi. Lütfen çeviri panelinden kaynak dili elle seçin."
+  },
+  "m_7facdf72db979717": {
+    "message": "Yerel çeviri çeviri döndürmedi."
+  },
+  "m_1fa6397d4f83dea5": {
+    "message": "Yerel çeviri"
+  },
+  "m_52ef70c62cb0bc93": {
+    "message": "Ücretsiz, tarayıcınızda çevrilir, metin cihazınızdan çıkmaz"
+  },
+  "m_07005997c39db6c1": {
+    "message": "Tarayıcının yerleşik çeviri modeliyle cihazınızda çevirin: ücretsiz, API Key gerekmez ve metniniz hiçbir sunucuya gönderilmez."
+  },
+  "m_a06682e9bf0d3dad": {
+    "message": "Çeviri sırasında kaynak dil otomatik algılanır. Her dil çifti için dil paketinin bir kez indirilmesi gerekir; sonrasında çevrimdışı da çalışır."
+  },
+  "m_89b7dda41d9f1cd3": {
+    "message": "Yalnızca metin çevrilir; görsel çevirisi ve tıklayarak yeniden ifade etme desteklenmez. Uzun paragraflar ve uzman içerik için çeviri kalitesi büyük modellere göre daha düşüktür."
+  },
+  "m_076f2358b99807b9": {
+    "message": "Dil paketini indir"
+  },
+  "m_62c2e6ccfbf21134": {
+    "message": "İndirildi, kullanıma hazır."
+  },
+  "m_369ca5e19c59093f": {
+    "message": "İndiriliyor…"
+  },
+  "m_4355e42500d8d276": {
+    "message": "Bu dil çifti henüz tarayıcı tarafından desteklenmiyor."
+  },
+  "m_2939df1d54f019fc": {
+    "message": "Henüz indirilmedi."
+  },
+  "m_530ebff5e46fb541": {
+    "message": "İndiriliyor… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f07335163e367650": {
+    "message": "Hazırlanıyor…"
+  },
+  "m_2e8298bf1b70bf27": {
+    "message": "● Key gerekmez"
+  },
+  "m_88216d91f2f32597": {
+    "message": "○ Tarayıcı tarafından desteklenmiyor"
+  },
+  "m_c10a3aede2b0120c": {
+    "message": "Şu anda yerel çeviri kullanılıyor; kredi harcanmaz."
+  },
+  "m_960c8b5766835c2b": {
+    "message": "Cihazınızda çevrilir, API Key gerekmez"
+  },
+  "m_807a44ffd35266fb": {
+    "message": "Bu tarayıcı yerel çeviriyi desteklemiyor. Platform değiştirmek için buraya tıklayın."
+  },
+  "m_50b84f5de3adab4b": {
+    "message": "Bu tarayıcı cihaz üzerinde çeviriyi desteklemiyor. Chrome veya Edge'in daha yeni bir masaüstü sürümü gerekli."
+  },
+  "m_f70d2d8b2a1d1075": {
+    "message": "Çeviri sırasında henüz indirilmemiş bir dil paketi gerekirse, buradan indirmeniz istenecektir."
+  },
+  "m_1bc71cf7306f8195": {
+    "message": "Bu tarayıcı cihaz üzerinde çeviriyi desteklemiyor. Chrome veya Edge'in daha yeni bir masaüstü sürümü gerekli."
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

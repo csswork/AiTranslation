@@ -85,6 +85,27 @@
         <div class="actions" id="hostedActions"></div>
       </section>
 
+      <section class="card hosted-config" id="localConfig" hidden>
+        <h2>本机翻译</h2>
+        <p class="desc">用浏览器内置的翻译模型在本机完成翻译：免费，不需要 API Key，原文不会发送到任何服务器。</p>
+        <ul class="hosted-notes">
+          <li>翻译时自动识别原文语言。每个语言对要先下载一次语言包，之后断网也能用。</li>
+          <li>翻译时遇到还没下载的语言包，会提示到这里下载。</li>
+          <li>只能翻译文字，不支持图片翻译和点词换说法；长段落和专业内容的译文质量不如大模型。</li>
+        </ul>
+        <div class="fields">
+          <div class="field">
+            <span class="label" id="localPairLabel">下载语言包</span>
+            <span class="key-row">
+              <select id="localSource" aria-labelledby="localPairLabel"></select>
+              <span id="localTarget"></span>
+              <button id="localDownload" class="btn" type="button">下载</button>
+            </span>
+            <span class="help" id="localStatus" role="status"></span>
+          </div>
+        </div>
+      </section>
+
       <section class="card" id="providerConfig">
         <h2>接口配置</h2>
         <p class="desc">API Key 只保存在本机，不同步；仅用于向你选择的平台鉴权。</p>
@@ -280,6 +301,7 @@
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/terms.js"></script>
+    <script src="../lib/local.js"></script>
     <script src="../lib/speech.js"></script>
     <script src="../lib/auth-ui.js"></script>
     <script src="options.js"></script>

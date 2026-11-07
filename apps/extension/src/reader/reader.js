@@ -760,7 +760,7 @@
   }
 
   function renderProviderOptions() {
-    el.provider.replaceChildren(...S.providerList().map((item) => {
+    el.provider.replaceChildren(...S.providerList(settings.provider).map((item) => {
       const option = make('option', '', item.label);
       option.value = item.id;
       return option;

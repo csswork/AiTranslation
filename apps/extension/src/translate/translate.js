@@ -99,7 +99,7 @@
   }
 
   function renderProviderOptions() {
-    el.provider.replaceChildren(...S.providerList().map((item) => {
+    el.provider.replaceChildren(...S.providerList(settings.provider).map((item) => {
       const option = document.createElement('option');
       option.value = item.id;
       option.textContent = item.label;

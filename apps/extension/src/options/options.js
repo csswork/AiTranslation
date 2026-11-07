@@ -77,6 +77,11 @@
     hostedState: $('hostedState'),
     hostedRate: $('hostedRate'),
     hostedActions: $('hostedActions'),
+    localConfig: $('localConfig'),
+    localSource: $('localSource'),
+    localTarget: $('localTarget'),
+    localDownload: $('localDownload'),
+    localStatus: $('localStatus'),
   };
 
   let settings = S.normalize(null);
@@ -219,6 +224,69 @@
     AITrAuthUi.sync();
   }
 
+  /* ------------------------------------------------------------- 本机翻译 */
+
+  let localBusy = false;
+
+  /** 下载语言包的原文语言默认英语；目标语言就是英语时默认简体中文。 */
+  function renderLocal() {
+    const keep = el.localSource.value;
+    el.localSource.replaceChildren(...S.targetList().filter((item) => item.id !== settings.target).map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = item.label;
+      return option;
+    }));
+    el.localSource.value = keep && keep !== settings.target ? keep : settings.target === 'en' ? 'zh-Hans' : 'en';
+    el.localTarget.textContent = `→ ${S.targetMenu(settings)}`;
+    renderLocalState();
+  }
+
+  async function renderLocalState() {
+    if (localBusy) return;
+    const L = globalThis.AITrLocal;
+    if (!L.supported()) {
+      el.localDownload.disabled = true;
+      el.localSource.disabled = true;
+      el.localStatus.textContent = t('当前浏览器不支持本机翻译，需要较新的桌面版 Chrome 或 Edge。');
+      return;
+    }
+    const sourceId = el.localSource.value;
+    const state = await L.availability(L.code(sourceId), L.code(settings.target));
+    if (sourceId !== el.localSource.value || localBusy) return;
+    el.localSource.disabled = false;
+    el.localDownload.disabled = state === 'available' || state === 'unavailable';
+    el.localStatus.textContent = ({
+      available: t('已下载，可以直接使用。'),
+      downloading: t('正在下载…'),
+      unavailable: t('浏览器暂不支持这个语言对。'),
+    })[state] || t('还没有下载。');
+  }
+
+  el.localSource.addEventListener('change', renderLocalState);
+  el.localDownload.addEventListener('click', async () => {
+    // 下载必须紧贴点击手势：prepare() 里第一步就是创建翻译器，前面不能有任何 await
+    const task = AITrLocal.prepare({
+      sourceId: el.localSource.value,
+      targetId: settings.target,
+      onProgress: (loaded) => { el.localStatus.textContent = t('正在下载… $1%', [Math.round(loaded * 100)]); },
+    });
+    localBusy = true;
+    el.localDownload.disabled = true;
+    el.localSource.disabled = true;
+    el.localStatus.textContent = t('正在准备…');
+    try {
+      await task;
+      localBusy = false;
+      await renderLocalState();
+    } catch (err) {
+      localBusy = false;
+      el.localDownload.disabled = false;
+      el.localSource.disabled = false;
+      el.localStatus.textContent = String(err?.message || err);
+    }
+  });
+
   function openLink(name) {
     const url = AITrEnv.links[name];
     if (url) chrome.tabs.create({ url });
@@ -241,10 +309,11 @@
   function renderCards() {
     const current = settings.provider;
     el.cards.replaceChildren(
-      ...S.providerList().map((item) => {
+      ...S.providerList(settings.provider).map((item) => {
         const hosted = item.kind === 'hosted';
+        const local = item.kind === 'local';
         const active = account.signedIn || account.guest;
-        const configured = hosted ? active && (subscribed() || hasCredits()) : Boolean(settings[item.id]?.apiKey);
+        const configured = hosted ? active && (subscribed() || hasCredits()) : local ? S.localSupported() : Boolean(settings[item.id]?.apiKey);
         const card = document.createElement('button');
         card.type = 'button';
         card.className = hosted ? 'provider-card hosted' : 'provider-card';
@@ -255,6 +324,7 @@
         card.querySelector('i').textContent = item.hint;
         card.querySelector('em').textContent = hosted
           ? (!active ? t('○ 需要登录') : subscribed() ? t('● 无限使用') : hasCredits() ? t('● 剩余 $1 点', [C.format(balanceOf())]) : t('○ 点数已用完'))
+          : local ? (configured ? t('● 不需要 Key') : t('○ 浏览器不支持'))
           : configured ? t("● 已配置 Key") : t("○ 未配置 Key");
         card.addEventListener('click', () => {
           if (settings.provider === item.id) return;
@@ -268,11 +338,14 @@
   function renderProviderConfig() {
     const def = S.PROVIDERS[settings.provider];
     const hosted = S.isHosted(settings.provider);
-    el.providerConfig.hidden = hosted;
+    const local = S.isLocal(settings.provider);
+    el.providerConfig.hidden = hosted || local;
     el.hostedConfig.hidden = !hosted;
+    el.localConfig.hidden = !local;
     el.stream.disabled = !S.supportsStreaming(settings.provider);
-    if (hosted) {
-      renderHosted();
+    if (hosted || local) {
+      if (hosted) renderHosted();
+      else renderLocal();
       el.streamHelp.textContent = t("$1 一次性返回全部译文，没有逐字显示。", [S.resolveProvider(settings).label]);
       return;
     }
@@ -579,6 +652,7 @@
     await save({ target: el.target.value });
     el.targetPreview.textContent = t('右键菜单：$1', [t('翻译成$1', [S.targetMenu(settings)])]);
     el.uiLanguage.value = settings.uiLanguage;
+    if (S.isLocal(settings.provider)) renderLocal();
     el.videoTarget.textContent = t('字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。', [S.targetMenu(settings)]);
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));

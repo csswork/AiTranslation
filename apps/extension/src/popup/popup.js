@@ -116,7 +116,7 @@
 
   function renderAccount() {
     const card = cardFor(account);
-    // 正在用自己的 API Key：点数暂不消耗，卡片收紧，不再推订阅；未登录时登录按钮也降为次要样式。
+    // 正在用自己的 API Key 或本机翻译：点数暂不消耗，卡片收紧，不再推订阅；未登录时登录按钮也降为次要样式。
     const ownKey = !S.isHosted(settings.provider);
     if (ownKey && card.cta) {
       if (card.cta.action === 'login' && !account.guest) card.cta.soft = true;
@@ -163,7 +163,8 @@
     // 当前翻译方式与点数的关系：自带 Key 不消耗点数；托管服务暂停时说明原因。
     const active = account.signedIn || account.guest;
     let note = '';
-    if (active && !S.isHosted(settings.provider)) note = t('当前使用自己的 API Key，不消耗点数。');
+    if (active && S.isLocal(settings.provider)) note = t('当前使用本机翻译，不消耗点数。');
+    else if (active && !S.isHosted(settings.provider)) note = t('当前使用自己的 API Key，不消耗点数。');
     else if (active && account.hosted && !account.hosted.available) note = t('点数翻译暂时不可用，可以先切换到自己的 API Key。');
     el.modeNote.textContent = note;
     el.modeNote.hidden = !note;
@@ -174,7 +175,7 @@
 
   function render() {
     el.provider.replaceChildren(
-      ...S.providerList().map((item) => {
+      ...S.providerList(settings.provider).map((item) => {
         const option = document.createElement('option');
         option.value = item.id;
         option.textContent = item.label;
@@ -186,7 +187,12 @@
     el.tip.textContent = t('选中文字，右键 → $1', [t('翻译成$1', [S.targetMenu(settings)])]);
     // 自带 Key 时在选择框下面显示 Key 与模型状态；点数翻译的状态在上面的账户卡片里。
     el.keyState.hidden = hosted;
-    if (!hosted) {
+    if (S.isLocal(settings.provider)) {
+      el.keyText.textContent = S.localSupported()
+        ? t('在本机翻译，不需要 API Key')
+        : t('当前浏览器不支持本机翻译，点这里换一个平台');
+      el.keyState.className = `key-state ${S.localSupported() ? '' : 'warn'}`;
+    } else if (!hosted) {
       const provider = S.resolveProvider(settings);
       const configured = Boolean(provider.apiKey);
       el.keyText.textContent = configured
