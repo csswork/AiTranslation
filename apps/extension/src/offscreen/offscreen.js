@@ -128,12 +128,12 @@
     };
     rec.onerror = (event) => {
       if (session.stopped) return; // 自己 abort 的
-      console.warn("[AI Translator] Speech recognition error:", event.error, event.message || '');
+      console.warn("[Huaci] Speech recognition error:", event.error, event.message || '');
       if (!RECOVERABLE.has(event.error)) session.fatal = event.error;
     };
     rec.onend = () => {
       if (session.stopped || session.rec !== rec) return;
-      console.info("[AI Translator] Recognition ended; restarting");
+      console.info("[Huaci] Recognition ended; restarting");
       if (session.fatal) {
         fail(tabId, session, recognitionError(session.fatal, session));
         return;

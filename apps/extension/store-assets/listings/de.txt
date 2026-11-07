@@ -1,77 +1,70 @@
-Wählen Sie Text auf einer Webseite aus, klicken Sie mit der rechten Maustaste und sehen Sie, wie die Übersetzung in einem schwebenden Panel erscheint – ohne Tab-Wechsel oder Kopieren und Einfügen.
+Auswählen, Rechtsklick und einfach weiterlesen. Lies ganze Artikel Absatz für Absatz neben ihrer Übersetzung und übersetze ausgewählten Text, Bilder und PDFs direkt an Ort und Stelle – ohne Tab-Wechsel oder Kopieren und Einfügen.
 
-AI Selection Translator ist eine Open-Source-Chrome-Erweiterung auf Basis von Manifest V3. Übersetzen Sie ausgewählten Text, Seitenbereiche und Text in Bildern in Ihre bevorzugte Sprache mit Ihrem eigenen OpenAI-, DeepSeek- oder DeepL-API-Schlüssel.
+Huaci – KI-Übersetzer & zweisprachiger Reader ist eine Open-Source-Browsererweiterung auf Basis von Manifest V3. Übersetze direkt nach der Installation mit schlüsselfreien Credits oder verwende deinen eigenen API Key von OpenAI, DeepSeek oder DeepL.
 
-▍Vier Möglichkeiten zu übersetzen
+▍Zweisprachiges Lesen (neu in 2.2.0)
+
+Klicke irgendwo auf einer Seite mit der rechten Maustaste, ohne Text auszuwählen, und wähle „Diesen Artikel zweisprachig lesen“. Ein Lichtstreifen zieht über die Seite, während Titel und Fließtext erkannt werden, und daneben öffnet sich eine übersichtliche Leseseite, auf der jeder Originalabsatz neben seiner Übersetzung ausgerichtet ist. Navigation, Seitenleisten, Werbeplätze und Empfehlungsmodule werden weggelassen und nie zur Übersetzung gesendet.
+
+• Bei der Anordnung nebeneinander beginnt jedes Absatzpaar auf derselben Höhe; du kannst sie auch untereinander anordnen oder nur die Übersetzung bzw. nur das Original anzeigen
+• Helles, dunkles oder systemabhängiges Erscheinungsbild, dazu anpassbare Farbpalette, Schrift, Größe, Zeilenhöhe und Seitenbreite – alles wird gespeichert
+• „Speichern“ behält den Artikel und seine Übersetzung auf deinem Gerät; öffne ihn später über die Liste rechts erneut, ohne ihn noch einmal zu übersetzen, oder lösche ihn, wenn du ihn nicht mehr brauchst
+
+▍Klicke auf ein Wort für eine andere Formulierung – und behalte deine bevorzugten Begriffe
+
+Auf der Leseseite, im Auswahl-Popup, im Übersetzungsbereich und auf der PDF-Seite klickst du auf ein Wort in der Übersetzung – oder markierst per Ziehen einige Wörter –, um mehrere alternative Formulierungen mit kurzen Hinweisen zu sehen, oder tippst deine eigene ein. Ersetze dasselbe Wort an anderer Stelle auf einmal.
+
+Gewählte Formulierungen werden auf deinem Gerät als Wording-Präferenzen gespeichert: Spätere Übersetzungen von Text mit demselben Ausgangsbegriff folgen deiner Wahl. Prüfe und lösche sie in den Einstellungen.
+
+▍Sechs Arten zu übersetzen, alle im Rechtsklick-Menü
 
 • Ausgewählter Text
-Wählen Sie Text aus und wählen Sie „Übersetzen nach…“ im Kontextmenü. Die Übersetzung erscheint in einem zentrierten Panel, mit Streaming-Ausgabe, wo unterstützt, und einer erweiterbaren Ansicht des Originaltexts.
-
-Auswahlen in jeder Sprache – einschließlich Chinesisch – können übersetzt werden. Auswahlen, die nur Zahlen, Satzzeichen oder Emoji enthalten, lösen das Übersetzungsangebot nicht aus.
-
-Ändern Sie die Zielsprache direkt im Panel, um die ursprüngliche Auswahl erneut zu übersetzen. Speichern Sie sie nur dann als Standard, wenn Sie es möchten.
-
-• Seitenbereiche
-Fügen Sie eine Übersetzungsschaltfläche zu einem bestimmten Bereich einer Webseite hinzu. Klicken Sie darauf, um den Text in diesem Bereich durch seine Übersetzung zu ersetzen und das Original bei Bedarf wiederherzustellen.
-
-Regeln werden pro Domain gespeichert, sodass die Schaltfläche beim erneuten Besuch der Website wieder erscheint. Längere Bereiche werden in Stapeln verarbeitet, wobei Übersetzungen nach und nach erscheinen.
+Wähle Text aus und wähle im Rechtsklick-Menü „Direkt übersetzen“. Die Übersetzung erscheint in einem zentrierten Popup, bei Anbietern mit Streaming-Unterstützung Wort für Wort. Du kannst auch die schwebende Schaltfläche neben einer Auswahl verwenden oder das Tastenkürzel ⌘⇧Y unter macOS / Alt+Shift+T anderswo. Das Popup lässt sich verschieben, zeigt das Original auf Wunsch und übersetzt das Original erneut, wenn du die Zielsprache wechselst.
 
 • Bilder
-Klicken Sie mit der rechten Maustaste auf ein Bild, um seinen Text zu erkennen und Übersetzungen an den erkannten Positionen einzublenden. Lange Bilder werden in kleinere Abschnitte aufgeteilt, um sie zu erkennen.
+Klicke mit der rechten Maustaste auf ein Bild, um seinen Text zu erkennen. Jeder Abschnitt wird entlang seiner Konturen umrandet, und die Übersetzung wird über das Original gelegt, ohne dass sich die Abschnitte gegenseitig verdecken. Vertikaler japanischer Text, wie in Manga, bleibt vertikal, wenn er ins Chinesische, Japanische oder Koreanische übersetzt wird. Prüfe die erkannten Formen zuerst – verschieben, bearbeiten, löschen oder neue zeichnen –, bevor du übersetzt, oder wähle nur die Bereiche aus, die du brauchst (Rechtecke oder Kreise). Lade das Ergebnis als neues Bild herunter oder kopiere es.
 
-Beim Ändern der Zielsprache wird der erkannte Text wiederverwendet, sodass dasselbe Bild nicht erneut gescannt werden muss. Die Bilderkennung erfordert einen Anbieter und ein Modell mit Bildverständnis.
+• Ganze PDFs
+Klicke im integrierten PDF-Betrachter des Browsers mit der rechten Maustaste, ohne Text auszuwählen, um das gesamte Dokument auf einer Seite daneben zu übersetzen. Übersetzungen werden über die Originalpositionen gelegt, sodass Layout, Abbildungen und Tabellenlinien erhalten bleiben. Vergleiche nebeneinander, zeige nur die Übersetzung oder nur das Original an und speichere das Ergebnis über den Druckdialog als PDF. Du kannst auch eine lokale PDF-Datei auf die Übersetzungsseite ziehen.
 
-• Übersetzungs-Panel
-Öffnen Sie eine eigene Seite mit dem Quelltext links und der Übersetzung rechts. Verwenden Sie sie für längere Passagen oder Text von außerhalb des Browsers.
+• Seitenbereiche
+Klicke mit der rechten Maustaste auf einen Bereich einer Seite, um ihm eine Übersetzungsschaltfläche hinzuzufügen. Klicke einmal, um den Text in diesem Bereich durch seine Übersetzung zu ersetzen, und erneut, um das Original wiederherzustellen. Regeln werden pro Website gespeichert.
 
-Wählen Sie aus 24 Zielsprachen: Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch und Koreanisch.
+• Übersetzungsbereich
+Eine eigene Seite mit dem Original links und der Übersetzung rechts, für längere Passagen oder Text von außerhalb des Browsers. Erkenne die Ausgangssprache automatisch oder wähle sie selbst.
 
-Erkennen Sie die Ausgangssprache automatisch oder wählen Sie sie explizit aus. Ausgangssprache, Zielsprache und Oberflächensprache sind unabhängige Einstellungen. Die Anbieterunterstützung variiert je nach Sprache und Funktion.
+24 Oberflächen- und Zielsprachen: Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch und Koreanisch. Oberflächen-, Ausgangs- und Zielsprache sind unabhängige Einstellungen, und Oberflächen in Arabisch, Hebräisch, Persisch und Urdu verwenden ein Rechts-nach-links-Layout.
 
-▍Für das alltägliche Lesen konzipiert
+▍Zwei Arten der Nutzung
 
-• Auf der Seite bleiben: Übersetzen Sie beim Lesen, ohne Ihren Arbeitsablauf zu unterbrechen.
-• Streaming-Ausgabe: Übersetzungen erscheinen nach und nach, wo unterstützt.
-• Helle und dunkle Designs folgen Ihrer Systemeinstellung.
-• Ziehen Sie das Übersetzungs-Panel, um es neu zu positionieren, oder drücken Sie Esc, um es zu schließen.
-• Tastenkürzel: ⌘⇧Y unter macOS oder Alt+Shift+T auf anderen Plattformen.
-• Lokalisierte Oberflächen für 24 Sprachen, einschließlich Layouts von rechts nach links.
-• Wählen Sie Ihre Standard-Übersetzungssprache unabhängig von der Oberflächensprache.
+• Schlüsselfreie Credit-Übersetzung
+Eine neue berechtigte Installation erhält eine Gast-Testphase (Ansprüche sind pro Netzwerk begrenzt), und die Registrierung per E-Mail oder Google fügt weitere Credits hinzu. Credits verfallen nie und werden nach der tatsächlich übersetzten Textmenge abgezogen (1 Credit pro 500 Zeichen); fehlgeschlagene Übersetzungen werden nicht berechnet. Sobald die Test-Credits aufgebraucht sind, erfordert die Credit-Übersetzung ein Abonnement, das unbegrenzte Nutzung bietet (Fair Use), sich automatisch verlängert und jederzeit gekündigt werden kann. Aktuelle Testbeträge und Preise findest du auf der Website und in deinem Konto-Center.
 
-Eine experimentelle Übersetzung von Video-Untertiteln ist ebenfalls als optionale Funktion verfügbar. Die Unterstützung der Spracherkennung hängt von Ihrem Browser, Gerät und der Ausgangssprache ab.
+• Dein eigener API Key
+Gib deinen eigenen OpenAI-, DeepSeek- oder DeepL-Key ein. Anfragen gehen direkt von deinem Browser an den jeweiligen Anbieter, der dir die Nutzung in Rechnung stellt. Die Bilderkennung erfordert ein visionsfähiges Modell; DeepL bietet weder Bilderkennung noch alternative Formulierungen.
 
 ▍Datenschutz
 
-• Kein vom Entwickler betriebener Übersetzungsserver. Übersetzungsanfragen gehen direkt an den Anbieter oder den von Ihnen konfigurierten benutzerdefinierten Endpunkt.
-• Keine Analysen, kein Tracking und keine Werbung.
-• Ihr API-Schlüssel wird lokal in chrome.storage.local gespeichert und nicht über Ihr Chrome-Konto synchronisiert.
-• Inhalte werden nur dann zur Übersetzung gesendet, wenn Sie sie aktiv anfordern. Der Entwickler erhält Ihren Übersetzungsverlauf nicht.
-• Die Video-Spracherkennung kann auf unterstützten Geräten lokal ausgeführt werden. Die optionale Cloud-Erkennung sendet Audio an den Spracherkennungsdienst des Browsers.
-• Der vollständige Quellcode ist unter GPL-3.0 zur Einsicht verfügbar.
+• Inhalte werden nur gesendet, wenn du sie übersetzen möchtest. Die Erweiterung durchsucht oder lädt niemals Seiten im Hintergrund hoch.
+• Mit deinem eigenen Key gehen Inhalte direkt an den von dir gewählten Anbieter, niemals über uns.
+• Bei der Credit-Übersetzung laufen Inhalte über unseren Server zu einem Modellanbieter; der Server speichert weder deinen Text noch Übersetzungen oder Bilder.
+• API Keys, Wording-Präferenzen und gespeicherte Artikel bleiben auf deinem Gerät und werden nicht über dein Browserkonto synchronisiert.
+• Keine Werbung, kein Tracking, keine Analyse durch Dritte. Der vollständige Quellcode ist unter GPL-3.0 verfügbar.
 
-▍Erste Schritte
-
-1. Nach der Installation öffnet sich die Einstellungsseite automatisch. Wählen Sie einen Anbieter, geben Sie Ihren eigenen API-Schlüssel ein und verwenden Sie „Verbindung testen“, um Ihre Konfiguration zu prüfen.
-2. Wählen Sie Ihre Oberflächensprache und das standardmäßige Übersetzungsziel.
-3. Wählen Sie Text auf einer Webseite aus, klicken Sie mit der rechten Maustaste und wählen Sie „Übersetzen nach…“, um zu beginnen.
-
-Erfordert Chrome 116 oder neuer. Experimentelle Video-Funktionen können einen neueren Browser und zusätzliche Einrichtung erfordern.
-
-Diese Version verwendet Ihre eigenen Anbieter-Anmeldedaten. Etwaige API-Kosten werden von Ihrem gewählten Anbieter in Rechnung gestellt.
+Live-Videountertitel sind eine experimentelle Funktion, standardmäßig deaktiviert. Sprache wird standardmäßig auf deinem Gerät erkannt; wenn du ausdrücklich die Cloud-Erkennung wählst, wird Audio an den Spracherkennungsdienst deines Browsers gesendet.
 
 ▍Bekannte Einschränkungen
 
-• Vom Browser geschützte Seiten, einschließlich chrome://-Seiten und des Chrome Web Store, erlauben keine Injektion von Content-Skripten. Übersetzungs-Overlays sind dort nicht verfügbar.
-• Einzelne Textübersetzungen sind auf 6.000 Zeichen begrenzt. Längere Auswahlen werden abgeschnitten, mit einem Hinweis im Panel.
-• Benutzerdefinierte API-Endpunkte erfordern eine separate Berechtigung für ihre Domain und müssen HTTPS verwenden.
-• Verfügbare Sprachen, Bilderkennung und Streaming-Funktionen hängen von Ihrem Anbieter und Modell ab.
+• Vom Browser geschützte Seiten wie interne chrome://-Seiten und die Erweiterungs-Store-Seiten können nicht verwendet werden.
+• Eine einzelne Auswahl kann bis zu 6.000 Zeichen enthalten; längere Auswahlen werden mit einem Hinweis gekürzt.
+• Das zweisprachige Lesen erkennt Artikel anhand der Seitenstruktur; Foren, soziale Netzwerke und Seiten hinter einem Login werden möglicherweise nicht vollständig erkannt.
+• Gescannte und passwortgeschützte PDFs werden noch nicht unterstützt.
+• Verfügbare Sprachen, Bilderkennung und Streaming hängen vom gewählten Anbieter und Modell ab.
 
-▍Über dieses Projekt
+Erfordert Chrome oder Edge 116 oder neuer.
 
-Ein unabhängiges Open-Source-Projekt. Es ist nicht mit OpenAI, DeepSeek, DeepL oder deren verbundenen Unternehmen verbunden, wird von ihnen nicht unterstützt oder gesponsert.
-
-ChatGPT, DeepSeek, DeepL und andere Produktnamen sind Marken ihrer jeweiligen Inhaber und werden ausschließlich zur Identifizierung kompatibler Dienste verwendet.
+Ein unabhängiges Open-Source-Projekt, nicht verbunden mit OpenAI, DeepSeek, DeepL oder deren Tochtergesellschaften, weder von ihnen unterstützt noch gesponsert. ChatGPT, DeepSeek, DeepL und andere Namen sind Marken ihrer jeweiligen Inhaber und werden nur zur Kennzeichnung kompatibler Dienste verwendet.
 
 Website: https://huaci.app/
 Quellcode und Fehlerberichte: https://github.com/csswork/AiTranslation
-Datenschutzrichtlinie: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md
+Datenschutzerklärung: https://huaci.app/privacy.html

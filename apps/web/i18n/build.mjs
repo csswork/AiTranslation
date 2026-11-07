@@ -495,12 +495,12 @@ async function translate(code) {
     '规则：',
     '1. HTML 标签与属性原样保留（如 <span class="mono">chrome.storage.local</span>、<a class="link" href="...">）；标签不能增删，href/src 一个字符都不要改。kind 只表示上下文，不要按 kind 在译文外添加标签；',
     '2. 不翻译 OpenAI、ChatGPT、DeepSeek、DeepL、GitHub、Chrome、GPL-3.0、API Key、chrome.storage.local、URL 与代码；',
-    '3. 产品名「AI 划词翻译」统一写作 AI Selection Translator；',
+    '3. 产品名「划词」统一写作 Huaci，不要意译；完整名称「划词 – AI 翻译与双语阅读」写作「Huaci – 」加后半句的译文（英文为 Huaci – AI Translator & Bilingual Reader）；',
     '4. 技术说明文语气，克制准确，不用感叹号；表格单元格保持简短；',
     '5. 只输出译文，不要解释。',
     '6. 严格保留版本号、金额、点数及数值；“即将上线”“计划”“尚未开放”必须保留其未发布含义，不能译成已经可用。',
     'HTML 标签里面的可见文字也必须翻译。text 必须是 html 的完整译文，不能返回 kind（例如 p、li）或摘要；除日语、繁体中文外，译文不得残留汉字。',
-    ...(code === 'zh-Hant' ? ['7. 使用繁體中文字，不得混入簡體字。產品名稱保留繁體中文「AI 劃詞翻譯」。'] : []),
+    ...(code === 'zh-Hant' ? ['7. 使用繁體中文字，不得混入簡體字。產品名稱寫作「劃詞」，完整名稱寫作「劃詞 – AI 翻譯與雙語閱讀」。'] : []),
   ].join('\n');
 
   const kindOf = (k) => (index[k] && index[k].kind === 'attr' ? k.slice(0, k.indexOf('|')) : index[k] && index[k].tag) || 'text';

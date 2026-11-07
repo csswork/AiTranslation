@@ -592,5 +592,18 @@
   "删除「$1」": "Hapus \"$1\"",
   "删除失败：$1": "Gagal menghapus: $1",
   "已删除「$1」": "\"$1\" telah dihapus",
-  "撤销": "Urungkan"
+  "撤销": "Urungkan",
+  "划词 – AI 翻译与双语阅读": "Huaci – Penerjemah AI & Pembaca Bilingual",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Baca seluruh artikel secara bilingual dan terjemahkan teks, gambar, serta PDF yang dipilih — dengan penyedia pilihan Anda atau kredit tanpa Key.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Terjemahan subtitle $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] Pintasan tidak memicu terjemahan: $1",
+  "图片翻译 · 划词": "Terjemahan gambar · Huaci",
+  "视频字幕 · 划词": "Subtitle video · Huaci",
+  "设置 · 划词": "Pengaturan · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "Terjemahan dilakukan oleh layanan Huaci, tanpa perlu API Key: gunakan kredit gratis, atau berlangganan untuk penggunaan tanpa batas.",
+  "翻译 PDF · 划词": "Terjemahkan PDF · Huaci",
+  "双语阅读 · 划词": "Pembacaan bilingual · Huaci",
+  "翻译面板 · 划词": "Panel terjemahan · Huaci",
+  "元素翻译规则 · 划词": "Aturan terjemahan elemen · Huaci"
 }

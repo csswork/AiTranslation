@@ -593,7 +593,20 @@ globalThis.AITrMessageIds = {
   "删除「$1」": "m_dbbcd0d453793ca2",
   "删除失败：$1": "m_6322fbad8347ddbb",
   "已删除「$1」": "m_8eb4a2a5652f58d0",
-  "撤销": "m_926a50b98ece2667"
+  "撤销": "m_926a50b98ece2667",
+  "划词 – AI 翻译与双语阅读": "m_ca6653710beba442",
+  "划词": "m_1a6e443e3e47fe75",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "m_bd5ab334d27aeafe",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "m_2376ae614774a4c3",
+  "[划词] 快捷键未触发翻译：$1": "m_5a05304fadbcc64e",
+  "图片翻译 · 划词": "m_0555ded666b2b68b",
+  "视频字幕 · 划词": "m_02ae7cbab1f0379b",
+  "设置 · 划词": "m_72d43ea5b16ddb04",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "m_757b2632195326cf",
+  "翻译 PDF · 划词": "m_cbb085cac9f065ce",
+  "双语阅读 · 划词": "m_0fea2e430f301752",
+  "翻译面板 · 划词": "m_fb01c791bf423297",
+  "元素翻译规则 · 划词": "m_4803435b906c8916"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1189,5 +1202,18 @@ globalThis.AITrEnglish = {
   "删除「$1」": "Delete \"$1\"",
   "删除失败：$1": "Delete failed: $1",
   "已删除「$1」": "Deleted \"$1\"",
-  "撤销": "Undo"
+  "撤销": "Undo",
+  "划词 – AI 翻译与双语阅读": "Huaci – AI Translator & Bilingual Reader",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Read whole articles bilingually and translate selected text, images and PDFs — with your chosen provider or key-free credits.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Subtitle translation $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] Shortcut did not trigger translation: $1",
+  "图片翻译 · 划词": "Image translation · Huaci",
+  "视频字幕 · 划词": "Video subtitles · Huaci",
+  "设置 · 划词": "Settings · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "Translation is handled by Huaci's service, no API Key needed: use the complimentary credits, or subscribe for unlimited use.",
+  "翻译 PDF · 划词": "Translate PDF · Huaci",
+  "双语阅读 · 划词": "Bilingual reading · Huaci",
+  "翻译面板 · 划词": "Translation panel · Huaci",
+  "元素翻译规则 · 划词": "Element translation rules · Huaci"
 };

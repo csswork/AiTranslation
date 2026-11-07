@@ -1,12 +1,24 @@
-Translate while you read: select text, right-click, and see the translation appear on the page.
+Read while you translate: turn a web article into a side-by-side bilingual reading page, or select text, right-click, and see the translation right on the page.
 
-AI Translator is an open-source Microsoft Edge extension for translating selected text, webpage regions, images and whole PDF documents. Use hosted translation without an API key, or connect your own OpenAI, DeepSeek or DeepL account.
+Huaci – AI Translator & Bilingual Reader is an open-source Microsoft Edge extension for bilingual reading and for translating selected text, webpage regions, images and whole PDF documents. Use hosted translation without an API key, or connect your own OpenAI, DeepSeek or DeepL account.
 
-FIVE WAYS TO TRANSLATE
+BILINGUAL READING (NEW IN 2.2.0)
 
+Right-click an ordinary webpage without selecting text and choose “Read this article bilingually”. The extension detects the article's title and body on your device, leaves out navigation, sidebars, ad slots and recommendation widgets, and opens a clean reading page next to the tab with each original paragraph aligned beside its translation. Only the cleaned-up article text is sent for translation.
+
+• Side by side, stacked, translation only or original only; light, dark or follow-system appearance; adjustable color palette, font, size, line height and page width.
+• Save an article with its translation on your device and reopen it later from the list on the right without translating it again; delete saved articles at any time.
+
+ALTERNATIVE WORDINGS AND WORDING PREFERENCES
+
+On the reading page, in the selection popup, in the translation panel and on the PDF page, click a word in the translation (or select a few words) to see alternative renderings with short notes, or type your own. Your choices are saved on your device as wording preferences and are applied to later translations that contain the same source term. Manage them in settings. DeepL does not provide alternative wordings.
+
+SIX WAYS TO TRANSLATE
+
+• Bilingual reading: described above.
 • Selected text: translate text in any language, including Chinese, in a movable popup. Stream the result where supported, expand the original for comparison, copy the translation, or change the target language.
 • Webpage regions: add a translation button to a chosen part of a website. Rules are saved by domain, and you can restore the original text.
-• Images: recognize text and overlay translated text on the image. Translate a selected region, adjust text boxes locally, and export the translated image. Recognition requires a vision-capable model; hosted mode includes image recognition.
+• Images: recognize text, outline each passage along its strokes and place the translation back over the original without passages covering each other. Vertical Japanese text stays vertical when translated into Chinese, Japanese or Korean. Review and edit the detected shapes before translating, translate a selected region, and export the translated image. Recognition requires a vision-capable model; hosted mode includes image recognition.
 • Whole PDFs: open a PDF in the browser and choose whole-document translation from the context menu. The PDF is parsed locally; only extracted text is sent for translation. Compare the original and translation, retain page layout, figures and tables, and print or save as PDF. Scanned pages without extractable text are not supported by whole-document translation.
 • Translation panel: paste a passage into a dedicated source-and-translation view, choose a source and target language, and translate it without a webpage selection.
 
@@ -16,7 +28,7 @@ Choose Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, Fr
 
 ACCOUNTS, FREE TRIAL AND OPTIONAL SUBSCRIPTIONS
 
-Hosted translation needs no API key. A new eligible browser installation receives a guest trial; signing in with an email verification code or Google provides an account and additional trial credits. Trial credits do not expire. Your balance, subscription and usage are shared with the user center at https://app.huaci.app/.
+Hosted translation needs no API key. A new eligible browser installation receives a guest trial; signing in with an email verification code or Google provides an account and additional trial credits. Trial credits do not expire and are deducted by the amount of text translated (1 credit per 500 characters); failed translations are not charged. Your balance, subscription and usage are shared with the user center at https://app.huaci.app/.
 
 After trial credits run out, hosted translation requires an active subscription. Current plans are US$3.99 per month or US$29.99 per year, plus applicable taxes. Subscriptions renew automatically until cancelled. Cancel future renewal in the user center; access continues until the paid period ends. Hosted use is subject to reasonable-use and abuse-prevention limits. Creem processes payments. Confirm the current price and terms on the plans page before purchase: https://app.huaci.app/plans.
 
@@ -30,15 +42,15 @@ PRIVACY
 
 • Bring-your-own-key requests go directly to your selected provider or HTTPS endpoint. Your key stays in local extension storage and is not synced through your browser account.
 • Hosted mode sends requested text or images through our server to a model provider. Our server does not retain original text, images or translations.
-• Whole PDF files are processed locally and are not uploaded.
+• Whole PDF files are processed locally and are not uploaded. Bilingual reading detects articles on your device; saved articles and wording preferences stay in local extension storage.
 • Accounts retain the email address, username and records needed for authentication, usage, credits and billing. No advertising, tracking SDKs or device fingerprinting.
 • All executable extension code is included in the package. Source is available under GPL-3.0.
 
 GETTING STARTED
 
-Install, select your preferred target language, and use the hosted trial or configure your own API key in settings. Select text on an ordinary webpage and choose “Translate to…” from the context menu. Keyboard shortcut: Alt+Shift+T, or Command+Shift+Y on macOS.
+Install, select your preferred target language, and use the hosted trial or configure your own API key in settings. On an ordinary webpage, right-click without selecting text and choose “Read this article bilingually”, or select text and choose “Translate to…”. Keyboard shortcut: Alt+Shift+T, or Command+Shift+Y on macOS.
 
-Browser-protected pages and extension stores do not allow translation overlays. Single text requests are limited to 6,000 characters; PDF and region translation use batches. Custom API endpoints require HTTPS and permission for the chosen host.
+Browser-protected pages and extension stores do not allow translation overlays. Single text requests are limited to 6,000 characters; PDF, region and bilingual reading translation use batches. Article detection is heuristic, so forums, social networks and pages behind a login may not be detected completely. Custom API endpoints require HTTPS and permission for the chosen host.
 
 Independent project; not affiliated with Microsoft, OpenAI, DeepSeek or DeepL. Names identify compatible services and remain their owners' trademarks.
 

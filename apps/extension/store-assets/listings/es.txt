@@ -1,77 +1,70 @@
-Selecciona texto en una página web, haz clic derecho y observa cómo aparece la traducción en un panel flotante, sin cambiar de pestaña ni copiar y pegar.
+Selecciona, haz clic derecho y sigue leyendo. Lee artículos completos en paralelo con su traducción y traduce el texto seleccionado, las imágenes y los PDF allí mismo, sin cambiar de pestaña ni copiar y pegar.
 
-AI Selection Translator es una extensión de Chrome de código abierto basada en Manifest V3. Traduce el texto seleccionado, regiones de la página y texto dentro de imágenes a tu idioma preferido usando tu propia clave API de OpenAI, DeepSeek o DeepL.
+Huaci – Traductor de IA y lector bilingüe es una extensión de navegador de código abierto basada en Manifest V3. Empieza a traducir justo después de instalarla con créditos sin clave, o usa tu propia clave de API de OpenAI, DeepSeek o DeepL.
 
-▍Cuatro formas de traducir
+▍Lectura bilingüe (novedad en 2.2.0)
+
+Haz clic derecho en cualquier parte de una página sin seleccionar texto y elige «Leer este artículo de forma bilingüe». Una franja de luz recorre la página mientras se detectan el título y el cuerpo, y luego se abre junto a ella una página de lectura limpia con cada párrafo original alineado junto a su traducción. La navegación, las barras laterales, los espacios publicitarios y los widgets de recomendación quedan fuera y nunca se envían para traducir.
+
+• En paralelo, cada par de párrafos empieza a la misma altura; también puedes apilarlos o mostrar solo la traducción o solo el original
+• Apariencia clara, oscura o según el sistema, además de paleta de colores, fuente, tamaño, altura de línea y ancho de página ajustables, todo recordado
+• «Guardar» conserva el artículo y su traducción en tu dispositivo; ábrelo de nuevo desde la lista de la derecha sin volver a traducirlo, o elimínalo cuando ya no lo necesites
+
+▍Haz clic en una palabra para ver otra redacción y conserva tus términos preferidos
+
+En la página de lectura, en la ventana emergente de selección, en el panel de traducción y en la página del PDF, haz clic en una palabra de la traducción, o arrastra sobre unas pocas palabras, para ver varias traducciones alternativas con notas breves, o escribe la tuya. Sustituye la misma palabra en el resto del texto de una sola vez.
+
+Las redacciones que eliges se guardan en tu dispositivo como preferencias de redacción: las traducciones posteriores de textos que contengan el mismo término de origen siguen tu elección. Revísalas y elimínalas en Ajustes.
+
+▍Seis formas de traducir, todas en el menú contextual
 
 • Texto seleccionado
-Selecciona texto y elige «Traducir a…» en el menú contextual. La traducción aparece en un panel centrado, con salida en streaming cuando sea compatible y una vista ampliable del texto original.
-
-Las selecciones en cualquier idioma, incluido el chino, se pueden traducir. Las selecciones que contienen solo números, puntuación o emoji no activan la opción de traducción.
-
-Cambia el idioma de destino directamente en el panel para volver a traducir la selección original. Guárdalo como predeterminado solo cuando tú lo elijas.
-
-• Regiones de la página
-Añade un botón de traducción a un área específica de una página web. Haz clic en él para reemplazar el texto de esa región por su traducción y restaurar el original cuando sea necesario.
-
-Las reglas se guardan por dominio, por lo que el botón vuelve a aparecer cuando visitas de nuevo el sitio web. Las regiones más largas se procesan por lotes, con traducciones que aparecen progresivamente.
+Selecciona texto y elige «Traducir a…» en el menú contextual. La traducción aparece en una ventana emergente centrada, palabra por palabra cuando el proveedor admite streaming. También puedes usar el botón flotante junto a una selección o el atajo ⌘⇧Y en macOS / Alt+Shift+T en otros sistemas. La ventana emergente se puede arrastrar, muestra el original cuando lo pidas y vuelve a traducir el original cuando cambias el idioma de destino.
 
 • Imágenes
-Haz clic derecho en una imagen para reconocer su texto y superponer las traducciones en las posiciones detectadas. Las imágenes largas se dividen en secciones más pequeñas para su reconocimiento.
+Haz clic derecho en una imagen para reconocer su texto. Cada pasaje se delimita siguiendo sus trazos y la traducción se coloca sobre el original sin que los pasajes se cubran entre sí. El texto vertical en japonés, como en el manga, se mantiene vertical al traducirse al chino, japonés o coreano. Revisa primero las formas detectadas (muévelas, edítalas, elimínalas o dibuja otras nuevas) antes de traducir, o selecciona solo las áreas que necesites (rectángulos o círculos). Descarga o copia el resultado como una nueva imagen.
 
-Cambiar el idioma de destino reutiliza el texto reconocido, por lo que no es necesario volver a escanear la misma imagen. El reconocimiento de imágenes requiere un proveedor y un modelo con capacidad de visión.
+• PDF completos
+En el visor de PDF integrado del navegador, haz clic derecho sin seleccionar texto para traducir todo el documento en una página contigua. Las traducciones se superponen a las posiciones originales, de modo que el diseño, las figuras y las líneas de las tablas se mantienen en su sitio. Compara en paralelo, muestra solo la traducción o solo el original, y guarda el resultado como PDF mediante el diálogo de impresión. También puedes arrastrar un PDF local a la página de traducción.
+
+• Regiones de la página
+Haz clic derecho en un área de una página para añadirle un botón de traducción. Haz clic una vez para sustituir el texto de esa área por su traducción y otra vez para restaurar el original. Las reglas se recuerdan por sitio web.
 
 • Panel de traducción
-Abre una página dedicada con el texto de origen a la izquierda y la traducción a la derecha. Úsala para pasajes más largos o texto de fuera del navegador.
+Una página dedicada con el original a la izquierda y la traducción a la derecha, para pasajes más largos o texto de fuera del navegador. Detecta el idioma de origen automáticamente o elígelo tú mismo.
 
-Elige entre 24 idiomas de destino: chino simplificado, chino tradicional, inglés, español, portugués, francés, alemán, italiano, neerlandés, ruso, ucraniano, polaco, turco, árabe, hebreo, persa, hindi, bengalí, urdu, indonesio, vietnamita, tailandés, japonés y coreano.
+24 idiomas de interfaz y de destino: chino simplificado, chino tradicional, inglés, español, portugués, francés, alemán, italiano, neerlandés, ruso, ucraniano, polaco, turco, árabe, hebreo, persa, hindi, bengalí, urdu, indonesio, vietnamita, tailandés, japonés y coreano. El idioma de la interfaz, el de origen y el de destino son ajustes independientes, y las interfaces en árabe, hebreo, persa y urdu usan un diseño de derecha a izquierda.
 
-Detecta el idioma de origen automáticamente o selecciónalo explícitamente. El idioma de origen, el idioma de destino y el idioma de la interfaz son ajustes independientes. La compatibilidad del proveedor varía según el idioma y la función.
+▍Dos formas de usarlo
 
-▍Diseñado para la lectura diaria
+• Traducción por créditos sin clave
+Una instalación nueva elegible recibe una prueba de invitado (las reclamaciones están limitadas por red), y registrarse con correo electrónico o Google añade más créditos. Los créditos nunca caducan y se descuentan según la cantidad de texto realmente traducido (1 crédito por cada 500 caracteres); las traducciones fallidas no se cobran. Cuando se agotan los créditos de prueba, la traducción por créditos requiere una suscripción, que ofrece uso ilimitado (uso razonable), se renueva automáticamente y puede cancelarse en cualquier momento. Consulta el sitio web y tu centro de cuenta para conocer los importes de prueba y los precios actuales.
 
-• Permanece en la página: traduce mientras lees, sin interrumpir tu flujo de trabajo.
-• Salida en streaming: las traducciones aparecen progresivamente cuando es compatible.
-• Los temas claro y oscuro siguen la preferencia de tu sistema.
-• Arrastra el panel de traducción para reposicionarlo, o pulsa Esc para cerrarlo.
-• Atajo de teclado: ⌘⇧Y en macOS o Alt+Shift+T en otras plataformas.
-• Interfaces localizadas para 24 idiomas, incluidos diseños de derecha a izquierda.
-• Elige tu idioma de traducción predeterminado independientemente del idioma de la interfaz.
-
-La traducción experimental de subtítulos de vídeo también está disponible como función opcional. La compatibilidad con el reconocimiento de voz depende de tu navegador, dispositivo e idioma de origen.
+• Tu propia clave de API
+Introduce tu propia clave de OpenAI, DeepSeek o DeepL. Las solicitudes van directamente desde tu navegador a ese proveedor, que te factura el uso. El reconocimiento de imágenes requiere un modelo con capacidad de visión; DeepL no ofrece reconocimiento de imágenes ni redacciones alternativas.
 
 ▍Privacidad
 
-• Sin servidor de traducción operado por el desarrollador. Las solicitudes de traducción van directamente al proveedor o al endpoint personalizado que configures.
-• Sin analíticas, seguimiento ni publicidad.
-• Tu clave API se almacena localmente en chrome.storage.local y no se sincroniza a través de tu cuenta de Chrome.
-• El contenido se envía para su traducción solo cuando lo solicitas activamente. El desarrollador no recibe tu historial de traducciones.
-• El reconocimiento de voz de vídeo puede ejecutarse localmente en dispositivos compatibles. El reconocimiento opcional en la nube envía el audio al servicio de reconocimiento de voz del navegador.
-• El código fuente completo está disponible bajo GPL-3.0 para su inspección.
+• El contenido solo se envía cuando eliges traducirlo. La extensión nunca escanea ni sube páginas en segundo plano.
+• Con tu propia clave, el contenido va directamente al proveedor que elijas, nunca a través de nosotros.
+• Con la traducción por créditos, el contenido pasa por nuestro servidor hacia un proveedor de modelos; el servidor no almacena tu texto, traducciones ni imágenes.
+• Las claves de API, las preferencias de redacción y los artículos guardados permanecen en tu dispositivo y no se sincronizan mediante tu cuenta del navegador.
+• Sin anuncios, rastreo ni analíticas de terceros. El código fuente completo está disponible bajo GPL-3.0.
 
-▍Primeros pasos
-
-1. Tras la instalación, la página de ajustes se abre automáticamente. Elige un proveedor, introduce tu propia clave API y usa «Probar conexión» para comprobar tu configuración.
-2. Elige tu idioma de interfaz y tu destino de traducción predeterminado.
-3. Selecciona texto en una página web, haz clic derecho y elige «Traducir a…» para empezar.
-
-Requiere Chrome 116 o posterior. Las funciones experimentales de vídeo pueden requerir un navegador más reciente y una configuración adicional.
-
-Esta versión usa tus propias credenciales de proveedor. Cualquier cargo de API lo factura el proveedor que elijas.
+Los subtítulos de vídeo en directo son una función experimental, desactivada por defecto. El habla se reconoce en tu dispositivo de forma predeterminada; si eliges explícitamente el reconocimiento en la nube, el audio se envía al servicio de reconocimiento de voz de tu navegador.
 
 ▍Limitaciones conocidas
 
-• Las páginas protegidas por el navegador, incluidas las páginas chrome:// y Chrome Web Store, no permiten la inyección de scripts de contenido. Las superposiciones de traducción no están disponibles allí.
-• Las traducciones de texto individuales están limitadas a 6.000 caracteres. Las selecciones más largas se truncan, con un aviso mostrado en el panel.
-• Los endpoints de API personalizados requieren permiso independiente para su dominio y deben usar HTTPS.
-• Los idiomas disponibles, el reconocimiento de imágenes y las capacidades de streaming dependen de tu proveedor y modelo.
+• Las páginas protegidas por el navegador, como las páginas internas chrome:// y las tiendas de extensiones, no se pueden usar.
+• Una sola selección puede contener hasta 6.000 caracteres; las selecciones más largas se truncan con un aviso.
+• La lectura bilingüe detecta artículos a partir de la estructura de la página; es posible que los foros, las redes sociales y las páginas tras un inicio de sesión no se detecten por completo.
+• Los PDF escaneados y protegidos con contraseña aún no son compatibles.
+• Los idiomas disponibles, el reconocimiento de imágenes y el streaming dependen del proveedor y el modelo que elijas.
 
-▍Acerca de este proyecto
+Requiere Chrome o Edge 116 o posterior.
 
-Un proyecto independiente y de código abierto. No está afiliado, respaldado ni patrocinado por OpenAI, DeepSeek, DeepL ni sus empresas asociadas.
-
-ChatGPT, DeepSeek, DeepL y otros nombres de productos son marcas registradas de sus respectivos propietarios y se utilizan únicamente para identificar servicios compatibles.
+Un proyecto de código abierto independiente, no afiliado, respaldado ni patrocinado por OpenAI, DeepSeek, DeepL ni sus filiales. ChatGPT, DeepSeek, DeepL y otros nombres son marcas registradas de sus respectivos propietarios y se usan solo para identificar servicios compatibles.
 
 Sitio web: https://huaci.app/
 Código fuente e informes de problemas: https://github.com/csswork/AiTranslation
-Política de privacidad: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md
+Política de privacidad: https://huaci.app/privacy.html

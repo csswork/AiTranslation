@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Geri al"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Tüm makaleleri iki dilli okuyun; seçili metinleri, görselleri ve PDF'leri çevirin — seçtiğiniz sağlayıcıyla veya anahtar gerektirmeyen kredilerle."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Altyazı çevirisi $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Kısayol çeviriyi tetiklemedi: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Görsel çevirisi · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Video altyazıları · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Ayarlar · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "Çeviri Huaci'nin hizmetiyle yapılır, API Key gerekmez: hediye kredileri kullanın veya abone olarak sınırsız kullanın."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "PDF çevir · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "İki dilli okuma · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Çeviri paneli · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Öğe çeviri kuralları · Huaci"
+  },
   "extensionName": {
-    "message": "AI çevirmen"
+    "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },
   "extensionDescription": {
-    "message": "Metni ve görselleri seçtiğiniz sağlayıcıyla okumak istediğiniz dile çevirin."
+    "message": "Tüm makaleleri iki dilli okuyun; seçili metinleri, görselleri ve PDF'leri çevirin — seçtiğiniz sağlayıcıyla veya anahtar gerektirmeyen kredilerle."
   },
   "translateSelection": {
     "message": "Seçili metni çevir"

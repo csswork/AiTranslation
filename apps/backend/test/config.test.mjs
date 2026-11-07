@@ -64,7 +64,7 @@ test('SHARED_COOKIE_DOMAIN 必须覆盖用户端与官网的主机名', () => {
 
 test('发信：生产环境用 Resend，需要 API Key 与发件地址', async () => {
   assert.throws(() => readConfig({ ...base, MAIL_TRANSPORT: 'resend' }), /缺少 RESEND_API_KEY[\s\S]*缺少 MAIL_FROM/);
-  const config = readConfig({ ...base, MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 're_x', MAIL_FROM: 'AI 划词翻译 <no-reply@huaci.app>' });
+  const config = readConfig({ ...base, MAIL_TRANSPORT: 'resend', RESEND_API_KEY: 're_x', MAIL_FROM: '划词 <no-reply@huaci.app>' });
   assert.equal(config.links.support, 'support@huaci.app');
   const { createMailer, codeEmail } = await import('../src/mail/index.js');
   const calls = [];
@@ -79,7 +79,7 @@ test('发信：生产环境用 Resend，需要 API Key 与发件地址', async (
   assert.match(body.subject, /123456/);
   assert.match(body.text, /123456/);
   const zh = codeEmail({ code: '654321', purpose: 'change_email', locale: 'zh-Hans', support: 'support@huaci.app' });
-  assert.match(zh.subject, /654321 是你的 AI 划词翻译验证码/);
+  assert.match(zh.subject, /654321 是你的划词验证码/);
   assert.match(zh.html, /更换为这个地址[\s\S]*654321[\s\S]*10 分钟/);
   const failing = createMailer(config, { fetchImpl: async () => new Response('{}', { status: 422 }) });
   await assert.rejects(failing.sendCode({ to: 'a@example.com', code: '1', purpose: 'login' }), /resend_422/);

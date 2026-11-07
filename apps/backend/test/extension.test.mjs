@@ -56,7 +56,7 @@ test('扩展登录：未登录先去登录页，确认后带一次性授权码�
 
   res = await b.get('/extension/authorize/confirm');
   const page = await res.text();
-  assert.match(page, /允许 AI 划词翻译扩展登录/);
+  assert.match(page, /允许划词扩展登录/);
   assert.match(res.headers.get('content-security-policy'), new RegExp(`form-action 'self' ${ORIGIN}(;|$)`));
 
   res = await b.post('/extension/authorize/confirm', { decision: 'approve' });

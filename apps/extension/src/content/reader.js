@@ -332,7 +332,7 @@
     try {
       parsed = parse();
     } catch (err) {
-      console.warn('[AI Translator] Reader parse failed:', err?.message || err);
+      console.warn('[Huaci] Reader parse failed:', err?.message || err);
       parsed = { readerable: false, article: null };
     }
     if (current.closed) return;
@@ -380,7 +380,7 @@
     session = current;
     onRetire(() => close(current, { fast: true }));
     run(current).catch((err) => {
-      console.warn('[AI Translator] Reader failed:', err?.message || err);
+      console.warn('[Huaci] Reader failed:', err?.message || err);
       close(current);
     });
     return { ok: true };

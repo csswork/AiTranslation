@@ -86,7 +86,7 @@ ${head}
 </head>
 <body class="admin ${admin ? 'signed-in' : 'signed-out'}">
 <header class="admin-bar">
-  <strong><img src="${assetUrl('icon.png')}" alt="" width="22" height="22"> AI 划词翻译 · 管理端</strong>
+  <strong><img src="${assetUrl('icon.png')}" alt="" width="22" height="22"> 划词 · 管理端</strong>
   <form class="theme-form" method="post" action="/preferences/theme" data-theme-form data-cookie-domain="${cookieDomain || ''}">
     <input type="hidden" name="theme" value="${theme === 'dark' ? 'light' : 'dark'}">
     <input type="hidden" name="next" value="${path}">

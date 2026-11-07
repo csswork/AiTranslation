@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Ongedaan maken"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – AI-vertaler & tweetalige lezer"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Lees hele artikelen tweetalig en vertaal geselecteerde tekst, afbeeldingen en PDF's — met je gekozen provider of sleutelvrije credits."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Ondertitelvertaling $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Sneltoets heeft de vertaling niet geactiveerd: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Afbeeldingsvertaling · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Videondertitels · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Instellingen · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "De vertaling wordt verzorgd door de dienst van Huaci, geen API Key nodig: gebruik de gratis credits, of neem een abonnement voor onbeperkt gebruik."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "PDF vertalen · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "Tweetalig lezen · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Vertaalpaneel · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Regels voor elementvertaling · Huaci"
+  },
   "extensionName": {
-    "message": "AI-vertaler"
+    "message": "Huaci – AI-vertaler & tweetalige lezer"
   },
   "extensionDescription": {
-    "message": "Vertaal tekst en afbeeldingen naar de taal die je wilt lezen met je gekozen provider."
+    "message": "Lees hele artikelen tweetalig en vertaal geselecteerde tekst, afbeeldingen en PDF's — met je gekozen provider of sleutelvrije credits."
   },
   "translateSelection": {
     "message": "Geselecteerde tekst vertalen"

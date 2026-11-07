@@ -1,77 +1,70 @@
-Pilih teks di halaman web, klik kanan, dan lihat terjemahan muncul di panel mengambang—tanpa berpindah tab atau menyalin dan menempel.
+Pilih, klik kanan, lalu lanjutkan membaca. Baca seluruh artikel berdampingan dengan terjemahannya, dan terjemahkan teks yang dipilih, gambar, serta PDF langsung di tempatnya—tanpa berpindah tab atau menyalin dan menempel.
 
-AI Selection Translator adalah ekstensi Chrome open-source yang dibangun di atas Manifest V3. Terjemahkan teks yang dipilih, area halaman, dan teks di dalam gambar ke bahasa pilihan Anda menggunakan kunci API OpenAI, DeepSeek, atau DeepL milik Anda sendiri.
+Huaci – Penerjemah AI & Pembaca Bilingual adalah ekstensi browser sumber terbuka yang dibangun di atas Manifest V3. Mulai menerjemahkan langsung setelah pemasangan dengan kredit tanpa kunci, atau gunakan API Key OpenAI, DeepSeek, atau DeepL milik Anda sendiri.
 
-▍Empat cara menerjemahkan
+▍Pembacaan bilingual (baru di 2.2.0)
+
+Klik kanan di mana saja pada halaman tanpa memilih teks dan pilih "Baca artikel ini secara bilingual". Sebuah cahaya menyapu halaman saat judul dan isi terdeteksi, lalu halaman baca yang bersih terbuka di sampingnya dengan setiap paragraf asli sejajar di samping terjemahannya. Navigasi, bilah samping, slot iklan, dan widget rekomendasi dikecualikan dan tidak pernah dikirim untuk diterjemahkan.
+
+• Berdampingan, setiap pasangan paragraf dimulai pada ketinggian yang sama; Anda juga dapat menumpuknya, atau hanya menampilkan terjemahan atau hanya teks asli
+• Tampilan terang, gelap, atau mengikuti sistem, plus palet warna, font, ukuran, tinggi baris, dan lebar halaman yang dapat disesuaikan—semuanya diingat
+• "Simpan" menyimpan artikel dan terjemahannya di perangkat Anda; buka kembali dari daftar di sebelah kanan tanpa menerjemahkannya lagi, atau hapus saat tidak lagi diperlukan
+
+▍Klik kata untuk padanan lain—dan pertahankan istilah pilihan Anda
+
+Di halaman baca, di popup seleksi, di panel terjemahan, dan di halaman PDF, klik sebuah kata dalam terjemahan—atau seret untuk memilih beberapa kata—untuk melihat beberapa padanan alternatif dengan catatan singkat, atau ketik sendiri. Ganti kata yang sama di tempat lain sekaligus.
+
+Padanan yang Anda pilih diingat di perangkat Anda sebagai preferensi padanan: terjemahan berikutnya dari teks yang mengandung istilah sumber yang sama akan mengikuti pilihan Anda. Tinjau dan hapus di Pengaturan.
+
+▍Enam cara menerjemahkan, semuanya di menu klik kanan
 
 • Teks yang dipilih
-Pilih teks dan pilih “Terjemahkan ke…” dari menu klik kanan. Terjemahan muncul di panel tengah, dengan output streaming jika didukung dan tampilan teks asli yang dapat diperluas.
-
-Pilihan dalam bahasa apa pun—termasuk bahasa Mandarin—dapat diterjemahkan. Pilihan yang hanya berisi angka, tanda baca, atau emoji tidak memicu tawaran terjemahan.
-
-Ubah bahasa target langsung di panel untuk menerjemahkan ulang pilihan asli. Simpan sebagai default hanya saat Anda memilihnya.
-
-• Area halaman
-Tambahkan tombol terjemahan ke area tertentu di halaman web. Klik untuk mengganti teks di area tersebut dengan terjemahannya, dan pulihkan teks asli saat diperlukan.
-
-Aturan disimpan berdasarkan domain, sehingga tombol muncul kembali saat Anda mengunjungi situs web itu lagi. Area yang lebih panjang diproses secara bertahap, dengan terjemahan muncul secara progresif.
+Pilih teks dan pilih "Terjemahkan ke…" dari menu klik kanan. Terjemahan muncul di popup tengah, kata demi kata jika penyedia mendukung streaming. Anda juga dapat menggunakan tombol mengambang di samping seleksi, atau pintasan ⌘⇧Y di macOS / Alt+Shift+T di tempat lain. Popup dapat diseret, menampilkan teks asli sesuai permintaan, dan menerjemahkan ulang teks asli saat Anda mengganti bahasa target.
 
 • Gambar
-Klik kanan gambar untuk mengenali teksnya dan menampilkan terjemahan pada posisi yang terdeteksi. Gambar panjang dibagi menjadi bagian-bagian lebih kecil untuk pengenalan.
+Klik kanan sebuah gambar untuk mengenali teksnya. Setiap bagian teks digariskan mengikuti goresannya, dan terjemahan ditempatkan kembali di atas teks asli tanpa bagian-bagian tersebut saling menutupi. Teks Jepang vertikal, seperti pada manga, tetap vertikal saat diterjemahkan ke bahasa Tionghoa, Jepang, atau Korea. Tinjau bentuk yang terdeteksi terlebih dahulu—pindahkan, edit, hapus, atau gambar bentuk baru—sebelum menerjemahkan, atau pilih hanya area yang diperlukan (persegi panjang atau lingkaran). Unduh atau salin hasilnya sebagai gambar baru.
 
-Mengubah bahasa target akan menggunakan kembali teks yang telah dikenali, sehingga gambar yang sama tidak perlu dipindai lagi. Pengenalan gambar memerlukan penyedia dan model yang mendukung visi.
+• Seluruh PDF
+Di penampil PDF bawaan browser, klik kanan tanpa memilih teks untuk menerjemahkan seluruh dokumen di halaman di sampingnya. Terjemahan ditumpuk pada posisi asli, sehingga tata letak, gambar, dan garis tabel tetap di tempatnya. Bandingkan berdampingan, tampilkan hanya terjemahan atau hanya teks asli, dan simpan hasilnya sebagai PDF melalui dialog cetak. Anda juga dapat menjatuhkan PDF lokal ke halaman terjemahan.
+
+• Area halaman
+Klik kanan suatu area halaman untuk menambahkan tombol terjemahan ke area tersebut. Klik sekali untuk mengganti teks di area itu dengan terjemahannya, dan klik lagi untuk memulihkan teks asli. Aturan diingat per situs web.
 
 • Panel terjemahan
-Buka halaman khusus dengan teks sumber di kiri dan terjemahan di kanan. Gunakan untuk bagian yang lebih panjang atau teks dari luar browser.
+Halaman khusus dengan teks asli di kiri dan terjemahan di kanan, untuk bagian teks yang lebih panjang atau teks dari luar browser. Deteksi bahasa sumber secara otomatis atau pilih sendiri.
 
-Pilih dari 24 bahasa target: Tionghoa Sederhana, Tionghoa Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thailand, Jepang, dan Korea.
+24 bahasa antarmuka dan bahasa target: Tionghoa Sederhana, Tionghoa Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thailand, Jepang, dan Korea. Bahasa antarmuka, bahasa sumber, dan bahasa target adalah pengaturan yang independen, dan antarmuka bahasa Arab, Ibrani, Persia, serta Urdu menggunakan tata letak kanan-ke-kiri.
 
-Deteksi bahasa sumber secara otomatis atau pilih secara eksplisit. Bahasa sumber, bahasa target, dan bahasa antarmuka adalah pengaturan yang independen. Dukungan penyedia bervariasi menurut bahasa dan fitur.
+▍Dua cara menggunakannya
 
-▍Dirancang untuk membaca sehari-hari
+• Terjemahan kredit tanpa kunci
+Pemasangan baru yang memenuhi syarat menerima uji coba tamu (klaim dibatasi per jaringan), dan mendaftar dengan email atau Google menambah kredit. Kredit tidak pernah kedaluwarsa dan dipotong berdasarkan jumlah teks yang benar-benar diterjemahkan (1 kredit per 500 karakter); terjemahan yang gagal tidak dikenai biaya. Setelah kredit uji coba habis, terjemahan kredit memerlukan langganan, yang memberikan penggunaan tanpa batas (penggunaan wajar), diperpanjang otomatis, dan dapat dibatalkan kapan saja. Lihat situs web dan pusat akun Anda untuk jumlah uji coba dan harga saat ini.
 
-• Tetap di halaman: terjemahkan saat membaca, tanpa mengganggu alur kerja Anda.
-• Output streaming: terjemahan muncul secara progresif jika didukung.
-• Tema terang dan gelap mengikuti preferensi sistem Anda.
-• Seret panel terjemahan untuk memindahkannya, atau tekan Esc untuk menutupnya.
-• Pintasan keyboard: ⌘⇧Y di macOS atau Alt+Shift+T di platform lain.
-• Antarmuka yang dilokalkan untuk 24 bahasa, termasuk tata letak kanan-ke-kiri.
-• Pilih bahasa terjemahan default Anda secara independen dari bahasa antarmuka.
-
-Terjemahan subtitle video eksperimental juga tersedia sebagai fitur opsional. Dukungan pengenalan suara bergantung pada browser, perangkat, dan bahasa sumber Anda.
+• API Key Anda sendiri
+Masukkan API Key OpenAI, DeepSeek, atau DeepL Anda sendiri. Permintaan dikirim langsung dari browser Anda ke penyedia tersebut, yang menagih Anda atas penggunaannya. Pengenalan gambar memerlukan model yang mendukung penglihatan; DeepL tidak menyediakan pengenalan gambar atau padanan alternatif.
 
 ▍Privasi
 
-• Tidak ada server terjemahan yang dioperasikan pengembang. Permintaan terjemahan dikirim langsung ke penyedia atau endpoint kustom yang Anda konfigurasikan.
-• Tidak ada analitik, pelacakan, atau periklanan.
-• Kunci API Anda disimpan secara lokal di chrome.storage.local dan tidak disinkronkan melalui akun Chrome Anda.
-• Konten dikirim untuk terjemahan hanya saat Anda secara aktif memintanya. Pengembang tidak menerima riwayat terjemahan Anda.
-• Pengenalan suara video dapat berjalan secara lokal di perangkat yang didukung. Pengenalan cloud opsional mengirim audio ke layanan pengenalan suara browser.
-• Kode sumber lengkap tersedia di bawah GPL-3.0 untuk diperiksa.
+• Konten hanya dikirim saat Anda memilih untuk menerjemahkannya. Ekstensi tidak pernah memindai atau mengunggah halaman di latar belakang.
+• Dengan API Key Anda sendiri, konten dikirim langsung ke penyedia yang Anda pilih, tidak pernah melalui kami.
+• Dengan terjemahan kredit, konten melewati server kami ke penyedia model; server tidak menyimpan teks, terjemahan, atau gambar Anda.
+• API Key, preferensi padanan, dan artikel yang disimpan tetap di perangkat Anda dan tidak disinkronkan melalui akun browser Anda.
+• Tanpa iklan, pelacakan, atau analitik pihak ketiga. Kode sumber lengkap tersedia di bawah GPL-3.0.
 
-▍Memulai
-
-1. Setelah instalasi, halaman pengaturan terbuka secara otomatis. Pilih penyedia, masukkan kunci API Anda sendiri, dan gunakan “Uji koneksi” untuk memeriksa konfigurasi Anda.
-2. Pilih bahasa antarmuka dan target terjemahan default Anda.
-3. Pilih teks di halaman web, klik kanan, dan pilih “Terjemahkan ke…” untuk memulai.
-
-Memerlukan Chrome 116 atau lebih baru. Fitur video eksperimental mungkin memerlukan browser yang lebih baru dan pengaturan tambahan.
-
-Versi ini menggunakan kredensial penyedia Anda sendiri. Setiap biaya API ditagih oleh penyedia pilihan Anda.
+Teks video langsung adalah fitur eksperimental, nonaktif secara default. Ucapan dikenali di perangkat Anda secara default; jika Anda secara eksplisit memilih pengenalan cloud, audio dikirim ke layanan pengenalan ucapan browser Anda.
 
 ▍Keterbatasan yang diketahui
 
-• Halaman yang dilindungi browser, termasuk halaman chrome:// dan Chrome Web Store, tidak mengizinkan injeksi content-script. Overlay terjemahan tidak tersedia di sana.
-• Terjemahan teks individual dibatasi hingga 6.000 karakter. Pilihan yang lebih panjang dipotong, dengan pemberitahuan ditampilkan di panel.
-• Endpoint API kustom memerlukan izin terpisah untuk domainnya dan harus menggunakan HTTPS.
-• Bahasa yang tersedia, pengenalan gambar, dan kemampuan streaming bergantung pada penyedia dan model Anda.
+• Halaman yang dilindungi browser, seperti halaman internal chrome:// dan toko ekstensi, tidak dapat digunakan.
+• Satu seleksi dapat berisi hingga 6.000 karakter; seleksi yang lebih panjang dipotong dengan pemberitahuan.
+• Pembacaan bilingual mendeteksi artikel dari struktur halaman; forum, jejaring sosial, dan halaman di balik login mungkin tidak terdeteksi sepenuhnya.
+• PDF hasil pindai dan yang dilindungi kata sandi belum didukung.
+• Bahasa yang tersedia, pengenalan gambar, dan streaming bergantung pada penyedia dan model yang Anda pilih.
 
-▍Tentang proyek ini
+Memerlukan Chrome atau Edge 116 atau lebih baru.
 
-Proyek open-source yang independen. Proyek ini tidak berafiliasi dengan, didukung oleh, atau disponsori oleh OpenAI, DeepSeek, DeepL, atau perusahaan terkait mereka.
-
-ChatGPT, DeepSeek, DeepL, dan nama produk lain adalah merek dagang dari pemiliknya masing-masing dan digunakan semata-mata untuk mengidentifikasi layanan yang kompatibel.
+Proyek sumber terbuka independen, tidak berafiliasi dengan, didukung oleh, atau disponsori oleh OpenAI, DeepSeek, DeepL atau afiliasinya. ChatGPT, DeepSeek, DeepL dan nama lain adalah merek dagang dari pemiliknya masing-masing dan hanya digunakan untuk mengidentifikasi layanan yang kompatibel.
 
 Situs web: https://huaci.app/
 Kode sumber dan laporan masalah: https://github.com/csswork/AiTranslation
-Kebijakan privasi: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md
+Kebijakan privasi: https://huaci.app/privacy.html

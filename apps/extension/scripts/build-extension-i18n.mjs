@@ -43,7 +43,7 @@ for (const locale of locales) {
     messages[id] = { message: nativeMessage, ...(Object.keys(placeholders).length ? { placeholders } : {}) };
   }
   // Chrome substitutes these manifest strings using the browser locale.
-  for (const [key, source] of Object.entries({ extensionName: 'AI 划词翻译', extensionDescription: '用你选择的平台，把文字和图片翻译成你想读的语言。', translateSelection: '翻译选中的文字' })) {
+  for (const [key, source] of Object.entries({ extensionName: '划词 – AI 翻译与双语阅读', extensionDescription: '双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。', translateSelection: '翻译选中的文字' })) {
     messages[key] = { message: catalog[source] };
   }
   files[locale.chromeLocale ? `_locales/${locale.chromeLocale}/messages.json` : `src/locales/${locale.id}/messages.json`] = JSON.stringify(messages, null, 2) + '\n';

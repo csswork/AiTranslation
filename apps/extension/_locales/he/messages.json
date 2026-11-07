@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "ביטול"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – מתרגם AI וקורא דו-לשוני"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "קרא מאמרים שלמים באופן דו-לשוני ותרגם טקסט נבחר, תמונות וקובצי PDF — עם הספק שבחרת או עם נקודות ללא מפתח."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] תרגום כתוביות $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] קיצור הדרך לא הפעיל תרגום: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "תרגום תמונות · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "כתוביות וידאו · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "הגדרות · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "התרגום מתבצע על ידי השירות של Huaci, ללא צורך ב-API Key: השתמש בנקודות המתנה, או הירשם כמנוי לשימוש ללא הגבלה."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "תרגום PDF · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "קריאה דו-לשונית · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "חלונית תרגום · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "כללי תרגום רכיבים · Huaci"
+  },
   "extensionName": {
-    "message": "מתרגם AI"
+    "message": "Huaci – מתרגם AI וקורא דו-לשוני"
   },
   "extensionDescription": {
-    "message": "תרגם טקסט ותמונות לשפה שברצונך לקרוא באמצעות הספק שבחרת."
+    "message": "קרא מאמרים שלמים באופן דו-לשוני ותרגם טקסט נבחר, תמונות וקובצי PDF — עם הספק שבחרת או עם נקודות ללא מפתח."
   },
   "translateSelection": {
     "message": "תרגם את הטקסט הנבחר"

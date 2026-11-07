@@ -21,7 +21,7 @@ Travel  Well-being  │  Make Chrome Yours: Accessibility · Functionality & UI 
 
 - 翻译类扩展的传统归属地，同类竞品（Google 翻译、沉浸式翻译、划词翻译类）都在这里；
 - 商店前台按类别浏览时，这个分类的流量最大；
-- 你的四个功能（划词、整块、图片、面板）本质都是「读网页时少一步」的效率工具，而不是开发者工具或娱乐内容。
+- 六种翻译方式（双语阅读、划词、图片、整份 PDF、区域、翻译面板）本质都是「读网页时少一步」的效率工具，而不是开发者工具或娱乐内容。
 
 备选与排除：
 
@@ -38,165 +38,38 @@ Travel  Well-being  │  Make Chrome Yours: Accessibility · Functionality & UI 
 
 ## 二、详细说明（中文，默认上架用）
 
-```
-选中网页上的外文，右键，译文就在屏幕中央逐字浮现——不用切标签页，不用复制粘贴。
+2.2.0 起详细说明统一放在 [`listings/`](listings/README.md)：简体中文 [`listings/zh-Hans.txt`](listings/zh-Hans.txt)，其余 23 种语言同目录。直接复制到商店后台对应语言的「详细说明」字段即可（Chrome 与 Edge 共用）。
 
-AI 划词翻译是一个开源的 Chrome 扩展（Manifest V3），把网页里的文字就地译成你选择的语言。译文由你自己配置的大模型 API 生成，支持 ChatGPT（OpenAI）、DeepSeek 与 DeepL，随时切换。
+扩展名称与简短说明来自安装包的 `_locales`（`extensionName`、`extensionDescription`），随新版本提交自动更新，不在这里维护：
 
-
-▍四个入口，都在右键菜单里
-
-· 划词翻译
-选中任意语言的文字，右键点「翻译成…」，译文在居中弹窗里流式出现，可展开原文对照阅读。
-中文、短词和混合语言也可以翻译；纯数字、标点和表情不会触发翻译入口。
-
-· 元素翻译
-给页面上的某个区域挂一个翻译按钮。点一下，区域里的文字就地换成所选语言。规则按域名记住，下次再访问同一个网站，按钮自动挂上；长内容分批送出，边译边替换，不用等整块跑完。
-
-· 图片翻译
-右键一张图片，识别图里的文字，再把译文按识别到的位置盖回原图。长图先切块再识别，切缝落在文字之间的空白行上，不会把一句话劈成两半。
-
-· 翻译面板
-一个独立页面，左边原文右边译文，用来处理成段的、不在网页上的文字。24 种目标语言可选。源语言可自动识别或手动指定，目标语言由你选择，面板会记住选择；指定源语言后可以交换翻译方向。
-
-
-▍为什么值得装
-
-· 不离开页面：翻译就发生在你正在读的那一段旁边。
-· 流式输出：译文逐字出现，不用等整段生成完。
-· 跟随系统深浅色；弹窗可拖动、Esc 关闭；支持快捷键 ⌘⇧Y（macOS）/ Alt+Shift+T。
-· 划词、区域、图片和字幕共用 24 种目标语言；界面语言与默认翻译目标独立设置。
-
-
-▍关于隐私
-
-· 没有服务器。全部网络请求都集中在 src/lib/providers.js 这一个文件里，只发往你在设置中选定的那家平台。
-· 没有统计、没有埋点、没有广告、没有第三方 SDK。
-· API Key 只存在本机 chrome.storage.local，不随 Chrome 账号同步，卸载扩展即一并清除。
-· 只有你主动触发翻译时，内容才会发出去。你翻译过什么，作者这边无从知道。
-· 全部源码以 GPL-3.0 公开，上面这些话都可以照着源码逐行核对。
-
-
-▍开始使用
-
-1. 首次安装会自动打开设置页：选一个平台，粘贴你自己的 API Key，点「测试连接」确认能通。
-2. 之后在任意网页选中文字 → 右键 → 点「翻译成…」。
-需要 Chrome 116 或更高版本。
-
-
-▍已知限制
-
-· 受浏览器限制，chrome:// 页面、Chrome 应用商店等受保护页面无法注入脚本，因而不能使用。
-· 单次翻译上限 6000 字符，超出会截断，弹窗里会说明。
-· 自定义接口地址（代理/中转）需要单独授权该域名的访问权限，且只支持 https。
-
-
-▍关于本项目
-
-独立开源作品，与 OpenAI、DeepSeek、DeepL 及其关联公司无任何隶属、授权或合作关系；ChatGPT、DeepSeek、DeepL 等名称为其各自权利人的商标，此处仅用于说明本扩展可以接入的 API。
-
-官网：https://huaci.app/
-源码与问题反馈：https://github.com/csswork/AiTranslation
-隐私政策：https://huaci.app/privacy.html
-```
+- 名称：划词 – AI 翻译与双语阅读 / Huaci – AI Translator & Bilingual Reader
+- 简短说明：双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。
 
 ---
 
-## 三、English description（备用）
+## 三、English description
 
-扩展已声明 `default_locale`，本地化文案位于 `_locales/`。以下为英文商品说明草稿：
-
-```
-Select foreign text on a web page, right-click, and the translation appears in the middle of
-the screen, word by word. No switching tabs, no copy-paste.
-
-AI Selection Translator is an open-source Chrome extension (Manifest V3) that translates web
-page text into your chosen language, using your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
-
-
-FOUR ENTRY POINTS, ALL IN THE RIGHT-CLICK MENU
-
-· Selection translation
-Select a passage, right-click "Translate to…", and the translation streams into a
-centered popup with a collapsible original-text panel. Chinese and mixed-language selections are supported. Only digits, punctuation and emoji are filtered.
-
-· Block translation
-Attach a translate button to any region of a page. One click replaces the text inside it with
-your chosen language, in place. Rules are remembered per domain, and long content is translated in batches
-so the page updates as it goes.
-
-· Image translation
-Right-click an image: the text is read, and the translation is overlaid where the original was.
-Long images are split into tiles along blank lines first, so a sentence is never cut in half.
-
-· Translation panel
-A standalone page, source on the left and translation on the right, for paragraphs that are not
-on a web page. Choose from 24 target languages. Detect the source automatically or select it explicitly; the panel remembers your choices and can swap explicitly selected languages.
-
-
-WHY INSTALL IT
-
-· Translation happens next to the paragraph you are reading — you never leave the page.
-· Streaming output, so you are not waiting for the whole answer.
-· Follows your system light/dark theme. Draggable popup, Esc to close, keyboard shortcut
-  ⌘⇧Y on macOS / Alt+Shift+T elsewhere.
-· Selection, region, image and caption translation share the same 24 target languages. Choose interface and target languages independently.
-
-
-PRIVACY
-
-· No servers. Every network request lives in a single file (src/lib/providers.js) and goes only
-  to the provider you selected in the settings.
-· No analytics, no tracking, no ads, no third-party SDKs.
-· Your API key is stored locally in chrome.storage.local — never synced through your Chrome
-  account, and removed when you uninstall the extension.
-· Nothing is sent anywhere until you explicitly trigger a translation.
-· The whole source is public under GPL-3.0, so all of the above can be verified line by line.
-
-GETTING STARTED
-
-1. The settings page opens on first install: pick a provider, paste your own API key, and hit
-   "Test connection".
-2. Then select foreign text on any page → right-click → "Translate to…".
-Requires Chrome 116 or later.
-
-KNOWN LIMITATIONS
-
-· Protected pages (chrome://, the Chrome Web Store and similar) do not allow script injection.
-· 6000 characters per translation; longer text is truncated and the popup says so.
-· A custom API base URL (proxy or relay) needs its origin authorized separately, https only.
-
-ABOUT
-
-An independent open-source project, not affiliated with, authorized by, or partnered with
-OpenAI, DeepSeek or DeepL. Their names are trademarks of their respective owners and are used
-here only to describe which APIs this extension can call.
-
-Website: https://huaci.app/
-Source and issues: https://github.com/csswork/AiTranslation
-Privacy policy: https://huaci.app/privacy.html
-```
+见 [`listings/en.txt`](listings/en.txt)（英文原稿，其他语言据此翻译）。
 
 ---
 
 ## 四、写这些文案时核对过的产品事实
 
-文案里每一句都对着代码核过，避免商店审核和用户预期出现落差：
+2.2.0 文案里的说法都对着代码和文档核过：
 
 | 说法 | 依据 |
 | --- | --- |
-| Manifest V3、Chrome 116+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version` |
-| 三个平台：ChatGPT / DeepSeek / DeepL | `src/lib/settings.js` 的 `PROVIDERS`，`src/lib/providers.js` 里 DeepL 走 `/v2/translate` |
-| 统一的 24 种语言 | `i18n/locales.json`，生成 `src/lib/languages.js` |
-| 首装目标按浏览器语言选择，升级保留原选择 | `src/lib/settings.js` 的 `normalize` / `migrateSettings` |
+| Manifest V3、Chrome / Edge 116+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version`；Edge 版见 `docs/extension/edge-release.md` |
+| 双语阅读：扫描识别、去广告、逐段对齐、明暗 / 跟随系统、保存到本机 | `docs/extension/reader.md`，`src/reader/`、`src/content/reader.js`、`src/lib/article.js` |
+| 点词换说法、用词偏好只存本机 | `docs/extension/word-alternatives.md`，`src/lib/word-picker.js`、`src/lib/terms.js` |
+| 图片按笔画勾形状、竖排、先看形状再翻译、框选、导出 | `docs/extension/image-translation.md` |
+| 整份 PDF：原位覆盖、对照、打印另存为 PDF、扫描件不支持 | `docs/extension/pdf-translation.md` |
+| 平台：OpenAI / DeepSeek / DeepL；DeepL 不支持识图与换说法 | `src/lib/settings.js`、`src/lib/providers.js` |
+| 点数：每 500 个字符 1 点、失败返还、点数不过期、订阅无限使用（合理使用） | `docs/backend/credit-accounting.md`、官网价格区 |
+| 点数翻译经服务器、不保存内容 | 隐私政策、`apps/backend/src/translation/hosted.js` |
+| 统一的 24 种语言、从右往左布局 | `i18n/locales.json` |
 | 单次 6000 字符 | `src/lib/lang.js` 的 `MAX_TEXT_LENGTH = 6000` |
 | 快捷键 ⌘⇧Y / Alt+Shift+T | `manifest.json` 的 `commands` |
-| 网络请求只发往选定平台 | `providers.js` 处理所选平台的请求；`i18n.js` 只读取安装包内的语言文件 |
-| Key 存 `chrome.storage.local` | `src/lib/settings.js` 的读写实现 |
-
-> **和落地页口径不一致的两处，建议顺手改掉**（我按代码为准写的商店文案）：
-> 1. 落地页写「整个项目只有一处 `fetch` 调用」，实际是 **两处**，都在 `src/lib/providers.js`（加了 DeepL 之后多出来的）。商店文案我写成了「全部网络请求都集中在这一个文件里」，既准确又不减分。
-> 2. 落地页的「支持接入 ChatGPT（OpenAI）与 DeepSeek」漏了 **DeepL**，但设置页和弹窗里都摆着三张平台卡。
 
 ---
 
@@ -204,7 +77,7 @@ Privacy policy: https://huaci.app/privacy.html
 
 | 后台字段 | 要求（官方文档） | 你手上有的 |
 | --- | --- | --- |
-| 详细说明 | 开头先说清用途，避免关键词堆砌 | 见上，中文约 1,400 字 |
+| 详细说明 | 开头先说清用途，避免关键词堆砌，最长 16,000 字符 | `listings/`，中文约 2,100 字，英文约 6,500 字符 |
 | 类别 | 主要类别，一个 | 建议 `Productivity` |
 | 语言 | 商品的语言，影响用户用什么语言搜到 | 建议 Chinese (Simplified) |
 | 商店图标 | 128×128 | `icons/icon128.png` ✓ |

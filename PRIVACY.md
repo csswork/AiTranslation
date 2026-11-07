@@ -1,6 +1,6 @@
 # Privacy Policy / 隐私政策
 
-**AI Selection Translator (AI 划词翻译)**
+**Huaci – AI Translator & Bilingual Reader (划词 – AI 翻译与双语阅读)**
 Last updated / 最后更新：2026-11-06
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
@@ -13,7 +13,7 @@ Last updated / 最后更新：2026-11-06
 
 Accounts, credits and subscriptions launched with version 2.0.0. This policy describes how those services process data.
 
-AI Selection Translator works in two ways. **Bring your own key**: what you translate goes straight to the AI provider you configured, never through us. **Credit translation**: the text passes through our server to a model provider, and our server **does not store the original or the translation**. For accounts, billing, and abuse prevention we keep only what is needed to run the service; nothing is used for advertising or sold.
+Huaci works in two ways. **Bring your own key**: what you translate goes straight to the AI provider you configured, never through us. **Credit translation**: the text passes through our server to a model provider, and our server **does not store the original or the translation**. For accounts, billing, and abuse prevention we keep only what is needed to run the service; nothing is used for advertising or sold.
 
 ### What is sent when you translate
 
@@ -140,7 +140,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 
 账户、点数与订阅服务已随 2.0.0 上线，以下说明这些服务的数据处理方式。
 
-AI 划词翻译有两种用法。**自带 Key**：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 **点数翻译**：内容经我们的服务器转给模型服务商完成翻译，服务器**不保存原文和译文**。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。
+划词有两种用法。**自带 Key**：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 **点数翻译**：内容经我们的服务器转给模型服务商完成翻译，服务器**不保存原文和译文**。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。
 
 ### 翻译时会发送的内容
 

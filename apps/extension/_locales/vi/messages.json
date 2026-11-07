@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Hoàn tác"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – Trình dịch AI & Đọc song ngữ"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Đọc song ngữ toàn bộ bài viết, dịch văn bản, hình ảnh và PDF được chọn — bằng nhà cung cấp bạn chọn hoặc điểm dịch miễn phí không cần Key."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Dịch phụ đề $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Phím tắt không kích hoạt dịch: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Dịch hình ảnh · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Phụ đề video · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Cài đặt · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "Bản dịch được thực hiện bởi dịch vụ của Huaci, không cần API Key: dùng điểm tặng kèm hoặc đăng ký để sử dụng không giới hạn."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "Dịch PDF · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "Đọc song ngữ · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Bảng dịch · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Quy tắc dịch phần tử · Huaci"
+  },
   "extensionName": {
-    "message": "Trình dịch AI"
+    "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },
   "extensionDescription": {
-    "message": "Dịch văn bản và hình ảnh sang ngôn ngữ bạn muốn đọc bằng nền tảng bạn chọn."
+    "message": "Đọc song ngữ toàn bộ bài viết, dịch văn bản, hình ảnh và PDF được chọn — bằng nhà cung cấp bạn chọn hoặc điểm dịch miễn phí không cần Key."
   },
   "translateSelection": {
     "message": "Dịch văn bản đã chọn"

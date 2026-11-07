@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AI 劃詞翻譯 · 網頁裡的外文，選取後按右鍵就能讀懂</title>
+<title>劃詞 – AI 翻譯與雙語閱讀 · 網頁裡的外文，選中右鍵就讀懂</title>
 <meta name="description" content="開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
@@ -26,18 +26,18 @@
 <link rel="alternate" hreflang="x-default" href="https://huaci.app/" />
 <!-- /i18n:alternates -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="AI 劃詞翻譯" />
+<meta property="og:site_name" content="劃詞" />
 <meta property="og:locale" content="zh_TW" />
 <meta property="og:url" content="https://huaci.app/zh-Hant/" />
-<meta property="og:title" content="AI 劃詞翻譯" />
+<meta property="og:title" content="劃詞 – AI 翻譯與雙語閱讀" />
 <meta property="og:description" content="選取文字，右鍵，然後接著讀。整篇文章逐段對照的雙語閱讀，以及文字、圖片、PDF 與網頁區域翻譯；24 種介面與目標語言。自帶 Key 或免 Key 點數翻譯均可。" />
 <meta property="og:image" content="https://huaci.app/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="AI 劃詞翻譯：選取，按右鍵，然後繼續閱讀。" />
+<meta property="og:image:alt" content="劃詞：選中，右鍵，然後接著讀。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"AI 劃詞翻譯","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"AI 劃詞翻譯","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"劃詞","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"劃詞","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -54,7 +54,7 @@
 
 <header class="nav">
   <div class="nav-in">
-    <a class="brand" href="/zh-Hant/"><img src="/assets/icon128.png" alt="" width="26" height="26" /> <span>AI 劃詞翻譯</span></a>
+    <a class="brand" href="/zh-Hant/"><img src="/assets/icon128.png" alt="" width="26" height="26" /> <span>劃詞</span></a>
     <nav class="nav-links">
       <a href="#features">功能</a>
       <a href="#privacy">隱私權</a>

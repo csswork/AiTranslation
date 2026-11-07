@@ -6,9 +6,9 @@ import { createI18n, k } from '../i18n/index.js';
 
 const PURPOSE_LABELS = { login: '登录', change_email: '更换邮箱', admin_login: '管理端登录' };
 const PURPOSE_LINES = {
-  login: k('你正在登录 AI 划词翻译。'),
-  change_email: k('你正在把 AI 划词翻译账户的邮箱更换为这个地址。'),
-  admin_login: k('你正在登录 AI 划词翻译的管理端。'),
+  login: k('你正在登录划词。'),
+  change_email: k('你正在把划词账户的邮箱更换为这个地址。'),
+  admin_login: k('你正在登录划词的管理端。'),
 };
 
 const unescape = (text) => String(text)
@@ -17,7 +17,7 @@ const unescape = (text) => String(text)
 /** 验证码邮件的标题、纯文本与 HTML（HTML 用内联样式，邮件客户端不加载外部样式）。 */
 export function codeEmail({ code, purpose, locale, support }) {
   const { t, locale: active } = createI18n(locale);
-  const subject = unescape(t('{code} 是你的 AI 划词翻译验证码', { code }));
+  const subject = unescape(t('{code} 是你的划词验证码', { code }));
   const lines = [
     t(PURPOSE_LINES[purpose] || PURPOSE_LINES.login),
     t('验证码 10 分钟内有效，只能使用一次。'),

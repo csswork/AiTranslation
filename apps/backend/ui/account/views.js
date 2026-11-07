@@ -43,7 +43,7 @@ function header(ui, user) {
   const nextTheme = ui.theme === 'dark' ? 'light' : 'dark';
   return html`<header class="nav">
   <div class="nav-in">
-    <a class="brand" href="${site(ui)}"><img src="${assetUrl('icon.png')}" alt="" width="26" height="26"><span>${t('AI 划词翻译')}</span></a>
+    <a class="brand" href="${site(ui)}"><img src="${assetUrl('icon.png')}" alt="" width="26" height="26"><span>${t('划词')}</span></a>
     <nav class="nav-links">
       <a href="${site(ui, '#features')}">${t('功能')}</a>
       <a href="${site(ui, '#privacy')}">${t('隐私')}</a>
@@ -103,7 +103,7 @@ export function layout(ui, { title, user = null, active = '', notice = null, bod
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>${title} · ${t('AI 划词翻译')}</title>
+<title>${title} · ${t('划词')}</title>
 <link rel="icon" href="${assetUrl('icon.png')}">
 <link rel="stylesheet" href="${assetUrl('account.css')}">
 <script src="${assetUrl('account.js')}" defer></script>
@@ -569,7 +569,7 @@ export function welcomePage(ui, { user, outcome, claimOutcome, balance, signupCr
   const { t } = ui;
   const balanceDisplay = displayCredits(balance ?? 0n);
   signupCredits = displayCredits(creditsToUnits(signupCredits));
-  let heading = t('欢迎使用 AI 划词翻译');
+  let heading = t('欢迎使用划词');
   let message;
   if (outcome === 'restored') {
     heading = t('欢迎回来');
@@ -612,7 +612,7 @@ export function extensionConsentPage(ui, { user }) {
     user,
     body: html`<section class="card auth consent">
   <img class="consent-mark" src="${assetUrl('icon.png')}" alt="" width="48" height="48">
-  <h1>${t('允许 AI 划词翻译扩展登录？')}</h1>
+  <h1>${t('允许划词扩展登录？')}</h1>
   <p>${t('扩展将以 {username} 的身份查看点数、试用与订阅状态，并在你选择「点数翻译」时使用点数。', { username: html`<strong>${user.username}</strong>` })}</p>
   <p class="fine">${t('扩展只获得自己的登录会话，不会读取你的网站登录状态；随时可以在「登录会话」里退出。')}</p>
   <form method="post" action="/extension/authorize/confirm" class="stack" data-auth-form>

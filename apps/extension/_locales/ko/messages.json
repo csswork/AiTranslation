@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "실행 취소"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – AI 번역 및 이중 언어 읽기"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "전체 기사를 이중 언어로 읽고 선택한 텍스트, 이미지, PDF를 번역하세요 — 선택한 제공업체 또는 키 없는 크레딧으로."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] 자막 번역 $arg1$ms($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] 단축키가 번역을 실행하지 못했습니다: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "이미지 번역 · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "동영상 자막 · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "설정 · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "번역은 Huaci의 서비스에서 처리되며 API Key가 필요하지 않습니다: 제공되는 크레딧을 사용하거나 구독하여 무제한으로 이용하세요."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "PDF 번역 · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "이중 언어 읽기 · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "번역 패널 · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "요소 번역 규칙 · Huaci"
+  },
   "extensionName": {
-    "message": "AI 번역"
+    "message": "Huaci – AI 번역 및 이중 언어 읽기"
   },
   "extensionDescription": {
-    "message": "선택한 플랫폼으로 텍스트와 이미지를 원하는 언어로 번역하세요."
+    "message": "전체 기사를 이중 언어로 읽고 선택한 텍스트, 이미지, PDF를 번역하세요 — 선택한 제공업체 또는 키 없는 크레딧으로."
   },
   "translateSelection": {
     "message": "선택한 텍스트 번역"

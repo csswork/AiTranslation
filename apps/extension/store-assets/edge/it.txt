@@ -1,14 +1,26 @@
-Traduci mentre leggi: seleziona il testo, fai clic con il tasto destro e visualizza la traduzione sulla pagina.
+Leggi mentre traduci: trasforma un articolo web in una pagina di lettura bilingue affiancata, oppure seleziona il testo, fai clic con il tasto destro e visualizza la traduzione direttamente sulla pagina.
 
-AI Translator è un'estensione open source per Microsoft Edge per tradurre testo selezionato, aree di pagine web, immagini e interi documenti PDF. Usa la traduzione ospitata senza chiave API oppure collega il tuo account OpenAI, DeepSeek o DeepL.
+Huaci – Traduttore AI e lettore bilingue è un'estensione open source per Microsoft Edge per la lettura bilingue e per la traduzione di testo selezionato, aree di pagine web, immagini e interi documenti PDF. Usa la traduzione ospitata senza chiave API, oppure collega il tuo account OpenAI, DeepSeek o DeepL.
 
-CINQUE MODI PER TRADURRE
+LETTURA BILINGUE (NOVITÀ NELLA 2.2.0)
 
+Fai clic con il tasto destro su una normale pagina web senza selezionare testo e scegli “Leggi questo articolo in modalità bilingue”. L'estensione rileva il titolo e il corpo dell'articolo sul tuo dispositivo, esclude navigazione, barre laterali, spazi pubblicitari e widget di raccomandazione, e apre una pagina di lettura pulita accanto alla scheda con ogni paragrafo originale allineato accanto alla sua traduzione. Solo il testo dell'articolo ripulito viene inviato per la traduzione.
+
+• Affiancato, impilato, solo traduzione o solo originale; aspetto chiaro, scuro o secondo il sistema; palette di colori, font, dimensione, altezza riga e larghezza pagina regolabili.
+• Salva un articolo con la sua traduzione sul tuo dispositivo e riaprilo in seguito dall'elenco a destra senza tradurlo di nuovo; elimina gli articoli salvati in qualsiasi momento.
+
+FORMULAZIONI ALTERNATIVE E PREFERENZE DI FORMULAZIONE
+
+Sulla pagina di lettura, nel popup di selezione, nel pannello di traduzione e sulla pagina PDF, fai clic su una parola nella traduzione (o seleziona alcune parole) per vedere formulazioni alternative con brevi note, oppure digita la tua. Le tue scelte vengono salvate sul tuo dispositivo come preferenze di formulazione e vengono applicate alle traduzioni successive che contengono lo stesso termine di origine. Gestiscile nelle impostazioni. DeepL non fornisce formulazioni alternative.
+
+SEI MODI PER TRADURRE
+
+• Lettura bilingue: descritta sopra.
 • Testo selezionato: traduci testo in qualsiasi lingua, incluso il cinese, in un popup spostabile. Trasmetti il risultato in streaming dove supportato, espandi l'originale per il confronto, copia la traduzione o cambia la lingua di destinazione.
 • Aree di pagine web: aggiungi un pulsante di traduzione a una parte scelta di un sito web. Le regole vengono salvate per dominio e puoi ripristinare il testo originale.
-• Immagini: riconosci il testo e sovrapponi il testo tradotto all'immagine. Traduci un'area selezionata, regola le caselle di testo localmente ed esporta l'immagine tradotta. Il riconoscimento richiede un modello con capacità visive; la modalità ospitata include il riconoscimento delle immagini.
-• Interi PDF: apri un PDF nel browser e scegli la traduzione dell'intero documento dal menu contestuale. Il PDF viene analizzato localmente; solo il testo estratto viene inviato per la traduzione. Confronta l'originale e la traduzione, mantieni il layout delle pagine, figure e tabelle, e stampa o salva come PDF. Le pagine scansionate senza testo estraibile non sono supportate dalla traduzione dell'intero documento.
-• Pannello di traduzione: incolla un passaggio in una vista dedicata con sorgente e traduzione, scegli una lingua di origine e una di destinazione e traducilo senza selezionare una pagina web.
+• Immagini: riconosci il testo, delinea ogni passaggio lungo i suoi tratti e posiziona la traduzione sopra l'originale senza che i passaggi si sovrappongano. Il testo verticale giapponese rimane verticale quando tradotto in cinese, giapponese o coreano. Rivedi e modifica le forme rilevate prima di tradurre, traduci una regione selezionata ed esporta l'immagine tradotta. Il riconoscimento richiede un modello con capacità visive; la modalità ospitata include il riconoscimento delle immagini.
+• PDF interi: apri un PDF nel browser e scegli la traduzione dell'intero documento dal menu contestuale. Il PDF viene analizzato localmente; solo il testo estratto viene inviato per la traduzione. Confronta l'originale e la traduzione, mantieni il layout della pagina, figure e tabelle, e stampa o salva come PDF. Le pagine scansionate senza testo estraibile non sono supportate dalla traduzione dell'intero documento.
+• Pannello di traduzione: incolla un passaggio in una vista dedicata con origine e traduzione, scegli una lingua di origine e di destinazione e traducilo senza una selezione di pagina web.
 
 24 LINGUE
 
@@ -16,11 +28,11 @@ Scegli cinese semplificato, cinese tradizionale, inglese, spagnolo, portoghese, 
 
 ACCOUNT, PROVA GRATUITA E ABBONAMENTI OPZIONALI
 
-La traduzione ospitata non richiede una chiave API. Una nuova installazione idonea del browser riceve una prova come ospite; accedendo con un codice di verifica via email o con Google si ottiene un account e crediti di prova aggiuntivi. I crediti di prova non scadono. Il tuo saldo, abbonamento e utilizzo sono condivisi con il centro utenti su https://app.huaci.app/.
+La traduzione ospitata non richiede una chiave API. Una nuova installazione idonea del browser riceve una prova guest; accedendo con un codice di verifica email o Google si ottiene un account e crediti di prova aggiuntivi. I crediti di prova non scadono e vengono detratti in base alla quantità di testo tradotto (1 credito ogni 500 caratteri); le traduzioni non riuscite non vengono addebitate. Il tuo saldo, abbonamento e utilizzo sono condivisi con il centro utenti su https://app.huaci.app/.
 
-Dopo l'esaurimento dei crediti di prova, la traduzione ospitata richiede un abbonamento attivo. I piani attuali sono 3.99 USD al mese o 29.99 USD all'anno, più le imposte applicabili. Gli abbonamenti si rinnovano automaticamente fino alla cancellazione. Annulla il rinnovo futuro nel centro utenti; l'accesso continua fino alla fine del periodo pagato. L'uso ospitato è soggetto a limiti di uso ragionevole e di prevenzione degli abusi. Creem elabora i pagamenti. Conferma il prezzo e i termini attuali nella pagina dei piani prima dell'acquisto: https://app.huaci.app/plans.
+Dopo l'esaurimento dei crediti di prova, la traduzione ospitata richiede un abbonamento attivo. I piani attuali sono 3.99 USD al mese o 29.99 USD all'anno, più le imposte applicabili. Gli abbonamenti si rinnovano automaticamente fino alla cancellazione. Annulla il rinnovo futuro nel centro utenti; l'accesso continua fino alla fine del periodo pagato. L'uso ospitato è soggetto a limiti di uso ragionevole e di prevenzione degli abusi. Creem elabora i pagamenti. Conferma il prezzo e i termini attuali sulla pagina dei piani prima dell'acquisto: https://app.huaci.app/plans.
 
-Installare l'estensione e usare la tua chiave API sono gratuiti. Il provider API scelto potrebbe addebitare costi separati. Un abbonamento a questa estensione non è necessario per la modalità bring-your-own-key. DeepL non fornisce il riconoscimento delle immagini.
+L'installazione dell'estensione e l'uso della tua chiave API sono gratuiti. Il provider API selezionato potrebbe addebitare separatamente. Un abbonamento a questa estensione non è richiesto per la modalità bring-your-own-key. DeepL non fornisce il riconoscimento delle immagini.
 
 SOTTOTITOLI VIDEO SPERIMENTALI
 
@@ -28,17 +40,17 @@ I sottotitoli video opzionali sono disattivati per impostazione predefinita. Il 
 
 PRIVACY
 
-• Le richieste bring-your-own-key vanno direttamente al provider scelto o all'endpoint HTTPS. La tua chiave rimane nell'archivio locale dell'estensione e non viene sincronizzata tramite il tuo account del browser.
+• Le richieste bring-your-own-key vanno direttamente al provider selezionato o all'endpoint HTTPS. La tua chiave rimane nella memoria locale dell'estensione e non viene sincronizzata tramite il tuo account del browser.
 • La modalità ospitata invia il testo o le immagini richiesti tramite il nostro server a un provider di modelli. Il nostro server non conserva testo originale, immagini o traduzioni.
-• I file PDF interi vengono elaborati localmente e non vengono caricati.
+• I file PDF interi vengono elaborati localmente e non vengono caricati. La lettura bilingue rileva gli articoli sul tuo dispositivo; gli articoli salvati e le preferenze di formulazione rimangono nella memoria locale dell'estensione.
 • Gli account conservano l'indirizzo email, il nome utente e i record necessari per autenticazione, utilizzo, crediti e fatturazione. Nessuna pubblicità, SDK di tracciamento o fingerprinting del dispositivo.
 • Tutto il codice eseguibile dell'estensione è incluso nel pacchetto. Il codice sorgente è disponibile sotto GPL-3.0.
 
 PER INIZIARE
 
-Installa, seleziona la lingua di destinazione preferita e usa la prova ospitata o configura la tua chiave API nelle impostazioni. Seleziona il testo su una pagina web normale e scegli "Traduci in…" dal menu contestuale. Scorciatoia da tastiera: Alt+Shift+T, o Command+Shift+Y su macOS.
+Installa, seleziona la lingua di destinazione preferita e usa la prova ospitata o configura la tua chiave API nelle impostazioni. Su una normale pagina web, fai clic con il tasto destro senza selezionare testo e scegli “Leggi questo articolo in modalità bilingue”, oppure seleziona il testo e scegli “Traduci in…”. Scorciatoia da tastiera: Alt+Shift+T, o Command+Shift+Y su macOS.
 
-Le pagine protette dal browser e gli store delle estensioni non consentono sovrapposizioni di traduzione. Le singole richieste di testo sono limitate a 6,000 caratteri; la traduzione di PDF e aree utilizza batch. Gli endpoint API personalizzati richiedono HTTPS e autorizzazione per l'host scelto.
+Le pagine protette dal browser e gli store delle estensioni non consentono overlay di traduzione. Le singole richieste di testo sono limitate a 6,000 caratteri; la traduzione di PDF, aree e lettura bilingue utilizza batch. Il rilevamento degli articoli è euristico, quindi forum, social network e pagine dietro un login potrebbero non essere rilevati completamente. Gli endpoint API personalizzati richiedono HTTPS e l'autorizzazione per l'host scelto.
 
 Progetto indipendente; non affiliato a Microsoft, OpenAI, DeepSeek o DeepL. I nomi identificano servizi compatibili e rimangono marchi dei rispettivi proprietari.
 

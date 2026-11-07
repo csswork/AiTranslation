@@ -1,77 +1,70 @@
-Select text on a webpage, right-click, and watch the translation appear in a floating panel—without switching tabs or copying and pasting.
+Select, right-click, and keep reading. Read whole articles side by side with their translation, and translate selected text, images and PDFs right where they are—without switching tabs or copying and pasting.
 
-AI Selection Translator is an open-source Chrome extension built on Manifest V3. Translate selected text, page regions, and text inside images into your preferred language using your own OpenAI, DeepSeek, or DeepL API key.
+Huaci – AI Translator & Bilingual Reader is an open-source browser extension built on Manifest V3. Start translating right after installation with key-free credits, or use your own OpenAI, DeepSeek or DeepL API key.
 
-▍Four ways to translate
+▍Bilingual reading (new in 2.2.0)
+
+Right-click anywhere on a page without selecting text and choose “Read this article bilingually”. A light sweeps across the page as the title and body are detected, then a clean reading page opens next to it with each original paragraph aligned beside its translation. Navigation, sidebars, ad slots and recommendation widgets are left out and never sent for translation.
+
+• Side by side, every paragraph pair starts at the same height; you can also stack them, or show only the translation or only the original
+• Light, dark or follow-system appearance, plus adjustable color palette, font, size, line height and page width—all remembered
+• “Save” keeps the article and its translation on your device; open it again from the list on the right without translating it again, or delete it when you no longer need it
+
+▍Click a word for another wording—and keep your preferred terms
+
+On the reading page, in the selection popup, in the translation panel and on the PDF page, click a word in the translation—or drag over a few words—to see several alternative renderings with short notes, or type your own. Replace the same word elsewhere in one go.
+
+Wordings you choose are remembered on your device as wording preferences: later translations of text that contains the same source term follow your choice. Review and delete them in Settings.
+
+▍Six ways to translate, all in the right-click menu
 
 • Selected text
-Select text and choose “Translate to…” from the right-click menu. The translation appears in a centered panel, with streaming output where supported and an expandable original-text view.
-
-Selections in any language—including Chinese—can be translated. Selections containing only numbers, punctuation, or emoji do not trigger the translation offer.
-
-Change the target language directly in the panel to translate the original selection again. Save it as your default only when you choose to.
-
-• Page regions
-Add a translation button to a specific area of a webpage. Click it to replace the text in that region with its translation, and restore the original when needed.
-
-Rules are saved by domain, so the button returns when you revisit the website. Longer regions are processed in batches, with translations appearing progressively.
+Select text and choose “Translate to…” from the right-click menu. The translation appears in a centered popup, word by word where the provider supports streaming. You can also use the floating button next to a selection, or the shortcut ⌘⇧Y on macOS / Alt+Shift+T elsewhere. The popup can be dragged, shows the original on demand, and translates the original again when you switch the target language.
 
 • Images
-Right-click an image to recognize its text and overlay translations at the detected positions. Long images are split into smaller sections for recognition.
+Right-click an image to recognize its text. Each passage is outlined along its strokes, and the translation is placed back over the original without the passages covering each other. Vertical Japanese text, as in manga, stays vertical when translated into Chinese, Japanese or Korean. Review the detected shapes first—move, edit, delete or draw new ones—before translating, or select just the areas you need (rectangles or circles). Download or copy the result as a new image.
 
-Changing the target language reuses the recognized text, so the same image does not need to be scanned again. Image recognition requires a vision-capable provider and model.
+• Whole PDFs
+In the browser's built-in PDF viewer, right-click without selecting text to translate the entire document in a page next to it. Translations are laid over the original positions, so layout, figures and table lines stay in place. Compare side by side, show only the translation or only the original, and save the result as a PDF through the print dialog. You can also drop a local PDF onto the translation page.
+
+• Page regions
+Right-click an area of a page to add a translation button to it. Click once to replace the text in that area with its translation, and again to restore the original. Rules are remembered per website.
 
 • Translation panel
-Open a dedicated page with source text on the left and translation on the right. Use it for longer passages or text from outside the browser.
+A dedicated page with the original on the left and the translation on the right, for longer passages or text from outside the browser. Detect the source language automatically or choose it yourself.
 
-Choose from 24 target languages: Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese, and Korean.
+24 interface and target languages: Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean. Interface, source and target languages are independent settings, and Arabic, Hebrew, Persian and Urdu interfaces use a right-to-left layout.
 
-Detect the source language automatically or select it explicitly. Source language, target language, and interface language are independent settings. Provider support varies by language and feature.
+▍Two ways to use it
 
-▍Designed for everyday reading
+• Key-free credit translation
+A new eligible installation receives a guest trial (claims are limited per network), and signing up with email or Google adds more credits. Credits never expire and are deducted by the amount of text actually translated (1 credit per 500 characters); failed translations are not charged. Once trial credits run out, credit translation requires a subscription, which gives unlimited use (fair use), renews automatically and can be canceled at any time. See the website and your account center for current trial amounts and prices.
 
-• Stay on the page: translate while reading, without interrupting your workflow.
-• Streaming output: translations appear progressively where supported.
-• Light and dark themes follow your system preference.
-• Drag the translation panel to reposition it, or press Esc to close it.
-• Keyboard shortcut: ⌘⇧Y on macOS or Alt+Shift+T on other platforms.
-• Localized interfaces for 24 languages, including right-to-left layouts.
-• Choose your default translation language independently of the interface language.
-
-Experimental video subtitle translation is also available as an optional feature. Speech recognition support depends on your browser, device, and source language.
+• Your own API key
+Enter your own OpenAI, DeepSeek or DeepL key. Requests go directly from your browser to that provider, which bills you for usage. Image recognition requires a vision-capable model; DeepL does not offer image recognition or alternative wordings.
 
 ▍Privacy
 
-• No developer-operated translation server. Translation requests go directly to the provider or custom endpoint you configure.
-• No analytics, tracking, or advertising.
-• Your API key is stored locally in chrome.storage.local and is not synced through your Chrome account.
-• Content is sent for translation only when you actively request it. The developer does not receive your translation history.
-• Video speech recognition can run locally on supported devices. Optional cloud recognition sends audio to the browser’s speech recognition service.
-• The complete source code is available under GPL-3.0 for inspection.
+• Content is sent only when you choose to translate it. The extension never scans or uploads pages in the background.
+• With your own key, content goes directly to the provider you chose, never through us.
+• With credit translation, content passes through our server to a model provider; the server does not store your text, translations or images.
+• API keys, wording preferences and saved articles stay on your device and are not synced through your browser account.
+• No ads, tracking or third-party analytics. The complete source code is available under GPL-3.0.
 
-▍Getting started
-
-1. After installation, the settings page opens automatically. Choose a provider, enter your own API key, and use “Test connection” to check your configuration.
-2. Choose your interface language and default translation target.
-3. Select text on a webpage, right-click, and choose “Translate to…” to begin.
-
-Requires Chrome 116 or later. Experimental video features may require a newer browser and additional setup.
-
-This version uses your own provider credentials. Any API charges are billed by your chosen provider.
+Live video captions are an experimental feature, off by default. Speech is recognized on your device by default; if you explicitly choose cloud recognition, audio is sent to your browser's speech recognition service.
 
 ▍Known limitations
 
-• Browser-protected pages, including chrome:// pages and the Chrome Web Store, do not allow content-script injection. Translation overlays are unavailable there.
-• Individual text translations are limited to 6,000 characters. Longer selections are truncated, with a notice shown in the panel.
-• Custom API endpoints require separate permission for their domain and must use HTTPS.
-• Available languages, image recognition, and streaming capabilities depend on your provider and model.
+• Browser-protected pages, such as internal chrome:// pages and the extension stores, cannot be used.
+• A single selection can contain up to 6,000 characters; longer selections are truncated with a notice.
+• Bilingual reading detects articles from the page structure; forums, social networks and pages behind a login may not be detected completely.
+• Scanned and password-protected PDFs are not supported yet.
+• Available languages, image recognition and streaming depend on the provider and model you choose.
 
-▍About this project
+Requires Chrome or Edge 116 or later.
 
-An independent, open-source project. It is not affiliated with, endorsed by, or sponsored by OpenAI, DeepSeek, DeepL, or their associated companies.
-
-ChatGPT, DeepSeek, DeepL, and other product names are trademarks of their respective owners and are used solely to identify compatible services.
+An independent open-source project, not affiliated with, endorsed by or sponsored by OpenAI, DeepSeek, DeepL or their affiliates. ChatGPT, DeepSeek, DeepL and other names are trademarks of their respective owners and are used only to identify compatible services.
 
 Website: https://huaci.app/
 Source code and issue reports: https://github.com/csswork/AiTranslation
-Privacy policy: https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md
+Privacy policy: https://huaci.app/privacy.html

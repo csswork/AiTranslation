@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Urungkan"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Baca seluruh artikel secara bilingual dan terjemahkan teks, gambar, serta PDF yang dipilih — dengan penyedia pilihan Anda atau kredit tanpa Key."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Terjemahan subtitle $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Pintasan tidak memicu terjemahan: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Terjemahan gambar · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Subtitle video · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Pengaturan · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "Terjemahan dilakukan oleh layanan Huaci, tanpa perlu API Key: gunakan kredit gratis, atau berlangganan untuk penggunaan tanpa batas."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "Terjemahkan PDF · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "Pembacaan bilingual · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Panel terjemahan · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Aturan terjemahan elemen · Huaci"
+  },
   "extensionName": {
-    "message": "Penerjemah AI"
+    "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },
   "extensionDescription": {
-    "message": "Terjemahkan teks dan gambar ke bahasa yang Anda inginkan dengan platform pilihan Anda."
+    "message": "Baca seluruh artikel secara bilingual dan terjemahkan teks, gambar, serta PDF yang dipilih — dengan penyedia pilihan Anda atau kredit tanpa Key."
   },
   "translateSelection": {
     "message": "Terjemahkan teks yang dipilih"

@@ -1,4 +1,6 @@
-# AI Selection Translator
+# Huaci – AI Translator & Bilingual Reader
+
+划词 – AI 翻译与双语阅读（formerly “AI 划词翻译 / AI Translator”; renamed in 2.2.0, same extension IDs and store listings).
 
 A Chrome extension for translating selected text, page regions, images, whole PDF documents and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
 
@@ -162,7 +164,7 @@ Catalog generation tools are development-only; the shipped extension does not do
 
 Released under the [GNU General Public License v3.0](../../LICENSE).
 
-    AI Selection Translator — a Chrome extension that translates selected text into your chosen language
+    Huaci — a browser extension for AI translation and bilingual reading
     Copyright (C) 2026  Haibo
 
     This program is free software: you can redistribute it and/or modify

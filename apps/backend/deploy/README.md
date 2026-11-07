@@ -23,7 +23,7 @@
 | `AUTH_SECRET` | 必填，≥32 字符 | 验证码 HMAC 密钥；更换后未完成的验证码失效 |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | `resend` | 开发用 `console`（验证码打印在日志里），生产环境不允许 |
-| `RESEND_API_KEY` / `MAIL_FROM` | 必填 | Resend API Key 与已验证的发件地址（如 `AI 划词翻译 <no-reply@huaci.app>`）；需在 Resend 为 huaci.app 配置 SPF / DKIM |
+| `RESEND_API_KEY` / `MAIL_FROM` | 必填 | Resend API Key 与已验证的发件地址（如 `划词 <no-reply@huaci.app>`）；需在 Resend 为 huaci.app 配置 SPF / DKIM |
 | `SUPPORT_EMAIL` | 默认 `support@huaci.app` | 客服邮箱：页脚、套餐页、验证码邮件的回复地址；须能收信，并与 Creem 后台一致 |
 | `TRIAL_CREDITS` / `GUEST_CREDITS` | 默认 200.00 / 50.00 | 注册与访客赠送点数的默认值（不过期，最多两位小数）；管理员界面里的设置优先 |
 | `REPORT_TIMEZONE` | 默认 `Asia/Shanghai` | 管理端的时区：运营报表与点数图表按它切分天和小时，页面上的时间也按它显示（用户端仍按 UTC） |

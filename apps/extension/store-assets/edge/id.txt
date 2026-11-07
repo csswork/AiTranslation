@@ -1,24 +1,36 @@
-Terjemahkan saat Anda membaca: pilih teks, klik kanan, dan lihat terjemahan muncul di halaman.
+Baca sambil menerjemahkan: ubah artikel web menjadi halaman baca bilingual berdampingan, atau pilih teks, klik kanan, dan lihat terjemahannya langsung di halaman.
 
-AI Translator adalah ekstensi Microsoft Edge sumber terbuka untuk menerjemahkan teks yang dipilih, area halaman web, gambar, dan seluruh dokumen PDF. Gunakan terjemahan terkelola tanpa kunci API, atau hubungkan akun OpenAI, DeepSeek, atau DeepL Anda sendiri.
+Huaci – Penerjemah AI & Pembaca Bilingual adalah ekstensi Microsoft Edge sumber terbuka untuk membaca bilingual dan untuk menerjemahkan teks terpilih, area halaman web, gambar, dan seluruh dokumen PDF. Gunakan terjemahan terkelola tanpa kunci API, atau hubungkan akun OpenAI, DeepSeek, atau DeepL Anda sendiri.
 
-LIMA CARA MENERJEMAHKAN
+MEMBACA BILINGUAL (BARU DI 2.2.0)
 
-• Teks yang dipilih: terjemahkan teks dalam bahasa apa pun, termasuk bahasa Mandarin, dalam popup yang dapat dipindahkan. Alirkan hasilnya jika didukung, perluas teks asli untuk perbandingan, salin terjemahan, atau ubah bahasa target.
+Klik kanan pada halaman web biasa tanpa memilih teks dan pilih “Baca artikel ini secara bilingual”. Ekstensi mendeteksi judul dan isi artikel di perangkat Anda, mengabaikan navigasi, bilah samping, slot iklan, dan widget rekomendasi, lalu membuka halaman baca yang bersih di samping tab dengan setiap paragraf asli sejajar di samping terjemahannya. Hanya teks artikel yang telah dibersihkan yang dikirim untuk diterjemahkan.
+
+• Berdampingan, bertumpuk, hanya terjemahan, atau hanya asli; tampilan terang, gelap, atau mengikuti sistem; palet warna, font, ukuran, tinggi baris, dan lebar halaman yang dapat disesuaikan.
+• Simpan artikel beserta terjemahannya di perangkat Anda dan buka kembali nanti dari daftar di sebelah kanan tanpa menerjemahkannya lagi; hapus artikel tersimpan kapan saja.
+
+ALTERNATIF PILIHAN KATA DAN PREFERENSI PILIHAN KATA
+
+Di halaman baca, di popup pilihan, di panel terjemahan, dan di halaman PDF, klik sebuah kata dalam terjemahan (atau pilih beberapa kata) untuk melihat alternatif padanan dengan catatan singkat, atau ketik sendiri. Pilihan Anda disimpan di perangkat Anda sebagai preferensi pilihan kata dan diterapkan pada terjemahan berikutnya yang mengandung istilah sumber yang sama. Kelola di pengaturan. DeepL tidak menyediakan alternatif pilihan kata.
+
+ENAM CARA MENERJEMAHKAN
+
+• Membaca bilingual: dijelaskan di atas.
+• Teks terpilih: terjemahkan teks dalam bahasa apa pun, termasuk bahasa Mandarin, dalam popup yang dapat dipindahkan. Alirkan hasilnya jika didukung, perluas teks asli untuk perbandingan, salin terjemahan, atau ubah bahasa target.
 • Area halaman web: tambahkan tombol terjemahan ke bagian situs web yang dipilih. Aturan disimpan per domain, dan Anda dapat memulihkan teks asli.
-• Gambar: kenali teks dan timpa teks terjemahan pada gambar. Terjemahkan area yang dipilih, sesuaikan kotak teks secara lokal, dan ekspor gambar yang diterjemahkan. Pengenalan memerlukan model yang mendukung visi; mode terkelola mencakup pengenalan gambar.
-• Seluruh PDF: buka PDF di browser dan pilih terjemahan seluruh dokumen dari menu konteks. PDF diurai secara lokal; hanya teks yang diekstrak yang dikirim untuk diterjemahkan. Bandingkan asli dan terjemahan, pertahankan tata letak halaman, gambar, dan tabel, serta cetak atau simpan sebagai PDF. Halaman hasil pindai tanpa teks yang dapat diekstrak tidak didukung oleh terjemahan seluruh dokumen.
-• Panel terjemahan: tempelkan bagian teks ke tampilan sumber-dan-terjemahan khusus, pilih bahasa sumber dan target, lalu terjemahkan tanpa memilih di halaman web.
+• Gambar: kenali teks, garis besar setiap bagian sepanjang goresannya dan tempatkan terjemahan kembali di atas aslinya tanpa bagian-bagian saling menutupi. Teks Jepang vertikal tetap vertikal saat diterjemahkan ke bahasa Mandarin, Jepang, atau Korea. Tinjau dan edit bentuk yang terdeteksi sebelum menerjemahkan, terjemahkan area terpilih, dan ekspor gambar yang diterjemahkan. Pengenalan memerlukan model yang mendukung visi; mode terkelola mencakup pengenalan gambar.
+• PDF utuh: buka PDF di browser dan pilih terjemahan seluruh dokumen dari menu konteks. PDF diurai secara lokal; hanya teks yang diekstrak yang dikirim untuk diterjemahkan. Bandingkan asli dan terjemahan, pertahankan tata letak halaman, gambar, dan tabel, serta cetak atau simpan sebagai PDF. Halaman pindaian tanpa teks yang dapat diekstrak tidak didukung oleh terjemahan seluruh dokumen.
+• Panel terjemahan: tempelkan bagian teks ke tampilan sumber-dan-terjemahan khusus, pilih bahasa sumber dan target, dan terjemahkan tanpa pilihan halaman web.
 
 24 BAHASA
 
-Pilih Tionghoa Sederhana, Tionghoa Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thai, Jepang, atau Korea. Bahasa antarmuka, bahasa sumber, dan target terjemahan bersifat independen. Dukungan penyedia bervariasi menurut bahasa dan fitur. Antarmuka kanan-ke-kiri didukung.
+Pilih Mandarin Sederhana, Mandarin Tradisional, Inggris, Spanyol, Portugis, Prancis, Jerman, Italia, Belanda, Rusia, Ukraina, Polandia, Turki, Arab, Ibrani, Persia, Hindi, Bengali, Urdu, Indonesia, Vietnam, Thailand, Jepang, atau Korea. Bahasa antarmuka, bahasa sumber, dan target terjemahan bersifat independen. Dukungan penyedia bervariasi menurut bahasa dan fitur. Antarmuka kanan-ke-kiri didukung.
 
 AKUN, UJI COBA GRATIS, DAN LANGGANAN OPSIONAL
 
-Terjemahan terkelola tidak memerlukan kunci API. Instalasi browser baru yang memenuhi syarat menerima uji coba tamu; masuk dengan kode verifikasi email atau Google memberikan akun dan kredit uji coba tambahan. Kredit uji coba tidak kedaluwarsa. Saldo, langganan, dan penggunaan Anda dibagikan dengan pusat pengguna di https://app.huaci.app/.
+Terjemahan terkelola tidak memerlukan kunci API. Instalasi browser baru yang memenuhi syarat menerima uji coba tamu; masuk dengan kode verifikasi email atau Google memberikan akun dan kredit uji coba tambahan. Kredit uji coba tidak kedaluwarsa dan dipotong berdasarkan jumlah teks yang diterjemahkan (1 kredit per 500 karakter); terjemahan yang gagal tidak dikenai biaya. Saldo, langganan, dan penggunaan Anda dibagikan dengan pusat pengguna di https://app.huaci.app/.
 
-Setelah kredit uji coba habis, terjemahan terkelola memerlukan langganan aktif. Paket saat ini adalah US$3.99 per bulan atau US$29.99 per tahun, ditambah pajak yang berlaku. Langganan diperpanjang otomatis hingga dibatalkan. Batalkan perpanjangan mendatang di pusat pengguna; akses berlanjut hingga periode berbayar berakhir. Penggunaan terkelola tunduk pada batas penggunaan wajar dan pencegahan penyalahgunaan. Creem memproses pembayaran. Konfirmasikan harga dan ketentuan saat ini di halaman paket sebelum membeli: https://app.huaci.app/plans.
+Setelah kredit uji coba habis, terjemahan terkelola memerlukan langganan aktif. Paket saat ini adalah US$3.99 per bulan atau US$29.99 per tahun, ditambah pajak yang berlaku. Langganan diperpanjang otomatis hingga dibatalkan. Batalkan perpanjangan mendatang di pusat pengguna; akses berlanjut hingga periode berbayar berakhir. Penggunaan terkelola tunduk pada batas penggunaan wajar dan pencegahan penyalahgunaan. Creem memproses pembayaran. Konfirmasi harga dan ketentuan saat ini di halaman paket sebelum membeli: https://app.huaci.app/plans.
 
 Memasang ekstensi dan menggunakan kunci API Anda sendiri gratis. Penyedia API pilihan Anda dapat mengenakan biaya terpisah. Langganan ekstensi ini tidak diperlukan untuk mode bawa-kunci-sendiri. DeepL tidak menyediakan pengenalan gambar.
 
@@ -28,19 +40,19 @@ Takarir video opsional nonaktif secara default. Pengenalan ucapan bergantung pad
 
 PRIVASI
 
-• Permintaan bawa-kunci-sendiri langsung menuju ke penyedia pilihan Anda atau endpoint HTTPS. Kunci Anda tetap di penyimpanan lokal ekstensi dan tidak disinkronkan melalui akun browser Anda.
+• Permintaan bawa-kunci-sendiri langsung menuju penyedia pilihan Anda atau endpoint HTTPS. Kunci Anda tetap di penyimpanan lokal ekstensi dan tidak disinkronkan melalui akun browser Anda.
 • Mode terkelola mengirim teks atau gambar yang diminta melalui server kami ke penyedia model. Server kami tidak menyimpan teks asli, gambar, atau terjemahan.
-• Seluruh file PDF diproses secara lokal dan tidak diunggah.
+• File PDF utuh diproses secara lokal dan tidak diunggah. Membaca bilingual mendeteksi artikel di perangkat Anda; artikel tersimpan dan preferensi pilihan kata tetap di penyimpanan lokal ekstensi.
 • Akun menyimpan alamat email, nama pengguna, dan catatan yang diperlukan untuk autentikasi, penggunaan, kredit, dan penagihan. Tidak ada iklan, SDK pelacakan, atau pengambilan sidik jari perangkat.
 • Semua kode ekstensi yang dapat dieksekusi disertakan dalam paket. Sumber tersedia di bawah GPL-3.0.
 
 MEMULAI
 
-Pasang, pilih bahasa target yang Anda inginkan, dan gunakan uji coba terkelola atau konfigurasikan kunci API Anda sendiri di pengaturan. Pilih teks di halaman web biasa dan pilih “Terjemahkan ke…” dari menu konteks. Pintasan keyboard: Alt+Shift+T, atau Command+Shift+Y di macOS.
+Pasang, pilih bahasa target yang Anda inginkan, dan gunakan uji coba terkelola atau konfigurasikan kunci API Anda sendiri di pengaturan. Di halaman web biasa, klik kanan tanpa memilih teks dan pilih “Baca artikel ini secara bilingual”, atau pilih teks dan pilih “Terjemahkan ke…”. Pintasan papan ketik: Alt+Shift+T, atau Command+Shift+Y di macOS.
 
-Halaman yang dilindungi browser dan toko ekstensi tidak mengizinkan hamparan terjemahan. Permintaan teks tunggal dibatasi hingga 6,000 karakter; terjemahan PDF dan area menggunakan batch. Endpoint API kustom memerlukan HTTPS dan izin untuk host yang dipilih.
+Halaman yang dilindungi browser dan toko ekstensi tidak mengizinkan hamparan terjemahan. Permintaan teks tunggal dibatasi hingga 6,000 karakter; terjemahan PDF, area, dan membaca bilingual menggunakan batch. Deteksi artikel bersifat heuristik, sehingga forum, jejaring sosial, dan halaman di balik login mungkin tidak terdeteksi sepenuhnya. Endpoint API kustom memerlukan HTTPS dan izin untuk host yang dipilih.
 
-Proyek independen; tidak berafiliasi dengan Microsoft, OpenAI, DeepSeek, atau DeepL. Nama-nama tersebut mengidentifikasi layanan yang kompatibel dan tetap merupakan merek dagang pemiliknya.
+Proyek independen; tidak berafiliasi dengan Microsoft, OpenAI, DeepSeek, atau DeepL. Nama-nama tersebut mengidentifikasi layanan yang kompatibel dan tetap merupakan merek dagang pemiliknya masing-masing.
 
 Situs web: https://huaci.app/
 Dukungan: support@huaci.app

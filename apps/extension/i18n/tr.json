@@ -592,5 +592,18 @@
   "删除「$1」": "\"$1\" öğesini sil",
   "删除失败：$1": "Silme başarısız: $1",
   "已删除「$1」": "\"$1\" silindi",
-  "撤销": "Geri al"
+  "撤销": "Geri al",
+  "划词 – AI 翻译与双语阅读": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Tüm makaleleri iki dilli okuyun; seçili metinleri, görselleri ve PDF'leri çevirin — seçtiğiniz sağlayıcıyla veya anahtar gerektirmeyen kredilerle.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Altyazı çevirisi $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] Kısayol çeviriyi tetiklemedi: $1",
+  "图片翻译 · 划词": "Görsel çevirisi · Huaci",
+  "视频字幕 · 划词": "Video altyazıları · Huaci",
+  "设置 · 划词": "Ayarlar · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "Çeviri Huaci'nin hizmetiyle yapılır, API Key gerekmez: hediye kredileri kullanın veya abone olarak sınırsız kullanın.",
+  "翻译 PDF · 划词": "PDF çevir · Huaci",
+  "双语阅读 · 划词": "İki dilli okuma · Huaci",
+  "翻译面板 · 划词": "Çeviri paneli · Huaci",
+  "元素翻译规则 · 划词": "Öğe çeviri kuralları · Huaci"
 }

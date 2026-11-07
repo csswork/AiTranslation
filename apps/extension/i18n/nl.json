@@ -592,5 +592,18 @@
   "删除「$1」": "\"$1\" verwijderen",
   "删除失败：$1": "Verwijderen mislukt: $1",
   "已删除「$1」": "\"$1\" verwijderd",
-  "撤销": "Ongedaan maken"
+  "撤销": "Ongedaan maken",
+  "划词 – AI 翻译与双语阅读": "Huaci – AI-vertaler & tweetalige lezer",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Lees hele artikelen tweetalig en vertaal geselecteerde tekst, afbeeldingen en PDF's — met je gekozen provider of sleutelvrije credits.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Ondertitelvertaling $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] Sneltoets heeft de vertaling niet geactiveerd: $1",
+  "图片翻译 · 划词": "Afbeeldingsvertaling · Huaci",
+  "视频字幕 · 划词": "Videondertitels · Huaci",
+  "设置 · 划词": "Instellingen · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "De vertaling wordt verzorgd door de dienst van Huaci, geen API Key nodig: gebruik de gratis credits, of neem een abonnement voor onbeperkt gebruik.",
+  "翻译 PDF · 划词": "PDF vertalen · Huaci",
+  "双语阅读 · 划词": "Tweetalig lezen · Huaci",
+  "翻译面板 · 划词": "Vertaalpaneel · Huaci",
+  "元素翻译规则 · 划词": "Regels voor elementvertaling · Huaci"
 }

@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "撤销"
   },
+  "m_ca6653710beba442": {
+    "message": "划词 – AI 翻译与双语阅读"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "划词"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。"
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[划词] 字幕翻译 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[划词] 快捷键未触发翻译：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "图片翻译 · 划词"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "视频字幕 · 划词"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "设置 · 划词"
+  },
+  "m_757b2632195326cf": {
+    "message": "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。"
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "翻译 PDF · 划词"
+  },
+  "m_0fea2e430f301752": {
+    "message": "双语阅读 · 划词"
+  },
+  "m_fb01c791bf423297": {
+    "message": "翻译面板 · 划词"
+  },
+  "m_4803435b906c8916": {
+    "message": "元素翻译规则 · 划词"
+  },
   "extensionName": {
-    "message": "AI 划词翻译"
+    "message": "划词 – AI 翻译与双语阅读"
   },
   "extensionDescription": {
-    "message": "用你选择的平台，把文字和图片翻译成你想读的语言。"
+    "message": "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。"
   },
   "translateSelection": {
     "message": "翻译选中的文字"

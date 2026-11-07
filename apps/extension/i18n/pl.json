@@ -592,5 +592,18 @@
   "删除「$1」": "Usuń „$1”",
   "删除失败：$1": "Usuwanie nie powiodło się: $1",
   "已删除「$1」": "Usunięto „$1”",
-  "撤销": "Cofnij"
+  "撤销": "Cofnij",
+  "划词 – AI 翻译与双语阅读": "Huaci – tłumacz AI i czytnik dwujęzyczny",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Czytaj całe artykuły dwujęzycznie i tłumacz zaznaczony tekst, obrazy oraz pliki PDF — za pomocą wybranego dostawcy lub darmowych kredytów bez klucza.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Tłumaczenie napisów $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] Skrót nie uruchomił tłumaczenia: $1",
+  "图片翻译 · 划词": "Tłumaczenie obrazów · Huaci",
+  "视频字幕 · 划词": "Napisy wideo · Huaci",
+  "设置 · 划词": "Ustawienia · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "Tłumaczenie realizuje usługa Huaci, bez potrzeby API Key: korzystaj z dołączonych kredytów lub subskrybuj, aby używać bez ograniczeń.",
+  "翻译 PDF · 划词": "Tłumacz PDF · Huaci",
+  "双语阅读 · 划词": "Czytanie dwujęzyczne · Huaci",
+  "翻译面板 · 划词": "Panel tłumaczenia · Huaci",
+  "元素翻译规则 · 划词": "Zasady tłumaczenia elementów · Huaci"
 }

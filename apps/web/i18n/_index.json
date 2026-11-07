@@ -1,12 +1,12 @@
 {
-  "页面不存在 · AI 划词翻译": {
+  "页面不存在 · 划词": {
     "kind": "text",
     "tag": "title",
     "pages": [
       "404.html"
     ]
   },
-  "<img src=\"/assets/icon128.png\" alt=\"\" width=\"26\" height=\"26\" /> <span>AI 划词翻译</span>": {
+  "<img src=\"/assets/icon128.png\" alt=\"\" width=\"26\" height=\"26\" /> <span>划词</span>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -129,21 +129,21 @@
       "404.html"
     ]
   },
-  "更新日志 · AI 划词翻译": {
+  "更新日志 · 划词": {
     "kind": "text",
     "tag": "title",
     "pages": [
       "changelog.html"
     ]
   },
-  "@meta:description|AI 划词翻译的版本更新记录。": {
+  "@meta:description|划词的版本更新记录。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
       "changelog.html"
     ]
   },
-  "@meta:og:site_name|AI 划词翻译": {
+  "@meta:og:site_name|划词": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -153,21 +153,21 @@
       "terms.html"
     ]
   },
-  "@meta:og:title|更新日志 · AI 划词翻译": {
+  "@meta:og:title|更新日志 · 划词": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
       "changelog.html"
     ]
   },
-  "@meta:og:description|AI 划词翻译的版本更新记录。": {
+  "@meta:og:description|划词的版本更新记录。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
       "changelog.html"
     ]
   },
-  "<img src=\"assets/icon128.png\" alt=\"\" width=\"26\" height=\"26\" /> <span>AI 划词翻译</span>": {
+  "<img src=\"assets/icon128.png\" alt=\"\" width=\"26\" height=\"26\" /> <span>划词</span>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -202,6 +202,13 @@
   "本版新增双语阅读，译文可以逐词换说法并记住你的用词，图片翻译改为按文字形状识别和排版。": {
     "kind": "text",
     "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>新名字</b>：产品更名为「划词 – AI 翻译与双语阅读」，更好地反映现在能做的事；扩展、账户、点数与设置都不受影响。": {
+    "kind": "text",
+    "tag": "li",
     "pages": [
       "changelog.html"
     ]
@@ -509,7 +516,7 @@
       "terms.html"
     ]
   },
-  "AI 划词翻译 · 网页里的外文，选中右键就读懂": {
+  "划词 – AI 翻译与双语阅读 · 网页里的外文，选中右键就读懂": {
     "kind": "text",
     "tag": "title",
     "pages": [
@@ -523,7 +530,7 @@
       "index.html"
     ]
   },
-  "@meta:og:title|AI 划词翻译": {
+  "@meta:og:title|划词 – AI 翻译与双语阅读": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -537,7 +544,7 @@
       "index.html"
     ]
   },
-  "@meta:og:image:alt|AI 划词翻译：选中，右键，然后接着读。": {
+  "@meta:og:image:alt|划词：选中，右键，然后接着读。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -1399,21 +1406,21 @@
       "index.html"
     ]
   },
-  "隐私政策 · AI 划词翻译": {
+  "隐私政策 · 划词": {
     "kind": "text",
     "tag": "title",
     "pages": [
       "privacy.html"
     ]
   },
-  "@meta:description|AI 划词翻译的隐私政策：自带 Key 时内容直接发往你选的平台；点数翻译经我们的服务器转给模型服务商，不保存原文译文；账户与计费只保留必要数据。中英双语。": {
+  "@meta:description|划词的隐私政策：自带 Key 时内容直接发往你选的平台；点数翻译经我们的服务器转给模型服务商，不保存原文译文；账户与计费只保留必要数据。中英双语。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
       "privacy.html"
     ]
   },
-  "@meta:og:title|隐私政策 · AI 划词翻译": {
+  "@meta:og:title|隐私政策 · 划词": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -1455,7 +1462,7 @@
       "privacy.html"
     ]
   },
-  "AI 划词翻译有两种用法。<b>自带 Key</b>：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 <b>点数翻译</b>：内容经我们的服务器转给模型服务商完成翻译，服务器<b>不保存原文和译文</b>。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。": {
+  "划词有两种用法。<b>自带 Key</b>：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 <b>点数翻译</b>：内容经我们的服务器转给模型服务商完成翻译，服务器<b>不保存原文和译文</b>。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -2107,21 +2114,21 @@
       "terms.html"
     ]
   },
-  "服务条款 · AI 划词翻译": {
+  "服务条款 · 划词": {
     "kind": "text",
     "tag": "title",
     "pages": [
       "terms.html"
     ]
   },
-  "@meta:description|AI 划词翻译的服务条款：免费试用与点数、订阅与自动续订、7 天退款、合理使用、可接受使用与免责说明。中英双语。": {
+  "@meta:description|划词的服务条款：免费试用与点数、订阅与自动续订、7 天退款、合理使用、可接受使用与免责说明。中英双语。": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
       "terms.html"
     ]
   },
-  "@meta:og:title|服务条款 · AI 划词翻译": {
+  "@meta:og:title|服务条款 · 划词": {
     "kind": "attr",
     "tag": "meta",
     "pages": [
@@ -2163,7 +2170,7 @@
       "terms.html"
     ]
   },
-  "AI 划词翻译（下称「本服务」）由 Haibo 运营，包括 Chrome 扩展、官网 <code>huaci.app</code> 与用户中心 <code>app.huaci.app</code>。 你可以用自己的 API Key 连接第三方 AI 平台翻译（自带 Key），也可以使用我们提供的托管翻译（点数翻译）。使用本服务即表示你同意本条款与<a class=\"link\" href=\"privacy.html\">隐私政策</a>。": {
+  "划词（下称「本服务」）由 Haibo 运营，包括 Chrome 扩展、官网 <code>huaci.app</code> 与用户中心 <code>app.huaci.app</code>。 你可以用自己的 API Key 连接第三方 AI 平台翻译（自带 Key），也可以使用我们提供的托管翻译（点数翻译）。使用本服务即表示你同意本条款与<a class=\"link\" href=\"privacy.html\">隐私政策</a>。": {
     "kind": "text",
     "tag": "p",
     "pages": [

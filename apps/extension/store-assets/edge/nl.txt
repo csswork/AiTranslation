@@ -1,44 +1,56 @@
-Vertaal terwijl u leest: selecteer tekst, klik met de rechtermuisknop en zie de vertaling op de pagina verschijnen.
+Lees terwijl je vertaalt: verander een webartikel in een tweetalige leespagina naast elkaar, of selecteer tekst, klik met de rechtermuisknop en zie de vertaling direct op de pagina.
 
-AI Translator is een opensource-extensie voor Microsoft Edge voor het vertalen van geselecteerde tekst, delen van webpagina's, afbeeldingen en volledige PDF-documenten. Gebruik gehoste vertaling zonder API-sleutel, of koppel uw eigen OpenAI-, DeepSeek- of DeepL-account.
+Huaci – AI-vertaler & tweetalige lezer is een open-source Microsoft Edge-extensie voor tweetalig lezen en voor het vertalen van geselecteerde tekst, webpagina-onderdelen, afbeeldingen en volledige PDF-documenten. Gebruik gehoste vertaling zonder API-sleutel, of verbind je eigen OpenAI-, DeepSeek- of DeepL-account.
 
-VIJF MANIEREN OM TE VERTALEN
+TWEETALIG LEZEN (NIEUW IN 2.2.0)
 
-• Geselecteerde tekst: vertaal tekst in elke taal, inclusief Chinees, in een verplaatsbare pop-up. Stream het resultaat waar ondersteund, klap het origineel uit ter vergelijking, kopieer de vertaling of wijzig de doeltaal.
-• Delen van webpagina's: voeg een vertaalknop toe aan een gekozen deel van een website. Regels worden per domein opgeslagen en u kunt de oorspronkelijke tekst herstellen.
-• Afbeeldingen: herken tekst en leg de vertaalde tekst over de afbeelding heen. Vertaal een geselecteerd gebied, pas tekstvakken lokaal aan en exporteer de vertaalde afbeelding. Herkenning vereist een model met beeldvermogen; de gehoste modus omvat beeldherkenning.
-• Volledige PDF's: open een PDF in de browser en kies volledige-documentvertaling in het contextmenu. De PDF wordt lokaal verwerkt; alleen geëxtraheerde tekst wordt ter vertaling verzonden. Vergelijk het origineel en de vertaling, behoud de paginalay-out, figuren en tabellen, en print of sla op als PDF. Gescande pagina's zonder extraheerbare tekst worden niet ondersteund door volledige-documentvertaling.
-• Vertaalpaneel: plak een passage in een aparte bron-en-vertaling-weergave, kies een bron- en doeltaal en vertaal deze zonder selectie op een webpagina.
+Klik met de rechtermuisknop op een gewone webpagina zonder tekst te selecteren en kies “Lees dit artikel tweetalig”. De extensie detecteert de titel en hoofdtekst van het artikel op je apparaat, laat navigatie, zijbalken, advertentieruimtes en aanbevelingswidgets weg, en opent een schone leespagina naast het tabblad met elke originele alinea naast de vertaling ervan. Alleen de opgeschoonde artikeltekst wordt ter vertaling verzonden.
+
+• Naast elkaar, gestapeld, alleen vertaling of alleen origineel; lichte, donkere of systeemvolgende weergave; aanpasbaar kleurenpalet, lettertype, grootte, regelhoogte en paginabreedte.
+• Sla een artikel met zijn vertaling op je apparaat op en open het later opnieuw uit de lijst aan de rechterkant zonder het opnieuw te vertalen; verwijder opgeslagen artikelen op elk moment.
+
+ALTERNATIEVE FORMULERINGEN EN FORMULERINGSVOORKEUREN
+
+Op de leespagina, in de selectiepopup, in het vertaalpaneel en op de PDF-pagina kun je op een woord in de vertaling klikken (of een paar woorden selecteren) om alternatieve weergaven met korte notities te zien, of je eigen formulering typen. Je keuzes worden op je apparaat opgeslagen als formuleringsvoorkeuren en worden toegepast op latere vertalingen die dezelfde bronterm bevatten. Beheer ze in de instellingen. DeepL biedt geen alternatieve formuleringen.
+
+ZES MANIEREN OM TE VERTALEN
+
+• Tweetalig lezen: hierboven beschreven.
+• Geselecteerde tekst: vertaal tekst in elke taal, inclusief Chinees, in een verplaatsbare popup. Stream het resultaat waar ondersteund, klap het origineel uit ter vergelijking, kopieer de vertaling of wijzig de doeltaal.
+• Webpagina-onderdelen: voeg een vertaalknop toe aan een gekozen deel van een website. Regels worden per domein opgeslagen en je kunt de originele tekst herstellen.
+• Afbeeldingen: herken tekst, omlijn elke passage langs de contouren en plaats de vertaling terug over het origineel zonder dat passages elkaar bedekken. Verticale Japanse tekst blijft verticaal wanneer deze naar Chinees, Japans of Koreaans wordt vertaald. Controleer en bewerk de gedetecteerde vormen vóór het vertalen, vertaal een geselecteerd gebied en exporteer de vertaalde afbeelding. Herkenning vereist een vision-capabel model; de gehoste modus omvat beeldherkenning.
+• Volledige PDF's: open een PDF in de browser en kies volledige documentvertaling in het contextmenu. De PDF wordt lokaal verwerkt; alleen geëxtraheerde tekst wordt ter vertaling verzonden. Vergelijk het origineel en de vertaling, behoud de paginalay-out, figuren en tabellen, en print of sla op als PDF. Gescande pagina's zonder extraheerbare tekst worden niet ondersteund door volledige documentvertaling.
+• Vertaalpaneel: plak een passage in een speciale bron-en-vertaling-weergave, kies een bron- en doeltaal en vertaal deze zonder een webpagina-selectie.
 
 24 TALEN
 
-Kies Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thai, Japans of Koreaans. Interfacetaal, brontaal en vertaaldoel zijn onafhankelijk. Providerondersteuning verschilt per taal en functie. Interfaces van rechts naar links worden ondersteund.
+Kies Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thai, Japans of Koreaans. Interface-taal, brontaal en vertaaldoel zijn onafhankelijk. Providerondersteuning verschilt per taal en functie. Rechts-naar-links-interfaces worden ondersteund.
 
 ACCOUNTS, GRATIS PROEFPERIODE EN OPTIONELE ABONNEMENTEN
 
-Gehoste vertaling vereist geen API-sleutel. Een nieuwe in aanmerking komende browserinstallatie ontvangt een gastproefperiode; aanmelden met een e-mailverificatiecode of Google biedt een account en extra proeftegoed. Proeftegoed verloopt niet. Uw saldo, abonnement en gebruik worden gedeeld met het gebruikerscentrum op https://app.huaci.app/.
+Gehoste vertaling vereist geen API-sleutel. Een nieuwe in aanmerking komende browserinstallatie ontvangt een gastproefperiode; inloggen met een e-mailverificatiecode of Google biedt een account en extra proeftegoed. Proeftegoed verloopt niet en wordt afgetrokken op basis van de hoeveelheid vertaalde tekst (1 tegoed per 500 tekens); mislukte vertalingen worden niet in rekening gebracht. Je saldo, abonnement en gebruik worden gedeeld met het gebruikerscentrum op https://app.huaci.app/.
 
-Nadat het proeftegoed is verbruikt, vereist gehoste vertaling een actief abonnement. De huidige plannen zijn US$3.99 per maand of US$29.99 per jaar, plus toepasselijke belastingen. Abonnementen worden automatisch verlengd totdat ze worden opgezegd. Zeg toekomstige verlenging op in het gebruikerscentrum; toegang blijft bestaan tot het betaalde periode eindigt. Gehost gebruik is onderworpen aan redelijk-gebruik- en misbruikpreventielimieten. Creem verwerkt betalingen. Bevestig de actuele prijs en voorwaarden op de plannenpagina vóór aankoop: https://app.huaci.app/plans.
+Nadat het proeftegoed is uitgeput, vereist gehoste vertaling een actief abonnement. Huidige plannen zijn US$3.99 per maand of US$29.99 per jaar, plus toepasselijke belastingen. Abonnementen worden automatisch verlengd totdat ze worden opgezegd. Zeg toekomstige verlenging op in het gebruikerscentrum; toegang blijft tot het einde van de betaalde periode. Gehost gebruik is onderworpen aan redelijk gebruik en limieten ter voorkoming van misbruik. Creem verwerkt betalingen. Bevestig de huidige prijs en voorwaarden op de plannenpagina vóór aankoop: https://app.huaci.app/plans.
 
-Het installeren van de extensie en het gebruik van uw eigen API-sleutel zijn gratis. Uw gekozen API-provider kan afzonderlijk kosten in rekening brengen. Een abonnement op deze extensie is niet vereist voor de bring-your-own-key-modus. DeepL biedt geen beeldherkenning.
+De extensie installeren en je eigen API-sleutel gebruiken is gratis. Je gekozen API-provider kan apart kosten in rekening brengen. Een abonnement op deze extensie is niet vereist voor de bring-your-own-key-modus. DeepL biedt geen beeldherkenning.
 
-EXPERIMENTELE VIDEOONDERTITELS
+EXPERIMENTELE VIDEO-ONDERTITELS
 
-Optionele videondertitels zijn standaard uitgeschakeld. Spraakherkenning is afhankelijk van browserversie, apparaat en taal en is mogelijk niet beschikbaar. Lokale herkenning wordt gebruikt waar ondersteund; er wordt nooit stilzwijgend overgeschakeld naar cloudherkenning. Alleen als u expliciet cloudherkenning kiest, wordt tabaudio naar de browsersprachtdienst verzonden (Microsoft Azure in Edge). Herkende tekst volgt uw geselecteerde vertaalmodus. Wij bieden geen gehoste audio-/videotranscriptie. Deze experimentele functie is geen garantie dat elke video kan worden vertaald.
+Optionele video-ondertitels zijn standaard uitgeschakeld. Spraakherkenning is afhankelijk van browserversie, apparaat en taal en is mogelijk niet beschikbaar. Lokale herkenning wordt gebruikt waar ondersteund; er wordt nooit stilzwijgend overgeschakeld naar cloudherkenning. Alleen als je expliciet cloudherkenning kiest, wordt tab-audio naar de browsersprachtdienst verzonden (Microsoft Azure in Edge). Herkende tekst volgt je geselecteerde vertaalmodus. Wij bieden geen gehoste audio-/videotranscriptie. Deze experimentele functie is geen garantie dat elke video kan worden vertaald.
 
 PRIVACY
 
-• Bring-your-own-key-verzoeken gaan rechtstreeks naar uw gekozen provider of HTTPS-eindpunt. Uw sleutel blijft in de lokale extensieopslag en wordt niet gesynchroniseerd via uw browseraccount.
+• Bring-your-own-key-verzoeken gaan rechtstreeks naar je gekozen provider of HTTPS-eindpunt. Je sleutel blijft in de lokale extensieopslag en wordt niet gesynchroniseerd via je browseraccount.
 • De gehoste modus verzendt gevraagde tekst of afbeeldingen via onze server naar een modelprovider. Onze server bewaart geen originele tekst, afbeeldingen of vertalingen.
-• Volledige PDF-bestanden worden lokaal verwerkt en niet geüpload.
-• Accounts bewaren het e-mailadres, de gebruikersnaam en gegevens die nodig zijn voor authenticatie, gebruik, tegoed en facturering. Geen advertenties, tracking-SDK's of apparaatvingerafdrukken.
+• Volledige PDF-bestanden worden lokaal verwerkt en niet geüpload. Tweetalig lezen detecteert artikelen op je apparaat; opgeslagen artikelen en formuleringsvoorkeuren blijven in de lokale extensieopslag.
+• Accounts bewaren het e-mailadres, de gebruikersnaam en gegevens die nodig zijn voor authenticatie, gebruik, tegoed en facturering. Geen advertenties, tracking-SDK's of device fingerprinting.
 • Alle uitvoerbare extensiecode is opgenomen in het pakket. Bron beschikbaar onder GPL-3.0.
 
 AAN DE SLAG
 
-Installeer, selecteer uw voorkeurdoeltaal en gebruik de gehoste proefperiode of configureer uw eigen API-sleutel in de instellingen. Selecteer tekst op een gewone webpagina en kies "Vertalen naar…" in het contextmenu. Sneltoets: Alt+Shift+T, of Command+Shift+Y op macOS.
+Installeer, selecteer je gewenste doeltaal en gebruik de gehoste proefperiode of configureer je eigen API-sleutel in de instellingen. Klik op een gewone webpagina met de rechtermuisknop zonder tekst te selecteren en kies “Lees dit artikel tweetalig”, of selecteer tekst en kies “Vertalen naar…”. Sneltoets: Alt+Shift+T, of Command+Shift+Y op macOS.
 
-Door de browser beschermde pagina's en extensiestores staan geen vertaaloverlays toe. Enkele tekstverzoeken zijn beperkt tot 6,000 tekens; PDF- en deelvertaling gebruiken batches. Aangepaste API-eindpunten vereisen HTTPS en toestemming voor de gekozen host.
+Door de browser beschermde pagina's en extensiestores staan geen vertaaloverlays toe. Enkele tekstverzoeken zijn beperkt tot 6,000 tekens; PDF-, regio- en tweetalig leesvertaling gebruiken batches. Artikeldetectie is heuristisch, dus forums, sociale netwerken en pagina's achter een login worden mogelijk niet volledig gedetecteerd. Aangepaste API-eindpunten vereisen HTTPS en toestemming voor de gekozen host.
 
 Onafhankelijk project; niet verbonden aan Microsoft, OpenAI, DeepSeek of DeepL. Namen identificeren compatibele diensten en blijven handelsmerken van hun eigenaren.
 

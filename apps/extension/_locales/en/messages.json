@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Undo"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – AI Translator & Bilingual Reader"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Read whole articles bilingually and translate selected text, images and PDFs — with your chosen provider or key-free credits."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Subtitle translation $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Shortcut did not trigger translation: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Image translation · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Video subtitles · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Settings · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "Translation is handled by Huaci's service, no API Key needed: use the complimentary credits, or subscribe for unlimited use."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "Translate PDF · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "Bilingual reading · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Translation panel · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Element translation rules · Huaci"
+  },
   "extensionName": {
-    "message": "AI Translator"
+    "message": "Huaci – AI Translator & Bilingual Reader"
   },
   "extensionDescription": {
-    "message": "Translate text and images into your language with your chosen provider."
+    "message": "Read whole articles bilingually and translate selected text, images and PDFs — with your chosen provider or key-free credits."
   },
   "translateSelection": {
     "message": "Translate selected text"

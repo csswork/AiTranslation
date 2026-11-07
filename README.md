@@ -1,4 +1,6 @@
-# AI 划词翻译 · Huaci
+# 划词 · Huaci
+
+划词 – AI 翻译与双语阅读（Huaci – AI Translator & Bilingual Reader）。原名「AI 划词翻译」，2.2.0 起改为现名，扩展 ID 与商店条目不变。
 
 一个仓库，三个应用：Vercel 上的 HTML 网站、VPS 上的后端服务、Chrome 扩展。
 

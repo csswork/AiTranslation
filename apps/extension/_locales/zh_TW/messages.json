@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "復原"
   },
+  "m_ca6653710beba442": {
+    "message": "劃詞 – AI 翻譯與雙語閱讀"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "劃詞"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "雙語閱讀整篇文章，翻譯選取的文字、圖片與 PDF：使用你選擇的平台，或免 Key 的點數翻譯。"
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[劃詞] 字幕翻譯 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[劃詞] 快速鍵未觸發翻譯：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "圖片翻譯 · 劃詞"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "影片字幕 · 劃詞"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "設定 · 劃詞"
+  },
+  "m_757b2632195326cf": {
+    "message": "由劃詞的服務完成翻譯，不需要 API Key：使用贈送的點數，或訂閱後無限使用。"
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "翻譯 PDF · 劃詞"
+  },
+  "m_0fea2e430f301752": {
+    "message": "雙語閱讀 · 劃詞"
+  },
+  "m_fb01c791bf423297": {
+    "message": "翻譯面板 · 劃詞"
+  },
+  "m_4803435b906c8916": {
+    "message": "元素翻譯規則 · 劃詞"
+  },
   "extensionName": {
-    "message": "AI 劃詞翻譯"
+    "message": "劃詞 – AI 翻譯與雙語閱讀"
   },
   "extensionDescription": {
-    "message": "用你選擇的平台，把文字和圖片翻譯成你想讀的語言。"
+    "message": "雙語閱讀整篇文章，翻譯選取的文字、圖片與 PDF：使用你選擇的平台，或免 Key 的點數翻譯。"
   },
   "translateSelection": {
     "message": "翻譯選取的文字"

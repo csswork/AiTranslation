@@ -55,7 +55,7 @@ done
 
 | 文件名 | 用途 | 现在是什么 |
 | --- | --- | --- |
-| `og.png` | 分享到社交媒体 / IM 时的预览图（1200×630） | 已生成 |
+| `og.png` | 分享到社交媒体 / IM 时的预览图（1200×630） | 已生成（划词 – AI 翻译与双语阅读，右侧为双语阅读页） |
 | `icon128.png` | favicon 和导航栏图标 | 从 `apps/extension/icons/` 复制来的 |
 
 首屏右侧大框的正式配图**不是文件**，是 `apps/web/public/index.html` 里内联的 SVG（`<div class="pv">`），
@@ -65,12 +65,7 @@ done
 （16:10）即可，但悬停错开的效果会跟着消失——它靠的是两层分开。要保留效果，
 得准备两张图：一张网页截图，一张抠出来的透明底弹窗 PNG，分别替换两个 `<svg class="pv-layer">`。
 
-`og.png` 若要重做，可以用无头 Chrome 截一张 1200×630：
-
-```
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
-  --window-size=1200,630 --screenshot=og.png file:///绝对路径/og-source.html
-```
+`og.png` 由拍摄工具链生成（2.2.0 改名后重做）：页面源是 `tools/capture/pages/og-source.html`（右侧截图取自双语阅读演示的一帧 `og-reader.jpg`），在 `tools/capture` 里运行 `node make-og.mjs` 截成 1200×630 并写到这里。
 
 ## 换掉图标
 

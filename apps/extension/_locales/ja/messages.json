@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "元に戻す"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – AI翻訳＆バイリンガルリーダー"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "記事全体をバイリンガルで読み、選択したテキスト・画像・PDFを翻訳 — お好みのプロバイダー、またはキー不要のクレジットで。"
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] 字幕翻訳 $arg1$ms（$arg2$ $arg3$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] ショートカットで翻訳が実行されませんでした: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "画像翻訳 · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "動画字幕 · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "設定 · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "翻訳はHuaciのサービスが行うため、API Keyは不要です。付与されたクレジットを使うか、購読すれば無制限に利用できます。"
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "PDFを翻訳 · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "バイリンガルリーディング · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "翻訳パネル · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "要素翻訳ルール · Huaci"
+  },
   "extensionName": {
-    "message": "AI翻訳"
+    "message": "Huaci – AI翻訳＆バイリンガルリーダー"
   },
   "extensionDescription": {
-    "message": "選択したプロバイダーで、テキストと画像を読みたい言語に翻訳します。"
+    "message": "記事全体をバイリンガルで読み、選択したテキスト・画像・PDFを翻訳 — お好みのプロバイダー、またはキー不要のクレジットで。"
   },
   "translateSelection": {
     "message": "選択したテキストを翻訳"

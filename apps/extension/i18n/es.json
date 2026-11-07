@@ -592,5 +592,18 @@
   "删除「$1」": "Eliminar «$1»",
   "删除失败：$1": "Error al eliminar: $1",
   "已删除「$1」": "Se eliminó «$1»",
-  "撤销": "Deshacer"
+  "撤销": "Deshacer",
+  "划词 – AI 翻译与双语阅读": "Huaci – Traductor de IA y lector bilingüe",
+  "划词": "Huaci",
+  "双语阅读整篇文章，翻译选中的文字、图片与 PDF：用你选择的平台，或免 Key 的点数翻译。": "Lee artículos completos de forma bilingüe y traduce texto seleccionado, imágenes y PDF: con el proveedor que elijas o con créditos sin Key.",
+  "[划词] 字幕翻译 $1ms（$2 $3）": "[Huaci] Traducción de subtítulos $1ms ($2 $3)",
+  "[划词] 快捷键未触发翻译：$1": "[Huaci] El atajo no activó la traducción: $1",
+  "图片翻译 · 划词": "Traducción de imágenes · Huaci",
+  "视频字幕 · 划词": "Subtítulos de video · Huaci",
+  "设置 · 划词": "Ajustes · Huaci",
+  "由划词的服务完成翻译，不需要 API Key：使用赠送的点数，或订阅后无限使用。": "La traducción la realiza el servicio de Huaci, sin necesidad de API Key: usa los créditos de regalo o suscríbete para un uso ilimitado.",
+  "翻译 PDF · 划词": "Traducir PDF · Huaci",
+  "双语阅读 · 划词": "Lectura bilingüe · Huaci",
+  "翻译面板 · 划词": "Panel de traducción · Huaci",
+  "元素翻译规则 · 划词": "Reglas de traducción de elementos · Huaci"
 }

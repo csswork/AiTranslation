@@ -37,7 +37,7 @@ test('页面按语言输出 lang、dir、译文和官网对应语言的链接', 
   const { app, config } = buildApp({ pool });
   const en = await (await browser(app, config).request('/login', { headers: { 'accept-language': 'en-US' } })).text();
   assert.match(en, /<html lang="en" dir="ltr">/);
-  assert.match(en, /AI Selection Translator/);
+  assert.match(en, /Huaci/);
   assert.match(en, /href="https:\/\/huaci\.app\/en\/#features"/);
   assert.match(en, /<option value="en" selected/);
   assert.doesNotMatch(en, /登录或注册/);

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AI 划词翻译 · 宣传站
+   划词（Huaci）· 宣传站
    纯静态，无构建。视差用 CSS 滚动驱动动画（animation-timeline），
    跑在合成器线程上，不监听 scroll、不占用主线程。
 
@@ -894,7 +894,7 @@ html:not(.js) .lang { display: none; }
    RTL 页面上若跟着翻转，文字会从卡片左边缘往外长——这里按 LTR 排版，阿拉伯字母自身仍正常连写。 */
 [dir="rtl"] .pv svg text { direction: ltr; }
 
-/* 窄屏导航：英文品牌名（AI Selection Translator）比中文长一倍，加上语言下拉会撑破一行。
+/* 窄屏导航：品牌名、各语言的导航词加上语言下拉会撑破一行。
    GitHub 入口页脚里还有，这里让位：只留图标 + 功能/隐私 + 语言 + 配色。 */
 @media (max-width: 620px) {
   .brand span { display: none; }

@@ -2496,11 +2496,66 @@
   "m_926a50b98ece2667": {
     "message": "Cofnij"
   },
+  "m_ca6653710beba442": {
+    "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
+  },
+  "m_1a6e443e3e47fe75": {
+    "message": "Huaci"
+  },
+  "m_bd5ab334d27aeafe": {
+    "message": "Czytaj całe artykuły dwujęzycznie i tłumacz zaznaczony tekst, obrazy oraz pliki PDF — za pomocą wybranego dostawcy lub darmowych kredytów bez klucza."
+  },
+  "m_2376ae614774a4c3": {
+    "message": "[Huaci] Tłumaczenie napisów $arg1$ms ($arg2$ $arg3$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_5a05304fadbcc64e": {
+    "message": "[Huaci] Skrót nie uruchomił tłumaczenia: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0555ded666b2b68b": {
+    "message": "Tłumaczenie obrazów · Huaci"
+  },
+  "m_02ae7cbab1f0379b": {
+    "message": "Napisy wideo · Huaci"
+  },
+  "m_72d43ea5b16ddb04": {
+    "message": "Ustawienia · Huaci"
+  },
+  "m_757b2632195326cf": {
+    "message": "Tłumaczenie realizuje usługa Huaci, bez potrzeby API Key: korzystaj z dołączonych kredytów lub subskrybuj, aby używać bez ograniczeń."
+  },
+  "m_cbb085cac9f065ce": {
+    "message": "Tłumacz PDF · Huaci"
+  },
+  "m_0fea2e430f301752": {
+    "message": "Czytanie dwujęzyczne · Huaci"
+  },
+  "m_fb01c791bf423297": {
+    "message": "Panel tłumaczenia · Huaci"
+  },
+  "m_4803435b906c8916": {
+    "message": "Zasady tłumaczenia elementów · Huaci"
+  },
   "extensionName": {
-    "message": "Tłumacz AI"
+    "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },
   "extensionDescription": {
-    "message": "Tłumacz tekst i obrazy na wybrany język za pomocą wybranej platformy."
+    "message": "Czytaj całe artykuły dwujęzycznie i tłumacz zaznaczony tekst, obrazy oraz pliki PDF — za pomocą wybranego dostawcy lub darmowych kredytów bez klucza."
   },
   "translateSelection": {
     "message": "Przetłumacz zaznaczony tekst"

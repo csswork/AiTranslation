@@ -91,7 +91,7 @@ function createMenu() {
         chrome.contextMenus.create(props, () => {
           // 必须读一次 lastError，否则会以 "Unchecked runtime.lastError" 冒到控制台
           const error = chrome.runtime.lastError;
-          if (error) console.warn("[AI Translator] Failed to create context menu:", props.id, error.message);
+          if (error) console.warn("[Huaci] Failed to create context menu:", props.id, error.message);
           else created.push(props.id);
           resolve();
         });
@@ -156,7 +156,7 @@ function createMenu() {
         visible: true,
       });
     }
-    console.info("[AI Translator] Context menu ready:", created.join(' + ') || t("（无）"));
+    console.info("[Huaci] Context menu ready:", created.join(' + ') || t("（无）"));
   });
   return menuTask;
 }
@@ -310,7 +310,7 @@ async function startReader(tab) {
       func: () => globalThis.AITrReaderScan?.start(),
     });
   } catch (err) {
-    console.warn("[AI Translator] Could not start reader:", err?.message);
+    console.warn("[Huaci] Could not start reader:", err?.message);
   }
 }
 
@@ -393,7 +393,7 @@ async function ensureContentScript(tabId) {
       files: CONTENT_FILES,
     });
   } catch (err) {
-    console.warn("[AI Translator] Could not inject scripts:", err?.message);
+    console.warn("[Huaci] Could not inject scripts:", err?.message);
     return false;
   }
   return ping(tabId);
@@ -607,7 +607,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   try {
     await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: ['src/lib/languages.js', 'src/lib/messages.js', 'src/lib/i18n.js', 'src/lib/requests.js', VIDEO_FILE] });
   } catch (err) {
-    console.warn("[AI Translator] Could not show captions:", err?.message);
+    console.warn("[Huaci] Could not show captions:", err?.message);
     return;
   }
 
@@ -618,7 +618,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     chrome.tabs
       .sendMessage(tabId, { srcUrl, langLabel, langName: lang.label, ...message }, { frameId })
       .catch((err) => {
-        console.warn("[AI Translator] Caption message failed:", err?.message);
+        console.warn("[Huaci] Caption message failed:", err?.message);
       });
 
   try {
@@ -632,7 +632,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   try {
     streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   } catch (err) {
-    console.warn("[AI Translator] Tab capture failed:", err?.message);
+    console.warn("[Huaci] Tab capture failed:", err?.message);
     await show({ type: 'video-error', message: captureErrorText(err) });
     return;
   }
@@ -662,7 +662,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         { frameId: info.frameId ?? 0 }
       );
     } catch (err) {
-      console.warn("[AI Translator] Could not translate image:", err?.message);
+      console.warn("[Huaci] Could not translate image:", err?.message);
     }
     return;
   }
@@ -678,9 +678,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (!(await ensureContentScript(tab.id))) return;
     try {
       const reply = await chrome.tabs.sendMessage(tab.id, { type: 'add-element-rule' }, { frameId: 0 });
-      if (!reply?.ok) console.warn("[AI Translator] Could not add region rule:", reply?.error);
+      if (!reply?.ok) console.warn("[Huaci] Could not add region rule:", reply?.error);
     } catch (err) {
-      console.warn("[AI Translator] Could not add region rule:", err?.message);
+      console.warn("[Huaci] Could not add region rule:", err?.message);
     }
     return;
   }
@@ -905,7 +905,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const elapsed = Date.now() - startedAt;
         // 翻译延迟只能用真实 Key 量，留一条日志方便对照
         const provider = AITrSettings.resolveProvider(settings);
-        console.info(t("[AI 划词翻译] 字幕翻译 $1ms（$2 $3）", [elapsed, provider.label, provider.model]));
+        console.info(t("[划词] 字幕翻译 $1ms（$2 $3）", [elapsed, provider.label, provider.model]));
         sendResponse({ ok: true, text, elapsed });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null });
@@ -1048,7 +1048,7 @@ async function selectionForTab(tabId) {
 }
 
 /** 快捷键没生效时，这里是唯一的线索来源，所以每个提前退出都要说明原因。 */
-const shortcutLog = (reason) => console.info(t("[AI 划词翻译] 快捷键未触发翻译：$1", [reason]));
+const shortcutLog = (reason) => console.info(t("[划词] 快捷键未触发翻译：$1", [reason]));
 
 async function onShortcut(command, tab) {
   if (command !== 'translate-selection') return;
@@ -1100,5 +1100,5 @@ if (chrome.commands?.onCommand) {
     onShortcut(command, tab).catch((err) => shortcutLog(String(err?.message || err)));
   });
 } else {
-  console.warn("[AI Translator] chrome.commands is unavailable. Reload the extension to enable keyboard shortcuts.");
+  console.warn("[Huaci] chrome.commands is unavailable. Reload the extension to enable keyboard shortcuts.");
 }
