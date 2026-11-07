@@ -605,5 +605,8 @@
   "翻译 PDF · 划词": "PDF vertalen · Huaci",
   "双语阅读 · 划词": "Tweetalig lezen · Huaci",
   "翻译面板 · 划词": "Vertaalpaneel · Huaci",
-  "元素翻译规则 · 划词": "Regels voor elementvertaling · Huaci"
+  "元素翻译规则 · 划词": "Regels voor elementvertaling · Huaci",
+  "拖动排序，或用上下方向键调整": "Sleep om te herordenen, of gebruik de pijltjestoetsen omhoog en omlaag",
+  "调整「$1」的位置（上下方向键）": "Pas de positie van \"$1\" aan (pijltjestoetsen omhoog en omlaag)",
+  "保存顺序失败：$1": "Volgorde opslaan mislukt: $1"
 }

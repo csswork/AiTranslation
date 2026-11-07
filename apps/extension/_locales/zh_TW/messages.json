@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "元素翻譯規則 · 劃詞"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "拖曳排序，或用上下方向鍵調整"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "調整「$arg1$」的位置（上下方向鍵）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "儲存順序失敗：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Regeln für die Elementübersetzung · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Zum Sortieren ziehen oder die Pfeiltasten nach oben und unten verwenden"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Position von „$arg1$“ anpassen (Pfeiltasten nach oben und unten)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Reihenfolge konnte nicht gespeichert werden: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

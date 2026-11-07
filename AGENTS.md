@@ -49,6 +49,7 @@
 - 网站多语言源和工具位于 `apps/web/i18n/`，与扩展语言目录独立；目前网站启用 11 种语言。
 - 中文 `public/*.html` 是页面源文，其他语言页面、`lang.js`、站点地图等由构建生成。修改文案后检查译文与生成产物。
 - 保持已有公开 URL 和语言路径。根目录 `PRIVACY.md` 保留既有公开链接。
+- 官网的当前最新版本只来自 `apps/extension/manifest.json`：`build:web` 把它写进标了 `data-extension-version`（版本号）和 `data-latest-release`（指向更新日志该版条目的链接）的元素以及结构化数据，不要手改这些地方；发布时提升 manifest 版本、手写更新日志条目（`id="vX-Y-Z"`、`data-release-version`）后跑 `build:web`，`check:web` 会核对。其余正文不写「随某版本上线」这类会过时的版本号。
 - 官网至少提供登录入口和登录后状态展示。完整注册、账户、订阅和账单属于 VPS 用户管理界面（规划 `app.huaci.app`），官网链接过去，当前按这个边界安排。
 - 官网页头的账户入口由 `main.js` 读取用户端 `/api/web/session` 后显示；`ACCOUNT_ORIGIN` 在本地指向 `localhost:8787`，在 `huaci.app` 与 `www.huaci.app` 指向 `https://app.huaci.app`（已加入 CSP `connect-src`）；后端 `WEB_ORIGINS` 与扩展 `AITrEnv` 需同时包含这两个官网来源。
 - 官网与 VPS 用户管理界面的页头、页脚（含账户入口样式）保持同一结构、类名、样式和链接，两边各自维护；改动任一边时同步另一边，后端测试会对照官网首页检查链接。

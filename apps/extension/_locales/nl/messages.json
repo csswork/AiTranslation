@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Regels voor elementvertaling · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Sleep om te herordenen, of gebruik de pijltjestoetsen omhoog en omlaag"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Pas de positie van \"$arg1$\" aan (pijltjestoetsen omhoog en omlaag)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Volgorde opslaan mislukt: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Quy tắc dịch phần tử · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Kéo để sắp xếp lại, hoặc dùng phím mũi tên lên và xuống"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Điều chỉnh vị trí của \"$arg1$\" (phím mũi tên lên và xuống)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Không thể lưu thứ tự: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Aturan terjemahan elemen · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Seret untuk mengurutkan ulang, atau gunakan tombol panah atas dan bawah"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Sesuaikan posisi \"$arg1$\" (tombol panah atas dan bawah)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Gagal menyimpan urutan: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

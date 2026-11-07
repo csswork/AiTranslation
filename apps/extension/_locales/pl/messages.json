@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Zasady tłumaczenia elementów · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Przeciągnij, aby zmienić kolejność, lub użyj klawiszy strzałek w górę i w dół"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Dostosuj pozycję „$arg1$” (klawisze strzałek w górę i w dół)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Nie udało się zapisać kolejności: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

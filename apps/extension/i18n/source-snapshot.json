@@ -606,7 +606,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "es": {
     "跟随浏览器": "Follow browser",
@@ -1215,7 +1218,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "pt": {
     "跟随浏览器": "Follow browser",
@@ -1824,7 +1830,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "fr": {
     "跟随浏览器": "Follow browser",
@@ -2433,7 +2442,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "de": {
     "跟随浏览器": "Follow browser",
@@ -3042,7 +3054,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "it": {
     "跟随浏览器": "Follow browser",
@@ -3651,7 +3666,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "nl": {
     "跟随浏览器": "Follow browser",
@@ -4260,7 +4278,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "ru": {
     "跟随浏览器": "Follow browser",
@@ -4869,7 +4890,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "uk": {
     "跟随浏览器": "Follow browser",
@@ -5478,7 +5502,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "pl": {
     "跟随浏览器": "Follow browser",
@@ -6087,7 +6114,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "tr": {
     "跟随浏览器": "Follow browser",
@@ -6696,7 +6726,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "ar": {
     "跟随浏览器": "Follow browser",
@@ -7305,7 +7338,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "he": {
     "跟随浏览器": "Follow browser",
@@ -7914,7 +7950,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "fa": {
     "跟随浏览器": "Follow browser",
@@ -8523,7 +8562,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "hi": {
     "跟随浏览器": "Follow browser",
@@ -9132,7 +9174,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "bn": {
     "跟随浏览器": "Follow browser",
@@ -9741,7 +9786,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "ur": {
     "跟随浏览器": "Follow browser",
@@ -10350,7 +10398,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "id": {
     "跟随浏览器": "Follow browser",
@@ -10959,7 +11010,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "vi": {
     "跟随浏览器": "Follow browser",
@@ -11568,7 +11622,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "th": {
     "跟随浏览器": "Follow browser",
@@ -12177,7 +12234,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "ja": {
     "跟随浏览器": "Follow browser",
@@ -12786,7 +12846,10 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   },
   "ko": {
     "跟随浏览器": "Follow browser",
@@ -13395,6 +13458,9 @@
     "翻译 PDF · 划词": "Translate PDF · Huaci",
     "双语阅读 · 划词": "Bilingual reading · Huaci",
     "翻译面板 · 划词": "Translation panel · Huaci",
-    "元素翻译规则 · 划词": "Element translation rules · Huaci"
+    "元素翻译规则 · 划词": "Element translation rules · Huaci",
+    "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+    "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+    "保存顺序失败：$1": "Failed to save order: $1"
   }
 }

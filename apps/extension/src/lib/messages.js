@@ -606,7 +606,10 @@ globalThis.AITrMessageIds = {
   "翻译 PDF · 划词": "m_cbb085cac9f065ce",
   "双语阅读 · 划词": "m_0fea2e430f301752",
   "翻译面板 · 划词": "m_fb01c791bf423297",
-  "元素翻译规则 · 划词": "m_4803435b906c8916"
+  "元素翻译规则 · 划词": "m_4803435b906c8916",
+  "拖动排序，或用上下方向键调整": "m_393ca9ce7dd702c9",
+  "调整「$1」的位置（上下方向键）": "m_7d1b16f7800ad25a",
+  "保存顺序失败：$1": "m_8d11ad8efcb951ce"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1215,5 +1218,8 @@ globalThis.AITrEnglish = {
   "翻译 PDF · 划词": "Translate PDF · Huaci",
   "双语阅读 · 划词": "Bilingual reading · Huaci",
   "翻译面板 · 划词": "Translation panel · Huaci",
-  "元素翻译规则 · 划词": "Element translation rules · Huaci"
+  "元素翻译规则 · 划词": "Element translation rules · Huaci",
+  "拖动排序，或用上下方向键调整": "Drag to reorder, or use the up and down arrow keys",
+  "调整「$1」的位置（上下方向键）": "Adjust the position of \"$1\" (up and down arrow keys)",
+  "保存顺序失败：$1": "Failed to save order: $1"
 };

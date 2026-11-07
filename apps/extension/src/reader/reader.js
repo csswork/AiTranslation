@@ -591,25 +591,103 @@
     el.libraryCount.textContent = String(items.length);
     el.libraryTotal.textContent = items.length ? t("$1 篇", [items.length]) : '';
     el.libraryEmpty.hidden = items.length > 0;
-    if (el.library.hidden) return;
+    // 拖动中不重建列表（翻译完成时会自动保存并刷新），松开后再刷新
+    if (el.library.hidden || dragging) return;
     el.libraryList.replaceChildren(...items.map((item) => {
       const row = make('li', `library-item${item.id === savedId ? ' current' : ''}`);
+      row.dataset.id = item.id;
+      row.draggable = true;
+      const name = item.title || item.url;
+      // 拖动手柄：也能用键盘上下方向键挪位置
+      const grip = make('button', 'library-grip');
+      grip.type = 'button';
+      grip.title = t("拖动排序，或用上下方向键调整");
+      grip.setAttribute('aria-label', t("调整「$1」的位置（上下方向键）", [name]));
+      grip.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+        event.preventDefault();
+        const sibling = event.key === 'ArrowUp' ? row.previousElementSibling : row.nextElementSibling;
+        if (!sibling || sibling.classList.contains('undo')) return;
+        if (event.key === 'ArrowUp') sibling.before(row); else sibling.after(row);
+        grip.focus();
+        saveOrder();
+      });
       const open = make('a', 'library-open');
       open.href = `?saved=${encodeURIComponent(item.id)}`;
+      open.draggable = false; // 整行拖动，不拖出链接
       if (item.id === savedId) open.setAttribute('aria-current', 'page');
-      const title = make('span', 'library-title', item.title || item.url);
-      const meta = make('span', 'library-meta', [item.siteName, formatSaved(item.savedAt),
-        AITrLanguages.LANGUAGES[item.target] ? label(item.target) : ''].filter(Boolean).join(' · '));
-      open.append(title, meta);
+      // 译后的标题在上、原标题在下；没有译文或两者相同时只显示原标题
+      if (item.translatedTitle) {
+        const translated = make('span', 'library-title', item.translatedTitle);
+        if (AITrLanguages.LANGUAGES[item.target]) {
+          translated.lang = item.target;
+          translated.dir = langInfo(item.target).dir || 'ltr';
+        }
+        open.append(translated, make('span', 'library-original', name));
+      } else {
+        open.append(make('span', 'library-title', name));
+      }
+      open.append(make('span', 'library-meta', [item.siteName, formatSaved(item.savedAt),
+        AITrLanguages.LANGUAGES[item.target] ? label(item.target) : ''].filter(Boolean).join(' · ')));
       const remove = make('button', 'library-del', '×');
       remove.type = 'button';
       remove.title = t("删除");
-      remove.setAttribute('aria-label', t("删除「$1」", [item.title || item.url]));
+      remove.setAttribute('aria-label', t("删除「$1」", [name]));
       remove.addEventListener('click', () => removeSaved(item, row));
-      row.append(open, remove);
+      row.append(grip, open, remove);
       return row;
     }));
   }
+
+  /** 按列表里的当前顺序保存。 */
+  async function saveOrder() {
+    const ids = [...el.libraryList.querySelectorAll('.library-item[data-id]:not(.undo)')].map((row) => row.dataset.id);
+    try {
+      await L.reorder(ids);
+    } catch (err) {
+      showError(t("保存顺序失败：$1", [String(err?.message || err)]));
+      renderLibrary();
+    }
+  }
+
+  // 拖动排序：拖着的那一行随鼠标在列表里移动，松开后保存顺序
+  let dragging = null;
+  el.libraryList.addEventListener('dragstart', (event) => {
+    const row = event.target.closest?.('.library-item[data-id]');
+    if (!row) return;
+    dragging = row;
+    row.classList.add('dragging');
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', row.dataset.id);
+  });
+  el.libraryList.addEventListener('dragover', (event) => {
+    if (!dragging) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    const rows = [...el.libraryList.querySelectorAll('.library-item[data-id]:not(.dragging)')];
+    const after = rows.find((row) => {
+      const rect = row.getBoundingClientRect();
+      return event.clientY < rect.top + rect.height / 2;
+    });
+    if (after) {
+      if (after !== dragging.nextElementSibling) after.before(dragging);
+    } else if (dragging !== el.libraryList.lastElementChild) {
+      el.libraryList.appendChild(dragging);
+    }
+  });
+  /** 松开时保存顺序；drop 与 dragend 谁先到都行，只处理一次。 */
+  function finishDrag() {
+    if (!dragging) return;
+    dragging.classList.remove('dragging');
+    dragging = null;
+    saveOrder().then(() => renderLibrary());
+  }
+  el.libraryList.addEventListener('drop', (event) => {
+    if (!dragging) return;
+    event.preventDefault();
+    finishDrag();
+  });
+  el.libraryList.addEventListener('dragend', finishDrag);
 
   /** 删除后在原位置留一行「撤销」，几秒后消失。 */
   async function removeSaved(item, row) {
@@ -633,7 +711,7 @@
     button.addEventListener('click', async () => {
       clearTimeout(undoTimer);
       if (record) {
-        await L.save({ ...record.content, provider: record.meta.provider, savedAt: record.meta.savedAt });
+        await L.save({ ...record.content, provider: record.meta.provider, savedAt: record.meta.savedAt, order: record.meta.order });
         if (wasCurrent) {
           savedId = item.id;
           savedAt = record.meta.savedAt;

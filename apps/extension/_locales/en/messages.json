@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Element translation rules · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Drag to reorder, or use the up and down arrow keys"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Adjust the position of \"$arg1$\" (up and down arrow keys)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Failed to save order: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

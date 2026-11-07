@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "כללי תרגום רכיבים · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "גרור כדי לשנות סדר, או השתמש במקשי החצים למעלה ולמטה"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "כוונן את המיקום של \"$arg1$\" (מקשי החצים למעלה ולמטה)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "שמירת הסדר נכשלה: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – מתרגם AI וקורא דו-לשוני"
   },

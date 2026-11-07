@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "元素翻译规则 · 划词"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "拖动排序，或用上下方向键调整"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "调整「$arg1$」的位置（上下方向键）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "保存顺序失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

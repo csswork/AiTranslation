@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="划词：选中，右键，然后接着读。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"划词","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"划词","url":"https://huaci.app/","description":"开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"划词","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"划词","url":"https://huaci.app/","description":"开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.2.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -86,7 +86,7 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="changelog.html#v2-2-0">
+        <a class="release-pill" href="changelog.html#v2-2-0" data-latest-release>
           <span class="mono release-ver" data-extension-version>v2.2.0</span>
           <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
@@ -484,7 +484,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
         <h2>自带 Key 免费用，也可以免 Key 直接翻译</h2>
-        <p>扩展开源免费。2.0.0 起提供免 Key 试用与订阅，在扩展里登录即可使用。</p>
+        <p>扩展开源免费。安装后就能免 Key 试用，需要时再订阅；在扩展里登录即可使用。</p>
       </div>
 
       <div class="plans reveal">
@@ -494,7 +494,7 @@
           <p class="plan-price">免费</p>
           <p class="plan-desc">填入自己的 OpenAI、DeepSeek 或 DeepL Key，费用由平台按用量收取。</p>
           <ul>
-            <li>划词、网页区域、图片与视频字幕翻译</li>
+            <li>双语阅读、划词、图片、整份 PDF 与网页区域翻译</li>
             <li>Key 只保存在你的浏览器里</li>
           </ul>
         </div>
@@ -518,7 +518,7 @@
             <li>按合理使用原则不限次数</li>
             <li>首次付款 7 天内可申请全额退款</li>
           </ul>
-          <a class="btn btn-ghost" href="changelog.html#v2-0-0">查看 2.0.0 更新</a>
+          <a class="btn btn-ghost" href="https://app.huaci.app/plans">查看订阅方案</a>
         </div>
       </div>
 
@@ -531,9 +531,9 @@
   <section class="section slide slide-steps" id="account-preview" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="kicker">Account · 2.0.0</p>
+        <p class="kicker">Account</p>
         <h2>在扩展里用，在用户中心管理</h2>
-        <p>账户服务随 2.0.0 上线。扩展是登录与翻译的主要入口，官网和用户中心共用同一个账户及订阅权益。</p>
+        <p>扩展是登录与翻译的主要入口，官网和用户中心共用同一个账户及订阅权益。</p>
       </div>
       <div class="facts reveal">
         <div class="fact">

@@ -605,5 +605,8 @@
   "翻译 PDF · 划词": "Traduzir PDF · Huaci",
   "双语阅读 · 划词": "Leitura bilíngue · Huaci",
   "翻译面板 · 划词": "Painel de tradução · Huaci",
-  "元素翻译规则 · 划词": "Regras de tradução de elementos · Huaci"
+  "元素翻译规则 · 划词": "Regras de tradução de elementos · Huaci",
+  "拖动排序，或用上下方向键调整": "Arraste para reordenar ou use as teclas de seta para cima e para baixo",
+  "调整「$1」的位置（上下方向键）": "Ajustar a posição de \"$1\" (teclas de seta para cima e para baixo)",
+  "保存顺序失败：$1": "Falha ao salvar a ordem: $1"
 }

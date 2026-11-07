@@ -605,5 +605,8 @@
   "翻译 PDF · 划词": "Dịch PDF · Huaci",
   "双语阅读 · 划词": "Đọc song ngữ · Huaci",
   "翻译面板 · 划词": "Bảng dịch · Huaci",
-  "元素翻译规则 · 划词": "Quy tắc dịch phần tử · Huaci"
+  "元素翻译规则 · 划词": "Quy tắc dịch phần tử · Huaci",
+  "拖动排序，或用上下方向键调整": "Kéo để sắp xếp lại, hoặc dùng phím mũi tên lên và xuống",
+  "调整「$1」的位置（上下方向键）": "Điều chỉnh vị trí của \"$1\" (phím mũi tên lên và xuống)",
+  "保存顺序失败：$1": "Không thể lưu thứ tự: $1"
 }

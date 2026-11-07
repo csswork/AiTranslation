@@ -605,5 +605,8 @@
   "翻译 PDF · 划词": "PDF çevir · Huaci",
   "双语阅读 · 划词": "İki dilli okuma · Huaci",
   "翻译面板 · 划词": "Çeviri paneli · Huaci",
-  "元素翻译规则 · 划词": "Öğe çeviri kuralları · Huaci"
+  "元素翻译规则 · 划词": "Öğe çeviri kuralları · Huaci",
+  "拖动排序，或用上下方向键调整": "Sıralamak için sürükleyin veya yukarı ve aşağı ok tuşlarını kullanın",
+  "调整「$1」的位置（上下方向键）": "\"$1\" konumunu ayarlayın (yukarı ve aşağı ok tuşları)",
+  "保存顺序失败：$1": "Sıra kaydedilemedi: $1"
 }

@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Regras de tradução de elementos · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Arraste para reordenar ou use as teclas de seta para cima e para baixo"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Ajustar a posição de \"$arg1$\" (teclas de seta para cima e para baixo)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Falha ao salvar a ordem: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Öğe çeviri kuralları · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Sıralamak için sürükleyin veya yukarı ve aşağı ok tuşlarını kullanın"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "\"$arg1$\" konumunu ayarlayın (yukarı ve aşağı ok tuşları)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Sıra kaydedilemedi: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

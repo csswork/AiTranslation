@@ -2551,6 +2551,25 @@
   "m_4803435b906c8916": {
     "message": "Règles de traduction des éléments · Huaci"
   },
+  "m_393ca9ce7dd702c9": {
+    "message": "Faites glisser pour réorganiser, ou utilisez les flèches haut et bas"
+  },
+  "m_7d1b16f7800ad25a": {
+    "message": "Ajuster la position de « $arg1$ » (flèches haut et bas)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8d11ad8efcb951ce": {
+    "message": "Échec de l'enregistrement de l'ordre : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

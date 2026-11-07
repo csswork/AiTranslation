@@ -276,6 +276,7 @@ function withJsonLd(html, loc, page) {
         applicationCategory: 'BrowserApplication',
         applicationSubCategory: 'Translation',
         operatingSystem: 'Windows, macOS, Linux, ChromeOS',
+        softwareVersion: EXTENSION_VERSION,
         browserRequirements: 'Google Chrome 116+ or Microsoft Edge 116+',
         license: 'https://www.gnu.org/licenses/gpl-3.0.html',
         isAccessibleForFree: true,
@@ -316,9 +317,23 @@ function rewrite(html, loc, page) {
 }
 
 /** 基础语言（中文源页面）只维护 hreflang 块，其余原样 */
+/**
+ * 当前最新版本只有一个来源：扩展的 manifest.json。构建时写进中文源页（各语言页面由它生成）：
+ *   data-extension-version 的元素  → 内容写成 vX.Y.Z
+ *   data-latest-release 的链接      → 指向更新日志里这一版的条目（changelog.html#vX-Y-Z）
+ * 更新日志的条目内容仍要手写；--check 会核对该条目存在。
+ */
+const EXTENSION_VERSION = JSON.parse(read(path.resolve(ROOT, '../extension/manifest.json'))).version;
+const releaseAnchor = (version) => 'v' + version.replace(/\./g, '-');
+function withVersion(html) {
+  return html
+    .replace(/(<[^>]*\bdata-extension-version\b[^>]*>)[^<]*(?=<)/g, '$1v' + EXTENSION_VERSION)
+    .replace(/<a\b[^>]*\bdata-latest-release\b[^>]*>/g, (tag) => tag.replace(/href="[^"]*"/, 'href="changelog.html#' + releaseAnchor(EXTENSION_VERSION) + '"'));
+}
+
 function refreshBase(page) {
   const html = read(pagePath(page));
-  const out = withJsonLd(withAlternates(html, alternatesBlock(page)), byCode(BASE), page);
+  const out = withJsonLd(withAlternates(withVersion(html), alternatesBlock(page)), byCode(BASE), page);
   if (out !== html) fs.writeFileSync(pagePath(page), out);
   return out !== html;
 }
@@ -376,7 +391,14 @@ function check() {
   const latest = /data-release-version="([^"]+)"/.exec(read(pagePath('changelog.html')))?.[1];
   const advertised = /data-extension-version>v([^<]+)</.exec(read(pagePath('index.html')))?.[1];
   if (latest !== manifest.version || advertised !== manifest.version) {
-    problems.push('首页与最新更新日志必须对应扩展版本 ' + manifest.version + '（尚未发布时注明预告）');
+    problems.push('首页与最新更新日志必须对应扩展版本 ' + manifest.version + '（版本号由构建写入首页，更新日志条目要手写；先跑 build:web）');
+  }
+  const anchor = releaseAnchor(manifest.version);
+  if (!read(pagePath('changelog.html')).includes('id="' + anchor + '"')) problems.push('更新日志缺少 ' + anchor + ' 条目');
+  for (const page of PAGES) {
+    for (const [tag] of read(pagePath(page)).matchAll(/<a\b[^>]*\bdata-latest-release\b[^>]*>/g)) {
+      if (!tag.includes('changelog.html#' + anchor)) problems.push(page + '：最新版本链接没有指向 ' + anchor + '（先跑 build:web）');
+    }
   }
   const { catalog, index } = extract({ quiet: true });
   const sourceKeys = new Set(Object.keys(catalog));
