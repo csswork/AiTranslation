@@ -69,31 +69,46 @@ code {
   background: var(--accent-soft);
 }
 
-/* 三个平台排一行。窄窗口下直接落成单列，不做 2+1 那种参差的中间态 */
+/* 点数翻译单独占第一行，其余四个平台排一行；窄窗口落成两列（2×2），再窄落成单列。
+   所有卡片同一种可点样式：右上角单选圆点，选中时描边、底色和圆点一起变。 */
 .providers {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px; margin-top: 14px;
 }
-@media (max-width: 680px) { .providers { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .providers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .providers { grid-template-columns: 1fr; } }
 .provider-card {
+  position: relative;
   display: flex; flex-direction: column; gap: 2px;
   padding: 12px 14px; cursor: pointer; text-align: start;
   border: 1.5px solid var(--line); border-radius: 11px;
-  background: transparent; color: inherit; font: inherit;
-  transition: border-color 0.12s, background 0.12s;
+  background: var(--card); color: inherit; font: inherit;
+  transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
 }
-.provider-card:hover { border-color: rgba(79, 70, 229, 0.4); }
-.provider-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
-.provider-card b { font-size: 14px; font-weight: 600; }
+.provider-card:hover { border-color: rgba(79, 70, 229, 0.45); box-shadow: 0 2px 10px rgba(79, 70, 229, 0.08); }
+.provider-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.provider-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+.provider-card b { font-size: 14px; font-weight: 600; padding-inline-end: 24px; }
 .provider-card i {
   font-style: normal; font-size: 12px; color: var(--muted);
   line-height: 1.5; min-height: 2.9em;   /* 两行高度对齐，避免卡片高低不齐 */
 }
 .provider-card em {
-  font-style: normal; font-size: 11px; margin-top: 4px;
+  font-style: normal; font-size: 11px; margin-top: auto; padding-top: 4px;
   color: var(--faint);
 }
 .provider-card em.ready { color: var(--ok); }
+.provider-card .radio {
+  position: absolute; top: 13px; inset-inline-end: 13px;
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--faint);
+  transition: border-color 0.12s, background 0.12s;
+}
+.provider-card:hover .radio { border-color: var(--accent); }
+.provider-card[aria-pressed="true"] .radio {
+  border-color: var(--accent);
+  background: radial-gradient(circle, var(--accent) 0 3.5px, transparent 4px);
+}
 
 .fields { display: grid; gap: 16px; margin-top: 16px; }
 /* max-width：页面加宽到 860px 后，单行输入框拉满会显得很空。
@@ -251,17 +266,10 @@ select { cursor: pointer; }
   background: var(--gradient);
 }
 
-/* 点数翻译卡片：占满第一行，渐变描边，与自带 Key 的平台区分开 */
-.provider-card.hosted {
-  grid-column: 1 / -1;
-  border-color: transparent;
-  background: linear-gradient(var(--card), var(--card)) padding-box, var(--gradient) border-box;
-}
+/* 点数翻译卡片：占满第一行，平台名用品牌渐变区分；边框和选中样式与其他平台一致，
+   不再常驻渐变描边（看起来像已选中或横幅，不像可以点）。 */
+.provider-card.hosted { grid-column: 1 / -1; }
 .provider-card.hosted i { min-height: 0; }
-.provider-card.hosted[aria-pressed="true"] {
-  background: linear-gradient(var(--accent-soft), var(--accent-soft)) padding-box,
-    linear-gradient(var(--card), var(--card)) padding-box, var(--gradient) border-box;
-}
 .provider-card.hosted b {
   background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
   width: fit-content;

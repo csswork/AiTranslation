@@ -319,7 +319,7 @@
         card.className = hosted ? 'provider-card hosted' : 'provider-card';
         card.setAttribute('aria-pressed', String(item.id === current));
         card.innerHTML =
-          `<b></b><i></i><em class="${configured ? 'ready' : ''}"></em>`;
+          `<span class="radio" aria-hidden="true"></span><b></b><i></i><em class="${configured ? 'ready' : ''}"></em>`;
         card.querySelector('b').textContent = item.label;
         card.querySelector('i').textContent = item.hint;
         card.querySelector('em').textContent = hosted
