@@ -35,6 +35,7 @@
 - 图片翻译（增强部分随 2.1.0 打包，见 `docs/extension/image-translation.md`）：识图提示词在扩展 `src/lib/providers.js` 与后台 `src/translation/hosted.js` 各有一份，改动时两边保持一致；送检前补白成正方形、识图温度 0。框选、按笔画校正和导出新图都在本机完成，导出不申请 `downloads` 权限。
 - 双语阅读（未发布，见 `docs/extension/reader.md`）：右键「双语阅读这篇文章」时才向顶层框架注入 `src/vendor/readability/`、`src/lib/article.js` 与 `src/content/reader.js`，不加进常驻内容脚本；正文在页面副本上识别，整理成纯文字块与 http(s) 图片地址，经后台存入 `storage.session` 后由 `src/reader/` 渲染，阅读页只用 `textContent` 写入，不把网页 HTML 带进扩展页面。识别前在页面副本上去广告（`AITrArticle.stripAds`、`isAdLabel`）。保存的文章连同译文存在扩展自己的 IndexedDB（`src/reader/library.js`），不上传。`src/vendor/readability/` 原样引入，不手改。
 - 点词换说法与用词偏好（见 `docs/extension/word-alternatives.md`）：阅读页、划词弹窗、翻译面板、PDF 页共用 `src/lib/word-picker.js`；换说法提示词在扩展 `src/lib/providers.js` 与后台 `src/translation/hosted.js` 各有一份（`alternativesPrompt`），改动时两边保持一致（`test/alternatives.mjs` 会对照），托管走 `/api/extension/alternatives` 按原文段落字数扣点，DeepL 不支持。用词偏好只存本机 `chrome.storage.local` 的 `termPrefs`（`src/lib/terms.js`），内容脚本经 service worker 读写；翻译时把相关条目放进提示词（点数翻译随 `/translate` 的 `glossary` 发送，后台不保存、不计费），DeepL 在译文里替换。不要改成存到服务端。
+- 本机翻译（未发布，见 `docs/extension/local-translation.md`）：平台 `local` 调用浏览器内置的 `Translator` / `LanguageDetector`（`src/lib/local.js`），免费、不需要 Key、文字不出本机，不经过后台也不计点。浏览器不提供 `Translator` 时不列出它。还没下载的语言对只能由扩展页面里的点击触发下载（设置页的下载按钮第一步就调用 `AITrLocal.prepare()`，前面不要加 `await`）。与 DeepL 一样不支持识图和换说法，用词偏好在译文里替换。
 - 界面语言、源语言和目标语言独立。界面本地化只作用于扩展拥有的界面，不修改宿主网站内容或文字方向。
 - 24 种语言注册表、英文基准与界面译文在 `apps/extension/i18n/`；`_locales/`、`src/locales/` 和生成的语言索引是运行时产物。
 - 界面译文在本地开发或打包时刷新。已有译文未变化时复用，不调用翻译 API；缺失或过期译文必须在发布前解决。

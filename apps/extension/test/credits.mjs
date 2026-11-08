@@ -52,7 +52,7 @@ Object.assign(context, {
   AITrSettings: {
     normalize: () => ({ provider: 'hosted' }), loadSettings: async () => ({ provider: 'hosted' }),
     providerList: () => [{ id: 'hosted', label: 'Hosted' }], resolveProvider: () => ({}),
-    isHosted: () => true, targetMenu: () => 'English',
+    isHosted: () => true, isLocal: () => false, localSupported: () => false, targetMenu: () => 'English',
   },
   chrome: { storage: {
     local: { get: async () => ({ accountStatus: { signedIn: true, username: 'member', credits: { balance: '0.00', available: true } } }) },
