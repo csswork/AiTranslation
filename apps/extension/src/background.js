@@ -12,6 +12,7 @@ import './lib/terms.js';
 import './lib/local.js';
 import './lib/providers.js';
 import './lib/account.js';
+import './lib/sites.js';
 
 const t = (...args) => AITrI18n.t(...args);
 
@@ -22,6 +23,8 @@ const VIDEO_MENU_ID = 'ai-translate-video';
 const PDF_MENU_ID = 'ai-translate-pdf';
 const PDF_PAGE = 'src/pdf/pdf.html';
 const READER_MENU_ID = 'ai-reader';
+/** 整站翻译：勾选框，勾上后这个网站的页面都自动翻译（见 src/content/site.js）。 */
+const SITE_MENU_ID = 'ai-translate-site';
 const READER_PAGE = 'src/reader/reader.html';
 /** 双语阅读的识别脚本不常驻，点菜单时才注入顶层框架（核心内容脚本已由 ensureContentScript 保证）。 */
 const READER_FILES = [
@@ -53,10 +56,12 @@ const CONTENT_FILES = [
   'src/lib/region-picker.js',
   'src/lib/shape-editor.js',
   'src/lib/word-picker.js',
+  'src/lib/sites.js',
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
   'src/content/pdf.js',
+  'src/content/site.js',
 ];
 
 /** `${tabId}:${frameId}` -> 该框架最近一次上报的选中文字（保留换行）。 */
@@ -85,6 +90,7 @@ function createMenu() {
     const settings = await AITrSettings.loadSettings();
     const title = t("翻译成$1", [AITrSettings.targetMenu(settings)]);
     const pdfActive = await activeTabIsPdf();
+    const siteState = await activeSiteState();
     await chrome.contextMenus.removeAll();
     const created = [];
     const create = (props) =>
@@ -117,6 +123,16 @@ function createMenu() {
       title: t("双语阅读这篇文章"),
       contexts: ['page'],
       visible: !pdfActive,
+    });
+    // 紧跟在双语阅读下面。勾选状态跟着当前标签页的网站切换（见 syncPageMenus）
+    await create({
+      id: SITE_MENU_ID,
+      type: 'checkbox',
+      title: t("翻译这个网站"),
+      contexts: ['page'],
+      checked: siteState.checked,
+      // 新标签页、chrome://、本地文件等页面翻译不了，不显示
+      visible: !pdfActive && siteState.available,
     });
     await create({
       id: ELEMENT_MENU_ID,
@@ -255,19 +271,66 @@ async function activeTabIsPdf() {
   }
 }
 
-/** 右键菜单是全局的：跟着当前标签页切换「区域按钮」与「翻译整个 PDF」。 */
+/**
+ * 「翻译这个网站」在某个标签页上的状态：能不能用（只有 http(s) 网页能注入脚本、能翻译），开没开。
+ * 拿不到标签页（没有活动窗口、事件里没有标签页）时当作能用，免得菜单项无端消失。
+ */
+async function siteMenuState(tab) {
+  if (!tab || tab.url === undefined) return { available: true, checked: false };
+  const host = AITrSites.hostOf(tab.url);
+  return { available: Boolean(host), checked: Boolean(host) && (await AITrSites.has(host)) };
+}
+
+async function tabSiteState(tabId) {
+  if (!Number.isInteger(tabId) || tabId < 0) return siteMenuState(null);
+  try {
+    // 没有权限的页面（chrome://、商店）拿不到 url：那里本来也注入不了脚本
+    const tab = await chrome.tabs.get(tabId);
+    return siteMenuState({ url: tab?.url ?? '' });
+  } catch {
+    return siteMenuState(null);
+  }
+}
+
+async function activeSiteState() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    return siteMenuState(tab ? { url: tab.url ?? '' } : null);
+  } catch {
+    return siteMenuState(null);
+  }
+}
+
+/** 右键菜单是全局的：跟着当前标签页切换「区域按钮」与「翻译整个 PDF」，以及「翻译这个网站」的勾选。 */
 async function syncPageMenus(tabId) {
   const pdf = tabId != null && (await pdfTabs()).has(tabId);
+  const site = await tabSiteState(tabId);
   try {
     await chrome.contextMenus.update(ELEMENT_MENU_ID, { visible: !pdf });
     await chrome.contextMenus.update(READER_MENU_ID, { visible: !pdf });
+    await chrome.contextMenus.update(SITE_MENU_ID, { visible: !pdf && site.available, checked: site.checked });
     await chrome.contextMenus.update(PDF_MENU_ID, { visible: pdf });
   } catch {
     await createMenu(); // 重建时已按当前标签页决定显隐
   }
 }
 
+async function syncActiveTab() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (tab?.id != null) await syncPageMenus(tab.id);
+  } catch {
+    /* 没有可用窗口 */
+  }
+}
+
 chrome.tabs.onActivated?.addListener(({ tabId }) => syncPageMenus(tabId));
+// 同一个标签页打开了别的网站：「翻译这个网站」的勾选要跟着变
+chrome.tabs.onUpdated?.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.url && tab?.active) syncPageMenus(tabId);
+});
+// 名单在别处改了（页面上的「关闭整站翻译」、设置页移除）
+AITrSites.onChange(() => syncActiveTab());
 chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
   if (windowId === chrome.windows.WINDOW_ID_NONE) return;
   try {
@@ -342,6 +405,53 @@ async function openReader(tab, article) {
   if (Number.isInteger(tab.index) && tab.index >= 0) properties.index = tab.index + 1;
   if (Number.isInteger(tab.windowId) && tab.windowId >= 0) properties.windowId = tab.windowId;
   await chrome.tabs.create(properties);
+}
+
+/* -------------------------------------------------------------- 整站翻译 */
+
+/**
+ * 勾选「翻译这个网站」：把域名加进名单，各标签页的 site.js 监听名单自行开始翻译；取消勾选则移除、恢复原文。
+ * 第一次用会花钱的平台（点数、API Key）开启时先在页面上确认，可以改用本机翻译；只问一次。
+ */
+async function toggleSite(info, tab) {
+  const host = AITrSites.hostOf(info.pageUrl || tab?.url);
+  if (!host || !Number.isInteger(tab?.id) || tab.id < 0) {
+    console.info("[Huaci] Site translation needs an http(s) page:", info.pageUrl || tab?.url);
+    await syncPageMenus(tab?.id);
+    return;
+  }
+  if (!info.checked) {
+    await AITrSites.set(host, false);
+    return;
+  }
+  const settings = await AITrSettings.loadSettings();
+  const providerId = AITrSettings.siteProvider(settings);
+  if (!AITrSettings.isLocal(providerId) && !settings.siteCostConfirmed) {
+    let choice = 'cancel';
+    if (await ensureContentScript(tab.id)) {
+      try {
+        const reply = await chrome.tabs.sendMessage(tab.id, {
+          type: 'site-confirm',
+          providerLabel: AITrSettings.resolveProvider(settings, providerId).label,
+          localAvailable: AITrSettings.localSupported(),
+        }, { frameId: 0 });
+        if (['local', 'continue'].includes(reply?.choice)) choice = reply.choice;
+      } catch (err) {
+        console.warn("[Huaci] Could not confirm site translation:", err?.message);
+      }
+    }
+    if (choice === 'cancel') {
+      console.info("[Huaci] Site translation not enabled:", host);
+      await syncPageMenus(tab.id); // 把被 Chrome 自动勾上的选项取消掉
+      return;
+    }
+    await AITrSettings.patchSettings(choice === 'local'
+      ? { siteProvider: 'local', siteCostConfirmed: true }
+      : { siteCostConfirmed: true });
+  }
+  await AITrSites.set(host, true);
+  // 还没有脚本的旧标签页：注入后 site.js 会自己读名单开始翻译
+  await ensureContentScript(tab.id);
 }
 
 /** 传统翻译接口识别不了图片，换到这类平台时把「翻译图片」藏起来。 */
@@ -675,6 +785,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
   if (info.menuItemId === READER_MENU_ID) {
     await startReader(tab);
+    return;
+  }
+  if (info.menuItemId === SITE_MENU_ID) {
+    await toggleSite(info, tab);
     return;
   }
   if (info.menuItemId === ELEMENT_MENU_ID && tab?.id) {

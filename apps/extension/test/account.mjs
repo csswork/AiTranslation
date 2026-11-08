@@ -49,6 +49,7 @@ function boot(production = false) {
   });
   vm.runInContext(source('src/lib/env.js'), context);
   vm.runInContext(source('src/lib/account.js'), context);
+  vm.runInContext(source('src/lib/sites.js'), context);
   vm.runInContext(source('src/background.js').replace(/^import .*$/gm, ''), context);
   const accountOrigin = production ? 'https://app.huaci.app' : 'http://localhost:8787';
   const sender = { id: ID, frameId: 0, tab: { id: 1 }, url: `${accountOrigin}/login` };

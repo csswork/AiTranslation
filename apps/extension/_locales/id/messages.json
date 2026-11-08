@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "Terjemahan lokal hanya dapat menerjemahkan teks; terjemahan gambar dan alternatif kata tidak tersedia"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Terjemahkan situs web ini"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Menerjemahkan situs web ini…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Matikan terjemahan seluruh situs"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Terjemahan seluruh situs gagal: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Menerjemahkan seluruh situs web akan menghabiskan banyak kuota"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Setelah diaktifkan, halaman di situs web ini akan diterjemahkan secara otomatis hingga Anda mematikannya. Saat ini menggunakan \"$arg1$\"; halaman dengan banyak teks akan menghabiskan lebih banyak kredit atau kuota API.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Beralih ke terjemahan di perangkat gratis dan teks tidak meninggalkan perangkat Anda, tetapi terjemahannya lebih harfiah. Nanti Anda dapat memilih platform terpisah untuk terjemahan seluruh situs di pengaturan."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "Nanti Anda dapat memilih platform terpisah untuk terjemahan seluruh situs di pengaturan."
+  },
+  "m_38da824393db45f2": {
+    "message": "Lanjutkan menggunakan $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Beralih ke terjemahan di perangkat"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Terjemahan seluruh situs"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Klik kanan pada area kosong halaman dan pilih \"Terjemahkan situs web ini\"; halaman di situs web ini akan diterjemahkan secara otomatis ke bahasa target Anda hingga Anda mengkliknya lagi untuk menghapus centang. Hanya konten yang Anda gulir yang diterjemahkan, dan teks yang sama hanya diterjemahkan sekali."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Platform yang digunakan untuk terjemahan seluruh situs"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Halaman dengan banyak teks akan menghabiskan lebih banyak kredit atau kuota API Key Anda; terjemahan di perangkat gratis dan teks tidak meninggalkan perangkat Anda."
+  },
+  "m_8783e02403bae167": {
+    "message": "Hapus semua"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Ikuti platform terjemahan ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Hapus"
+  },
+  "m_00743696b67c9f27": {
+    "message": "$arg1$ situs web dengan terjemahan seluruh situs aktif",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "Belum ada situs web dengan terjemahan seluruh situs aktif"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Matikan terjemahan seluruh situs untuk semua situs web?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "Halaman ini sudah dalam $arg1$, jadi tidak perlu diterjemahkan; halaman dalam bahasa lain di situs ini akan diterjemahkan secara otomatis.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "Tidak ditemukan teks yang perlu diterjemahkan di halaman ini; konten yang dimuat kemudian dan halaman lain di situs ini akan diterjemahkan secara otomatis."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

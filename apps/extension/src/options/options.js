@@ -46,6 +46,10 @@
     termList: $('termList'),
     termCount: $('termCount'),
     termClear: $('termClear'),
+    siteProvider: $('siteProvider'),
+    siteList: $('siteList'),
+    siteCount: $('siteCount'),
+    siteClear: $('siteClear'),
     videoEnabled: $('videoEnabled'),
     videoOptions: $('videoOptions'),
     videoLang: $('videoLang'),
@@ -103,6 +107,7 @@
     settings = await S.saveSettings({ ...settings, ...patch });
     flash(t("已保存"));
     renderCards();
+    renderSiteProvider();
   }
 
   /** 只改当前平台那一份配置。 */
@@ -652,6 +657,14 @@
       settings = S.normalize(changes.settings.newValue);
       renderCards();
       renderProviderConfig();
+      renderSiteProvider();
+    } else if (changes.settings?.newValue) {
+      // 整站翻译的确认框里选了「改用本机翻译」：后台改的，这里跟着显示
+      const next = S.normalize(changes.settings.newValue);
+      if (next.siteProvider !== settings.siteProvider || next.siteCostConfirmed !== settings.siteCostConfirmed) {
+        settings = { ...settings, siteProvider: next.siteProvider, siteCostConfirmed: next.siteCostConfirmed };
+        renderSiteProvider();
+      }
     }
   });
   el.model.addEventListener('change', () => saveProviderField('model', el.model.value.trim()));
@@ -683,7 +696,7 @@
   });
   AITrI18n.onChange(() => {
     renderAccount(); renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang();
-    renderShortcutKey(); renderRuleCount(); renderLangState();
+    renderShortcutKey(); renderRuleCount(); renderLangState(); renderSiteProvider(); renderSites();
   });
 
   el.target.addEventListener('change', async () => {
@@ -753,6 +766,53 @@
       el.ruleCount.textContent = '';
     }
   }
+
+  /**
+   * 整站翻译：单独选平台（空值跟随上面的翻译平台），列出开着整站翻译的网站。
+   * 网站名单在 lib/sites.js，只存在本机。
+   */
+  function renderSiteProvider() {
+    const current = S.PROVIDERS[settings.provider] ? S.resolveProvider(settings).label : '';
+    const follow = document.createElement('option');
+    follow.value = '';
+    follow.textContent = t("跟随翻译平台（$1）", [current]);
+    el.siteProvider.replaceChildren(follow, ...S.providerList(settings.siteProvider || settings.provider).map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = item.label;
+      return option;
+    }));
+    el.siteProvider.value = settings.siteProvider;
+  }
+  el.siteProvider.addEventListener('change', () => save({ siteProvider: el.siteProvider.value }));
+
+  async function renderSites() {
+    const sites = await AITrSites.list();
+    el.siteList.replaceChildren(...sites.map((host) => {
+      const item = document.createElement('li');
+      const name = document.createElement('span');
+      name.className = 'term-pair';
+      const label = document.createElement('b');
+      label.dir = 'ltr';
+      label.textContent = host;
+      name.append(label);
+      const meta = document.createElement('span');
+      meta.className = 'term-meta';
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'btn ghost small';
+      remove.textContent = t("移除");
+      remove.addEventListener('click', () => AITrSites.set(host, false));
+      item.append(name, meta, remove);
+      return item;
+    }));
+    el.siteCount.textContent = sites.length ? t("$1 个网站开着整站翻译", [sites.length]) : t("还没有开着整站翻译的网站");
+    el.siteClear.hidden = !sites.length;
+  }
+  AITrSites.onChange(renderSites);
+  el.siteClear.addEventListener('click', async () => {
+    if (confirm(t("关闭所有网站的整站翻译？"))) await AITrSites.clear();
+  });
 
   /** 用词偏好（lib/terms.js）：列出、单条删除、全部清除。 */
   async function renderTerms() {
@@ -858,6 +918,8 @@
     renderShortcutKey();
     renderRuleCount();
     renderTerms();
+    renderSiteProvider();
+    renderSites();
     renderVideoLang();
     renderLangState();
     // 从语言下拉的「下载更多语言…」过来：直接定位到本机翻译卡片

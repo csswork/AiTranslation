@@ -192,6 +192,26 @@
         </div>
       </section>
 
+      <section class="card" id="siteSection">
+        <h2>整站翻译</h2>
+        <p class="desc">
+          在网页空白处右键，选「翻译这个网站」，这个网站的页面都会自动翻译成目标语言，直到再次点它取消勾选。
+          只翻译滚动到的内容，相同的文字只翻译一次。
+        </p>
+        <div class="fields">
+          <label class="field">
+            <span class="label">整站翻译使用的平台</span>
+            <select id="siteProvider"></select>
+            <span class="help">网页文字多，用点数或自己的 API Key 会消耗较多用量；本机翻译免费，文字也不离开本机。</span>
+          </label>
+        </div>
+        <ul class="terms" id="siteList"></ul>
+        <div class="actions">
+          <span class="test-result" id="siteCount"></span>
+          <button id="siteClear" class="btn ghost small" type="button" hidden>全部移除</button>
+        </div>
+      </section>
+
       <section class="card" id="termsSection">
         <h2>用词偏好</h2>
         <p class="desc">
@@ -303,6 +323,7 @@
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/terms.js"></script>
+    <script src="../lib/sites.js"></script>
     <script src="../lib/local.js"></script>
     <script src="../lib/speech.js"></script>
     <script src="../lib/auth-ui.js"></script>

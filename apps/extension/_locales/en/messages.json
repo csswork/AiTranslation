@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "Local translation handles text only; image translation and alternative wordings are unavailable"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Translate this website"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Translating this website…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Turn off whole-site translation"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Whole-site translation failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Translating a whole website uses a lot of credits or API quota"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Once enabled, pages on this website will be translated automatically until you turn it off. Currently using \"$arg1$\"; pages with lots of text will consume more credits or API usage.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Switching to on-device translation is free and text never leaves your device, but translations are more literal. You can later choose a separate platform for whole-site translation in settings."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "You can later choose a separate platform for whole-site translation in settings."
+  },
+  "m_38da824393db45f2": {
+    "message": "Continue using $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Switch to on-device translation"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Whole-site translation"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Right-click on an empty area of the page and select \"Translate this website\"; pages on this website will be translated automatically into your target language until you click it again to uncheck it. Only content you scroll to is translated, and identical text is translated only once."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Platform used for whole-site translation"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Pages with lots of text will consume more credits or your own API Key usage; on-device translation is free and text never leaves your device."
+  },
+  "m_8783e02403bae167": {
+    "message": "Remove all"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Follow translation platform ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Remove"
+  },
+  "m_00743696b67c9f27": {
+    "message": "$arg1$ website(s) with whole-site translation on",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "No websites have whole-site translation on yet"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Turn off whole-site translation for all websites?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "This page is already in $arg1$, so no translation is needed; pages in other languages on this site will be translated automatically.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

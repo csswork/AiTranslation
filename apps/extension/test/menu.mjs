@@ -20,6 +20,10 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     activeTab: null,
     createdTabs: [],
     tabMessages: [], // 发给页面内容脚本的消息
+    local: {}, // chrome.storage.local 里 settings 以外的内容（整站翻译名单）
+    tabUrls: {}, // tabId -> 网址，chrome.tabs.get / query 用
+    storageListeners: [],
+    confirmChoice: 'cancel', // 整站翻译确认框里点的按钮
   };
 
   let pendingError = null;
@@ -77,13 +81,19 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
     },
     storage: {
       local: {
-        get: async (k) => (k === 'settings' ? { settings: state.settings } : {}),
+        get: async (k) => (k === 'settings' ? { settings: state.settings } : k in state.local ? { [k]: state.local[k] } : {}),
         // 设置页保存后 storage 里就是新值：总开关的用例要靠它读到改后的配置
         set: async (patch) => {
           if (patch && 'settings' in patch) state.settings = patch.settings;
+          const { settings, ...rest } = patch || {};
+          Object.assign(state.local, rest);
         },
       },
-      onChanged: { addListener: (f) => (state.listeners.storage = f) },
+      // 可以有多个监听：设置变化与整站翻译名单各一个
+      onChanged: { addListener: (f) => {
+        state.storageListeners.push(f);
+        state.listeners.storage = (...args) => state.storageListeners.forEach((g) => g(...args));
+      } },
       session: {
         get: async (key) => {
           const all = { pdfTabs: state.pdfTabs, ...state.session };
@@ -97,11 +107,17 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
         remove: async (keys) => { for (const key of [].concat(keys)) delete state.session[key]; },
       },
     },
-    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7 }] : []), sendMessage: async (tabId, message, options) => { state.tabMessages.push({ tabId, message, options }); return { ok: true }; },
+    tabs: { query: async () => (state.activeTab != null ? [{ id: state.activeTab, index: 2, windowId: 7, url: state.tabUrls[state.activeTab] ?? 'https://example.com/' }] : []),
+            get: async (tabId) => ({ id: tabId, url: state.tabUrls[tabId] ?? 'https://example.com/' }),
+            sendMessage: async (tabId, message, options) => {
+              state.tabMessages.push({ tabId, message, options });
+              return message.type === 'site-confirm' ? { choice: state.confirmChoice } : { ok: true };
+            },
             create: async (properties) => { state.createdTabs.push(properties); return { id: 100 }; },
             connect: () => ({ postMessage(){}, disconnect(){}, onDisconnect:{addListener(){}}, onMessage:{addListener(){}} }),
             onRemoved: { addListener: () => {} },
-            onActivated: { addListener: (f) => (state.listeners.activated = f) } },
+            onActivated: { addListener: (f) => (state.listeners.activated = f) },
+            onUpdated: { addListener: (f) => (state.listeners.updated = f) } },
     windows: { WINDOW_ID_NONE: -1, onFocusChanged: { addListener: () => {} } },
     scripting: { executeScript: async () => [{ result: true }] },
     commands: { onCommand: { addListener: () => {} } },
@@ -110,7 +126,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   const console2 = { info: () => {}, warn: (...a) => state.warns.push(a.join(' ')), log: () => {}, error: () => {} };
   globalThis.chrome = chrome;
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
-  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js');
+  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');
   new Function('chrome', 'console', bg)(chrome, console2);
   return { state, chrome };
@@ -133,8 +149,9 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 5, '不靠任何事件，启动时就应建好五个常驻菜单项');
+  assert.equal(state.items.size, 6, '不靠任何事件，启动时就应建好六个常驻菜单项');
   assert.equal(state.items.get('ai-reader').visible, true, '普通网页里显示「双语阅读这篇文章」');
+  assert.equal(state.items.get('ai-translate-site').visible, true, '普通网页里显示「翻译这个网站」');
   assert.ok(state.items.has('ai-translate-selection'));
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
@@ -156,7 +173,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 5, '划词项 + 双语阅读 + 元素项 + PDF 项 + 图片项，共五个（视频字幕默认关闭）');
+  assert.equal(state.items.size, 6, '划词项 + 双语阅读 + 整站翻译 + 元素项 + PDF 项 + 图片项，共六个（视频字幕默认关闭）');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -166,7 +183,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 5);
+  assert.equal(state.items.size, 6);
   assert.equal(state.items.get('ai-translate-selection').visible, true,
     '选中中文时，保留翻译入口');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
@@ -253,6 +270,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const items = () => {
     const element = state.items.get('ai-translate-element').visible;
     assert.equal(state.items.get('ai-reader').visible, element, '双语阅读项跟区域按钮一起显隐');
+    assert.equal(state.items.get('ai-translate-site').visible, element, '整站翻译项跟区域按钮一起显隐');
     return [element, state.items.get('ai-translate-pdf').visible];
   };
   state.listeners.message({ type: 'page-kind', pdf: true }, { tab: { id: 7, active: true }, frameId: 0 }, () => {});
@@ -310,6 +328,88 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   console.log('✓ 双语阅读：只注入顶层框架，文章存会话存储，阅读页开在右边，旧文章自动清理');
 }
 
+/* --- 3e. 整站翻译：勾选框跟着当前网站；第一次用花钱的平台先确认，可改用本机翻译 --- */
+{
+  const { state } = boot();
+  await settle();
+  const site = () => state.items.get('ai-translate-site');
+  assert.equal(site().type, 'checkbox');
+  assert.deepEqual(site().contexts, ['page']);
+  assert.equal(site().title, '翻译这个网站');
+  assert.equal(site().checked, false);
+  const keys = [...state.items.keys()];
+  assert.equal(keys.indexOf('ai-translate-site'), keys.indexOf('ai-reader') + 1, '紧跟在双语阅读下面');
+
+  state.tabUrls = { 12: 'https://news.example.com/a', 13: 'https://other.example.org/' };
+  const tab = { id: 12, index: 1, windowId: 2, url: state.tabUrls[12] };
+  const click = (checked) => state.listeners.clicked({ menuItemId: 'ai-translate-site', checked, pageUrl: tab.url, frameId: 0 }, tab);
+  const confirms = () => state.tabMessages.filter((m) => m.message.type === 'site-confirm');
+
+  // 取消：名单不变，勾选被撤回
+  site().checked = true; // Chrome 点击时自动勾上
+  await click(true);
+  assert.equal(confirms().length, 1, '第一次用 API 平台要先确认');
+  assert.deepEqual(confirms()[0].options, { frameId: 0 });
+  assert.equal(confirms()[0].message.providerLabel, 'DeepSeek');
+  assert.equal(await AITrSites.has('news.example.com'), false);
+  assert.equal(site().checked, false, '取消后撤回勾选');
+  assert.notEqual(state.settings.siteCostConfirmed, true, '取消不记成已确认');
+
+  // 改用本机翻译：整站翻译的平台换成本机，记下已确认，加入名单
+  state.confirmChoice = 'local';
+  await click(true);
+  assert.equal(confirms().length, 2);
+  assert.equal(state.settings.siteProvider, 'local');
+  assert.equal(state.settings.siteCostConfirmed, true);
+  assert.equal(state.settings.provider, 'deepseek', '其他功能的平台不变');
+  assert.deepEqual(await AITrSites.list(), ['news.example.com']);
+
+  // 已确认过：不再弹
+  await AITrSettings.patchSettings({ siteProvider: '' });
+  await click(false);
+  assert.deepEqual(await AITrSites.list(), [], '取消勾选即从名单移除');
+  await click(true);
+  assert.equal(confirms().length, 2, '只确认一次');
+  assert.deepEqual(await AITrSites.list(), ['news.example.com']);
+
+  // 勾选状态跟着当前标签页的网站
+  state.listeners.activated({ tabId: 13 });
+  await settle();
+  assert.equal(site().checked, false, '别的网站没有勾选');
+  state.listeners.activated({ tabId: 12 });
+  await settle();
+  assert.equal(site().checked, true, '切回开着整站翻译的网站');
+  // 新标签页、chrome:// 等页面翻译不了：菜单项不出现；拿不到网址（没有权限）也一样
+  state.tabUrls[15] = 'chrome://newtab/';
+  state.listeners.activated({ tabId: 15 });
+  await settle();
+  assert.equal(site().visible, false, 'chrome:// 页面不显示');
+  state.tabUrls[16] = 'file:///Users/a/b.html';
+  state.listeners.activated({ tabId: 16 });
+  await settle();
+  assert.equal(site().visible, false, '本地文件不显示');
+  state.listeners.activated({ tabId: 12 });
+  await settle();
+  assert.equal(site().visible, true, '回到网页又出现');
+  state.tabUrls[12] = 'https://other.example.org/b';
+  state.listeners.updated(12, { url: state.tabUrls[12] }, { id: 12, active: true });
+  await settle();
+  assert.equal(site().checked, false, '同一个标签页换了网站');
+
+  // 不是 http(s) 网页：不加入名单
+  await state.listeners.clicked({ menuItemId: 'ai-translate-site', checked: true, pageUrl: 'chrome://settings/' }, { id: 14, url: 'chrome://settings/' });
+  assert.deepEqual(await AITrSites.list(), ['news.example.com']);
+  // 本机翻译不花钱：新用户直接开启，不弹确认
+  {
+    const { state: fresh } = boot({ target: 'zh-Hans', provider: 'local' });
+    await settle();
+    await fresh.listeners.clicked({ menuItemId: 'ai-translate-site', checked: true, pageUrl: 'https://a.example/' }, { id: 3, url: 'https://a.example/' });
+    assert.equal(fresh.tabMessages.some((m) => m.message.type === 'site-confirm'), false);
+    assert.deepEqual(fresh.local.siteTranslate, ['a.example']);
+  }
+  console.log('✓ 整站翻译：勾选框跟随当前网站，首次用 API 平台先确认（可改用本机翻译），只问一次');
+}
+
 /* --- 3b. 空选区不藏菜单：内置 PDF 阅读器里内容脚本读不到选区，
    别的网页点空白上报的空选区不能把全局菜单藏掉 --- */
 {
@@ -342,7 +442,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   const video = state.items.get('ai-translate-video');
   assert.ok(video, '打开总开关后应出现视频菜单项');
-  assert.equal(state.items.size, 6, '打开后共六个菜单项');
+  assert.equal(state.items.size, 7, '打开后共七个菜单项');
   assert.deepEqual(video.contexts, ['video']);
   assert.equal(video.visible, true);
   assert.equal(state.duplicateErrors, 0);
@@ -357,7 +457,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
   await settle();
   assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
-  assert.equal(state.items.size, 5);
+  assert.equal(state.items.size, 6);
   assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
   assert.ok(
     state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),

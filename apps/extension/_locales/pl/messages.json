@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "Tłumaczenie lokalne obsługuje tylko tekst; tłumaczenie obrazów i alternatywne sformułowania są niedostępne"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Przetłumacz tę witrynę"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Tłumaczenie tej witryny…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Wyłącz tłumaczenie całej witryny"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Tłumaczenie całej witryny nie powiodło się: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Tłumaczenie całej witryny zużywa dużo limitów"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Po włączeniu strony tej witryny będą tłumaczone automatycznie, dopóki tego nie wyłączysz. Obecnie używane jest „$arg1$”; strony z dużą ilością tekstu zużyją więcej kredytów lub limitu API.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Przełączenie na tłumaczenie na urządzeniu jest bezpłatne, a tekst nie opuszcza urządzenia, ale tłumaczenia są bardziej dosłowne. Później możesz wybrać osobną platformę do tłumaczenia całej witryny w ustawieniach."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "Później możesz wybrać osobną platformę do tłumaczenia całej witryny w ustawieniach."
+  },
+  "m_38da824393db45f2": {
+    "message": "Kontynuuj używanie $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Przełącz na tłumaczenie na urządzeniu"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Tłumaczenie całej witryny"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Kliknij prawym przyciskiem myszy puste miejsce na stronie i wybierz „Przetłumacz tę witrynę”; strony tej witryny będą tłumaczone automatycznie na język docelowy, dopóki nie klikniesz ponownie, aby odznaczyć. Tłumaczona jest tylko treść, do której przewiniesz, a identyczny tekst jest tłumaczony tylko raz."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Platforma używana do tłumaczenia całej witryny"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Strony z dużą ilością tekstu zużyją więcej kredytów lub limitu Twojego klucza API; tłumaczenie na urządzeniu jest bezpłatne, a tekst nie opuszcza urządzenia."
+  },
+  "m_8783e02403bae167": {
+    "message": "Usuń wszystkie"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Zgodnie z platformą tłumaczenia ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Usuń"
+  },
+  "m_00743696b67c9f27": {
+    "message": "Witryny z włączonym tłumaczeniem całej witryny: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "Żadna witryna nie ma jeszcze włączonego tłumaczenia całej witryny"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Wyłączyć tłumaczenie całej witryny dla wszystkich witryn?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "Ta strona jest już w języku $arg1$, więc tłumaczenie nie jest potrzebne; strony w innych językach w tej witrynie będą tłumaczone automatycznie.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "Na tej stronie nie znaleziono tekstu wymagającego tłumaczenia; treści ładowane później i inne strony w tej witrynie będą tłumaczone automatycznie."
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "Die lokale Übersetzung verarbeitet nur Text; Bildübersetzung und alternative Formulierungen sind nicht verfügbar"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Diese Website übersetzen"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Diese Website wird übersetzt…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Ganzseitenübersetzung ausschalten"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Ganzseitenübersetzung fehlgeschlagen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Das Übersetzen einer ganzen Website verbraucht viele Credits"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Nach dem Aktivieren werden die Seiten dieser Website automatisch übersetzt, bis du es ausschaltest. Aktuell wird „$arg1$“ verwendet; textreiche Seiten verbrauchen mehr Punkte oder API-Nutzung.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Die Übersetzung auf dem Gerät ist kostenlos und der Text verlässt dein Gerät nicht, aber die Übersetzungen sind wörtlicher. Du kannst später in den Einstellungen eine separate Plattform für die Ganzseitenübersetzung wählen."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "Du kannst später in den Einstellungen eine separate Plattform für die Ganzseitenübersetzung wählen."
+  },
+  "m_38da824393db45f2": {
+    "message": "$arg1$ weiter verwenden",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Zur Übersetzung auf dem Gerät wechseln"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Ganzseitenübersetzung"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Klicke mit der rechten Maustaste auf eine leere Stelle der Seite und wähle „Diese Website übersetzen“; die Seiten dieser Website werden automatisch in deine Zielsprache übersetzt, bis du erneut klickst, um das Häkchen zu entfernen. Nur Inhalte, zu denen du scrollst, werden übersetzt, und identischer Text wird nur einmal übersetzt."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Plattform für die Ganzseitenübersetzung"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Textreiche Seiten verbrauchen mehr Punkte oder Nutzung deines eigenen API Key; die Übersetzung auf dem Gerät ist kostenlos und der Text verlässt dein Gerät nicht."
+  },
+  "m_8783e02403bae167": {
+    "message": "Alle entfernen"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Übersetzungsplattform folgen ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Entfernen"
+  },
+  "m_00743696b67c9f27": {
+    "message": "$arg1$ Website(s) mit aktiver Ganzseitenübersetzung",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "Noch keine Websites mit aktiver Ganzseitenübersetzung"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Ganzseitenübersetzung für alle Websites ausschalten?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "Diese Seite ist bereits auf $arg1$, eine Übersetzung ist nicht nötig; Seiten in anderen Sprachen auf dieser Website werden automatisch übersetzt.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "Auf dieser Seite wurde kein zu übersetzender Text gefunden; später geladene Inhalte und andere Seiten dieser Website werden automatisch übersetzt."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

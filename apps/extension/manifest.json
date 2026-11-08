@@ -58,10 +58,12 @@
         "src/lib/region-picker.js",
         "src/lib/shape-editor.js",
         "src/lib/word-picker.js",
+        "src/lib/sites.js",
         "src/content/content.js",
         "src/content/elements.js",
         "src/content/image.js",
-        "src/content/pdf.js"
+        "src/content/pdf.js",
+        "src/content/site.js"
       ],
       "run_at": "document_idle",
       "all_frames": true,

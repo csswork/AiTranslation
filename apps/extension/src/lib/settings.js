@@ -145,6 +145,10 @@
     imageReview: false,
     // 框选的形状：矩形，或圆形（椭圆，按住 Shift 拖出正圆）
     imageShape: 'rect',
+    // 整站翻译单独用的平台：空字符串表示跟随上面的翻译平台（见 siteProvider）
+    siteProvider: '',
+    // 第一次用会花钱的平台（点数、API Key）整站翻译时已经确认过用量提醒
+    siteCostConfirmed: false,
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -175,6 +179,8 @@
       imageMode: input.imageMode === 'select' ? 'select' : 'auto',
       imageReview: input.imageReview === true,
       imageShape: input.imageShape === 'ellipse' ? 'ellipse' : 'rect',
+      siteProvider: PROVIDERS[input.siteProvider] ? input.siteProvider : '',
+      siteCostConfirmed: input.siteCostConfirmed === true,
     };
     for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};
@@ -263,6 +269,9 @@
   const needsModel = (id) => providerKind(id) === 'llm';
   const deeplCode = (languageId) => DEEPL_CODES[languageId] || '';
 
+  /** 整站翻译实际使用的平台：设置里单独选过就用它，否则跟随翻译平台。 */
+  const siteProvider = (settings) => (PROVIDERS[settings?.siteProvider] ? settings.siteProvider : settings?.provider) || DEFAULTS.provider;
+
   const isHosted = (id) => providerKind(id) === 'hosted';
   const isLocal = (id) => providerKind(id) === 'local';
   /** 浏览器是否提供内置 Translator（Chrome 138+ 桌面版、Edge 148+）。 */
@@ -310,6 +319,7 @@
     resolveProvider,
     targetPrompt,
     targetMenu,
+    siteProvider,
     providerList,
     targetList,
     VIDEO_LANGS,

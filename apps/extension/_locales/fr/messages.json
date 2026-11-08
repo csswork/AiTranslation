@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "La traduction locale ne gère que le texte ; la traduction d'images et les reformulations ne sont pas disponibles"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Traduire ce site web"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Traduction de ce site web…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Désactiver la traduction de tout le site"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Échec de la traduction de tout le site : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Traduire tout un site web consomme beaucoup de crédits"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Une fois activée, les pages de ce site seront traduites automatiquement jusqu'à ce que vous la désactiviez. Utilisation actuelle : « $arg1$ » ; les pages avec beaucoup de texte consomment plus de crédits ou d'utilisation de l'API.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Passer à la traduction sur l'appareil est gratuit et le texte ne quitte jamais votre appareil, mais les traductions sont plus littérales. Vous pourrez choisir plus tard une plateforme distincte pour la traduction de tout le site dans les paramètres."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "Vous pourrez choisir plus tard une plateforme distincte pour la traduction de tout le site dans les paramètres."
+  },
+  "m_38da824393db45f2": {
+    "message": "Continuer avec $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Passer à la traduction sur l'appareil"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Traduction de tout le site"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Faites un clic droit sur une zone vide de la page et sélectionnez « Traduire ce site web » ; les pages de ce site seront traduites automatiquement dans votre langue cible jusqu'à ce que vous cliquiez à nouveau pour décocher. Seul le contenu que vous faites défiler est traduit, et le texte identique n'est traduit qu'une seule fois."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Plateforme utilisée pour la traduction de tout le site"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Les pages avec beaucoup de texte consomment plus de crédits ou d'utilisation de votre propre clé API ; la traduction sur l'appareil est gratuite et le texte ne quitte jamais votre appareil."
+  },
+  "m_8783e02403bae167": {
+    "message": "Tout supprimer"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Suivre la plateforme de traduction ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Supprimer"
+  },
+  "m_00743696b67c9f27": {
+    "message": "$arg1$ site(s) avec la traduction de tout le site activée",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "Aucun site n'a encore la traduction de tout le site activée"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Désactiver la traduction de tout le site pour tous les sites ?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "Cette page est déjà en $arg1$, aucune traduction n'est nécessaire ; les pages dans d'autres langues de ce site seront traduites automatiquement.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "Aucun texte à traduire n'a été trouvé sur cette page ; le contenu chargé ultérieurement et les autres pages de ce site seront traduits automatiquement."
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

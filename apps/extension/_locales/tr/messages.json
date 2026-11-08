@@ -2694,6 +2694,102 @@
   "m_20367a46503e72e2": {
     "message": "Yerel çeviri yalnızca metni çevirir; görsel çeviri ve alternatif ifadeler kullanılamaz"
   },
+  "m_9f10c19445b41dc4": {
+    "message": "Bu web sitesini çevir"
+  },
+  "m_d0b81ceb32f2c58f": {
+    "message": "Bu web sitesi çevriliyor…"
+  },
+  "m_365ecf591134ae64": {
+    "message": "Tüm site çevirisini kapat"
+  },
+  "m_5ed74278e07c3a8c": {
+    "message": "Tüm site çevirisi başarısız oldu: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f05c4e757285caa3": {
+    "message": "Tüm bir web sitesini çevirmek çok fazla kullanım tüketir"
+  },
+  "m_13d9352202c026d0": {
+    "message": "Etkinleştirildiğinde, bu web sitesindeki sayfalar siz kapatana kadar otomatik olarak çevrilir. Şu anda \"$arg1$\" kullanılıyor; çok metin içeren sayfalar daha fazla kredi veya API kullanımı tüketir.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_a12755eca4afba2e": {
+    "message": "Cihaz üzerinde çeviriye geçmek ücretsizdir ve metin cihazınızdan hiç ayrılmaz, ancak çeviriler daha birebir olur. Daha sonra ayarlardan tüm site çevirisi için ayrı bir platform seçebilirsiniz."
+  },
+  "m_a8d2b97a5d28840d": {
+    "message": "Daha sonra ayarlardan tüm site çevirisi için ayrı bir platform seçebilirsiniz."
+  },
+  "m_38da824393db45f2": {
+    "message": "$arg1$ kullanmaya devam et",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_609b9adb8e53c6a7": {
+    "message": "Cihaz üzerinde çeviriye geç"
+  },
+  "m_588e4b965aa94579": {
+    "message": "Tüm site çevirisi"
+  },
+  "m_0981b172a56eec58": {
+    "message": "Sayfanın boş bir alanına sağ tıklayın ve \"Bu web sitesini çevir\" seçeneğini seçin; işareti kaldırmak için tekrar tıklayana kadar bu web sitesindeki sayfalar hedef dilinize otomatik olarak çevrilir. Yalnızca kaydırdığınız içerik çevrilir ve aynı metin yalnızca bir kez çevrilir."
+  },
+  "m_8be481ab81db1efe": {
+    "message": "Tüm site çevirisi için kullanılan platform"
+  },
+  "m_2bed0e5e00333e25": {
+    "message": "Çok metin içeren sayfalar daha fazla kredi veya kendi API Key kullanımınızı tüketir; cihaz üzerinde çeviri ücretsizdir ve metin cihazınızdan hiç ayrılmaz."
+  },
+  "m_8783e02403bae167": {
+    "message": "Tümünü kaldır"
+  },
+  "m_e5d5318b4026cd55": {
+    "message": "Çeviri platformunu takip et ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_6135d4159e892541": {
+    "message": "Kaldır"
+  },
+  "m_00743696b67c9f27": {
+    "message": "$arg1$ web sitesinde tüm site çevirisi açık",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9f4a381ad593f00": {
+    "message": "Henüz tüm site çevirisi açık olan web sitesi yok"
+  },
+  "m_7fa36949ceed8fd8": {
+    "message": "Tüm web siteleri için tüm site çevirisi kapatılsın mı?"
+  },
+  "m_530866df9f116ad1": {
+    "message": "Bu sayfa zaten $arg1$ dilinde, çeviriye gerek yok; bu sitedeki diğer dillerdeki sayfalar otomatik olarak çevrilecek.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_aa8ea9c5b58d95f7": {
+    "message": "Bu sayfada çevrilmesi gereken metin bulunamadı; sonradan yüklenen içerik ve bu sitenin diğer sayfaları otomatik olarak çevrilecek."
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },
