@@ -138,6 +138,7 @@
    * @param {(entry) => Promise<void>} [options.forget]
    * @param {(unit) => void} [options.onChange]     译文改动后（同步复制内容、重新排版等）
    * @param {string} [options.cacheKey]             平台等会影响结果的因素，变化时缓存失效
+   * @param {() => boolean} [options.enabled]       当前平台支持换说法吗；不支持时译文按纯文字显示，没有可点的词
    */
   function create(options) {
     const { root, mount } = options;
@@ -206,7 +207,19 @@
     }
 
     /** 译文按词切开：每个词一个 span（记下在译文里的起止位置），空格与标点保持纯文字。 */
+    const enabled = () => !options.enabled || options.enabled();
+
     function paint(unit, { fresh = false, changed = null } = {}) {
+      if (!enabled()) {
+        unitOfNode.delete(unit.node);
+        if (fresh) {
+          const wrap = make(doc, 'span', 'wp-fresh', unit.out);
+          unit.node.replaceChildren(wrap);
+        } else {
+          unit.node.textContent = unit.out;
+        }
+        return;
+      }
       unitOfNode.set(unit.node, unit);
       const fragment = doc.createDocumentFragment();
       for (const { segment, index, isWordLike } of words(unit.out)) {
@@ -452,6 +465,7 @@
     // 点一个词，或在一段译文里选中几个词（Shadow DOM 里的选区要从根上取）
     root.addEventListener('click', (event) => {
       if (alt.contains(event.target) || toast.contains(event.target)) return;
+      if (!enabled()) return;
       const selection = typeof root.getSelection === 'function' ? root.getSelection() : win.getSelection();
       if (selection && !selection.isCollapsed && selection.rangeCount) {
         const range = selection.getRangeAt(0);

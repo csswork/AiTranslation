@@ -58,6 +58,7 @@
     units: () => (unit ? [unit] : []),
     target: () => unitTarget,
     cacheKey: () => settings.provider,
+    enabled: () => S.supportsAlternatives(settings.provider),
     request: (args) => P.alternatives({
       ...args, settings: S.normalize({ ...settings, target: unitTarget }), targetId: unitTarget, noteId: AITrI18n.locale(),
     }),
@@ -84,16 +85,24 @@
 
   const effectiveTarget = () => choice;
 
-  function renderTargetOptions() {
-    const options = () => LANGUAGES.map((item) => {
+  /** 本机翻译时两个下拉只列已下载的语言（见 lib/local.js），末尾可以去下载更多。 */
+  async function renderTargetOptions() {
+    const providerId = settings.provider;
+    const options = (list) => list.map((item) => {
       const option = document.createElement('option');
       option.value = item.id; option.textContent = label(item.id);
       return option;
     });
-    el.target.replaceChildren(...options());
+    const [targets, sources] = await Promise.all([
+      AITrLocal.limit(LANGUAGES, { providerId, keep: choice }),
+      AITrLocal.limit(LANGUAGES, { providerId, role: 'source', target: choice, keep: source }),
+    ]);
+    el.target.replaceChildren(...options(targets));
+    AITrLocal.addMoreOption(el.target, providerId);
     const auto = document.createElement('option');
     auto.value = AUTO; auto.textContent = t("自动识别");
-    el.source.replaceChildren(auto, ...options());
+    el.source.replaceChildren(auto, ...options(sources));
+    AITrLocal.addMoreOption(el.source, providerId);
     el.target.value = choice; el.source.value = source;
     el.swap.disabled = source === AUTO;
   }
@@ -279,7 +288,9 @@
   el.settings.addEventListener('click', () => chrome.runtime.openOptionsPage());
 
   el.target.addEventListener('change', async () => {
+    if (AITrLocal.pickedMore(el.target, choice)) return;
     choice = el.target.value;
+    if (S.isLocal(settings.provider)) renderTargetOptions();
     chrome.storage.local.set({ [STORE_KEY]: choice });
     lastSent = '';
     renderStatus();
@@ -287,6 +298,7 @@
   });
 
   el.source.addEventListener('change', async () => {
+    if (AITrLocal.pickedMore(el.source, source)) return;
     source = el.source.value;
     chrome.storage.local.set({ panelSource: source });
     lastSent = '';
@@ -310,6 +322,7 @@
     settings = await S.patchSettings({ provider: el.provider.value });
     const provider = S.resolveProvider(settings);
     el.meta.textContent = `${provider.label} · ${provider.model}`;
+    renderTargetOptions();
   });
 
   AITrI18n.onChange(() => { renderTargetOptions(); renderProviderOptions(); renderStatus(); });

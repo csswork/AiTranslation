@@ -502,7 +502,9 @@ async function startTranslation({ tabId, text, providerId, targetId }) {
     truncated,
     target: AITrSettings.targetMenu(settings),
     targetId: settings.target,
-    targets: AITrSettings.targetList(),
+    // 本机翻译时只列已下载的目标语言，弹窗里另有「下载更多语言…」
+    targets: await AITrLocal.limit(AITrSettings.targetList(), { providerId: settings.provider, keep: settings.target }),
+    moreLanguages: AITrSettings.isLocal(settings.provider) && AITrLocal.supported(),
     provider: { id: provider.id, label: provider.label, model: provider.model },
     providers: AITrSettings.providerList(settings.provider),
     showOriginal: settings.showOriginal,
@@ -929,6 +931,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (type === 'open-options') {
     chrome.runtime.openOptionsPage();
+    return false;
+  }
+
+  // 划词弹窗的「下载更多语言…」：内容脚本没有 tabs 权限，由这里打开设置页的本机翻译卡片
+  if (type === 'open-local-download') {
+    AITrLocal.openDownloads();
     return false;
   }
 

@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Dịch trên máy"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Miễn phí, dịch ngay trong trình duyệt, văn bản không rời khỏi thiết bị"
-  },
   "m_07005997c39db6c1": {
     "message": "Dịch ngay trên thiết bị bằng mô hình dịch tích hợp sẵn của trình duyệt: miễn phí, không cần API Key, văn bản gốc không được gửi đến bất kỳ máy chủ nào."
   },
   "m_a06682e9bf0d3dad": {
     "message": "Tự động nhận diện ngôn ngữ gốc khi dịch. Mỗi cặp ngôn ngữ chỉ cần tải gói ngôn ngữ một lần, sau đó có thể dùng khi ngoại tuyến."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Chỉ dịch được văn bản, không hỗ trợ dịch hình ảnh và nhấp từ để đổi cách diễn đạt; chất lượng bản dịch cho đoạn dài và nội dung chuyên ngành thấp hơn so với mô hình lớn."
   },
   "m_076f2358b99807b9": {
     "message": "Tải gói ngôn ngữ"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Đang dùng dịch trên máy, không tiêu tốn điểm."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Dịch trên thiết bị, không cần API Key"
-  },
   "m_807a44ffd35266fb": {
     "message": "Trình duyệt hiện tại không hỗ trợ dịch trên máy, nhấp vào đây để đổi nền tảng"
   },
   "m_50b84f5de3adab4b": {
     "message": "Trình duyệt này không hỗ trợ dịch trên thiết bị. Cần phiên bản Chrome hoặc Edge dành cho máy tính mới hơn."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Nếu gói ngôn ngữ chưa được tải xuống cần dùng khi dịch, bạn sẽ được nhắc tải xuống tại đây."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Trình duyệt này không hỗ trợ dịch trên thiết bị. Cần phiên bản Chrome hoặc Edge dành cho máy tính mới hơn."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Tải thêm ngôn ngữ…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Miễn phí, văn bản không rời khỏi thiết bị của bạn; chỉ dịch văn bản"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Ngôn ngữ nguồn"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Dịch sang"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Nếu gói ngôn ngữ chưa được tải xuống khi dịch, bạn sẽ được nhắc tải xuống tại đây; danh sách thả xuống ngôn ngữ trong bảng dịch, PDF và trang đọc song ngữ chỉ liệt kê các ngôn ngữ đã tải xuống."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Chỉ dịch văn bản: khi dùng tính năng dịch trên thiết bị, dịch hình ảnh và đổi cách diễn đạt bằng cách nhấp từ sẽ không khả dụng. Chất lượng dịch cho đoạn văn dài và nội dung chuyên ngành thấp hơn so với mô hình lớn."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Ngôn ngữ đã tải xuống: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Chưa tải xuống gói ngôn ngữ nào."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Bản dịch cục bộ chỉ dịch được văn bản; không dùng được tính năng dịch hình ảnh và cách diễn đạt khác"
   },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"

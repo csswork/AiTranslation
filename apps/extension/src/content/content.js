@@ -14,6 +14,8 @@
   // 扩展更新后旧脚本要撤掉自己（见 lifecycle.js）：页面级监听都带上这个 signal
   const { signal, onRetire } = globalThis.AITrLifecycle;
   const PORT_NAME = 'ai-translate-panel';
+  /** 目标语言下拉里的「下载更多语言…」，与 lib/local.js 的 MORE 一致 */
+  const MORE_LANGUAGES = '__local-download__';
   const IS_TOP = (() => {
     try {
       return window.top === window;
@@ -306,6 +308,7 @@
         units: () => (unit ? [unit] : []),
         target: () => targetId,
         cacheKey: () => providerId,
+        enabled: () => AITrSettings.supportsAlternatives(providerId),
         request: async (args) => {
           const reply = await AITrRequests.request({ type: 'alternatives', ...args, providerId, targetId, noteId: AITrI18n.locale() });
           if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });
@@ -391,7 +394,14 @@
       dom.backdrop.addEventListener('mousedown', () => hide());
       dom.retry.addEventListener('click', () => retranslate());
       dom.provider.addEventListener('change', () => retranslate(dom.provider.value));
-      dom.target.addEventListener('change', () => retranslate(undefined, dom.target.value));
+      dom.target.addEventListener('change', () => {
+        if (dom.target.value === MORE_LANGUAGES) {
+          dom.target.value = targetId;
+          send({ type: 'open-local-download' });
+          return;
+        }
+        retranslate(undefined, dom.target.value);
+      });
       dom.copy.addEventListener('click', copyResult);
       enableDrag();
 
@@ -558,6 +568,12 @@
         option.selected = item.id === targetId;
         return option;
       }));
+      // 本机翻译：目标语言只列已下载的，末尾去设置页下载更多
+      if (message.moreLanguages) {
+        const more = document.createElement('option');
+        more.value = MORE_LANGUAGES; more.textContent = t("下载更多语言…");
+        dom.target.append(more);
+      }
       const providers = message.providers || [];
       dom.provider.hidden = providers.length < 2;
       dom.provider.replaceChildren(

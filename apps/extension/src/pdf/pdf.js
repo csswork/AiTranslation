@@ -461,6 +461,7 @@
     units: () => pages.flatMap((page) => (page.blocks || []).map((block) => block.unit).filter((item) => item?.node.isConnected)),
     target: () => target,
     cacheKey: () => settings.provider,
+    enabled: () => S.supportsAlternatives(settings.provider),
     request: (args) => P.alternatives({
       ...args, settings: S.normalize({ ...settings, target }), targetId: target, noteId: AITrI18n.locale(),
     }),
@@ -641,13 +642,16 @@
 
   /* ---------------------------------------------------------------- 控件 */
 
-  function renderTargetOptions() {
-    el.target.replaceChildren(...S.targetList().map((item) => {
+  /** 本机翻译时只列已下载的目标语言（见 lib/local.js），末尾可以去下载更多。 */
+  async function renderTargetOptions() {
+    const list = await AITrLocal.limit(S.targetList(), { providerId: settings.provider, keep: target });
+    el.target.replaceChildren(...list.map((item) => {
       const option = document.createElement('option');
       option.value = item.id;
       option.textContent = label(item.id);
       return option;
     }));
+    AITrLocal.addMoreOption(el.target, settings.provider);
     el.target.value = target;
   }
 
@@ -665,11 +669,13 @@
   el.download.addEventListener('click', download);
   el.settings.addEventListener('click', () => chrome.runtime.openOptionsPage());
   el.target.addEventListener('change', () => {
+    if (AITrLocal.pickedMore(el.target, target)) return;
     target = el.target.value;
     restart();
   });
   el.provider.addEventListener('change', async () => {
     settings = await S.patchSettings({ provider: el.provider.value });
+    renderTargetOptions();
     restart();
   });
   for (const button of document.querySelectorAll('.seg button')) {

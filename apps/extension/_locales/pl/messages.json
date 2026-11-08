@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Tłumaczenie lokalne"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Bezpłatnie, tłumaczenie w przeglądarce, tekst nie opuszcza urządzenia"
-  },
   "m_07005997c39db6c1": {
     "message": "Tłumacz na swoim urządzeniu za pomocą wbudowanego modelu tłumaczenia w przeglądarce: bezpłatnie, bez API Key, a tekst nigdy nie jest wysyłany na żaden serwer."
   },
   "m_a06682e9bf0d3dad": {
     "message": "Język źródłowy jest wykrywany automatycznie podczas tłumaczenia. Dla każdej pary językowej trzeba jednorazowo pobrać pakiet językowy, po czym działa ona również offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Tylko tekst; tłumaczenie obrazów i zmiana sformułowania po kliknięciu słowa nie są obsługiwane. Jakość tłumaczenia długich akapitów i treści specjalistycznych jest niższa niż w przypadku dużych modeli."
   },
   "m_076f2358b99807b9": {
     "message": "Pobierz pakiet językowy"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Obecnie używane jest tłumaczenie lokalne; punkty nie są zużywane."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Tłumaczenie na urządzeniu, bez API Key"
-  },
   "m_807a44ffd35266fb": {
     "message": "Ta przeglądarka nie obsługuje tłumaczenia lokalnego. Kliknij tutaj, aby zmienić platformę."
   },
   "m_50b84f5de3adab4b": {
     "message": "Ta przeglądarka nie obsługuje tłumaczenia na urządzeniu. Wymagana jest nowsza wersja Chrome lub Edge na komputer."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Jeśli podczas tłumaczenia potrzebny będzie jeszcze niepobrany pakiet językowy, pojawi się tutaj prośba o jego pobranie."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Ta przeglądarka nie obsługuje tłumaczenia na urządzeniu. Wymagana jest nowsza wersja Chrome lub Edge na komputer."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Pobierz więcej języków…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Bezpłatnie, tekst nie opuszcza urządzenia; tylko tłumaczenie tekstu"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Język źródłowy"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Tłumacz na"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Jeśli podczas tłumaczenia pakiet językowy nie został jeszcze pobrany, pojawi się tutaj monit o jego pobranie; listy rozwijane języków w panelu tłumaczenia, PDF i stronie czytania dwujęzycznego pokazują tylko pobrane języki."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Tylko tłumaczenie tekstu: przy tłumaczeniu na urządzeniu tłumaczenie obrazów i przeformułowanie po kliknięciu słowa są niedostępne. Jakość tłumaczenia długich akapitów i treści specjalistycznych jest niższa niż w przypadku dużych modeli."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Pobrane języki: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Nie pobrano jeszcze żadnych pakietów językowych."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Tłumaczenie lokalne obsługuje tylko tekst; tłumaczenie obrazów i alternatywne sformułowania są niedostępne"
   },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"

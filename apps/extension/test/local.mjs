@@ -150,4 +150,46 @@ const settings = S.normalize({ provider: 'local', target: 'zh-Hans' });
   console.log('✓ 用词偏好、换说法、识图、测试连接与字幕');
 }
 
+/* 换说法：本机翻译和 DeepL 不支持，界面不出现可点的词 */
+{
+  assert.equal(S.supportsAlternatives('local'), false);
+  assert.equal(S.supportsAlternatives('deepl'), false);
+  assert.equal(S.supportsAlternatives('hosted'), true);
+  assert.equal(S.supportsAlternatives('openai'), true);
+  console.log('✓ 换说法的支持情况');
+}
+
+/* 语言下拉：本机翻译只列已下载的语言，当前选中的保留；其他平台不变 */
+{
+  const list = S.targetList();
+  const pairs = await L.installedPairs();
+  assert.ok(pairs.some(([s, t]) => s === 'en' && t === 'zh-Hans'), '已下载的语言对按项目语言 id');
+  assert.ok(pairs.some(([s, t]) => s === 'en' && t === 'ko'), '刚下载的语言对立即出现');
+  const targets = (await L.limit(list, { providerId: 'local', keep: 'fr' })).map((item) => item.id);
+  assert.deepEqual(targets.sort(), ['en', 'fr', 'ko', 'zh-Hans', 'zh-Hant'].sort());
+  const sources = (await L.limit(list, { providerId: 'local', role: 'source', target: 'zh-Hans' })).map((item) => item.id);
+  assert.deepEqual(sources.sort(), ['en', 'ja'].sort());
+  assert.equal((await L.limit(list, { providerId: 'openai' })).length, list.length, '其他平台不过滤');
+  console.log('✓ 语言下拉只列已下载的语言');
+}
+
+/* 「下载更多语言…」：只在本机翻译时出现，选中后恢复原值并打开设置页 */
+{
+  const opened = [];
+  chrome.runtime = { getURL: (path) => `chrome-extension://id/${path}` };
+  chrome.tabs = { create: (args) => opened.push(args.url) };
+  const options = [];
+  const select = { value: 'zh-Hans', ownerDocument: { createElement: () => ({}) }, append: (option) => options.push(option) };
+  L.addMoreOption(select, 'openai');
+  assert.equal(options.length, 0);
+  L.addMoreOption(select, 'local');
+  assert.equal(options[0].value, L.MORE);
+  assert.equal(L.pickedMore(select, 'zh-Hans'), false);
+  select.value = L.MORE;
+  assert.equal(L.pickedMore(select, 'zh-Hans'), true);
+  assert.equal(select.value, 'zh-Hans');
+  assert.deepEqual(opened, ['chrome-extension://id/src/options/options.html#local']);
+  console.log('✓ 下载更多语言');
+}
+
 console.log('\n全部通过');

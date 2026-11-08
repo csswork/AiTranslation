@@ -113,7 +113,8 @@
       .key-state.warn .dot { background: var(--warn); }
 
       /* 工具：并排的次要入口 */
-      .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+      /* auto-fit：图片翻译、视频字幕入口隐藏时，剩下的按钮撑满一行 */
+      .tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; }
       .tool {
         display: flex; align-items: center; justify-content: center; gap: 6px;
         padding: 8px 6px; border-radius: 9px; border: 1px solid var(--line); background: transparent;

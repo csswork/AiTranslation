@@ -31,7 +31,7 @@
       id: 'local',
       label: k("本机翻译"),
       kind: 'local',
-      hint: k("免费，在浏览器里翻译，文字不离开本机"),
+      hint: k("免费，文字不离开本机；只能翻译文字"),
       defaultBaseUrl: '',
       defaultModel: '',
       models: [],
@@ -255,6 +255,8 @@
   const providerKind = (id) => PROVIDERS[id]?.kind || 'llm';
   /** 只有 LLM 平台能识图；传统翻译接口只能文本进文本出。 */
   const supportsVision = (id) => ['llm', 'hosted'].includes(providerKind(id));
+  /** 点词换说法：传统翻译接口和本机翻译只给一个译文，不支持；不支持时界面不出现可点的词。 */
+  const supportsAlternatives = (id) => !['mt', 'local'].includes(providerKind(id));
   /** 只有 LLM 平台能流式输出。 */
   const supportsStreaming = (id) => providerKind(id) === 'llm';
   /** 传统翻译接口不需要选模型。 */
@@ -294,6 +296,7 @@
     DEEPL_CODES,
     providerKind,
     supportsVision,
+    supportsAlternatives,
     supportsStreaming,
     needsModel,
     deeplCode,

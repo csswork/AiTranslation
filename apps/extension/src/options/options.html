@@ -90,18 +90,20 @@
         <p class="desc">用浏览器内置的翻译模型在本机完成翻译：免费，不需要 API Key，原文不会发送到任何服务器。</p>
         <ul class="hosted-notes">
           <li>翻译时自动识别原文语言。每个语言对要先下载一次语言包，之后断网也能用。</li>
-          <li>翻译时遇到还没下载的语言包，会提示到这里下载。</li>
-          <li>只能翻译文字，不支持图片翻译和点词换说法；长段落和专业内容的译文质量不如大模型。</li>
+          <li>翻译时遇到还没下载的语言包，会提示到这里下载；翻译面板、PDF 和双语阅读页的语言下拉只列出已下载的语言。</li>
+          <li>只能翻译文字：用本机翻译时，图片翻译和点词换说法不会出现。长段落和专业内容的译文质量不如大模型。</li>
         </ul>
         <div class="fields">
           <div class="field">
-            <span class="label" id="localPairLabel">下载语言包</span>
-            <span class="key-row">
-              <select id="localSource" aria-labelledby="localPairLabel"></select>
-              <span id="localTarget"></span>
+            <span class="label">下载语言包</span>
+            <span class="key-row local-pair">
+              <select id="localSource" aria-label="原文语言"></select>
+              <span aria-hidden="true">→</span>
+              <select id="localTarget" aria-label="翻译成"></select>
               <button id="localDownload" class="btn" type="button">下载</button>
             </span>
             <span class="help" id="localStatus" role="status"></span>
+            <span class="help" id="localInstalled"></span>
           </div>
         </div>
       </section>

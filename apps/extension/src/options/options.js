@@ -82,6 +82,7 @@
     localTarget: $('localTarget'),
     localDownload: $('localDownload'),
     localStatus: $('localStatus'),
+    localInstalled: $('localInstalled'),
   };
 
   let settings = S.normalize(null);
@@ -228,18 +229,47 @@
 
   let localBusy = false;
 
-  /** 下载语言包的原文语言默认英语；目标语言就是英语时默认简体中文。 */
+  const languageOptions = (exclude) => S.targetList().filter((item) => item.id !== exclude).map((item) => {
+    const option = document.createElement('option');
+    option.value = item.id;
+    option.textContent = item.label;
+    return option;
+  });
+
+  /**
+   * 下载语言包：目标语言默认是「默认翻译目标语言」，也可以选别的（翻译面板等处会用到）；
+   * 原文语言默认英语，目标就是英语时默认简体中文。
+   */
   function renderLocal() {
+    const target = el.localTarget.value || settings.target;
+    el.localTarget.replaceChildren(...languageOptions());
+    el.localTarget.value = target;
+    renderLocalSources();
+  }
+
+  function renderLocalSources() {
+    const target = el.localTarget.value;
     const keep = el.localSource.value;
-    el.localSource.replaceChildren(...S.targetList().filter((item) => item.id !== settings.target).map((item) => {
-      const option = document.createElement('option');
-      option.value = item.id;
-      option.textContent = item.label;
-      return option;
-    }));
-    el.localSource.value = keep && keep !== settings.target ? keep : settings.target === 'en' ? 'zh-Hans' : 'en';
-    el.localTarget.textContent = `→ ${S.targetMenu(settings)}`;
+    el.localSource.replaceChildren(...languageOptions(target));
+    el.localSource.value = keep && keep !== target ? keep : target === 'en' ? 'zh-Hans' : 'en';
     renderLocalState();
+  }
+
+  function listFormat(items) {
+    try {
+      return new Intl.ListFormat(AITrI18n.locale(), { type: 'conjunction' }).format(items);
+    } catch {
+      return items.join(', ');
+    }
+  }
+
+  async function renderLocalInstalled() {
+    const pairs = await AITrLocal.installedPairs();
+    const ids = new Set(pairs.flat());
+    const names = S.targetList().filter((item) => ids.has(item.id)).map((item) => item.label);
+    el.localInstalled.textContent = names.length
+      ? t('已下载的语言：$1', [listFormat(names)])
+      : t('还没有下载任何语言包。');
   }
 
   async function renderLocalState() {
@@ -248,13 +278,18 @@
     if (!L.supported()) {
       el.localDownload.disabled = true;
       el.localSource.disabled = true;
+      el.localTarget.disabled = true;
+      el.localInstalled.textContent = '';
       el.localStatus.textContent = t('当前浏览器不支持本机翻译，需要较新的桌面版 Chrome 或 Edge。');
       return;
     }
+    renderLocalInstalled();
     const sourceId = el.localSource.value;
-    const state = await L.availability(L.code(sourceId), L.code(settings.target));
-    if (sourceId !== el.localSource.value || localBusy) return;
+    const targetId = el.localTarget.value;
+    const state = await L.availability(L.code(sourceId), L.code(targetId));
+    if (sourceId !== el.localSource.value || targetId !== el.localTarget.value || localBusy) return;
     el.localSource.disabled = false;
+    el.localTarget.disabled = false;
     el.localDownload.disabled = state === 'available' || state === 'unavailable';
     el.localStatus.textContent = ({
       available: t('已下载，可以直接使用。'),
@@ -264,16 +299,18 @@
   }
 
   el.localSource.addEventListener('change', renderLocalState);
+  el.localTarget.addEventListener('change', renderLocalSources);
   el.localDownload.addEventListener('click', async () => {
     // 下载必须紧贴点击手势：prepare() 里第一步就是创建翻译器，前面不能有任何 await
     const task = AITrLocal.prepare({
       sourceId: el.localSource.value,
-      targetId: settings.target,
+      targetId: el.localTarget.value,
       onProgress: (loaded) => { el.localStatus.textContent = t('正在下载… $1%', [Math.round(loaded * 100)]); },
     });
     localBusy = true;
     el.localDownload.disabled = true;
     el.localSource.disabled = true;
+    el.localTarget.disabled = true;
     el.localStatus.textContent = t('正在准备…');
     try {
       await task;
@@ -283,6 +320,7 @@
       localBusy = false;
       el.localDownload.disabled = false;
       el.localSource.disabled = false;
+      el.localTarget.disabled = false;
       el.localStatus.textContent = String(err?.message || err);
     }
   });
@@ -652,7 +690,10 @@
     await save({ target: el.target.value });
     el.targetPreview.textContent = t('右键菜单：$1', [t('翻译成$1', [S.targetMenu(settings)])]);
     el.uiLanguage.value = settings.uiLanguage;
-    if (S.isLocal(settings.provider)) renderLocal();
+    if (S.isLocal(settings.provider)) {
+      el.localTarget.value = settings.target;
+      renderLocalSources();
+    }
     el.videoTarget.textContent = t('字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。', [S.targetMenu(settings)]);
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
@@ -819,5 +860,10 @@
     renderTerms();
     renderVideoLang();
     renderLangState();
+    // 从语言下拉的「下载更多语言…」过来：直接定位到本机翻译卡片
+    if (location.hash === '#local' && S.isLocal(settings.provider)) {
+      el.localConfig.scrollIntoView({ block: 'start' });
+      el.localSource.focus({ preventScroll: true });
+    }
   })();
 })();

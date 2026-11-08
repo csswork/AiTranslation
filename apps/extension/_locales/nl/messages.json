@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Lokaal vertalen"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Gratis, vertaald in je browser, tekst verlaat je apparaat nooit"
-  },
   "m_07005997c39db6c1": {
     "message": "Vertaal op je apparaat met het ingebouwde vertaalmodel van de browser: gratis, geen API Key nodig en je tekst wordt nooit naar een server verzonden."
   },
   "m_a06682e9bf0d3dad": {
     "message": "De brontaal wordt automatisch herkend tijdens het vertalen. Elk taalpaar vereist eenmalig een gedownload taalpakket, daarna werkt het ook offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Alleen tekst; afbeeldingsvertaling en klik-om-te-herformuleren worden niet ondersteund. De vertaalkwaliteit voor lange alinea's en gespecialiseerde inhoud is lager dan bij grote modellen."
   },
   "m_076f2358b99807b9": {
     "message": "Taalpakket downloaden"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Momenteel wordt lokaal vertalen gebruikt; er worden geen punten verbruikt."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Vertaald op je apparaat, geen API Key nodig"
-  },
   "m_807a44ffd35266fb": {
     "message": "Deze browser ondersteunt geen lokaal vertalen. Klik hier om van platform te wisselen."
   },
   "m_50b84f5de3adab4b": {
     "message": "Deze browser ondersteunt geen vertaling op het apparaat. Er is een nieuwere desktopversie van Chrome of Edge vereist."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Als er tijdens het vertalen een taalpakket nodig is dat nog niet is gedownload, wordt u hier gevraagd om het te downloaden."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Deze browser ondersteunt geen vertaling op het apparaat. Er is een nieuwere desktopversie van Chrome of Edge vereist."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Meer talen downloaden…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Gratis, tekst verlaat je apparaat nooit; alleen tekstvertaling"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Brontaal"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Vertalen naar"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Als er tijdens het vertalen nog geen taalpakket is gedownload, krijg je hier een melding om het te downloaden; de taalkeuzelijsten in het vertaalpaneel, PDF en de tweetalige leespagina tonen alleen gedownloade talen."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Alleen tekstvertaling: bij vertaling op het apparaat zijn beeldvertaling en herformuleren via woordklik niet beschikbaar. De vertaalkwaliteit voor lange alinea's en gespecialiseerde inhoud is lager dan bij grote modellen."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Gedownloade talen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Er zijn nog geen taalpakketten gedownload."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Lokale vertaling verwerkt alleen tekst; afbeeldingsvertaling en alternatieve formuleringen zijn niet beschikbaar"
   },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"

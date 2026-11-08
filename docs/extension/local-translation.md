@@ -7,9 +7,14 @@
 翻译平台多了一项「本机翻译」：用浏览器内置的翻译模型在本机翻译，免费，不需要 API Key，不消耗点数，原文不发给任何服务器。
 
 - 可用于划词、区域翻译、翻译面板、整份 PDF、双语阅读和视频字幕。
-- 不支持图片翻译（不能识图）、点词换说法（Translator 只给一个译文），也没有逐字流式输出。这几项与 DeepL 的处理相同：明确报错，不悄悄换平台。
-- 用词偏好与 DeepL 一样，在译文里替换（`AITrTerms.applyTo`）。
-- 语言包按「原文语言 → 目标语言」下载，下载一次后断网也能用。设置页选中本机翻译时出现「本机翻译」卡片，可以选原文语言下载到当前目标语言的语言包，并显示状态与进度。
+- 只能翻译文字。不支持的功能不出现，而不是点了才报错（DeepL 同样处理）：
+  - 图片翻译：右键菜单项、弹窗的「图片翻译」按钮隐藏，图片翻译页的平台下拉不列出（`supportsVision`）；
+  - 点词换说法：译文按纯文字显示，没有可点的词（`supportsAlternatives`，`word-picker.js` 的 `enabled`）；
+  - 扫描件 PDF 对所有平台都不支持（没有可提取的文字），与本机翻译无关。Chrome 没有已上线的内置 OCR。
+- 功能受限的提醒：平台卡片的说明写「只能翻译文字」，设置页卡片列出限制，弹窗里选中本机翻译时显示「只能翻译文字，图片翻译和换说法不可用」。
+- 没有逐字流式输出。用词偏好与 DeepL 一样，在译文里替换（`AITrTerms.applyTo`）。
+- 语言包按「原文语言 → 目标语言」下载，下载一次后断网也能用。设置页选中本机翻译时出现「本机翻译」卡片：选原文语言和目标语言下载，显示状态、进度和已下载的语言。
+- 语言下拉只列已下载的语言（翻译面板的原文和目标语言、PDF 页、双语阅读页、划词弹窗）：目标语言要至少有一个已下载的语言对能翻成它，原文语言要能翻成当前目标语言；当前选中的总是保留。下拉末尾有「下载更多语言…」，打开设置页 `#local` 并定位到卡片。设置页「默认翻译目标语言」仍列全部语言。
 - 浏览器不提供 `Translator`（Firefox、Safari、旧版 Chrome、手机）时，平台列表里不出现本机翻译；已经选了它的用户仍保留这一项，翻译时提示原因。
 
 ## 二、实现
@@ -19,8 +24,9 @@
 | `src/lib/local.js` | `AITrLocal`：语言代码换算、原文语言识别、翻译器缓存、批量翻译、设置页下载 |
 | `src/lib/settings.js` | `PROVIDERS.local`（`kind: 'local'`），`isLocal`、`localSupported`；`KEY_PROVIDERS` 不含它；`providerList(current)` 在不支持时隐藏它 |
 | `src/lib/providers.js` | `translate`、`translateBatch`、`translateCaption`、`testConnection` 走 `local` 分支；`alternatives`、`readImageText` 与 DeepL 同样拒绝 |
-| `src/options/` | 「本机翻译」卡片与下载按钮 |
-| `src/popup/popup.js` | 选中本机翻译时的状态文字 |
+| `src/options/` | 「本机翻译」卡片：原文 / 目标语言、下载、已下载的语言；`#local` 定位 |
+| `src/popup/` | 选中本机翻译时的限制说明；不能识图时隐藏图片翻译按钮 |
+| 翻译面板、PDF、双语阅读、`background.js` + `content.js` | 语言下拉按 `AITrLocal.limit()` 过滤，加「下载更多语言…」（`addMoreOption` / `pickedMore`；内容脚本经 `open-local-download` 消息） |
 | `test/local.mjs` | 用假的 `Translator` / `LanguageDetector` 覆盖上述行为 |
 
 `local.js` 与 `providers.js` 一起被 service worker（`import`）和扩展页面（`<script>`）加载；设置页单独加载它，用于下载。

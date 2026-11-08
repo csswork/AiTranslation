@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Lokale Übersetzung"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Kostenlos, Übersetzung im Browser, Text verlässt dein Gerät nicht"
-  },
   "m_07005997c39db6c1": {
     "message": "Übersetze auf deinem Gerät mit dem integrierten Übersetzungsmodell des Browsers: kostenlos, kein API Key erforderlich, und dein Text wird nie an einen Server gesendet."
   },
   "m_a06682e9bf0d3dad": {
     "message": "Die Ausgangssprache wird beim Übersetzen automatisch erkannt. Für jedes Sprachpaar muss einmalig ein Sprachpaket heruntergeladen werden, danach funktioniert es auch offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Nur Text; Bildübersetzung und Klick-zum-Umformulieren werden nicht unterstützt. Die Übersetzungsqualität bei langen Absätzen und Fachinhalten ist geringer als bei großen Modellen."
   },
   "m_076f2358b99807b9": {
     "message": "Sprachpaket herunterladen"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Derzeit wird die lokale Übersetzung verwendet; es werden keine Punkte verbraucht."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Auf deinem Gerät übersetzt, kein API Key erforderlich"
-  },
   "m_807a44ffd35266fb": {
     "message": "Dieser Browser unterstützt keine lokale Übersetzung. Klicke hier, um die Plattform zu wechseln."
   },
   "m_50b84f5de3adab4b": {
     "message": "Dieser Browser unterstützt keine Übersetzung auf dem Gerät. Eine neuere Desktop-Version von Chrome oder Edge ist erforderlich."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Wenn beim Übersetzen ein noch nicht heruntergeladenes Sprachpaket benötigt wird, wirst du hier zum Herunterladen aufgefordert."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Dieser Browser unterstützt keine Übersetzung auf dem Gerät. Eine neuere Desktop-Version von Chrome oder Edge ist erforderlich."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Weitere Sprachen herunterladen…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Kostenlos, Text verlässt nie dein Gerät; nur Textübersetzung"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Ausgangssprache"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Übersetzen nach"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Wenn beim Übersetzen ein Sprachpaket noch nicht heruntergeladen ist, wirst du hier zum Herunterladen aufgefordert; die Sprach-Dropdowns im Übersetzungsbereich, in PDF und auf der zweisprachigen Leseseite listen nur heruntergeladene Sprachen auf."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Nur Textübersetzung: Bei der Übersetzung auf dem Gerät sind Bildübersetzung und Umformulierung per Wortklick nicht verfügbar. Die Übersetzungsqualität für lange Absätze und Fachinhalte ist geringer als bei großen Modellen."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Heruntergeladene Sprachen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Noch keine Sprachpakete heruntergeladen."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Die lokale Übersetzung verarbeitet nur Text; Bildübersetzung und alternative Formulierungen sind nicht verfügbar"
   },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"

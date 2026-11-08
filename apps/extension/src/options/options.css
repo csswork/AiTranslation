@@ -128,6 +128,9 @@ input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-v
 }
 select { cursor: pointer; }
 .key-row { display: flex; gap: 8px; align-items: center; }
+/* 本机翻译的语言包：原文 → 目标 两个下拉平分，窄窗口换行 */
+.local-pair { flex-wrap: wrap; }
+.local-pair select { flex: 1 1 140px; min-width: 0; }
 
 .advanced summary {
   cursor: pointer; font-size: 12.5px; color: var(--muted);

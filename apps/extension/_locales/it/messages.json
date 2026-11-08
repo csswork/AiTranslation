@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Traduzione locale"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Gratuita, tradotta nel browser, il testo non lascia mai il tuo dispositivo"
-  },
   "m_07005997c39db6c1": {
     "message": "Traduci sul tuo dispositivo usando il modello di traduzione integrato nel browser: gratuito, nessuna API Key richiesta e il testo non viene mai inviato a nessun server."
   },
   "m_a06682e9bf0d3dad": {
     "message": "La lingua di origine viene rilevata automaticamente durante la traduzione. Ogni coppia di lingue richiede il download del pacchetto linguistico una sola volta, dopodiché funziona anche offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Solo testo; la traduzione di immagini e la riformulazione con clic non sono supportate. La qualità della traduzione per paragrafi lunghi e contenuti specialistici è inferiore rispetto ai modelli di grandi dimensioni."
   },
   "m_076f2358b99807b9": {
     "message": "Scarica pacchetto linguistico"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Attualmente in uso la traduzione locale; nessun credito viene consumato."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Tradotto sul tuo dispositivo, nessuna API Key richiesta"
-  },
   "m_807a44ffd35266fb": {
     "message": "Questo browser non supporta la traduzione locale. Clicca qui per cambiare piattaforma."
   },
   "m_50b84f5de3adab4b": {
     "message": "Questo browser non supporta la traduzione sul dispositivo. È necessaria una versione desktop più recente di Chrome o Edge."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Se durante la traduzione è necessario un pacchetto linguistico non ancora scaricato, ti verrà chiesto di scaricarlo qui."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Questo browser non supporta la traduzione sul dispositivo. È necessaria una versione desktop più recente di Chrome o Edge."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Scarica altre lingue…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Gratuito, il testo non lascia mai il tuo dispositivo; solo traduzione di testo"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Lingua di origine"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Traduci in"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Se durante la traduzione un pacchetto lingua non è ancora stato scaricato, ti verrà chiesto di scaricarlo qui; i menu a tendina delle lingue nel pannello di traduzione, nei PDF e nella pagina di lettura bilingue elencano solo le lingue scaricate."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Solo traduzione di testo: con la traduzione sul dispositivo, la traduzione delle immagini e la riformulazione con clic sulle parole non sono disponibili. La qualità della traduzione di paragrafi lunghi e contenuti specialistici è inferiore rispetto ai modelli di grandi dimensioni."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Lingue scaricate: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Nessun pacchetto lingua scaricato."
+  },
+  "m_20367a46503e72e2": {
+    "message": "La traduzione locale gestisce solo il testo; la traduzione delle immagini e le formulazioni alternative non sono disponibili"
   },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"

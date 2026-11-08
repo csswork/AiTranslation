@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Terjemahan lokal"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Gratis, diterjemahkan di browser Anda, teks tidak pernah meninggalkan perangkat Anda"
-  },
   "m_07005997c39db6c1": {
     "message": "Terjemahkan di perangkat Anda menggunakan model terjemahan bawaan browser: gratis, tidak perlu API Key, dan teks Anda tidak pernah dikirim ke server mana pun."
   },
   "m_a06682e9bf0d3dad": {
     "message": "Bahasa sumber dideteksi secara otomatis saat menerjemahkan. Setiap pasangan bahasa perlu mengunduh paket bahasanya sekali, setelah itu dapat digunakan secara offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Hanya teks; terjemahan gambar dan klik-untuk-parafrase tidak didukung. Kualitas terjemahan untuk paragraf panjang dan konten khusus lebih rendah dibandingkan dengan model besar."
   },
   "m_076f2358b99807b9": {
     "message": "Unduh paket bahasa"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Saat ini menggunakan terjemahan lokal; tidak ada kredit yang digunakan."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Diterjemahkan di perangkat Anda, tidak perlu API Key"
-  },
   "m_807a44ffd35266fb": {
     "message": "Browser ini tidak mendukung terjemahan lokal. Klik di sini untuk beralih platform."
   },
   "m_50b84f5de3adab4b": {
     "message": "Browser ini tidak mendukung terjemahan di perangkat. Diperlukan Chrome atau Edge versi desktop yang lebih baru."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "Jika paket bahasa yang belum diunduh diperlukan saat menerjemahkan, Anda akan diminta mengunduhnya di sini."
-  },
   "m_1bc71cf7306f8195": {
     "message": "Browser ini tidak mendukung terjemahan di perangkat. Diperlukan Chrome atau Edge versi desktop yang lebih baru."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Unduh lebih banyak bahasa…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Gratis, teks tidak pernah meninggalkan perangkat Anda; hanya terjemahan teks"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Bahasa sumber"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Terjemahkan ke"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "Jika paket bahasa belum diunduh saat menerjemahkan, Anda akan diminta mengunduhnya di sini; menu dropdown bahasa di panel terjemahan, PDF, dan halaman baca bilingual hanya menampilkan bahasa yang sudah diunduh."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Hanya terjemahan teks: dengan terjemahan di perangkat, terjemahan gambar dan pengubahan frasa dengan klik kata tidak tersedia. Kualitas terjemahan untuk paragraf panjang dan konten khusus lebih rendah dibandingkan dengan model besar."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Bahasa yang sudah diunduh: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "Belum ada paket bahasa yang diunduh."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Terjemahan lokal hanya dapat menerjemahkan teks; terjemahan gambar dan alternatif kata tidak tersedia"
   },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"

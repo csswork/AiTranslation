@@ -189,7 +189,7 @@
     el.keyState.hidden = hosted;
     if (S.isLocal(settings.provider)) {
       el.keyText.textContent = S.localSupported()
-        ? t('在本机翻译，不需要 API Key')
+        ? t('本机翻译只能翻译文字，图片翻译和换说法不可用')
         : t('当前浏览器不支持本机翻译，点这里换一个平台');
       el.keyState.className = `key-state ${S.localSupported() ? '' : 'warn'}`;
     } else if (!hosted) {
@@ -203,6 +203,8 @@
     renderAccount();
     // 视频字幕默认关闭：没打开时连入口都不显示
     el.video.hidden = !settings.videoEnabled;
+    // 与右键菜单一致：本机翻译、DeepL 不能识图，图片翻译入口不出现
+    el.image.hidden = !S.supportsVision(settings.provider);
   }
 
   AITrI18n.onChange(() => render());

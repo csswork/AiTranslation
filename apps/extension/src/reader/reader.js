@@ -509,6 +509,7 @@
     units: () => units.filter((item) => item.done),
     target: () => target,
     cacheKey: () => settings.provider,
+    enabled: () => S.supportsAlternatives(settings.provider),
     request: (args) => P.alternatives({
       ...args, settings: S.normalize({ ...settings, target }), targetId: target, noteId: AITrI18n.locale(),
     }),
@@ -750,12 +751,15 @@
 
   /* ---------------------------------------------------------------- 控件 */
 
-  function renderTargetOptions() {
-    el.target.replaceChildren(...S.targetList().map((item) => {
+  /** 本机翻译时只列已下载的目标语言（见 lib/local.js），末尾可以去下载更多。 */
+  async function renderTargetOptions() {
+    const list = await AITrLocal.limit(S.targetList(), { providerId: settings.provider, keep: target });
+    el.target.replaceChildren(...list.map((item) => {
       const option = make('option', '', label(item.id));
       option.value = item.id;
       return option;
     }));
+    AITrLocal.addMoreOption(el.target, settings.provider);
     el.target.value = target;
   }
 
@@ -819,11 +823,13 @@
   });
   el.run.addEventListener('click', () => (runController ? stop() : runAll()));
   el.target.addEventListener('change', () => {
+    if (AITrLocal.pickedMore(el.target, target)) return;
     target = el.target.value;
     restart();
   });
   el.provider.addEventListener('change', async () => {
     settings = await S.patchSettings({ provider: el.provider.value });
+    renderTargetOptions();
     restart();
   });
 

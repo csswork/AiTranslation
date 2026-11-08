@@ -2612,17 +2612,11 @@
   "m_1fa6397d4f83dea5": {
     "message": "Local translation"
   },
-  "m_52ef70c62cb0bc93": {
-    "message": "Free, translated in your browser, text never leaves your device"
-  },
   "m_07005997c39db6c1": {
     "message": "Translate on your device using the browser's built-in translation model: free, no API Key required, and your text is never sent to any server."
   },
   "m_a06682e9bf0d3dad": {
     "message": "The source language is detected automatically when translating. Each language pair needs its language pack downloaded once, after which it works offline."
-  },
-  "m_89b7dda41d9f1cd3": {
-    "message": "Text only; image translation and click-to-rephrase aren't supported. Translation quality for long paragraphs and specialized content is lower than with large models."
   },
   "m_076f2358b99807b9": {
     "message": "Download language pack"
@@ -2659,20 +2653,46 @@
   "m_c10a3aede2b0120c": {
     "message": "Currently using local translation; no credits are used."
   },
-  "m_960c8b5766835c2b": {
-    "message": "Translated on your device, no API Key required"
-  },
   "m_807a44ffd35266fb": {
     "message": "This browser doesn't support local translation. Click here to switch platforms."
   },
   "m_50b84f5de3adab4b": {
     "message": "This browser doesn't support on-device translation. A newer desktop version of Chrome or Edge is required."
   },
-  "m_f70d2d8b2a1d1075": {
-    "message": "If a language pack that hasn't been downloaded yet is needed during translation, you'll be prompted to download it here."
-  },
   "m_1bc71cf7306f8195": {
     "message": "This browser doesn't support on-device translation. A newer desktop version of Chrome or Edge is required."
+  },
+  "m_c55adcd1d6822e33": {
+    "message": "Download more languages…"
+  },
+  "m_fe0b521ed468be3c": {
+    "message": "Free, text never leaves your device; text translation only"
+  },
+  "m_54ca8b6a7921700b": {
+    "message": "Source language"
+  },
+  "m_617840b1c678f5f4": {
+    "message": "Translate to"
+  },
+  "m_2bb9d5df2693d27e": {
+    "message": "If a language pack hasn't been downloaded yet when translating, you'll be prompted to download it here; the language dropdowns in the translation panel, PDF, and bilingual reading page only list downloaded languages."
+  },
+  "m_0f3cbc85a1113810": {
+    "message": "Text translation only: with on-device translation, image translation and click-word rephrasing are unavailable. Translation quality for long paragraphs and specialized content is lower than with large models."
+  },
+  "m_1528ec97c1f7dda4": {
+    "message": "Downloaded languages: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_2f7fb80f77631358": {
+    "message": "No language packs downloaded yet."
+  },
+  "m_20367a46503e72e2": {
+    "message": "Local translation handles text only; image translation and alternative wordings are unavailable"
   },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"

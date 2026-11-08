@@ -763,7 +763,8 @@
       return option;
     }));
     el.provider.replaceChildren(
-      ...S.providerList(settings.provider).map((item) => {
+      // 本机翻译、DeepL 不能识图，不列出来（当前选中的仍保留）
+      ...S.providerList(settings.provider).filter((item) => S.supportsVision(item.id) || item.id === settings.provider).map((item) => {
         const option = document.createElement('option');
         option.value = item.id;
         option.textContent = item.label;

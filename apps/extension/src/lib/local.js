@@ -172,8 +172,73 @@
       ? (m) => m.addEventListener('downloadprogress', (event) => onProgress(event.loaded))
       : undefined;
     await translator(source, target, monitor);
+    pairsTask = null;
     return availability(source, target);
   }
 
-  globalThis.AITrLocal = { supported, code, name, detect, availability, translate, prepare, LocalError };
+  /* ---------------------------------------------------- 已下载的语言（下拉框只列这些） */
+
+  /** 已下载的语言对 [[源语言 id, 目标语言 id]]，按项目语言 id。查询很快，结果缓存半分钟，下载后作废。 */
+  let pairsTask = null;
+  let pairsAt = 0;
+  function installedPairs() {
+    if (!supported()) return Promise.resolve([]);
+    if (!pairsTask || Date.now() - pairsAt > 30_000) {
+      pairsAt = Date.now();
+      const ids = Object.keys(AITrLanguages.LANGUAGES);
+      pairsTask = Promise.all(ids.flatMap((s) => ids.filter((t) => t !== s).map(async (t) => (
+        (await availability(code(s), code(t))) === 'available' ? [s, t] : null
+      )))).then((pairs) => pairs.filter(Boolean));
+    }
+    return pairsTask;
+  }
+
+  const isLocalProvider = (providerId) => globalThis.AITrSettings?.providerKind(providerId) === 'local';
+
+  /**
+   * 本机翻译时，语言下拉只保留已下载的语言；其他平台原样返回。
+   * role 'target'：至少有一个语言对能翻成它；'source'：能翻成 target 的原文语言。
+   * keep：当前选中的语言总是保留，免得下拉框显示空白。
+   */
+  async function limit(list, { providerId, role = 'target', target, keep } = {}) {
+    if (!isLocalProvider(providerId) || !supported()) return list;
+    const pairs = await installedPairs();
+    const ids = new Set(role === 'source'
+      ? pairs.filter(([, t]) => t === target).map(([s]) => s)
+      : pairs.map(([, t]) => t));
+    return list.filter((item) => ids.has(item.id) || item.id === keep);
+  }
+
+  /** 下拉框末尾的「下载更多语言…」：选中它就去设置页下载语言包。 */
+  const MORE = '__local-download__';
+
+  function addMoreOption(select, providerId) {
+    if (!isLocalProvider(providerId) || !supported()) return;
+    const option = select.ownerDocument.createElement('option');
+    option.value = MORE;
+    option.textContent = t("下载更多语言…");
+    select.append(option);
+  }
+
+  /** 设置页的本机翻译卡片。内容脚本没有 tabs 权限，交给 service worker 打开。 */
+  function openDownloads() {
+    if (globalThis.chrome?.tabs?.create) {
+      chrome.tabs.create({ url: chrome.runtime.getURL('src/options/options.html#local') });
+    } else {
+      chrome.runtime.sendMessage({ type: 'open-local-download' }).catch(() => {});
+    }
+  }
+
+  /** 下拉框 change 时先调用：选的是「下载更多语言…」就打开设置页、恢复原值，返回 true。 */
+  function pickedMore(select, previous) {
+    if (select.value !== MORE) return false;
+    select.value = previous;
+    openDownloads();
+    return true;
+  }
+
+  globalThis.AITrLocal = {
+    supported, code, name, detect, availability, translate, prepare, LocalError,
+    installedPairs, limit, addMoreOption, pickedMore, openDownloads, MORE,
+  };
 })();
