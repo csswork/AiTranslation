@@ -677,7 +677,10 @@ globalThis.AITrMessageIds = {
   "下一张图（→）": "m_d8f514ea380ac5b7",
   "下一张图": "m_f8559aefb319052e",
   "翻译音效字": "m_3c581c555d2f6b68",
-  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "m_257f284111f75da4"
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "m_257f284111f75da4",
+  "调整文字形状": "m_0c6548cc7ba699b8",
+  "选项": "m_bb7486f4410fd370",
+  "原图": "m_4b1db520af460460"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1357,5 +1360,8 @@ globalThis.AITrEnglish = {
   "下一张图（→）": "Next image (→)",
   "下一张图": "Next image",
   "翻译音效字": "Translate sound effects",
-  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type."
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
+  "调整文字形状": "Adjust text shape",
+  "选项": "Options",
+  "原图": "Original image"
 };

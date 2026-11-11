@@ -2835,6 +2835,15 @@
   "m_257f284111f75da4": {
     "message": "Traduci anche le onomatopee disegnate nell'immagine: mantieni il testo originale e aggiungi la traduzione accanto in caratteri piccoli."
   },
+  "m_0c6548cc7ba699b8": {
+    "message": "Regola la forma del testo"
+  },
+  "m_bb7486f4410fd370": {
+    "message": "Opzioni"
+  },
+  "m_4b1db520af460460": {
+    "message": "Immagine originale"
+  },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"
   },

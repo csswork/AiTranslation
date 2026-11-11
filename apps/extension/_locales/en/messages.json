@@ -2835,6 +2835,15 @@
   "m_257f284111f75da4": {
     "message": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type."
   },
+  "m_0c6548cc7ba699b8": {
+    "message": "Adjust text shape"
+  },
+  "m_bb7486f4410fd370": {
+    "message": "Options"
+  },
+  "m_4b1db520af460460": {
+    "message": "Original image"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

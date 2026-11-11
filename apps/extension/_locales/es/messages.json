@@ -2835,6 +2835,15 @@
   "m_257f284111f75da4": {
     "message": "Traduce también las onomatopeyas dibujadas en la imagen: conserva el texto original y añade la traducción al lado en letra pequeña."
   },
+  "m_0c6548cc7ba699b8": {
+    "message": "Ajustar forma del texto"
+  },
+  "m_bb7486f4410fd370": {
+    "message": "Opciones"
+  },
+  "m_4b1db520af460460": {
+    "message": "Imagen original"
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

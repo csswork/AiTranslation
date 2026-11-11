@@ -224,6 +224,9 @@
       pointer-events: auto;
     }
     .panel {
+      /* 界面的强调色用品牌紫；图上的选区、形状仍是橙色（在各种图片上都看得清） */
+      --accent: #6366f1; --accent-hi: #7c7ff6; --accent-soft: rgba(129, 140, 248, 0.16);
+      --text: #e9eaee; --dim: rgba(233, 234, 238, 0.56); --line: rgba(255, 255, 255, 0.08);
       position: absolute; left: 50%; top: 50%;
       transform: translate(-50%, -50%);
       box-sizing: border-box;
@@ -232,7 +235,7 @@
       /* 竖长的图显示得窄，面板跟着变窄会把工具栏挤成两行；给个下限，图在中间 */
       min-width: min(94vw, 660px);
       pointer-events: auto;
-      background: #16181d; color: #e9eaee;
+      background: #16181d; color: var(--text);
       border-radius: 14px; overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
@@ -246,72 +249,154 @@
     @keyframes pop { from { opacity: 0 } }
     @media (prefers-reduced-motion: reduce) { .panel { animation: none } }
 
-    /* 顶部只放标题、状态和关闭；操作都在底部工具栏，按「看结果 / 框选」两套切换 */
+    /* 三层：顶部说明「现在看的是什么」（哪张图、译文还是原图、处在哪个模式）；
+       中间是图，进度和提示浮在图的下沿；底部左边是译文的语言，右边是操作 */
     .head {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 8px 8px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px;
+      height: 46px; box-sizing: border-box; padding: 0 8px 0 14px;
+      border-bottom: 1px solid var(--line);
       flex: none;
     }
+    .head .left, .head .right { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .head .right { justify-content: flex-end; }
     .title { font-size: 13px; font-weight: 600; flex: none; white-space: nowrap; }
-    .meta {
-      flex: 1 1 auto; min-width: 0;
-      font-size: 11.5px; color: rgba(233, 234, 238, 0.5);
+    .summary {
+      min-width: 0; font-size: 11.5px; color: var(--dim);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    /* 框选、调整形状时，中间换成模式名 */
+    .mode {
+      display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 11px; border-radius: 13px;
+      font-size: 12px; font-weight: 500; color: #c7d2fe; background: var(--accent-soft); white-space: nowrap;
+    }
+    .mode::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #818cf8; }
+
     .tools {
-      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px;
-      padding: 8px 10px 8px 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px;
+      min-height: 52px; box-sizing: border-box; padding: 8px 12px;
+      border-top: 1px solid var(--line);
       flex: none;
     }
     .group { display: flex; align-items: center; gap: 6px; flex: none; }
     .spacer { flex: 1 1 auto; }
+    .sep { width: 1px; height: 18px; flex: none; background: rgba(255, 255, 255, 0.12); margin: 0 2px; }
     .panel.picking .v, .panel:not(.picking) .p { display: none !important; }
-    .field { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(233, 234, 238, 0.55); }
-    .direct { flex: none; cursor: pointer; color: rgba(233, 234, 238, 0.8); }
-    .direct input { margin: 0; width: 14px; height: 14px; cursor: pointer; accent-color: #f59e0b; }
-    .tip { font-size: 11.5px; color: rgba(233, 234, 238, 0.5); white-space: nowrap; }
+    .field { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dim); }
 
     /* 框选提示放在工具栏中间（形状和确认按钮之间的空位），不挡图片 */
-    .hint { flex: 1 1 220px; min-width: 0; font-size: 11.5px; line-height: 1.45; }
+    /* contain：提示再长也不把面板撑宽，进出框选时窗口宽度不变 */
+    .hint { flex: 1 1 0; min-width: 120px; contain: inline-size; font-size: 11.5px; line-height: 1.45; }
     /* 每句一行，放不下就省略，完整内容在悬停提示里 */
     .hint b, .hint span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .hint b { font-weight: 500; color: #e9eaee; }
-    .hint span { color: rgba(233, 234, 238, 0.5); }
+    .hint b { font-weight: 500; color: var(--text); }
+    .hint span { color: var(--dim); }
 
-    /* 形状：两个并排的切换按钮 */
-    .seg { display: inline-flex; padding: 2px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); }
+    /* 并排的切换按钮：顶部的「译文 / 原图」、框选的形状 */
+    .seg { display: inline-flex; padding: 2px; border-radius: 9px; background: rgba(255, 255, 255, 0.07); }
     .seg button {
       all: unset; box-sizing: border-box; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 5px;
-      height: 24px; padding: 0 9px; border-radius: 6px;
-      font-size: 12px; color: rgba(233, 234, 238, 0.7);
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      height: 26px; padding: 0 12px; border-radius: 7px;
+      font-size: 12px; font-weight: 500; color: rgba(233, 234, 238, 0.66); white-space: nowrap;
+      transition: background-color 0.15s, color 0.15s;
     }
+    .seg button:hover { color: var(--text); }
     .seg button svg { width: 15px; height: 15px; }
-    .seg button[aria-pressed="true"] { color: #111; background: #f59e0b; }
+    .seg button[aria-pressed="true"] { color: #fff; background: var(--accent); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
     .seg button:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
+    .seg.view button { min-width: 58px; }
     button.act {
       all: unset; box-sizing: border-box; cursor: pointer; flex: none;
-      display: inline-flex; align-items: center; height: 28px;
-      padding: 0 11px; border-radius: 7px;
-      font-size: 12px; font-weight: 500; color: rgba(233, 234, 238, 0.85);
-      background: rgba(255, 255, 255, 0.08);
+      display: inline-flex; align-items: center; gap: 6px; height: 30px;
+      padding: 0 11px; border-radius: 8px;
+      font-size: 12px; font-weight: 500; color: rgba(233, 234, 238, 0.86);
+      background: rgba(255, 255, 255, 0.07); white-space: nowrap;
+      transition: background-color 0.15s;
     }
-    button.act:hover { background: rgba(255, 255, 255, 0.15); }
-    button.act:disabled { opacity: 0.45; cursor: default; background: rgba(255, 255, 255, 0.08); }
-    button.act.primary { color: #111; background: #f59e0b; }
-    button.act.primary:hover { background: #fbbf24; }
-    button.act.icon { padding: 0; width: 28px; height: 28px; display: grid; place-items: center; background: none; }
-    button.act.icon:hover { background: rgba(255, 255, 255, 0.1); }
+    button.act svg { width: 15px; height: 15px; flex: none; }
+    button.act:hover { background: rgba(255, 255, 255, 0.14); }
+    button.act:disabled { opacity: 0.4; cursor: default; background: rgba(255, 255, 255, 0.07); }
+    /* 次要操作：平时没有底色 */
+    button.act.ghost { background: none; }
+    button.act.ghost:hover, button.act.ghost[aria-expanded="true"] { background: rgba(255, 255, 255, 0.1); }
+    button.act.primary { color: #fff; background: var(--accent); }
+    button.act.primary:hover { background: var(--accent-hi); }
+    button.act.primary:disabled { background: var(--accent); }
+    button.act.icon { padding: 0; width: 30px; height: 30px; display: grid; place-items: center; background: none; }
+    button.act.icon:hover, button.act.icon[aria-expanded="true"] { background: rgba(255, 255, 255, 0.1); }
     button.act.icon svg { width: 16px; height: 16px; }
     button.act:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
 
+    /* 选项菜单：不常用的设置收在这里，从工具栏右侧向上弹出 */
+    .menu {
+      position: absolute; right: 12px; bottom: calc(100% + 8px); z-index: 4;
+      box-sizing: border-box; width: 264px; max-width: calc(100% - 24px); padding: 6px;
+      border-radius: 12px; background: #1d2029; color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      font-size: 12.5px; line-height: 1.4;
+      animation: pop 0.12s ease-out;
+    }
+    .menu .item {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-height: 38px; box-sizing: border-box; padding: 4px 8px; border-radius: 8px;
+    }
+    .menu .item .ctl { display: flex; align-items: center; gap: 6px; flex: none; }
+    .menu label.item { cursor: pointer; }
+    .menu label.item:hover { background: rgba(255, 255, 255, 0.05); }
+    .menu .rule { height: 1px; margin: 4px 8px; background: var(--line); }
+    .menu button.act { width: 100%; height: 36px; padding: 0 8px; background: none; font-size: 12.5px; }
+    .menu button.act:hover { background: rgba(255, 255, 255, 0.08); }
+    /* 开关 */
+    .menu input.switch {
+      all: unset; box-sizing: border-box; flex: none; cursor: pointer; position: relative;
+      width: 32px; height: 18px; border-radius: 9px; background: rgba(255, 255, 255, 0.2);
+      transition: background-color 0.15s;
+    }
+    .menu input.switch::after {
+      content: ''; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; transition: transform 0.15s;
+    }
+    .menu input.switch:checked { background: var(--accent); }
+    .menu input.switch:checked::after { transform: translateX(14px); }
+    .menu input.switch:focus-visible { outline: 2px solid #818cf8; outline-offset: 2px; }
+
+    .stage { position: relative; flex: 1 1 auto; min-height: min(170px, 36vh); display: flex; }
     .body {
-      flex: 1 1 auto; min-height: 0; overflow: auto;
+      flex: 1 1 auto; min-width: 0; min-height: 0; overflow: auto;
       display: flex; align-items: center; justify-content: center;
       padding: 14px; background: #0e1014;
     }
+    /* 看原图时在图的左上角标出来，免得分不清现在看的是哪一版 */
+    .tag {
+      position: absolute; left: 12px; top: 12px; z-index: 2; pointer-events: none;
+      height: 22px; padding: 0 9px; border-radius: 11px; display: inline-flex; align-items: center;
+      font-size: 11.5px; font-weight: 500; color: #fff; background: rgba(14, 16, 20, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    /* 进度、提示、报错：浮在图的下沿正中 */
+    .status {
+      position: absolute; left: 50%; bottom: 14px; z-index: 2; transform: translateX(-50%);
+      box-sizing: border-box; max-width: calc(100% - 28px);
+      display: flex; align-items: center; gap: 9px; padding: 7px 14px; border-radius: 18px;
+      font-size: 12.5px; line-height: 1.4; color: var(--text);
+      background: rgba(24, 27, 35, 0.94); border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      animation: pop 0.14s ease-out;
+    }
+    .status.error { border-color: rgba(248, 113, 113, 0.5); }
+    .status.error .meta { color: #fecaca; }
+    .status .meta { min-width: 0; overflow-wrap: anywhere; }
+    .status button.act { height: 24px; padding: 0 10px; border-radius: 12px; }
+    .status .spin {
+      width: 13px; height: 13px; flex: none; box-sizing: border-box; border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.25); border-top-color: #818cf8;
+      animation: turn 0.8s linear infinite;
+    }
+    @keyframes turn { to { transform: rotate(360deg) } }
+    @media (prefers-reduced-motion: reduce) { .status .spin { animation-duration: 2.4s } }
+    .status:not(.busy) .spin { display: none; }
+
     /* 画布尺寸按原图比例预先算好（sizeCanvas），图片还没加载完也先占好位置，
        窗口不会在图片载入后再跳一下。普通图片缩到窗口内；长图只按宽度显示、纵向滚动，
        否则会被高度压成一条，宽度小到看不清 */
@@ -320,19 +405,30 @@
     /* 换图时新图载入前什么都不显示，不让上一张图露出来 */
     .canvas.loading { background: rgba(255, 255, 255, 0.04); }
     .canvas.loading > * { visibility: hidden; }
-    /* 长图必须给面板一个明确宽度：面板本来按内容收缩，
-       长图的收缩计算会把它挤到很窄（实测只剩 186px）。 */
     select {
-      font: inherit; font-size: 12px; height: 28px; max-width: 150px; padding: 0 6px;
-      color: #e9eaee; background: #20232c; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px;
+      font: inherit; font-size: 12px; height: 30px; max-width: 160px; padding: 0 6px;
+      color: var(--text); background: #20232c; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px;
     }
     select:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
+    .menu select { height: 28px; max-width: 124px; }
+    /* 长图必须给面板一个明确宽度：面板本来按内容收缩，
+       长图的收缩计算会把它挤到很窄（实测只剩 186px）。 */
     .panel.tall { width: min(94vw, 860px); }
     .panel.tall .body { align-items: flex-start; }
     .panel.tall .canvas { width: 100%; }
     input.fill-color {
       width: 28px; height: 28px; padding: 2px; flex: none; cursor: pointer; box-sizing: border-box;
-      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px; background: none;
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px; background: none;
+    }
+    /* 窄窗口：顶部只留翻页、切换和关闭，底部的按钮只留图标 */
+    .head .left { overflow: hidden; }
+    @media (max-width: 600px) {
+      .panel { min-width: min(94vw, 340px); }
+      .head { gap: 6px; padding-left: 10px; }
+      .title, .summary { display: none; }
+      .tools .group.v button.act:not(.icon) { padding: 0 9px; }
+      .tools .group.v button.act span { display: none; }
+      .tools select.target { max-width: 120px; }
     }
     .layer { position: absolute; inset: 0; }
     .hide-translation .layer, .picking .layer { display: none; }
@@ -340,19 +436,13 @@
     .shapes { position: absolute; inset: 0; pointer-events: none; }
     .shapes canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
     .hide-translation .shapes, .picking .shapes { display: none; }
-    /* 识别、翻译进行中：标题栏转圈，看结果用的按钮先不能点 */
-    .head .spin {
-      width: 13px; height: 13px; flex: none; box-sizing: border-box; border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.25); border-top-color: #818cf8;
-      animation: turn 0.8s linear infinite;
-    }
-    @keyframes turn { to { transform: rotate(360deg) } }
-    @media (prefers-reduced-motion: reduce) { .head .spin { animation-duration: 2.4s } }
-    .panel:not(.working) .head .spin { display: none; }
     /* 上一张 / 下一张：页面上只有一张图时不显示 */
-    .nav { gap: 2px; }
-    .nav .count { font-size: 11.5px; color: rgba(233, 234, 238, 0.6); min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; }
-    .nav button.act.icon { width: 24px; height: 24px; font-size: 16px; line-height: 1; }
+    .nav { gap: 1px; padding: 2px; border-radius: 9px; background: rgba(255, 255, 255, 0.05); }
+    .nav .count { font-size: 11.5px; color: var(--dim); min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
+    .nav button.act.icon { width: 24px; height: 24px; border-radius: 7px; }
+    .nav button.act.icon svg { width: 14px; height: 14px; }
+    /* 识别、翻译进行中：看结果用的控件先不能点 */
+    .panel.working .head .view { opacity: 0.45; pointer-events: none; }
     .panel.working .tools .v { opacity: 0.45; pointer-events: none; }
     /* 识别、翻译进行中：像扫描仪一样，一条亮线在图片上来回扫，后面拖着渐隐的光带；
        已经识别出的形状跟着一明一暗 */
@@ -420,6 +510,14 @@
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>';
   const ELLIPSE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="8.5" ry="6.5"/></svg>';
+  const ICON = (body) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  const PREV_ICON = ICON('<path d="M15 5l-7 7 7 7"/>');
+  const NEXT_ICON = ICON('<path d="M9 5l7 7-7 7"/>');
+  const PICK_ICON = ICON('<path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/>');
+  const MORE_ICON = ICON('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>');
+  const SAVE_ICON = ICON('<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>');
+  const COPY_ICON = ICON('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>');
+  const REDO_ICON = ICON('<path d="M20 11a8 8 0 1 0-2.3 6.3M20 4v7h-7"/>');
   const CLOSE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
     'stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -472,40 +570,42 @@
       <div class="backdrop"></div>
       <div class="panel" role="dialog" aria-modal="true" aria-label="图片翻译" tabindex="-1">
         <div class="head">
-          <span class="title">图片翻译</span>
-          <div class="group nav" hidden>
-            <button class="act icon prev" type="button" title="上一张图（←）" aria-label="上一张图">‹</button>
-            <span class="count"></span>
-            <button class="act icon next" type="button" title="下一张图（→）" aria-label="下一张图">›</button>
+          <div class="left">
+            <span class="title">图片翻译</span>
+            <div class="group nav" hidden>
+              <button class="act icon prev" type="button" title="上一张图（←）" aria-label="上一张图">${PREV_ICON}</button>
+              <span class="count"></span>
+              <button class="act icon next" type="button" title="下一张图（→）" aria-label="下一张图">${NEXT_ICON}</button>
+            </div>
           </div>
-          <span class="spin" aria-hidden="true"></span>
-          <span class="meta" aria-live="polite"></span>
-          <button class="act retry" type="button" hidden>重试</button>
-          <button class="act icon close" type="button" title="关闭（Esc）" aria-label="关闭">
-            ${CLOSE_ICON}
-          </button>
+          <div class="center">
+            <div class="seg view" role="group" aria-label="显示" hidden>
+              <button type="button" data-view="translation" aria-pressed="true">译文</button>
+              <button type="button" data-view="original" aria-pressed="false">原图</button>
+            </div>
+            <span class="mode" hidden></span>
+          </div>
+          <div class="right">
+            <span class="summary"></span>
+            <button class="act icon close" type="button" title="关闭（Esc）" aria-label="关闭">
+              ${CLOSE_ICON}
+            </button>
+          </div>
         </div>
-        <div class="body">
-          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="bubbles"></div><div class="pick-layer" hidden></div><div class="edit-layer" hidden></div></div>
+        <div class="stage">
+          <div class="body">
+            <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="bubbles"></div><div class="pick-layer" hidden></div><div class="edit-layer" hidden></div></div>
+          </div>
+          <span class="tag" hidden>原图</span>
+          <div class="status" hidden>
+            <span class="spin" aria-hidden="true"></span>
+            <span class="meta" aria-live="polite"></span>
+            <button class="act retry" type="button" hidden>重试</button>
+          </div>
         </div>
         <div class="tools">
           <div class="group v">
             <select class="target" title="目标语言"></select>
-            <label class="field">背景
-              <select class="fill" title="译文背景">
-                <option value="auto">相近色</option>
-                <option value="dark">深色半透明</option>
-                <option value="white">白色</option>
-                <option value="black">黑色</option>
-                <option value="custom">自定义</option>
-              </select>
-            </label>
-            <input class="fill-color" type="color" title="自定义背景色" hidden />
-          </div>
-          <div class="group v">
-            <button class="act pick" type="button" title="只翻译框出的区域">框选区域</button>
-            <button class="act toggle" type="button">显示原图</button>
-            <button class="act redo" type="button" title="重新识别并翻译这张图" hidden>重新识别</button>
           </div>
           <div class="group p">
             <span class="field">形状</span>
@@ -515,17 +615,37 @@
             </div>
           </div>
           <div class="hint p" aria-live="polite"><b></b><span>拖动框内可移动，拖动边框可调整大小；按住 Shift 拖出正方形或正圆</span></div>
-          <label class="field direct" hidden title="识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」">
-            <input class="direct-check" type="checkbox" />直接翻译
-          </label>
           <span class="spacer v"></span>
           <div class="group v">
-            <button class="act save" type="button" title="下载带译文的图片">下载</button>
-            <button class="act copy" type="button" title="复制带译文的图片">复制图片</button>
+            <button class="act ghost pick" type="button" title="只翻译框出的区域">${PICK_ICON}<span>框选区域</span></button>
+            <button class="act icon more" type="button" title="选项" aria-label="选项" aria-haspopup="true" aria-expanded="false">${MORE_ICON}</button>
+            <span class="sep"></span>
+            <button class="act copy" type="button" title="复制带译文的图片">${COPY_ICON}<span>复制图片</span></button>
+            <button class="act primary save" type="button" title="下载带译文的图片">${SAVE_ICON}<span>下载</span></button>
           </div>
           <div class="group p">
             <button class="act cancel-pick" type="button">取消</button>
             <button class="act primary done-pick" type="button">翻译选区</button>
+          </div>
+          <div class="menu v" hidden>
+            <div class="item">
+              <span>译文背景</span>
+              <span class="ctl">
+                <input class="fill-color" type="color" title="自定义背景色" hidden />
+                <select class="fill" title="译文背景">
+                  <option value="auto">相近色</option>
+                  <option value="dark">深色半透明</option>
+                  <option value="white">白色</option>
+                  <option value="black">黑色</option>
+                  <option value="custom">自定义</option>
+                </select>
+              </span>
+            </div>
+            <label class="item direct" hidden title="识别后直接翻译；取消勾选时先显示识别出的文字形状，确认后再点「翻译」">
+              <span>直接翻译</span>
+              <input class="direct-check switch" type="checkbox" />
+            </label>
+            <button class="act redo" type="button" title="重新识别并翻译这张图" hidden>${REDO_ICON}<span>重新识别</span></button>
           </div>
         </div>
       </div>`;
@@ -558,7 +678,16 @@
       shapeValue: 'rect',
       donePick: q('.done-pick'),
       cancelPick: q('.cancel-pick'),
-      toggle: q('.toggle'),
+      view: q('.view'),
+      viewButtons: [...root.querySelectorAll('.view button')],
+      mode: q('.mode'),
+      tag: q('.tag'),
+      summary: q('.summary'),
+      status: q('.status'),
+      more: q('.more'),
+      menu: q('.menu'),
+      exportable: false,
+      noteTimer: 0,
       save: q('.save'),
       copy: q('.copy'),
       close: q('.close'),
@@ -579,7 +708,6 @@
       next: q('.next'),
       retry: q('.retry'),
       redo: q('.redo'),
-      metaText: '',
     };
     panel.hintNoteText = panel.hintNote.textContent;
     panel.editor = Editor.create(panel.editLayer, {
@@ -592,7 +720,7 @@
       max: Regions.MAX_REGIONS,
       shape: () => panel.shapeValue,
       deleteLabel: t('删除这个选区'),
-      onLimit: () => { panel.meta.textContent = t('最多框选 $1 个区域', [Regions.MAX_REGIONS]); },
+      onLimit: () => { say(t('最多框选 $1 个区域', [Regions.MAX_REGIONS]), 'note'); },
     });
 
     panel.target.addEventListener('change', () => {
@@ -608,7 +736,7 @@
     });
     panel.fillColor.addEventListener('input', applyFill);
     panel.fillColor.addEventListener('change', saveFill);
-    panel.pick.addEventListener('click', () => setPicking(true));
+    panel.pick.addEventListener('click', () => { toggleMenu(false); setPicking(true); });
     // 自动识别后直接翻译（默认），还是先显示文字形状、点「翻译」再翻译；选择会保存，下次沿用
     panel.directCheck.addEventListener('change', () => {
       const review = !panel.directCheck.checked;
@@ -643,7 +771,7 @@
         translateWhole(imageResult);
         return;
       }
-      panel.meta.textContent = t('先在图上拖动鼠标框出要翻译的区域');
+      say(t('先在图上拖动鼠标框出要翻译的区域'), 'note');
     });
     panel.save.addEventListener('click', () => exportImage(false));
     panel.copy.addEventListener('click', () => exportImage(true));
@@ -653,11 +781,21 @@
     panel.prev.addEventListener('click', () => stepImage(-1));
     panel.next.addEventListener('click', () => stepImage(1));
     panel.retry.addEventListener('click', () => { if (lastSrc) translateImage(lastSrc); });
-    panel.redo.addEventListener('click', () => { if (lastSrc) translateImage(lastSrc, { fresh: true }); });
+    panel.redo.addEventListener('click', () => { toggleMenu(false); if (lastSrc) translateImage(lastSrc, { fresh: true }); });
     panel.backdrop.addEventListener('mousedown', closePanel);
-    panel.toggle.addEventListener('click', () => {
-      const hidden = panel.canvas.classList.toggle('hide-translation');
-      panel.toggle.textContent = hidden ? t("显示译文") : t("显示原图");
+    for (const button of panel.viewButtons) {
+      button.addEventListener('click', () => {
+        panel.canvas.classList.toggle('hide-translation', button.dataset.view === 'original');
+        closeBubbleEditor();
+        updateView();
+      });
+    }
+    panel.more.addEventListener('click', () => toggleMenu(panel.menu.hidden));
+    // 点菜单以外的地方收起菜单
+    panel.panel.addEventListener('pointerdown', (event) => {
+      if (panel.menu.hidden) return;
+      const path = event.composedPath();
+      if (!path.includes(panel.menu) && !path.includes(panel.more)) toggleMenu(false);
     });
 
     (document.body || document.documentElement).appendChild(host);
@@ -679,6 +817,7 @@
     }
     if (event.key === 'Escape' && panel?.open) {
       event.stopPropagation();
+      if (!panel.menu.hidden) { toggleMenu(false); panel.more.focus({ preventScroll: true }); return; }
       // 正在改某一段译文：Esc 只收起编辑框
       if (panel.bubbleEditor) { closeBubbleEditor(); return; }
       // 框选时 Esc 只退出框选，不关掉整个窗口
@@ -687,8 +826,47 @@
     }
   }
 
+  /** 选项菜单的开合。 */
+  function toggleMenu(open) {
+    if (!panel) return;
+    panel.menu.hidden = !open;
+    panel.more.setAttribute('aria-expanded', String(Boolean(open)));
+  }
+
+  /**
+   * 图下沿的提示条。kind：busy 进行中（带转圈）、error 出错、note 几秒后自己消失的提醒，
+   * 其余的留到下一次操作。空字符串收起。
+   */
+  function say(text, kind = '') {
+    if (!panel) return;
+    clearTimeout(panel.noteTimer);
+    const message = String(text || '');
+    panel.meta.textContent = message;
+    panel.status.hidden = !message;
+    panel.status.classList.toggle('busy', kind === 'busy');
+    panel.status.classList.toggle('error', kind === 'error');
+    panel.retry.hidden = true;
+    if (message && kind === 'note') panel.noteTimer = setTimeout(() => say(''), 5000);
+  }
+
+  /** 顶部中间：有译文时是「译文 / 原图」切换，框选、调整形状时是模式名；看原图时图上再标一下。 */
+  function updateView() {
+    if (!panel) return;
+    const has = Boolean(panel.blocks.length || panel.shapeItems?.length);
+    const original = panel.canvas.classList.contains('hide-translation');
+    panel.view.hidden = panel.picking || !has;
+    panel.mode.hidden = !panel.picking;
+    panel.tag.hidden = panel.picking || !has || !original;
+    for (const button of panel.viewButtons) {
+      button.setAttribute('aria-pressed', String((button.dataset.view === 'original') === original));
+    }
+    // 没有译文，或读不到像素（合成不了新图）时不能导出
+    for (const node of [panel.save, panel.copy]) node.disabled = !has || !panel.exportable;
+  }
+
   function closePanel() {
     if (!panel) return;
+    toggleMenu(false);
     closeBubbleEditor();
     generation += 1;
     controller?.abort();
@@ -719,8 +897,11 @@
         ? t('拖动鼠标框出要翻译的区域，可以框多个')
         : t('框出要翻译的区域，可以框多个；不框直接点「翻译选区」就翻译整张图');
       panel.hint.parentElement.title = `${panel.hint.textContent}\n${panel.hint.nextElementSibling.textContent}`;
+      panel.mode.textContent = t('框选区域');
+      toggleMenu(false);
     }
-    panel.meta.textContent = panel.metaText;
+    say('');
+    updateView();
   }
 
   /**
@@ -736,6 +917,7 @@
     panel.editLayer.hidden = false;
     panel.editor.set(shapes);
     panel.donePick.textContent = t('翻译');
+    panel.mode.textContent = t('调整文字形状');
     panel.hint.textContent = t('检查识别出的文字形状，确认后点「翻译」');
     panel.hintNote.textContent = t('拖动形状可移动；拖动顶点时附近的点跟着动，按住 Alt 只动一个点；双击边线加顶点，双击顶点删掉；空白处拖出新形状；选中后按 Delete 删除');
     panel.hint.parentElement.title = `${panel.hint.textContent}\n${panel.hintNote.textContent}`;
@@ -827,7 +1009,9 @@
       return option;
     }));
     const { natural } = grabbed;
-    panel.metaText = meta;
+    panel.summary.textContent = meta || '';
+    panel.summary.title = meta || '';
+    panel.exportable = Boolean(grabbed.ctx);
     setPicking(false);
     setBusy(false);
     const tall = Boolean(natural && natural.h / Math.max(1, natural.w) > TALL_RATIO);
@@ -854,19 +1038,16 @@
     panel.bubbleNodes = [];
     setWorking(false);
     updateNav();
-    panel.retry.hidden = true;
     panel.redo.hidden = !imageResult?.shapes;
     // 「直接翻译」只对自动识别有意义
     panel.direct.hidden = !imageResult?.shapes;
     panel.directCheck.checked = !settings.imageReview;
-    panel.toggle.textContent = t("显示原图");
     panel.fill.value = settings.imageFill;
     setShape(settings.imageShape);
     panel.fillColor.value = settings.imageFillColor;
     panel.fillColor.hidden = settings.imageFill !== 'custom';
     // 读不到像素就没法合成新图
     for (const node of [panel.save, panel.copy]) {
-      node.disabled = !grabbed.ctx;
       node.title = grabbed.ctx ? node.dataset.title : t('这张图跨域读不到像素，生成不了新图片');
     }
 
@@ -908,6 +1089,7 @@
       })
     );
     applyFill();
+    updateView();
 
     panel.host.style.setProperty('display', 'block', 'important');
     panel.open = true;
@@ -925,10 +1107,11 @@
     if (!imageResult || (!panel?.blocks.length && !panel?.shapeItems?.length)) return;
     const { grabbed, targetId } = imageResult;
     const button = toClipboard ? panel.copy : panel.save;
-    const label = button.textContent;
+    const caption = button.querySelector('span');
+    const label = caption.textContent;
     const flash = (text) => {
-      button.textContent = text;
-      setTimeout(() => { button.textContent = label; }, 1400);
+      caption.textContent = text;
+      setTimeout(() => { caption.textContent = label; }, 1400);
     };
     button.disabled = true;
     try {
@@ -947,7 +1130,7 @@
     } catch {
       flash(toClipboard ? t('复制失败') : t('生成图片失败'));
     } finally {
-      button.disabled = false;
+      updateView();
     }
   }
 
@@ -978,29 +1161,30 @@
     return true;
   }
 
-  /** 进行中：标题栏转圈，结果上的按钮先不能点。 */
+  /** 进行中：图上有扫描动画，结果上的按钮先不能点。 */
   function setWorking(on) {
+    if (on) toggleMenu(false);
     panel?.panel.classList.toggle('working', Boolean(on));
   }
 
   /** 进度：弹窗开着写在标题栏，否则写在图上的遮罩里。 */
   function progress(text) {
     if (mask) mask.label.textContent = text;
-    if (panel?.open) panel.meta.textContent = text;
+    if (panel?.open) say(text, 'busy');
   }
 
   /** 失败：弹窗开着时留在标题栏并给出「重试」，否则写在图上的遮罩里。 */
   function fail(message) {
     if (panel?.open) {
       setWorking(false);
-      panel.meta.textContent = message;
+      say(message, 'error');
       panel.retry.hidden = false;
     } else showFailure(message);
   }
 
   /** 弹窗开着时提示写在标题栏，否则写在图上的遮罩里。 */
   function report(message) {
-    if (panel?.open) panel.meta.textContent = message;
+    if (panel?.open) say(message);
     else showFailure(message);
   }
 
@@ -1025,7 +1209,7 @@
     if (panel) panel.target.disabled = true;
     const busy = t('正在翻译 $1 段…', [worth.length]);
     if (mask) mask.label.textContent = busy;
-    if (panel?.open) panel.meta.textContent = busy;
+    if (panel?.open) say(busy, 'busy');
     try {
       const reply = await AITrRequests.request({
         type: 'translate-batch', texts: worth.map((b) => b.text),
@@ -1045,7 +1229,7 @@
     } catch (err) {
       if (token !== generation) return;
       if (panel?.open) {
-        panel.meta.textContent = String(err?.message || err);
+        say(String(err?.message || err), 'error');
         panel.target.value = imageResult?.targetId || settings.target;
       }
       showFailure(String(err?.message || err));
@@ -1065,13 +1249,13 @@
     const { signal } = controller;
     const { grabbed, settings } = result;
     setBusy(true);
-    panel.meta.textContent = t('正在识别选区…');
+    say(t('正在识别选区…'), 'busy');
     try {
       const found = grabbed.ctx
         ? await Regions.readRegions({
           source: grabbed.source, natural: grabbed.natural, regions, scaleFor: sendScale,
           onProgress: (i, total) => {
-            if (total > 1) panel.meta.textContent = t('正在识别选区 $1/$2…', [i + 1, total]);
+            if (total > 1) say(t('正在识别选区 $1/$2…', [i + 1, total]), 'busy');
           },
           read: async (image, imageSize) => {
             const reply = await AITrRequests.request({ type: 'read-image', image, imageSize,
@@ -1087,7 +1271,7 @@
       const merged = result.merged || (grabbed.ctx ? null : lastLines);
       await translateBlocks({ ...result, merged, regions, groups }, panel.target.value, token);
     } catch (err) {
-      if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
+      if (token === generation && err?.name !== 'AbortError') say(String(err?.message || err), 'error');
     } finally {
       if (token === generation) setBusy(false);
     }
@@ -1104,7 +1288,7 @@
     const { grabbed, settings } = result;
     const progress = (text) => {
       if (mask) mask.label.textContent = text;
-      if (panel?.open) panel.meta.textContent = text;
+      if (panel?.open) say(text, 'busy');
     };
     const total = grabbed.parts.length;
     const perTile = [];
@@ -1251,6 +1435,7 @@
     panel.shapeItems = Render.layoutShapes(panel.shapeRaw, imageResult.grabbed.natural, imageResult.targetId);
     drawShapeOverlay();
     placeBubbles();
+    updateView();
   }
 
   /** 每一段的热区：盖住它的底色和译文两块范围。数量变了才重建，拖动中不能换节点。 */
@@ -1366,7 +1551,7 @@
           apply({ text });
         }
       } catch (err) {
-        if (panel?.open) panel.meta.textContent = String(err?.message || err);
+        if (panel?.open) say(String(err?.message || err), 'error');
       } finally {
         again.disabled = false;
       }
@@ -1437,7 +1622,7 @@
     try {
       let filled = edited.map((shape) => ({ ...shape, bounds: Editor.boundsOf(shape.polygons) }));
       if (changed.length) {
-        panel.meta.textContent = t('正在识别改动过的形状…');
+        say(t('正在识别改动过的形状…'), 'busy');
         const regions = changed.map((shape) => ({ ...Editor.boundsOf(shape.polygons), shape: 'polygon', polygons: shape.polygons }));
         const found = grabbed.ctx
           ? await Regions.readRegions({
@@ -1470,7 +1655,7 @@
       if (result.cacheKey) remember(result.cacheKey, { shapes, blocks: result.blocks || [], small: 0, translations: new Map() });
       await translateShapes({ ...result, shapes }, shapes, panel.target.value, token);
     } catch (err) {
-      if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
+      if (token === generation && err?.name !== 'AbortError') say(String(err?.message || err), 'error');
     } finally {
       if (token === generation) setBusy(false);
     }
@@ -1492,7 +1677,7 @@
       if (!merged || token !== generation) return;
       await translateBlocks({ ...base, merged }, panel.target.value, token);
     } catch (err) {
-      if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
+      if (token === generation && err?.name !== 'AbortError') say(String(err?.message || err), 'error');
     } finally {
       if (token === generation) setBusy(false);
     }
@@ -1535,7 +1720,7 @@
       let found = cache.get(key);
       const base = { ...result, cacheKey: key };
       imageResult = { ...base, shapes: found?.shapes || [], blocks: found?.blocks || [] };
-      openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: t('正在找出图中的文字范围…') });
+      openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: '' });
       if (!found) {
         setWorking(true);
         const seen = await detectShapes(result, signal, token);

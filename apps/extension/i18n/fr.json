@@ -676,5 +676,8 @@
   "下一张图（→）": "Image suivante (→)",
   "下一张图": "Image suivante",
   "翻译音效字": "Traduire les onomatopées",
-  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Traduisez aussi les onomatopées dessinées dans l'image : conservez le texte original et ajoutez la traduction à côté en petits caractères."
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Traduisez aussi les onomatopées dessinées dans l'image : conservez le texte original et ajoutez la traduction à côté en petits caractères.",
+  "调整文字形状": "Ajuster la forme du texte",
+  "选项": "Options",
+  "原图": "Image d'origine"
 }
