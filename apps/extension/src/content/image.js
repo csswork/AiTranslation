@@ -343,7 +343,7 @@
     /* 识别、翻译进行中：标题栏转圈，看结果用的按钮先不能点 */
     .head .spin {
       width: 13px; height: 13px; flex: none; box-sizing: border-box; border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.25); border-top-color: #f59e0b;
+      border: 2px solid rgba(255, 255, 255, 0.25); border-top-color: #818cf8;
       animation: turn 0.8s linear infinite;
     }
     @keyframes turn { to { transform: rotate(360deg) } }
@@ -354,6 +354,32 @@
     .nav .count { font-size: 11.5px; color: rgba(233, 234, 238, 0.6); min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; }
     .nav button.act.icon { width: 24px; height: 24px; font-size: 16px; line-height: 1; }
     .panel.working .tools .v { opacity: 0.45; pointer-events: none; }
+    /* 识别、翻译进行中：像扫描仪一样，一条亮线在图片上来回扫，后面拖着渐隐的光带；
+       已经识别出的形状跟着一明一暗 */
+    .panel.working .canvas { overflow: hidden; }
+    .panel.working .canvas::before {
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: rgba(14, 16, 20, 0.18);
+    }
+    .panel.working .canvas::after {
+      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 22%; z-index: 1; pointer-events: none;
+      /* 品牌紫：与划词面板、官网同一组颜色（#6366f1 → #a855f7） */
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0) 0%, rgba(99, 102, 241, 0.26) 78%, rgba(196, 181, 253, 0.98) 98%, rgba(196, 181, 253, 0) 100%);
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.75));
+      transform: translateY(-100%);
+      animation: scan 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+    @keyframes scan { from { transform: translateY(-100%) } to { transform: translateY(455%) } }
+    .panel.working .shapes canvas { animation: glow 1.1s ease-in-out infinite alternate; }
+    @keyframes glow { from { opacity: 0.45 } to { opacity: 1 } }
+    @media (prefers-reduced-motion: reduce) {
+      /* 不扫动：整张图罩一层淡淡的颜色，慢慢明暗 */
+      .panel.working .canvas::after {
+        height: 100%; transform: none; filter: none; background: rgba(99, 102, 241, 0.18);
+        animation: glow 2.4s ease-in-out infinite alternate;
+      }
+      .panel.working .shapes canvas { animation: none; }
+    }
     /* 翻译好的每一段上盖一个看不见的热区：悬停看原文，点一下修改，拖动挪位置 */
     .bubbles { position: absolute; inset: 0; }
     .hide-translation .bubbles, .picking .bubbles, .panel.working .bubbles { display: none; }
@@ -1204,8 +1230,9 @@
     const ctx = canvas.getContext('2d');
     ctx.lineWidth = Math.max(2, canvas.width / 500);
     ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#f59e0b';
-    ctx.fillStyle = 'rgba(245, 158, 11, 0.16)';
+    // 进行中的提示都用品牌紫，和扫描线一致
+    ctx.strokeStyle = '#818cf8';
+    ctx.fillStyle = 'rgba(129, 140, 248, 0.2)';
     for (const shape of shapes) {
       ctx.beginPath();
       for (const poly of shape.polygons) {
