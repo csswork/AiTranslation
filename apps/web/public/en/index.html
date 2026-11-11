@@ -85,7 +85,7 @@
       <div class="hero-copy">
         <a class="release-pill" href="/en/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>New: bilingual reading turns web articles into a paragraph-by-paragraph reading page.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Select, right-click,<br /><span class="dim">then keep reading.</span></h1>
-        <p class="hero-sub">A Chrome extension. Select text, a whole page region, an image, or an entire article, and translate it into a language you know. 24 interface and target languages can be chosen independently; start with your own OpenAI, DeepSeek, or DeepL API Key.</p>
+        <p class="hero-sub">A sentence, an image, a PDF, or an entire article on a web page can be translated into your language with a right-click. It works right after installation, with no API Key required; you can also use your own OpenAI, DeepSeek, or DeepL Key.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -95,7 +95,7 @@
           <li><b>Open source</b> GPL-3.0 · 24 languages</li>
           <li>Chrome / Edge 116+</li>
           <li>No translation storage · No third-party analytics</li>
-          <li>Six translation modes</li>
+          <li>Try it without entering a Key</li>
         </ul>
       </div>
 
@@ -208,18 +208,17 @@
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
           <h2>Six entry points, all in the right-click menu</h2>
-          <p>No tab switching, no copy-paste. Wherever the part you cannot read is, that is where the translation happens.</p>
+          <p>Each one comes with a demo; see below.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Bilingual reading<span class="new">New</span></h3>
-            <p>Without selecting any text on a webpage, right-click to scan and identify headings and body text, and open a clean reading page alongside: source and translation aligned paragraph by paragraph, with navigation, ads, and recommendation modules excluded.</p>
+            <p>Right-click on an empty area of an article page and select "Read this article bilingually" to open a reading page with only the main text. Original and translation are paired paragraph by paragraph, with no navigation or ads.</p>
             <ul>
-              <li>In side-by-side mode each paragraph is top-aligned; you can also use stacked view, translation only, or source only</li>
-              <li>Click any word in the translation to see several alternative translations or write your own; rephrased wording is remembered and preferred in later translations</li>
-              <li>Appearance can be light, dark, or follow the system; colors, fonts, font size, line spacing, and content width are all adjustable</li>
-              <li>Saved locally together with the translation, openable anytime from the right side, with no re-translation</li>
+              <li>View side by side, stacked, or show only the translation or only the original</li>
+              <li>Click a word in the translation to choose an alternative rendering; the chosen wording is preferred afterward</li>
+              <li>Articles and translations can be stored locally, so no re-translation is needed next time</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -241,12 +240,11 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Selection translation</h3>
-            <p>After selecting text, right-click to translate, and the translation appears in a centered pop-up; platforms that support streaming output can display it word by word. If you temporarily switch the target language, the original text is translated again.</p>
+            <p>Select a passage of text and right-click to translate; the translation appears in a popup in the middle of the page.</p>
             <ul>
-              <li>Chinese, short phrases, and mixed-language text can all be translated; pure numbers, punctuation, and emoji do not show the translation entry point</li>
-              <li>The popup is centered and draggable, closes with <span class="mono">Esc</span> or a click on the backdrop — not a little bubble chasing your cursor</li>
-              <li>Collapsible source panel for side-by-side reading; click a word in the translation to see an alternative wording</li>
-              <li>There is a keyboard shortcut too: <span class="mono">Alt+Shift+T</span> (<span class="mono">Command+Shift+Y</span> on macOS)</li>
+              <li>In the popup, you can expand the original for comparison or temporarily switch the target language</li>
+              <li>Click a word in the translation to choose an alternative rendering</li>
+              <li>Shortcut: <span class="mono">Alt+Shift+T</span> (on macOS, <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
@@ -268,13 +266,11 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>Image translation</h3>
-            <p>Right-click an image to recognize the text in it, overlay the full translation directly over the original text, and save the result as a new image.</p>
+            <p>Right-click an image and the text in it is recognized, with the translation overlaid in place. The translated image can be downloaded or copied.</p>
             <ul>
-              <li>Dialogs, headings, and paragraphs are each translated as a whole; the shape of every text segment is outlined stroke by stroke, and translations are placed near their original positions without overlapping</li>
-              <li>Vertical text in Japanese manga stays vertical when translated into Chinese, Japanese, or Korean; furigana is not mixed into the translation</li>
-              <li>You can review the detected text shapes first, then move, delete, edit, or draw new ones before translating; background color is automatically sampled from the surrounding area</li>
-              <li>You can select only the areas to translate: rectangles or circles that can be dragged and resized, with multiple selections recognized in one pass</li>
-              <li>Results can be downloaded or copied as a new image, composited locally; you can also open the image panel to upload, paste an image, or enter an image URL</li>
+              <li>Vertical text in Japanese manga stays vertical when translated into Chinese, Japanese, or Korean</li>
+              <li>You can select only the part to translate, or adjust the recognized text regions before translating</li>
+              <li>You can also upload or paste an image, or enter an image URL</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -296,12 +292,11 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>Full PDF translation</h3>
-            <p>In a PDF opened in Chrome, right-click without selecting any text and the entire document is translated in a side panel. Translations are overlaid in place, preserving layout, figures, and tables.</p>
+            <p>Open a PDF in Chrome and right-click to translate the entire document. The translation is overlaid in place, with layout, figures, and tables unchanged.</p>
             <ul>
-              <li>Source and translation are shown side by side, or you can view only the translation or only the source; click a word in the translation to see an alternative wording</li>
-              <li>Tables are translated cell by cell, preserving rows, columns, and table lines; text that does not fit is automatically reduced in font size</li>
-              <li>Save as PDF via browser print; the translation is selectable and searchable text</li>
-              <li>Files are parsed locally; only the extracted text is sent to the translation platform. Local PDFs can be dragged directly into the translation page. Scanned documents are not supported yet</li>
+              <li>Original and translation can be viewed side by side</li>
+              <li>Save as PDF using the browser's print function; the translation remains selectable and searchable text</li>
+              <li>Files are parsed locally only; only the extracted text is sent. Scanned documents are not supported yet</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
@@ -323,11 +318,11 @@
           <div class="feature-copy reveal">
             <p class="no">05</p>
             <h3>Element translation</h3>
-            <p>Right-click a region on the page to attach a translation button to it. Click once and the text in the region is replaced in place with the selected language; click again to restore the original text.</p>
+            <p>Right-click a region of a web page to add a translate button to it. Click once to replace the text with the translation; click again to restore the original.</p>
             <ul>
-              <li>Rules are remembered per domain, so the button is attached automatically the next time you visit that site</li>
-              <li>Long content is sent in batches and replaced as it is translated, so you do not wait for the whole region</li>
-              <li>Saved rules can be reviewed and deleted one by one on the rules page</li>
+              <li>Buttons are remembered per site and appear automatically the next time you open the same site</li>
+              <li>Long content is translated in batches, showing each translated section as it is ready</li>
+              <li>Added buttons can be viewed and deleted on the management page</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
@@ -349,11 +344,10 @@
           <div class="feature-copy reveal">
             <p class="no">06</p>
             <h3>Translation panel</h3>
-            <p>A standalone page with the source on the left and the translation on the right, for passages that are not on a web page.</p>
+            <p>A standalone translation page: paste the source text on the left, get the translation on the right. Suitable for translating text that is not on a web page.</p>
             <ul>
-              <li>24 target languages available, covering major global languages</li>
-              <li>The source language can be auto-detected or specified manually, the target language is selected independently, and the panel remembers the last selection</li>
-              <li>Platform and target language are right on the toolbar, so you can switch and retranslate at any time; translated words can be clicked to see alternative wordings</li>
+              <li>The source language can be detected automatically or specified manually</li>
+              <li>After switching platforms or target languages, you can translate again directly</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -372,8 +366,8 @@
             <h3>Real-time video subtitles</h3>
           </div>
           <div>
-            <p>Optional experimental feature, off by default. Captures the sound of the current tab, recognizes it into subtitles, then translates them; speech recognition language and translation target are configured separately.</p>
-            <p>Recognition is performed locally by default, which requires browser support and a language pack download; you can also switch to the browser's cloud recognition, in which case audio is sent to the browser's speech service (Google for Chrome, Microsoft Azure for Edge). Accuracy and compatibility remain limited, so relying on it for important content is not recommended. The hosted service receives only the recognized text and does not provide audio or video upload or transcription.</p>
+            <p>Experimental feature, off by default. It recognizes the audio of the current tab as subtitles, then translates them into your language.</p>
+            <p>Recognition runs locally by default. If you switch to the browser's cloud recognition, the audio is sent to the browser's speech service (Google for Chrome, Microsoft Azure for Edge). Recognition accuracy is still limited; do not rely on it for important content.</p>
           </div>
         </aside>
       </div>
@@ -386,21 +380,21 @@
       <div class="lang-hero reveal" aria-hidden="true">24</div>
       <div class="section-head reveal">
         <p class="kicker">Languages</p>
-        <h2>Read the world's content in your language</h2>
-        <p>Interface language, translation source, and target are independent. On first use, the default target is chosen based on the browser language, and you can also fix it in settings.</p>
+        <h2>The interface and translations support 24 languages</h2>
+        <p>The interface language, source language, and target language are set separately. On first use, the target language follows the browser language by default and can be changed in settings.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
-          <b>24 interface and target languages</b>
+          <b>Supported languages</b>
           <p>Simplified Chinese, Traditional Chinese, English, Japanese, Korean, Spanish, Portuguese (Brazil), French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, and Thai.</p>
         </div>
         <div class="fact">
-          <b>Right-click entry follows the translation target</b>
-          <p>If the target is Japanese, the menu shows translation into Japanese; if the target is English, it shows translation into English. Selected Chinese can also be translated, so it is no longer designed only for Chinese readers.</p>
+          <b>The context menu shows the current target language</b>
+          <p>If the target language is set to Japanese, the menu item reads "Translate to Japanese". Even if the source is Chinese, you can translate into other languages.</p>
         </div>
         <div class="fact">
-          <b>Right-to-left reads naturally too</b>
-          <p>Arabic, Hebrew, Persian, and Urdu interfaces use a right-to-left layout. The source text and translation each determine their own direction without changing the page's own layout. The language combinations actually available depend on the selected platform.</p>
+          <b>Support for right-to-left languages</b>
+          <p>The interfaces for Arabic, Hebrew, Persian, and Urdu are laid out right to left. Source text and translations each display in their own direction, and the page's own layout is unaffected. Which languages can actually be translated depends on the translation platform you choose.</p>
         </div>
       </div>
     </div>
@@ -411,22 +405,22 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>Content is sent only when you trigger translation</h2>
-        <p>With your own Key, translated content is sent directly to the platform you choose. Credit-based translation routes through our servers to the model provider; the servers do not store images, source text, or translations. For how audio is handled when video subtitles are enabled, see the privacy policy.</p>
+        <h2>What leaves your browser</h2>
+        <p>Only content you actively translate is sent. When using your own Key, content goes directly to the platform you choose; when translating with credits, content is relayed through our server to the model provider, and the server does not store images, source text, or translations. See the privacy policy for how audio from video subtitles is handled.</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>Bring your own Key: direct connection</b>
-          <p>Requests go from your browser directly to the platform you select in settings, without passing through us. The API Key is stored in <span class="mono">chrome.storage.local</span> and is not synced through your Chrome account.</p>
+          <b>Using your own Key: does not go through us</b>
+          <p>Requests are sent directly from your browser to the platform you choose. The API Key is stored only in this browser and is not synced with your Chrome account.</p>
         </div>
         <div class="fact">
-          <b>Hosted service: translation content is not retained</b>
-          <p>Hosted text and images remain in memory only briefly while processing requests. Accounts store only the necessary email and username; usage, points, and subscription records are used to provide the service, and avatars, nicknames, or device fingerprints are not collected.</p>
+          <b>Credit-based translation: translation content is not stored</b>
+          <p>Text and images stay briefly in server memory only while a request is being processed. Accounts store only an email address and username, plus the usage, credit, and subscription records needed to provide the service. No avatars, nicknames, or device fingerprints are collected.</p>
         </div>
         <div class="fact">
           <b>No ads and no third-party analytics</b>
-          <p>No ads, tracking, or third-party analytics SDKs are used, and no data is sold or rented. Both the extension and server code are public under GPL-3.0 and can be reviewed line by line.</p>
+          <p>No ads, no tracking, no third-party analytics SDKs, and no selling or renting of data. Both the extension and server code are public under GPL-3.0, so you can verify this yourself.</p>
         </div>
       </div>
 
@@ -439,16 +433,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Use your own Key for free, or translate directly without a Key</h2>
-        <p>The extension is open source and free. After installation, you can try it without an API Key and subscribe when needed; just log in within the extension to use it.</p>
+        <h2>The extension is free; credit-based translation is available by subscription</h2>
+        <p>Using your own key is free. If you would rather not apply for a key, you can translate with credits: you get trial credits after installing, and you decide whether to subscribe once they run out.</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">Bring your own Key</b>
-          <span class="plan-status">Currently available</span>
+          <span class="plan-status">Requires your own key</span>
           <p class="plan-price">Free</p>
-          <p class="plan-desc">Enter your own OpenAI, DeepSeek, or DeepL Key; fees are charged by the platform based on usage.</p>
+          <p class="plan-desc">Enter your own OpenAI, DeepSeek, or DeepL key. Translation costs are billed to you by those platforms based on usage.</p>
           <ul>
             <li>Bilingual reading, text selection, images, full PDFs, and webpage region translation</li>
             <li>The Key is stored only in your browser</li>
@@ -456,9 +450,9 @@
         </div>
         <div class="plan">
           <b class="plan-name">Free trial</b>
-          <span class="plan-status">Currently available</span>
+          <span class="plan-status">No registration required</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">Visitors receive a 50.00-point trial, and registration adds another 200.00 points. Points do not expire and are deducted based on actual usage.</p>
+          <p class="plan-desc">Without registering you can try 50.00 credits; after registering you get another 200.00 credits. Credits do not expire, and you are charged only for what you use.</p>
           <ul>
             <li>No API Key required</li>
             <li>No credits are deducted if translation fails</li>
@@ -466,10 +460,10 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Subscription</b>
-          <span class="plan-status">Subscription available now</span>
+          <span class="plan-status">Cancel anytime</span>
           <p class="plan-price">$3.99<span>/ month</span></p>
           <p class="plan-alt">Or $29.99 / year, 37% less than monthly</p>
-          <p class="plan-desc">Point-based translation offers unlimited use and can be canceled at any time.</p>
+          <p class="plan-desc">During an active subscription, credit-based translation is unlimited.</p>
           <ul>
             <li>Unlimited usage under a fair use policy</li>
             <li>Full refund available within 7 days of first payment</li>
@@ -486,21 +480,21 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Account</p>
-        <h2>Use it in the extension, manage it in the user center</h2>
-        <p>The extension is the main entry point for login and translation; the website and user center share the same account and subscription benefits.</p>
+        <h2>One account for both the extension and the website</h2>
+        <p>Sign in to the extension to use credit-based translation. View credits, subscriptions, and orders in the user center.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
           <b>Sign in with email or Google</b>
-          <p>Sign in with an email verification code or Google account, complete authorization in the current browser tab, then return to the extension. Only an email and username are required.</p>
+          <p>Sign in with an email verification code or a Google account; only an email address and username are required.</p>
         </div>
         <div class="fact">
-          <b>Balance and status update promptly</b>
-          <p>When not subscribed, view remaining points; after subscribing, unlimited use is shown. The user center lets you view your usage, point history, subscriptions, orders, and sign-in sessions; after signing out of the current web session, the associated extension will also sign out.</p>
+          <b>View credits and subscriptions in the user center</b>
+          <p>The user center shows remaining credits, usage records, subscriptions, orders, and current sign-in sessions. Signing out on the website also signs out the corresponding extension.</p>
         </div>
         <div class="fact">
-          <b>Keep the option to use your own key at any time</b>
-          <p>Hosted translation and your own key can be switched between. Requests with your own key connect directly to the platform, do not deduct hosted points, and do not require purchasing our subscription.</p>
+          <b>You can still use your own key after subscribing</b>
+          <p>You can switch between credit-based translation and your own key at any time. Using your own key does not deduct credits and does not require a subscription.</p>
         </div>
       </div>
     </div>
@@ -512,7 +506,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>Install from the Chrome or Edge store</h2>
-        <p>Available in both the Chrome Web Store and the Microsoft Edge Add-ons store; version 116 or later is required. Other Chromium-based browsers such as Brave can install from the Chrome Web Store.</p>
+        <p>Available in the Chrome Web Store and the Microsoft Edge Add-ons store; browser version 116 or later is required. Chromium-based browsers such as Brave install from the Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
@@ -526,7 +520,7 @@
           <div><b>Pin to the toolbar</b> <span>Click the puzzle icon and pin the extension to the toolbar.</span></div>
         </div>
         <div class="step">
-          <div><b>Start translating</b> <span>Enter your own API Key in settings, select text, and right-click to translate.</span></div>
+          <div><b>Start translating</b> <span>Select some text and translate it from the context menu. You can use trial credits first without entering a key.</span></div>
         </div>
       </div>
 
@@ -543,8 +537,8 @@
   <!-- ===================================================== 结尾 CTA（和页脚一起作为最后一屏） -->
   <section class="wrap closing" data-slide>
     <div class="cta reveal">
-      <h2>Install it, then forget about it</h2>
-      <p>Until the next time you select a passage you cannot read.</p>
+      <h2>Try it now</h2>
+      <p>No sign-up and no API Key required. Translate right after installation.</p>
       <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Add to Chrome</span><span data-for-browser="edge" hidden>Add to Edge</span></a> <a class="btn btn-ghost" href="/en/changelog.html">Changelog</a></div>
     </div>
   </section>

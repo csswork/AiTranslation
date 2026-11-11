@@ -85,7 +85,7 @@
       <div class="hero-copy">
         <a class="release-pill" href="/de/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>Neue Version: Zweisprachiges Lesen verwandelt Webseitenartikel in eine Absatz für Absatz gegenübergestellte Leseansicht.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Markieren, Rechtsklick,<br /><span class="dim">weiterlesen.</span></h1>
-        <p class="hero-sub">Eine Chrome-Erweiterung. Markieren Sie Text, einen ganzen Webseitenbereich, ein Bild oder einen ganzen Artikel, um ihn in Ihre vertraute Sprache zu übersetzen. 24 Oberflächen- und Zielsprachen sind unabhängig wählbar; mit einem eigenen OpenAI-, DeepSeek- oder DeepL-API Key kann es losgehen.</p>
+        <p class="hero-sub">Ein Satz, ein Bild, ein PDF oder ein ganzer Artikel auf einer Webseite lässt sich per Rechtsklick in Ihre Sprache übersetzen. Nach der Installation sofort nutzbar, ohne zuerst einen API Key einzugeben; wer möchte, kann auch den eigenen OpenAI-, DeepSeek- oder DeepL-Key verwenden.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -95,7 +95,7 @@
           <li><b>Open Source</b> GPL-3.0 · 24 Sprachen</li>
           <li>Chrome / Edge 116+</li>
           <li>Keine Speicherung von Übersetzungen · Keine Statistiken von Drittanbietern</li>
-          <li>Sechs Übersetzungsarten</li>
+          <li>Auch ohne Key testen</li>
         </ul>
       </div>
 
@@ -208,18 +208,17 @@
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
           <h2>Sechs Einstiegspunkte, alle im Kontextmenü</h2>
-          <p>Kein Tab-Wechsel, kein Kopieren und Einfügen. Wo die Passage steht, die Sie nicht verstehen, dort findet auch die Übersetzung statt.</p>
+          <p>Zu jeder Funktion gibt es eine Demo, scrollen Sie weiter.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Zweisprachiges Lesen<span class="new">Neue Funktion</span></h3>
-            <p>Ohne Textauswahl auf einer Webseite mit Rechtsklick wählen; Überschriften und Fließtext werden erkannt, und daneben öffnet sich eine übersichtliche Leseansicht: Original und Übersetzung Absatz für Absatz gegenübergestellt, Navigation, Werbung und Empfehlungsmodule bleiben außen vor.</p>
+            <p>Rechtsklick auf eine freie Stelle einer Artikelseite und „Diesen Artikel zweisprachig lesen“ wählen; es öffnet sich eine Leseseite mit nur dem Haupttext. Original und Übersetzung Absatz für Absatz, ohne Navigation und Werbung.</p>
             <ul>
-              <li>Bei nebeneinander liegender Anordnung sind die Absätze oben bündig; auch untereinander, nur Übersetzung oder nur Original sind möglich</li>
-              <li>Klicken Sie ein beliebiges Wort in der Übersetzung an, um mehrere andere Varianten zu sehen oder selbst umzuformulieren; geänderte Formulierungen werden gemerkt und bei späteren Übersetzungen bevorzugt verwendet</li>
-              <li>Erscheinungsbild hell, dunkel oder systemabhängig; Farben, Schriftart, Schriftgröße, Zeilenabstand und Satzspiegel sind einstellbar</li>
-              <li>Zusammen mit der Übersetzung lokal gespeichert, jederzeit rechts zu öffnen, ohne erneute Übersetzung</li>
+              <li>Nebeneinander, untereinander, oder nur Übersetzung bzw. nur Original anzeigen</li>
+              <li>Ein Klick auf ein Wort in der Übersetzung wählt eine andere Übersetzungsvariante; die geänderte Variante wird künftig bevorzugt verwendet</li>
+              <li>Artikel und Übersetzung können lokal gespeichert werden, beim nächsten Öffnen ist keine erneute Übersetzung nötig</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -241,12 +240,11 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Auswahlübersetzung</h3>
-            <p>Nach dem Markieren von Text per Rechtsklick übersetzen; die Übersetzung erscheint in einem zentrierten Popup. Plattformen mit Streaming-Ausgabe können den Text zeichenweise anzeigen. Beim vorübergehenden Wechsel der Zielsprache wird der Ausgangstext neu übersetzt.</p>
+            <p>Text markieren, per Rechtsklick übersetzen; die Übersetzung erscheint in einem Popup in der Seitenmitte.</p>
             <ul>
-              <li>Chinesisch, kurze Wörter und gemischte Sprachen lassen sich übersetzen; bei reinen Zahlen, Satzzeichen und Emojis wird kein Übersetzungseinstieg angezeigt</li>
-              <li>Das Popup ist zentriert und verschiebbar, schließt mit <span class="mono">Esc</span> oder einem Klick auf den Hintergrund – keine kleine Sprechblase, die dem Cursor folgt</li>
-              <li>Einklappbares Originaltext-Panel zum vergleichenden Lesen; ein Klick auf ein Wort in der Übersetzung zeigt eine alternative Formulierung</li>
-              <li>Es gibt auch einen Kurzbefehl: <span class="mono">Alt+Shift+T</span> (unter macOS <span class="mono">Command+Shift+Y</span>)</li>
+              <li>Im Popup lässt sich das Original zum Vergleich einblenden oder vorübergehend eine andere Zielsprache wählen</li>
+              <li>Ein Klick auf ein Wort in der Übersetzung wählt eine andere Übersetzungsvariante</li>
+              <li>Tastenkürzel: <span class="mono">Alt+Shift+T</span> (unter macOS <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
@@ -268,13 +266,11 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>Bildübersetzung</h3>
-            <p>Rechtsklick auf ein Bild, Text im Bild erkennen und die gesamte Übersetzung an der Position des Originaltexts überlagern; das Ergebnis kann auch als neues Bild gespeichert werden.</p>
+            <p>Rechtsklick auf ein Bild: Der Text im Bild wird erkannt, die Übersetzung wird an der ursprünglichen Stelle eingeblendet. Das übersetzte Bild lässt sich herunterladen oder kopieren.</p>
             <ul>
-              <li>Dialoge, Überschriften und Absätze werden jeweils als ganzer Absatz übersetzt; die Form jedes Textabschnitts wird entlang der Kontur erfasst, und die Übersetzungen werden in der Nähe ihrer Originalposition platziert, ohne sich gegenseitig zu überdecken</li>
-              <li>Vertikaler Text in japanischen Manga bleibt beim Übersetzen ins Chinesische, Japanische oder Koreanische vertikal; Furigana gelangen nicht in die Übersetzung</li>
-              <li>Zunächst können die erkannten Textformen geprüft, verschoben, gelöscht, geändert oder neu gezeichnet und erst danach übersetzt werden; die Hintergrundfarbe wird automatisch aus den umgebenden Farbtönen des Textes übernommen</li>
-              <li>Es kann nur der zu übersetzende Bereich ausgewählt werden: Rechteck oder Kreis, verschiebbar und in der Größe anpassbar; mehrere Auswahlbereiche werden in einem Durchgang erkannt</li>
-              <li>Ergebnisse können als neues Bild heruntergeladen oder kopiert werden, die Zusammenführung erfolgt lokal; alternativ lässt sich das Bildfenster öffnen, um Bilder hochzuladen, einzufügen oder eine Bild-URL einzugeben</li>
+              <li>Vertikaler Text in japanischen Manga bleibt beim Übersetzen ins Chinesische, Japanische oder Koreanische vertikal</li>
+              <li>Es kann nur ein Teilbereich ausgewählt oder zuerst der erkannte Textbereich angepasst und dann übersetzt werden</li>
+              <li>Bilder können auch hochgeladen, eingefügt oder per Bildadresse eingegeben werden</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -296,12 +292,11 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>Übersetzung ganzer PDF-Dateien</h3>
-            <p>In einem in Chrome geöffneten PDF ohne Textauswahl direkt das Kontextmenü öffnen: Das gesamte Dokument wird auf einer benachbarten Seite übersetzt. Die Übersetzung wird an der ursprünglichen Position eingeblendet; Layout, Diagramme und Tabellen bleiben unverändert.</p>
+            <p>PDF in Chrome öffnen und per Rechtsklick das gesamte Dokument übersetzen. Die Übersetzung wird an der ursprünglichen Stelle eingeblendet, Layout, Diagramme und Tabellen bleiben unverändert.</p>
             <ul>
-              <li>Original und Übersetzung stehen nebeneinander zum Vergleich; es kann auch nur die Übersetzung oder nur das Original angezeigt werden; ein Klick auf ein Wort in der Übersetzung zeigt eine alternative Formulierung</li>
-              <li>Tabellen werden Zelle für Zelle übersetzt, Zeilen, Spalten und Tabellenlinien bleiben erhalten; zu lange Übersetzungen werden automatisch verkleinert</li>
-              <li>Über den Browser-Druck als PDF speichern; die Übersetzung ist auswählbarer und durchsuchbarer Text</li>
-              <li>Dateien werden ausschließlich lokal verarbeitet; nur der extrahierte Text wird an die Übersetzungsplattform gesendet. Lokale PDFs lassen sich direkt in die Übersetzungsseite ziehen. Gescannte Dokumente werden derzeit nicht unterstützt</li>
+              <li>Original und Übersetzung lassen sich nebeneinander vergleichen</li>
+              <li>Beim Speichern als PDF über die Druckfunktion des Browsers bleibt die Übersetzung als auswählbarer und durchsuchbarer Text erhalten</li>
+              <li>Die Datei wird nur lokal verarbeitet, übertragen wird ausschließlich der extrahierte Text. Gescannte Dokumente werden derzeit nicht unterstützt</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
@@ -323,11 +318,11 @@
           <div class="feature-copy reveal">
             <p class="no">05</p>
             <h3>Elementübersetzung</h3>
-            <p>Rechtsklick auf einen Bereich der Seite, um ihm eine Übersetzungsschaltfläche zuzuweisen. Ein Klick ersetzt den Text im Bereich direkt durch die gewählte Sprache, ein weiterer Klick stellt das Original wieder her.</p>
+            <p>Rechtsklick auf einen Bereich einer Webseite, um ihm eine Übersetzungsschaltfläche hinzuzufügen. Ein Klick ersetzt den Text durch die Übersetzung, ein weiterer Klick stellt das Original wieder her.</p>
             <ul>
-              <li>Regeln werden pro Domain gespeichert; beim nächsten Besuch derselben Website wird die Schaltfläche automatisch angebracht</li>
-              <li>Lange Inhalte werden in Stapeln gesendet und während der Übersetzung ersetzt, sodass Sie nicht auf den gesamten Bereich warten müssen</li>
-              <li>Gespeicherte Regeln lassen sich auf der Verwaltungsseite einzeln ansehen und löschen</li>
+              <li>Die Schaltfläche wird pro Website gespeichert und erscheint beim nächsten Öffnen derselben Website automatisch</li>
+              <li>Bei sehr langen Inhalten wird abschnittsweise übersetzt; jeder fertige Abschnitt wird sofort angezeigt</li>
+              <li>Hinzugefügte Schaltflächen lassen sich auf der Verwaltungsseite anzeigen und löschen</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
@@ -349,11 +344,10 @@
           <div class="feature-copy reveal">
             <p class="no">06</p>
             <h3>Übersetzungsbereich</h3>
-            <p>Eine eigenständige Seite: links der Ausgangstext, rechts die Übersetzung – geeignet für zusammenhängende Textpassagen, die nicht auf einer Webseite stehen.</p>
+            <p>Eine separate Übersetzungsseite: links den Originaltext einfügen, rechts erscheint die Übersetzung. Geeignet für Texte, die nicht auf einer Webseite stehen.</p>
             <ul>
-              <li>24 Zielsprachen zur Auswahl, die wichtigsten Sprachen weltweit abgedeckt</li>
-              <li>Die Ausgangssprache kann automatisch erkannt oder manuell festgelegt werden, die Zielsprache wird separat gewählt, das Panel merkt sich die letzte Auswahl</li>
-              <li>Plattform und Zielsprache befinden sich direkt in der Symbolleiste und können jederzeit gewechselt werden, um neu zu übersetzen; übersetzte Wörter lassen sich anklicken, um alternative Formulierungen anzuzeigen</li>
+              <li>Die Ausgangssprache kann automatisch erkannt oder manuell festgelegt werden</li>
+              <li>Nach einem Wechsel der Plattform oder der Zielsprache kann direkt neu übersetzt werden</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -372,8 +366,8 @@
             <h3>Echtzeit-Untertitel für Videos</h3>
           </div>
           <div>
-            <p>Optionales experimentelles Feature, standardmäßig deaktiviert. Der Ton des aktuellen Tabs wird erfasst, als Untertitel erkannt und anschließend übersetzt; Spracherkennungssprache und Übersetzungsziel werden getrennt eingestellt.</p>
-            <p>Standardmäßig erfolgt die Erkennung lokal; der Browser muss dies unterstützen und ein Sprachpaket herunterladen. Sie können auch aktiv zur cloudbasierten Erkennung des Browsers wechseln; dabei wird die Audiodaten an den Sprachdienst des Browsers gesendet (bei Chrome an Google, bei Edge an Microsoft Azure). Die Erkennungsgenauigkeit und Kompatibilität sind weiterhin begrenzt; es wird nicht empfohlen, sich bei wichtigen Inhalten darauf zu verlassen. Der Hosting-Dienst empfängt nur den erkannten Text; das Hochladen und Transkribieren von Audio- und Videodateien wird nicht angeboten.</p>
+            <p>Experimentelle Funktion, standardmäßig deaktiviert. Sie erkennt den Ton des aktuellen Tabs als Untertitel und übersetzt ihn in deine Sprache.</p>
+            <p>Die Erkennung erfolgt standardmäßig lokal. Wenn du stattdessen die cloudbasierte Erkennung des Browsers verwendest, wird der Ton an den Sprachdienst des Browsers gesendet (bei Chrome an Google, bei Edge an Microsoft Azure). Die Erkennungsgenauigkeit ist noch begrenzt; verlasse dich bei wichtigen Inhalten nicht darauf.</p>
           </div>
         </aside>
       </div>
@@ -386,21 +380,21 @@
       <div class="lang-hero reveal" aria-hidden="true">24</div>
       <div class="section-head reveal">
         <p class="kicker">Languages</p>
-        <h2>In deiner Sprache die Inhalte der Welt lesen</h2>
-        <p>Oberflächensprache, Übersetzungsquelle und Ziel sind jeweils unabhängig. Bei der ersten Nutzung wird anhand der Browsersprache ein Standardziel gewählt; in den Einstellungen kann es auch festgelegt werden.</p>
+        <h2>Oberfläche und Übersetzungen unterstützen 24 Sprachen</h2>
+        <p>Oberflächensprache, Ausgangssprache und Zielsprache werden getrennt eingestellt. Bei der ersten Verwendung folgt die Zielsprache standardmäßig der Browsersprache und kann in den Einstellungen geändert werden.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
-          <b>24 Oberflächen- und Zielsprachen</b>
+          <b>Unterstützte Sprachen</b>
           <p>Vereinfachtes Chinesisch, traditionelles Chinesisch, Englisch, Japanisch, Koreanisch, Spanisch, Portugiesisch (Brasilien), Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch und Thailändisch.</p>
         </div>
         <div class="fact">
-          <b>Rechtsklick-Einstieg folgt dem Übersetzungsziel</b>
-          <p>Ist Japanisch als Ziel gewählt, zeigt das Menü die Übersetzung ins Japanische an; ist Englisch als Ziel gewählt, die Übersetzung ins Englische. Auch markiertes Chinesisch kann übersetzt werden; es ist nicht mehr nur für chinesische Leser gedacht.</p>
+          <b>Das Kontextmenü zeigt die aktuelle Zielsprache an</b>
+          <p>Ist die Zielsprache auf Japanisch gesetzt, lautet der Menüeintrag „Auf Japanisch übersetzen“. Auch ein chinesischer Ausgangstext kann in andere Sprachen übersetzt werden.</p>
         </div>
         <div class="fact">
-          <b>Auch von rechts nach links natürlich lesbar</b>
-          <p>Die Oberflächen für Arabisch, Hebräisch, Persisch und Urdu verwenden ein Layout von rechts nach links. Ausgangstext und Übersetzung bestimmen ihre Richtung jeweils selbst und verändern das Layout der Webseite nicht. Die tatsächlich verfügbaren Sprachkombinationen hängen von der gewählten Plattform ab.</p>
+          <b>Unterstützung für Sprachen mit Rechts-nach-links-Schreibrichtung</b>
+          <p>Die Oberfläche für Arabisch, Hebräisch, Persisch und Urdu wird von rechts nach links gesetzt. Originaltext und Übersetzung werden jeweils in ihrer eigenen Richtung angezeigt; das Layout der Webseite selbst bleibt unberührt. Welche Sprachen tatsächlich übersetzt werden können, hängt von der gewählten Übersetzungsplattform ab.</p>
         </div>
       </div>
     </div>
@@ -411,22 +405,22 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>Inhalte werden erst gesendet, wenn du die Übersetzung auslöst</h2>
-        <p>Bei eigenem Key werden die Übersetzungsinhalte direkt an die gewählte Plattform gesendet. Bei der Punkteübersetzung werden sie über unsere Server an den Modellanbieter weitergeleitet; die Server speichern weder Bilder noch Ausgangstext oder Übersetzung. Wie Audiodaten bei aktivierten Videountertiteln verarbeitet werden, ist in der Datenschutzerklärung beschrieben.</p>
+        <h2>Welche Inhalte deinen Browser verlassen</h2>
+        <p>Nur die von dir aktiv übersetzten Inhalte werden gesendet. Bei Verwendung eines eigenen Keys gehen die Inhalte direkt an die von dir gewählte Plattform; bei der Übersetzung mit Punkten werden die Inhalte über unseren Server an den Modellanbieter weitergeleitet, wobei der Server keine Bilder, Originaltexte und Übersetzungen speichert. Zur Tonverarbeitung bei Video-Untertiteln siehe die Datenschutzerklärung.</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>Eigener Key: direkte Verbindung zur Plattform</b>
-          <p>Die Anfrage geht direkt von Ihrem Browser an die in den Einstellungen gewählte Plattform und nicht über uns. Der API Key wird in <span class="mono">chrome.storage.local</span> gespeichert und nicht über das Chrome-Konto synchronisiert.</p>
+          <b>Eigener Key: keine Weiterleitung über uns</b>
+          <p>Die Anfrage wird direkt von deinem Browser an die von dir gewählte Plattform gesendet. Der API Key wird nur in diesem Browser gespeichert und nicht mit dem Chrome-Konto synchronisiert.</p>
         </div>
         <div class="fact">
-          <b>Gehosteter Dienst: keine Speicherung von Übersetzungsinhalten</b>
-          <p>Gehosteter Text und gehostete Bilder verbleiben nur während der Verarbeitung einer Anfrage kurzzeitig im Arbeitsspeicher. Das Konto speichert nur die erforderliche E-Mail-Adresse und den Benutzernamen; Nutzung, Punkte und Abonnementdaten dienen der Bereitstellung des Dienstes. Avatare, Anzeigenamen oder Gerätefingerabdrücke werden nicht erfasst.</p>
+          <b>Übersetzung mit Punkten: keine Speicherung der Übersetzungsinhalte</b>
+          <p>Texte und Bilder bleiben nur während der Verarbeitung einer Anfrage kurzzeitig im Arbeitsspeicher des Servers. Das Konto speichert ausschließlich E-Mail-Adresse und Benutzername sowie die für die Bereitstellung des Dienstes erforderlichen Nutzungs-, Punkt- und Abonnementdaten. Profilbilder, Anzeigenamen und Gerätefingerabdrücke werden nicht erfasst.</p>
         </div>
         <div class="fact">
-          <b>Keine Werbung und keine Statistiken Dritter</b>
-          <p>Es werden keine Werbung, kein Tracking und keine Statistik-SDKs Dritter eingesetzt; Daten werden weder verkauft noch vermietet. Der Code der Erweiterung und des Servers ist unter GPL-3.0 offengelegt und kann Zeile für Zeile geprüft werden.</p>
+          <b>Keine Werbung und keine Drittanbieter-Statistiken</b>
+          <p>Keine Werbung, kein Tracking, keine SDKs von Drittanbieter-Statistikdiensten, kein Verkauf oder Vermieten von Daten. Der Code der Erweiterung und des Servers ist unter GPL-3.0 offengelegt und kann selbst überprüft werden.</p>
         </div>
       </div>
 
@@ -439,16 +433,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Kostenlos mit eigenem Key oder direkt Key-frei übersetzen</h2>
-        <p>Die Erweiterung ist quelloffen und kostenlos. Nach der Installation kann sie ohne API Key getestet werden; bei Bedarf ist ein Abonnement möglich. Die Anmeldung erfolgt direkt in der Erweiterung.</p>
+        <h2>Die Erweiterung ist kostenlos, Punktübersetzungen sind im Abonnement erhältlich</h2>
+        <p>Mit eigenem Key entstehen keine Kosten. Wer keinen Key beantragen möchte, kann Punktübersetzungen nutzen: Nach der Installation gibt es zunächst Testpunkte, danach entscheiden Sie, ob ein Abonnement gewünscht ist.</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">Eigener Key</b>
-          <span class="plan-status">Derzeit verfügbar</span>
+          <span class="plan-status">Eigener Key erforderlich</span>
           <p class="plan-price">Kostenlos</p>
-          <p class="plan-desc">Hinterlegen Sie Ihren eigenen OpenAI-, DeepSeek- oder DeepL-Key; die Kosten werden von der Plattform nutzungsabhängig berechnet.</p>
+          <p class="plan-desc">Tragen Sie Ihren eigenen OpenAI-, DeepSeek- oder DeepL-Key ein. Die Übersetzungskosten werden von diesen Plattformen nutzungsabhängig in Rechnung gestellt.</p>
           <ul>
             <li>Bilinguales Lesen, Huaci, Bilder, vollständige PDFs und Übersetzung von Webseitenbereichen</li>
             <li>Der Key wird nur in Ihrem Browser gespeichert</li>
@@ -456,9 +450,9 @@
         </div>
         <div class="plan">
           <b class="plan-name">Kostenlos testen</b>
-          <span class="plan-status">Derzeit verfügbar</span>
+          <span class="plan-status">Keine Registrierung erforderlich</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">Gäste erhalten 50.00 Punkte zum Testen, bei Registrierung zusätzlich 200.00 Punkte. Punkte verfallen nicht und werden nach tatsächlicher Nutzung abgezogen.</p>
+          <p class="plan-desc">Ohne Registrierung können 50,00 Punkte testweise genutzt werden, nach der Registrierung gibt es weitere 200,00 Punkte. Punkte verfallen nicht, abgerechnet wird nur der tatsächliche Verbrauch.</p>
           <ul>
             <li>Kein API Key erforderlich</li>
             <li>Bei fehlgeschlagener Übersetzung werden keine Punkte abgezogen</li>
@@ -466,10 +460,10 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Abonnement</b>
-          <span class="plan-status">Derzeit abonnierbar</span>
+          <span class="plan-status">Jederzeit kündbar</span>
           <p class="plan-price">$3.99<span>/ Monat</span></p>
           <p class="plan-alt">Oder $29.99 / Jahr, 37 % günstiger als die monatliche Zahlung</p>
-          <p class="plan-desc">Punkte ermöglichen unbegrenzte Übersetzungen; jederzeit kündbar.</p>
+          <p class="plan-desc">Während des Abonnements sind Punktübersetzungen unbegrenzt.</p>
           <ul>
             <li>Unbegrenzte Nutzung nach dem Grundsatz der angemessenen Nutzung</li>
             <li>Volle Rückerstattung innerhalb von 7 Tagen nach der ersten Zahlung möglich</li>
@@ -486,21 +480,21 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Account</p>
-        <h2>In der Erweiterung nutzen, im Nutzerzentrum verwalten</h2>
-        <p>Die Erweiterung ist der zentrale Einstiegspunkt für Anmeldung und Übersetzung; Website und Nutzerzentrum teilen dasselbe Konto und dieselben Abo-Vorteile.</p>
+        <h2>Ein Konto für Erweiterung und Website</h2>
+        <p>Nach der Anmeldung in der Erweiterung können Punktübersetzungen genutzt werden. Punkte, Abonnements und Bestellungen sind im Benutzerkonto einsehbar.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
           <b>Anmeldung per E-Mail oder Google</b>
-          <p>Anmeldung per E-Mail-Code oder Google-Konto; nach Autorisierung im aktuellen Browser-Tab zurück zur Erweiterung. Es werden nur E-Mail und Benutzername benötigt.</p>
+          <p>Anmeldung per E-Mail-Bestätigungscode oder Google-Konto, es werden nur E-Mail-Adresse und Benutzername benötigt.</p>
         </div>
         <div class="fact">
-          <b>Guthaben und Status werden zeitnah aktualisiert</b>
-          <p>Ohne Abonnement werden die verbleibenden Punkte angezeigt, mit Abonnement unbegrenzte Nutzung. Im Nutzerzentrum sind eigene Nutzung, Punkteverlauf, Abonnement, Bestellungen und Anmeldesitzungen einsehbar; nach Abmeldung der aktuellen Websitzung wird auch die verknüpfte Erweiterung abgemeldet.</p>
+          <b>Punkte und Abonnements im Benutzerkonto einsehbar</b>
+          <p>Im Benutzerkonto sind verbleibende Punkte, Nutzungsverlauf, Abonnements, Bestellungen und die aktuelle Anmeldesitzung einsehbar. Eine Abmeldung auf der Website meldet auch die zugehörige Erweiterung ab.</p>
         </div>
         <div class="fact">
-          <b>Die Option für einen eigenen Key bleibt jederzeit erhalten</b>
-          <p>Verwaltete Übersetzung und eigener Key sind umschaltbar. Anfragen mit eigenem Key verbinden direkt mit der Plattform, verbrauchen keine verwalteten Punkte und erfordern kein Abonnement bei uns.</p>
+          <b>Auch mit Abonnement kann der eigene Key weiter verwendet werden</b>
+          <p>Zwischen Punktübersetzungen und eigenem Key kann jederzeit gewechselt werden. Mit eigenem Key werden keine Punkte abgezogen und es ist kein Abonnement erforderlich.</p>
         </div>
       </div>
     </div>
@@ -512,7 +506,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>Aus dem Chrome- oder Edge-Store installieren</h2>
-        <p>Die Erweiterung ist sowohl im Chrome Web Store als auch im Microsoft Edge Add-ons Store verfügbar; erforderlich ist Version 116 oder höher. Andere Chromium-basierte Browser wie Brave können aus dem Chrome Web Store installiert werden.</p>
+        <p>Die Installation ist über den Chrome Web Store und den Microsoft Edge Add-ons Store möglich, der Browser muss Version 116 oder höher haben. Chromium-basierte Browser wie Brave installieren über den Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
@@ -526,7 +520,7 @@
           <div><b>An die Symbolleiste anheften</b> <span>Klicken Sie auf das Puzzleteil-Symbol und heften Sie die Erweiterung an die Symbolleiste.</span></div>
         </div>
         <div class="step">
-          <div><b>Übersetzung starten</b> <span>Hinterlegen Sie in den Einstellungen Ihren eigenen API Key, markieren Sie Text und übersetzen Sie per Rechtsklick.</span></div>
+          <div><b>Übersetzung starten</b> <span>Text markieren und per Rechtsklick übersetzen. Auch ohne Key können zunächst Testpunkte genutzt werden.</span></div>
         </div>
       </div>
 
@@ -543,8 +537,8 @@
   <!-- ===================================================== 结尾 CTA（和页脚一起作为最后一屏） -->
   <section class="wrap closing" data-slide>
     <div class="cta reveal">
-      <h2>Installieren und vergessen</h2>
-      <p>Bis zum nächsten Mal, wenn Sie wieder eine Passage markieren, die Sie nicht verstehen.</p>
+      <h2>Jetzt installieren und ausprobieren</h2>
+      <p>Keine Registrierung, kein Key erforderlich – nach der Installation sofort einsatzbereit.</p>
       <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Zu Chrome hinzufügen</span><span data-for-browser="edge" hidden>Zu Edge hinzufügen</span></a> <a class="btn btn-ghost" href="/de/changelog.html">Änderungsprotokoll</a></div>
     </div>
   </section>

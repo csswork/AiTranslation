@@ -85,7 +85,7 @@
       <div class="hero-copy">
         <a class="release-pill" href="/zh-Hant/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：雙語閱讀，把網頁文章變成逐段對照的閱讀頁。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">一個 Chrome 擴充功能。選中文字、整塊網頁區域、一張圖片，或整篇文章，就能譯成你熟悉的語言。24 種介面與目標語言可獨立選擇，用自己的 OpenAI、DeepSeek 或 DeepL API Key 即可開始。</p>
+        <p class="hero-sub">網頁上的一句話、一張圖片、一份 PDF，或者一整篇文章，按右鍵就能翻譯成你的語言。裝好就能用，不用先填 API Key；想用自己的 OpenAI、DeepSeek 或 DeepL Key 也可以。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -95,7 +95,7 @@
           <li><b>開源</b> GPL-3.0 · 24 種語言</li>
           <li>Chrome / Edge 116+</li>
           <li>不儲存譯文 · 無第三方統計</li>
-          <li>六種翻譯方式</li>
+          <li>不填 Key 也能試用</li>
         </ul>
       </div>
 
@@ -208,18 +208,17 @@
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
           <h2>六個入口，都在右鍵選單裡</h2>
-          <p>不用切換分頁，不用複製貼上。看不懂的那一段在哪裡，翻譯就發生在哪裡。</p>
+          <p>每一種都配了一段演示，往下看。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>雙語閱讀<span class="new">新功能</span></h3>
-            <p>在網頁上不選文字直接右鍵，掃描識別出標題和正文，在旁邊打開一個乾淨的閱讀頁：原文與譯文逐段對齊，導航、廣告和推薦模組都不進來。</p>
+            <p>在文章頁面的空白處按右鍵，選「雙語閱讀這篇文章」，會開啟一個只有正文的閱讀頁。原文和譯文一段對一段，沒有導覽和廣告。</p>
             <ul>
-              <li>左右並排時每段頂端對齊，也能上下對照、只看譯文或只看原文</li>
-              <li>點譯文裡的任意一個詞，看幾種其他譯法或自己改寫；換過的說法會記住，之後翻譯優先使用</li>
-              <li>外觀可選淺色、深色或跟隨系統，配色、字體、字號、行距與版心都能調</li>
-              <li>連同譯文保存在本機，右側隨時打開，不用再翻譯</li>
+              <li>可以左右並排、上下對照，也可以只看譯文或只看原文</li>
+              <li>點譯文裡的詞能換一種譯法，換過的說法之後會優先使用</li>
+              <li>文章和譯文可以存在本機，下次開啟不用重新翻譯</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -241,12 +240,11 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>劃詞翻譯</h3>
-            <p>選取文字後右鍵翻譯，譯文在居中彈窗裡顯示；支援串流輸出的平台可逐字呈現。臨時換個目標語言，會用原文重新翻譯。</p>
+            <p>選取一段文字，按右鍵翻譯，譯文顯示在頁面中間的彈窗裡。</p>
             <ul>
-              <li>中文、短詞和混合語言都可以翻譯；純數字、標點和表情不顯示翻譯入口</li>
-              <li>彈出視窗置中且可拖曳，按 <span class="mono">Esc</span> 或點擊背景即可關閉，不是追著游標跑的小氣泡</li>
-              <li>可摺疊的原文面板，對照著讀；點譯文裡的詞能換一種說法</li>
-              <li>也有鍵盤快速鍵：<span class="mono">Alt+Shift+T</span>（macOS 為 <span class="mono">Command+Shift+Y</span>）</li>
+              <li>彈窗裡可以展開原文對照，也可以臨時換一種目標語言</li>
+              <li>點譯文裡的詞能換一種譯法</li>
+              <li>快速鍵：<span class="mono">Alt+Shift+T</span>（macOS 為 <span class="mono">Command+Shift+Y</span>）</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
@@ -268,13 +266,11 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>圖片翻譯</h3>
-            <p>在圖片上按右鍵，辨識圖中的文字，將整段譯文貼回原文位置覆蓋，還能存成一張新圖片。</p>
+            <p>對一張圖片按右鍵，圖裡的文字會被辨識出來，譯文蓋在原來的位置上。譯好的圖可以下載或複製。</p>
             <ul>
-              <li>對話框、標題、段落各按整段翻譯，按筆畫勾出每段文字的形狀，譯文排在原位附近、互不遮擋</li>
-              <li>日文漫畫的直排文字譯成中文、日文或韓文時保持直排，注音假名不會混進譯文</li>
-              <li>可以先看辨識出的文字形狀，移動、刪改或新畫後再翻譯；底色自動取文字周圍的相近色</li>
-              <li>可以只框選要翻譯的地方：矩形或圓形，能拖曳、調整大小，多個選區一次辨識</li>
-              <li>結果可下載或複製成新圖片，在本機合成；也可開啟圖片面板，上傳、貼上圖片或輸入圖片網址</li>
+              <li>日文漫畫的直排文字譯成中文、日文或韓文時保持直排</li>
+              <li>可以只框選要翻譯的部分，也可以先調整辨識出的文字區域再翻譯</li>
+              <li>也能上傳、貼上圖片，或輸入圖片網址</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -296,12 +292,11 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>整份 PDF 翻譯</h3>
-            <p>在 Chrome 開啟的 PDF 裡，不選文字直接按右鍵，整份文件在旁邊的頁面裡翻譯。譯文按原位置覆蓋回去，版面、圖表與表格都不變。</p>
+            <p>在 Chrome 裡開啟 PDF，按右鍵就能翻譯整份文件。譯文蓋在原來的位置，版面、圖表和表格不變。</p>
             <ul>
-              <li>原文和譯文並排對照，也可以只看譯文或只看原文；點譯文裡的詞能換一種說法</li>
-              <li>表格逐格翻譯，行列與表格線保持原樣；放不下的譯文自動縮小字號</li>
-              <li>透過瀏覽器列印另存為 PDF，譯文是可選取、可搜尋的文字</li>
-              <li>檔案只在本機解析，只有擷取出的文字傳送給翻譯平台；本機 PDF 可以直接拖進翻譯頁。暫不支援掃描件</li>
+              <li>原文和譯文可以並排對照</li>
+              <li>用瀏覽器的列印功能另存為 PDF，譯文仍是可以選取和搜尋的文字</li>
+              <li>檔案只在本機解析，送出的只有擷取出的文字。暫不支援掃描件</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
@@ -323,11 +318,11 @@
           <div class="feature-copy reveal">
             <p class="no">05</p>
             <h3>元素翻譯</h3>
-            <p>右鍵頁面上的某個區域，給它掛一個翻譯按鈕。點一下，區域裡的文字就地換成所選語言，再點可恢復原文。</p>
+            <p>對網頁上的某一塊區域按右鍵，給它加一個翻譯按鈕。點一下，這塊文字換成譯文；再點一下，換回原文。</p>
             <ul>
-              <li>規則會依網域記住，下次再來同一個網站，按鈕會自動掛上</li>
-              <li>長內容分批送出，邊翻譯邊取代，不用等整塊完成</li>
-              <li>累積的規則可以在管理頁面逐條查看和刪除</li>
+              <li>按網站記住按鈕，下次開啟同一網站時會自動出現</li>
+              <li>內容較長時分批翻譯，譯好一段顯示一段</li>
+              <li>新增過的按鈕可在管理頁面檢視和刪除</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
@@ -349,11 +344,10 @@
           <div class="feature-copy reveal">
             <p class="no">06</p>
             <h3>翻譯面板</h3>
-            <p>一個獨立頁面，左邊貼原文、右邊輸出譯文，適合處理成段的、不在網頁上的文字。</p>
+            <p>獨立的翻譯頁面：左邊貼上原文，右邊顯示譯文。適合翻譯不在網頁上的文字。</p>
             <ul>
-              <li>24 種目標語言可選，覆蓋全球主流語言</li>
-              <li>來源語言可自動識別或手動指定，目標語言獨立選擇，面板記住上次選擇</li>
-              <li>平台和目標語言就在工具列上，隨時切換重譯；譯好的詞可以點開換說法</li>
+              <li>原文語言可自動辨識，也可手動指定</li>
+              <li>更換平台或目標語言後可直接重新翻譯</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -372,8 +366,8 @@
             <h3>影片即時字幕</h3>
           </div>
           <div>
-            <p>可選的實驗功能，預設關閉。讀取目前分頁的聲音，識別成字幕後再翻譯；語音識別語言與翻譯目標分別設定。</p>
-            <p>預設在本機辨識，需瀏覽器支援並下載語言套件；也可主動切換到瀏覽器的雲端辨識，此時聲音會傳送給瀏覽器語音服務（Chrome 為 Google，Edge 為 Microsoft Azure）。辨識準確度與相容性仍有限，不建議依賴它處理重要內容。託管服務只接收辨識後的文字，不提供音視訊上傳與轉寫。</p>
+            <p>實驗功能，預設關閉。它會將目前分頁的聲音辨識為字幕，再翻譯成你的語言。</p>
+            <p>辨識預設在本機進行。若改用瀏覽器的雲端辨識，聲音會傳送給瀏覽器的語音服務（Chrome 為 Google，Edge 為 Microsoft Azure）。辨識準確度仍有限，重要內容請勿依賴此功能。</p>
           </div>
         </aside>
       </div>
@@ -386,21 +380,21 @@
       <div class="lang-hero reveal" aria-hidden="true">24</div>
       <div class="section-head reveal">
         <p class="kicker">Languages</p>
-        <h2>用你的語言，讀世界的內容</h2>
-        <p>介面語言、翻譯來源和目標各自獨立。首次使用會根據瀏覽器語言選擇預設目標，也可以在設定裡固定下來。</p>
+        <h2>介面與譯文皆支援 24 種語言</h2>
+        <p>介面語言、原文語言與目標語言分開設定。首次使用時，目標語言預設跟隨瀏覽器語言，可在設定中變更。</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
-          <b>24 種介面與目標語言</b>
+          <b>支援的語言</b>
           <p>簡體中文、繁體中文、英語、日語、韓語、西班牙語、葡萄牙語（巴西）、法語、德語、義大利語、荷蘭語、俄語、烏克蘭語、波蘭語、土耳其語、阿拉伯語、希伯來語、波斯語、印地語、孟加拉語、烏爾都語、印尼語、越南語與泰語。</p>
         </div>
         <div class="fact">
-          <b>右鍵入口跟隨翻譯目標</b>
-          <p>目標選日語，選單就提示譯成日語；目標選英語，就提示譯成英語。選取中文也能翻譯，不再只為中文讀者設計。</p>
+          <b>右鍵選單顯示目前的目標語言</b>
+          <p>目標語言設為日語時，選單項目即為「翻譯成日語」。原文為中文時，也可翻譯成其他語言。</p>
         </div>
         <div class="fact">
-          <b>從右往左，也讀得自然</b>
-          <p>阿拉伯語、希伯來語、波斯語和烏爾都語介面使用從右往左的佈局。原文與譯文各自判斷方向，不改變網頁本身的排版。實際可用的語言組合取決於所選平台。</p>
+          <b>支援由右至左書寫的語言</b>
+          <p>阿拉伯語、希伯來語、波斯語與烏爾都語的介面由右至左排版。原文與譯文各自依其方向顯示，網頁本身的排版不受影響。實際可翻譯的語言取決於你選擇的翻譯平台。</p>
         </div>
       </div>
     </div>
@@ -411,22 +405,22 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>你觸發翻譯，內容才會傳送</h2>
-        <p>自帶 Key 時，翻譯內容直接傳送至你選擇的平台。點數翻譯會經我們的伺服器轉給模型服務商，伺服器不儲存圖片、原文或譯文。視訊字幕開啟後的聲音處理方式見隱私權政策。</p>
+        <h2>哪些內容會離開你的瀏覽器</h2>
+        <p>只有你主動翻譯的內容會被傳送。使用自己的 Key 時，內容直接傳送給你選擇的平台；使用點數翻譯時，內容經我們的伺服器轉給模型服務商，伺服器不保存圖片、原文與譯文。影片字幕的聲音處理方式請見隱私政策。</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>自帶 Key：直連平台</b>
-          <p>請求從你的瀏覽器直接傳往你在設定裡選的那家平台，不經過我們。API Key 存在 <span class="mono">chrome.storage.local</span>，不走 Chrome 帳號同步。</p>
+          <b>使用自己的 Key：不經過我們</b>
+          <p>請求從你的瀏覽器直接傳送給你選擇的平台。API Key 只存在於此瀏覽器，不隨 Chrome 帳號同步。</p>
         </div>
         <div class="fact">
-          <b>託管服務：不留存翻譯內容</b>
-          <p>託管文字與圖片只在處理請求時短暫停留於記憶體。帳戶只保存必要的電子郵件與使用者名稱；用量、點數和訂閱記錄用於提供服務，不蒐集頭像、暱稱或裝置指紋。</p>
+          <b>點數翻譯：不保存翻譯內容</b>
+          <p>文字和圖片只在處理請求時短暫留在伺服器記憶體裡。帳戶只保存電子郵件和使用者名稱，另有提供服務所需的用量、點數和訂閱記錄。不蒐集頭像、暱稱和裝置指紋。</p>
         </div>
         <div class="fact">
-          <b>沒有廣告與第三方統計</b>
-          <p>不使用廣告、埋點或第三方統計 SDK，不出售或出租任何資料。擴充功能與服務端程式碼都以 GPL-3.0 公開，可以逐行核對。</p>
+          <b>沒有廣告和第三方統計</b>
+          <p>不放廣告，不做埋點，不接第三方統計 SDK，不出售或出租資料。擴充功能和伺服器端的程式碼都以 GPL-3.0 公開，可以自行核對。</p>
         </div>
       </div>
 
@@ -439,16 +433,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>自帶 Key 免費用，也可以免 Key 直接翻譯</h2>
-        <p>擴展開源免費。安裝後即可免 Key 試用，需要時再訂閱；在擴展裡登入即可使用。</p>
+        <h2>擴充功能免費，點數翻譯可以訂閱</h2>
+        <p>使用自己的 Key 不收費。不想申請 Key，可以使用點數翻譯：安裝後先贈送試用點數，用完再決定是否訂閱。</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">自帶 Key</b>
-          <span class="plan-status">目前可用</span>
+          <span class="plan-status">需要自己的 Key</span>
           <p class="plan-price">免費</p>
-          <p class="plan-desc">填入自己的 OpenAI、DeepSeek 或 DeepL Key，費用由平台按用量收取。</p>
+          <p class="plan-desc">填入自己的 OpenAI、DeepSeek 或 DeepL Key。翻譯費用由這些平台依用量向你收取。</p>
           <ul>
             <li>雙語閱讀、劃詞、圖片、整份 PDF 與網頁區域翻譯</li>
             <li>Key 只保存在你的瀏覽器裡</li>
@@ -456,9 +450,9 @@
         </div>
         <div class="plan">
           <b class="plan-name">免費試用</b>
-          <span class="plan-status">目前可用</span>
+          <span class="plan-status">無需註冊</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">訪客試用 50.00 點，註冊再送 200.00 點。點數不過期，按實際用量扣減。</p>
+          <p class="plan-desc">不註冊可以試用 50.00 點，註冊後再送 200.00 點。點數不會過期，用多少扣多少。</p>
           <ul>
             <li>不需要任何 API Key</li>
             <li>翻譯失敗不扣點</li>
@@ -466,10 +460,10 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">訂閱</b>
-          <span class="plan-status">目前可訂閱</span>
+          <span class="plan-status">隨時可以取消</span>
           <p class="plan-price">$3.99<span>/ 月</span></p>
           <p class="plan-alt">或 $29.99 / 年，比月付省 37%</p>
-          <p class="plan-desc">點數翻譯無限使用，隨時可以取消。</p>
+          <p class="plan-desc">訂閱期間點數翻譯不限量。</p>
           <ul>
             <li>依合理使用原則不限次數</li>
             <li>首次付款 7 天內可申請全額退款</li>
@@ -486,21 +480,21 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Account</p>
-        <h2>在擴充功能裡用，在使用者中心管理</h2>
-        <p>擴展是登入與翻譯的主要入口，官網和使用者中心共用同一個帳戶及訂閱權益。</p>
+        <h2>一個帳戶，擴充功能與網頁通用</h2>
+        <p>在擴充功能中登入後即可使用點數翻譯。點數、訂閱和訂單可在使用者中心查看。</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
           <b>電子郵件或 Google 登入</b>
-          <p>使用電子郵件驗證碼或 Google 帳戶登入，在目前瀏覽器分頁完成授權後返回擴充功能。只需要電子郵件與使用者名稱。</p>
+          <p>使用電子郵件驗證碼或 Google 帳戶登入，只需要電子郵件和使用者名稱。</p>
         </div>
         <div class="fact">
-          <b>餘額與狀態及時更新</b>
-          <p>未訂閱時查看剩餘點數，訂閱後顯示無限使用。使用者中心可查看自己的用量、點數記錄、訂閱、訂單與登入工作階段；目前網頁工作階段登出後，關聯的擴充功能也會登出。</p>
+          <b>點數和訂閱可在使用者中心查看</b>
+          <p>使用者中心可查看剩餘點數、用量記錄、訂閱、訂單和目前的登入工作階段。在網頁上登出，對應的擴充功能也會一併登出。</p>
         </div>
         <div class="fact">
-          <b>隨時保留自帶 Key 的選擇</b>
-          <p>託管翻譯和自帶 Key 可切換使用。自帶 Key 的請求直接連接平台，不扣託管點數，也不需要購買我們的訂閱。</p>
+          <b>訂閱後仍然可以使用自己的 Key</b>
+          <p>點數翻譯和自帶 Key 可以隨時切換。使用自己的 Key 時不扣點數，也不需要訂閱。</p>
         </div>
       </div>
     </div>
@@ -512,7 +506,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>從 Chrome 或 Edge 商店安裝</h2>
-        <p>Chrome 應用商店與 Microsoft Edge 載入項商店皆已上架，需要 116 或更高版本；Brave 等其他 Chromium 核心瀏覽器可從 Chrome 應用商店安裝。</p>
+        <p>Chrome 線上應用程式商店和 Microsoft Edge 擴充功能商店都能安裝，瀏覽器需要 116 或更高版本。Brave 等 Chromium 核心瀏覽器請從 Chrome 線上應用程式商店安裝。</p>
       </div>
 
       <div class="steps reveal">
@@ -526,7 +520,7 @@
           <div><b>固定到工具列</b> <span>點拼圖圖示，把擴充功能固定到工具列。</span></div>
         </div>
         <div class="step">
-          <div><b>開始翻譯</b> <span>在設定裡填入自己的 API Key，選取文字，右鍵翻譯。</span></div>
+          <div><b>開始翻譯</b> <span>選取一段文字，按右鍵翻譯。不填 Key 也能先使用試用點數。</span></div>
         </div>
       </div>
 
@@ -543,8 +537,8 @@
   <!-- ===================================================== 结尾 CTA（和页脚一起作为最后一屏） -->
   <section class="wrap closing" data-slide>
     <div class="cta reveal">
-      <h2>裝好之後，就忘了它</h2>
-      <p>直到下一次，你又選取了一段看不懂的文字。</p>
+      <h2>現在裝上試試</h2>
+      <p>不用註冊，也不用填 Key，裝好就能翻譯。</p>
       <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">新增至 Chrome</span><span data-for-browser="edge" hidden>新增至 Edge</span></a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
     </div>
   </section>

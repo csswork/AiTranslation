@@ -85,7 +85,7 @@
       <div class="hero-copy">
         <a class="release-pill" href="/pt/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>Nova versão: leitura bilíngue, transformando artigos da web em uma página de leitura com parágrafos pareados.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Selecione, clique com o botão direito,<br /><span class="dim">e continue lendo.</span></h1>
-        <p class="hero-sub">Uma extensão para Chrome. Selecione texto, uma área inteira da página, uma imagem ou um artigo completo e traduza para o idioma que você conhece. 24 idiomas de interface e de destino podem ser escolhidos de forma independente; basta começar com sua própria API Key da OpenAI, DeepSeek ou DeepL.</p>
+        <p class="hero-sub">Uma frase, uma imagem, um PDF ou um artigo inteiro numa página web pode ser traduzido para o seu idioma com o botão direito. Funciona logo após a instalação, sem necessidade de preencher uma API Key; também pode usar a sua própria chave OpenAI, DeepSeek ou DeepL.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -95,7 +95,7 @@
           <li><b>Código aberto</b> GPL-3.0 · 24 idiomas</li>
           <li>Chrome / Edge 116+</li>
           <li>Sem armazenamento de traduções · Sem estatísticas de terceiros</li>
-          <li>Seis modos de tradução</li>
+          <li>Experimente sem preencher uma Key</li>
         </ul>
       </div>
 
@@ -208,18 +208,17 @@
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
           <h2>Seis entradas, todas no menu de contexto</h2>
-          <p>Sem trocar de aba, sem copiar e colar. Onde estiver o trecho que você não entende, é ali que a tradução acontece.</p>
+          <p>Cada uma tem uma demonstração; continue a ler.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
             <p class="no">01</p>
             <h3>Leitura bilíngue<span class="new">Novo recurso</span></h3>
-            <p>Sem selecionar texto na página, clique com o botão direito; títulos e corpo do texto são identificados por varredura e uma página de leitura limpa é aberta ao lado: original e tradução alinhados parágrafo a parágrafo, sem navegação, anúncios ou módulos de recomendação.</p>
+            <p>Clique com o botão direito numa área vazia da página do artigo e escolha «Ler este artigo bilíngue» para abrir uma página de leitura apenas com o texto. O original e a tradução ficam parágrafo a parágrafo, sem navegação nem anúncios.</p>
             <ul>
-              <li>No modo lado a lado, cada parágrafo é alinhado pelo topo; também é possível usar o modo empilhado, somente tradução ou somente original</li>
-              <li>Clique em qualquer palavra da tradução para ver outras opções ou reescrever por conta própria; as reformulações são memorizadas e priorizadas em traduções futuras</li>
-              <li>Aparência clara, escura ou conforme o sistema, com cores, fonte, tamanho, entrelinha e largura do texto ajustáveis</li>
-              <li>Salvo localmente junto com a tradução, acessível a qualquer momento à direita, sem nova tradução</li>
+              <li>Pode ver lado a lado, em cima e em baixo, ou apenas a tradução ou apenas o original</li>
+              <li>Clique numa palavra da tradução para escolher outra forma de traduzir; as escolhas anteriores passam a ser preferidas</li>
+              <li>O artigo e a tradução podem ser guardados localmente, sem necessidade de traduzir novamente na próxima abertura</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-reader.mp4">
@@ -241,12 +240,11 @@
           <div class="feature-copy reveal">
             <p class="no">02</p>
             <h3>Tradução de seleção</h3>
-            <p>Após selecionar o texto, clique com o botão direito para traduzir; a tradução aparece em uma janela centralizada e, em plataformas com saída em streaming, é exibida caractere por caractere. Ao trocar temporariamente o idioma de destino, o texto original é traduzido novamente.</p>
+            <p>Selecione um trecho de texto e traduza com o botão direito; a tradução aparece numa janela no centro da página.</p>
             <ul>
-              <li>Chinês, palavras curtas e idiomas mistos podem ser traduzidos; números puros, pontuação e emojis não exibem a opção de tradução</li>
-              <li>A janela fica centralizada e pode ser arrastada; fecha com <span class="mono">Esc</span> ou com um clique no fundo — não é um balãozinho que segue o cursor</li>
-              <li>Painel de texto original recolhível para leitura lado a lado; clicar numa palavra da tradução permite ver outra formulação</li>
-              <li>Também há um atalho de teclado: <span class="mono">Alt+Shift+T</span> (no macOS, <span class="mono">Command+Shift+Y</span>)</li>
+              <li>Na janela pode expandir o original para comparação ou mudar temporariamente o idioma de destino</li>
+              <li>Clique numa palavra da tradução para escolher outra forma de traduzir</li>
+              <li>Atalho: <span class="mono">Alt+Shift+T</span> (no macOS, <span class="mono">Command+Shift+Y</span>)</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-selection.mp4">
@@ -268,13 +266,11 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>Tradução de imagens</h3>
-            <p>Clique com o botão direito em uma imagem, reconheça o texto nela contido e sobreponha a tradução completa na posição do texto original, podendo ainda salvá-la como uma nova imagem.</p>
+            <p>Clique com o botão direito numa imagem para reconhecer o texto nela e sobrepor a tradução na posição original. A imagem traduzida pode ser descarregada ou copiada.</p>
             <ul>
-              <li>Diálogos, títulos e parágrafos são traduzidos como blocos inteiros; o contorno de cada trecho é traçado e a tradução é posicionada junto ao original, sem sobreposição</li>
-              <li>Texto vertical em mangá japonês permanece vertical ao ser traduzido para chinês, japonês ou coreano; furigana não se mistura com a tradução</li>
-              <li>É possível ver primeiro os contornos reconhecidos, mover, apagar, editar ou desenhar novos antes de traduzir; a cor de fundo é obtida automaticamente a partir das cores próximas ao texto</li>
-              <li>É possível selecionar apenas a área a traduzir: retângulo ou círculo, com arrastar e redimensionar, e várias seleções reconhecidas de uma só vez</li>
-              <li>O resultado pode ser baixado ou copiado como uma nova imagem, composta localmente; também é possível abrir o painel de imagens, enviar, colar imagens ou inserir o URL da imagem</li>
+              <li>O texto vertical de manga japonesa mantém-se vertical quando traduzido para chinês, japonês ou coreano</li>
+              <li>Pode selecionar apenas a parte a traduzir ou ajustar primeiro as áreas de texto reconhecidas antes de traduzir</li>
+              <li>Também pode carregar, colar imagens ou introduzir o endereço de uma imagem</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-image.mp4">
@@ -296,12 +292,11 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>Tradução do PDF completo</h3>
-            <p>Em um PDF aberto no Chrome, clique com o botão direito sem selecionar texto e o documento inteiro é traduzido em uma página ao lado. A tradução é sobreposta nas posições originais, mantendo layout, gráficos e tabelas inalterados.</p>
+            <p>Abra um PDF no Chrome e traduza o documento inteiro com o botão direito. A tradução sobrepõe-se na posição original, mantendo o layout, gráficos e tabelas.</p>
             <ul>
-              <li>Original e tradução lado a lado, ou apenas a tradução ou apenas o original; clicar numa palavra da tradução permite ver outra formulação</li>
-              <li>Tabelas traduzidas célula a célula, com linhas, colunas e bordas preservadas; traduções que não cabem reduzem automaticamente o tamanho da fonte</li>
-              <li>Salve como PDF pela impressão do navegador; a tradução é texto selecionável e pesquisável</li>
-              <li>O arquivo é processado apenas localmente; somente o texto extraído é enviado à plataforma de tradução. PDFs locais podem ser arrastados diretamente para a página de tradução. Digitalizações não são suportadas no momento</li>
+              <li>O original e a tradução podem ser comparados lado a lado</li>
+              <li>Ao guardar como PDF com a função de impressão do navegador, a tradução continua a ser texto selecionável e pesquisável</li>
+              <li>O ficheiro é processado apenas localmente; só o texto extraído é enviado. Documentos digitalizados ainda não são suportados</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-pdf.mp4">
@@ -323,11 +318,11 @@
           <div class="feature-copy reveal">
             <p class="no">05</p>
             <h3>Tradução de elementos</h3>
-            <p>Clique com o botão direito em uma região da página para adicionar um botão de tradução. Com um clique, o texto da região é substituído no local pelo idioma escolhido; clique novamente para restaurar o original.</p>
+            <p>Clique com o botão direito numa área da página web para lhe adicionar um botão de tradução. Um clique substitui o texto pela tradução; outro clique repõe o original.</p>
             <ul>
-              <li>As regras são lembradas por domínio; na próxima vez que você visitar o mesmo site, o botão é anexado automaticamente</li>
-              <li>Conteúdos longos são enviados em lotes e substituídos à medida que são traduzidos; você não precisa esperar o bloco inteiro</li>
-              <li>As regras salvas podem ser consultadas e excluídas uma a uma na página de gerenciamento</li>
+              <li>Os botões são memorizados por site; ao abrir o mesmo site novamente, eles reaparecem automaticamente</li>
+              <li>Conteúdos muito longos são traduzidos em partes, exibindo cada trecho assim que fica pronto</li>
+              <li>Os botões adicionados podem ser vistos e removidos na página de gerenciamento</li>
             </ul>
           </div>
           <div class="frame parallax-fast" data-video="/assets/demo-element.mp4">
@@ -349,11 +344,10 @@
           <div class="feature-copy reveal">
             <p class="no">06</p>
             <h3>Painel de tradução</h3>
-            <p>Uma página independente, com o original à esquerda e a tradução à direita, ideal para trechos de texto que não estão em uma página web.</p>
+            <p>Uma página de tradução separada: cole o texto original à esquerda e veja a tradução à direita. Ideal para traduzir textos que não estão em páginas web.</p>
             <ul>
-              <li>24 idiomas de destino disponíveis, cobrindo os principais idiomas do mundo</li>
-              <li>O idioma de origem pode ser detectado automaticamente ou especificado manualmente; o idioma de destino é escolhido separadamente e o painel lembra a última seleção</li>
-              <li>A plataforma e o idioma de destino ficam na barra de ferramentas, permitindo alternar e retraduzir a qualquer momento; palavras traduzidas podem ser clicadas para ver outras formulações</li>
+              <li>O idioma de origem pode ser detectado automaticamente ou especificado manualmente</li>
+              <li>Após trocar de plataforma ou de idioma de destino, é possível traduzir novamente de imediato</li>
             </ul>
           </div>
           <div class="frame parallax-slow" data-video="/assets/demo-panel.mp4">
@@ -372,8 +366,8 @@
             <h3>Legendas em tempo real para vídeos</h3>
           </div>
           <div>
-            <p>Recurso experimental opcional, desativado por padrão. Captura o áudio da aba atual, reconhece como legenda e depois traduz; o idioma de reconhecimento de voz e o destino de tradução são configurados separadamente.</p>
-            <p>Por padrão, o reconhecimento ocorre localmente, sendo necessário suporte do navegador e o download do pacote de idioma; também é possível alternar ativamente para o reconhecimento na nuvem do navegador, caso em que o áudio é enviado ao serviço de voz do navegador (Google no Chrome, Microsoft Azure no Edge). A precisão e a compatibilidade do reconhecimento ainda são limitadas, não sendo recomendável depender dele para conteúdos importantes. O serviço hospedado recebe apenas o texto reconhecido e não oferece upload nem transcrição de áudio e vídeo.</p>
+            <p>Recurso experimental, desativado por padrão. Ele reconhece o áudio da aba atual como legendas e o traduz para o seu idioma.</p>
+            <p>O reconhecimento é feito localmente por padrão. Se você optar pelo reconhecimento na nuvem do navegador, o áudio será enviado ao serviço de voz do navegador (Google no Chrome, Microsoft Azure no Edge). A precisão do reconhecimento ainda é limitada; não dependa dele para conteúdos importantes.</p>
           </div>
         </aside>
       </div>
@@ -386,21 +380,21 @@
       <div class="lang-hero reveal" aria-hidden="true">24</div>
       <div class="section-head reveal">
         <p class="kicker">Languages</p>
-        <h2>Leia o conteúdo do mundo no seu idioma</h2>
-        <p>O idioma da interface, a origem da tradução e o destino são independentes. No primeiro uso, o destino padrão é escolhido com base no idioma do navegador, e também pode ser fixado nas configurações.</p>
+        <h2>A interface e as traduções suportam 24 idiomas</h2>
+        <p>O idioma da interface, o idioma de origem e o idioma de destino são configurados separadamente. No primeiro uso, o idioma de destino segue o idioma do navegador por padrão e pode ser alterado nas configurações.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
-          <b>24 idiomas de interface e de destino</b>
+          <b>Idiomas suportados</b>
           <p>Chinês simplificado, chinês tradicional, inglês, japonês, coreano, espanhol, português (Brasil), francês, alemão, italiano, holandês, russo, ucraniano, polonês, turco, árabe, hebraico, persa, hindi, bengali, urdu, indonésio, vietnamita e tailandês.</p>
         </div>
         <div class="fact">
-          <b>O menu de contexto segue o destino de tradução</b>
-          <p>Se o destino for japonês, o menu indica traduzir para japonês; se o destino for inglês, indica traduzir para inglês. Também é possível traduzir a partir do chinês, pois o recurso não é mais voltado apenas para leitores de chinês.</p>
+          <b>O menu de contexto exibe o idioma de destino atual</b>
+          <p>Com o idioma de destino definido como japonês, o item do menu é «Traduzir para japonês». Se o original for chinês, também é possível traduzir para outros idiomas.</p>
         </div>
         <div class="fact">
-          <b>Da direita para a esquerda, também com leitura natural</b>
-          <p>As interfaces em árabe, hebraico, persa e urdu usam layout da direita para a esquerda. O texto original e a tradução determinam cada um sua direção, sem alterar a diagramação da própria página. As combinações de idiomas realmente disponíveis dependem da plataforma escolhida.</p>
+          <b>Idiomas com escrita da direita para a esquerda</b>
+          <p>As interfaces em árabe, hebraico, persa e urdu são dispostas da direita para a esquerda. O original e a tradução são exibidos cada um na sua direção, sem afetar o layout da própria página web. Quais idiomas podem ser traduzidos depende da plataforma de tradução escolhida.</p>
         </div>
       </div>
     </div>
@@ -411,22 +405,22 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
-        <h2>O conteúdo só é enviado quando você aciona a tradução</h2>
-        <p>Com Key própria, o conteúdo a traduzir é enviado diretamente para a plataforma que escolher. A tradução por pontos é encaminhada para o fornecedor do modelo através dos nossos servidores, que não guardam imagens, texto original nem traduções. O tratamento do som após ativar as legendas de vídeo está descrito na política de privacidade.</p>
+        <h2>Quais conteúdos saem do seu navegador</h2>
+        <p>Apenas os conteúdos que você traduz ativamente são enviados. Ao usar sua própria Key, o conteúdo vai diretamente para a plataforma escolhida; ao traduzir com pontos, o conteúdo passa pelo nosso servidor a caminho do provedor do modelo, e o servidor não armazena imagens, textos originais nem traduções. Para saber como o áudio das legendas de vídeo é tratado, consulte a política de privacidade.</p>
       </div>
 
       <div class="facts reveal">
         <div class="fact">
-          <b>Key própria: conexão direta com a plataforma</b>
-          <p>As requisições saem do seu navegador direto para a plataforma que você selecionou nas configurações, sem passar por nós. A API Key fica armazenada em <span class="mono">chrome.storage.local</span> e não é sincronizada pela conta do Chrome.</p>
+          <b>Com sua própria Key: sem passar por nós</b>
+          <p>As solicitações são enviadas diretamente do seu navegador para a plataforma escolhida. A API Key fica armazenada apenas neste navegador e não é sincronizada com a conta do Chrome.</p>
         </div>
         <div class="fact">
-          <b>Serviço hospedado: não retém o conteúdo traduzido</b>
-          <p>Textos e imagens do serviço hospedado permanecem apenas brevemente na memória durante o processamento da solicitação. A conta armazena apenas o e-mail e o nome de usuário necessários; registros de uso, pontos e assinatura são usados para fornecer o serviço, e não são coletados avatar, apelido nem impressão digital do dispositivo.</p>
+          <b>Tradução com pontos: sem armazenamento do conteúdo traduzido</b>
+          <p>O texto e as imagens permanecem apenas temporariamente na memória do servidor durante o processamento do pedido. A conta guarda apenas o e-mail e o nome de utilizador, além dos registos de utilização, pontos e subscrição necessários à prestação do serviço. Não são recolhidos avatar, alcunha nem impressão digital do dispositivo.</p>
         </div>
         <div class="fact">
-          <b>Sem anúncios e sem estatísticas de terceiros</b>
-          <p>Não usamos anúncios, rastreamento ou SDKs de estatísticas de terceiros, e não vendemos nem alugamos dados. O código da extensão e do servidor é público sob a GPL-3.0 e pode ser verificado linha por linha.</p>
+          <b>Sem publicidade e sem estatísticas de terceiros</b>
+          <p>Sem publicidade, sem rastreamento, sem SDK de estatísticas de terceiros, sem venda ou aluguer de dados. O código da extensão e do servidor é público sob GPL-3.0, pode verificá-lo você mesmo.</p>
         </div>
       </div>
 
@@ -439,16 +433,16 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Pricing</p>
-        <h2>Utilização gratuita com Key própria ou tradução direta sem Key</h2>
-        <p>A extensão é de código aberto e gratuita. Após a instalação, você pode testá-la sem API Key e assinar quando necessário; basta fazer login na extensão para usá-la.</p>
+        <h2>A extensão é gratuita, a tradução por pontos pode ser subscrita</h2>
+        <p>Com a sua própria Key não há custos. Se não quiser pedir uma Key, pode usar a tradução por pontos: ao instalar recebe pontos de teste e, depois de os gastar, decide se quer subscrever.</p>
       </div>
 
       <div class="plans reveal">
         <div class="plan">
           <b class="plan-name">Key própria</b>
-          <span class="plan-status">Disponível atualmente</span>
+          <span class="plan-status">Requer a sua própria Key</span>
           <p class="plan-price">Gratuito</p>
-          <p class="plan-desc">Insira sua própria chave OpenAI, DeepSeek ou DeepL; os custos são cobrados pela plataforma conforme o uso.</p>
+          <p class="plan-desc">Introduza a sua Key da OpenAI, DeepSeek ou DeepL. Os custos de tradução são cobrados por essas plataformas conforme a utilização.</p>
           <ul>
             <li>Leitura bilíngue, tradução de texto selecionado, imagens, PDF completo e áreas de páginas web</li>
             <li>A Key fica armazenada apenas no seu navegador</li>
@@ -456,9 +450,9 @@
         </div>
         <div class="plan">
           <b class="plan-name">Teste gratuito</b>
-          <span class="plan-status">Disponível atualmente</span>
+          <span class="plan-status">Sem registo</span>
           <p class="plan-price">$0</p>
-          <p class="plan-desc">Visitantes recebem 50,00 pontos de teste e mais 200,00 pontos ao se registrar. Os pontos não expiram e são deduzidos conforme o uso real.</p>
+          <p class="plan-desc">Sem registo pode experimentar 50,00 pontos; após o registo recebe mais 200,00 pontos. Os pontos não expiram e são descontados conforme o uso.</p>
           <ul>
             <li>Não requer nenhuma API Key</li>
             <li>Falhas na tradução não consomem pontos</li>
@@ -466,10 +460,10 @@
         </div>
         <div class="plan featured">
           <b class="plan-name">Assinatura</b>
-          <span class="plan-status">Subscrição disponível</span>
+          <span class="plan-status">Pode cancelar a qualquer momento</span>
           <p class="plan-price">$3.99<span>/ mês</span></p>
           <p class="plan-alt">Ou $29.99 / ano, 37% mais barato que o pagamento mensal</p>
-          <p class="plan-desc">A tradução por pontos é de uso ilimitado e pode ser cancelada a qualquer momento.</p>
+          <p class="plan-desc">Durante a subscrição, a tradução por pontos é ilimitada.</p>
           <ul>
             <li>Sem limite de vezes, conforme a política de uso razoável</li>
             <li>Reembolso integral mediante solicitação em até 7 dias após o primeiro pagamento</li>
@@ -486,21 +480,21 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Account</p>
-        <h2>Use na extensão, gerencie no Centro do Usuário</h2>
-        <p>A extensão é o principal ponto de acesso para login e tradução; o site oficial e a central do usuário compartilham a mesma conta e os mesmos benefícios de assinatura.</p>
+        <h2>Uma conta, válida na extensão e na web</h2>
+        <p>Após iniciar sessão na extensão, pode usar a tradução por pontos. Os pontos, a subscrição e as encomendas consultam-se na área de utilizador.</p>
       </div>
       <div class="facts reveal">
         <div class="fact">
           <b>Login por e-mail ou Google</b>
-          <p>Faça login com código de verificação por e-mail ou conta Google, conclua a autorização na aba atual do navegador e retorne à extensão. Apenas e-mail e nome de usuário são necessários.</p>
+          <p>Inicie sessão com um código de verificação por e-mail ou com uma conta Google; só precisa de e-mail e nome de utilizador.</p>
         </div>
         <div class="fact">
-          <b>Saldo e status atualizados em tempo real</b>
-          <p>Sem assinatura, veja os pontos restantes; com assinatura, o uso é ilimitado. No Centro do Usuário é possível ver seu uso, histórico de pontos, assinatura, pedidos e sessões de login; ao sair da sessão atual do navegador, a extensão associada também será desconectada.</p>
+          <b>Pontos e subscrição consultam-se na área de utilizador</b>
+          <p>Na área de utilizador pode ver os pontos restantes, o histórico de utilização, a subscrição, as encomendas e as sessões de início de sessão atuais. Ao terminar sessão na web, a extensão correspondente também termina sessão.</p>
         </div>
         <div class="fact">
-          <b>Mantenha a opção de usar sua própria chave a qualquer momento</b>
-          <p>A tradução hospedada e a sua própria chave podem ser alternadas. As solicitações com sua própria chave conectam-se diretamente à plataforma, não consomem pontos hospedados e não exigem a compra da nossa assinatura.</p>
+          <b>Após a subscrição, continua a poder usar a sua própria Key</b>
+          <p>Pode alternar a qualquer momento entre a tradução por pontos e a sua própria Key. Com a sua própria Key não são descontados pontos nem é necessária subscrição.</p>
         </div>
       </div>
     </div>
@@ -512,7 +506,7 @@
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
         <h2>Instalar a partir da loja Chrome ou Edge</h2>
-        <p>Já disponível na Chrome Web Store e na loja de suplementos do Microsoft Edge; requer a versão 116 ou superior. Outros navegadores baseados em Chromium, como o Brave, podem instalar a partir da Chrome Web Store.</p>
+        <p>Pode instalar a partir da Chrome Web Store e da Microsoft Edge Add-ons; o navegador requer a versão 116 ou superior. Navegadores baseados em Chromium, como o Brave, instalam a partir da Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
@@ -526,7 +520,7 @@
           <div><b>Fixar na barra de ferramentas</b> <span>Clique no ícone de quebra-cabeça e fixe a extensão na barra de ferramentas.</span></div>
         </div>
         <div class="step">
-          <div><b>Começar a traduzir</b> <span>Insira sua própria API Key nas configurações, selecione o texto e clique com o botão direito para traduzir.</span></div>
+          <div><b>Começar a traduzir</b> <span>Selecione um texto e clique com o botão direito para traduzir. Também pode usar os pontos de teste sem introduzir uma Key.</span></div>
         </div>
       </div>
 
@@ -543,8 +537,8 @@
   <!-- ===================================================== 结尾 CTA（和页脚一起作为最后一屏） -->
   <section class="wrap closing" data-slide>
     <div class="cta reveal">
-      <h2>Instale e esqueça</h2>
-      <p>Até a próxima vez em que você selecionar um trecho que não entende.</p>
+      <h2>Instale agora e experimente</h2>
+      <p>Sem registro e sem preencher a API Key; basta instalar para traduzir.</p>
       <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Adicionar ao Chrome</span><span data-for-browser="edge" hidden>Adicionar ao Edge</span></a> <a class="btn btn-ghost" href="/pt/changelog.html">Registo de alterações</a></div>
     </div>
   </section>
