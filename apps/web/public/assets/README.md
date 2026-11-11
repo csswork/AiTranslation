@@ -13,14 +13,16 @@
 | --- | --- | --- | --- |
 | `demo-reader.mp4` | 功能 01 双语阅读（重点介绍） | **新闻页（导航、广告位、侧栏）上右键空白处** → 光带扫过、标题与正文逐个点亮（广告位不亮）→ 阅读页骨架 → 逐段对照译文淡入，推镜 → 选中「百科全书」换成「知识库」并记成用词偏好 → 切到深色 → 保存，右侧列表出现 | 21.1s |
 | `demo-selection.mp4` | 功能 02 划词翻译 | 在真实的维基百科页面上划词 → 浮动按钮 → 弹窗里译文逐字出现 | 9.7s |
-| `demo-image.mp4` | 功能 03 图片翻译 | **在网页里右键一张拉面店海报** → 图上转圈识别 → 整张图译文贴着原文盖回、底色取相近色（含竖排招牌）→ 下载 → 框选换成圆形、圈住角标并拖动挪正 → 只翻译圈住的那块 | 19.7s |
+| `demo-image.mp4` | 功能 03 图片翻译 | **单独编排的介绍短片**（不是屏幕录像）：片头 → 右键漫画页 → 紫色扫描线识字、计数和用时 → 推近看按笔画勾出的文字形状 → 盖上译文 → 译文与原图对照 → 换页 → 弹窗的四个功能（对照、改单段、框选、导出）→ 片尾署名 | 43.5s |
 | `demo-pdf.mp4` | 功能 04 整份 PDF 翻译 | **在 Chrome 内置 PDF 阅读器里右键空白处** → 翻译页灰色骨架扫光 → 译文盖回原位，推镜看正文与表格 → 切到只看译文 | 15.8s |
 | `demo-element.mp4` | 功能 05 元素翻译 | 悬停区域出现按钮 → 点击就地变中文 | 8.2s |
 | `demo-panel.mp4` | 功能 06 翻译面板 | 输入原文 → 右侧逐字出译文 | 10.6s |
 
-全部 1280×800（16:10）、30fps、H.264 + faststart、**无音轨**，单文件 0.36–1.3 MB。
-`demo-image.mp4` 的海报由 `tools/capture/pages/ramen-source.html` 经 `make-ramen.mjs` 截成 `ramen.png`，
-同时量出每块文字的位置；假接口按补白成正方形后的坐标回答识图，框选时用扩展自己的拼图算法算出布局。
+全部 1280×800（16:10）、30fps、H.264 + faststart、**无音轨**，单文件 0.36–2.6 MB。
+`demo-image.mp4` 用的漫画是 Pepper&Carrot 第 1 话日文版（David Revoy，日文翻译 guruguru，CC BY 4.0），
+署名标在用到它的每个画面左下角和片尾，换素材时署名要跟着换。图上的文字形状和译文是真实内容脚本加真实模型
+跑出来的（`tools/capture/film/capture.mjs`），弹窗画面是真实界面截图；编排在 `film/film.html`，
+`node film/render.mjs` 逐帧渲染到 `tools/capture/out/film/`，其中 `image-film-1280.mp4` 就是这里的文件。
 `demo-reader.mp4` 的新闻页是 `tools/capture/pages/reader.html`，同样跨两个标签页录制（原网页的扫描动画 → 阅读页）。
 `demo-pdf.mp4` 跨两个标签页录制（阅读器 → 翻译页），翻译页渲染好第一页后才接上，中间不留加载空白；
 演示用的报告由 `tools/capture/pages/report.html` 经 `make-report-pdf.mjs` 打印成 `report.pdf`。
@@ -39,7 +41,7 @@ node make-ramen.mjs                      # 只在改了 pages/ramen-source.html 
 node record-demos.mjs                    # 全部重录（可只录某几段：node record-demos.mjs pdf）
 # 8788 被本机官网预览占用时：CAPTURE_PORT=8790 node record-demos.mjs pdf
 /Users/haibo/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/bin/python3 scripts/compose_demos.py
-for c in reader selection element image pdf panel; do
+for c in reader selection element pdf panel; do   # image 那段是单独的介绍短片，见上
   node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i out/demo-frames/$c/frame_%06d.png \
     -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -an -movflags +faststart \
     ../../apps/web/public/assets/demo-$c.mp4
@@ -48,7 +50,7 @@ done
 
 录制环境、假接口与文案都在那套工具里，改完重跑即可；细节见 `tools/capture/lib/content.mjs` 的注释。
 
-> 注意：示例里的译文是**预先写好的演示文案**（真实模型调用会消耗额度、且不可复现），
+> 注意：除 `demo-image.mp4` 外，示例里的译文是**预先写好的演示文案**（真实模型调用会消耗额度、且不可复现），
 > 界面、交互、请求与流式链路都是真的。
 
 ## 静态图
