@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">安裝到 Chrome</span> <span data-for-browser="edge" hidden>安裝到 Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
         <p class="install-note" data-install-note hidden>這個瀏覽器無法安裝 Chrome 擴充功能：請在電腦上使用 Chrome、Edge 等 Chromium 核心瀏覽器開啟本頁。</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">複製本頁連結</span> <span data-copy-state="done" hidden>已複製</span></button>
         <ul class="hero-meta">
           <li><b>開源</b> GPL-3.0 · 24 種語言</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>演示影片預留位置</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>示範影片預留位置</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>示範影片預留位置</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>示範影片佔位</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>示範影片預留位置</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>示範影片預留位置</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">觀看示範影片</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">使用電子郵件驗證碼或 Google 帳戶登入，點數、訂閱與訂單可在<a class="link" href="https://app.huaci.app/">使用者中心</a>查看。點數翻譯與自帶 Key 可隨時切換。</p>
       <p class="after-facts reveal">實際價格以使用者中心顯示為準。價格以美元計，可能另加稅費；由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商處理付款，我們不接觸銀行卡資訊。詳見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>一個帳戶，擴充功能與網頁通用</h2>
-        <p>在擴充功能中登入後即可使用點數翻譯。點數、訂閱和訂單可在使用者中心查看。</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>電子郵件或 Google 登入</b>
-          <p>使用電子郵件驗證碼或 Google 帳戶登入，只需要電子郵件和使用者名稱。</p>
-        </div>
-        <div class="fact">
-          <b>點數和訂閱可在使用者中心查看</b>
-          <p>使用者中心可查看剩餘點數、用量記錄、訂閱、訂單和目前的登入工作階段。在網頁上登出，對應的擴充功能也會一併登出。</p>
-        </div>
-        <div class="fact">
-          <b>訂閱後仍然可以使用自己的 Key</b>
-          <p>點數翻譯和自帶 Key 可以隨時切換。使用自己的 Key 時不扣點數，也不需要訂閱。</p>
-        </div>
-      </div>
     </div>
   </section>
 

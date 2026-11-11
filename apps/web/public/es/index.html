@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Instalar en Chrome</span> <span data-for-browser="edge" hidden>Instalar en Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Ver código fuente</a></div>
         <p class="install-note" data-install-note hidden>Este navegador no puede instalar extensiones de Chrome: abre esta página en un equipo con un navegador basado en Chromium, como Chrome o Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Copiar enlace de esta página</span> <span data-copy-state="done" hidden>Copiado</span></button>
         <ul class="hero-meta">
           <li><b>Código abierto</b> GPL-3.0 · 24 idiomas</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador de video de demostración</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador del vídeo de demostración</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador del vídeo de demostración</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador de posición del video de demostración</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador del vídeo de demostración</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Marcador del vídeo de demostración</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">Ver vídeo de demostración</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">Inicia sesión con un código de verificación por correo electrónico o con una cuenta de Google; consulta los créditos, las suscripciones y los pedidos en el <a class="link" href="https://app.huaci.app/">centro de usuario</a>. Puedes alternar entre la traducción por créditos y tu propia API Key en cualquier momento.</p>
       <p class="after-facts reveal">El precio final es el que se muestra en el centro de usuario. Los precios se expresan en dólares estadounidenses y pueden incluir impuestos adicionales; <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> actúa como distribuidor y procesa el pago; no tenemos acceso a los datos de la tarjeta bancaria. Consulta los <a class="link" href="/es/terms.html">términos del servicio</a>.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>Una sola cuenta, válida para la extensión y la web</h2>
-        <p>Tras iniciar sesión en la extensión, puedes usar la traducción por puntos. Los puntos, la suscripción y los pedidos se consultan en el centro de usuario.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>Inicio de sesión con correo electrónico o Google</b>
-          <p>Inicia sesión con un código de verificación por correo electrónico o con una cuenta de Google; solo se necesita el correo electrónico y el nombre de usuario.</p>
-        </div>
-        <div class="fact">
-          <b>Los puntos y la suscripción se consultan en el centro de usuario</b>
-          <p>En el centro de usuario puedes ver los puntos restantes, el historial de uso, la suscripción, los pedidos y las sesiones de inicio de sesión actuales. Si cierras sesión en la web, la extensión correspondiente también cerrará sesión.</p>
-        </div>
-        <div class="fact">
-          <b>Tras suscribirte, puedes seguir usando tu propia Key</b>
-          <p>Puedes alternar en cualquier momento entre la traducción por puntos y tu propia Key. Con tu propia Key no se descuentan puntos ni se requiere suscripción.</p>
-        </div>
-      </div>
     </div>
   </section>
 

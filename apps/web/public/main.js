@@ -73,6 +73,21 @@
     });
     const installNote = document.querySelector('[data-install-note]');
     if (installNote) installNote.hidden = false;
+
+    // 手机或其他浏览器装不了：给一个「复制本页链接」，方便回到电脑上的 Chrome / Edge 打开
+    const copyLink = document.querySelector('[data-copy-link]');
+    if (copyLink && navigator.clipboard) {
+      const show = (state) => {
+        copyLink.querySelectorAll('[data-copy-state]').forEach((label) => { label.hidden = label.dataset.copyState !== state; });
+      };
+      copyLink.hidden = false;
+      copyLink.addEventListener('click', () => {
+        navigator.clipboard.writeText(location.href.split('#')[0]).then(() => {
+          show('done');
+          setTimeout(() => show('idle'), 2000);
+        }).catch(() => {});
+      });
+    }
   }
 
   /* ------------------------------------------------------------ 账户入口 */

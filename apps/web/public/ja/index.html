@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Chrome にインストール</span> <span data-for-browser="edge" hidden>Edge にインストール</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">ソースコードを見る</a></div>
         <p class="install-note" data-install-note hidden>このブラウザには Chrome 拡張機能をインストールできません。パソコンで Chrome、Edge などの Chromium ベースのブラウザを使用して本ページを開いてください。</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">このページのリンクをコピー</span> <span data-copy-state="done" hidden>コピーしました</span></button>
         <ul class="hero-meta">
           <li><b>オープンソース</b> GPL-3.0 · 24 言語</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画プレースホルダー</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画プレースホルダー</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>デモ動画のプレースホルダー</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">デモ動画を見る</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">メールの認証コードまたは Google アカウントでログインします。ポイント、サブスクリプション、注文は<a class="link" href="https://app.huaci.app/">ユーザーセンター</a>で確認できます。ポイント翻訳と独自の Key はいつでも切り替えられます。</p>
       <p class="after-facts reveal">実際の価格はユーザーセンターの表示を基準とします。価格は米ドル建てで、別途税金が加算される場合があります。決済は販売代理店である <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> が処理し、当社はカード情報に触れません。詳細は<a class="link" href="/ja/terms.html">利用規約</a>を参照してください。</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>1つのアカウントで、拡張機能とウェブページの両方に対応</h2>
-        <p>拡張機能でログインするとポイント翻訳を利用できます。ポイント、サブスクリプション、注文はユーザーセンターで確認できます。</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>メールまたはGoogleでログイン</b>
-          <p>メール認証コードまたはGoogleアカウントでログインでき、必要なのはメールアドレスとユーザー名のみです。</p>
-        </div>
-        <div class="fact">
-          <b>ポイントとサブスクリプションはユーザーセンターで確認</b>
-          <p>ユーザーセンターでは、残りポイント、利用履歴、サブスクリプション、注文、現在のログインセッションを確認できます。ウェブページでログアウトすると、対応する拡張機能も同時にログアウトされます。</p>
-        </div>
-        <div class="fact">
-          <b>サブスクリプション後もご自身のKeyを使用可能</b>
-          <p>ポイント翻訳とご自身のKeyはいつでも切り替えられます。ご自身のKeyを使用する場合はポイントが差し引かれず、サブスクリプションも不要です。</p>
-        </div>
-      </div>
     </div>
   </section>
 

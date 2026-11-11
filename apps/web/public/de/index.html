@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Für Chrome installieren</span> <span data-for-browser="edge" hidden>Für Edge installieren</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Quellcode ansehen</a></div>
         <p class="install-note" data-install-note hidden>In diesem Browser können keine Chrome-Erweiterungen installiert werden: Bitte öffnen Sie diese Seite auf einem Computer mit einem Chromium-basierten Browser wie Chrome oder Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Link zu dieser Seite kopieren</span> <span data-copy-state="done" hidden>Kopiert</span></button>
         <ul class="hero-meta">
           <li><b>Open Source</b> GPL-3.0 · 24 Sprachen</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demovideo</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demovideo</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Platzhalter für Demo-Video</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">Demo-Video ansehen</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">Melden Sie sich mit einem E-Mail-Bestätigungscode oder einem Google-Konto an; Punkte, Abonnements und Bestellungen finden Sie im <a class="link" href="https://app.huaci.app/">Benutzerkonto</a>. Zwischen Punkteübersetzung und eigenem API Key kann jederzeit gewechselt werden.</p>
       <p class="after-facts reveal">Der tatsächliche Preis richtet sich nach der Anzeige im Benutzerzentrum. Die Preise sind in US-Dollar angegeben; es können zusätzlich Steuern anfallen. <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> wickelt die Zahlung als Wiederverkäufer ab; wir erhalten keine Kartendaten. Details siehe <a class="link" href="/de/terms.html">Nutzungsbedingungen</a>.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>Ein Konto für Erweiterung und Website</h2>
-        <p>Nach der Anmeldung in der Erweiterung können Punktübersetzungen genutzt werden. Punkte, Abonnements und Bestellungen sind im Benutzerkonto einsehbar.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>Anmeldung per E-Mail oder Google</b>
-          <p>Anmeldung per E-Mail-Bestätigungscode oder Google-Konto, es werden nur E-Mail-Adresse und Benutzername benötigt.</p>
-        </div>
-        <div class="fact">
-          <b>Punkte und Abonnements im Benutzerkonto einsehbar</b>
-          <p>Im Benutzerkonto sind verbleibende Punkte, Nutzungsverlauf, Abonnements, Bestellungen und die aktuelle Anmeldesitzung einsehbar. Eine Abmeldung auf der Website meldet auch die zugehörige Erweiterung ab.</p>
-        </div>
-        <div class="fact">
-          <b>Auch mit Abonnement kann der eigene Key weiter verwendet werden</b>
-          <p>Zwischen Punktübersetzungen und eigenem Key kann jederzeit gewechselt werden. Mit eigenem Key werden keine Punkte abgezogen und es ist kein Abonnement erforderlich.</p>
-        </div>
-      </div>
     </div>
   </section>
 

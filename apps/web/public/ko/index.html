@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Chrome에 설치</span> <span data-for-browser="edge" hidden>Edge에 설치</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 코드 보기</a></div>
         <p class="install-note" data-install-note hidden>이 브라우저에는 Chrome 확장 프로그램을 설치할 수 없습니다. 컴퓨터에서 Chrome, Edge 등 Chromium 기반 브라우저로 이 페이지를 열어 주세요.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">이 페이지 링크 복사</span> <span data-copy-state="done" hidden>복사됨</span></button>
         <ul class="hero-meta">
           <li><b>오픈 소스</b> GPL-3.0 · 24개 언어</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>데모 영상 자리 표시자</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">데모 영상 보기</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">이메일 인증 코드 또는 Google 계정으로 로그인하며, 포인트, 구독 및 주문은 <a class="link" href="https://app.huaci.app/">사용자 센터</a>에서 확인할 수 있습니다. 포인트 번역과 자체 Key는 언제든지 전환할 수 있습니다.</p>
       <p class="after-facts reveal">실제 가격은 사용자 센터에 표시된 가격을 기준으로 합니다. 가격은 미국 달러로 책정되며 세금이 추가될 수 있습니다. <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a>이 판매자로서 결제를 처리하며, 당사는 카드 정보에 접근하지 않습니다. 자세한 내용은 <a class="link" href="/ko/terms.html">서비스 약관</a>을 참고하세요.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>하나의 계정으로 확장 프로그램과 웹에서 공통 사용</h2>
-        <p>확장 프로그램에서 로그인하면 포인트 번역을 사용할 수 있습니다. 포인트, 구독, 주문은 사용자 센터에서 확인할 수 있습니다.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>이메일 또는 Google 로그인</b>
-          <p>이메일 인증 코드 또는 Google 계정으로 로그인하며, 이메일과 사용자 이름만 필요합니다.</p>
-        </div>
-        <div class="fact">
-          <b>포인트와 구독은 사용자 센터에서 확인</b>
-          <p>사용자 센터에서 남은 포인트, 사용량 기록, 구독, 주문, 현재 로그인 세션을 확인할 수 있습니다. 웹에서 로그아웃하면 해당 확장 프로그램도 함께 로그아웃됩니다.</p>
-        </div>
-        <div class="fact">
-          <b>구독 후에도 자체 Key 사용 가능</b>
-          <p>포인트 번역과 자체 Key는 언제든지 전환할 수 있습니다. 자체 Key를 사용할 때는 포인트가 차감되지 않으며 구독도 필요하지 않습니다.</p>
-        </div>
-      </div>
     </div>
   </section>
 

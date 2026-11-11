@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">تثبيت على Chrome</span> <span data-for-browser="edge" hidden>تثبيت على Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">عرض المصدر</a></div>
         <p class="install-note" data-install-note hidden>هذا المتصفح لا يدعم إضافات Chrome: يُرجى فتح هذه الصفحة على الحاسوب باستخدام متصفح مبني على Chromium مثل Chrome أو Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">نسخ رابط هذه الصفحة</span> <span data-copy-state="done" hidden>تم النسخ</span></button>
         <ul class="hero-meta">
           <li><b>مفتوح المصدر</b> GPL-3.0 · 24 لغة</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>عنصر نائب لفيديو العرض</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">مشاهدة الفيديو التوضيحي</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">سجّل الدخول برمز التحقق عبر البريد الإلكتروني أو بحساب Google، ويمكنك الاطلاع على النقاط والاشتراكات والطلبات في <a class="link" href="https://app.huaci.app/">مركز المستخدم</a>. يمكن التبديل بين الترجمة بالنقاط والترجمة بمفتاحك الخاص في أي وقت.</p>
       <p class="after-facts reveal">السعر الفعلي وفق ما يظهر في مركز المستخدم. الأسعار بالدولار الأمريكي وقد تُضاف ضرائب؛ وتتولى <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> معالجة الدفع بصفتها الموزع، ولا نطّلع على بيانات البطاقات البنكية. راجع <a class="link" href="/ar/terms.html">شروط الخدمة</a> للتفاصيل.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>حساب واحد للإضافة والموقع</h2>
-        <p>بعد تسجيل الدخول في الإضافة يمكنك الترجمة بالنقاط. وتُعرض النقاط والاشتراك والطلبات في مركز المستخدم.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>تسجيل الدخول بالبريد الإلكتروني أو Google</b>
-          <p>سجّل الدخول برمز التحقق عبر البريد الإلكتروني أو بحساب Google، ولا يلزم سوى البريد الإلكتروني واسم المستخدم.</p>
-        </div>
-        <div class="fact">
-          <b>تُعرض النقاط والاشتراك في مركز المستخدم</b>
-          <p>يعرض مركز المستخدم النقاط المتبقية وسجلات الاستخدام والاشتراك والطلبات وجلسات تسجيل الدخول الحالية. وعند تسجيل الخروج من الموقع تُسجَّل الإضافة المقابلة الخروج أيضًا.</p>
-        </div>
-        <div class="fact">
-          <b>يمكنك استخدام مفتاحك الخاص حتى بعد الاشتراك</b>
-          <p>يمكن التبديل بين الترجمة بالنقاط والمفتاح الخاص في أي وقت. واستخدام مفتاحك الخاص لا يخصم نقاطًا ولا يتطلب اشتراكًا.</p>
-        </div>
-      </div>
     </div>
   </section>
 

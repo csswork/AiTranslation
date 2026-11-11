@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Instalar no Chrome</span> <span data-for-browser="edge" hidden>Instalar no Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Ver código-fonte</a></div>
         <p class="install-note" data-install-note hidden>Este navegador não pode instalar extensões do Chrome: abra esta página em um computador com um navegador baseado em Chromium, como Chrome ou Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Copiar link desta página</span> <span data-copy-state="done" hidden>Copiado</span></button>
         <ul class="hero-meta">
           <li><b>Código aberto</b> GPL-3.0 · 24 idiomas</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Espaço reservado para vídeo de demonstração</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vídeo de demonstração (espaço reservado)</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vídeo de demonstração (espaço reservado)</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Espaço reservado para vídeo de demonstração</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vídeo de demonstração (espaço reservado)</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vídeo de demonstração (espaço reservado)</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">Assistir ao vídeo de demonstração</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">Entre com um código de verificação por e-mail ou com uma conta Google; pontos, assinaturas e pedidos podem ser consultados no <a class="link" href="https://app.huaci.app/">centro do usuário</a>. A tradução por pontos e a chave própria podem ser alternadas a qualquer momento.</p>
       <p class="after-facts reveal">Os preços efetivos são os apresentados no centro de utilizador. Os preços são em dólares e podem incluir impostos adicionais; a <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> processa os pagamentos como revendedor e não temos acesso aos dados do cartão bancário. Consulte os <a class="link" href="/pt/terms.html">termos de serviço</a>.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>Uma conta, válida na extensão e na web</h2>
-        <p>Após iniciar sessão na extensão, pode usar a tradução por pontos. Os pontos, a subscrição e as encomendas consultam-se na área de utilizador.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>Login por e-mail ou Google</b>
-          <p>Inicie sessão com um código de verificação por e-mail ou com uma conta Google; só precisa de e-mail e nome de utilizador.</p>
-        </div>
-        <div class="fact">
-          <b>Pontos e subscrição consultam-se na área de utilizador</b>
-          <p>Na área de utilizador pode ver os pontos restantes, o histórico de utilização, a subscrição, as encomendas e as sessões de início de sessão atuais. Ao terminar sessão na web, a extensão correspondente também termina sessão.</p>
-        </div>
-        <div class="fact">
-          <b>Após a subscrição, continua a poder usar a sua própria Key</b>
-          <p>Pode alternar a qualquer momento entre a tradução por pontos e a sua própria Key. Com a sua própria Key não são descontados pontos nem é necessária subscrição.</p>
-        </div>
-      </div>
     </div>
   </section>
 

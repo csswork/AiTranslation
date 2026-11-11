@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Установить в Chrome</span> <span data-for-browser="edge" hidden>Установить в Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Исходный код</a></div>
         <p class="install-note" data-install-note hidden>В этом браузере нельзя установить расширения Chrome: откройте эту страницу на компьютере в браузере на базе Chromium, например Chrome или Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Скопировать ссылку на страницу</span> <span data-copy-state="done" hidden>Скопировано</span></button>
         <ul class="hero-meta">
           <li><b>Открытый исходный код</b> GPL-3.0 · 24 языка</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Место для демонстрационного видео</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Заглушка демонстрационного видео</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">Смотреть демонстрационное видео</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">Войдите с помощью кода подтверждения по электронной почте или аккаунта Google; баллы, подписки и заказы отображаются в <a class="link" href="https://app.huaci.app/">личном кабинете</a>. Перевод за баллы и собственный API Key можно переключать в любое время.</p>
       <p class="after-facts reveal">Фактическая цена отображается в личном кабинете. Цены указаны в долларах США, возможны дополнительные налоги; платежи обрабатывает <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> как реселлер, мы не получаем данные банковских карт. Подробнее см. <a class="link" href="/ru/terms.html">Условия обслуживания</a>.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>Один аккаунт для расширения и веб-сайта</h2>
-        <p>После входа в расширении можно пользоваться переводом за баллы. Баллы, подписки и заказы отображаются в личном кабинете.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>Вход по электронной почте или через Google</b>
-          <p>Вход по коду подтверждения на email или через аккаунт Google, требуются только email и имя пользователя.</p>
-        </div>
-        <div class="fact">
-          <b>Баллы и подписки отображаются в личном кабинете</b>
-          <p>В личном кабинете видны остаток баллов, история использования, подписки, заказы и текущие сеансы входа. При выходе из аккаунта на веб-сайте соответствующее расширение также выходит из аккаунта.</p>
-        </div>
-        <div class="fact">
-          <b>После подписки по-прежнему можно использовать собственный ключ</b>
-          <p>Перевод за баллы и собственный ключ можно переключать в любой момент. При использовании собственного ключа баллы не списываются и подписка не требуется.</p>
-        </div>
-      </div>
     </div>
   </section>
 

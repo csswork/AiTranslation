@@ -91,6 +91,7 @@
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
         <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Installer sur Chrome</span> <span data-for-browser="edge" hidden>Installer sur Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">Voir le code source</a></div>
         <p class="install-note" data-install-note hidden>Ce navigateur ne peut pas installer d'extensions Chrome : ouvrez cette page sur un ordinateur avec un navigateur basé sur Chromium, comme Chrome ou Edge.</p>
+        <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Copier le lien de cette page</span> <span data-copy-state="done" hidden>Copié</span></button>
         <ul class="hero-meta">
           <li><b>Open source</b> GPL-3.0 · 24 langues</li>
           <li>Chrome / Edge 116+</li>
@@ -227,7 +228,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Espace réservé pour la vidéo de démonstration</strong> <span class="mono">assets/demo-reader.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-reader.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -253,7 +254,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-selection.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-selection.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-image.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-image.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -305,7 +306,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Emplacement de la vidéo de démonstration</strong> <span class="mono">assets/demo-pdf.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-pdf.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-element.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-element.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -356,7 +357,7 @@
               <span class="addr"></span>
             </div>
             <div class="frame-body">
-              <div class="ph"><strong>Vidéo de démonstration (emplacement réservé)</strong> <span class="mono">assets/demo-panel.mp4</span></div>
+              <div class="ph"><a class="link" href="/assets/demo-panel.mp4">Voir la vidéo de démonstration</a></div>
             </div>
           </div>
         </div>
@@ -472,31 +473,8 @@
         </div>
       </div>
 
+      <p class="after-facts reveal">Connectez-vous avec un code de vérification par e-mail ou un compte Google ; les points, les abonnements et les commandes sont consultables dans l'<a class="link" href="https://app.huaci.app/">espace utilisateur</a>. La traduction par points et la clé personnelle peuvent être commutées à tout moment.</p>
       <p class="after-facts reveal">Les prix affichés dans l'espace utilisateur font foi. Les prix sont en dollars américains et des taxes peuvent s'ajouter ; <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> agit en tant que revendeur et traite les paiements ; nous n'avons pas accès aux informations de carte bancaire. Voir les <a class="link" href="/fr/terms.html">conditions de service</a>.</p>
-    </div>
-  </section>
-
-  <section class="section slide slide-steps" id="account-preview" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Account</p>
-        <h2>Un seul compte, valable pour l'extension et le site web</h2>
-        <p>Après connexion dans l'extension, vous pouvez utiliser la traduction par points. Les points, abonnements et commandes sont consultables dans l'espace utilisateur.</p>
-      </div>
-      <div class="facts reveal">
-        <div class="fact">
-          <b>Connexion par e-mail ou Google</b>
-          <p>Connectez-vous par code de vérification e-mail ou avec un compte Google ; seuls l'adresse e-mail et le nom d'utilisateur sont requis.</p>
-        </div>
-        <div class="fact">
-          <b>Points et abonnements consultables dans l'espace utilisateur</b>
-          <p>L'espace utilisateur affiche les points restants, l'historique d'utilisation, les abonnements, les commandes et la session de connexion en cours. Si vous vous déconnectez sur le site web, l'extension correspondante se déconnecte également.</p>
-        </div>
-        <div class="fact">
-          <b>Votre propre clé reste utilisable même avec un abonnement</b>
-          <p>La traduction par points et votre propre clé sont interchangeables à tout moment. L'utilisation de votre propre clé ne déduit pas de points et ne nécessite pas d'abonnement.</p>
-        </div>
-      </div>
     </div>
   </section>
 
