@@ -122,6 +122,33 @@
   }
 
   /** 在画布上取一个框的相近色（像素坐标）。画布被跨域污染时返回 null。 */
+  /**
+   * 底色是不是渐变：比较形状外沿上下、左右两对色带。两头都和文字的底色相近（同一片背景）、
+   * 彼此又有明显差别，就返回过渡的方向和两头的颜色；否则返回 null（单色）。
+   * @param {{r,g,b}} base 文字的底色
+   */
+  function gradientAt(ctx, rect, width, height, base) {
+    if (!ctx || !base) return null;
+    const gap = (a, b) => Math.max(Math.abs(a.r - b.r), Math.abs(a.g - b.g), Math.abs(a.b - b.b));
+    const band = 4;
+    const x0 = Math.max(0, Math.floor(rect.x));
+    const y0 = Math.max(0, Math.floor(rect.y));
+    const x1 = Math.min(width, Math.ceil(rect.x + rect.w));
+    const y1 = Math.min(height, Math.ceil(rect.y + rect.h));
+    const strip = (x, y, w, h) => {
+      if (w <= 0 || h <= 0 || x < 0 || y < 0 || x + w > width || y + h > height) return null;
+      try { return dominantColor([ctx.getImageData(x, y, w, h)]); } catch { return null; }
+    };
+    const pairs = [
+      { axis: 'y', from: strip(x0, y0 - band, x1 - x0, band), to: strip(x0, y1, x1 - x0, band) },
+      { axis: 'x', from: strip(x0 - band, y0, band, y1 - y0), to: strip(x1, y0, band, y1 - y0) },
+    ].filter((p) => p.from && p.to && gap(p.from, base) <= 60 && gap(p.to, base) <= 60)
+      .map((p) => ({ ...p, diff: gap(p.from, p.to) }))
+      .filter((p) => p.diff >= 10)
+      .sort((a, b) => b.diff - a.diff);
+    return pairs.length ? { axis: pairs[0].axis, from: pairs[0].from, to: pairs[0].to } : null;
+  }
+
   function sampleAt(ctx, rect, width, height) {
     try {
       return dominantColor(ringStrips(rect, width, height).map((s) => ctx.getImageData(s.x, s.y, s.w, s.h)));
@@ -169,10 +196,36 @@
    * @param {{x,y,w,h}} hint 窗口内的提示范围（像素）：模型给的框，或用户画的选区
    * @param {Array<{x,y,w,h}>} [others] 窗口内其他文字块的提示范围：更靠近它们的笔画归它们
    * @param {boolean} [withMask] 同时返回选中笔画的格子（cell 边长、cw × ch、mask）和字高 textSize，用来勾出不规则的文字形状
+   * @param {{em:number, chars:number}} [prior] 按模型给的原文字数和框大小估出的字号（像素）与字数。
+   *   给了它：底色只在提示框里取（窗口放宽后常带进气泡外面另一种颜色的画面）；
+   *   「比字大得多」这类判断按它算，不受笔画粘连、网点的影响；满地的小点（网点、星空）整批丢掉
    * @returns {{x,y,w,h,glyph:number}|null} 窗口内像素坐标；glyph 是单个字的大致尺寸
    */
-  function inkBox(data, width, height, hint, others = [], withMask = false) {
-    const bg = dominantColor([{ data }]);
+  function inkBox(data, width, height, hint, others = [], withMask = false, prior = null) {
+    let bg = null;
+    if (prior) {
+      // 提示框里的像素单独取众数
+      const hx0 = Math.max(0, Math.floor(hint.x));
+      const hy0 = Math.max(0, Math.floor(hint.y));
+      const hx1 = Math.min(width, Math.ceil(hint.x + hint.w));
+      const hy1 = Math.min(height, Math.ceil(hint.y + hint.h));
+      if (hx1 - hx0 >= 4 && hy1 - hy0 >= 4) {
+        const step = Math.max(1, Math.floor(Math.sqrt(((hx1 - hx0) * (hy1 - hy0)) / 6000)));
+        const sample = [];
+        // prior.bgFrom === 'edge'：只看提示框的一圈边。又粗又大的字（音效、标题）占了框里大半，
+        // 框里最常见的颜色是字本身，框的边上才是底色
+        const band = prior.bgFrom === 'edge' ? Math.max(2, Math.round(Math.min(hx1 - hx0, hy1 - hy0) * 0.05)) : 0;
+        for (let y = hy0; y < hy1; y += step) {
+          for (let x = hx0; x < hx1; x += step) {
+            if (band && x - hx0 >= band && hx1 - 1 - x >= band && y - hy0 >= band && hy1 - 1 - y >= band) continue;
+            const q = (y * width + x) << 2;
+            sample.push(data[q], data[q + 1], data[q + 2], data[q + 3]);
+          }
+        }
+        bg = dominantColor([{ data: sample }]);
+      }
+    }
+    bg ||= dominantColor([{ data }]);
     if (!bg || width < 4 || height < 4) return null;
     // 格子边长：窗口长边分成约 240 格，几百万像素的窗口也只要几毫秒
     const cell = Math.max(1, Math.ceil(Math.max(width, height) / 240));
@@ -241,12 +294,64 @@
       const [pw, ph] = dims(p);
       return Math.max(pw, ph) > 6 && p.cells / (pw * ph) < 0.12;
     };
+    const expect = prior?.em > 0 ? prior.em / cell : 0;
     let keep = parts.filter((p) => {
       const [pw, ph] = dims(p);
       if ((pw > cw * 0.4 || ph > ch * 0.4) && p.edge) return false; // 从窗口外伸进来的画面
       if ((pw > cw * 0.6 || ph > ch * 0.6) && sparse(p)) return false; // 对话框描边
+      // 知道字大概多大时：碰到窗口边缘、又比一个半字还大的，是气泡外面的画面
+      if (expect && p.edge && Math.max(pw, ph) > expect * 1.5) return false;
       return true;
     });
+    if (expect) {
+      // 文字所在的那片底色（气泡、文字框的内部）：没有笔画的格子连成片，取提示框里占得最多的一片。
+      // 只认挨着这片底色的笔画——框线另一侧的网点、画面不挨着它，再近也不算
+      const region = new Int32Array(cw * ch).fill(-1);
+      const inHint = [];
+      const queue = [];
+      for (let start = 0; start < ink.length; start += 1) {
+        if (ink[start] || region[start] >= 0) continue;
+        const id = inHint.length;
+        let hits = 0;
+        region[start] = id;
+        queue.push(start);
+        while (queue.length) {
+          const i = queue.pop();
+          const x = i % cw;
+          const y = (i / cw) | 0;
+          const px = (x + 0.5) * cell;
+          const py = (y + 0.5) * cell;
+          if (px >= hint.x && px <= hint.x + hint.w && py >= hint.y && py <= hint.y + hint.h) hits += 1;
+          for (const j of [x > 0 ? i - 1 : -1, x < cw - 1 ? i + 1 : -1, y > 0 ? i - cw : -1, y < ch - 1 ? i + cw : -1]) {
+            if (j < 0 || ink[j] || region[j] >= 0) continue;
+            region[j] = id;
+            queue.push(j);
+          }
+        }
+        inHint.push(hits);
+      }
+      const home = inHint.indexOf(Math.max(0, ...inHint));
+      if (home >= 0 && inHint[home] > 0) {
+        const touches = new Uint8Array(parts.length);
+        for (let i = 0; i < ink.length; i += 1) {
+          if (!ink[i] || touches[label[i]]) continue;
+          const x = i % cw;
+          const y = (i / cw) | 0;
+          for (let dy = -1; dy <= 1 && !touches[label[i]]; dy += 1) {
+            for (let dx = -1; dx <= 1; dx += 1) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx < 0 || ny < 0 || nx >= cw || ny >= ch) continue;
+              if (region[ny * cw + nx] === home) { touches[label[i]] = 1; break; }
+            }
+          }
+        }
+        keep = keep.filter((p) => touches[p.id]);
+      }
+      // 网点、星空：比字小得多的点成片出现，数量远超原文的字数（标点最多也就和字数相当）
+      const tiny = (p) => Math.max(...dims(p)) < expect * 0.22;
+      if (keep.filter(tiny).length > (prior.chars || 0) * 3 + 8) keep = keep.filter((p) => !tiny(p));
+    }
     if (!keep.length) return null;
 
     // 单个字的大致尺寸：各块长边的四分之三分位（注音假名和笔画断开的汉字会偏小），
@@ -261,7 +366,9 @@
     const inside = solid.filter(hintCenter);
     const sizes = (inside.length ? inside : solid)
       .map((p) => Math.max(...dims(p))).sort((a, b) => a - b);
-    const glyph = sizes[Math.floor(sizes.length * 0.75)];
+    const measured = sizes[Math.floor(sizes.length * 0.75)];
+    // 字挨得紧时笔画连成整个词，量出来的是词宽；有估计值时按估计值判断
+    const glyph = expect || measured;
     // 单个字的块不会太大：横竖都比字大得多的是画面、圆圈或描边；
     // 一边比两个字还长、另一边又细的是线条（心里话两侧的波浪线、速度线）
     keep = keep.filter((p) => {
@@ -348,7 +455,9 @@
         }
         return edge / Math.max(1, p.cells) > 0.85;
       };
-      const outlines = new Set(parts.filter((p) => taken.has(p.id) && Math.max(...dims(p)) > glyph * 3 && (sparse(p) || rim(p)))
+      // 框线两个方向都比字大；一个细长的词（笔画细、连成一片）只有一个方向长，不能当成框线
+      const outlines = new Set(parts.filter((p) => taken.has(p.id) && Math.max(...dims(p)) > glyph * 3 &&
+        Math.min(...dims(p)) > glyph * 1.5 && (sparse(p) || rim(p)))
         .map((p) => p.id));
       const mask = new Uint8Array(cw * ch);
       for (let i = 0; i < mask.length; i += 1) if (label[i] >= 0 && taken.has(label[i]) && !outlines.has(label[i])) mask[i] = 1;
@@ -358,7 +467,8 @@
       const mins = parts.filter((p) => taken.has(p.id) && !sparse(p) && Math.max(...dims(p)) >= glyph * 0.5)
         .map((p) => Math.min(...dims(p))).sort((a, b) => a - b);
       const textSize = mins.length ? mins[Math.floor(mins.length * 0.75)] * cell : glyph * cell;
-      Object.assign(found, { cell, cw, ch, mask, textSize });
+      // ink 是文字本身的颜色：译文沿用它
+      Object.assign(found, { cell, cw, ch, mask, textSize, bg, ink: main });
     }
     return found;
   }
@@ -666,21 +776,36 @@
    * @param {(text:string, size:number)=>number} measure 横排文字宽度
    * @returns {{size:number, lines:string[], vertical:boolean, box:{x,y,w,h}}}
    */
-  function layoutShape(text, rect, image, measure, { vertical = false, glyph = 0, min = 10 } = {}) {
+  function layoutShape(text, rect, image, measure, { vertical = false, glyph = 0, min = 10, align = 'center', fixed = false } = {}) {
     const lineHeight = LINE_HEIGHT;
     const max = Math.max(min, glyph > 0 ? glyph : Math.min(rect.w, rect.h) / 2);
     // 用空格分词的文字（英文等）不能把一个词拆到两行：拆了就算放不下，宁可加宽
     const words = String(text).trim().split(/\s+/).filter(Boolean);
-    const intact = (lines) => words.length < 2 ||
+    // 只有一个词时也一样（「Huh?」不能拆成 H / uh?）；中日韩文字不分词，随便断
+    const spaced = words.length > 1 || !/[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]/.test(String(text));
+    const intact = (lines) => !spaced ||
       words.every((word) => lines.some((line) => line.split(/\s+/).includes(word)));
     const attempt = (size, width) => {
       if (vertical) {
-        const lines = wrapVertical(text, rect.h, size);
+        let lines = wrapVertical(text, rect.h, size);
+        // 各列排匀：最后一列只剩一两个字时，把每列的字数摊平（列数不变）
+        if (lines.length > 1) {
+          const total = lines.reduce((sum, l) => sum + graphemes(l).length, 0);
+          const even = wrapVertical(text, (Math.ceil(total / lines.length) + 0.5) * size * VERTICAL_ADVANCE, size);
+          if (even.length <= lines.length) lines = even;
+        }
         const w = lines.length * size * lineHeight;
         const h = Math.max(...lines.map((l) => graphemes(l.replace(HANGING, '')).length)) * size * VERTICAL_ADVANCE;
         return { size, lines, w, h, ok: w <= width + 0.5 && h <= rect.h + 0.5 };
       }
-      const lines = wrap(text, width, size, measure);
+      let lines = wrap(text, width, size, measure);
+      // 居中的多行（气泡）各行排匀：行数不变的前提下把行宽收窄，最后一行不至于只剩一两个字
+      if (align === 'center' && lines.length > 1) {
+        for (let k = 0.6; k < 1; k += 0.05) {
+          const even = wrap(text, width * k, size, measure);
+          if (even.length === lines.length && intact(even)) { lines = even; break; }
+        }
+      }
       const w = Math.max(0, ...lines.map((l) => measure(l.replace(HANGING, ''), size)));
       const h = lines.length * size * lineHeight;
       return { size, lines, w, h, ok: w <= width + 0.5 && h <= rect.h + 0.5 && intact(lines) };
@@ -705,10 +830,11 @@
     let widest = null;
     for (const factor of [1, 1.4, 2, 2.8, 4]) {
       const width = Math.min(limit, rect.w * factor);
-      const tried = best(width);
+      // fixed：用户自己定了字号，不再缩小去适应形状，只找一个放得下的宽度
+      const tried = fixed ? attempt(Math.max(6, glyph), width) : best(width);
       widest = tried;
       if (tried.ok && (!chosen || tried.size > chosen.size)) chosen = tried;
-      if (tried.ok && tried.size >= max * 0.7) break;
+      if (tried.ok && (fixed || tried.size >= max * 0.7)) break;
       if (width >= limit) break;
     }
     // 怎么加宽都放不下：用最宽的那次（最小字号），允许溢出
@@ -717,9 +843,15 @@
     const cy = rect.y + rect.h / 2;
     const w = chosen.w;
     const h = chosen.h;
-    const x = Math.min(Math.max(0, cx - w / 2), Math.max(0, image.w - w));
-    const y = Math.min(Math.max(0, cy - h / 2), Math.max(0, image.h - h));
-    return { size: chosen.size, lines: chosen.lines, vertical, box: { x, y, w, h } };
+    // 原文左对齐（右对齐）的段落：译文贴着同一边、从第一行的位置排起，不居中。
+    // 形状在笔画外留了约 0.3 个字的边，译文从笔画的位置开始
+    const side = !vertical && (align === 'left' || align === 'right') ? align : 'center';
+    const inset = Math.max(0, glyph > 0 ? glyph * 0.3 : 0);
+    const left = side === 'left' ? rect.x + inset : side === 'right' ? rect.x + rect.w - inset - w : cx - w / 2;
+    const top = side === 'center' ? cy - h / 2 : rect.y + Math.min(inset, Math.max(0, (rect.h - h) / 2));
+    const x = Math.min(Math.max(0, left), Math.max(0, image.w - w));
+    const y = Math.min(Math.max(0, top), Math.max(0, image.h - h));
+    return { size: chosen.size, lines: chosen.lines, vertical, align: side, box: { x, y, w, h } };
   }
 
   /** 按形状排好每段译文（原图像素）。items 里要有 polygons、bounds、translation、glyph、vertical。 */
@@ -731,15 +863,38 @@
       return ctx.measureText(text).width;
     };
     const vertical = verticalTarget(targetId);
-    return items.map((item) => ({
-      ...item,
-      natural,
-      layout: layoutShape(item.translation, toPixels(item.bounds, natural.w, natural.h), natural, measure, {
+    return items.map((item) => {
+      // item.tweak 是用户对这一段的手动修改：改过的译文、字号倍数、挪动的距离（相对原图宽高）
+      const tweak = item.tweak || {};
+      const text = tweak.text ?? item.translation;
+      const scale = tweak.scale > 0 ? tweak.scale : 1;
+      if (item.sfx) {
+        // 音效字：原来的美术字留着，译文用小字标在它下面（下面出了图就标在上面）
+        const b = toPixels(item.bounds, natural.w, natural.h);
+        const size = Math.min(34, Math.max(12, natural.h / 90, (item.glyph || 0) * natural.h * 0.3)) * scale;
+        const below = b.y + b.h + size * 1.4 <= natural.h;
+        const strip = { x: b.x, y: below ? b.y + b.h : b.y - size * 1.3, w: b.w, h: size * 1.3 };
+        const layout = layoutShape(text, strip, natural, measure, { glyph: size, fixed: true });
+        if (tweak.dx || tweak.dy) {
+          layout.box.x = Math.min(Math.max(0, layout.box.x + (tweak.dx || 0) * natural.w), Math.max(0, natural.w - layout.box.w));
+          layout.box.y = Math.min(Math.max(0, layout.box.y + (tweak.dy || 0) * natural.h), Math.max(0, natural.h - layout.box.h));
+        }
+        return { ...item, translation: text, natural, layout };
+      }
+      const layout = layoutShape(text, toPixels(item.bounds, natural.w, natural.h), natural, measure, {
         vertical: vertical && item.vertical,
-        glyph: (item.glyph || 0) * natural.h,
+        glyph: (item.glyph || 0) * natural.h * scale,
         min: Math.max(10, natural.h / 160),
-      }),
-    }));
+        align: item.align,
+        fixed: scale !== 1,
+      });
+      if (tweak.dx || tweak.dy) {
+        const { box } = layout;
+        box.x = Math.min(Math.max(0, box.x + (tweak.dx || 0) * natural.w), Math.max(0, natural.w - box.w));
+        box.y = Math.min(Math.max(0, box.y + (tweak.dy || 0) * natural.h), Math.max(0, natural.h - box.h));
+      }
+      return { ...item, translation: text, natural, layout };
+    });
   }
 
   /**
@@ -751,14 +906,41 @@
     ctx.save();
     ctx.scale(scale, scale);
     // 先铺完所有底色再写字，免得后铺的底色盖住前一段溢出的字
-    const colored = items.map((item) => ({ item, color: paint(fill, custom, item.sample) }));
+    // 相近色优先用文字自己的底色，取不到再用形状外沿采到的颜色
+    const rgb = (c) => `rgb(${Math.round(c.r)}, ${Math.round(c.g)}, ${Math.round(c.b)})`;
+    const contrast = (a, b) => {
+      const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+      return (hi + 0.05) / (lo + 0.05);
+    };
+    const colored = items.map((item) => {
+      // 音效字不覆盖原图：译文是压在画面上的小字，黑字白边
+      if (item.sfx) return { item, color: { bg: '#ffffff', fg: '#111111' } };
+      const base = item.background || item.sample;
+      const color = { ...paint(fill, custom, base) };
+      // 相近色时译文沿用原文的颜色（和底色的对比度够才用，否则按黑白选）
+      if (fill === 'auto' && base && item.ink && contrast(item.ink, base) >= 3) color.fg = rgb(item.ink);
+      return { item, color };
+    });
     for (const { item, color } of colored) {
+      if (item.sfx) continue;
       ctx.beginPath();
       for (const poly of item.polygons) {
         poly.forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x * item.natural.w, y * item.natural.h));
         ctx.closePath();
       }
       ctx.fillStyle = color.bg;
+      // 底色是渐变（天空、海报背景）时照着两头的颜色过渡，不留下一块单色的补丁
+      const g = fill === 'auto' ? item.gradient : null;
+      if (g) {
+        const b = item.bounds;
+        const [w, h] = [item.natural.w, item.natural.h];
+        const gradient = g.axis === 'x'
+          ? ctx.createLinearGradient(b.x * w, 0, (b.x + b.w) * w, 0)
+          : ctx.createLinearGradient(0, b.y * h, 0, (b.y + b.h) * h);
+        gradient.addColorStop(0, rgb(g.from));
+        gradient.addColorStop(1, rgb(g.to));
+        ctx.fillStyle = gradient;
+      }
       ctx.fill();
     }
     ctx.lineJoin = 'round';
@@ -767,7 +949,7 @@
       ctx.font = `500 ${size}px ${FONT}`;
       ctx.fillStyle = color.fg;
       ctx.strokeStyle = color.bg;
-      ctx.lineWidth = size * 0.22;
+      ctx.lineWidth = size * (item.sfx ? 0.34 : 0.22);
       ctx.textBaseline = 'middle';
       const put = (text, x, y) => {
         ctx.strokeText(text, x, y);
@@ -787,7 +969,8 @@
         const lineHeight = size * LINE_HEIGHT;
         lines.forEach((line, i) => {
           const w = ctx.measureText(line.replace(HANGING, '')).width;
-          put(line, box.x + (box.w - w) / 2, box.y + (i + 0.5) * lineHeight);
+          const x = item.layout.align === 'left' ? box.x : item.layout.align === 'right' ? box.x + box.w - w : box.x + (box.w - w) / 2;
+          put(line, x, box.y + (i + 0.5) * lineHeight);
         });
       }
     }
@@ -857,6 +1040,7 @@
     dominantColor,
     ringStrips,
     sampleAt,
+    gradientAt,
     coverBox,
     textArea,
     overlayShape,

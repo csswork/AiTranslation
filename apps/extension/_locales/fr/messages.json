@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Aucun texte à traduire n'a été trouvé sur cette page ; le contenu chargé ultérieurement et les autres pages de ce site seront traduits automatiquement."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Cliquez pour modifier cette traduction, faites glisser pour la déplacer"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Retraduire uniquement ce segment"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Réduire la taille de la police"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Augmenter la taille de la police"
+  },
+  "m_ddde08946298195d": {
+    "message": "Réinitialiser"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Annuler les modifications de ce segment"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Terminé"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Reconnaître et traduire à nouveau cette image"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Reconnaître à nouveau"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Image précédente (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Image précédente"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Image suivante (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Image suivante"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Traduire les onomatopées"
+  },
+  "m_257f284111f75da4": {
+    "message": "Traduisez aussi les onomatopées dessinées dans l'image : conservez le texte original et ajoutez la traduction à côté en petits caractères."
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

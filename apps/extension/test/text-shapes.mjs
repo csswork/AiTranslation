@@ -45,13 +45,14 @@ const second = [...line(160, 105, 6), ...line(160, 135, 6)];
 const ctx = canvas(W, H, [...first, ...second]);
 const rel = (x, y, w, h) => ({ x: x / W, y: y / H, w: w / W, h: h / H });
 const blocks = [
-  { text: 'first', box: rel(35, 35, 215, 95) },
-  { text: 'second', box: rel(150, 95, 170, 70) },
+  // 原文的字数与图上的字数一致：字号的估计值按它算
+  { text: '第'.repeat(15), box: rel(35, 35, 215, 95) },
+  { text: '二'.repeat(12), box: rel(150, 95, 170, 70) },
 ];
 const { shapes, small } = S.findShapes(ctx, W, H, blocks);
 assert.equal(small, 0);
 assert.equal(shapes.length, 2);
-assert.deepEqual(shapes.map((s) => s.text), ['first', 'second']);
+assert.deepEqual(shapes.map((s) => s.text[0]), ['第', '二']);
 for (const shape of shapes) {
   assert.equal(shape.fallback, false, '读得到像素时按笔画勾形状');
   assert.equal(shape.polygons.length, 1, '同一块的几行连成一片');
@@ -72,9 +73,9 @@ console.log('✓ 按笔画勾出不规则多边形，相互压住的两块分开
 
 /* ---- 小字丢掉 ---- */
 const tiny = canvas(W, H, [...first, ...line(400, 300, 6, 4, 2)]);
-const withTiny = S.findShapes(tiny, W, H, [blocks[0], { text: 'tiny', box: rel(398, 298, 40, 8) }]);
+const withTiny = S.findShapes(tiny, W, H, [blocks[0], { text: 'tiny©', box: rel(398, 298, 40, 8) }]);
 assert.equal(withTiny.small, 1);
-assert.deepEqual(withTiny.shapes.map((s) => s.text), ['first']);
+assert.deepEqual(withTiny.shapes.map((s) => s.text[0]), ['第']);
 console.log('✓ 字不到图片短边 1.5% 的小字丢掉');
 
 /* ---- 周围满是细碎纹理（树林、星空）时，字号不被拉小，正常大小的字不当小字丢掉 ---- */
@@ -98,11 +99,53 @@ console.log('✓ 字不到图片短边 1.5% 的小字丢掉');
 {
   const frame = [[30, 30, 260, 2], [30, 128, 260, 2], [30, 30, 2, 100], [288, 30, 2, 100]];
   const framed = canvas(W, H, [...first.filter(([, y]) => y < 100), ...frame]);
-  const found = S.findShapes(framed, W, H, [{ text: 'framed', box: rel(38, 38, 200, 60) }]);
+  const found = S.findShapes(framed, W, H, [{ text: '框'.repeat(13), box: rel(38, 38, 200, 60) }]);
   assert.equal(found.shapes.length, 1);
   const bounds = found.shapes[0].bounds;
   assert.ok(bounds.x * W > 31 && (bounds.x + bounds.w) * W < 289, `形状不含边框：${bounds.x * W}-${(bounds.x + bounds.w) * W}`);
   console.log('✓ 文字框的边框不勾进形状');
+}
+
+/* ---- 字号按行高量，对齐方式按各行的起止位置判断 ---- */
+{
+  // 三行左对齐、长短不一的「字」（20 像素见方），外加一列很细的注音
+  const ruby = Array.from({ length: 4 }, (_, i) => [262, 40 + i * 8, 5, 5]);
+  const page = canvas(W, H, [...first, ...ruby]);
+  const text = '第'.repeat(15);
+  const [shape] = S.findShapes(page, W, H, [{ text, box: rel(35, 35, 215, 95) }]).shapes;
+  const em = shape.glyph * H;
+  assert.ok(em > 18 && em < 26, `字号接近 20/0.92：${em}`);
+  assert.equal(shape.lines, 3);
+  assert.equal(shape.align, 'left', '各行起点对齐、终点参差：左对齐');
+  assert.ok(shape.background && shape.background.r > 240, '底色取文字自己的底色');
+  // 估计值：15 个字、215×95 的框
+  const prior = S.priorEm(text, { x: 0, y: 0, w: 215, h: 95 });
+  assert.ok(prior.em > 25 && prior.em < 40 && prior.chars === 15);
+  assert.equal(S.isCjk('明日の試験'), true);
+  assert.equal(S.isCjk('NOT SINCE THE STORM'), false);
+  console.log('✓ 字号按行高量、对齐方式按行的起止判断、底色取文字自己的');
+}
+
+/* ---- 文字的气泡跨在两种底色上：气泡外面的色块不勾进形状 ---- */
+{
+  const data = (() => {
+    const c = canvas(W, H, []);
+    return c;
+  })();
+  // 下半张图是深色的「草地」，白色气泡（矩形）压在分界线上，字在气泡里
+  const raw = new Uint8ClampedArray(W * H * 4).fill(255);
+  const paint = (x0, y0, w, h, v) => { for (let y = y0; y < y0 + h; y += 1) for (let x = x0; x < x0 + w; x += 1) raw.set([v[0], v[1], v[2], 255], (y * W + x) * 4); };
+  paint(0, 200, W, 200, [90, 140, 80]);
+  paint(100, 150, 300, 110, [255, 255, 255]);
+  for (const [x, y, w, h] of line(130, 180, 9)) paint(x, y, w, h, [0, 0, 0]);
+  for (const [x, y, w, h] of line(130, 212, 6)) paint(x, y, w, h, [0, 0, 0]);
+  const ctx2 = { getImageData(x, y, w, h) { const out = new Uint8ClampedArray(w * h * 4); for (let r = 0; r < h; r += 1) out.set(raw.subarray(((y + r) * W + x) * 4, ((y + r) * W + x + w) * 4), r * w * 4); return { data: out }; } };
+  const [shape] = S.findShapes(ctx2, W, H, [{ text: '字'.repeat(15), box: rel(120, 170, 250, 70) }]).shapes;
+  assert.equal(shape.fallback, false);
+  const b = shape.bounds;
+  assert.ok(b.x * W >= 100 && (b.x + b.w) * W <= 400 && b.y * H >= 150 && (b.y + b.h) * H <= 260, `形状留在气泡里：${[b.x * W, b.y * H, b.w * W, b.h * H].map(Math.round)}`);
+  assert.ok(shape.background.r > 240 && shape.background.g > 240, '底色是气泡的白色，不是草地的颜色');
+  console.log('✓ 气泡跨在两种底色上时形状不漏到气泡外，底色取气泡里的');
 }
 
 /* ---- 读不到像素：退回模型的矩形，重叠部分仍然分清归属 ---- */

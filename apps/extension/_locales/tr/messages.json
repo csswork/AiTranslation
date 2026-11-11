@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Bu sayfada çevrilmesi gereken metin bulunamadı; sonradan yüklenen içerik ve bu sitenin diğer sayfaları otomatik olarak çevrilecek."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Çeviriyi düzenlemek için tıklayın, taşımak için sürükleyin"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Yalnızca bu bölümü yeniden çevir"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Yazı boyutunu küçült"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Yazı boyutunu büyüt"
+  },
+  "m_ddde08946298195d": {
+    "message": "Sıfırla"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Bu bölümdeki değişiklikleri geri al"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Tamam"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Bu görseli yeniden tanı ve çevir"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Yeniden tanı"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Önceki görsel (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Önceki görsel"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Sonraki görsel (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Sonraki görsel"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Ses efektlerini çevir"
+  },
+  "m_257f284111f75da4": {
+    "message": "Çizimde yer alan yansıma sözcükleri de çevir: özgün metni koru ve çevirisini yanına küçük harflerle ekle."
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Click to edit this translation, drag to move it"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Retranslate this segment only"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Decrease font size"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Increase font size"
+  },
+  "m_ddde08946298195d": {
+    "message": "Reset"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Undo changes to this segment"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Done"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Re-recognize and translate this image"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Re-recognize"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Previous image (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Previous image"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Next image (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Next image"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Translate sound effects"
+  },
+  "m_257f284111f75da4": {
+    "message": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

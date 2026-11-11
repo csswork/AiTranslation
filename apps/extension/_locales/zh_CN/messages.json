@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。"
   },
+  "m_a21abc9eef16dee4": {
+    "message": "点一下修改这段译文，拖动可以挪位置"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "只重新翻译这一段"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "缩小字号"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "放大字号"
+  },
+  "m_ddde08946298195d": {
+    "message": "还原"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "撤销对这一段的修改"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "完成"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "重新识别并翻译这张图"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "重新识别"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "上一张图（←）"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "上一张图"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "下一张图（→）"
+  },
+  "m_f8559aefb319052e": {
+    "message": "下一张图"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "翻译音效字"
+  },
+  "m_257f284111f75da4": {
+    "message": "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

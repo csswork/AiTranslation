@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Không tìm thấy văn bản nào cần dịch trên trang này; nội dung tải sau và các trang khác trên trang web này sẽ được dịch tự động."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Nhấp để chỉnh sửa bản dịch này, kéo để di chuyển vị trí"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Chỉ dịch lại đoạn này"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Giảm cỡ chữ"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Tăng cỡ chữ"
+  },
+  "m_ddde08946298195d": {
+    "message": "Khôi phục"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Hoàn tác thay đổi đối với đoạn này"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Xong"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Nhận diện lại và dịch hình ảnh này"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Nhận diện lại"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Ảnh trước (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Ảnh trước"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Ảnh tiếp theo (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Ảnh tiếp theo"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Dịch từ tượng thanh"
+  },
+  "m_257f284111f75da4": {
+    "message": "Dịch cả từ tượng thanh được vẽ trong tranh: giữ nguyên chữ gốc và thêm bản dịch cỡ nhỏ bên cạnh."
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

@@ -9,7 +9,7 @@
  *                    可带 glossary（扩展本机保存的用词偏好，最多 20 条）：只放进提示词，不保存、不计费。
  *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
  *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
- *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围）；文字随后走 /translate，按实际文字扣点
+ *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围，'regions-sfx' 时连音效字一起找）；文字随后走 /translate，按实际文字扣点
  *
  * 认证用 Authorization: Bearer <扩展会话令牌>，不用 Cookie，所以不受站内表单的同源校验约束；
  * 只接受扩展会话（网页会话不能调用）。跨源请求头只发给允许的扩展来源（chrome-extension://<ID>）。
@@ -241,7 +241,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         meta?.latencyMs ?? null, error]);
     let result;
     try {
-      result = await hosted.readImageText({ image: body.image, purpose: body.purpose === 'regions' ? 'regions' : 'text' });
+      result = await hosted.readImageText({ image: body.image, purpose: ['regions', 'regions-sfx'].includes(body.purpose) ? body.purpose : 'text' });
     } catch (err) {
       // 不把模型响应或请求内容写进日志；识别没有扣点，不需要写返还流水。
       await record(err.meta, 'failed', /^[a-z_\d]{1,60}$/.test(err.code) ? err.code : 'image_failed');

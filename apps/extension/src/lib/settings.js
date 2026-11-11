@@ -143,6 +143,8 @@
     imageMode: 'auto',
     // 自动识别后先显示找到的文字形状，用户调整后再翻译（默认直接翻译）
     imageReview: false,
+    // 自动识别时连音效字（画在画面里的拟声词）一起翻译：不覆盖原图，译文小字标在旁边
+    imageSfx: false,
     // 框选的形状：矩形，或圆形（椭圆，按住 Shift 拖出正圆）
     imageShape: 'rect',
     // 整站翻译单独用的平台：空字符串表示跟随上面的翻译平台（见 siteProvider）
@@ -178,6 +180,7 @@
       imageFillColor: /^#[0-9a-f]{6}$/i.test(input.imageFillColor) ? input.imageFillColor.toLowerCase() : DEFAULTS.imageFillColor,
       imageMode: input.imageMode === 'select' ? 'select' : 'auto',
       imageReview: input.imageReview === true,
+      imageSfx: input.imageSfx === true,
       imageShape: input.imageShape === 'ellipse' ? 'ellipse' : 'rect',
       siteProvider: PROVIDERS[input.siteProvider] ? input.siteProvider : '',
       siteCostConfirmed: input.siteCostConfirmed === true,

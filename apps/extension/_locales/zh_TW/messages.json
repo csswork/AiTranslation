@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "這個頁面上沒有找到需要翻譯的文字；之後載入的內容和這個網站的其他頁面會自動翻譯。"
   },
+  "m_a21abc9eef16dee4": {
+    "message": "點一下修改這段譯文，拖曳可以移動位置"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "只重新翻譯這一段"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "縮小字級"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "放大字級"
+  },
+  "m_ddde08946298195d": {
+    "message": "還原"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "復原對這一段的修改"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "完成"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "重新辨識並翻譯這張圖"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "重新辨識"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "上一張圖（←）"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "上一張圖"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "下一張圖（→）"
+  },
+  "m_f8559aefb319052e": {
+    "message": "下一張圖"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "翻譯音效字"
+  },
+  "m_257f284111f75da4": {
+    "message": "漫畫中畫在畫面上的擬聲詞也一併翻譯：保留原本的文字，並在旁邊以小字標註譯文。"
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

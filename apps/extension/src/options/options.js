@@ -35,6 +35,7 @@
     floating: $('floating'),
     imageMode: $('imageMode'),
     imageDirect: $('imageDirect'),
+    imageSfx: $('imageSfx'),
     shortcut: $('shortcut'),
     shortcutKey: $('shortcutKey'),
     shortcutHint: $('shortcutHint'),
@@ -460,6 +461,7 @@
     el.floating.checked = settings.floating;
     el.imageMode.value = settings.imageMode;
     el.imageDirect.checked = !settings.imageReview;
+    el.imageSfx.checked = settings.imageSfx;
     el.shortcut.checked = settings.shortcut;
   }
 
@@ -714,6 +716,7 @@
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
   el.imageDirect.addEventListener('change', () => save({ imageReview: !el.imageDirect.checked }));
+  el.imageSfx.addEventListener('change', () => save({ imageSfx: el.imageSfx.checked }));
   el.shortcut.addEventListener('change', () => save({ shortcut: el.shortcut.checked }));
 
   el.videoEnabled.addEventListener('change', async () => {

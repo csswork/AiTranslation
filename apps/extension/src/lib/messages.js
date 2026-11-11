@@ -662,7 +662,22 @@ globalThis.AITrMessageIds = {
   "还没有开着整站翻译的网站": "m_d9f4a381ad593f00",
   "关闭所有网站的整站翻译？": "m_7fa36949ceed8fd8",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "m_530866df9f116ad1",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "m_aa8ea9c5b58d95f7"
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "m_aa8ea9c5b58d95f7",
+  "点一下修改这段译文，拖动可以挪位置": "m_a21abc9eef16dee4",
+  "只重新翻译这一段": "m_9334ac8b6bbdf7fa",
+  "缩小字号": "m_a6e47d2e82de0c3d",
+  "放大字号": "m_a4a6ebeabe260b01",
+  "还原": "m_ddde08946298195d",
+  "撤销对这一段的修改": "m_a97ca487bdd5d30c",
+  "完成": "m_c0b3fbff51ccc40b",
+  "重新识别并翻译这张图": "m_97a30e5413024d0d",
+  "重新识别": "m_30e247bc6e8c1164",
+  "上一张图（←）": "m_a933c3dfdae1dbc7",
+  "上一张图": "m_9fe889a76cbbf018",
+  "下一张图（→）": "m_d8f514ea380ac5b7",
+  "下一张图": "m_f8559aefb319052e",
+  "翻译音效字": "m_3c581c555d2f6b68",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "m_257f284111f75da4"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1327,5 +1342,20 @@ globalThis.AITrEnglish = {
   "还没有开着整站翻译的网站": "No websites have whole-site translation on yet",
   "关闭所有网站的整站翻译？": "Turn off whole-site translation for all websites?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "This page is already in $1, so no translation is needed; pages in other languages on this site will be translated automatically.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically.",
+  "点一下修改这段译文，拖动可以挪位置": "Click to edit this translation, drag to move it",
+  "只重新翻译这一段": "Retranslate this segment only",
+  "缩小字号": "Decrease font size",
+  "放大字号": "Increase font size",
+  "还原": "Reset",
+  "撤销对这一段的修改": "Undo changes to this segment",
+  "完成": "Done",
+  "重新识别并翻译这张图": "Re-recognize and translate this image",
+  "重新识别": "Re-recognize",
+  "上一张图（←）": "Previous image (←)",
+  "上一张图": "Previous image",
+  "下一张图（→）": "Next image (→)",
+  "下一张图": "Next image",
+  "翻译音效字": "Translate sound effects",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type."
 };

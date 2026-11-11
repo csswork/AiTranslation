@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Auf dieser Seite wurde kein zu übersetzender Text gefunden; später geladene Inhalte und andere Seiten dieser Website werden automatisch übersetzt."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Klicken, um diese Übersetzung zu bearbeiten; ziehen, um sie zu verschieben"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Nur dieses Segment neu übersetzen"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Schriftgröße verkleinern"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Schriftgröße vergrößern"
+  },
+  "m_ddde08946298195d": {
+    "message": "Zurücksetzen"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Änderungen an diesem Segment rückgängig machen"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Fertig"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Dieses Bild neu erkennen und übersetzen"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Neu erkennen"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Vorheriges Bild (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Vorheriges Bild"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Nächstes Bild (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Nächstes Bild"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Lautmalereien übersetzen"
+  },
+  "m_257f284111f75da4": {
+    "message": "Auch im Bild gezeichnete Lautmalereien übersetzen: Originaltext beibehalten und die Übersetzung in kleiner Schrift daneben setzen."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Na tej stronie nie znaleziono tekstu wymagającego tłumaczenia; treści ładowane później i inne strony w tej witrynie będą tłumaczone automatycznie."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Kliknij, aby edytować to tłumaczenie; przeciągnij, aby zmienić położenie"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Przetłumacz ponownie tylko ten fragment"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Zmniejsz rozmiar czcionki"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Zwiększ rozmiar czcionki"
+  },
+  "m_ddde08946298195d": {
+    "message": "Przywróć"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Cofnij zmiany w tym fragmencie"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Gotowe"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Rozpoznaj ponownie i przetłumacz ten obraz"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Rozpoznaj ponownie"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Poprzedni obraz (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Poprzedni obraz"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Następny obraz (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Następny obraz"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Tłumacz efekty dźwiękowe"
+  },
+  "m_257f284111f75da4": {
+    "message": "Tłumacz także dźwiękonaśladowcze wyrazy narysowane na obrazie: zachowaj oryginalny tekst i dopisz tłumaczenie obok drobnym drukiem."
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

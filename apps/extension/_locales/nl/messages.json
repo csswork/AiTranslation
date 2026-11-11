@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Er is geen tekst gevonden op deze pagina die vertaald moet worden; later geladen inhoud en andere pagina's op deze site worden automatisch vertaald."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Klik om deze vertaling te bewerken, sleep om te verplaatsen"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Alleen dit segment opnieuw vertalen"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Lettergrootte verkleinen"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Lettergrootte vergroten"
+  },
+  "m_ddde08946298195d": {
+    "message": "Herstellen"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Wijzigingen aan dit segment ongedaan maken"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Klaar"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Deze afbeelding opnieuw herkennen en vertalen"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Opnieuw herkennen"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Vorige afbeelding (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Vorige afbeelding"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Volgende afbeelding (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Volgende afbeelding"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Geluidseffecten vertalen"
+  },
+  "m_257f284111f75da4": {
+    "message": "Vertaal ook klankwoorden die in het beeld zijn getekend: behoud de originele tekst en zet de vertaling ernaast in kleine letters."
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

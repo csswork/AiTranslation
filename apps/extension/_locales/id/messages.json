@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Tidak ditemukan teks yang perlu diterjemahkan di halaman ini; konten yang dimuat kemudian dan halaman lain di situs ini akan diterjemahkan secara otomatis."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Klik untuk mengedit terjemahan ini, seret untuk memindahkannya"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Terjemahkan ulang hanya segmen ini"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Perkecil ukuran font"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Perbesar ukuran font"
+  },
+  "m_ddde08946298195d": {
+    "message": "Atur ulang"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Urungkan perubahan pada segmen ini"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Selesai"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Kenali ulang dan terjemahkan gambar ini"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Kenali ulang"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Gambar sebelumnya (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Gambar sebelumnya"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Gambar berikutnya (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Gambar berikutnya"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Terjemahkan efek suara"
+  },
+  "m_257f284111f75da4": {
+    "message": "Terjemahkan juga onomatope yang digambar pada panel: pertahankan teks asli dan tambahkan terjemahan di sampingnya dengan huruf kecil."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

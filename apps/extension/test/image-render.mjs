@@ -245,4 +245,47 @@ console.log('✓ 圆形选区：只在圆内找字，文字排进内接矩形，
   console.log('✓ 按形状排版：竖排、加宽、溢出与贴边');
 }
 
+/* ---- 按形状排版：左对齐的段落贴左、从上排起；居中的多行各行排匀；竖排各列排匀 ---- */
+{
+  const measure = (text, size) => [...text].length * size * 0.55;
+  const image = { w: 1000, h: 1000 };
+  const rect = { x: 100, y: 100, w: 300, h: 160 };
+  const left = R.layoutShape('四十多个摊位供应面条饺子', rect, image, measure, { glyph: 20, align: 'left' });
+  assert.equal(left.align, 'left');
+  assert.ok(Math.abs(left.box.x - (100 + 6)) < 0.01, '从笔画的位置（形状留的边以内）排起');
+  assert.ok(left.box.y < 110, '从第一行的位置排起，不垂直居中');
+  const right = R.layoutShape('河滨公园三号门', rect, image, measure, { glyph: 20, align: 'right' });
+  assert.ok(Math.abs(right.box.x + right.box.w - (400 - 6)) < 0.01);
+  // 居中：两行排匀，不是一长一短
+  const even = R.layoutShape('一二三四五六七八九十一二三四五六七八九十一二', { x: 100, y: 100, w: 230, h: 200 }, image, measure, { glyph: 20 });
+  const counts = even.lines.map((l) => [...l].length);
+  assert.ok(Math.max(...counts) - Math.min(...counts) <= 2, `各行排匀：${counts}`);
+  // 竖排：最后一列不只剩一个字
+  const cols = R.layoutShape('明天的考试你好好准备了吗', { x: 500, y: 100, w: 120, h: 190 }, image, measure, { glyph: 30, vertical: true });
+  const per = cols.lines.map((l) => [...l].length);
+  assert.ok(Math.min(...per) >= 2, `各列排匀：${per}`);
+  // 单独一个英文词不拆开：窄气泡里宁可加宽
+  const word = R.layoutShape('Really?', { x: 700, y: 100, w: 50, h: 120 }, image, measure, { glyph: 30 });
+  assert.deepEqual(word.lines, ['Really?']);
+  // 用户定了字号：不再缩小去适应形状，宁可加宽
+  const big = R.layoutShape('今天天气真好', { x: 300, y: 300, w: 60, h: 60 }, image, measure, { glyph: 40, fixed: true });
+  assert.equal(big.size, 40);
+  console.log('✓ 按形状排版：对齐方式、各行各列排匀');
+}
+
+/* ---- 渐变底色：两头都接近文字的底色、彼此有差别才算；音效字的译文标在原字下面 ---- */
+{
+  const W2 = 200, H2 = 120;
+  const data = new Uint8ClampedArray(W2 * H2 * 4);
+  for (let y = 0; y < H2; y += 1) for (let x = 0; x < W2; x += 1) data.set([40, 60 + y, 120 + y, 255], (y * W2 + x) * 4);
+  const ctx = { getImageData: (x, y, w, h) => { const out = new Uint8ClampedArray(w * h * 4); for (let r = 0; r < h; r += 1) out.set(data.subarray(((y + r) * W2 + x) * 4, ((y + r) * W2 + x + w) * 4), r * w * 4); return { data: out }; } };
+  const g = R.gradientAt(ctx, { x: 40, y: 30, w: 100, h: 50 }, W2, H2, { r: 40, g: 115, b: 175 });
+  assert.equal(g.axis, 'y', '上下两头颜色不同：竖向过渡');
+  assert.ok(g.to.g > g.from.g);
+  assert.equal(R.gradientAt(ctx, { x: 40, y: 30, w: 100, h: 50 }, W2, H2, { r: 255, g: 255, b: 255 }), null, '外沿和文字的底色差得远（气泡在画面上）：不当渐变');
+  const flat = { getImageData: (x, y, w, h) => ({ data: new Uint8ClampedArray(w * h * 4).fill(255) }) };
+  assert.equal(R.gradientAt(flat, { x: 40, y: 30, w: 100, h: 50 }, W2, H2, { r: 255, g: 255, b: 255 }), null, '单色不当渐变');
+  console.log('✓ 渐变底色的判断');
+}
+
 console.log('全部通过');

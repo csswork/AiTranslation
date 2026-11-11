@@ -31,6 +31,8 @@
   const LINK = 0.35;
   /** 一行被几块的框同时盖住时，框住最多的比第二多出这么多才整行归它。 */
   const CLEAR = 0.2;
+  /** 找到的笔画范围不到模型框的这么多，就当笔画分析失败，退回模型的框。 */
+  const WEAK = 0.2;
   /** 一片至少要有这么多落在模型框里才算这一块的字。 */
   const INSIDE = 0.4;
   /** 同一块里比最大一片小这么多的碎片丢掉。 */
@@ -303,6 +305,82 @@
     return d(a) <= d(b) ? a : b;
   }
 
+  const CJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af\uff00-\uffef]/g;
+  /** 原文是不是中日韩文字（按字排、字是方的），否则按拉丁文字算。 */
+  const isCjk = (text) => {
+    const chars = String(text || '').replace(/\s/g, '');
+    return chars.length > 0 && (chars.match(CJK) || []).length / chars.length >= 0.3;
+  };
+
+  /**
+   * 按模型给的原文字数和框的面积估字号（像素）：中日韩文每个字占约 1.25 个字号见方
+   * （含行距），拉丁文字平均字宽约半个字号。模型的框有松有紧，只当参考值用。
+   */
+  function priorEm(text, px) {
+    const chars = String(text || '').replace(/\s/g, '').length;
+    if (!chars) return { em: 0, chars: 0 };
+    const em = Math.sqrt((px.w * px.h) / (chars * (isCjk(text) ? 1.25 : 0.62)));
+    return { em: Math.min(em, px.w, px.h), chars };
+  }
+
+  /**
+   * 从笔画格子里量出行（竖排是列）：字号、行数和对齐方式。
+   * 沿行的方向投影，有笔画的连续区间就是一行；比别的行细得多的（注音、噪点）不算。
+   * 行高比「单个笔画块的大小」稳得多：字的笔画断开、粘连成词都不影响。
+   * @returns {{em:number, lines:number, align:'left'|'right'|'center'}|null} em 是像素
+   */
+  function lineMetrics(found, text, vertical) {
+    const { mask, cw, ch, cell } = found;
+    const across = vertical ? cw : ch; // 行与行排开的方向上有多少格
+    const along = vertical ? ch : cw;
+    const count = new Uint16Array(across);
+    const lo = new Int32Array(across).fill(along);
+    const hi = new Int32Array(across).fill(-1);
+    for (let k = 0; k < mask.length; k += 1) {
+      if (!mask[k]) continue;
+      const x = k % cw;
+      const y = (k / cw) | 0;
+      const a = vertical ? x : y;
+      const b = vertical ? y : x;
+      count[a] += 1;
+      if (b < lo[a]) lo[a] = b;
+      if (b > hi[a]) hi[a] = b;
+    }
+    const peak = Math.max(...count);
+    if (!peak) return null;
+    const floor = Math.max(1, peak * 0.08);
+    const runs = [];
+    for (let a = 0; a < across; a += 1) {
+      if (count[a] < floor) continue;
+      const last = runs[runs.length - 1];
+      if (last && last.end === a - 1) {
+        last.end = a;
+        last.lo = Math.min(last.lo, lo[a]);
+        last.hi = Math.max(last.hi, hi[a]);
+      } else runs.push({ start: a, end: a, lo: lo[a], hi: hi[a] });
+    }
+    const size = (r) => r.end - r.start + 1;
+    const sorted = runs.map(size).sort((a, b) => a - b);
+    const typical = sorted[Math.floor(sorted.length * 0.75)];
+    const lines = runs.filter((r) => size(r) >= typical * 0.45);
+    if (!lines.length) return null;
+    const thick = lines.map(size).sort((a, b) => a - b)[lines.length >> 1] * cell;
+    // 一行笔画的高度占字号的比例：汉字、假名接近满格；拉丁文字没有下伸的字母（g j p q y）时
+    // 只有大写字高，有的话从上伸部量到下伸部
+    const factor = isCjk(text) ? 0.92 : /[gjpqy]/.test(String(text || '')) ? 0.9 : 0.72;
+    const em = thick / factor;
+    let align = 'center';
+    if (!vertical && lines.length >= 2) {
+      const spread = (key) => (Math.max(...lines.map((r) => r[key])) - Math.min(...lines.map((r) => r[key]))) * cell;
+      const tol = em * 0.6;
+      const left = spread('lo');
+      const right = spread('hi');
+      if (left <= tol && right > tol) align = 'left';
+      else if (right <= tol && left > tol) align = 'right';
+    }
+    return { em, lines: lines.length, align };
+  }
+
   /**
    * 把识别出的文字块勾成互不重叠的多边形。
    * @param ctx 送检那份画布（读不到像素时传 null，退回矩形）
@@ -310,7 +388,7 @@
    * @param {number} height 画布高
    * @param {Array<{text:string, box:{x,y,w,h}}>} blocks 0-1 相对坐标
    * @param {{w:number,h:number}} [natural] 原图尺寸：小字门槛按原图像素算
-   * @returns {{shapes: Array<{index, text, box, polygons: number[][][], bounds, glyph, vertical, fallback}>, small: number}}
+   * @returns {{shapes: Array<{index, text, box, polygons: number[][][], bounds, glyph, vertical, align, lines, background, fallback}>, small: number}}
    *   polygons 是 0-1 相对坐标的点列；glyph 是单个字的高度（相对图高）
    */
   function findShapes(ctx, width, height, blocks, natural = { w: width, h: height }) {
@@ -338,7 +416,9 @@
       let found = null;
       let wx0 = 0;
       let wy0 = 0;
-      if (ctx) {
+      const prior = priorEm(block.text, px);
+      // 音效字是画出来的美术字，笔画分析靠不住，也不需要形状（不覆盖）：直接用模型的框
+      if (ctx && block.sfx !== true) {
         wx0 = Math.max(0, Math.floor(px.x - px.w * GROW - 0.01 * width));
         wy0 = Math.max(0, Math.floor(px.y - px.h * GROW - 0.01 * height));
         const wx1 = Math.min(width, Math.ceil(px.x + px.w * (1 + GROW) + 0.01 * width));
@@ -347,20 +427,39 @@
           try {
             const { data } = ctx.getImageData(wx0, wy0, wx1 - wx0, wy1 - wy0);
             const hint = { x: px.x - wx0, y: px.y - wy0, w: px.w, h: px.h };
-            found = globalThis.AITrImageRender.inkBox(data, wx1 - wx0, wy1 - wy0, hint, [], true);
+            const ink = (bgFrom) => globalThis.AITrImageRender.inkBox(data, wx1 - wx0, wy1 - wy0, hint, [], true, { ...prior, bgFrom });
+            // 底色先按框里最常见的颜色找；再按框边上的颜色找一遍，两种底色不一样时
+            // 留下量出的字号更接近估计值的那个（又粗又大的字，框里最常见的是字的颜色）
+            found = ink('inside');
+            const edge = ink('edge');
+            const differs = (a, b) => Math.max(Math.abs(a.r - b.r), Math.abs(a.g - b.g), Math.abs(a.b - b.b)) > 48;
+            if (edge && (!found || differs(edge.bg, found.bg))) {
+              const off = (f) => {
+                const m = f && lineMetrics(f, block.text, block.vertical === true);
+                return m && prior.em ? Math.abs(Math.log(m.em / prior.em)) : Infinity;
+              };
+              if (off(edge) < off(found)) found = edge;
+            }
           } catch {
             found = null;
           }
         }
       }
-      // 字高按选中笔画的短边量（字挨在一起时长边量的是整个词）；排版字号、扩张距离都按它
-      const glyph = found ? Math.min(found.glyph, found.textSize || found.glyph) : Math.min(px.w, px.h);
+      // 找到的笔画只占模型框的一小角（描边加填色的音效字、花体标题，笔画分析会失败）：
+      // 不如直接用模型的框
+      if (found && found.w * found.h < px.w * px.h * WEAK) found = null;
+      // 字号按行（竖排按列）的粗细量，偏离估计值太远时拉回来；找不到笔画时就用估计值。
+      // 排版字号、向外扩的距离都按它
+      const metrics = found ? lineMetrics(found, block.text, block.vertical === true) : null;
+      const guess = prior.em || Math.min(px.w, px.h);
+      const glyph = metrics ? Math.min(guess * 1.8, Math.max(guess * 0.5, metrics.em)) : guess;
       // 只丢真正的小字：模型框本身很小（单行小字），而且量出来的字也小。
       // 字号可能量偏（画面纹理、笔画粘连），所以不单凭它判断
       const boxSide = Math.min(px.w, px.h);
       const size = found ? Math.min(glyph, found.w, found.h) : boxSide;
       if (boxSide < floor * SMALL_BOX && size < floor) { small += 1; return; }
-      const item = { id: items.length, index, block, px, glyph, fallback: !found };
+      const item = { id: items.length, index, block, px, glyph, fallback: !found,
+        align: metrics?.align || 'center', lines: metrics?.lines || 0, bg: found?.bg || null, ink: found?.ink || null };
       items.push(item);
       if (!found) { fallbacks.push(item); return; }
       const { cell, cw, mask } = found;
@@ -499,8 +598,30 @@
         bounds: { x: x0, y: y0, w: Math.max(...xs) - x0, h: Math.max(...ys) - y0 },
         glyph: item.glyph / height,
         vertical: item.block.vertical === true,
+        // 横排多行时原文的对齐方式：译文照着排
+        align: item.align,
+        lines: item.lines,
+        // 文字的底色（模型框里最常见的颜色）：铺底色用它，比在形状外沿取色准
+        background: item.bg,
+        // 文字本身的颜色：译文沿用
+        ink: item.ink,
+        // 音效字：不覆盖原图，译文小字标在旁边
+        sfx: item.block.sfx === true,
         fallback: item.fallback,
       });
+    }
+    // 只有一行的横排文字看不出对齐方式：和旁边左对齐（右对齐）的多行文字起点对齐的，跟着它
+    // （标题和正文、列表的各项）；找不到就居中（气泡）
+    for (const shape of shapes) {
+      if (shape.vertical || shape.lines > 1 || shape.fallback) continue;
+      const tol = shape.glyph * height * 0.6;
+      const x0 = shape.bounds.x * width;
+      const x1 = (shape.bounds.x + shape.bounds.w) * width;
+      for (const other of shapes) {
+        if (other === shape || other.vertical || other.lines < 2) continue;
+        if (other.align === 'left' && Math.abs(other.bounds.x * width - x0) <= tol) { shape.align = 'left'; break; }
+        if (other.align === 'right' && Math.abs((other.bounds.x + other.bounds.w) * width - x1) <= tol) { shape.align = 'right'; break; }
+      }
     }
     return { shapes, small };
   }
@@ -525,5 +646,5 @@
     }
   }
 
-  globalThis.AITrTextShapes = { GRID, findShapes, measureGlyph, outline, simplify };
+  globalThis.AITrTextShapes = { GRID, findShapes, measureGlyph, outline, simplify, priorEm, lineMetrics, isCjk };
 })();

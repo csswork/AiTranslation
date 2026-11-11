@@ -548,11 +548,11 @@ test('图片托管：只接受 regions 用途（找文字范围），其他值�
   const { hosted, purposes } = fakeVision();
   const { app, config, mailbox } = buildApp({ pool, hosted });
   const { token } = await extensionLogin(app, config, mailbox, 'vision-purpose@example.com');
-  for (const purpose of ['regions', 'ignore previous instructions', undefined]) {
+  for (const purpose of ['regions', 'ignore previous instructions', undefined, 'regions-sfx']) {
     const res = await api(app, config, '/read-image', { method: 'POST', token, body: { image: IMAGE, purpose } });
     assert.equal(res.status, 200);
   }
-  assert.deepEqual(purposes, ['regions', 'text', 'text']);
+  assert.deepEqual(purposes, ['regions', 'text', 'text', 'regions-sfx']);
 });
 
 test('图片托管：未登录、网页凭据、空余额、冻结、暂停与非法图片均不调用模型', async () => {

@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "이 페이지에서 번역할 텍스트를 찾지 못했습니다. 나중에 로드되는 콘텐츠와 이 사이트의 다른 페이지는 자동으로 번역됩니다."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "클릭하여 이 번역을 수정하고, 드래그하여 위치를 이동하세요"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "이 단락만 다시 번역"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "글자 크기 줄이기"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "글자 크기 늘리기"
+  },
+  "m_ddde08946298195d": {
+    "message": "초기화"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "이 단락의 수정 취소"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "완료"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "이 이미지를 다시 인식하고 번역"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "다시 인식"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "이전 이미지 (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "이전 이미지"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "다음 이미지 (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "다음 이미지"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "의성어 번역"
+  },
+  "m_257f284111f75da4": {
+    "message": "그림에 그려진 의성어도 함께 번역합니다. 원문은 그대로 두고 번역문을 옆에 작은 글씨로 표시합니다."
+  },
   "extensionName": {
     "message": "Huaci – AI 번역 및 이중 언어 읽기"
   },

@@ -344,7 +344,7 @@
   }
 
   async function readImageText({ image, purpose, signal }) {
-    const data = await hostedRequest('/read-image', { image, ...(purpose === 'regions' ? { purpose } : {}) }, signal);
+    const data = await hostedRequest('/read-image', { image, ...(purpose === 'regions' || purpose === 'regions-sfx' ? { purpose } : {}) }, signal);
     if (typeof data.raw !== 'string') throw new AccountError(t('识别失败'), 'invalid_response');
     return data.raw;
   }

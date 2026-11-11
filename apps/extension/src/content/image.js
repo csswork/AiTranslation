@@ -340,6 +340,40 @@
     .shapes { position: absolute; inset: 0; pointer-events: none; }
     .shapes canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
     .hide-translation .shapes, .picking .shapes { display: none; }
+    /* 识别、翻译进行中：标题栏转圈，看结果用的按钮先不能点 */
+    .head .spin {
+      width: 13px; height: 13px; flex: none; box-sizing: border-box; border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.25); border-top-color: #f59e0b;
+      animation: turn 0.8s linear infinite;
+    }
+    @keyframes turn { to { transform: rotate(360deg) } }
+    @media (prefers-reduced-motion: reduce) { .head .spin { animation-duration: 2.4s } }
+    .panel:not(.working) .head .spin { display: none; }
+    /* 上一张 / 下一张：页面上只有一张图时不显示 */
+    .nav { gap: 2px; }
+    .nav .count { font-size: 11.5px; color: rgba(233, 234, 238, 0.6); min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; }
+    .nav button.act.icon { width: 24px; height: 24px; font-size: 16px; line-height: 1; }
+    .panel.working .tools .v { opacity: 0.45; pointer-events: none; }
+    /* 翻译好的每一段上盖一个看不见的热区：悬停看原文，点一下修改，拖动挪位置 */
+    .bubbles { position: absolute; inset: 0; }
+    .hide-translation .bubbles, .picking .bubbles, .panel.working .bubbles { display: none; }
+    .bubble { position: absolute; box-sizing: border-box; border-radius: 6px; cursor: pointer; touch-action: none; }
+    .bubble:hover, .bubble.active { outline: 1.5px dashed #f59e0b; outline-offset: 2px; background: rgba(245, 158, 11, 0.1); }
+    .bubble-edit {
+      position: absolute; z-index: 3; box-sizing: border-box; width: 290px; max-width: 94%; padding: 10px;
+      border-radius: 10px; background: #1b1e26; color: #e9eaee;
+      border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      font-size: 12px; line-height: 1.45; text-align: start;
+    }
+    .bubble-edit .src { max-height: 58px; overflow: auto; margin-bottom: 7px; color: rgba(233, 234, 238, 0.6); user-select: text; overflow-wrap: anywhere; }
+    .bubble-edit textarea {
+      all: unset; box-sizing: border-box; display: block; width: 100%; min-height: 58px; max-height: 140px; padding: 6px 8px;
+      border-radius: 7px; background: #0e1014; border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 13px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; overflow: auto; cursor: text;
+    }
+    .bubble-edit textarea:focus-visible { outline: 2px solid #818cf8; outline-offset: 1px; }
+    .bubble-edit .row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .bubble-edit .row .grow { flex: 1 1 auto; }
 
     .box { position: absolute; box-sizing: border-box; min-width: 22px; min-height: 17px; }
     .box .fill {
@@ -369,6 +403,33 @@
   let imageResult = null;
   let generation = 0;
   let controller = null;
+  /** 最近一次右键的图片地址：重试、重新识别用。 */
+  let lastSrc = '';
+
+  /**
+   * 这个页面里识别、翻译过的图：再次打开直接用，不重新请求（识图按次数限额）。
+   * 键是图片地址加尺寸；值是 { shapes, blocks, small, translations: Map<目标语言, 各段> }，
+   * 各段上带着用户的手动修改。只在内存里，页面关掉就没了。
+   */
+  const cache = new Map();
+  const CACHE_MAX = 30;
+  function cacheKey(grabbed) {
+    const src = String(grabbed.display || '');
+    const id = src.length > 300 ? `${src.length}:${src.slice(0, 120)}:${src.slice(-120)}` : src;
+    return `${grabbed.natural.w}x${grabbed.natural.h}:${id}`;
+  }
+  /** 这个页面上值得翻译的图片（已经加载、看得见、不是图标），按页面里的先后顺序。 */
+  function pageImages() {
+    return [...document.querySelectorAll('img')].filter((img) =>
+      img.complete && img.naturalWidth >= 160 && img.naturalHeight >= 160 &&
+      (img.currentSrc || img.src) && img.getClientRects().length > 0);
+  }
+  const srcOf = (img) => img.currentSrc || img.src;
+  function remember(key, entry) {
+    cache.delete(key);
+    cache.set(key, entry);
+    while (cache.size > CACHE_MAX) cache.delete(cache.keys().next().value);
+  }
 
   function buildPanel() {
     const host = document.createElement('div');
@@ -386,13 +447,20 @@
       <div class="panel" role="dialog" aria-modal="true" aria-label="图片翻译" tabindex="-1">
         <div class="head">
           <span class="title">图片翻译</span>
-          <span class="meta"></span>
+          <div class="group nav" hidden>
+            <button class="act icon prev" type="button" title="上一张图（←）" aria-label="上一张图">‹</button>
+            <span class="count"></span>
+            <button class="act icon next" type="button" title="下一张图（→）" aria-label="下一张图">›</button>
+          </div>
+          <span class="spin" aria-hidden="true"></span>
+          <span class="meta" aria-live="polite"></span>
+          <button class="act retry" type="button" hidden>重试</button>
           <button class="act icon close" type="button" title="关闭（Esc）" aria-label="关闭">
             ${CLOSE_ICON}
           </button>
         </div>
         <div class="body">
-          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="pick-layer" hidden></div><div class="edit-layer" hidden></div></div>
+          <div class="canvas"><img alt="" /><div class="layer"></div><div class="shapes"></div><div class="bubbles"></div><div class="pick-layer" hidden></div><div class="edit-layer" hidden></div></div>
         </div>
         <div class="tools">
           <div class="group v">
@@ -411,6 +479,7 @@
           <div class="group v">
             <button class="act pick" type="button" title="只翻译框出的区域">框选区域</button>
             <button class="act toggle" type="button">显示原图</button>
+            <button class="act redo" type="button" title="重新识别并翻译这张图" hidden>重新识别</button>
           </div>
           <div class="group p">
             <span class="field">形状</span>
@@ -473,6 +542,17 @@
       blocks: [],
       // 自动识别翻译好的各段（按形状覆盖），与 blocks 二选一
       shapeItems: null,
+      // 排版前的各段（带用户的手动修改 tweak），shapeItems 由它排出来
+      shapeRaw: null,
+      bubbles: q('.bubbles'),
+      bubbleNodes: [],
+      bubbleEditor: null,
+      nav: q('.nav'),
+      navCount: q('.nav .count'),
+      prev: q('.prev'),
+      next: q('.next'),
+      retry: q('.retry'),
+      redo: q('.redo'),
       metaText: '',
     };
     panel.hintNoteText = panel.hintNote.textContent;
@@ -542,6 +622,12 @@
     panel.save.addEventListener('click', () => exportImage(false));
     panel.copy.addEventListener('click', () => exportImage(true));
     panel.close.addEventListener('click', closePanel);
+    // 失败后的「重试」沿用已经识别出的形状（识别成功过就只重新翻译）；
+    // 结果上的「重新识别」丢掉这张图的缓存，从头再来
+    panel.prev.addEventListener('click', () => stepImage(-1));
+    panel.next.addEventListener('click', () => stepImage(1));
+    panel.retry.addEventListener('click', () => { if (lastSrc) translateImage(lastSrc); });
+    panel.redo.addEventListener('click', () => { if (lastSrc) translateImage(lastSrc, { fresh: true }); });
     panel.backdrop.addEventListener('mousedown', closePanel);
     panel.toggle.addEventListener('click', () => {
       const hidden = panel.canvas.classList.toggle('hide-translation');
@@ -559,8 +645,16 @@
       event.stopPropagation();
       return;
     }
+    // 左右方向键翻到页面上的上一张 / 下一张图（正在框选、改译文、操作下拉框时不抢键）
+    if (panel?.open && (event.key === 'ArrowLeft' || event.key === 'ArrowRight') && !panel.picking && !panel.bubbleEditor &&
+      !event.metaKey && !event.ctrlKey && !event.altKey && !/^(SELECT|TEXTAREA|INPUT)$/.test(event.composedPath?.()[0]?.tagName || '')) {
+      if (stepImage(event.key === 'ArrowLeft' ? -1 : 1)) { event.preventDefault(); event.stopPropagation(); }
+      return;
+    }
     if (event.key === 'Escape' && panel?.open) {
       event.stopPropagation();
+      // 正在改某一段译文：Esc 只收起编辑框
+      if (panel.bubbleEditor) { closeBubbleEditor(); return; }
       // 框选时 Esc 只退出框选，不关掉整个窗口
       if (panel.picking) panel.cancelPick.click();
       else closePanel();
@@ -569,6 +663,7 @@
 
   function closePanel() {
     if (!panel) return;
+    closeBubbleEditor();
     generation += 1;
     controller?.abort();
     hideMask();
@@ -727,6 +822,14 @@
     panel.canvas.classList.remove('hide-translation');
     panel.shapeLayer.replaceChildren();
     panel.shapeItems = null;
+    panel.shapeRaw = null;
+    closeBubbleEditor();
+    panel.bubbles.replaceChildren();
+    panel.bubbleNodes = [];
+    setWorking(false);
+    updateNav();
+    panel.retry.hidden = true;
+    panel.redo.hidden = !imageResult?.shapes;
     // 「直接翻译」只对自动识别有意义
     panel.direct.hidden = !imageResult?.shapes;
     panel.directCheck.checked = !settings.imageReview;
@@ -827,6 +930,46 @@
     mask.label.textContent = message;
     const current = mask;
     setTimeout(() => { if (mask === current) hideMask(); }, 4500); // 提示可能较长，留够阅读时间
+  }
+
+  /** 标题栏的「第几张 / 共几张」和前后按钮。 */
+  function updateNav() {
+    const list = pageImages();
+    const index = list.findIndex((img) => srcOf(img) === lastSrc || img.src === lastSrc);
+    panel.nav.hidden = list.length < 2 || index < 0;
+    panel.navCount.textContent = `${index + 1} / ${list.length}`;
+    panel.prev.disabled = index <= 0;
+    panel.next.disabled = index < 0 || index >= list.length - 1;
+  }
+
+  /** 翻到页面上的前一张 / 后一张图并翻译（翻译过的直接显示）。到头了返回 false。 */
+  function stepImage(delta) {
+    const list = pageImages();
+    const index = list.findIndex((img) => srcOf(img) === lastSrc || img.src === lastSrc);
+    const next = list[index + delta];
+    if (index < 0 || !next) return false;
+    translateImage(srcOf(next));
+    return true;
+  }
+
+  /** 进行中：标题栏转圈，结果上的按钮先不能点。 */
+  function setWorking(on) {
+    panel?.panel.classList.toggle('working', Boolean(on));
+  }
+
+  /** 进度：弹窗开着写在标题栏，否则写在图上的遮罩里。 */
+  function progress(text) {
+    if (mask) mask.label.textContent = text;
+    if (panel?.open) panel.meta.textContent = text;
+  }
+
+  /** 失败：弹窗开着时留在标题栏并给出「重试」，否则写在图上的遮罩里。 */
+  function fail(message) {
+    if (panel?.open) {
+      setWorking(false);
+      panel.meta.textContent = message;
+      panel.retry.hidden = false;
+    } else showFailure(message);
   }
 
   /** 弹窗开着时提示写在标题栏，否则写在图上的遮罩里。 */
@@ -966,8 +1109,8 @@
     const total = grabbed.parts.length;
     const perTile = [];
     for (let i = 0; i < total; i += 1) {
-      if (mask) mask.label.textContent = total > 1 ? t('正在找出文字范围 $1/$2…', [i + 1, total]) : t('正在找出图中的文字范围…');
-      const reply = await AITrRequests.request({ type: 'read-image', purpose: 'regions',
+      progress(total > 1 ? t('正在找出文字范围 $1/$2…', [i + 1, total]) : t('正在找出图中的文字范围…'));
+      const reply = await AITrRequests.request({ type: 'read-image', purpose: settings.imageSfx ? 'regions-sfx' : 'regions',
         image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
       if (token !== generation) return null;
       if (!reply?.ok) {
@@ -978,7 +1121,7 @@
       perTile.push(Tiles.fromSquare(reply.blocks, grabbed.parts[i].frame));
     }
     const blocks = Tiles.mergeBlocks(perTile, grabbed.plan, grabbed.fullHeight);
-    if (mask) mask.label.textContent = t('正在勾出文字形状…');
+    progress(t('正在勾出文字形状…'));
     // 读不到像素（跨域图）时按原图尺寸退回模型的矩形
     const found = grabbed.ctx
       ? Shapes.findShapes(grabbed.ctx, grabbed.width, grabbed.height, blocks, grabbed.natural)
@@ -1002,44 +1145,231 @@
     controller = new AbortController();
     const { signal } = controller;
     const { grabbed, settings } = result;
-    const worth = shapes
+    // 这张图这个语言翻译过：直接用（上面还带着用户改过的地方）
+    const entry = cache.get(result.cacheKey);
+    let items = entry?.shapes === shapes ? entry.translations.get(targetId) : null;
+    const worth = items ? [] : shapes
       .map((shape) => ({ ...shape, source: Regions.flatten(shape.text) }))
       .filter((shape) => shape.source && Lang.shouldOffer(shape.source));
-    if (!worth.length) {
+    if (!items && !worth.length) {
+      setWorking(false);
       report(shapes.length ? t("图中没有需要翻译的文字") : t("图中没有识别到文字"));
       return;
     }
     if (panel) panel.target.disabled = true;
-    const busy = t('正在翻译 $1 段…', [worth.length]);
-    if (mask) mask.label.textContent = busy;
-    if (panel?.open) panel.meta.textContent = busy;
     try {
-      const reply = await AITrRequests.request({
-        type: 'translate-batch', texts: worth.map((shape) => shape.source),
-        targetId, providerId: settings.provider,
-      }, { signal });
-      if (token !== generation) return;
-      if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
-      const items = worth
-        .map((shape, i) => ({ ...shape, translation: String(reply.texts[i] || '').trim() }))
-        .filter((shape) => shape.translation && shape.translation !== shape.source.trim())
-        .map((shape) => ({ ...shape, sample: sampleShape(grabbed, shape.bounds) }));
+      if (!items) {
+        setWorking(true);
+        progress(t('正在翻译 $1 段…', [worth.length]));
+        const reply = await AITrRequests.request({
+          type: 'translate-batch', texts: worth.map((shape) => shape.source),
+          targetId, providerId: settings.provider,
+        }, { signal });
+        if (token !== generation) return;
+        if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
+        items = worth
+          .map((shape, i) => ({ ...shape, translation: String(reply.texts[i] || '').trim() }))
+          .filter((shape) => shape.translation && shape.translation !== shape.source.trim())
+          .map((shape) => ({ ...shape, sample: sampleShape(grabbed, shape.bounds),
+            // 底色是渐变时记下两头的颜色，铺底色时照着过渡
+            gradient: grabbed.ctx && !shape.sfx ? Render.gradientAt(grabbed.ctx, {
+              x: shape.bounds.x * grabbed.width, y: shape.bounds.y * grabbed.height,
+              w: shape.bounds.w * grabbed.width, h: shape.bounds.h * grabbed.height,
+            }, grabbed.width, grabbed.height, shape.background) : null }));
+        if (entry?.shapes === shapes) entry.translations.set(targetId, items);
+      }
       hideMask();
       imageResult = { ...result, shapes, targetId, regions: null, groups: null };
       openPanel({ grabbed, blocks: [], targetId, settings,
         meta: [AITrLanguages.label(targetId), String(items.length)].join(' · ') });
-      panel.shapeItems = Render.layoutShapes(items, grabbed.natural, targetId);
-      drawShapeOverlay();
+      panel.shapeRaw = items;
+      relayout();
     } catch (err) {
       if (token !== generation) return;
-      if (panel?.open) {
-        panel.meta.textContent = String(err?.message || err);
-        panel.target.value = imageResult?.targetId || settings.target;
-      }
-      showFailure(String(err?.message || err));
+      if (panel?.open) panel.target.value = imageResult?.targetId || settings.target;
+      fail(String(err?.message || err));
     } finally {
       if (token === generation && panel && !panel.picking) panel.target.disabled = false;
     }
+  }
+
+  /** 识别出形状、译文还没回来时：先把形状勾在图上，让人看到识别到了哪些文字。 */
+  function drawShapePreview(shapes) {
+    if (!panel?.open || !imageResult) return;
+    const { natural } = imageResult.grabbed;
+    const scale = Math.min(1, 2400 / Math.max(natural.w, natural.h));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(natural.w * scale));
+    canvas.height = Math.max(1, Math.round(natural.h * scale));
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = Math.max(2, canvas.width / 500);
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#f59e0b';
+    ctx.fillStyle = 'rgba(245, 158, 11, 0.16)';
+    for (const shape of shapes) {
+      ctx.beginPath();
+      for (const poly of shape.polygons) {
+        poly.forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x * canvas.width, y * canvas.height));
+        ctx.closePath();
+      }
+      ctx.fill();
+      ctx.stroke();
+    }
+    panel.shapeLayer.replaceChildren(canvas);
+  }
+
+  /** 按各段现在的内容（含用户的修改）重新排版、重画，热区跟着挪。 */
+  function relayout() {
+    if (!panel?.shapeRaw || !imageResult) return;
+    panel.shapeItems = Render.layoutShapes(panel.shapeRaw, imageResult.grabbed.natural, imageResult.targetId);
+    drawShapeOverlay();
+    placeBubbles();
+  }
+
+  /** 每一段的热区：盖住它的底色和译文两块范围。数量变了才重建，拖动中不能换节点。 */
+  function placeBubbles() {
+    const items = panel.shapeItems || [];
+    const { natural } = imageResult.grabbed;
+    if (panel.bubbleNodes.length !== items.length) {
+      panel.bubbleNodes = items.map((_, index) => {
+        const node = document.createElement('div');
+        node.className = 'bubble';
+        node.addEventListener('pointerdown', (event) => dragBubble(event, index, node));
+        return node;
+      });
+      panel.bubbles.replaceChildren(...panel.bubbleNodes);
+    }
+    items.forEach((item, i) => {
+      const { box } = item.layout;
+      const x0 = Math.min(item.bounds.x, box.x / natural.w);
+      const y0 = Math.min(item.bounds.y, box.y / natural.h);
+      const x1 = Math.max(item.bounds.x + item.bounds.w, (box.x + box.w) / natural.w);
+      const y1 = Math.max(item.bounds.y + item.bounds.h, (box.y + box.h) / natural.h);
+      const node = panel.bubbleNodes[i];
+      node.style.left = `${x0 * 100}%`;
+      node.style.top = `${y0 * 100}%`;
+      node.style.width = `${(x1 - x0) * 100}%`;
+      node.style.height = `${(y1 - y0) * 100}%`;
+      node.title = `${item.source}\n${t('点一下修改这段译文，拖动可以挪位置')}`;
+      node.classList.toggle('active', panel.bubbleEditor?.index === i);
+    });
+  }
+
+  /** 按住一段拖动是挪译文的位置；没拖动就松开是打开编辑框。 */
+  function dragBubble(event, index, node) {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    const raw = panel.shapeRaw[index];
+    const rect = panel.canvas.getBoundingClientRect();
+    const start = { x: event.clientX, y: event.clientY, dx: raw.tweak?.dx || 0, dy: raw.tweak?.dy || 0 };
+    let moved = false;
+    let frame = 0;
+    node.setPointerCapture(event.pointerId);
+    const move = (ev) => {
+      const mx = ev.clientX - start.x;
+      const my = ev.clientY - start.y;
+      if (!moved && Math.hypot(mx, my) < 4) return;
+      moved = true;
+      raw.tweak = { ...raw.tweak, dx: start.dx + mx / Math.max(1, rect.width), dy: start.dy + my / Math.max(1, rect.height) };
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; relayout(); });
+    };
+    const end = () => {
+      node.removeEventListener('pointermove', move);
+      node.removeEventListener('pointerup', end);
+      node.removeEventListener('pointercancel', end);
+      if (moved) relayout();
+      else openBubbleEditor(index);
+    };
+    node.addEventListener('pointermove', move);
+    node.addEventListener('pointerup', end);
+    node.addEventListener('pointercancel', end);
+  }
+
+  function closeBubbleEditor() {
+    if (!panel?.bubbleEditor) return;
+    panel.bubbleEditor.node.remove();
+    panel.bubbleEditor = null;
+    panel.bubbleNodes.forEach((node) => node.classList.remove('active'));
+  }
+
+  /** 修改一段译文：改文字、调字号、只重新翻译这一段、还原。改动随手生效，并记在这张图的缓存里。 */
+  function openBubbleEditor(index) {
+    closeBubbleEditor();
+    const raw = panel.shapeRaw?.[index];
+    if (!raw) return;
+    const node = document.createElement('div');
+    node.className = 'bubble-edit';
+    const source = document.createElement('div');
+    source.className = 'src';
+    source.textContent = raw.source;
+    const input = document.createElement('textarea');
+    input.dir = 'auto';
+    input.setAttribute('aria-label', t('译文'));
+    input.value = raw.tweak?.text ?? raw.translation;
+    // 宿主网页常有全局快捷键，打字不能漏出去；Esc 留给弹窗自己处理
+    for (const type of ['keydown', 'keyup', 'keypress']) {
+      input.addEventListener(type, (event) => { if (event.key !== 'Escape') event.stopPropagation(); });
+    }
+    const button = (label, title, handler, primary = false) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = primary ? 'act primary' : 'act';
+      b.textContent = label;
+      if (title) { b.title = title; b.setAttribute('aria-label', title); }
+      b.addEventListener('click', handler);
+      return b;
+    };
+    const apply = (patch) => {
+      raw.tweak = { ...raw.tweak, ...patch };
+      if (raw.tweak.text === raw.translation) delete raw.tweak.text;
+      relayout();
+    };
+    input.addEventListener('input', () => apply({ text: input.value }));
+    const resize = (factor) => apply({ scale: Math.min(3, Math.max(0.4, (raw.tweak?.scale || 1) * factor)) });
+    const again = button(t('重新翻译'), t('只重新翻译这一段'), async () => {
+      again.disabled = true;
+      try {
+        const reply = await AITrRequests.request({ type: 'translate-batch', texts: [raw.source],
+          targetId: imageResult.targetId, providerId: imageResult.settings.provider });
+        if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
+        const text = String(reply.texts[0] || '').trim();
+        if (text && panel.bubbleEditor?.node === node) {
+          raw.translation = text;
+          input.value = text;
+          apply({ text });
+        }
+      } catch (err) {
+        if (panel?.open) panel.meta.textContent = String(err?.message || err);
+      } finally {
+        again.disabled = false;
+      }
+    });
+    const row = document.createElement('div');
+    row.className = 'row';
+    const grow = document.createElement('span');
+    grow.className = 'grow';
+    row.append(
+      button('A−', t('缩小字号'), () => resize(1 / 1.12)),
+      button('A+', t('放大字号'), () => resize(1.12)),
+      again,
+      button(t('还原'), t('撤销对这一段的修改'), () => { delete raw.tweak; input.value = raw.translation; relayout(); }),
+      grow,
+      button(t('完成'), '', closeBubbleEditor, true),
+    );
+    node.append(source, input, row);
+    // 放在这一段的下面；靠近底部时放到上面
+    const hot = panel.bubbleNodes[index];
+    const canvas = panel.canvas.getBoundingClientRect();
+    const box = hot.getBoundingClientRect();
+    const left = Math.min(Math.max(0, box.left - canvas.left), Math.max(0, canvas.width - 290));
+    node.style.left = `${left}px`;
+    if (box.bottom - canvas.top > canvas.height * 0.62) node.style.bottom = `${canvas.bottom - box.top + 8}px`;
+    else node.style.top = `${box.bottom - canvas.top + 8}px`;
+    node.addEventListener('pointerdown', (event) => event.stopPropagation());
+    panel.canvas.appendChild(node);
+    panel.bubbleEditor = { node, index };
+    hot.classList.add('active');
+    input.focus({ preventScroll: true });
   }
 
   /** 形状周围的相近色（读不到像素时为 null，按深色半透明铺）。 */
@@ -1109,6 +1439,8 @@
       }
       const shapes = filled.filter((shape) => String(shape.text || '').trim())
         .map(({ dirty, created, ...shape }) => shape);
+      // 形状改过了：这张图的缓存换成新的形状，旧译文作废
+      if (result.cacheKey) remember(result.cacheKey, { shapes, blocks: result.blocks || [], small: 0, translations: new Map() });
       await translateShapes({ ...result, shapes }, shapes, panel.target.value, token);
     } catch (err) {
       if (token === generation && err?.name !== 'AbortError') panel.meta.textContent = String(err?.message || err);
@@ -1139,10 +1471,15 @@
     }
   }
 
-  /** 右键翻译图片：按设置里的默认入口，自动识别并翻译，或先打开窗口让用户框选。 */
-  async function translateImage(srcUrl) {
+  /**
+   * 右键翻译图片：按设置里的默认入口，自动识别并翻译，或先打开窗口让用户框选。
+   * 自动识别时一读到图就打开窗口：先显示原图，识别完勾出文字形状，译文回来再盖上去。
+   * @param {{fresh?: boolean}} [options] fresh：不用这张图的缓存，重新识别
+   */
+  async function translateImage(srcUrl, { fresh = false } = {}) {
     const img = findImage(srcUrl);
     if (!img) return;
+    lastSrc = srcUrl;
     const token = ++generation;
     controller?.abort();
     controller = new AbortController();
@@ -1156,30 +1493,43 @@
       if (token !== generation) return;
       if (!grabbed) { showFailure(t("这张图还没加载完")); return; }
       const result = { grabbed, merged: null, settings, regions: null, groups: null, targetId: settings.target };
+      hideMask();
       if (settings.imageMode === 'select') {
         // 先框选：直接打开窗口露出原图，用户框完再识别，不白识别整张图
-        hideMask();
         imageResult = result;
         openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: '' });
         setPicking(true);
         return;
       }
       // 自动识别：先找出各段文字并按笔画勾成互不重叠的形状，再按形状翻译、覆盖
-      const found = await detectShapes(result, signal, token);
-      if (!found) return;
-      const detected = { ...result, shapes: found.shapes, blocks: found.blocks };
-      if (!found.shapes.length) { showFailure(t("图中没有识别到文字")); return; }
-      if (settings.imageReview) {
-        // 设置里打开了「翻译前先显示形状」：用户检查、调整后再点「翻译」
-        hideMask();
+      // 开没开「翻译音效字」识别结果不一样，分开缓存
+      const key = `${settings.imageSfx ? 'sfx:' : ''}${cacheKey(grabbed)}`;
+      if (fresh) cache.delete(key);
+      let found = cache.get(key);
+      const base = { ...result, cacheKey: key };
+      imageResult = { ...base, shapes: found?.shapes || [], blocks: found?.blocks || [] };
+      openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: t('正在找出图中的文字范围…') });
+      if (!found) {
+        setWorking(true);
+        const seen = await detectShapes(result, signal, token);
+        if (!seen) return;
+        found = { shapes: seen.shapes, blocks: seen.blocks, small: seen.small, translations: new Map() };
+        remember(key, found);
+      }
+      const detected = { ...base, shapes: found.shapes, blocks: found.blocks };
+      if (!found.shapes.length) { fail(t("图中没有识别到文字")); return; }
+      if (settings.imageReview && !found.translations.has(settings.target)) {
+        // 没勾「直接翻译」：用户检查、调整形状后再点「翻译」
         imageResult = detected;
         openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: shapesMeta(found) });
         setEditing(true, found.shapes);
         return;
       }
+      imageResult = detected;
+      if (!found.translations.has(settings.target)) drawShapePreview(found.shapes);
       await translateShapes(detected, found.shapes, settings.target, token);
     } catch (err) {
-      if (token === generation) showFailure(String(err?.message || err));
+      if (token === generation) fail(String(err?.message || err));
     }
   }
 

@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "Aucun site n'a encore la traduction de tout le site activée",
   "关闭所有网站的整站翻译？": "Désactiver la traduction de tout le site pour tous les sites ?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "Cette page est déjà en $1, aucune traduction n'est nécessaire ; les pages dans d'autres langues de ce site seront traduites automatiquement.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Aucun texte à traduire n'a été trouvé sur cette page ; le contenu chargé ultérieurement et les autres pages de ce site seront traduits automatiquement."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Aucun texte à traduire n'a été trouvé sur cette page ; le contenu chargé ultérieurement et les autres pages de ce site seront traduits automatiquement.",
+  "点一下修改这段译文，拖动可以挪位置": "Cliquez pour modifier cette traduction, faites glisser pour la déplacer",
+  "只重新翻译这一段": "Retraduire uniquement ce segment",
+  "缩小字号": "Réduire la taille de la police",
+  "放大字号": "Augmenter la taille de la police",
+  "还原": "Réinitialiser",
+  "撤销对这一段的修改": "Annuler les modifications de ce segment",
+  "完成": "Terminé",
+  "重新识别并翻译这张图": "Reconnaître et traduire à nouveau cette image",
+  "重新识别": "Reconnaître à nouveau",
+  "上一张图（←）": "Image précédente (←)",
+  "上一张图": "Image précédente",
+  "下一张图（→）": "Image suivante (→)",
+  "下一张图": "Image suivante",
+  "翻译音效字": "Traduire les onomatopées",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Traduisez aussi les onomatopées dessinées dans l'image : conservez le texte original et ajoutez la traduction à côté en petits caractères."
 }

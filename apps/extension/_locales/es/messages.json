@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "No se encontró texto que traducir en esta página; el contenido que se cargue después y las demás páginas de este sitio se traducirán automáticamente."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Haz clic para editar esta traducción, arrastra para moverla"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Volver a traducir solo este segmento"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Reducir el tamaño de la fuente"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Aumentar el tamaño de la fuente"
+  },
+  "m_ddde08946298195d": {
+    "message": "Restablecer"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Deshacer los cambios en este segmento"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Listo"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Volver a reconocer y traducir esta imagen"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Volver a reconocer"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Imagen anterior (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Imagen anterior"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Imagen siguiente (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Imagen siguiente"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Traducir efectos de sonido"
+  },
+  "m_257f284111f75da4": {
+    "message": "Traduce también las onomatopeyas dibujadas en la imagen: conserva el texto original y añade la traducción al lado en letra pequeña."
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

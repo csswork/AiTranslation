@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "Noch keine Websites mit aktiver Ganzseitenübersetzung",
   "关闭所有网站的整站翻译？": "Ganzseitenübersetzung für alle Websites ausschalten?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "Diese Seite ist bereits auf $1, eine Übersetzung ist nicht nötig; Seiten in anderen Sprachen auf dieser Website werden automatisch übersetzt.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Auf dieser Seite wurde kein zu übersetzender Text gefunden; später geladene Inhalte und andere Seiten dieser Website werden automatisch übersetzt."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Auf dieser Seite wurde kein zu übersetzender Text gefunden; später geladene Inhalte und andere Seiten dieser Website werden automatisch übersetzt.",
+  "点一下修改这段译文，拖动可以挪位置": "Klicken, um diese Übersetzung zu bearbeiten; ziehen, um sie zu verschieben",
+  "只重新翻译这一段": "Nur dieses Segment neu übersetzen",
+  "缩小字号": "Schriftgröße verkleinern",
+  "放大字号": "Schriftgröße vergrößern",
+  "还原": "Zurücksetzen",
+  "撤销对这一段的修改": "Änderungen an diesem Segment rückgängig machen",
+  "完成": "Fertig",
+  "重新识别并翻译这张图": "Dieses Bild neu erkennen und übersetzen",
+  "重新识别": "Neu erkennen",
+  "上一张图（←）": "Vorheriges Bild (←)",
+  "上一张图": "Vorheriges Bild",
+  "下一张图（→）": "Nächstes Bild (→)",
+  "下一张图": "Nächstes Bild",
+  "翻译音效字": "Lautmalereien übersetzen",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Auch im Bild gezeichnete Lautmalereien übersetzen: Originaltext beibehalten und die Übersetzung in kleiner Schrift daneben setzen."
 }

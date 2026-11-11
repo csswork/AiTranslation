@@ -2790,6 +2790,51 @@
   "m_aa8ea9c5b58d95f7": {
     "message": "Nenhum texto que precise de tradução foi encontrado nesta página; o conteúdo carregado depois e outras páginas deste site serão traduzidos automaticamente."
   },
+  "m_a21abc9eef16dee4": {
+    "message": "Clique para editar esta tradução, arraste para movê-la"
+  },
+  "m_9334ac8b6bbdf7fa": {
+    "message": "Retraduzir apenas este segmento"
+  },
+  "m_a6e47d2e82de0c3d": {
+    "message": "Diminuir tamanho da fonte"
+  },
+  "m_a4a6ebeabe260b01": {
+    "message": "Aumentar tamanho da fonte"
+  },
+  "m_ddde08946298195d": {
+    "message": "Redefinir"
+  },
+  "m_a97ca487bdd5d30c": {
+    "message": "Desfazer alterações neste segmento"
+  },
+  "m_c0b3fbff51ccc40b": {
+    "message": "Concluído"
+  },
+  "m_97a30e5413024d0d": {
+    "message": "Reconhecer e traduzir esta imagem novamente"
+  },
+  "m_30e247bc6e8c1164": {
+    "message": "Reconhecer novamente"
+  },
+  "m_a933c3dfdae1dbc7": {
+    "message": "Imagem anterior (←)"
+  },
+  "m_9fe889a76cbbf018": {
+    "message": "Imagem anterior"
+  },
+  "m_d8f514ea380ac5b7": {
+    "message": "Próxima imagem (→)"
+  },
+  "m_f8559aefb319052e": {
+    "message": "Próxima imagem"
+  },
+  "m_3c581c555d2f6b68": {
+    "message": "Traduzir efeitos sonoros"
+  },
+  "m_257f284111f75da4": {
+    "message": "Também traduza as onomatopeias desenhadas na arte: mantenha o texto original e adicione a tradução ao lado em letras pequenas."
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

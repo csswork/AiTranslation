@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "Chưa có trang web nào bật dịch toàn trang",
   "关闭所有网站的整站翻译？": "Tắt dịch toàn trang cho tất cả trang web?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "Trang này đã ở $1, không cần dịch; các trang bằng ngôn ngữ khác trên trang web này sẽ được dịch tự động.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Không tìm thấy văn bản nào cần dịch trên trang này; nội dung tải sau và các trang khác trên trang web này sẽ được dịch tự động."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Không tìm thấy văn bản nào cần dịch trên trang này; nội dung tải sau và các trang khác trên trang web này sẽ được dịch tự động.",
+  "点一下修改这段译文，拖动可以挪位置": "Nhấp để chỉnh sửa bản dịch này, kéo để di chuyển vị trí",
+  "只重新翻译这一段": "Chỉ dịch lại đoạn này",
+  "缩小字号": "Giảm cỡ chữ",
+  "放大字号": "Tăng cỡ chữ",
+  "还原": "Khôi phục",
+  "撤销对这一段的修改": "Hoàn tác thay đổi đối với đoạn này",
+  "完成": "Xong",
+  "重新识别并翻译这张图": "Nhận diện lại và dịch hình ảnh này",
+  "重新识别": "Nhận diện lại",
+  "上一张图（←）": "Ảnh trước (←)",
+  "上一张图": "Ảnh trước",
+  "下一张图（→）": "Ảnh tiếp theo (→)",
+  "下一张图": "Ảnh tiếp theo",
+  "翻译音效字": "Dịch từ tượng thanh",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Dịch cả từ tượng thanh được vẽ trong tranh: giữ nguyên chữ gốc và thêm bản dịch cỡ nhỏ bên cạnh."
 }

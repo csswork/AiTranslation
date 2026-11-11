@@ -161,6 +161,12 @@ ok(od.blocks[0].box, 0.1, 0.2, 0.6, 0.03);
 reply(JSON.stringify([]));
 await P.readImageText({ image: 'x', settings, model: 'm' });
 assert.doesNotMatch(captured.body.messages[0].content, /Ignore small text/, '普通识图仍用原提示词');
+// 「翻译音效字」：换成包含音效的提示词变体，保留模型标的 sfx
+reply(JSON.stringify([{ text: 'ドン', box: [100, 200, 700, 230], sfx: true }, { text: 'A', box: [1, 2, 3, 4] }]));
+od = await P.readImageText({ image: 'x', settings, model: 'm', purpose: 'regions-sfx' });
+assert.match(captured.body.messages[0].content, /"sfx":true/);
+assert.doesNotMatch(captured.body.messages[0].content, /small sound effects/);
+assert.deepEqual(od.blocks.map((b) => b.sfx), [true, false]);
 console.log('✓ 找文字范围用单独的提示词，忽略小字');
 
 // 点数模式同样支持识图：后台直接使用账户服务，扩展页面只能通过后台固定消息调用。

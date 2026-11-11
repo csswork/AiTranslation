@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "No websites have whole-site translation on yet",
   "关闭所有网站的整站翻译？": "Turn off whole-site translation for all websites?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "This page is already in $1, so no translation is needed; pages in other languages on this site will be translated automatically.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "No text needing translation was found on this page; content loaded later and other pages on this site will be translated automatically.",
+  "点一下修改这段译文，拖动可以挪位置": "Click to edit this translation, drag to move it",
+  "只重新翻译这一段": "Retranslate this segment only",
+  "缩小字号": "Decrease font size",
+  "放大字号": "Increase font size",
+  "还原": "Reset",
+  "撤销对这一段的修改": "Undo changes to this segment",
+  "完成": "Done",
+  "重新识别并翻译这张图": "Re-recognize and translate this image",
+  "重新识别": "Re-recognize",
+  "上一张图（←）": "Previous image (←)",
+  "上一张图": "Previous image",
+  "下一张图（→）": "Next image (→)",
+  "下一张图": "Next image",
+  "翻译音效字": "Translate sound effects",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type."
 }

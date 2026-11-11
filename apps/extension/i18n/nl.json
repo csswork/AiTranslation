@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "Nog geen websites met vertaling van de hele site aan",
   "关闭所有网站的整站翻译？": "Vertaling van de hele site uitschakelen voor alle websites?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "Deze pagina is al in het $1, dus er is geen vertaling nodig; pagina's in andere talen op deze site worden automatisch vertaald.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Er is geen tekst gevonden op deze pagina die vertaald moet worden; later geladen inhoud en andere pagina's op deze site worden automatisch vertaald."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Er is geen tekst gevonden op deze pagina die vertaald moet worden; later geladen inhoud en andere pagina's op deze site worden automatisch vertaald.",
+  "点一下修改这段译文，拖动可以挪位置": "Klik om deze vertaling te bewerken, sleep om te verplaatsen",
+  "只重新翻译这一段": "Alleen dit segment opnieuw vertalen",
+  "缩小字号": "Lettergrootte verkleinen",
+  "放大字号": "Lettergrootte vergroten",
+  "还原": "Herstellen",
+  "撤销对这一段的修改": "Wijzigingen aan dit segment ongedaan maken",
+  "完成": "Klaar",
+  "重新识别并翻译这张图": "Deze afbeelding opnieuw herkennen en vertalen",
+  "重新识别": "Opnieuw herkennen",
+  "上一张图（←）": "Vorige afbeelding (←)",
+  "上一张图": "Vorige afbeelding",
+  "下一张图（→）": "Volgende afbeelding (→)",
+  "下一张图": "Volgende afbeelding",
+  "翻译音效字": "Geluidseffecten vertalen",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Vertaal ook klankwoorden die in het beeld zijn getekend: behoud de originele tekst en zet de vertaling ernaast in kleine letters."
 }

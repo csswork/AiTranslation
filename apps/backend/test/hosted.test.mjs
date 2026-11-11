@@ -51,6 +51,12 @@ test('找文字范围用单独的提示词：整块框住、忽略小字，返�
   assert.match(body.messages[0].content, /vertical columns/);
   assert.equal(body.temperature, 0);
   assert.deepEqual(result, [{ text: 'Hi', box: [1, 2, 3, 4] }]);
+  // 音效字变体：不再忽略音效，保留 sfx 标记
+  assert.match(body.messages[0].content, /small sound effects/);
+  const withSfx = JSON.parse((await hosted.readImageText({ image, purpose: 'regions-sfx' })).raw);
+  assert.match(body.messages[0].content, /"sfx":true/);
+  assert.doesNotMatch(body.messages[0].content, /small sound effects/);
+  assert.deepEqual(withSfx, [{ text: 'Hi', box: [1, 2, 3, 4] }]);
   await hosted.readImageText({ image, purpose: 'anything-else' });
   assert.doesNotMatch(body.messages[0].content, /Ignore small text/, '未知用途按普通识图处理');
 });

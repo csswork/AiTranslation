@@ -661,5 +661,20 @@
   "还没有开着整站翻译的网站": "Henüz tüm site çevirisi açık olan web sitesi yok",
   "关闭所有网站的整站翻译？": "Tüm web siteleri için tüm site çevirisi kapatılsın mı?",
   "这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。": "Bu sayfa zaten $1 dilinde, çeviriye gerek yok; bu sitedeki diğer dillerdeki sayfalar otomatik olarak çevrilecek.",
-  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Bu sayfada çevrilmesi gereken metin bulunamadı; sonradan yüklenen içerik ve bu sitenin diğer sayfaları otomatik olarak çevrilecek."
+  "这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。": "Bu sayfada çevrilmesi gereken metin bulunamadı; sonradan yüklenen içerik ve bu sitenin diğer sayfaları otomatik olarak çevrilecek.",
+  "点一下修改这段译文，拖动可以挪位置": "Çeviriyi düzenlemek için tıklayın, taşımak için sürükleyin",
+  "只重新翻译这一段": "Yalnızca bu bölümü yeniden çevir",
+  "缩小字号": "Yazı boyutunu küçült",
+  "放大字号": "Yazı boyutunu büyüt",
+  "还原": "Sıfırla",
+  "撤销对这一段的修改": "Bu bölümdeki değişiklikleri geri al",
+  "完成": "Tamam",
+  "重新识别并翻译这张图": "Bu görseli yeniden tanı ve çevir",
+  "重新识别": "Yeniden tanı",
+  "上一张图（←）": "Önceki görsel (←)",
+  "上一张图": "Önceki görsel",
+  "下一张图（→）": "Sonraki görsel (→)",
+  "下一张图": "Sonraki görsel",
+  "翻译音效字": "Ses efektlerini çevir",
+  "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Çizimde yer alan yansıma sözcükleri de çevir: özgün metni koru ve çevirisini yanına küçük harflerle ekle."
 }
