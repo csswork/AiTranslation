@@ -2,13 +2,43 @@
 
 划词 – AI 翻译与双语阅读（Huaci – AI Translator & Bilingual Reader）。原名「AI 划词翻译」，2.2.0 起改为现名，扩展 ID 与商店条目不变。
 
+在浏览器里读外语文章、翻译图片和 PDF：原文与译文逐段对齐，点译文里的词就能换说法，文章连同译文可以保存在本机。也支持划词翻译、网页区域翻译和独立翻译面板；可自带 API Key，或使用免 Key 的点数翻译。
+
+[官网](https://huaci.app/) · [Chrome 商店](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge 商店](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [扩展使用说明](apps/extension/README.md)
+
+## 功能预览
+
+以下为当前 **2.2.0 开发版**加载到 Chrome 后的实际截图与操作录屏，识别和翻译均调用真实模型。双语阅读、换说法和图片形状翻译等新功能正在准备发布，商店发布状态见[扩展说明](apps/extension/README.md#account-and-credits-hosted-mode)。
+
+**图片识别与翻译**：识别图中文字、按文字形状覆盖译文，切换原图对照，点击单段修改，也能手动框选范围。
+
+![图片识别实机演示：识别、翻译、对照原图、编辑译文与框选区域](docs/screenshots/image-recognition.gif)
+
+**双语阅读**：从网页识别正文、移除广告，逐段对照翻译；点词换说法，切换阅读布局，并将文章和译文保存在本机。
+
+![双语阅读实机演示：正文识别、对照翻译、换说法、切换布局与保存文章](docs/screenshots/bilingual-reader.gif)
+
+| 双语对照阅读 | 点词换说法 |
+| --- | --- |
+| [![双语对照阅读](docs/screenshots/01-bilingual-reader.png)](docs/screenshots/01-bilingual-reader.png) | [![点词换说法](docs/screenshots/02-word-alternatives.png)](docs/screenshots/02-word-alternatives.png) |
+| **图片翻译** | **深色阅读与本机书库** |
+| [![图片翻译](docs/screenshots/04-image-translation.png)](docs/screenshots/04-image-translation.png) | [![深色阅读与本机书库](docs/screenshots/03-reader-library.png)](docs/screenshots/03-reader-library.png) |
+| **划词翻译** | **网页区域翻译** |
+| [![划词翻译](docs/screenshots/06-selection-translation.png)](docs/screenshots/06-selection-translation.png) | [![网页区域翻译](docs/screenshots/09-region-translation.png)](docs/screenshots/09-region-translation.png) |
+| **整份 PDF 对照翻译** | **翻译面板** |
+| [![整份 PDF 对照翻译](docs/screenshots/08-pdf-translation.png)](docs/screenshots/08-pdf-translation.png) | [![翻译面板](docs/screenshots/07-translation-panel.png)](docs/screenshots/07-translation-panel.png) |
+
+拍摄环境、演示素材与署名见[截图说明](docs/screenshots/README.md)。
+
+## 项目组成
+
 一个仓库，三个应用：Vercel 上的 HTML 网站、VPS 上的后端服务、Chrome 扩展。
 
 | 应用 | 目录 | 运行位置 | 当前状态 |
 | --- | --- | --- | --- |
 | 网站 | [apps/web](apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
 | 后端 | [apps/backend](apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
-| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome | 2.0.0 已上架：24 语言、自带 Key、账户与点数、订阅入口、免 Key 托管翻译；2.1.0（整份 PDF 翻译、图片框选与导出等增强）已打包，待上架 |
+| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome / Edge | 商店版 2.1.0；当前源码 2.2.0 新增双语阅读、换说法与用词偏好、按文字形状翻译图片，正在准备发布 |
 
 ## 目录
 
