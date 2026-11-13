@@ -28,7 +28,7 @@
 | **整份 PDF 对照翻译** | **翻译面板** |
 | [![整份 PDF 对照翻译](docs/screenshots/08-pdf-translation.png)](docs/screenshots/08-pdf-translation.png) | [![翻译面板](docs/screenshots/07-translation-panel.png)](docs/screenshots/07-translation-panel.png) |
 
-拍摄环境、演示素材与署名见[截图说明](docs/screenshots/README.md)。
+拍摄环境与演示素材见[截图说明](docs/screenshots/README.md)。
 
 ## 项目组成
 
