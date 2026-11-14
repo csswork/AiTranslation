@@ -1,0 +1,73 @@
+[
+  { "id": "ja-news-01", "from": "ja", "genre": "news", "text": "政府は来年度から、子育て世帯を対象とした新たな支援策を導入する方針を固めた。関係者によると、所得制限は設けない方向で調整が進められているという。", "watch": "方針を固めた／〜という 的新闻腔；被动" },
+  { "id": "ja-news-02", "from": "ja", "genre": "news", "text": "同社は15日、主力製品の値上げを発表した。原材料価格の高騰に加え、物流コストの上昇が続いていることが背景にあるとみられる。", "watch": "〜とみられる；背景にある" },
+  { "id": "ja-news-03", "from": "ja", "genre": "news", "text": "台風の接近に伴い、鉄道各社は明日の始発から一部区間で運転を見合わせる可能性があるとして、利用者に最新の情報を確認するよう呼びかけている。", "watch": "運転を見合わせる；呼びかけている；长句" },
+  { "id": "ja-news-04", "from": "ja", "genre": "news", "text": "調査では、回答者の約6割が「在宅勤務を続けたい」と答えた一方、コミュニケーション不足に不安を感じる人も少なくなかった。", "watch": "一方；少なくなかった 双重否定" },
+  { "id": "ja-news-05", "from": "ja", "genre": "news", "text": "決勝は延長戦にもつれ込む接戦となったが、最後は途中出場の選手が決勝点を挙げ、チームを3年ぶりの優勝に導いた。", "watch": "体育用语；もつれ込む" },
+  { "id": "ja-news-06", "from": "ja", "genre": "news", "text": "警察は、男が容疑を認めているかどうかについて明らかにしていない。現場周辺の防犯カメラの映像を解析するなどして、詳しい経緯を調べている。", "watch": "明らかにしていない；〜などして" },
+
+  { "id": "ja-forum-01", "from": "ja", "genre": "forum", "text": "これ、マジで買ってよかった。正直あんまり期待してなかったんだけど、使ってみたら全然違うわ。もっと早く買えばよかった。", "watch": "口语；全然違う；语气词" },
+  { "id": "ja-forum-02", "from": "ja", "genre": "forum", "text": "すみません、初心者なんですが、この設定ってどこから変えられますか？いろいろ調べたんですけど、よくわからなくて…。", "watch": "〜んですが／〜なくて… 的委婉；主语省略" },
+  { "id": "ja-forum-03", "from": "ja", "genre": "forum", "text": "それな。うちの会社も同じ感じで、結局誰も責任取らないまま話が流れたんだよね。なんだかなあって思う。", "watch": "それな；話が流れた；なんだかなあ" },
+  { "id": "ja-forum-04", "from": "ja", "genre": "forum", "text": "大丈夫ですよ、気にしないでください。こちらこそ返信が遅くなってしまって申し訳ないです。また何かあれば遠慮なく聞いてくださいね。", "watch": "大丈夫 假朋友；敬语淡化；遠慮なく" },
+  { "id": "ja-forum-05", "from": "ja", "genre": "forum", "text": "昨日ライブ行ってきたんだけど、やばかった。語彙力なくなるくらい最高で、帰り道ずっと余韻に浸ってた。", "watch": "やばい；語彙力なくなる；余韻に浸る" },
+  { "id": "ja-forum-06", "from": "ja", "genre": "forum", "text": "個人的には微妙かな。悪くはないんだけど、この値段出すなら他にも選択肢あるし、わざわざこれを選ぶ理由が見当たらない。", "watch": "微妙 假朋友；見当たらない" },
+
+  { "id": "ja-tech-01", "from": "ja", "genre": "tech", "text": "このメソッドは、引数に渡された配列を破壊的に変更します。元の配列を保持したい場合は、事前にコピーを作成してから呼び出してください。", "watch": "破壊的に変更；术语通用译法" },
+  { "id": "ja-tech-02", "from": "ja", "genre": "tech", "text": "インストールが完了したら、ターミナルを再起動してください。環境変数が正しく反映されていない場合、コマンドが見つからないというエラーが表示されることがあります。", "watch": "反映されていない；〜ことがあります" },
+  { "id": "ja-tech-03", "from": "ja", "genre": "tech", "text": "本バージョンでは、起動時間が大幅に短縮されたほか、一部の環境でアプリが強制終了する不具合を修正しました。", "watch": "更新日志文体；〜ほか" },
+  { "id": "ja-tech-04", "from": "ja", "genre": "tech", "text": "キャッシュを有効にすると応答速度は向上しますが、データの整合性が損なわれるおそれがあるため、更新頻度の高い処理には推奨されません。", "watch": "おそれがある；推奨されません 被动" },
+  { "id": "ja-tech-05", "from": "ja", "genre": "tech", "text": "なお、この機能は現在ベータ版として提供されており、予告なく仕様が変更される場合があります。あらかじめご了承ください。", "watch": "なお；ご了承ください 套话" },
+
+  { "id": "ja-essay-01", "from": "ja", "genre": "essay", "text": "久しぶりに実家に帰ったら、駅前の商店街がすっかり様変わりしていた。子どもの頃によく通った本屋はもうなくて、少し寂しい気持ちになった。", "watch": "様変わり；寂しい気持ちになった" },
+  { "id": "ja-essay-02", "from": "ja", "genre": "essay", "text": "勉強は苦手だったけれど、あの先生の授業だけはなぜか楽しみだった。今思えば、教え方というより、先生自身が楽しそうだったからかもしれない。", "watch": "勉強 假朋友；〜というより；かもしれない" },
+  { "id": "ja-essay-03", "from": "ja", "genre": "essay", "text": "忙しい毎日の中で、何もしない時間を持つことは意外と難しい。けれど、そういう時間こそが、自分を取り戻すために必要なのだと思う。", "watch": "〜のだと思う；こそ；名词化" },
+  { "id": "ja-essay-04", "from": "ja", "genre": "essay", "text": "人に迷惑をかけてはいけない、と言われて育った。でも大人になってみると、多少の迷惑はお互いさまだと思えるようになった。", "watch": "迷惑 假朋友；お互いさま" },
+  { "id": "ja-essay-05", "from": "ja", "genre": "essay", "text": "雨の日は嫌いじゃない。窓を打つ音を聞きながらコーヒーを淹れていると、時間がゆっくり流れていくような気がする。", "watch": "嫌いじゃない；〜ような気がする" },
+
+  { "id": "ja-shop-01", "from": "ja", "genre": "shop", "text": "ご注文いただいた商品は、通常2〜3営業日以内に発送いたします。お届け日時の指定をご希望の場合は、注文時に備考欄へご記入ください。", "watch": "敬语淡化；営業日" },
+  { "id": "ja-shop-02", "from": "ja", "genre": "shop", "text": "軽くて持ち運びやすく、毎日の通勤にもぴったり。撥水加工が施されているので、急な雨でも安心です。", "watch": "广告文案节奏；施されている 被动；安心" },
+  { "id": "ja-shop-03", "from": "ja", "genre": "shop", "text": "サイズ感は普段通りで問題なかったです。ただ、写真より色が少し暗めだったので、星ひとつ減らしました。", "watch": "サイズ感；评价口吻" },
+  { "id": "ja-shop-04", "from": "ja", "genre": "shop", "text": "誠に勝手ながら、年末年始は休業とさせていただきます。期間中にいただいたお問い合わせには、営業再開後に順次対応いたします。", "watch": "誠に勝手ながら；させていただきます" },
+
+  { "id": "ja-batch-01", "from": "ja", "genre": "ui", "mode": "batch", "texts": ["ホーム", "お気に入り", "閲覧履歴", "ログインして続ける", "もっと見る", "お問い合わせ", "利用規約に同意する"], "watch": "界面短句：简短、约定俗成" },
+  { "id": "ja-batch-02", "from": "ja", "genre": "ui", "mode": "batch", "texts": ["新着記事", "3時間前", "この記事は会員限定です。", "続きを読むには", "無料会員登録", "が必要です。", "関連記事"], "watch": "被行内标签切开的一句话（第4–6项）" },
+  { "id": "ja-batch-03", "from": "ja", "genre": "news", "mode": "batch", "texts": ["円安が続く中、海外からの観光客が増えている。", "一方で、", "地元の住民からは", "混雑や騒音を心配する声も上がっている。", "市は来月、対策をまとめる方針だ。"], "watch": "句子被切成片段；声が上がっている" },
+  { "id": "ja-batch-04", "from": "ja", "genre": "shop", "mode": "batch", "texts": ["在庫あり", "カートに入れる", "送料無料", "残り2点", "ご注文はお早めに", "レビュー（128件）", "この商品を見た人はこんな商品も見ています"], "watch": "电商界面习惯用语" },
+
+  { "id": "en-news-01", "from": "en", "genre": "news", "text": "The central bank held interest rates steady on Wednesday, a decision that had been widely expected by economists, while signaling that cuts could come as early as the spring.", "watch": "定语从句；while 分句；被动" },
+  { "id": "en-news-02", "from": "en", "genre": "news", "text": "Officials said the bridge, which was built in the 1960s and carries about 40,000 vehicles a day, will remain closed until engineers can determine the extent of the damage.", "watch": "插入的定语从句；until 语序" },
+  { "id": "en-news-03", "from": "en", "genre": "news", "text": "The company, once seen as the undisputed leader in its field, is now struggling to keep pace with younger rivals that have been quicker to embrace new technology.", "watch": "同位插入；that 从句；keep pace with" },
+  { "id": "en-news-04", "from": "en", "genre": "news", "text": "Critics argue the plan does little to address the underlying problem, and some lawmakers have already vowed to block it when it comes up for a vote next month.", "watch": "does little to；comes up for a vote" },
+  { "id": "en-news-05", "from": "en", "genre": "news", "text": "It was the team's first win on the road this season, and it came at a moment when many fans had all but given up hope of making the playoffs.", "watch": "it 形式主语；all but；on the road" },
+  { "id": "en-news-06", "from": "en", "genre": "news", "text": "Researchers cautioned that the findings are preliminary and that larger studies will be needed before any conclusions can be drawn about long-term effects.", "watch": "被动连用；before 语序" },
+
+  { "id": "en-forum-01", "from": "en", "genre": "forum", "text": "Honestly, I was skeptical at first, but this thing has been a game changer for me. Can't believe I waited this long to try it.", "watch": "game changer；口语；省略主语" },
+  { "id": "en-forum-02", "from": "en", "genre": "forum", "text": "Not gonna lie, the first few episodes are kind of a slog, but stick with it. It really picks up around the halfway point and the ending is so worth it.", "watch": "not gonna lie；slog；picks up；so worth it" },
+  { "id": "en-forum-03", "from": "en", "genre": "forum", "text": "Does anyone else feel like the new update made everything worse? I'm not trying to be dramatic, but I genuinely can't find half the settings anymore.", "watch": "feel like；be dramatic" },
+  { "id": "en-forum-04", "from": "en", "genre": "forum", "text": "Thanks for the heads up! I had no idea that was even a thing. Will definitely give it a shot this weekend and report back.", "watch": "heads up；a thing；give it a shot" },
+  { "id": "en-forum-05", "from": "en", "genre": "forum", "text": "I get where you're coming from, but I think you're missing the point. Nobody is saying it's perfect, just that it's better than what we had before.", "watch": "where you're coming from；missing the point" },
+  { "id": "en-forum-06", "from": "en", "genre": "forum", "text": "For what it's worth, I ran into the same issue last year and it turned out to be a loose cable. Might be worth checking before you spend money on a replacement.", "watch": "for what it's worth；turned out；might be worth" },
+
+  { "id": "en-tech-01", "from": "en", "genre": "tech", "text": "If the request fails, the client will retry up to three times with exponential backoff before giving up and returning an error to the caller.", "watch": "术语；before 语序" },
+  { "id": "en-tech-02", "from": "en", "genre": "tech", "text": "Note that this option is ignored when the application is running in production mode, as caching is always enabled there for performance reasons.", "watch": "Note that；被动；as 从句" },
+  { "id": "en-tech-03", "from": "en", "genre": "tech", "text": "This release fixes a bug that could cause the app to crash on startup, improves sync reliability, and adds support for importing data from spreadsheets.", "watch": "更新日志文体；并列结构" },
+  { "id": "en-tech-04", "from": "en", "genre": "tech", "text": "You can think of a promise as a placeholder for a value that isn't available yet but will be at some point in the future.", "watch": "think of ... as；that 从句" },
+  { "id": "en-tech-05", "from": "en", "genre": "tech", "text": "Make sure you have backed up your files before proceeding, since this operation cannot be undone and any unsaved changes will be lost.", "watch": "祈使；since；被动" },
+
+  { "id": "en-essay-01", "from": "en", "genre": "essay", "text": "There is a particular kind of quiet that settles over a house after everyone has gone to bed, and I have always found it to be the best time to think.", "watch": "there is；settles over；found it to be" },
+  { "id": "en-essay-02", "from": "en", "genre": "essay", "text": "My grandmother never talked much about her childhood, but every so often a small detail would slip out, and I would hold on to it like a secret.", "watch": "would 表习惯；slip out；hold on to" },
+  { "id": "en-essay-03", "from": "en", "genre": "essay", "text": "We tend to overestimate what we can do in a day and underestimate what we can do in a year, which is why so many plans end in disappointment.", "watch": "对仗；which is why" },
+  { "id": "en-essay-04", "from": "en", "genre": "essay", "text": "It took me years to realize that being busy is not the same as being productive, and that saying no is often the kindest thing you can do for yourself.", "watch": "it took me；动名词主语；kindest thing" },
+  { "id": "en-essay-05", "from": "en", "genre": "essay", "text": "The city I grew up in no longer exists, not really. The streets are still there, but the people and the shops that made it feel like home are long gone.", "watch": "not really；made it feel like home；long gone" },
+
+  { "id": "en-shop-01", "from": "en", "genre": "shop", "text": "Designed with busy mornings in mind, this compact coffee maker brews a full pot in under five minutes and keeps it warm for hours.", "watch": "分词开头；广告文案节奏" },
+  { "id": "en-shop-02", "from": "en", "genre": "shop", "text": "Fits true to size and feels much more expensive than it is. My only complaint is that the zipper sticks a little, but that's a minor thing.", "watch": "true to size；评价口吻" },
+  { "id": "en-shop-03", "from": "en", "genre": "shop", "text": "Orders placed before 2 p.m. ship the same day. If you're not completely satisfied, you can return any item within 30 days for a full refund, no questions asked.", "watch": "no questions asked；被动" },
+  { "id": "en-shop-04", "from": "en", "genre": "shop", "text": "We're sorry for the inconvenience. Your order has been delayed due to high demand, and we expect it to ship within the next five business days.", "watch": "客服套话；due to；business days" },
+
+  { "id": "en-batch-01", "from": "en", "genre": "ui", "mode": "batch", "texts": ["Home", "Sign in", "Get started", "Learn more", "Pricing", "Contact sales", "Skip to main content"], "watch": "界面短句：约定俗成的说法" },
+  { "id": "en-batch-02", "from": "en", "genre": "ui", "mode": "batch", "texts": ["By continuing, you agree to our", "Terms of Service", "and", "Privacy Policy", ".", "Already have an account?", "Log in"], "watch": "被行内标签切开的一句话（第1–5项）" },
+  { "id": "en-batch-03", "from": "en", "genre": "news", "mode": "batch", "texts": ["Housing prices rose for the sixth straight month,", "according to", "figures released on Tuesday", ", putting further pressure on first-time buyers.", "Analysts expect the trend to continue into next year."], "watch": "句子被切成片段；语序无法在片段内调整" },
+  { "id": "en-batch-04", "from": "en", "genre": "shop", "mode": "batch", "texts": ["In stock", "Add to cart", "Free shipping on orders over $50", "Only 3 left", "Customers also bought", "4.6 out of 5 stars", "Write a review"], "watch": "电商界面习惯用语" }
+]

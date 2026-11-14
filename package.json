@@ -14,6 +14,7 @@
     "i18n:extension": "node apps/extension/scripts/sync-extension-i18n.mjs",
     "i18n:extension:watch": "node apps/extension/scripts/sync-extension-i18n.mjs --watch",
     "check:extension": "node apps/extension/scripts/build-extension-i18n.mjs --check",
+    "eval:translation": "node apps/extension/eval/run.mjs",
     "package:extension": "bash package.sh",
     "package:edge": "bash apps/extension/package.sh edge",
     "dev:web": "python3 -m http.server 8788 --directory apps/web/public",
