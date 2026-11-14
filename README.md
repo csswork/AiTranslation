@@ -1,126 +1,128 @@
-# 划词 · Huaci
+# Huaci · 划词
 
-划词 – AI 翻译与双语阅读（Huaci – AI Translator & Bilingual Reader）。原名「AI 划词翻译」，2.2.0 起改为现名，扩展 ID 与商店条目不变。
+**English** · [简体中文](docs/readme/README.zh-CN.md) · [日本語](docs/readme/README.ja.md) · [Français](docs/readme/README.fr.md) · [Deutsch](docs/readme/README.de.md) · [Español](docs/readme/README.es.md) · [العربية](docs/readme/README.ar.md)
 
-在浏览器里读外语文章、翻译图片和 PDF：原文与译文逐段对齐，点译文里的词就能换说法，文章连同译文可以保存在本机。也支持划词翻译、网页区域翻译和独立翻译面板；可自带 API Key，或使用免 Key 的点数翻译。
+**Huaci — AI Translator & Bilingual Reader.** Previously called “AI 划词翻译 / AI Translator”; renamed in 2.2.0 with the same extension IDs and store listings.
 
-[官网](https://huaci.app/) · [Chrome 商店](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge 商店](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [扩展使用说明](apps/extension/README.md)
+Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Bring your own API key or use hosted translation with credits, without a key.
 
-## 功能预览
+[Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Extension guide](apps/extension/README.md)
 
-以下为当前 **2.2.0 开发版**加载到 Chrome 后的实际截图与操作录屏，识别和翻译均调用真实模型。双语阅读、换说法和图片形状翻译等新功能正在准备发布，商店发布状态见[扩展说明](apps/extension/README.md#account-and-credits-hosted-mode)。
+## Preview
 
-**图片识别与翻译**：识别图中文字、按文字形状覆盖译文，切换原图对照，点击单段修改，也能手动框选范围。
+These screenshots and recordings show the current **2.2.0 development build** loaded in Chrome, using real models for recognition and translation. Bilingual reading, alternative wording, and image translation that follows text shapes are being prepared for release. See the [Extension guide](apps/extension/README.md#account-and-credits-hosted-mode) for store availability.
 
-![图片识别实机演示：识别、翻译、对照原图、编辑译文与框选区域](docs/screenshots/image-recognition.gif)
+**Image recognition and translation:** Detect text, overlay translations following the text shapes, compare with the original, edit individual translations, or select regions manually.
 
-**双语阅读**：从网页识别正文、移除广告，逐段对照翻译；点词换说法，切换阅读布局，并将文章和译文保存在本机。
+![Image recognition: detect, translate, compare, edit, and select regions](docs/screenshots/image-recognition.gif)
 
-![双语阅读实机演示：正文识别、对照翻译、换说法、切换布局与保存文章](docs/screenshots/bilingual-reader.gif)
+**Bilingual reading:** Extract article text, remove ads, and align each paragraph with its translation. Choose alternative wording, switch layouts, and save the article and translation on your device.
 
-| 双语对照阅读 | 点词换说法 |
+![Bilingual reading: extract an article, translate, choose wording, change layouts, and save](docs/screenshots/bilingual-reader.gif)
+
+| Bilingual reading | Alternative wording |
 | --- | --- |
-| [![双语对照阅读](docs/screenshots/01-bilingual-reader.png)](docs/screenshots/01-bilingual-reader.png) | [![点词换说法](docs/screenshots/02-word-alternatives.png)](docs/screenshots/02-word-alternatives.png) |
-| **图片翻译** | **深色阅读与本机书库** |
-| [![图片翻译](docs/screenshots/04-image-translation.png)](docs/screenshots/04-image-translation.png) | [![深色阅读与本机书库](docs/screenshots/03-reader-library.png)](docs/screenshots/03-reader-library.png) |
-| **划词翻译** | **网页区域翻译** |
-| [![划词翻译](docs/screenshots/06-selection-translation.png)](docs/screenshots/06-selection-translation.png) | [![网页区域翻译](docs/screenshots/09-region-translation.png)](docs/screenshots/09-region-translation.png) |
-| **整份 PDF 对照翻译** | **翻译面板** |
-| [![整份 PDF 对照翻译](docs/screenshots/08-pdf-translation.png)](docs/screenshots/08-pdf-translation.png) | [![翻译面板](docs/screenshots/07-translation-panel.png)](docs/screenshots/07-translation-panel.png) |
+| [![Bilingual reading](docs/screenshots/01-bilingual-reader.png)](docs/screenshots/01-bilingual-reader.png) | [![Alternative wording](docs/screenshots/02-word-alternatives.png)](docs/screenshots/02-word-alternatives.png) |
+| **Image translation** | **Dark mode and saved articles** |
+| [![Image translation](docs/screenshots/04-image-translation.png)](docs/screenshots/04-image-translation.png) | [![Dark mode and saved articles](docs/screenshots/03-reader-library.png)](docs/screenshots/03-reader-library.png) |
+| **Selection translation** | **Page region translation** |
+| [![Selection translation](docs/screenshots/06-selection-translation.png)](docs/screenshots/06-selection-translation.png) | [![Page region translation](docs/screenshots/09-region-translation.png)](docs/screenshots/09-region-translation.png) |
+| **Whole-PDF translation, side by side** | **Translation panel** |
+| [![Whole-PDF translation, side by side](docs/screenshots/08-pdf-translation.png)](docs/screenshots/08-pdf-translation.png) | [![Translation panel](docs/screenshots/07-translation-panel.png)](docs/screenshots/07-translation-panel.png) |
 
-拍摄环境与演示素材见[截图说明](docs/screenshots/README.md)。
+See the [capture notes](docs/screenshots/README.md) for the recording environment and sample materials. The captured interface is in Simplified Chinese; all documentation languages share these images and GIFs.
 
-## 项目组成
+## Project
 
-一个仓库，三个应用：Vercel 上的 HTML 网站、VPS 上的后端服务、Chrome 扩展。
+One repository, three applications: an HTML website on Vercel, a backend on a VPS, and a browser extension.
 
-| 应用 | 目录 | 运行位置 | 当前状态 |
+| Application | Directory | Runs on | Status |
 | --- | --- | --- | --- |
-| 网站 | [apps/web](apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
-| 后端 | [apps/backend](apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
-| 扩展 | [apps/extension](apps/extension/README.md) | 用户的 Chrome / Edge | 商店版 2.1.0；当前源码 2.2.0 新增双语阅读、换说法与用词偏好、按文字形状翻译图片，正在准备发布 |
+| Website | [apps/web](apps/web/README.md) | Vercel | Product pages, privacy, terms, and changelog in 11 languages; the header reads the sign-in state from app.huaci.app |
+| Backend | [apps/backend](apps/backend/README.md) | VPS | Authentication, account and admin interfaces, extension API, guest trials, precise credit accounting, hosted text and images, and Creem subscriptions; the first release is deployed |
+| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | Store version: 2.1.0. Source version: 2.2.0, adding bilingual reading, alternative wording, wording preferences, and image translation following text shapes; release in preparation |
 
-## 目录
+## Layout
 
 ```text
 apps/
   web/
-    public/          HTML、CSS、JS、静态资源和生成的各语言页面
-    i18n/            网站语言目录与页面构建工具
-    test/            网站、语言切换与 CSP 检查
+    public/          HTML, CSS, JS, assets, and generated language pages
+    i18n/            Website translations and page builder
+    test/            Website, language switching, and CSP checks
   backend/
-    src/             Hono 服务：配置、数据库、认证、点数账本、发信
-    ui/account/      用户管理界面（服务端渲染）
-    migrations/      PostgreSQL 迁移
-    test/  deploy/   服务端测试与 VPS 部署说明
+    src/             Hono: config, database, auth, credits, email
+    ui/account/      Account interface (server-rendered)
+    migrations/      PostgreSQL migrations
+    test/  deploy/   Backend tests and VPS deployment instructions
   extension/
-    manifest.json    Chrome 扩展声明
-    src/             扩展运行代码与界面（src/vendor/pdfjs 为原样引入的 pdf.js）
-    icons/           扩展图标
-    _locales/        Chrome 原生本地化产物
-    i18n/            开发期界面译文、语言注册表和模板
-    scripts/         本地多语言提取、翻译与构建
-    test/            扩展测试
-    store-assets/    商店文案、截图和宣传素材
-    package.sh       扩展专用打包工具
-docs/                架构、后端界面审核稿与技术研究
-test/run.sh          全项目测试入口
-package.sh           扩展打包入口
-vercel.json          Vercel 部署与安全响应头配置
-dist/extension/      生成的扩展 ZIP（不提交）
-tools/               本地拍摄与实验工具（不提交）
-LICENSE              仓库统一许可证
-PRIVACY.md           保留既有公开隐私政策路径
+    manifest.json    Chrome extension manifest
+    src/             Extension code and UI; src/vendor/pdfjs is upstream pdf.js
+    icons/           Extension icons
+    _locales/        Generated Chrome localization files
+    i18n/            UI translations, language registry, and templates
+    scripts/         Local UI extraction, translation, and build tools
+    test/            Extension tests
+    store-assets/    Store listings, screenshots, and promotional materials
+    package.sh       Extension packaging tool
+docs/                Architecture, engineering notes, and multilingual READMEs
+test/run.sh          Repository-wide test entry point
+package.sh           Extension packaging entry point
+vercel.json          Vercel deployment and security headers
+dist/extension/      Generated extension ZIPs (not committed)
+tools/               Local capture and experiment tools (not committed)
+LICENSE              Repository license
+PRIVACY.md           Preserved public privacy-policy path
 ```
 
-## 本地开发
+## Local development
 
-开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。网站与扩展的构建和测试使用标准库，不需要安装 npm 依赖；后端有自己的依赖（`cd apps/backend && npm ci`）并需要本机 PostgreSQL，未安装依赖时 `npm test` 会跳过后端。
+Development tools require Node.js 22 or later. Website preview and extension packaging also require Python 3. The extension itself requires Chrome 116 or later. Website and extension builds and tests use standard libraries, without npm dependencies. The backend has its own dependencies (`cd apps/backend && npm ci`) and requires local PostgreSQL; `npm test` skips the backend if its dependencies are not installed.
 
 ```sh
-npm run dev                   # 启动全部本地服务并列出地址，Ctrl+C 一起停止（见下）
-npm test                      # 网站与扩展全部测试
-npm run test:web              # 只检查网站
-npm run test:extension        # 只检查扩展
+npm run dev                   # Start local services; Ctrl+C stops them together
+npm test                      # Website and extension tests
+npm run test:web              # Website tests only
+npm run test:extension        # Extension tests only
 npm run dev:web               # http://localhost:8788
-npm run build:web             # 生成网站各语言页面
-npm run check:web             # 检查网站多语言产物
-npm run i18n:extension        # 本地刷新扩展文案
-npm run check:extension       # 检查扩展多语言产物
+npm run build:web             # Generate website language pages
+npm run check:web             # Check generated website translations
+npm run i18n:extension        # Refresh extension UI translations locally
+npm run check:extension       # Check generated extension translations
 npm run package:extension     # dist/extension/ai-translation-<version>.zip
-npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip（Edge 发布准备）
-npm run test:backend          # 后端测试（需要 PostgreSQL 的 huaci_test 库）
-npm run migrate:backend       # 执行后端数据库迁移
-npm run dev:backend           # http://localhost:8787 用户管理界面
+npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip
+npm run test:backend          # Requires the PostgreSQL database huaci_test
+npm run migrate:backend       # Apply backend database migrations
+npm run dev:backend           # http://localhost:8787 — account interface
 ```
 
-`npm run dev` 同时启动：
+`npm run dev` starts:
 
-| 服务 | 地址 |
+| Service | Address |
 | --- | --- |
-| 后端：用户端、扩展 API、Creem 回调（启动前自动执行未完成的数据库迁移） | `http://localhost:8787` |
-| 管理端（同一后端进程，按主机名区分） | `http://admin.localhost:8787` |
-| 官网静态预览 | `http://localhost:8788` |
-| 扩展界面文案监听（修改后在本地刷新译文） | 在 Chrome 加载已解压的 `apps/extension` |
+| Backend: account interface, extension API, Creem callbacks; pending migrations run before startup | `http://localhost:8787` |
+| Admin interface: same backend process, selected by hostname | `http://admin.localhost:8787` |
+| Website preview | `http://localhost:8788` |
+| Extension UI translation watcher; load this unpacked directory in Chrome | `apps/extension` |
 
-端口已被占用的服务会跳过并说明；后端需要先在 `apps/backend` 运行 `npm ci`，并配置好本机 PostgreSQL 与 `apps/backend/.env.local`。
+Services whose ports are already in use are skipped with an explanation. Before starting the backend, run `npm ci` in `apps/backend` and configure local PostgreSQL and `apps/backend/.env.local`.
 
-原来的 `bash test/run.sh`、`bash package.sh` 仍可从仓库根目录运行。各应用的脚本也可以进入应用目录单独运行。
+The compatibility entry points `bash test/run.sh` and `bash package.sh` still work from the repository root. Each application’s scripts can also run from its own directory.
 
-Chrome 开发者模式“加载已解压的扩展”应选择 **`apps/extension`**，不再选择仓库根目录。开发版改变加载路径可能获得新的扩展 ID，需要重新配置；商店版更新继续使用同一个商店条目。
+In Chrome developer mode, **Load unpacked** should point to **`apps/extension`**, not the repository root. Changing the development extension’s path may give it a new ID and require reconfiguration; store updates continue using the same listing.
 
-扩展界面翻译生成器依次使用 `apps/extension/.env.local`、仓库根目录 `.env.local` 或进程环境中的配置；保留现有根目录 Key 即可。运行时的用户 API Key 仍只保存在 `chrome.storage.local`。环境文件与开发期翻译工具不进入安装包。
+The extension UI translation generator reads `apps/extension/.env.local`, falls back to the root `.env.local`, and also supports process environment variables. Existing keys in the root file can stay there. Runtime API keys are stored only in `chrome.storage.local`. Environment files and development translation tools are excluded from extension packages.
 
-## 部署
+## Deployment
 
-- **Vercel 网站**：保留仓库根目录作为 Vercel 项目根目录，`vercel.json` 构建 `apps/web`，仅发布 `apps/web/public`。GitHub 工作流在网站、Vercel 配置或相关构建入口发生变化时触发。
-- **VPS 后端**：`apps/backend` 独立部署，已上线（用户端 `app.huaci.app`）。托管音视频转写尚未实现，已识别字幕可走托管文字翻译。部署说明见 [deploy/README.md](apps/backend/deploy/README.md)。
-- **Chrome 扩展**：单独打包发布到 Chrome 商店。ZIP 白名单为扩展 `manifest.json`、`src/`、`icons/`、`_locales/` 和根目录 `LICENSE`。
+- **Vercel website:** Keep the repository root as the Vercel project root. `vercel.json` builds `apps/web` and publishes only `apps/web/public`. The GitHub workflow runs when website files, Vercel configuration, or related build entry points change.
 
-职责、旧目录映射和后续顺序见 [架构说明](docs/architecture.md)。
+- **VPS backend:** `apps/backend` is deployed independently; the account service is live at `app.huaci.app`. Hosted audio/video transcription is not implemented. Recognized subtitles can use hosted text translation. See the [deployment instructions](apps/backend/deploy/README.md).
 
-后续开发约定见根目录 [AGENTS.md](AGENTS.md)。
+- **Browser extension:** Packaged and released separately to the stores. ZIP contents are limited to `manifest.json`, `src/`, `icons/`, `_locales/`, and the root `LICENSE`.
 
-官网：<https://huaci.app/> · 源码：<https://github.com/csswork/AiTranslation>
+See [architecture](docs/architecture.md) for responsibilities, old directory mappings, and development priorities. Repository development conventions are in [AGENTS.md](AGENTS.md).
 
-以 [GPL-3.0](LICENSE) 发布。
+[Website](https://huaci.app/) · [Source](https://github.com/csswork/AiTranslation)
+
+Released under [GPL-3.0](LICENSE).
