@@ -45,13 +45,42 @@ export function glossaryLine(glossary) {
 }
 
 /**
- * 目标语言是中文时追加的译文风格指南：不加的话模型倾向逐词对译，读起来生硬。
+ * 中文以外的目标语言用的通用风格指南（英文写，语言名代入），日语、英语各多一条专属说明。
+ * 两边保持一致，见下面 styleGuide 的说明。
+ */
+export function generalStyleGuide(targetLanguage, fragments) {
+  const target = String(targetLanguage);
+  return [
+    'Style:',
+    `Write what a native speaker of ${target} would write, not a word-for-word rendering. Work out the meaning and tone first, then say it afresh in ${target}.`,
+    `- Follow the word order and sentence rhythm of ${target}: split, merge or reorder sentences and clauses wherever that reads more naturally.`,
+    '- Match the register of the source: casual speech and internet slang become the equivalent casual wording; news and technical writing stay concise and formal.',
+    `- Render politeness formulas, hedges, set phrases, idioms and slang with what people actually say in the same situation in ${target}, not literally.`,
+    `- Do not carry over source-language habits that ${target} does not share, such as how often pronouns, articles, passives, nominalizations or honorifics appear; add or drop them as ${target} requires.`,
+    `- Use the wording that ${target} websites and apps conventionally use for interface labels and technical terms.`,
+    '- Change the wording, not the content: add no details, do not make precise statements vague, and keep qualifiers, degree, contrast and negation; numbers, names and terms stay accurate.',
+    '- Translate everything: no sentence, clause or closing courtesy may be dropped, and nothing may become ambiguous through omission.',
+    /Japanese|日本語/i.test(target)
+      ? '- Japanese: choose one style and keep it — です・ます体 for general text, product pages and interfaces, だ・である体 for news and essays, plain casual speech for casual sources. Leave out subjects and pronouns (私は, あなたは, 彼は) where Japanese would. Use established katakana loanwords and standard interface terms, and do not reuse Chinese-character words whose Japanese meaning differs.'
+      : '',
+    /English/i.test(target)
+      ? '- English: prefer verbs to chains of nouns, break up long strings of modifiers, and supply the subjects, articles, plurals and tenses the source leaves implicit. Avoid calques of Chinese or Japanese set phrases (such as "thank you for your hard work" or "please kindly").'
+      : '',
+    fragments
+      ? 'When adjacent items are clearly pieces of one sentence that was split apart, translate the whole sentence first, then distribute it back over the same number of items so that, read in order, the pieces connect grammatically into one natural sentence. Never return an empty string for a non-empty item; an item that is only punctuation stays punctuation.'
+      : '',
+  ].filter(Boolean).join('\n');
+}
+
+/**
+ * 追加到文字翻译系统提示词里的译文风格指南：不加的话模型倾向逐词对译，读起来生硬。
+ * 目标是中文时用中文写的专门版本（简体、繁体各一份），其他语言用 generalStyleGuide。
  * fragments 为真时是网页片段（JSON 数组），多一条「被切开的句子连起来要读得通」。
  * 与扩展 src/lib/providers.js 的 styleGuide 保持一致（扩展 test/style-guide.mjs 会对照）。
  * 改动前后用 npm run eval:translation 对比，见 docs/extension/translation-eval.md。
  */
 export function styleGuide(targetLanguage, fragments) {
-  if (!/Chinese|中文/i.test(String(targetLanguage))) return '';
+  if (!/Chinese|中文/i.test(String(targetLanguage))) return generalStyleGuide(targetLanguage, fragments);
   // 繁体目标用繁体写的指南：用简体写时，模型偶尔会跟着输出简体译文
   const traditional = /Traditional|繁/i.test(String(targetLanguage));
   const lines = traditional ? [

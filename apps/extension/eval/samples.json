@@ -69,5 +69,26 @@
   { "id": "en-batch-01", "from": "en", "genre": "ui", "mode": "batch", "texts": ["Home", "Sign in", "Get started", "Learn more", "Pricing", "Contact sales", "Skip to main content"], "watch": "界面短句：约定俗成的说法" },
   { "id": "en-batch-02", "from": "en", "genre": "ui", "mode": "batch", "texts": ["By continuing, you agree to our", "Terms of Service", "and", "Privacy Policy", ".", "Already have an account?", "Log in"], "watch": "被行内标签切开的一句话（第1–5项）" },
   { "id": "en-batch-03", "from": "en", "genre": "news", "mode": "batch", "texts": ["Housing prices rose for the sixth straight month,", "according to", "figures released on Tuesday", ", putting further pressure on first-time buyers.", "Analysts expect the trend to continue into next year."], "watch": "句子被切成片段；语序无法在片段内调整" },
-  { "id": "en-batch-04", "from": "en", "genre": "shop", "mode": "batch", "texts": ["In stock", "Add to cart", "Free shipping on orders over $50", "Only 3 left", "Customers also bought", "4.6 out of 5 stars", "Write a review"], "watch": "电商界面习惯用语" }
+  { "id": "en-batch-04", "from": "en", "genre": "shop", "mode": "batch", "texts": ["In stock", "Add to cart", "Free shipping on orders over $50", "Only 3 left", "Customers also bought", "4.6 out of 5 stars", "Write a review"], "watch": "电商界面习惯用语" },
+
+  {"id": "zh-news-01", "from": "zh", "genre": "news", "text": "记者从市交通部门获悉，地铁五号线二期工程预计年底前开通试运营，届时从城南到机场的通勤时间将缩短至四十分钟以内。", "watch": "记者从…获悉；届时；流水句"},
+  {"id": "zh-news-02", "from": "zh", "genre": "news", "text": "受强冷空气影响，本周末全市气温将出现断崖式下跌，最低气温或跌破零度，气象部门提醒市民注意防寒保暖。", "watch": "断崖式下跌；或；提醒…注意"},
+  {"id": "zh-news-03", "from": "zh", "genre": "news", "text": "这家老字号餐馆上月宣布停业，消息一出，不少老顾客专程赶来吃最后一顿，门口一度排起了长队。", "watch": "老字号；消息一出；一度"},
+  {"id": "zh-news-04", "from": "zh", "genre": "news", "text": "业内人士指出，价格战虽然短期内能拉动销量，但长远来看会压缩企业的研发投入，最终受损的还是消费者。", "watch": "业内人士指出；虽然…但；最终受损的还是"},
+  {"id": "zh-forum-01", "from": "zh", "genre": "forum", "text": "真的服了，排了两个小时队，轮到我的时候说卖完了。早知道就不来了，白白浪费一下午。", "watch": "服了；早知道；白白"},
+  {"id": "zh-forum-02", "from": "zh", "genre": "forum", "text": "楼主说得太对了，我之前也踩过这个坑。建议新手别贪便宜，一分钱一分货，买贵的反而省心。", "watch": "楼主；踩坑；一分钱一分货；省心"},
+  {"id": "zh-forum-03", "from": "zh", "genre": "forum", "text": "有没有人跟我一样，一到周日晚上就开始焦虑？明明什么都没发生，就是莫名其妙心慌。", "watch": "无主句；明明；莫名其妙"},
+  {"id": "zh-forum-04", "from": "zh", "genre": "forum", "text": "谢谢大家的建议！回头我试试看，有结果了再来汇报。要是还不行，可能就只能送修了。", "watch": "回头；省略主语；要是"},
+  {"id": "zh-tech-01", "from": "zh", "genre": "tech", "text": "如果接口返回 401，说明登录状态已失效，需要重新获取令牌后再发起请求，不要直接重试。", "watch": "无主语；说明；术语"},
+  {"id": "zh-tech-02", "from": "zh", "genre": "tech", "text": "本次更新优化了列表的滚动性能，修复了深色模式下部分文字看不清的问题，并新增了批量导出功能。", "watch": "更新日志文体；并列动词"},
+  {"id": "zh-tech-03", "from": "zh", "genre": "tech", "text": "配置文件修改后不会立即生效，需要重启服务。建议先在测试环境验证，确认无误后再同步到线上。", "watch": "无主语；确认无误；线上"},
+  {"id": "zh-essay-01", "from": "zh", "genre": "essay", "text": "小时候总盼着长大，觉得长大了就能想干什么干什么。真长大了才发现，自由是有的，只是时间没了。", "watch": "省略主语；想干什么干什么；流水句"},
+  {"id": "zh-essay-02", "from": "zh", "genre": "essay", "text": "外婆做的红烧肉，我后来在很多地方都吃过类似的，可没有一家是那个味道。也许我怀念的不是肉，是那张饭桌。", "watch": "话题句；外婆；那个味道"},
+  {"id": "zh-essay-03", "from": "zh", "genre": "essay", "text": "人到中年，朋友越来越少，倒不是谁变了，只是各有各的忙。偶尔聚一次，话还没说几句，又该散了。", "watch": "人到中年；倒不是；各有各的忙"},
+  {"id": "zh-shop-01", "from": "zh", "genre": "shop", "text": "面料柔软亲肤，上身不闷不扎，版型宽松显瘦，日常通勤、周末出游都能穿。", "watch": "四字格广告语；亲肤；显瘦"},
+  {"id": "zh-shop-02", "from": "zh", "genre": "shop", "text": "物流很快，第二天就到了。包装完好，用了一周没发现什么问题，性价比挺高的，会回购。", "watch": "省略主语；性价比；回购"},
+  {"id": "zh-shop-03", "from": "zh", "genre": "shop", "text": "亲，非常抱歉给您带来不好的体验。这边已经为您登记补发，预计三天内送达，请您留意查收。", "watch": "亲；这边；客服套话"},
+  {"id": "zh-batch-01", "from": "zh", "genre": "ui", "mode": "batch", "texts": ["首页", "我的订单", "消息中心", "立即登录", "查看全部", "意见反馈", "我已阅读并同意用户协议"], "watch": "界面短句：约定俗成的说法"},
+  {"id": "zh-batch-02", "from": "zh", "genre": "ui", "mode": "batch", "texts": ["登录即表示你已阅读并同意", "《用户协议》", "和", "《隐私政策》", "。", "还没有账号？", "立即注册"], "watch": "被行内标签切开的一句话（第1–5项）；书名号"},
+  {"id": "zh-batch-03", "from": "zh", "genre": "shop", "mode": "batch", "texts": ["现货", "加入购物车", "满200元包邮", "仅剩3件", "买过的人还买了", "好评率98%", "写评价"], "watch": "电商界面习惯用语"}
 ]

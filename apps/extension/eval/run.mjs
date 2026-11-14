@@ -29,7 +29,7 @@ if (flag('--help') || flag('-h')) {
     '用法：node apps/extension/eval/run.mjs [选项]',
     '  --variants a,b     要跑的方案，第一个是对照组（默认 baseline）',
     '  --list             列出可用方案',
-    '  --from ja|en       只跑某个源语言',
+    '  --from ja|en|zh    只跑某个源语言',
     '  --genre a,b        只跑某些体裁',
     '  --ids a,b          只跑指定样本',
     '  --limit N          最多跑 N 条',
@@ -87,6 +87,8 @@ samples = samples.filter((sample) =>
   (!only.from || sample.from === only.from)
   && (!only.genres.length || only.genres.includes(sample.genre))
   && (!only.ids.length || only.ids.includes(sample.id)));
+// 原文与目标是同一种语言的样本没有可比的东西（如中文原文译成简体或繁体中文）
+samples = samples.filter((sample) => sample.from !== targetId.split('-')[0]);
 if (arg('--limit')) samples = samples.slice(0, Number(arg('--limit')));
 if (!samples.length) {
   console.error('没有符合条件的样本。');

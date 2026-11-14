@@ -6,7 +6,7 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `apps/extension/eval/samples.json` | 样本：日→中、英→中各 30 条，覆盖新闻、论坛口语、技术文档、随笔、电商和界面短句 |
+| `apps/extension/eval/samples.json` | 样本：日文、英文原文各 30 条，中文原文 20 条，覆盖新闻、论坛口语、技术文档、随笔、电商和界面短句；原文与目标是同一种语言的样本自动跳过 |
 | `apps/extension/eval/variants.mjs` | 待对比的方案，每个方案只描述在线上请求体基础上改什么 |
 | `apps/extension/eval/run.mjs` | 翻译、盲评、生成报告 |
 
@@ -21,6 +21,7 @@ npm run eval:translation -- --list
 npm run eval:translation -- --variants baseline,temp-0.7
 npm run eval:translation -- --variants baseline,temp-0.7 --from ja --genre forum,essay
 npm run eval:translation -- --variants baseline --no-judge
+npm run eval:translation -- --variants no-style,baseline --target en
 ```
 
 `--variants` 的第一个是对照组，其余每个都和它两两比较。其他选项见 `--help`。
@@ -51,7 +52,23 @@ npm run eval:translation -- --variants baseline --no-judge
 | `hosted`、`hosted-no-style` | 换成后台 `hosted.js` 的提示词（托管翻译的基础提示词与扩展不同），带与不带风格指南 |
 | `temp-0.7`、`temp-1.0`、`thinking` | 只改请求参数 |
 
-中文风格指南（`styleGuide`）落地时的结果：自带 Key 的提示词 60 条里胜 40、平 7、负 13，托管提示词胜 36、平 12、负 12，地道分约 3.8 → 4.5，忠实分略降约 0.1。繁体目标用繁体写的指南；用简体写时模型会跟着输出简体译文。改指南后至少重跑 `--variants no-style,baseline`、`--variants hosted-no-style,hosted`，并用 `--target zh-Hant --no-judge` 看一遍繁体输出。
+风格指南落地时的结果（带指南 对 不带指南，胜 / 平 / 负，评审 `deepseek-flash`）：
+
+| 目标语言 | 指南 | 自带 Key 的提示词 | 托管提示词 | 地道分 |
+| --- | --- | --- | --- | --- |
+| 简体中文 | 中文专门版 | 40 / 7 / 13 | 36 / 12 / 12 | 约 3.8 → 4.5 |
+| 英语 | 通用版 + 英语一条 | 39 / 3 / 8 | 33 / 6 / 11 | 3.56 → 4.74 |
+| 日语 | 通用版 + 日语一条 | 34 / 5 / 11 | 34 / 4 / 12 | 3.53 → 4.39 |
+| 韩语 | 通用版 | 48 / 12 / 19 | 未跑 | 3.64 → 4.45 |
+| 西班牙语 | 通用版 | 46 / 12 / 22 | 未跑 | 3.87 → 4.52 |
+| 法语 | 通用版 | 48 / 16 / 16 | 未跑 | 3.76 → 4.31 |
+
+忠实分各语言持平或略降（不超过约 0.15）。其余目标语言没有评测；`deepseek-flash` 对小语种地道程度的判断也不可靠，结论只能当参考。
+
+改指南时：
+
+- 中文专门版（`styleGuide`）：重跑 `--variants no-style,baseline`、`--variants hosted-no-style,hosted`，并用 `--target zh-Hant --no-judge` 看一遍繁体输出。繁体目标用繁体写的指南；用简体写时模型会跟着输出简体译文。
+- 通用版（`generalStyleGuide`）：加 `--target en`、`--target ja` 等重跑同样的对比。第一版没有写「不许漏译」「片段不许返回空项」时，出现过丢掉结尾客套话、把只有句号的片段译成空字符串的情况，改动时留意这两点。
 
 ## 添加样本
 
