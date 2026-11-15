@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-11-06 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -83,11 +83,11 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>In one sentence</h3>
-          <p>The following explains how data is handled for translation, accounts, credits, and subscription services.</p>
-          <p>Huaci supports on-device translation, bring-your-own-key, and credit-based translation. <b>On-device translation</b>: text is processed only on your device. <b>Bring-your-own-key</b>: the content you translate is sent directly to the AI platform you configured, without passing through us. <b>Credit-based translation</b>: content is relayed through our servers to the model provider to complete translation, and our servers <b>do not store the source text or the translation</b>. Accounts, billing, and abuse prevention retain only the data necessary for operation; it is not used for advertising and is not sold.</p>
+          <p>Account, credit, and subscription services are now available with 2.0.0. The following explains how data is handled for these services.</p>
+          <p>Huaci offers two modes. <b>Bring your own key</b>: the content you translate is sent directly to the AI platform you configure, without passing through us. <b>Credit-based translation</b>: content passes through our servers to the model provider for translation, and the servers <b>do not store the source or translated text</b>. For accounts, billing, and abuse prevention, only data necessary for operation is retained; it is not used for advertising and is not sold.</p>
 
           <h3>What is sent during translation</h3>
-          <p>After you actively translate or enable automatic translation for a website, online translation modes send the following content over HTTPS; on-device text translation does not send this content:</p>
+          <p>Only when you <b>actively trigger a translation</b> (context menu, keyboard shortcut, or clicking the translate button) is the following content sent over HTTPS:</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -95,7 +95,6 @@
               </thead>
               <tbody>
                 <tr><td>The text you selected</td><td>Using selection translation</td><td>Your chosen provider</td><td>Our server, then forwarded to the model provider</td></tr>
-                <tr><td>Text near the viewport on websites with full-site translation enabled</td><td>Automatic translation after enabling and on subsequent visits to that website</td><td>Your chosen provider</td><td>Our server, then forwarded to the model provider</td></tr>
                 <tr><td>The text inside a region you marked</td><td>When you click the translate button on the selected area</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Text you type into the translation panel</td><td>Clicking Translate</td><td>Same</td><td>Same</td></tr>
                 <tr><td>Recognized text from video subtitles</td><td>When video subtitle translation is enabled</td><td>Same</td><td>Same</td></tr>
@@ -116,12 +115,7 @@
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>Not sent</b>: page content you have not actively translated, browsing history, cookies, form data. Automatic translation occurs only on websites you have explicitly enabled.</p>
-
-          <h3>On-device translation</h3>
-          <p>On-device translation uses the browser's built-in model. Language packs are downloaded and managed by the browser; once downloaded, text can be translated offline. Source text, translations, and wording preferences are not sent to us or to translation platforms, and no hosted usage records are generated. On-device translation handles text only and does not support image recognition or rephrasing by clicking a word.</p>
-          <h3>Full-site automatic translation</h3>
-          <p>Only after you check "Translate this website" in the right-click menu will text near the viewport on that website be translated automatically; this remains in effect on subsequent visits to the same website until you uncheck it. Identical text reuses the translation within the same page. The website list and dedicated platform selections are stored only on your device; with on-device translation, text is not uploaded, while with bring-your-own-key or credit-based translation it is sent as described in the table above, and enabling a paid platform for the first time will require confirmation.</p>
+          <p><b>Not sent</b>: page content you have not actively translated, browsing history, cookies, or form data. The extension does not automatically scan or upload anything in the background.</p>
 
           <h3>Audio handling for experimental video subtitles</h3>
           <p>Video subtitles are off by default. When enabled, audio from the current tab is recognized locally by default, which may require downloading a browser language pack; audio is sent to the browser's speech recognition service only when you explicitly choose "Use cloud recognition": Google for Chrome (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>), Microsoft Azure for Microsoft Edge (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Microsoft Privacy Statement</a>). Local recognition is available only on supported browser versions and languages; the extension does not switch to cloud recognition automatically. The recognized subtitle text is then sent to the translation platform or our servers according to the selected translation mode. We do not receive or store video or audio, and we do not provide hosted audio or video transcription.</p>
@@ -167,8 +161,7 @@
             <li><b>API Key</b> — used only to authenticate with your chosen platform in request headers; it is never sent to us</li>
             <li><b>Extension login token</b> — sent only to <code>app.huaci.app</code>, used for point-based translation and account status</li>
             <li><b>Preferences</b> — target language, model in use, and individual toggles</li>
-            <li><b>Full-site translation</b>: enabled website domains and dedicated platform selections</li>
-            <li><b>Regional translation rules</b>: "domain + CSS selector" entries you add manually</li>
+            <li><b>Regional translation rules</b> — "domain + CSS selector" entries you add manually</li>
             <li><b>Terminology preferences</b> — the wording you have changed in translations (source term and your preferred translation); relevant entries are sent with translation requests, as described above</li>
             <li><b>Saved articles</b> — articles and translations you save in bilingual reading, stored only on this device; they can be deleted on the right side of the reading page</li>
           </ul>

@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="劃詞：選中，右鍵，然後接著讀。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"劃詞","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"劃詞","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.3.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"劃詞","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"劃詞","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.2.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/zh-Hant/changelog.html#v2-3-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.3.0</span> <span>新版：雙語閱讀，把網頁文章變成逐段對照的閱讀頁。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/zh-Hant/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>新版：雙語閱讀，把網頁文章變成逐段對照的閱讀頁。</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
-        <p class="hero-sub">網頁上的一句話、一張圖片、一份 PDF，或是一整篇文章，按右鍵就能翻譯成你的語言。安裝後即可使用，不必先填 API Key；支援的瀏覽器還可下載語言套件，免費在本機翻譯文字。也可以使用自己的 OpenAI、DeepSeek 或 DeepL Key。</p>
+        <p class="hero-sub">網頁上的一句話、一張圖片、一份 PDF，或者一整篇文章，按右鍵就能翻譯成你的語言。裝好就能用，不用先填 API Key；想用自己的 OpenAI、DeepSeek 或 DeepL Key 也可以。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -208,8 +208,8 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>從一句話到整個網站，按右鍵就能翻譯</h2>
-          <p>劃詞、圖片、PDF 與雙語閱讀都有示範。按右鍵勾選「翻譯這個網站」，還可在捲動時自動翻譯網頁文字。</p>
+          <h2>六個入口，都在右鍵選單裡</h2>
+          <p>每一種都配了一段演示，往下看。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
@@ -267,7 +267,7 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>圖片翻譯</h3>
-            <p>對圖片按右鍵，依文字形狀自動辨識並排版，改進字級、對齊與背景色。譯文可逐段拖曳、改字、調字級或重翻，下載與複製會保留修改；音效字也可選擇翻譯。</p>
+            <p>對一張圖片按右鍵，圖裡的文字會被辨識出來，譯文蓋在原來的位置上。譯好的圖可以下載或複製。</p>
             <ul>
               <li>日文漫畫的直排文字譯成中文、日文或韓文時保持直排</li>
               <li>可以只框選要翻譯的部分，也可以先調整辨識出的文字區域再翻譯</li>
@@ -401,24 +401,13 @@
     </div>
   </section>
 
-  <section class="section slide" id="local-translation" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Local translation</p>
-        <h2>文字在本機翻譯，免費也能離線使用</h2>
-        <p>在提供內建翻譯能力的瀏覽器與裝置上，選擇「本機翻譯」，並在設定中下載語言套件。之後翻譯文字不需要 Key、不消耗點數，原文不會上傳。</p>
-      </div>
-      <p class="after-facts reveal">支援劃詞、區域、整站、翻譯面板、PDF、雙語閱讀與字幕文字。本機翻譯只處理文字，不支援圖片辨識與點詞換說法；可用語言取決於瀏覽器與已下載的語言套件。不支援的瀏覽器不會顯示這個平台。</p>
-    </div>
-  </section>
-
   <!-- ===================================================== 隐私 -->
   <section class="section slide slide-split" id="privacy" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>哪些內容會離開你的瀏覽器</h2>
-        <p>本機翻譯的文字不會離開裝置。使用自己的 Key 時，內容會直接傳送給你選擇的平台；使用點數翻譯時，內容會經由我們的伺服器轉給模型服務商，伺服器不儲存圖片、原文與譯文。啟用整站翻譯後，指定網站上視窗附近的文字會依所選平台自動處理。影片字幕的聲音處理方式請見隱私權政策。</p>
+        <p>只有你主動翻譯的內容會被傳送。使用自己的 Key 時，內容直接傳送給你選擇的平台；使用點數翻譯時，內容經我們的伺服器轉給模型服務商，伺服器不保存圖片、原文與譯文。影片字幕的聲音處理方式請見隱私政策。</p>
       </div>
 
       <div class="facts reveal">
@@ -484,7 +473,7 @@
         </div>
       </div>
 
-      <p class="after-facts reveal">使用電子郵件驗證碼或 Google 帳戶登入，點數、訂閱與訂單可在<a class="link" href="https://app.huaci.app/">使用者中心</a>查看。本機翻譯、點數翻譯與自備 Key 可隨時切換；本機文字翻譯免費，不需要訂閱。</p>
+      <p class="after-facts reveal">使用電子郵件驗證碼或 Google 帳戶登入，點數、訂閱與訂單可在<a class="link" href="https://app.huaci.app/">使用者中心</a>查看。點數翻譯與自帶 Key 可隨時切換。</p>
       <p class="after-facts reveal">實際價格以使用者中心顯示為準。價格以美元計，可能另加稅費；由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作為經銷商處理付款，我們不接觸銀行卡資訊。詳見<a class="link" href="/zh-Hant/terms.html">服務條款</a>。</p>
     </div>
   </section>

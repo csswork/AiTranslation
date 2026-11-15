@@ -1,78 +1,70 @@
-Seçin, sağ tıklayın ve okumaya devam edin. Tüm makaleleri çevirileriyle yan yana okuyun; seçili metinleri, görselleri ve PDF'leri sekme değiştirmeden veya kopyalayıp yapıştırmadan bulundukları yerde çevirin.
+Seçin, sağ tıklayın ve okumaya devam edin. Tüm makaleleri çevirileriyle yan yana okuyun; seçili metinleri, görselleri ve PDF'leri sekmeler arasında geçiş yapmadan veya kopyalayıp yapıştırmadan bulundukları yerde çevirin.
 
-Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu, Manifest V3 üzerine kurulu açık kaynaklı bir tarayıcı uzantısıdır. Desteklenen yerlerde ücretsiz yerel metin çevirisini, anahtar gerektirmeyen barındırılan kredileri veya kendi OpenAI, DeepSeek ya da DeepL API anahtarınızı kullanın.
+Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu, Manifest V3 üzerine kurulu açık kaynaklı bir tarayıcı uzantısıdır. Kurulumdan hemen sonra anahtar gerektirmeyen kredilerle çeviriye başlayın veya kendi OpenAI, DeepSeek ya da DeepL API anahtarınızı kullanın.
 
-YEREL VE OTOMATİK WEB SİTESİ ÇEVİRİSİ (2.3.0'DA YENİ)
+▍İki dilli okuma (2.2.0'da yeni)
 
-• Yerel metin çevirisi: desteklenen tarayıcılarda ve cihazlarda, Ayarlar'dan dil çiftlerini indirin ve API anahtarı ya da kredi olmadan ücretsiz olarak çevrimdışı çeviri yapın. Metin cihazınızda kalır. Seçimler, sayfa bölgeleri, web siteleri, metin paneli, PDF'ler, iki dilli okuma ve tanınan altyazılar için kullanın. Kullanılabilirlik ve diller tarayıcıya ve indirilen paketlere bağlıdır. Yerel mod görsel tanıma veya alternatif ifadeler sunmaz; desteklenmeyen kontroller gizlenir.
-• Otomatik web sitesi çevirisi: sağ tıklayın ve “Bu web sitesini çevir”i etkinleştirin. Görüntü alanına yakın metin, siz devre dışı bırakana kadar kaydırdıkça ve sonraki ziyaretlerde de çevrilir. Bir sayfadaki tekrarlanan metin, çevirileri yeniden kullanır. Ayarlar'dan ayrı bir sağlayıcı seçin; ücretli bir sağlayıcının ilk kullanımı onay ister.
-• Daha doğal ifade: gözden geçirilmiş stil kılavuzları, Çince ve diğer hedef diller için ifade, terminoloji ve tonu iyileştirir.
-• Daha iyi otomatik görsel çevirisi: geliştirilmiş metin şekilleri, yazı tipi boyutlandırma, hizalama, dikey metin ve arka plan renkleri. Bir pasajı taşıyın, çevirisini veya boyutunu düzenleyin ya da yalnızca o pasajı yeniden çevirin. Dışa aktarılan görseller düzenlemelerinizi korur. İsteğe bağlı olarak ses efektlerini çevirin; tanınan görseller geçerli sayfada önbelleğe alınır ve görseller arasında gezinme sunulur.
+Bir sayfada metin seçmeden herhangi bir yere sağ tıklayın ve "Bu makaleyi iki dilli oku" seçeneğini seçin. Başlık ve gövde algılanırken sayfada bir ışık süpürmesi geçer, ardından yanında temiz bir okuma sayfası açılır ve her özgün paragraf çevirisiyle hizalanır. Gezinme, kenar çubukları, reklam alanları ve öneri widget'ları dışarıda bırakılır ve asla çeviriye gönderilmez.
 
-▍İki dilli okuma
-
-Metin seçmeden bir sayfada herhangi bir yere sağ tıklayın ve “Bu makaleyi iki dilli oku”yu seçin. Başlık ve gövde algılanırken sayfa üzerinde bir ışık süpürme efekti geçer, ardından her özgün paragrafın çevirisiyle yan yana hizalandığı temiz bir okuma sayfası açılır. Gezinme, kenar çubukları, reklam alanları ve öneri widget'ları dışarıda bırakılır ve asla çeviriye gönderilmez.
-
-• Yan yana, her paragraf çifti aynı yükseklikte başlar; ayrıca üst üste yığabilir ya da yalnızca çeviriyi veya yalnızca özgün metni gösterebilirsiniz
-• Açık, koyu veya sistemi izle görünümü, ayrıca ayarlanabilir renk paleti, yazı tipi, boyut, satır yüksekliği ve sayfa genişliği—hepsi hatırlanır
-• “Kaydet”, makaleyi ve çevirisini cihazınızda tutar; sağdaki listeden yeniden çevirmeden tekrar açın veya artık ihtiyacınız olmadığında silin
+• Yan yana görünümde her paragraf çifti aynı yükseklikten başlar; üst üste de yerleştirebilir, yalnızca çeviriyi ya da yalnızca özgün metni gösterebilirsiniz
+• Açık, koyu veya sistemi takip eden görünüm; ayrıca ayarlanabilir renk paleti, yazı tipi, boyut, satır yüksekliği ve sayfa genişliği—hepsi hatırlanır
+• "Kaydet", makaleyi ve çevirisini cihazınızda tutar; sağdaki listeden yeniden çevirmeden tekrar açabilir veya artık ihtiyacınız olmadığında silebilirsiniz
 
 ▍Başka bir ifade için bir sözcüğe tıklayın—ve tercih ettiğiniz terimleri koruyun
 
-Okuma sayfasında, seçim açılır penceresinde, çeviri panelinde ve PDF sayfasında, çevirideki bir sözcüğe tıklayın—veya birkaç sözcüğün üzerinden sürükleyin—kısa notlarla birkaç alternatif karşılık görmek için ya da kendinizinkini yazın. Aynı sözcüğü başka yerlerde tek seferde değiştirin.
+Okuma sayfasında, seçim açılır penceresinde, çeviri panelinde ve PDF sayfasında çevirideki bir sözcüğe tıklayın—veya birkaç sözcüğün üzerinden sürükleyin—kısa notlarla birlikte birkaç alternatif karşılık görün ya da kendi ifadenizi yazın. Aynı sözcüğü başka yerlerde tek seferde değiştirin.
 
-Seçtiğiniz ifadeler, cihazınızda ifade tercihleri olarak hatırlanır: aynı kaynak terimi içeren metinlerin sonraki çevirileri sizin seçiminizi izler. Bunları Ayarlar'dan gözden geçirin ve silin.
+Seçtiğiniz ifadeler, ifade tercihleri olarak cihazınızda saklanır: aynı kaynak terimi içeren metinlerin sonraki çevirileri sizin seçiminizi izler. Bunları Ayarlar'da gözden geçirip silebilirsiniz.
 
-▍Çeviri araçları
+▍Altı çeviri yolu, hepsi sağ tık menüsünde
 
 • Seçili metin
-Metin seçin ve sağ tıklama menüsünden “Şuna çevir…”i seçin. Çeviri, sağlayıcının akış desteği sunduğu yerlerde sözcük sözcük olarak ortalanmış bir açılır pencerede görünür. Seçimin yanındaki yüzen düğmeyi veya macOS'ta ⌘⇧Y / diğerlerinde Alt+Shift+T kısayolunu da kullanabilirsiniz. Açılır pencere sürüklenebilir, istendiğinde özgün metni gösterir ve hedef dili değiştirdiğinizde özgün metni yeniden çevirir.
+Metni seçin ve sağ tık menüsünden "Şuna çevir…" seçeneğini seçin. Çeviri, sağlayıcı akışı destekliyorsa sözcük sözcük olacak şekilde ortalanmış bir açılır pencerede görünür. Seçimin yanındaki yüzen düğmeyi veya macOS'ta ⌘⇧Y / diğerlerinde Alt+Shift+T kısayolunu da kullanabilirsiniz. Açılır pencere sürüklenebilir, özgün metni istek üzerine gösterir ve hedef dili değiştirdiğinizde özgün metni yeniden çevirir.
 
 • Görseller
-Metnini tanımak için bir görsele sağ tıklayın. Her pasaj kendi çizgileri boyunca ana hatlandırılır ve çeviri, pasajlar birbirini örtmeden özgün metnin üzerine yerleştirilir. Manga gibi dikey Japonca metin, Çince, Japonca veya Koreceye çevrildiğinde dikey kalır. Çevirmeden önce algılanan şekilleri gözden geçirin—taşıyın, düzenleyin, silin veya yenilerini çizin—ya da yalnızca ihtiyacınız olan alanları seçin (dikdörtgenler veya daireler). Sonucu yeni bir görsel olarak indirin veya kopyalayın.
+Metnini tanımak için bir görsele sağ tıklayın. Her pasaj kendi çizgileri boyunca ana hatlarıyla belirtilir ve çeviri, pasajlar birbirini örtmeyecek şekilde özgün konumun üzerine yerleştirilir. Manga gibi dikey Japonca metinler, Çince, Japonca veya Koreceye çevrildiğinde dikey kalır. Çevirmeden önce algılanan şekilleri gözden geçirin—taşıyın, düzenleyin, silin veya yenilerini çizin—ya da yalnızca ihtiyacınız olan alanları seçin (dikdörtgenler veya daireler). Sonucu yeni bir görsel olarak indirin veya kopyalayın.
 
 • Tüm PDF'ler
-Tarayıcının yerleşik PDF görüntüleyicisinde, metin seçmeden sağ tıklayarak tüm belgeyi yanındaki bir sayfada çevirin. Çeviriler özgün konumların üzerine yerleştirilir, böylece düzen, şekiller ve tablo çizgileri yerinde kalır. Yan yana karşılaştırın, yalnızca çeviriyi veya yalnızca özgün metni gösterin ve sonucu yazdırma iletişim kutusu aracılığıyla PDF olarak kaydedin. Yerel bir PDF'yi çeviri sayfasına da bırakabilirsiniz.
+Tarayıcının yerleşik PDF görüntüleyicisinde metin seçmeden sağ tıklayarak tüm belgeyi yanındaki bir sayfada çevirin. Çeviriler özgün konumların üzerine yerleştirilir; böylece düzen, şekiller ve tablo çizgileri yerinde kalır. Yan yana karşılaştırın, yalnızca çeviriyi veya yalnızca özgün metni gösterin ve sonucu yazdırma iletişim kutusu aracılığıyla PDF olarak kaydedin. Yerel bir PDF'yi çeviri sayfasına da bırakabilirsiniz.
 
 • Sayfa bölgeleri
-Bir sayfanın bir alanına sağ tıklayarak ona bir çeviri düğmesi ekleyin. O alandaki metni çevirisiyle değiştirmek için bir kez, özgün metni geri yüklemek için tekrar tıklayın. Kurallar web sitesi başına hatırlanır.
+Bir sayfanın belirli bir alanına sağ tıklayarak ona bir çeviri düğmesi ekleyin. Bir kez tıklayarak o alandaki metni çevirisiyle değiştirin, tekrar tıklayarak özgün metni geri yükleyin. Kurallar web sitesi bazında hatırlanır.
 
 • Çeviri paneli
-Daha uzun pasajlar veya tarayıcı dışından gelen metinler için solda özgün metnin, sağda çevirinin bulunduğu özel bir sayfa. Kaynak dili otomatik algılayın veya kendiniz seçin.
+Daha uzun pasajlar veya tarayıcı dışından gelen metinler için sol tarafta özgün metnin, sağ tarafta çevirinin bulunduğu özel bir sayfa. Kaynak dili otomatik algılayın veya kendiniz seçin.
 
-24 arayüz ve hedef diller: Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, İspanyolca, Portekizce, Fransızca, Almanca, İtalyanca, Hollandaca, Rusça, Ukraynaca, Lehçe, Türkçe, Arapça, İbranice, Farsça, Hintçe, Bengalce, Urduca, Endonezce, Vietnamca, Tayca, Japonca ve Korece. Arayüz, kaynak ve hedef diller bağımsız ayarlardır ve Arapça, İbranice, Farsça ve Urduca arayüzler sağdan sola düzen kullanır.
+24 arayüz ve hedef dili: Basitleştirilmiş Çince, Geleneksel Çince, İngilizce, İspanyolca, Portekizce, Fransızca, Almanca, İtalyanca, Hollandaca, Rusça, Ukraynaca, Lehçe, Türkçe, Arapça, İbranice, Farsça, Hintçe, Bengalce, Urduca, Endonezce, Vietnamca, Tayca, Japonca ve Korece. Arayüz, kaynak ve hedef dilleri birbirinden bağımsız ayarlardır; Arapça, İbranice, Farsça ve Urduca arayüzler sağdan sola düzen kullanır.
 
-▍Çeviri modları
+▍İki kullanım yolu
 
 • Anahtar gerektirmeyen kredi çevirisi
-Uygun yeni bir kurulum, bir konuk deneme alır (talepler ağ başına sınırlıdır) ve e-posta veya Google ile kaydolmak daha fazla kredi ekler. Krediler hiçbir zaman sona ermez ve gerçekte çevrilen metin miktarına göre düşülür (500 karakter başına 1 kredi); başarısız çeviriler ücretlendirilmez. Deneme kredileri tükendiğinde, kredi çevirisi sınırsız kullanım (adil kullanım) sunan, otomatik olarak yenilenen ve istediğiniz zaman iptal edilebilen bir abonelik gerektirir. Güncel deneme miktarları ve fiyatlar için web sitesine ve hesap merkezinize bakın.
+Yeni ve uygun bir kurulum misafir denemesi alır (talep sayısı ağ başına sınırlıdır) ve e-posta veya Google ile kaydolmak daha fazla kredi ekler. Krediler hiç süresi dolmaz ve gerçekte çevrilen metin miktarına göre düşülür (500 karakter başına 1 kredi); başarısız çeviriler ücretlendirilmez. Deneme kredileri tükendiğinde kredi çevirisi bir abonelik gerektirir; abonelik sınırsız kullanım (adil kullanım) sağlar, otomatik yenilenir ve istediğiniz zaman iptal edilebilir. Güncel deneme miktarları ve fiyatlar için web sitesine ve hesap merkezinize bakın.
 
 • Kendi API anahtarınız
-Kendi OpenAI, DeepSeek veya DeepL anahtarınızı girin. İstekler doğrudan tarayıcınızdan o sağlayıcıya gider ve kullanım için sizi faturalandırır. Görsel tanıma, görsel yetenekli bir model gerektirir; DeepL görsel tanıma veya alternatif ifadeler sunmaz.
+Kendi OpenAI, DeepSeek veya DeepL anahtarınızı girin. İstekler doğrudan tarayıcınızdan o sağlayıcıya gider ve kullanım ücretini o sağlayıcı faturalandırır. Görsel tanıma, görsel yeteneği olan bir model gerektirir; DeepL görsel tanıma veya alternatif ifadeler sunmaz.
 
 ▍Gizlilik
 
-• Yerel çeviri metni cihazınızda tutar. Çevrimiçi modlar, istenen içeriği seçilen hizmete gönderir. Otomatik web sitesi çevirisi, metni yalnızca açıkça etkinleştirdiğiniz web sitelerinde, sonraki ziyaretler dahil olmak üzere işler.
-• Kendi anahtarınızla, içerik doğrudan seçtiğiniz sağlayıcıya gider, asla bizim üzerimizden geçmez.
-• Kredi çevirisiyle, içerik bir model sağlayıcısına sunucumuz üzerinden geçer; sunucu metninizi, çevirilerinizi veya görsellerinizi saklamaz.
-• API anahtarları, ifade tercihleri ve kaydedilen makaleler cihazınızda kalır ve tarayıcı hesabınız üzerinden senkronize edilmez.
-• Reklam, izleme veya üçüncü taraf analitiği yoktur. Tam kaynak kodu GPL-3.0 altında mevcuttur.
+• İçerik yalnızca siz çevirmeyi seçtiğinizde gönderilir. Uzantı sayfaları asla arka planda taramaz veya yüklemez.
+• Kendi anahtarınızla içerik doğrudan seçtiğiniz sağlayıcıya gider, asla bizim üzerimizden geçmez.
+• Kredi çevirisinde içerik, bir model sağlayıcısına iletilmek üzere sunucumuzdan geçer; sunucu metninizi, çevirilerinizi veya görsellerinizi saklamaz.
+• API anahtarları, ifade tercihleri ve kaydedilen makaleler cihazınızda kalır ve tarayıcı hesabınız aracılığıyla eşitlenmez.
+• Reklam, izleme veya üçüncü taraf analitik yoktur. Kaynak kodun tamamı GPL-3.0 altında açıktır.
 
-Canlı video altyazıları deneysel bir özelliktir ve varsayılan olarak kapalıdır. Konuşma varsayılan olarak cihazınızda tanınır; açıkça bulut tanımayı seçerseniz, ses tarayıcınızın konuşma tanıma hizmetine gönderilir.
+Canlı video altyazıları deneysel bir özelliktir ve varsayılan olarak kapalıdır. Konuşma varsayılan olarak cihazınızda tanınır; açıkça bulut tanımayı seçerseniz ses, tarayıcınızın konuşma tanıma hizmetine gönderilir.
 
 ▍Bilinen sınırlamalar
 
-• chrome:// gibi dahili sayfalar ve uzantı mağazaları gibi tarayıcı tarafından korunan sayfalar kullanılamaz.
-• Tek bir seçim en fazla 6,000 karakter içerebilir; daha uzun seçimler bir bildirimle kesilir.
-• İki dilli okuma makaleleri sayfa yapısından algılar; forumlar, sosyal ağlar ve oturum açma gerektiren sayfalar tam olarak algılanmayabilir.
+• Tarayıcı tarafından korunan sayfalar, örneğin dahili chrome:// sayfaları ve uzantı mağazaları kullanılamaz.
+• Tek bir seçim en fazla 6.000 karakter içerebilir; daha uzun seçimler bir bildirimle kesilir.
+• İki dilli okuma makaleleri sayfa yapısından algılar; forumlar, sosyal ağlar ve oturum açma gerektiren sayfalar tam olarak algılanamayabilir.
 • Taranmış ve parola korumalı PDF'ler henüz desteklenmemektedir.
 • Kullanılabilir diller, görsel tanıma ve akış, seçtiğiniz sağlayıcıya ve modele bağlıdır.
 
-Chrome veya Edge 116 ya da üstünü gerektirir.
+Chrome veya Edge 116 ya da daha yeni bir sürüm gerektirir.
 
-Bağımsız bir açık kaynak projesi; OpenAI, DeepSeek, DeepL veya bağlı kuruluşlarıyla ilişkili değildir, onlar tarafından onaylanmamış veya desteklenmemiştir. ChatGPT, DeepSeek, DeepL ve diğer adlar ilgili sahiplerinin ticari markalarıdır ve yalnızca uyumlu hizmetleri tanımlamak için kullanılır.
+Bağımsız bir açık kaynak projedir; OpenAI, DeepSeek, DeepL veya bağlı kuruluşlarıyla bağlantılı değildir, onlar tarafından onaylanmamış veya sponsorluk almamıştır. ChatGPT, DeepSeek, DeepL ve diğer adlar ilgili sahiplerinin ticari markalarıdır ve yalnızca uyumlu hizmetleri tanımlamak için kullanılmıştır.
 
-Destek: support@huaci.app
 Web sitesi: https://huaci.app/
 Kaynak kodu ve sorun bildirimleri: https://github.com/csswork/AiTranslation
 Gizlilik politikası: https://huaci.app/privacy.html

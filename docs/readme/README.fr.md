@@ -40,7 +40,7 @@ Un dépôt, trois applications : un site HTML sur Vercel, un serveur backend sur
 | --- | --- | --- | --- |
 | Site | [apps/web](../../apps/web/README.md) | Vercel | Présentation, confidentialité, conditions et historique des versions en 11 langues ; l’en-tête récupère l’état de connexion auprès de app.huaci.app |
 | Backend | [apps/backend](../../apps/backend/README.md) | VPS | Authentification, espaces utilisateur et administrateur, API de l’extension, essai invité, comptabilité précise des crédits, traduction hébergée de textes et d’images et abonnements Creem ; première version déployée |
-| Extension | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | Code source : 2.3.0. Traduction locale, traduction automatique des sites et améliorations du style et des images. [État de publication](../../docs/extension/releases/2.3.0.md) |
+| Extension | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | Version en boutique : 2.1.0. Code source : 2.2.0, avec lecture bilingue, reformulations, préférences terminologiques et traduction suivant la forme du texte ; publication en préparation |
 
 ## Arborescence
 

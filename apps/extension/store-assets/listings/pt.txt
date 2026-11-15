@@ -1,78 +1,70 @@
-Selecione, clique com o botão direito e continue lendo. Leia artigos completos lado a lado com a tradução e traduza o texto selecionado, imagens e PDFs onde eles estão—sem trocar de aba ou copiar e colar.
+Selecione, clique com o botão direito e continue lendo. Leia artigos inteiros lado a lado com a tradução e traduza textos selecionados, imagens e PDFs no próprio local—sem trocar de aba nem copiar e colar.
 
-Huaci – Tradutor de IA e leitor bilíngue é uma extensão de navegador de código aberto construída no Manifest V3. Use tradução de texto local gratuita onde suportado, créditos hospedados sem chave ou sua própria chave de API OpenAI, DeepSeek ou DeepL.
+Huaci – Tradutor de IA e leitor bilíngue é uma extensão de navegador de código aberto baseada no Manifest V3. Comece a traduzir logo após a instalação com créditos sem chave, ou use sua própria chave de API da OpenAI, DeepSeek ou DeepL.
 
-TRADUÇÃO LOCAL E AUTOMÁTICA DE SITES (NOVO NA 2.3.0)
+▍Leitura bilíngue (novidade na 2.2.0)
 
-• Tradução de texto local: em navegadores e dispositivos compatíveis, baixe pares de idiomas nas Configurações e traduza offline gratuitamente, sem chave de API ou créditos. O texto permanece no seu dispositivo. Use para seleções, regiões da página, sites, o painel de texto, PDFs, leitura bilíngue e legendas reconhecidas. A disponibilidade e os idiomas dependem do navegador e dos pacotes baixados. O modo local não oferece reconhecimento de imagem ou formulações alternativas; controles não suportados ficam ocultos.
-• Tradução automática de sites: clique com o botão direito e ative “Traduzir este site”. O texto próximo à viewport é traduzido conforme você rola, incluindo em visitas posteriores, até você desativar. Textos repetidos na página reutilizam traduções. Escolha um provedor separado nas Configurações; o primeiro uso de um provedor pago pede confirmação.
-• Formulação mais natural: guias de estilo revisados melhoram a fraseologia, terminologia e tom para chinês e outros idiomas de destino.
-• Melhor tradução automática de imagens: formas de texto, tamanho de fonte, alinhamento, texto vertical e cores de fundo aprimorados. Mova uma passagem, edite sua tradução ou tamanho, ou retraduza apenas essa passagem. Imagens exportadas mantêm suas edições. Opcionalmente, traduza efeitos sonoros; imagens reconhecidas são armazenadas em cache na página atual, com navegação entre imagens.
-
-▍Leitura bilíngue
-
-Clique com o botão direito em qualquer lugar da página sem selecionar texto e escolha “Ler este artigo bilíngue”. Uma luz percorre a página enquanto o título e o corpo são detectados, então uma página de leitura limpa abre ao lado com cada parágrafo original alinhado à sua tradução. Navegação, barras laterais, espaços publicitários e widgets de recomendação são deixados de fora e nunca enviados para tradução.
+Clique com o botão direito em qualquer lugar da página sem selecionar texto e escolha «Ler este artigo bilíngue». Uma faixa de luz percorre a página enquanto o título e o corpo são detectados; em seguida, uma página de leitura limpa é aberta ao lado, com cada parágrafo original alinhado ao lado da respectiva tradução. Navegação, barras laterais, espaços publicitários e widgets de recomendação ficam de fora e nunca são enviados para tradução.
 
 • Lado a lado, cada par de parágrafos começa na mesma altura; você também pode empilhá-los ou mostrar apenas a tradução ou apenas o original
-• Aparência clara, escura ou seguir o sistema, além de paleta de cores, fonte, tamanho, altura da linha e largura da página ajustáveis—tudo lembrado
-• “Salvar” mantém o artigo e sua tradução no seu dispositivo; abra-o novamente na lista à direita sem traduzi-lo de novo, ou exclua-o quando não precisar mais
+• Aparência clara, escura ou seguir o sistema, além de paleta de cores, fonte, tamanho, altura de linha e largura da página ajustáveis—tudo lembrado
+• «Salvar» mantém o artigo e a tradução no seu dispositivo; abra-o novamente na lista à direita sem traduzi-lo de novo, ou exclua-o quando não precisar mais
 
 ▍Clique em uma palavra para outra formulação—e mantenha seus termos preferidos
 
-Na página de leitura, no popup de seleção, no painel de tradução e na página do PDF, clique em uma palavra na tradução—ou arraste sobre algumas palavras—para ver várias renderizações alternativas com notas curtas, ou digite a sua própria. Substitua a mesma palavra em outros lugares de uma só vez.
+Na página de leitura, no pop-up de seleção, no painel de tradução e na página do PDF, clique em uma palavra da tradução—ou arraste sobre algumas palavras—para ver várias traduções alternativas com breves notas, ou digite a sua. Substitua a mesma palavra em outros lugares de uma só vez.
 
-As formulações que você escolhe são lembradas no seu dispositivo como preferências de formulação: traduções posteriores de texto que contenham o mesmo termo de origem seguem sua escolha. Revise e exclua-as nas Configurações.
+As formulações que você escolhe são lembradas no seu dispositivo como preferências de tradução: traduções posteriores de textos que contenham o mesmo termo de origem seguem sua escolha. Revise e exclua-as nas Configurações.
 
-▍Ferramentas de tradução
+▍Seis formas de traduzir, todas no menu do botão direito
 
 • Texto selecionado
-Selecione o texto e escolha “Traduzir para…” no menu de contexto. A tradução aparece em um popup centralizado, palavra por palavra onde o provedor suporta streaming. Você também pode usar o botão flutuante ao lado de uma seleção ou o atalho ⌘⇧Y no macOS / Alt+Shift+T em outros lugares. O popup pode ser arrastado, mostra o original sob demanda e traduz o original novamente quando você muda o idioma de destino.
+Selecione o texto e escolha «Traduzir para…» no menu do botão direito. A tradução aparece em um pop-up centralizado, palavra por palavra nos provedores que oferecem streaming. Você também pode usar o botão flutuante ao lado de uma seleção ou o atalho ⌘⇧Y no macOS / Alt+Shift+T em outros sistemas. O pop-up pode ser arrastado, mostra o original sob demanda e traduz o original novamente quando você troca o idioma de destino.
 
 • Imagens
-Clique com o botão direito em uma imagem para reconhecer seu texto. Cada passagem é contornada ao longo de seus traços, e a tradução é colocada de volta sobre o original sem que as passagens se cubram. Texto vertical japonês, como em mangá, permanece vertical quando traduzido para chinês, japonês ou coreano. Revise as formas detectadas primeiro—mova, edite, exclua ou desenhe novas—antes de traduzir, ou selecione apenas as áreas necessárias (retângulos ou círculos). Baixe ou copie o resultado como uma nova imagem.
+Clique com o botão direito em uma imagem para reconhecer o texto. Cada trecho é contornado ao longo de seus traços, e a tradução é posicionada sobre o original sem que os trechos se sobreponham. Texto japonês vertical, como em mangás, permanece vertical quando traduzido para chinês, japonês ou coreano. Revise as formas detectadas primeiro—mova, edite, exclua ou desenhe novas—antes de traduzir, ou selecione apenas as áreas necessárias (retângulos ou círculos). Baixe ou copie o resultado como uma nova imagem.
 
-• PDFs completos
-No visualizador de PDF integrado do navegador, clique com o botão direito sem selecionar texto para traduzir o documento inteiro em uma página ao lado. As traduções são sobrepostas às posições originais, para que layout, figuras e linhas de tabela permaneçam no lugar. Compare lado a lado, mostre apenas a tradução ou apenas o original, e salve o resultado como PDF pelo diálogo de impressão. Você também pode arrastar um PDF local para a página de tradução.
+• PDFs inteiros
+No visualizador de PDF integrado do navegador, clique com o botão direito sem selecionar texto para traduzir o documento inteiro em uma página ao lado. As traduções são sobrepostas às posições originais, de modo que o layout, as figuras e as linhas de tabela permanecem no lugar. Compare lado a lado, mostre apenas a tradução ou apenas o original e salve o resultado como PDF pelo diálogo de impressão. Você também pode arrastar um PDF local para a página de tradução.
 
 • Regiões da página
-Clique com o botão direito em uma área da página para adicionar um botão de tradução a ela. Clique uma vez para substituir o texto naquela área pela tradução, e novamente para restaurar o original. As regras são lembradas por site.
+Clique com o botão direito em uma área de uma página para adicionar um botão de tradução a ela. Clique uma vez para substituir o texto daquela área pela tradução e novamente para restaurar o original. As regras são lembradas por site.
 
 • Painel de tradução
-Uma página dedicada com o original à esquerda e a tradução à direita, para passagens mais longas ou texto de fora do navegador. Detecte o idioma de origem automaticamente ou escolha você mesmo.
+Uma página dedicada com o original à esquerda e a tradução à direita, para trechos mais longos ou textos de fora do navegador. Detecte o idioma de origem automaticamente ou escolha-o você mesmo.
 
-24 idiomas da interface e de destino: chinês simplificado, chinês tradicional, inglês, espanhol, português, francês, alemão, italiano, holandês, russo, ucraniano, polonês, turco, árabe, hebraico, persa, hindi, bengali, urdu, indonésio, vietnamita, tailandês, japonês e coreano. Interface, idioma de origem e de destino são configurações independentes, e interfaces em árabe, hebraico, persa e urdu usam layout da direita para a esquerda.
+24 idiomas de interface e de destino: chinês simplificado, chinês tradicional, inglês, espanhol, português, francês, alemão, italiano, holandês, russo, ucraniano, polonês, turco, árabe, hebraico, persa, hindi, bengali, urdu, indonésio, vietnamita, tailandês, japonês e coreano. Interface, idioma de origem e idioma de destino são configurações independentes, e as interfaces em árabe, hebraico, persa e urdu usam layout da direita para a esquerda.
 
-▍Modos de tradução
+▍Duas formas de usar
 
 • Tradução por créditos sem chave
-Uma nova instalação elegível recebe um teste de convidado (as reivindicações são limitadas por rede), e cadastrar-se com e-mail ou Google adiciona mais créditos. Os créditos nunca expiram e são deduzidos pela quantidade de texto realmente traduzido (1 crédito por 500 caracteres); traduções com falha não são cobradas. Quando os créditos de teste acabam, a tradução por créditos requer uma assinatura, que oferece uso ilimitado (uso justo), renova automaticamente e pode ser cancelada a qualquer momento. Consulte o site e a central da sua conta para valores atuais de teste e preços.
+Uma nova instalação elegível recebe um teste de convidado (os resgates são limitados por rede), e cadastrar-se com e-mail ou Google adiciona mais créditos. Os créditos nunca expiram e são descontados pela quantidade de texto realmente traduzido (1 crédito por 500 caracteres); traduções com falha não são cobradas. Quando os créditos de teste acabarem, a tradução por créditos exige uma assinatura, que oferece uso ilimitado (uso razoável), é renovada automaticamente e pode ser cancelada a qualquer momento. Consulte o site e sua central de conta para os valores atuais de teste e os preços.
 
 • Sua própria chave de API
-Insira sua própria chave OpenAI, DeepSeek ou DeepL. As solicitações vão diretamente do seu navegador para esse provedor, que cobra pelo uso. O reconhecimento de imagem requer um modelo com capacidade de visão; DeepL não oferece reconhecimento de imagem ou formulações alternativas.
+Insira sua própria chave da OpenAI, DeepSeek ou DeepL. As solicitações vão diretamente do seu navegador para esse provedor, que cobra pelo uso. O reconhecimento de imagens exige um modelo com capacidade de visão; a DeepL não oferece reconhecimento de imagens nem formulações alternativas.
 
 ▍Privacidade
 
-• A tradução local mantém o texto no seu dispositivo. Os modos online enviam o conteúdo solicitado ao serviço escolhido. A tradução automática de sites processa texto apenas em sites que você ativa explicitamente, incluindo visitas posteriores.
-• Com sua própria chave, o conteúdo vai diretamente para o provedor escolhido, nunca através de nós.
-• Com tradução por créditos, o conteúdo passa pelo nosso servidor para um provedor de modelo; o servidor não armazena seu texto, traduções ou imagens.
-• Chaves de API, preferências de formulação e artigos salvos permanecem no seu dispositivo e não são sincronizados pela conta do navegador.
+• O conteúdo só é enviado quando você escolhe traduzi-lo. A extensão nunca escaneia nem envia páginas em segundo plano.
+• Com sua própria chave, o conteúdo vai diretamente para o provedor que você escolheu, nunca passa por nós.
+• Na tradução por créditos, o conteúdo passa pelo nosso servidor até um provedor de modelos; o servidor não armazena seu texto, traduções ou imagens.
+• Chaves de API, preferências de tradução e artigos salvos ficam no seu dispositivo e não são sincronizados pela sua conta do navegador.
 • Sem anúncios, rastreamento ou análises de terceiros. O código-fonte completo está disponível sob GPL-3.0.
 
-Legendas de vídeo ao vivo são um recurso experimental, desativado por padrão. A fala é reconhecida no seu dispositivo por padrão; se você escolher explicitamente o reconhecimento na nuvem, o áudio é enviado ao serviço de reconhecimento de fala do seu navegador.
+As legendas de vídeo ao vivo são um recurso experimental, desativado por padrão. A fala é reconhecida no seu dispositivo por padrão; se você escolher explicitamente o reconhecimento na nuvem, o áudio é enviado ao serviço de reconhecimento de fala do seu navegador.
 
 ▍Limitações conhecidas
 
 • Páginas protegidas pelo navegador, como páginas internas chrome:// e as lojas de extensões, não podem ser usadas.
-• Uma única seleção pode conter até 6,000 caracteres; seleções mais longas são truncadas com um aviso.
-• A leitura bilíngue detecta artigos a partir da estrutura da página; fóruns, redes sociais e páginas atrás de login podem não ser detectados completamente.
+• Uma única seleção pode conter até 6.000 caracteres; seleções mais longas são truncadas com um aviso.
+• A leitura bilíngue detecta artigos pela estrutura da página; fóruns, redes sociais e páginas atrás de login podem não ser detectados por completo.
 • PDFs digitalizados e protegidos por senha ainda não são suportados.
-• Idiomas disponíveis, reconhecimento de imagem e streaming dependem do provedor e modelo escolhidos.
+• Os idiomas disponíveis, o reconhecimento de imagens e o streaming dependem do provedor e do modelo escolhidos.
 
-Requer Chrome ou Edge 116 ou posterior.
+Requer Chrome ou Edge 116 ou superior.
 
-Um projeto independente de código aberto, não afiliado, endossado ou patrocinado pela OpenAI, DeepSeek, DeepL ou suas afiliadas. ChatGPT, DeepSeek, DeepL e outros nomes são marcas registradas de seus respectivos proprietários e são usados apenas para identificar serviços compatíveis.
+Um projeto independente de código aberto, sem vínculo, endosso ou patrocínio da OpenAI, DeepSeek, DeepL ou de suas afiliadas. ChatGPT, DeepSeek, DeepL e outros nomes são marcas registradas de seus respectivos proprietários e são usados apenas para identificar serviços compatíveis.
 
-Suporte: support@huaci.app
 Site: https://huaci.app/
-Código-fonte e relatórios de problemas: https://github.com/csswork/AiTranslation
+Código-fonte e relatos de problemas: https://github.com/csswork/AiTranslation
 Política de privacidade: https://huaci.app/privacy.html

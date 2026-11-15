@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="Huaci: selecione, clique com o botão direito e continue lendo." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/pt/#app","name":"Huaci","url":"https://huaci.app/pt/","description":"Extensão de tradução open source para Chrome / Edge, com leitura bilingue, tradução de seleção, imagens, PDF completo, regiões da página e painel de tradução independente, com 24 idiomas de interface e de destino. Pode usar a sua própria API Key ou iniciar sessão para experimentar sem Key ou subscrever.","image":"https://huaci.app/assets/og.png","inLanguage":"pt","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.3.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/pt/#app","name":"Huaci","url":"https://huaci.app/pt/","description":"Extensão de tradução open source para Chrome / Edge, com leitura bilingue, tradução de seleção, imagens, PDF completo, regiões da página e painel de tradução independente, com 24 idiomas de interface e de destino. Pode usar a sua própria API Key ou iniciar sessão para experimentar sem Key ou subscrever.","image":"https://huaci.app/assets/og.png","inLanguage":"pt","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.2.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/pt/changelog.html#v2-3-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.3.0</span> <span>Nova versão: leitura bilíngue, transformando artigos da web em páginas de leitura com parágrafos lado a lado.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/pt/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>Nova versão: leitura bilíngue, transformando artigos da web em uma página de leitura com parágrafos pareados.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Selecione, clique com o botão direito,<br /><span class="dim">e continue lendo.</span></h1>
-        <p class="hero-sub">Uma frase, uma imagem, um PDF ou um artigo inteiro na web: com o botão direito, traduza para o seu idioma. Pronto para usar após a instalação, sem precisar preencher uma API Key antes; nos navegadores compatíveis, também é possível baixar pacotes de idioma e traduzir texto localmente de forma gratuita. Você também pode usar sua própria chave OpenAI, DeepSeek ou DeepL.</p>
+        <p class="hero-sub">Uma frase, uma imagem, um PDF ou um artigo inteiro numa página web pode ser traduzido para o seu idioma com o botão direito. Funciona logo após a instalação, sem necessidade de preencher uma API Key; também pode usar a sua própria chave OpenAI, DeepSeek ou DeepL.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -208,8 +208,8 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>De uma frase a um site inteiro, traduza com o botão direito</h2>
-          <p>Há demonstrações para seleção de texto, imagens, PDF e leitura bilíngue. Marque com o botão direito «Traduzir este site» para traduzir automaticamente o texto da página ao rolar.</p>
+          <h2>Seis entradas, todas no menu de contexto</h2>
+          <p>Cada uma tem uma demonstração; continue a ler.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
@@ -267,7 +267,7 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>Tradução de imagens</h3>
-            <p>Clique com o botão direito em uma imagem para reconhecer e diagramar automaticamente conforme a forma do texto, com melhorias em tamanho de fonte, alinhamento e cor de fundo. A tradução pode ser arrastada trecho a trecho, ter o texto alterado, o tamanho da fonte ajustado ou ser retraduzida; o download e a cópia preservam as alterações; onomatopeias também podem ser traduzidas opcionalmente.</p>
+            <p>Clique com o botão direito numa imagem para reconhecer o texto nela e sobrepor a tradução na posição original. A imagem traduzida pode ser descarregada ou copiada.</p>
             <ul>
               <li>O texto vertical de manga japonesa mantém-se vertical quando traduzido para chinês, japonês ou coreano</li>
               <li>Pode selecionar apenas a parte a traduzir ou ajustar primeiro as áreas de texto reconhecidas antes de traduzir</li>
@@ -401,24 +401,13 @@
     </div>
   </section>
 
-  <section class="section slide" id="local-translation" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Local translation</p>
-        <h2>Texto traduzido localmente, gratuito e disponível offline</h2>
-        <p>Em navegadores e dispositivos que oferecem tradução integrada, selecione «Tradução local» e baixe o pacote de idioma nas configurações. A partir daí, a tradução de texto não exige chave nem consome pontos, e o original não é enviado.</p>
-      </div>
-      <p class="after-facts reveal">Compatível com seleção de texto, região, site inteiro, painel de tradução, PDF, leitura bilíngue e legendas. A tradução local processa apenas texto e não oferece reconhecimento de imagem nem reformulação por clique na palavra; os idiomas disponíveis dependem do navegador e dos pacotes de idioma baixados. Navegadores não compatíveis não exibem essa plataforma.</p>
-    </div>
-  </section>
-
   <!-- ===================================================== 隐私 -->
   <section class="section slide slide-split" id="privacy" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>Quais conteúdos saem do seu navegador</h2>
-        <p>O texto da tradução local não sai do dispositivo. Ao usar sua própria chave, o conteúdo é enviado diretamente à plataforma escolhida; ao traduzir com pontos, o conteúdo é encaminhado aos provedores de modelo por meio dos nossos servidores, que não armazenam imagens, textos originais nem traduções. Com a tradução de sites inteiros ativada, os textos próximos à área visível nos sites especificados são processados automaticamente pela plataforma selecionada. O tratamento de áudio das legendas de vídeo está descrito na política de privacidade.</p>
+        <p>Apenas os conteúdos que você traduz ativamente são enviados. Ao usar sua própria Key, o conteúdo vai diretamente para a plataforma escolhida; ao traduzir com pontos, o conteúdo passa pelo nosso servidor a caminho do provedor do modelo, e o servidor não armazena imagens, textos originais nem traduções. Para saber como o áudio das legendas de vídeo é tratado, consulte a política de privacidade.</p>
       </div>
 
       <div class="facts reveal">
@@ -484,7 +473,7 @@
         </div>
       </div>
 
-      <p class="after-facts reveal">Entre com código de verificação por e-mail ou conta Google; pontos, assinaturas e pedidos podem ser consultados na <a class="link" href="https://app.huaci.app/">central do usuário</a>. É possível alternar a qualquer momento entre tradução local, tradução com pontos e chave própria; a tradução local de texto é gratuita e não exige assinatura.</p>
+      <p class="after-facts reveal">Entre com um código de verificação por e-mail ou com uma conta Google; pontos, assinaturas e pedidos podem ser consultados no <a class="link" href="https://app.huaci.app/">centro do usuário</a>. A tradução por pontos e a chave própria podem ser alternadas a qualquer momento.</p>
       <p class="after-facts reveal">Os preços efetivos são os apresentados no centro de utilizador. Os preços são em dólares e podem incluir impostos adicionais; a <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> processa os pagamentos como revendedor e não temos acesso aos dados do cartão bancário. Consulte os <a class="link" href="/pt/terms.html">termos de serviço</a>.</p>
     </div>
   </section>

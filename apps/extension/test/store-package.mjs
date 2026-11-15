@@ -33,8 +33,8 @@ try {
     assert.equal(env.accountOrigin, 'https://app.huaci.app');
     assert.equal(env.isAccountPage('http://localhost:8787/'), false);
     assert.equal(env.extensionsShortcuts, `${target === 'edge' ? 'edge' : 'chrome'}://extensions/shortcuts`);
-    assert.equal(fs.readFileSync(path.join(staging, 'src/vendor/pdfjs/pdf.mjs'), 'utf8'),
-      fs.readFileSync(path.join(root, 'src/vendor/pdfjs/pdf.mjs'), 'utf8'), 'Vendor code stays unchanged');
+    assert.equal(fs.readFileSync(path.join(staging, 'src/vendor/pdfjs/pdf.min.mjs'), 'utf8'),
+      fs.readFileSync(path.join(root, 'src/vendor/pdfjs/pdf.min.mjs'), 'utf8'), 'Vendor code stays unchanged');
   }
   assert.equal(environment(originalEnv, true).dev, true, 'Loading repository source still uses local services');
   assert.equal(environment(originalEnv, false, true).dev, false, 'Existing store manifests remain compatible');

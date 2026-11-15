@@ -1,6 +1,6 @@
 # 点词换说法与用词偏好
 
-> 状态：Chrome 商店公开版已为 **2.2.0**（2026-11-15 核验）；后台改动（`/api/extension/alternatives`、`/translate` 的 `glossary`）已部署（2026-11-06）。当前版本与提交状态见 [发布记录](releases/2.3.0.md)。
+> 状态：随扩展 **2.2.0** 发布，**尚未打包、上传商店**。后台改动（`/api/extension/alternatives`、`/translate` 的 `glossary`）已部署（2026-11-06）。
 
 ## 一、用户能做什么
 

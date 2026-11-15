@@ -198,8 +198,8 @@
 
   async function loadPdfjs() {
     if (pdfjs) return pdfjs;
-    pdfjs = await import(`${VENDOR}pdf.mjs`);
-    pdfjs.GlobalWorkerOptions.workerSrc = `${VENDOR}pdf.worker.mjs`;
+    pdfjs = await import(`${VENDOR}pdf.min.mjs`);
+    pdfjs.GlobalWorkerOptions.workerSrc = `${VENDOR}pdf.worker.min.mjs`;
     return pdfjs;
   }
 

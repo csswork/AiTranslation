@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="划词：选中，右键，然后接着读。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"划词","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"划词","url":"https://huaci.app/","description":"开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.3.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"划词","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/#app","name":"划词","url":"https://huaci.app/","description":"开源 Chrome / Edge 翻译扩展，支持双语阅读、划词、图片、整份 PDF、网页区域与独立翻译面板，提供 24 种界面与目标语言。可自带 API Key，也可登录后免 Key 试用或订阅。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hans","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.2.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -86,14 +86,14 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="changelog.html#v2-3-0" data-latest-release>
-          <span class="mono release-ver" data-extension-version>v2.3.0</span>
+        <a class="release-pill" href="changelog.html#v2-2-0" data-latest-release>
+          <span class="mono release-ver" data-extension-version>v2.2.0</span>
           <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
         </a>
         <h1>选中，右键，<br /><span class="dim">然后接着读。</span></h1>
         <p class="hero-sub">
-          网页上的一句话、一张图片、一份 PDF，或者一整篇文章，右键就能翻译成你的语言。装好就能用，不用先填 API Key；支持的浏览器还可下载语言包，免费在本机翻译文字。也可以使用自己的 OpenAI、DeepSeek 或 DeepL Key。
+          网页上的一句话、一张图片、一份 PDF，或者一整篇文章，右键就能翻译成你的语言。装好就能用，不用先填 API Key；想用自己的 OpenAI、DeepSeek 或 DeepL Key 也可以。
         </p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
@@ -227,8 +227,8 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>从一句话到整个网站，右键就能翻译</h2>
-          <p>划词、图片、PDF 和双语阅读都有演示。右键勾选「翻译这个网站」，还可在滚动时自动翻译网页文字。</p>
+          <h2>六个入口，都在右键菜单里</h2>
+          <p>每一种都配了一段演示，往下看。</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
@@ -290,7 +290,7 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>图片翻译</h3>
-            <p>右键一张图片，按文字形状自动识别并排版，改进字号、对齐与背景色。译文可逐段拖动、改字、调字号或重翻，下载和复制会保留修改；音效字也可选择翻译。</p>
+            <p>右键一张图片，图里的文字会被识别出来，译文盖在原来的位置上。译好的图可以下载或复制。</p>
             <ul>
               <li>日文漫画的竖排文字译成中文、日文或韩文时保持竖排</li>
               <li>可以只框选要翻译的部分，也可以先调整识别出的文字区域再翻译</li>
@@ -432,17 +432,6 @@
     </div>
   </section>
 
-  <section class="section slide" id="local-translation" data-slide>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="kicker">Local translation</p>
-        <h2>文字在本机翻译，免费也能离线用</h2>
-        <p>在提供内置翻译能力的浏览器和设备上，选择「本机翻译」，在设置里下载语言包。之后翻译文字不需要 Key、不消耗点数，原文不上传。</p>
-      </div>
-      <p class="after-facts reveal">支持划词、区域、整站、翻译面板、PDF、双语阅读和字幕文字。本机翻译只处理文字，不支持图片识别和点词换说法；可用语言取决于浏览器与已下载的语言包。不支持的浏览器不会显示这个平台。</p>
-    </div>
-  </section>
-
   <!-- ===================================================== 隐私 -->
   <section class="section slide slide-split" id="privacy" data-slide>
     <div class="wrap">
@@ -450,7 +439,7 @@
         <p class="kicker">Privacy</p>
         <h2>哪些内容会离开你的浏览器</h2>
         <p>
-          本机翻译的文字不离开设备。用自己的 Key 时，内容直接发给你选的平台；用点数翻译时，内容经我们的服务器转给模型服务商，服务器不保存图片、原文和译文。启用整站翻译后，指定网站上视口附近的文字会按所选平台自动处理。视频字幕的声音处理方式见隐私政策。
+          只有你主动翻译的内容会被发送。用自己的 Key 时，内容直接发给你选的平台；用点数翻译时，内容经我们的服务器转给模型服务商，服务器不保存图片、原文和译文。视频字幕的声音处理方式见隐私政策。
         </p>
       </div>
 
@@ -526,7 +515,7 @@
       </div>
 
       <p class="after-facts reveal">
-        用邮箱验证码或 Google 账户登录，点数、订阅和订单在<a class="link" href="https://app.huaci.app/">用户中心</a>查看。本机翻译、点数翻译和自带 Key 可以随时切换；本机文字翻译免费，不需要订阅。
+        用邮箱验证码或 Google 账户登录，点数、订阅和订单在<a class="link" href="https://app.huaci.app/">用户中心</a>查看。点数翻译和自带 Key 可以随时切换。
       </p>
       <p class="after-facts reveal">
         实际价格以用户中心显示为准。价格以美元计，可能另加税费；由 <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> 作为经销商处理付款，我们不接触银行卡信息。详见<a class="link" href="terms.html">服务条款</a>。

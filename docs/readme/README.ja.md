@@ -40,7 +40,7 @@
 | --- | --- | --- | --- |
 | サイト | [apps/web](../../apps/web/README.md) | Vercel | 製品紹介、プライバシー、利用規約、更新履歴を 11 言語で提供。ヘッダーは app.huaci.app のログイン状態を取得 |
 | バックエンド | [apps/backend](../../apps/backend/README.md) | VPS | 認証、アカウント画面、管理者画面、拡張機能 API、ゲスト試用、正確なクレジット管理、テキスト・画像のホスト型翻訳、Creem サブスクリプションの初版をデプロイ済み |
-| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | ソースは 2.3.0。端末内翻訳、サイト自動翻訳、訳文スタイルと画像翻訳の改善。[公開状況](../../docs/extension/releases/2.3.0.md) |
+| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | ストア版は 2.1.0。ソースは 2.2.0 で、バイリンガル読書、言い換え、用語の好み、文字の形に沿った画像翻訳を追加。リリース準備中 |
 
 ## ディレクトリ構成
 

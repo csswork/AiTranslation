@@ -1,78 +1,70 @@
-Seleziona, fai clic con il tasto destro e continua a leggere. Leggi interi articoli fianco a fianco con la loro traduzione e traduci testo selezionato, immagini e PDF direttamente dove si trovano, senza cambiare scheda o copiare e incollare.
+Seleziona, fai clic con il tasto destro e continua a leggere. Leggi interi articoli affiancati alla loro traduzione e traduci testo selezionato, immagini e PDF direttamente dove si trovano, senza cambiare scheda né copiare e incollare.
 
-Huaci – Traduttore AI e lettore bilingue è un'estensione browser open source basata su Manifest V3. Usa la traduzione locale gratuita del testo dove supportata, crediti ospitati senza chiave o la tua chiave API OpenAI, DeepSeek o DeepL.
+Huaci – Traduttore AI e lettore bilingue è un'estensione per browser open source basata su Manifest V3. Inizia a tradurre subito dopo l'installazione con crediti senza chiave, oppure usa la tua API Key di OpenAI, DeepSeek o DeepL.
 
-TRADUZIONE LOCALE E AUTOMATICA DEI SITI WEB (NOVITÀ NELLA 2.3.0)
+▍Lettura bilingue (novità della 2.2.0)
 
-• Traduzione locale del testo: sui browser e dispositivi supportati, scarica le coppie linguistiche nelle Impostazioni e traduci offline gratuitamente, senza chiave API o crediti. Il testo rimane sul tuo dispositivo. Usala per selezioni, aree della pagina, siti web, il pannello di testo, PDF, lettura bilingue e sottotitoli riconosciuti. La disponibilità e le lingue dipendono dal browser e dai pacchetti scaricati. La modalità locale non fornisce riconoscimento delle immagini o formulazioni alternative; i controlli non supportati sono nascosti.
-• Traduzione automatica dei siti web: fai clic con il tasto destro e abilita "Traduci questo sito web". Il testo vicino alla finestra viene tradotto mentre scorri, anche nelle visite successive, finché non lo disabiliti. Il testo ripetuto su una pagina riutilizza le traduzioni. Scegli un provider separato nelle Impostazioni; il primo utilizzo di un provider a pagamento richiede conferma.
-• Formulazioni più naturali: guide di stile riviste migliorano la fraseologia, la terminologia e il tono per il cinese e altre lingue di destinazione.
-• Migliore traduzione automatica delle immagini: forme del testo, dimensioni dei caratteri, allineamento, testo verticale e colori di sfondo migliorati. Sposta un passaggio, modifica la sua traduzione o dimensione, o ritraducilo solo per quel passaggio. Le immagini esportate mantengono le tue modifiche. Traduci facoltativamente gli effetti sonori; le immagini riconosciute vengono memorizzate nella cache della pagina corrente, con navigazione tra le immagini.
+Fai clic con il tasto destro in un punto qualsiasi della pagina senza selezionare testo e scegli «Leggi questo articolo in modalità bilingue». Una striscia luminosa attraversa la pagina mentre vengono rilevati titolo e corpo, poi accanto si apre una pagina di lettura pulita con ogni paragrafo originale allineato alla sua traduzione. Navigazione, barre laterali, spazi pubblicitari e widget di raccomandazione vengono esclusi e non vengono mai inviati per la traduzione.
 
-▍Lettura bilingue
+• Affiancati, ogni coppia di paragrafi inizia alla stessa altezza; puoi anche impilarli oppure mostrare solo la traduzione o solo l'originale
+• Aspetto chiaro, scuro o conforme al sistema, con palette colori, carattere, dimensione, interlinea e larghezza pagina regolabili, il tutto memorizzato
+• «Salva» conserva l'articolo e la sua traduzione sul tuo dispositivo; riaprilo dall'elenco a destra senza ritradurlo, oppure eliminalo quando non ti serve più
 
-Fai clic con il tasto destro in un punto qualsiasi di una pagina senza selezionare testo e scegli "Leggi questo articolo in modalità bilingue". Una luce scorre sulla pagina mentre vengono rilevati titolo e corpo, quindi si apre una pagina di lettura pulita accanto, con ogni paragrafo originale allineato alla sua traduzione. Navigazione, barre laterali, spazi pubblicitari e widget di raccomandazione vengono esclusi e mai inviati per la traduzione.
+▍Clicca una parola per un'altra resa e conserva i tuoi termini preferiti
 
-• Fianco a fianco, ogni coppia di paragrafi inizia alla stessa altezza; puoi anche impilarli o mostrare solo la traduzione o solo l'originale
-• Aspetto chiaro, scuro o segui sistema, con palette colori, carattere, dimensione, altezza riga e larghezza pagina regolabili—tutto memorizzato
-• "Salva" conserva l'articolo e la sua traduzione sul tuo dispositivo; riaprilo dall'elenco a destra senza tradurlo di nuovo, oppure eliminalo quando non ti serve più
+Nella pagina di lettura, nel popup di selezione, nel pannello di traduzione e nella pagina PDF, clicca una parola nella traduzione, oppure trascina su alcune parole, per vedere diverse rese alternative con brevi note, oppure digita la tua. Sostituisci la stessa parola altrove in un'unica operazione.
 
-▍Clicca su una parola per un'altra formulazione—e mantieni i tuoi termini preferiti
+Le rese che scegli vengono memorizzate sul tuo dispositivo come preferenze di resa: le traduzioni successive di testi che contengono lo stesso termine di partenza seguono la tua scelta. Rivedile ed eliminale in Impostazioni.
 
-Nella pagina di lettura, nel popup di selezione, nel pannello di traduzione e nella pagina PDF, clicca su una parola nella traduzione—o trascina su alcune parole—per vedere diverse rese alternative con brevi note, oppure digita la tua. Sostituisci la stessa parola altrove in un colpo solo.
-
-Le formulazioni che scegli vengono memorizzate sul tuo dispositivo come preferenze di formulazione: le traduzioni successive di testi che contengono lo stesso termine di origine seguono la tua scelta. Rivedile ed eliminale nelle Impostazioni.
-
-▍Strumenti di traduzione
+▍Sei modi per tradurre, tutti nel menu del tasto destro
 
 • Testo selezionato
-Seleziona il testo e scegli "Traduci in…" dal menu contestuale. La traduzione appare in un popup centrato, parola per parola dove il provider supporta lo streaming. Puoi anche usare il pulsante flottante accanto a una selezione o la scorciatoia ⌘⇧Y su macOS / Alt+Shift+T altrove. Il popup può essere trascinato, mostra l'originale su richiesta e traduce di nuovo l'originale quando cambi la lingua di destinazione.
+Seleziona il testo e scegli «Traduci in…» dal menu del tasto destro. La traduzione appare in un popup centrato, parola per parola dove il provider supporta lo streaming. Puoi anche usare il pulsante flottante accanto a una selezione, oppure la scorciatoia ⌘⇧Y su macOS / Alt+Shift+T altrove. Il popup è trascinabile, mostra l'originale su richiesta e ritraduce l'originale quando cambi la lingua di destinazione.
 
 • Immagini
-Fai clic con il tasto destro su un'immagine per riconoscerne il testo. Ogni passaggio è delineato lungo i suoi tratti e la traduzione viene posizionata sopra l'originale senza che i passaggi si coprano a vicenda. Il testo verticale giapponese, come nei manga, rimane verticale quando tradotto in cinese, giapponese o coreano. Rivedi prima le forme rilevate—sposta, modifica, elimina o disegna nuove forme—prima di tradurre, oppure seleziona solo le aree necessarie (rettangoli o cerchi). Scarica o copia il risultato come nuova immagine.
+Fai clic con il tasto destro su un'immagine per riconoscerne il testo. Ogni passaggio è delineato lungo i suoi tratti e la traduzione viene ricollocata sopra l'originale senza che i passaggi si sovrappongano. Il testo verticale giapponese, come nei manga, resta verticale quando viene tradotto in cinese, giapponese o coreano. Controlla prima le forme rilevate (sposta, modifica, elimina o disegnane di nuove) prima di tradurre, oppure seleziona solo le aree che ti servono (rettangoli o cerchi). Scarica o copia il risultato come nuova immagine.
 
-• PDF interi
-Nel visualizzatore PDF integrato del browser, fai clic con il tasto destro senza selezionare testo per tradurre l'intero documento in una pagina accanto. Le traduzioni sono sovrapposte alle posizioni originali, quindi layout, figure e linee delle tabelle rimangono al loro posto. Confronta fianco a fianco, mostra solo la traduzione o solo l'originale e salva il risultato come PDF tramite la finestra di stampa. Puoi anche trascinare un PDF locale sulla pagina di traduzione.
+• Interi PDF
+Nel visualizzatore PDF integrato del browser, fai clic con il tasto destro senza selezionare testo per tradurre l'intero documento in una pagina accanto. Le traduzioni sono sovrapposte alle posizioni originali, così layout, figure e linee delle tabelle restano al loro posto. Confronta affiancati, mostra solo la traduzione o solo l'originale e salva il risultato come PDF tramite la finestra di stampa. Puoi anche trascinare un PDF locale sulla pagina di traduzione.
 
 • Aree della pagina
 Fai clic con il tasto destro su un'area di una pagina per aggiungervi un pulsante di traduzione. Clicca una volta per sostituire il testo in quell'area con la sua traduzione e di nuovo per ripristinare l'originale. Le regole vengono memorizzate per sito web.
 
 • Pannello di traduzione
-Una pagina dedicata con l'originale a sinistra e la traduzione a destra, per passaggi più lunghi o testo esterno al browser. Rileva automaticamente la lingua di origine o sceglila tu stesso.
+Una pagina dedicata con l'originale a sinistra e la traduzione a destra, per passaggi più lunghi o testi provenienti dall'esterno del browser. Rileva automaticamente la lingua di partenza o sceglila tu.
 
-24 lingue dell'interfaccia e di destinazione: cinese semplificato, cinese tradizionale, inglese, spagnolo, portoghese, francese, tedesco, italiano, olandese, russo, ucraino, polacco, turco, arabo, ebraico, persiano, hindi, bengalese, urdu, indonesiano, vietnamita, thai, giapponese e coreano. Le lingue dell'interfaccia, di origine e di destinazione sono impostazioni indipendenti e le interfacce in arabo, ebraico, persiano e urdu utilizzano un layout da destra a sinistra.
+24 lingue dell'interfaccia e di destinazione: cinese semplificato, cinese tradizionale, inglese, spagnolo, portoghese, francese, tedesco, italiano, olandese, russo, ucraino, polacco, turco, arabo, ebraico, persiano, hindi, bengalese, urdu, indonesiano, vietnamita, thai, giapponese e coreano. Lingua dell'interfaccia, lingua di partenza e lingua di destinazione sono impostazioni indipendenti, e le interfacce in arabo, ebraico, persiano e urdu usano un layout da destra a sinistra.
 
-▍Modalità di traduzione
+▍Due modi per usarlo
 
-• Traduzione con crediti senza chiave
-Una nuova installazione idonea riceve una prova guest (le richieste sono limitate per rete) e la registrazione con email o Google aggiunge altri crediti. I crediti non scadono mai e vengono detratti in base alla quantità di testo effettivamente tradotto (1 credito ogni 500 caratteri); le traduzioni non riuscite non vengono addebitate. Una volta esauriti i crediti di prova, la traduzione con crediti richiede un abbonamento, che offre uso illimitato (uso corretto), si rinnova automaticamente e può essere annullato in qualsiasi momento. Consulta il sito web e il centro account per gli importi di prova e i prezzi correnti.
+• Traduzione a crediti senza chiave
+Una nuova installazione idonea riceve una prova ospite (le richieste sono limitate per rete), e registrandoti con email o Google ottieni altri crediti. I crediti non scadono e vengono detratti in base alla quantità di testo effettivamente tradotto (1 credito ogni 500 caratteri); le traduzioni non riuscite non vengono addebitate. Una volta esauriti i crediti di prova, la traduzione a crediti richiede un abbonamento, che offre uso illimitato (uso ragionevole), si rinnova automaticamente e può essere annullato in qualsiasi momento. Consulta il sito web e il centro account per gli importi di prova e i prezzi attuali.
 
-• La tua chiave API
-Inserisci la tua chiave OpenAI, DeepSeek o DeepL. Le richieste vanno direttamente dal tuo browser a quel provider, che ti addebita l'utilizzo. Il riconoscimento delle immagini richiede un modello con capacità visive; DeepL non offre riconoscimento delle immagini o formulazioni alternative.
+• La tua API Key
+Inserisci la tua chiave OpenAI, DeepSeek o DeepL. Le richieste vanno direttamente dal tuo browser a quel provider, che ti addebita l'utilizzo. Il riconoscimento delle immagini richiede un modello con capacità visive; DeepL non offre riconoscimento delle immagini né rese alternative.
 
 ▍Privacy
 
-• La traduzione locale mantiene il testo sul tuo dispositivo. Le modalità online inviano il contenuto richiesto al servizio scelto. La traduzione automatica dei siti web elabora il testo solo sui siti web che abiliti esplicitamente, comprese le visite successive.
-• Con la tua chiave, il contenuto va direttamente al provider che hai scelto, mai attraverso di noi.
-• Con la traduzione con crediti, il contenuto passa attraverso il nostro server a un provider di modelli; il server non memorizza il tuo testo, le traduzioni o le immagini.
-• Le chiavi API, le preferenze di formulazione e gli articoli salvati rimangono sul tuo dispositivo e non vengono sincronizzati tramite il tuo account browser.
-• Nessuna pubblicità, tracciamento o analisi di terze parti. Il codice sorgente completo è disponibile sotto GPL-3.0.
+• I contenuti vengono inviati solo quando scegli di tradurli. L'estensione non scansiona né carica mai le pagine in background.
+• Con la tua chiave, i contenuti vanno direttamente al provider che hai scelto, mai attraverso di noi.
+• Con la traduzione a crediti, i contenuti passano attraverso il nostro server verso un provider di modelli; il server non memorizza il tuo testo, le traduzioni o le immagini.
+• Le API Key, le preferenze di resa e gli articoli salvati restano sul tuo dispositivo e non vengono sincronizzati tramite il tuo account del browser.
+• Nessuna pubblicità, tracciamento o analisi di terze parti. Il codice sorgente completo è disponibile con licenza GPL-3.0.
 
 I sottotitoli video in tempo reale sono una funzione sperimentale, disattivata per impostazione predefinita. Il parlato viene riconosciuto sul tuo dispositivo per impostazione predefinita; se scegli esplicitamente il riconoscimento cloud, l'audio viene inviato al servizio di riconoscimento vocale del tuo browser.
 
-▍Limitazioni note
+▍Limiti noti
 
 • Le pagine protette dal browser, come le pagine interne chrome:// e gli store delle estensioni, non possono essere utilizzate.
-• Una singola selezione può contenere fino a 6,000 caratteri; le selezioni più lunghe vengono troncate con un avviso.
+• Una singola selezione può contenere fino a 6.000 caratteri; le selezioni più lunghe vengono troncate con un avviso.
 • La lettura bilingue rileva gli articoli dalla struttura della pagina; forum, social network e pagine dietro un login potrebbero non essere rilevati completamente.
 • I PDF scansionati e protetti da password non sono ancora supportati.
-• Le lingue disponibili, il riconoscimento delle immagini e lo streaming dipendono dal provider e dal modello scelti.
+• Le lingue disponibili, il riconoscimento delle immagini e lo streaming dipendono dal provider e dal modello che scegli.
 
 Richiede Chrome o Edge 116 o versioni successive.
 
-Un progetto open source indipendente, non affiliato, approvato o sponsorizzato da OpenAI, DeepSeek, DeepL o loro affiliate. ChatGPT, DeepSeek, DeepL e altri nomi sono marchi dei rispettivi proprietari e sono usati solo per identificare servizi compatibili.
+Un progetto open source indipendente, non affiliato, approvato o sponsorizzato da OpenAI, DeepSeek, DeepL o dalle loro affiliate. ChatGPT, DeepSeek, DeepL e altri nomi sono marchi dei rispettivi proprietari e sono usati solo per identificare i servizi compatibili.
 
-Supporto: support@huaci.app
 Sito web: https://huaci.app/
-Codice sorgente e segnalazioni di problemi: https://github.com/csswork/AiTranslation
+Codice sorgente e segnalazione problemi: https://github.com/csswork/AiTranslation
 Informativa sulla privacy: https://huaci.app/privacy.html

@@ -1,78 +1,70 @@
-Chọn, nhấp chuột phải và tiếp tục đọc. Đọc toàn bộ bài viết song song với bản dịch, và dịch văn bản đã chọn, hình ảnh và PDF ngay tại chỗ—không cần chuyển tab hay sao chép và dán.
+Chọn, nhấp chuột phải và tiếp tục đọc. Đọc toàn bộ bài viết song song với bản dịch, và dịch văn bản được chọn, hình ảnh và PDF ngay tại chỗ—không cần chuyển tab hay sao chép dán.
 
-Huaci – Trình dịch AI & Đọc song ngữ là tiện ích mở rộng trình duyệt mã nguồn mở được xây dựng trên Manifest V3. Sử dụng tính năng dịch văn bản cục bộ miễn phí khi được hỗ trợ, tín dụng máy chủ không cần khóa, hoặc khóa API OpenAI, DeepSeek hoặc DeepL của riêng bạn.
+Huaci – Trình dịch AI & Đọc song ngữ là tiện ích mở rộng trình duyệt mã nguồn mở được xây dựng trên Manifest V3. Bắt đầu dịch ngay sau khi cài đặt với tín dụng miễn phí không cần khóa, hoặc sử dụng API Key OpenAI, DeepSeek hoặc DeepL của riêng bạn.
 
-DỊCH TRANG WEB TỰ ĐỘNG VÀ CỤC BỘ (MỚI TRONG 2.3.0)
+▍Đọc song ngữ (mới trong 2.2.0)
 
-• Dịch văn bản cục bộ: trên các trình duyệt và thiết bị được hỗ trợ, tải xuống các cặp ngôn ngữ trong Cài đặt và dịch ngoại tuyến miễn phí, không cần khóa API hay tín dụng. Văn bản vẫn ở trên thiết bị của bạn. Sử dụng cho văn bản đã chọn, vùng trang, trang web, bảng văn bản, PDF, đọc song ngữ và phụ đề được nhận dạng. Tính khả dụng và ngôn ngữ phụ thuộc vào trình duyệt và các gói đã tải xuống. Chế độ cục bộ không cung cấp nhận dạng hình ảnh hoặc cách diễn đạt thay thế; các điều khiển không được hỗ trợ sẽ bị ẩn.
-• Dịch trang web tự động: nhấp chuột phải và bật “Dịch trang web này”. Văn bản gần khung nhìn được dịch khi bạn cuộn, kể cả trong các lần truy cập sau, cho đến khi bạn tắt tính năng này. Văn bản lặp lại trên một trang sẽ tái sử dụng bản dịch. Chọn nhà cung cấp riêng trong Cài đặt; lần sử dụng đầu tiên của nhà cung cấp trả phí sẽ yêu cầu xác nhận.
-• Cách diễn đạt tự nhiên hơn: hướng dẫn phong cách được sửa đổi cải thiện cách diễn đạt, thuật ngữ và giọng điệu cho tiếng Trung và các ngôn ngữ đích khác.
-• Dịch hình ảnh tự động tốt hơn: cải thiện hình dạng văn bản, cỡ chữ, căn chỉnh, văn bản dọc và màu nền. Di chuyển một đoạn văn, chỉnh sửa bản dịch hoặc kích thước của nó, hoặc dịch lại chỉ đoạn đó. Hình ảnh xuất ra giữ nguyên các chỉnh sửa của bạn. Tùy chọn dịch hiệu ứng âm thanh; hình ảnh được nhận dạng sẽ được lưu trong bộ nhớ đệm trên trang hiện tại, với điều hướng giữa các hình ảnh.
+Nhấp chuột phải vào bất kỳ đâu trên trang mà không chọn văn bản và chọn "Đọc bài viết này song ngữ". Một làn sáng quét qua trang khi tiêu đề và nội dung được phát hiện, sau đó một trang đọc gọn gàng mở ra bên cạnh với từng đoạn gốc được căn thẳng hàng với bản dịch. Thanh điều hướng, thanh bên, vị trí quảng cáo và widget gợi ý bị loại bỏ và không bao giờ được gửi đi dịch.
 
-▍Đọc song ngữ
+• Song song, mỗi cặp đoạn bắt đầu ở cùng độ cao; bạn cũng có thể xếp chồng chúng, hoặc chỉ hiển thị bản dịch hoặc chỉ bản gốc
+• Giao diện sáng, tối hoặc theo hệ thống, cùng bảng màu, phông chữ, cỡ chữ, chiều cao dòng và chiều rộng trang có thể điều chỉnh—tất cả đều được ghi nhớ
+• "Lưu" giữ bài viết và bản dịch trên thiết bị của bạn; mở lại từ danh sách bên phải mà không cần dịch lại, hoặc xóa khi không còn cần nữa
 
-Nhấp chuột phải vào bất kỳ đâu trên trang mà không chọn văn bản và chọn “Đọc bài viết này song ngữ”. Một ánh sáng quét qua trang khi tiêu đề và nội dung được phát hiện, sau đó một trang đọc sạch sẽ mở ra bên cạnh với mỗi đoạn gốc được căn chỉnh bên cạnh bản dịch của nó. Điều hướng, thanh bên, vị trí quảng cáo và tiện ích gợi ý được loại bỏ và không bao giờ được gửi để dịch.
+▍Nhấp vào từ để đổi cách diễn đạt—và giữ các thuật ngữ ưa thích của bạn
 
-• Song song, mỗi cặp đoạn văn bắt đầu ở cùng độ cao; bạn cũng có thể xếp chồng chúng, hoặc chỉ hiển thị bản dịch hoặc chỉ hiển thị bản gốc
-• Giao diện sáng, tối hoặc theo hệ thống, cùng bảng màu, phông chữ, kích thước, chiều cao dòng và chiều rộng trang có thể điều chỉnh—tất cả đều được ghi nhớ
-• “Lưu” giữ bài viết và bản dịch của nó trên thiết bị của bạn; mở lại từ danh sách bên phải mà không cần dịch lại, hoặc xóa khi bạn không còn cần nữa
+Trên trang đọc, trong cửa sổ bật lên khi chọn văn bản, trong bảng dịch và trên trang PDF, nhấp vào một từ trong bản dịch—hoặc kéo chọn vài từ—để xem nhiều cách diễn đạt thay thế kèm ghi chú ngắn, hoặc tự nhập của riêng bạn. Thay thế cùng một từ ở nơi khác trong một lần.
 
-▍Nhấp vào một từ để xem cách diễn đạt khác—và giữ các thuật ngữ ưa thích của bạn
+Các cách diễn đạt bạn chọn được ghi nhớ trên thiết bị của bạn dưới dạng tùy chọn cách dùng từ: các bản dịch sau đó của văn bản chứa cùng thuật ngữ gốc sẽ tuân theo lựa chọn của bạn. Xem lại và xóa chúng trong Cài đặt.
 
-Trên trang đọc, trong cửa sổ bật lên khi chọn, trong bảng dịch và trên trang PDF, nhấp vào một từ trong bản dịch—hoặc kéo qua một vài từ—để xem nhiều cách diễn đạt thay thế với ghi chú ngắn, hoặc tự nhập của bạn. Thay thế cùng một từ ở nơi khác trong một lần.
+▍Sáu cách dịch, tất cả trong menu nhấp chuột phải
 
-Các cách diễn đạt bạn chọn được ghi nhớ trên thiết bị của bạn dưới dạng tùy chọn cách diễn đạt: các bản dịch sau của văn bản chứa cùng thuật ngữ nguồn sẽ tuân theo lựa chọn của bạn. Xem lại và xóa chúng trong Cài đặt.
-
-▍Công cụ dịch
-
-• Văn bản đã chọn
-Chọn văn bản và chọn “Dịch sang…” từ menu nhấp chuột phải. Bản dịch xuất hiện trong cửa sổ bật lên ở giữa, từng từ một khi nhà cung cấp hỗ trợ truyền phát. Bạn cũng có thể sử dụng nút nổi bên cạnh vùng chọn, hoặc phím tắt ⌘⇧Y trên macOS / Alt+Shift+T ở nơi khác. Cửa sổ bật lên có thể được kéo, hiển thị bản gốc theo yêu cầu và dịch lại bản gốc khi bạn chuyển ngôn ngữ đích.
+• Văn bản được chọn
+Chọn văn bản và chọn "Dịch sang…" từ menu nhấp chuột phải. Bản dịch xuất hiện trong cửa sổ bật lên ở giữa, từng từ một khi nhà cung cấp hỗ trợ truyền trực tuyến. Bạn cũng có thể sử dụng nút nổi bên cạnh vùng chọn, hoặc phím tắt ⌘⇧Y trên macOS / Alt+Shift+T trên các hệ khác. Cửa sổ bật lên có thể kéo, hiển thị bản gốc theo yêu cầu và dịch lại bản gốc khi bạn chuyển ngôn ngữ đích.
 
 • Hình ảnh
-Nhấp chuột phải vào hình ảnh để nhận dạng văn bản của nó. Mỗi đoạn văn được phác thảo theo nét của nó, và bản dịch được đặt lại trên bản gốc mà các đoạn văn không che lấp nhau. Văn bản tiếng Nhật dọc, như trong manga, vẫn giữ chiều dọc khi được dịch sang tiếng Trung, tiếng Nhật hoặc tiếng Hàn. Xem lại các hình dạng được phát hiện trước—di chuyển, chỉnh sửa, xóa hoặc vẽ mới—trước khi dịch, hoặc chỉ chọn các khu vực bạn cần (hình chữ nhật hoặc hình tròn). Tải xuống hoặc sao chép kết quả dưới dạng hình ảnh mới.
+Nhấp chuột phải vào hình ảnh để nhận dạng văn bản trong đó. Mỗi đoạn văn được viền theo nét chữ, và bản dịch được đặt trở lại vị trí gốc mà các đoạn không che lấp lẫn nhau. Văn bản tiếng Nhật dọc, như trong truyện tranh, vẫn giữ chiều dọc khi dịch sang tiếng Trung, tiếng Nhật hoặc tiếng Hàn. Xem lại các hình dạng được phát hiện trước—di chuyển, chỉnh sửa, xóa hoặc vẽ mới—trước khi dịch, hoặc chỉ chọn những vùng bạn cần (hình chữ nhật hoặc hình tròn). Tải xuống hoặc sao chép kết quả dưới dạng hình ảnh mới.
 
 • Toàn bộ PDF
-Trong trình xem PDF tích hợp của trình duyệt, nhấp chuột phải mà không chọn văn bản để dịch toàn bộ tài liệu trong một trang bên cạnh. Bản dịch được đặt trên các vị trí gốc, vì vậy bố cục, hình vẽ và đường bảng vẫn giữ nguyên. So sánh song song, chỉ hiển thị bản dịch hoặc chỉ hiển thị bản gốc, và lưu kết quả dưới dạng PDF thông qua hộp thoại in. Bạn cũng có thể thả một PDF cục bộ vào trang dịch.
+Trong trình xem PDF tích hợp của trình duyệt, nhấp chuột phải mà không chọn văn bản để dịch toàn bộ tài liệu trong một trang bên cạnh. Bản dịch được phủ lên vị trí gốc, nên bố cục, hình vẽ và đường bảng vẫn giữ nguyên. So sánh song song, chỉ hiển thị bản dịch hoặc chỉ bản gốc, và lưu kết quả dưới dạng PDF qua hộp thoại in. Bạn cũng có thể kéo thả PDF cục bộ vào trang dịch.
 
 • Vùng trang
-Nhấp chuột phải vào một khu vực của trang để thêm nút dịch vào đó. Nhấp một lần để thay thế văn bản trong khu vực đó bằng bản dịch của nó, và nhấp lại để khôi phục bản gốc. Quy tắc được ghi nhớ cho từng trang web.
+Nhấp chuột phải vào một vùng của trang để thêm nút dịch cho vùng đó. Nhấp một lần để thay thế văn bản trong vùng đó bằng bản dịch, nhấp lại để khôi phục bản gốc. Quy tắc được ghi nhớ theo từng trang web.
 
 • Bảng dịch
-Một trang chuyên dụng với bản gốc ở bên trái và bản dịch ở bên phải, cho các đoạn văn dài hơn hoặc văn bản từ bên ngoài trình duyệt. Tự động phát hiện ngôn ngữ nguồn hoặc tự chọn.
+Một trang riêng với bản gốc bên trái và bản dịch bên phải, dành cho các đoạn văn dài hơn hoặc văn bản từ bên ngoài trình duyệt. Tự động phát hiện ngôn ngữ nguồn hoặc tự chọn.
 
-24 ngôn ngữ giao diện và ngôn ngữ đích: Tiếng Trung Giản thể, Tiếng Trung Phồn thể, Tiếng Anh, Tiếng Tây Ban Nha, Tiếng Bồ Đào Nha, Tiếng Pháp, Tiếng Đức, Tiếng Ý, Tiếng Hà Lan, Tiếng Nga, Tiếng Ukraina, Tiếng Ba Lan, Tiếng Thổ Nhĩ Kỳ, Tiếng Ả Rập, Tiếng Do Thái, Tiếng Ba Tư, Tiếng Hindi, Tiếng Bengal, Tiếng Urdu, Tiếng Indonesia, Tiếng Việt, Tiếng Thái, Tiếng Nhật và Tiếng Hàn. Ngôn ngữ giao diện, ngôn ngữ nguồn và ngôn ngữ đích là các cài đặt độc lập, và giao diện tiếng Ả Rập, tiếng Do Thái, tiếng Ba Tư và tiếng Urdu sử dụng bố cục từ phải sang trái.
+24 ngôn ngữ giao diện và ngôn ngữ đích: Tiếng Trung giản thể, Tiếng Trung phồn thể, Tiếng Anh, Tiếng Tây Ban Nha, Tiếng Bồ Đào Nha, Tiếng Pháp, Tiếng Đức, Tiếng Ý, Tiếng Hà Lan, Tiếng Nga, Tiếng Ukraina, Tiếng Ba Lan, Tiếng Thổ Nhĩ Kỳ, Tiếng Ả Rập, Tiếng Do Thái, Tiếng Ba Tư, Tiếng Hindi, Tiếng Bengal, Tiếng Urdu, Tiếng Indonesia, Tiếng Việt, Tiếng Thái, Tiếng Nhật và Tiếng Hàn. Ngôn ngữ giao diện, ngôn ngữ nguồn và ngôn ngữ đích là các cài đặt độc lập, và giao diện Tiếng Ả Rập, Tiếng Do Thái, Tiếng Ba Tư và Tiếng Urdu sử dụng bố cục từ phải sang trái.
 
-▍Chế độ dịch
+▍Hai cách sử dụng
 
 • Dịch bằng tín dụng không cần khóa
-Một cài đặt mới đủ điều kiện nhận bản dùng thử khách (yêu cầu bị giới hạn theo mạng), và đăng ký bằng email hoặc Google sẽ thêm tín dụng. Tín dụng không bao giờ hết hạn và được trừ theo lượng văn bản thực sự được dịch (1 tín dụng cho mỗi 500 ký tự); các bản dịch thất bại không bị tính phí. Khi tín dụng dùng thử hết, dịch bằng tín dụng yêu cầu đăng ký, cung cấp sử dụng không giới hạn (sử dụng hợp lý), tự động gia hạn và có thể hủy bất cứ lúc nào. Xem trang web và trung tâm tài khoản của bạn để biết số lượng dùng thử và giá hiện tại.
+Một bản cài đặt mới đủ điều kiện nhận bản dùng thử khách (số lần nhận bị giới hạn theo mạng), và đăng ký bằng email hoặc Google sẽ thêm tín dụng. Tín dụng không bao giờ hết hạn và được trừ theo lượng văn bản thực sự được dịch (1 tín dụng cho mỗi 500 ký tự); các bản dịch thất bại không bị tính phí. Khi tín dụng dùng thử hết, dịch bằng tín dụng yêu cầu đăng ký, cung cấp sử dụng không giới hạn (sử dụng hợp lý), tự động gia hạn và có thể hủy bất cứ lúc nào. Xem trang web và trung tâm tài khoản của bạn để biết số lượng dùng thử và giá hiện tại.
 
-• Khóa API của riêng bạn
-Nhập khóa OpenAI, DeepSeek hoặc DeepL của riêng bạn. Yêu cầu đi trực tiếp từ trình duyệt của bạn đến nhà cung cấp đó, nhà cung cấp sẽ tính phí bạn cho việc sử dụng. Nhận dạng hình ảnh yêu cầu một mô hình có khả năng thị giác; DeepL không cung cấp nhận dạng hình ảnh hoặc cách diễn đạt thay thế.
+• API Key của riêng bạn
+Nhập khóa OpenAI, DeepSeek hoặc DeepL của riêng bạn. Yêu cầu đi trực tiếp từ trình duyệt của bạn đến nhà cung cấp đó, và họ sẽ tính phí bạn theo mức sử dụng. Nhận dạng hình ảnh yêu cầu mô hình có khả năng thị giác; DeepL không cung cấp nhận dạng hình ảnh hoặc cách diễn đạt thay thế.
 
 ▍Quyền riêng tư
 
-• Dịch cục bộ giữ văn bản trên thiết bị của bạn. Các chế độ trực tuyến gửi nội dung được yêu cầu đến dịch vụ đã chọn. Dịch trang web tự động chỉ xử lý văn bản trên các trang web bạn đã bật rõ ràng, kể cả trong các lần truy cập sau.
+• Nội dung chỉ được gửi khi bạn chọn dịch nó. Tiện ích không bao giờ quét hoặc tải lên các trang trong nền.
 • Với khóa của riêng bạn, nội dung đi trực tiếp đến nhà cung cấp bạn đã chọn, không bao giờ qua chúng tôi.
 • Với dịch bằng tín dụng, nội dung đi qua máy chủ của chúng tôi đến nhà cung cấp mô hình; máy chủ không lưu trữ văn bản, bản dịch hoặc hình ảnh của bạn.
-• Khóa API, tùy chọn cách diễn đạt và bài viết đã lưu vẫn ở trên thiết bị của bạn và không được đồng bộ qua tài khoản trình duyệt của bạn.
-• Không quảng cáo, theo dõi hoặc phân tích của bên thứ ba. Mã nguồn đầy đủ có sẵn theo GPL-3.0.
+• API Key, tùy chọn cách dùng từ và bài viết đã lưu vẫn ở trên thiết bị của bạn và không được đồng bộ qua tài khoản trình duyệt của bạn.
+• Không quảng cáo, theo dõi hoặc phân tích của bên thứ ba. Toàn bộ mã nguồn có sẵn theo GPL-3.0.
 
-Phụ đề video trực tiếp là một tính năng thử nghiệm, mặc định tắt. Giọng nói được nhận dạng trên thiết bị của bạn theo mặc định; nếu bạn chọn rõ ràng nhận dạng đám mây, âm thanh được gửi đến dịch vụ nhận dạng giọng nói của trình duyệt của bạn.
+Phụ đề video trực tiếp là tính năng thử nghiệm, mặc định tắt. Giọng nói được nhận dạng trên thiết bị của bạn theo mặc định; nếu bạn chủ động chọn nhận dạng đám mây, âm thanh sẽ được gửi đến dịch vụ nhận dạng giọng nói của trình duyệt.
 
 ▍Hạn chế đã biết
 
-• Các trang được trình duyệt bảo vệ, chẳng hạn như các trang chrome:// nội bộ và cửa hàng tiện ích mở rộng, không thể sử dụng được.
-• Một vùng chọn có thể chứa tối đa 6,000 ký tự; các vùng chọn dài hơn sẽ bị cắt bớt kèm thông báo.
-• Đọc song ngữ phát hiện bài viết từ cấu trúc trang; diễn đàn, mạng xã hội và các trang sau đăng nhập có thể không được phát hiện hoàn toàn.
-• PDF quét và được bảo vệ bằng mật khẩu chưa được hỗ trợ.
-• Ngôn ngữ khả dụng, nhận dạng hình ảnh và truyền phát phụ thuộc vào nhà cung cấp và mô hình bạn chọn.
+• Các trang được trình duyệt bảo vệ, như các trang nội bộ chrome:// và cửa hàng tiện ích, không thể sử dụng.
+• Một lần chọn có thể chứa tối đa 6.000 ký tự; các vùng chọn dài hơn sẽ bị cắt bớt kèm thông báo.
+• Đọc song ngữ phát hiện bài viết từ cấu trúc trang; diễn đàn, mạng xã hội và các trang yêu cầu đăng nhập có thể không được phát hiện đầy đủ.
+• PDF quét và PDF được bảo vệ bằng mật khẩu chưa được hỗ trợ.
+• Ngôn ngữ khả dụng, nhận dạng hình ảnh và truyền trực tuyến phụ thuộc vào nhà cung cấp và mô hình bạn chọn.
 
 Yêu cầu Chrome hoặc Edge 116 trở lên.
 
-Một dự án mã nguồn mở độc lập, không liên kết với, được xác nhận bởi hoặc tài trợ bởi OpenAI, DeepSeek, DeepL hoặc các chi nhánh của họ. ChatGPT, DeepSeek, DeepL và các tên khác là nhãn hiệu của chủ sở hữu tương ứng và chỉ được sử dụng để xác định các dịch vụ tương thích.
+Một dự án mã nguồn mở độc lập, không liên kết, không được chứng thực hay tài trợ bởi OpenAI, DeepSeek, DeepL hoặc các chi nhánh của họ. ChatGPT, DeepSeek, DeepL và các tên khác là thương hiệu của chủ sở hữu tương ứng và chỉ được sử dụng để xác định các dịch vụ tương thích.
 
-Hỗ trợ: support@huaci.app
 Trang web: https://huaci.app/
 Mã nguồn và báo cáo sự cố: https://github.com/csswork/AiTranslation
 Chính sách quyền riêng tư: https://huaci.app/privacy.html

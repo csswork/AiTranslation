@@ -10,7 +10,7 @@
 
 ## 功能预览
 
-以下为 2026-11-13 将 **2.2.0 源码版**加载到 Chrome 后的实际截图与操作录屏，识别和翻译均调用真实模型。商店发布状态见[扩展说明](../../apps/extension/README.md#account-and-credits-hosted-mode)。
+以下为当前 **2.2.0 开发版**加载到 Chrome 后的实际截图与操作录屏，识别和翻译均调用真实模型。双语阅读、换说法和图片形状翻译等新功能正在准备发布，商店发布状态见[扩展说明](../../apps/extension/README.md#account-and-credits-hosted-mode)。
 
 **图片识别与翻译**：识别图中文字、按文字形状覆盖译文，切换原图对照，点击单段修改，也能手动框选范围。
 
@@ -40,7 +40,7 @@
 | --- | --- | --- | --- |
 | 网站 | [apps/web](../../apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
 | 后端 | [apps/backend](../../apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
-| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge | 当前源码 2.3.0：新增本机翻译、整站翻译，优化译文风格与图片自动翻译；[发布状态](../../docs/extension/releases/2.3.0.md) |
+| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge | 商店版 2.1.0；当前源码 2.2.0 新增双语阅读、换说法与用词偏好、按文字形状翻译图片，正在准备发布 |
 
 ## 目录
 
@@ -90,7 +90,7 @@ npm run check:web             # 检查网站多语言产物
 npm run i18n:extension        # 本地刷新扩展文案
 npm run check:extension       # 检查扩展多语言产物
 npm run package:extension     # dist/extension/ai-translation-<version>.zip
-npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip（Edge 独立安装包）
+npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip（Edge 发布准备）
 npm run test:backend          # 后端测试（需要 PostgreSQL 的 huaci_test 库）
 npm run migrate:backend       # 执行后端数据库迁移
 npm run dev:backend           # http://localhost:8787 用户管理界面

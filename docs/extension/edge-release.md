@@ -7,7 +7,7 @@
 ```sh
 npm run test:extension
 npm run package:edge
-# dist/extension/ai-translation-edge-2.3.0.zip
+# dist/extension/ai-translation-edge-2.1.0.zip
 ```
 
 Chrome 仍使用 `npm run package:extension`，输出文件名保持不变。两种商店包从相同源码生成，白名单均为 `manifest.json`、`src/`、`icons/`、`_locales/`、`LICENSE`，不包含开发工具、密钥、模型或商店资料。
@@ -30,7 +30,7 @@ Edge 内置 PDF 阅读器的右键事件可能返回 `TAB_ID_NONE`（`-1`）。�
 
 ## 商店资料
 
-`apps/extension/store-assets/edge/en.txt` 是本次英文完整说明的源，包含账户和托管服务、PDF/图片功能、本机翻译、整站翻译、价格与续费、BYOK、隐私及实验功能限制。其余 23 种语言由同目录工具本地生成：
+`apps/extension/store-assets/edge/en.txt` 是本次英文完整说明的源，包含 2.0.0 账户和托管服务、2.1.0 PDF/图片功能、价格与续费、BYOK、隐私及实验功能限制。其余 23 种语言由同目录工具本地生成：
 
 ```sh
 node apps/extension/store-assets/edge/build-listings.mjs
@@ -99,7 +99,3 @@ Partner Center 的扩展 CRX ID 为 `mojcgjimlkkbohomcijkmoefpeekmohe`（产品 
 - [商店提交](https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension)
 - [Edge 本机语音识别](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/speech-recognition-api)
 - [Edge 云端语音服务](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/speechrecognitionenabled)
-
-## 2.3.0 更新（2026-11-15）
-
-本机文字翻译、整站翻译、译文风格与图片自动翻译优化同步打入 Chrome 和 Edge 的独立生产 ZIP。pdf.js 改用同版本官方未压缩 legacy 以处理 Chrome 可读性警告。两商店实际提交状态、验证与限制统一见 [发布记录](releases/2.3.0.md)。本文 2026-10-25 的未完成项是历史记录，不代表当前提交状态。

@@ -2,68 +2,60 @@ Czytaj podczas tłumaczenia: zamień artykuł internetowy w dwujęzyczną stron�
 
 Huaci – tłumacz AI i czytnik dwujęzyczny to otwartoźródłowe rozszerzenie do Microsoft Edge do czytania dwujęzycznego oraz tłumaczenia zaznaczonego tekstu, fragmentów stron internetowych, obrazów i całych dokumentów PDF. Korzystaj z tłumaczenia hostowanego bez klucza API lub podłącz własne konto OpenAI, DeepSeek lub DeepL.
 
-LOKALNE I AUTOMATYCZNE TŁUMACZENIE STRON (NOWOŚĆ W 2.3.0)
+CZYTANIE DWUJĘZYCZNE (NOWOŚĆ W 2.2.0)
 
-• Lokalne tłumaczenie tekstu: w obsługiwanych przeglądarkach i na obsługiwanych urządzeniach pobierz pary językowe w Ustawieniach i tłumacz offline za darmo, bez klucza API i kredytów. Tekst pozostaje na Twoim urządzeniu. Używaj go do zaznaczeń, fragmentów stron, witryn, panelu tekstu, plików PDF, czytania dwujęzycznego i rozpoznanych napisów. Dostępność i języki zależą od przeglądarki i pobranych pakietów. Tryb lokalny nie zapewnia rozpoznawania obrazów ani alternatywnych sformułowań; nieobsługiwane elementy sterujące są ukryte.
-• Automatyczne tłumaczenie stron: kliknij prawym przyciskiem myszy i włącz „Przetłumacz tę witrynę”. Tekst w pobliżu widoku jest tłumaczony podczas przewijania, także przy późniejszych wizytach, dopóki tego nie wyłączysz. Powtarzający się tekst na stronie ponownie wykorzystuje tłumaczenia. Wybierz osobnego dostawcę w Ustawieniach; pierwsze użycie płatnego dostawcy wymaga potwierdzenia.
-• Bardziej naturalne sformułowania: zaktualizowane przewodniki stylu poprawiają frazowanie, terminologię i ton dla języka chińskiego i innych języków docelowych.
-• Lepsze automatyczne tłumaczenie obrazów: ulepszone kształty tekstu, rozmiar czcionki, wyrównanie, tekst pionowy i kolory tła. Przenieś fragment, edytuj jego tłumaczenie lub rozmiar albo przetłumacz ponownie tylko ten fragment. Wyeksportowane obrazy zachowują Twoje zmiany. Opcjonalnie tłumacz efekty dźwiękowe; rozpoznane obrazy są buforowane na bieżącej stronie, z nawigacją między obrazami.
-
-CZYTANIE DWUJĘZYCZNE
-
-Kliknij prawym przyciskiem myszy zwykłą stronę internetową bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”. Rozszerzenie wykrywa tytuł i treść artykułu na Twoim urządzeniu, pomija nawigację, paski boczne, miejsca reklamowe i widżety rekomendacji oraz otwiera czystą stronę do czytania obok karty, z każdym oryginalnym akapitem wyrównanym obok jego tłumaczenia. Tylko oczyszczony tekst artykułu jest przetwarzany przez wybrany tryb tłumaczenia.
+Kliknij prawym przyciskiem myszy zwykłą stronę internetową bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”. Rozszerzenie wykrywa tytuł i treść artykułu na Twoim urządzeniu, pomija nawigację, paski boczne, miejsca reklamowe i widżety z rekomendacjami oraz otwiera czystą stronę do czytania obok karty, z każdym oryginalnym akapitem wyrównanym obok jego tłumaczenia. Do tłumaczenia wysyłany jest wyłącznie oczyszczony tekst artykułu.
 
 • Obok siebie, jeden pod drugim, tylko tłumaczenie lub tylko oryginał; jasny, ciemny lub zgodny z systemem wygląd; regulowana paleta kolorów, czcionka, rozmiar, wysokość wiersza i szerokość strony.
-• Zapisz artykuł wraz z tłumaczeniem na swoim urządzeniu i otwórz go później z listy po prawej stronie bez ponownego tłumaczenia; usuwaj zapisane artykuły w dowolnym momencie.
+• Zapisz artykuł wraz z tłumaczeniem na swoim urządzeniu i otwórz go później z listy po prawej stronie bez ponownego tłumaczenia; zapisane artykuły możesz w każdej chwili usunąć.
 
 ALTERNATYWNE SFORMUŁOWANIA I PREFERENCJE SFORMUŁOWAŃ
 
-Na stronie do czytania, w okienku zaznaczenia, w panelu tłumaczenia i na stronie PDF kliknij słowo w tłumaczeniu (lub zaznacz kilka słów), aby zobaczyć alternatywne warianty z krótkimi uwagami, albo wpisz własny. Twoje wybory są zapisywane na Twoim urządzeniu jako preferencje sformułowań i stosowane do późniejszych tłumaczeń zawierających ten sam termin źródłowy. Zarządzaj nimi w ustawieniach. DeepL i tłumaczenie lokalne nie zapewniają alternatywnych sformułowań.
+Na stronie do czytania, w okienku zaznaczenia, w panelu tłumaczenia i na stronie PDF kliknij słowo w tłumaczeniu (lub zaznacz kilka słów), aby zobaczyć alternatywne warianty z krótkimi uwagami, albo wpisz własny. Twoje wybory są zapisywane na Twoim urządzeniu jako preferencje sformułowań i stosowane w późniejszych tłumaczeniach zawierających ten sam termin źródłowy. Zarządzaj nimi w ustawieniach. DeepL nie udostępnia alternatywnych sformułowań.
 
-NARZĘDZIA TŁUMACZENIOWE
+SZEŚĆ SPOSOBÓW TŁUMACZENIA
 
 • Czytanie dwujęzyczne: opisane powyżej.
-• Zaznaczony tekst: tłumacz tekst w dowolnym języku, w tym chińskim, w przenośnym okienku. Przesyłaj wynik strumieniowo, gdy jest to obsługiwane, rozwiń oryginał do porównania, skopiuj tłumaczenie lub zmień język docelowy.
-• Fragmenty stron internetowych: dodaj przycisk tłumaczenia do wybranej części witryny. Reguły są zapisywane według domeny, a Ty możesz przywrócić oryginalny tekst.
-• Obrazy: rozpoznawaj tekst, obrysuj każdy fragment wzdłuż jego obrysów i umieść tłumaczenie z powrotem na oryginale, aby fragmenty się nie nakładały. Pionowy tekst japoński pozostaje pionowy po przetłumaczeniu na chiński, japoński lub koreański. Przejrzyj i edytuj wykryte kształty przed tłumaczeniem, przetłumacz wybrany obszar i wyeksportuj przetłumaczony obraz. Rozpoznawanie wymaga modelu z obsługą wizji; tryb hostowany obejmuje rozpoznawanie obrazów.
-• Całe pliki PDF: otwórz plik PDF w przeglądarce i wybierz tłumaczenie całego dokumentu z menu kontekstowego. Plik PDF jest analizowany lokalnie; tylko wyodrębniony tekst jest przetwarzany przez wybrany tryb tłumaczenia. Porównaj oryginał i tłumaczenie, zachowaj układ strony, ryciny i tabele oraz drukuj lub zapisz jako PDF. Zeskanowane strony bez wyodrębnialnego tekstu nie są obsługiwane przez tłumaczenie całego dokumentu.
+• Zaznaczony tekst: tłumacz tekst w dowolnym języku, w tym po chińsku, w przenośnym okienku. Przesyłaj wynik strumieniowo, jeśli jest to obsługiwane, rozwiń oryginał do porównania, skopiuj tłumaczenie lub zmień język docelowy.
+• Fragmenty stron internetowych: dodaj przycisk tłumaczenia do wybranej części witryny. Reguły są zapisywane według domeny, a oryginalny tekst możesz przywrócić.
+• Obrazy: rozpoznawaj tekst, obrysuj każdy fragment wzdłuż jego kresek i umieść tłumaczenie z powrotem na oryginale, tak aby fragmenty się nie nakładały. Pionowy tekst japoński pozostaje pionowy po przetłumaczeniu na chiński, japoński lub koreański. Przejrzyj i edytuj wykryte kształty przed tłumaczeniem, przetłumacz wybrany obszar i wyeksportuj przetłumaczony obraz. Rozpoznawanie wymaga modelu obsługującego obrazy; tryb hostowany obejmuje rozpoznawanie obrazów.
+• Całe pliki PDF: otwórz plik PDF w przeglądarce i wybierz tłumaczenie całego dokumentu z menu kontekstowego. Plik PDF jest przetwarzany lokalnie; do tłumaczenia wysyłany jest wyłącznie wyodrębniony tekst. Porównaj oryginał i tłumaczenie, zachowaj układ stron, rysunki i tabele oraz drukuj lub zapisz jako PDF. Zeskanowane strony bez tekstu do wyodrębnienia nie są obsługiwane przez tłumaczenie całego dokumentu.
 • Panel tłumaczenia: wklej fragment do dedykowanego widoku źródła i tłumaczenia, wybierz język źródłowy i docelowy i przetłumacz go bez zaznaczania na stronie internetowej.
 
 24 JĘZYKI
 
-Wybierz chiński uproszczony, chiński tradycyjny, angielski, hiszpański, portugalski, francuski, niemiecki, włoski, niderlandzki, rosyjski, ukraiński, polski, turecki, arabski, hebrajski, perski, hindi, bengalski, urdu, indonezyjski, wietnamski, tajski, japoński lub koreański. Język interfejsu, język źródłowy i język docelowy tłumaczenia są niezależne. Obsługa dostawców różni się w zależności od języka i funkcji. Interfejsy od prawej do lewej są obsługiwane.
+Wybierz chiński uproszczony, chiński tradycyjny, angielski, hiszpański, portugalski, francuski, niemiecki, włoski, niderlandzki, rosyjski, ukraiński, polski, turecki, arabski, hebrajski, perski, hindi, bengalski, urdu, indonezyjski, wietnamski, tajski, japoński lub koreański. Język interfejsu, język źródłowy i język docelowy tłumaczenia są niezależne. Obsługa przez dostawcę różni się w zależności od języka i funkcji. Interfejsy od prawej do lewej są obsługiwane.
 
 KONTA, BEZPŁATNY OKRES PRÓBNY I OPCJONALNE SUBSKRYPCJE
 
 Tłumaczenie hostowane nie wymaga klucza API. Nowa kwalifikująca się instalacja przeglądarki otrzymuje próbę gościa; zalogowanie się za pomocą kodu weryfikacyjnego e-mail lub Google zapewnia konto i dodatkowe kredyty próbne. Kredyty próbne nie wygasają i są odejmowane według ilości przetłumaczonego tekstu (1 kredyt na 500 znaków); nieudane tłumaczenia nie są obciążane. Twoje saldo, subskrypcja i użycie są współdzielone z centrum użytkownika pod adresem https://app.huaci.app/.
 
-Po wyczerpaniu kredytów próbnych tłumaczenie hostowane wymaga aktywnej subskrypcji. Aktualne plany to 3.99 USD miesięcznie lub 29.99 USD rocznie, plus obowiązujące podatki. Subskrypcje odnawiają się automatycznie do momentu anulowania. Anuluj przyszłe odnowienie w centrum użytkownika; dostęp trwa do końca opłaconego okresu. Korzystanie hostowane jest objęte limitami rozsądnego użytkowania i zapobiegania nadużyciom. Płatności przetwarza Creem. Potwierdź aktualną cenę i warunki na stronie planów przed zakupem: https://app.huaci.app/plans.
+Po wyczerpaniu kredytów próbnych tłumaczenie hostowane wymaga aktywnej subskrypcji. Aktualne plany to 3.99 USD miesięcznie lub 29.99 USD rocznie, plus obowiązujące podatki. Subskrypcje odnawiają się automatycznie do momentu anulowania. Anuluj przyszłe odnowienie w centrum użytkownika; dostęp trwa do końca opłaconego okresu. Korzystanie z trybu hostowanego podlega limitom rozsądnego użytkowania i zapobiegania nadużyciom. Płatności przetwarza Creem. Przed zakupem potwierdź aktualną cenę i warunki na stronie planów: https://app.huaci.app/plans.
 
-Instalacja rozszerzenia i korzystanie z własnego klucza API są bezpłatne. Wybrany dostawca API może pobierać osobne opłaty. Subskrypcja tego rozszerzenia nie jest wymagana w trybie własnego klucza. DeepL nie zapewnia rozpoznawania obrazów.
+Instalacja rozszerzenia i korzystanie z własnego klucza API są bezpłatne. Wybrany przez Ciebie dostawca API może pobierać osobne opłaty. Subskrypcja tego rozszerzenia nie jest wymagana w trybie własnego klucza. DeepL nie zapewnia rozpoznawania obrazów.
 
 EKSPERYMENTALNE NAPISY DO FILMÓW
 
-Opcjonalne napisy do filmów są domyślnie wyłączone. Rozpoznawanie mowy zależy od wersji przeglądarki, urządzenia i języka i może być niedostępne. Rozpoznawanie lokalne jest używane, gdy jest obsługiwane; nigdy nie przełącza się po cichu na rozpoznawanie w chmurze. Tylko jeśli wyraźnie wybierzesz rozpoznawanie w chmurze, dźwięk karty jest wysyłany do usługi mowy przeglądarki (Microsoft Azure w Edge). Rozpoznany tekst podlega wybranemu trybowi tłumaczenia. Nie zapewniamy hostowanej transkrypcji audio/wideo. Ta eksperymentalna funkcja nie gwarantuje, że każdy film można przetłumaczyć.
+Opcjonalne napisy do filmów są domyślnie wyłączone. Rozpoznawanie mowy zależy od wersji przeglądarki, urządzenia i języka i może być niedostępne. Jeśli jest obsługiwane, używane jest rozpoznawanie lokalne; nigdy nie przełącza się po cichu na rozpoznawanie w chmurze. Tylko jeśli wyraźnie wybierzesz rozpoznawanie w chmurze, dźwięk karty jest wysyłany do usługi mowy przeglądarki (Microsoft Azure w Edge). Rozpoznany tekst jest zgodny z wybranym trybem tłumaczenia. Nie zapewniamy hostowanej transkrypcji audio/wideo. Ta eksperymentalna funkcja nie gwarantuje, że każdy film można przetłumaczyć.
 
 PRYWATNOŚĆ
 
-• Lokalne tłumaczenie tekstu pozostaje na Twoim urządzeniu. Automatyczne tłumaczenie działa tylko w witrynach, które wyraźnie włączysz, także przy późniejszych wizytach.
-• Żądania z własnym kluczem trafiają bezpośrednio do wybranego dostawcy lub punktu końcowego HTTPS. Twój klucz pozostaje w lokalnej pamięci rozszerzenia i nie jest synchronizowany przez konto przeglądarki.
-• Tryb hostowany wysyła żądany tekst lub obrazy przez nasz serwer do dostawcy modelu. Nasz serwer nie zachowuje oryginalnego tekstu, obrazów ani tłumaczeń.
+• Żądania w trybie własnego klucza trafiają bezpośrednio do wybranego dostawcy lub punktu końcowego HTTPS. Twój klucz pozostaje w lokalnej pamięci rozszerzenia i nie jest synchronizowany przez konto przeglądarki.
+• Tryb hostowany wysyła żądany tekst lub obrazy przez nasz serwer do dostawcy modelu. Nasz serwer nie przechowuje oryginalnego tekstu, obrazów ani tłumaczeń.
 • Całe pliki PDF są przetwarzane lokalnie i nie są przesyłane. Czytanie dwujęzyczne wykrywa artykuły na Twoim urządzeniu; zapisane artykuły i preferencje sformułowań pozostają w lokalnej pamięci rozszerzenia.
-• Konta zachowują adres e-mail, nazwę użytkownika i zapisy potrzebne do uwierzytelniania, użycia, kredytów i rozliczeń. Brak reklam, zestawów SDK śledzących i fingerprintingu urządzeń.
-• Cały wykonywalny kod rozszerzenia jest zawarty w pakiecie. Źródło jest dostępne na licencji GPL-3.0.
+• Konta przechowują adres e-mail, nazwę użytkownika i zapisy potrzebne do uwierzytelniania, użytkowania, kredytów i rozliczeń. Bez reklam, zestawów SDK śledzących i fingerprintingu urządzeń.
+• Cały wykonywalny kod rozszerzenia jest zawarty w pakiecie. Źródła są dostępne na licencji GPL-3.0.
 
 ROZPOCZĘCIE
 
-Zainstaluj, wybierz preferowany język docelowy i skorzystaj z próby hostowanej lub skonfiguruj własny klucz API w ustawieniach. Na zwykłej stronie internetowej kliknij prawym przyciskiem myszy bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”, albo zaznacz tekst i wybierz „Przetłumacz na…”. Skrót klawiszowy: Alt+Shift+T lub Command+Shift+Y w systemie macOS.
+Zainstaluj, wybierz preferowany język docelowy i skorzystaj z hostowanej próby lub skonfiguruj własny klucz API w ustawieniach. Na zwykłej stronie internetowej kliknij prawym przyciskiem myszy bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”, albo zaznacz tekst i wybierz „Przetłumacz na…”. Skrót klawiszowy: Alt+Shift+T lub Command+Shift+Y w systemie macOS.
 
-Strony chronione przez przeglądarkę i sklepy z rozszerzeniami nie pozwalają na nakładki tłumaczeń. Pojedyncze żądania tekstu są ograniczone do 6,000 znaków; tłumaczenie plików PDF, fragmentów i czytania dwujęzycznego używa partii. Wykrywanie artykułów jest heurystyczne, więc fora, sieci społecznościowe i strony za logowaniem mogą nie być wykrywane w pełni. Niestandardowe punkty końcowe API wymagają HTTPS i uprawnień dla wybranego hosta.
+Strony chronione przez przeglądarkę i sklepy z rozszerzeniami nie pozwalają na nakładki tłumaczeń. Pojedyncze żądania tekstowe są ograniczone do 6,000 znaków; tłumaczenie PDF, fragmentów i czytanie dwujęzyczne korzystają z partii. Wykrywanie artykułów jest heurystyczne, więc fora, sieci społecznościowe i strony za logowaniem mogą nie zostać wykryte w pełni. Niestandardowe punkty końcowe API wymagają HTTPS i uprawnienia dla wybranego hosta.
 
 Niezależny projekt; niepowiązany z Microsoft, OpenAI, DeepSeek ani DeepL. Nazwy identyfikują kompatybilne usługi i pozostają znakami towarowymi ich właścicieli.
 
 Strona internetowa: https://huaci.app/
 Pomoc: support@huaci.app
-Źródło i problemy: https://github.com/csswork/AiTranslation
+Źródła i zgłoszenia: https://github.com/csswork/AiTranslation
 Polityka prywatności: https://huaci.app/privacy.html
 Warunki i zwroty: https://huaci.app/terms.html

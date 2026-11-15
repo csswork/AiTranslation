@@ -40,7 +40,7 @@ Un repositorio, tres aplicaciones: un sitio HTML en Vercel, un backend en un VPS
 | --- | --- | --- | --- |
 | Sitio web | [apps/web](../../apps/web/README.md) | Vercel | Presentación, privacidad, condiciones e historial de cambios en 11 idiomas; la cabecera consulta el estado de sesión en app.huaci.app |
 | Backend | [apps/backend](../../apps/backend/README.md) | VPS | Autenticación, interfaces de usuario y administración, API de la extensión, prueba para visitantes, contabilidad precisa de créditos, traducción alojada de texto e imágenes y suscripciones con Creem; primera versión desplegada |
-| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | Código fuente: 2.3.0. Traducción local, traducción automática de sitios y mejoras de estilo e imágenes. [Estado de publicación](../../docs/extension/releases/2.3.0.md) |
+| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | Versión en las tiendas: 2.1.0. Código fuente: 2.2.0, con lectura bilingüe, expresiones alternativas, preferencias de vocabulario y traducción siguiendo la forma del texto; publicación en preparación |
 
 ## Estructura
 
