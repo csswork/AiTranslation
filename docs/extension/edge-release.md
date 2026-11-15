@@ -103,3 +103,5 @@ Partner Center 的扩展 CRX ID 为 `mojcgjimlkkbohomcijkmoefpeekmohe`（产品 
 ## 2.3.0 更新（2026-11-15）
 
 本机文字翻译、整站翻译、译文风格与图片自动翻译优化同步打入 Chrome 和 Edge 的独立生产 ZIP。pdf.js 改用同版本官方未压缩 legacy 以处理 Chrome 可读性警告。两商店实际提交状态、验证与限制统一见 [发布记录](releases/2.3.0.md)。本文 2026-10-25 的未完成项是历史记录，不代表当前提交状态。
+
+2.3.0 已于 2026-11-15 上传并通过包校验，随后提交，Partner Center 的 Extension overview 显示 `Version 2.3.0 / In review`。本次不是已获审核通过；详见发布记录。

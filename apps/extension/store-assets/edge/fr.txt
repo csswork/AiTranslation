@@ -35,7 +35,7 @@ Chinois simplifié, chinois traditionnel, anglais, espagnol, portugais, françai
 
 COMPTES, ESSAI GRATUIT ET ABONNEMENTS FACULTATIFS
 
-La traduction hébergée ne nécessite aucune clé API. Une nouvelle installation de navigateur éligible reçoit un essai invité ; se connecter par code e-mail ou Google fournit un compte et des crédits d’essai supplémentaires. Les crédits n’expirent pas et sont déduits selon le texte traduit (1 crédit pour 500 caractères) ; les échecs ne sont pas facturés. Solde, abonnement et utilisation sont partagés avec le centre utilisateur à https://app.huaci.app/.
+La traduction hébergée ne nécessite aucune clé API. Une nouvelle installation de navigateur éligible reçoit un essai invité ; se connecter par code e-mail ou Google fournit un compte et des crédits d’essai supplémentaires. Les crédits n’expirent pas et sont déduits selon le texte traduit (1 crédit pour 500 caractères) ; les échecs ne sont pas facturés. Solde, abonnement et utilisation sont partagés avec le centre utilisateur à https://app.huaci.app/ .
 
 Une fois l’essai épuisé, la traduction hébergée nécessite un abonnement actif. Offres actuelles : 3.99 US$ par mois ou 29.99 US$ par an, plus taxes applicables. Renouvellement automatique jusqu’à annulation. Annulez le renouvellement futur dans le centre utilisateur ; l’accès continue jusqu’à la fin de la période payée. Utilisation hébergée soumise à des limites d’usage raisonnable et de prévention des abus. Creem traite les paiements. Confirmez prix et conditions actuels sur https://app.huaci.app/plans avant achat.
 

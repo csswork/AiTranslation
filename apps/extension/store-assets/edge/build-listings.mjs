@@ -15,6 +15,12 @@ const hashes = fs.existsSync(snapshotFile) ? JSON.parse(fs.readFileSync(snapshot
 const locales = JSON.parse(fs.readFileSync(path.join(root, 'i18n/locales.json')));
 const urls = (text) => [...text.matchAll(/https:\/\/[a-z\d./:_?&=%#-]+/gi)]
   .map((match) => match[0].replace(/[.,;:!?。，；：！？）)]+$/u, '')).sort().join('\n');
+// Partner Center treats punctuation attached to a URL as part of the address.
+const separateUrls = (text) => text.replace(/https:\/\/[a-z\d./:_?&=%#-]+/gi, (match, offset, source) => {
+  const url = match.replace(/[.,;:!?]+$/u, '');
+  const suffix = match.slice(url.length);
+  return url + (suffix || /\S/u.test(source[offset + match.length] || '') ? ' ' : '') + suffix;
+});
 const issues = (text) => typeof text !== 'string' ? ['missing text'] : [
   ...(text.length < 1000 || text.length > 10000 ? [`length ${text.length}`] : []),
   ...(urls(text) !== urls(english) ? ['URL mismatch: ' + urls(text).replaceAll('\n', ', ')] : []),
@@ -50,6 +56,14 @@ if (process.argv.includes('--check')) {
   if (queue.length) throw new Error(`Stale ${store} descriptions: ` + queue.map((l) => l.id).join(', '));
   console.log(`24 current ${store} store descriptions; URLs, prices and length checked`);
 } else {
+  for (const locale of locales.filter((locale) => locale.id !== 'en')) {
+    const file = path.join(here, `${locale.id}.txt`);
+    if (fs.existsSync(file)) {
+      const cached = fs.readFileSync(file, 'utf8');
+      const normalized = separateUrls(cached);
+      if (normalized !== cached) fs.writeFileSync(file, normalized);
+    }
+  }
   const config = { ...process.env };
   const env = [path.join(root, '.env.local'), path.resolve(root, '../../.env.local')].find(fs.existsSync);
   if (env) for (const line of fs.readFileSync(env, 'utf8').split(/\r?\n/)) {
@@ -89,7 +103,7 @@ if (process.argv.includes('--check')) {
           }
         }
         if (!valid(text)) throw new Error('Invalid translation: ' + issues(text).join(', '));
-        fs.writeFileSync(path.join(here, `${locale.id}.txt`), text.trim() + '\n');
+        fs.writeFileSync(path.join(here, `${locale.id}.txt`), separateUrls(text).trim() + '\n');
         hashes[locale.id] = hash;
         fs.writeFileSync(snapshotFile, JSON.stringify(hashes, null, 2) + '\n');
         console.log(locale.id + `: ${store} description ready`);

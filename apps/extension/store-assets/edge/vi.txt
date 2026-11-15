@@ -35,9 +35,9 @@ Chọn tiếng Trung Giản thể, tiếng Trung Phồn thể, tiếng Anh, ti�
 
 TÀI KHOẢN, DÙNG THỬ MIỄN PHÍ VÀ ĐĂNG KÝ TÙY CHỌN
 
-Dịch máy chủ không cần khóa API. Một bản cài đặt trình duyệt mới đủ điều kiện sẽ nhận được bản dùng thử khách; đăng nhập bằng mã xác minh email hoặc Google sẽ cung cấp tài khoản và thêm tín dụng dùng thử. Tín dụng dùng thử không hết hạn và được trừ theo lượng văn bản được dịch (1 tín dụng cho mỗi 500 ký tự); các bản dịch thất bại không bị tính phí. Số dư, đăng ký và mức sử dụng của bạn được chia sẻ với trung tâm người dùng tại https://app.huaci.app/.
+Dịch máy chủ không cần khóa API. Một bản cài đặt trình duyệt mới đủ điều kiện sẽ nhận được bản dùng thử khách; đăng nhập bằng mã xác minh email hoặc Google sẽ cung cấp tài khoản và thêm tín dụng dùng thử. Tín dụng dùng thử không hết hạn và được trừ theo lượng văn bản được dịch (1 tín dụng cho mỗi 500 ký tự); các bản dịch thất bại không bị tính phí. Số dư, đăng ký và mức sử dụng của bạn được chia sẻ với trung tâm người dùng tại https://app.huaci.app/ .
 
-Sau khi tín dụng dùng thử hết, dịch máy chủ yêu cầu đăng ký đang hoạt động. Các gói hiện tại là US$3.99 mỗi tháng hoặc US$29.99 mỗi năm, cộng với thuế áp dụng. Đăng ký tự động gia hạn cho đến khi bị hủy. Hủy gia hạn trong tương lai trong trung tâm người dùng; quyền truy cập tiếp tục cho đến khi kết thúc thời gian đã trả. Việc sử dụng máy chủ tuân theo các giới hạn sử dụng hợp lý và phòng chống lạm dụng. Creem xử lý thanh toán. Xác nhận giá và điều khoản hiện tại trên trang gói trước khi mua: https://app.huaci.app/plans.
+Sau khi tín dụng dùng thử hết, dịch máy chủ yêu cầu đăng ký đang hoạt động. Các gói hiện tại là US$3.99 mỗi tháng hoặc US$29.99 mỗi năm, cộng với thuế áp dụng. Đăng ký tự động gia hạn cho đến khi bị hủy. Hủy gia hạn trong tương lai trong trung tâm người dùng; quyền truy cập tiếp tục cho đến khi kết thúc thời gian đã trả. Việc sử dụng máy chủ tuân theo các giới hạn sử dụng hợp lý và phòng chống lạm dụng. Creem xử lý thanh toán. Xác nhận giá và điều khoản hiện tại trên trang gói trước khi mua: https://app.huaci.app/plans .
 
 Cài đặt tiện ích mở rộng và sử dụng khóa API của riêng bạn là miễn phí. Nhà cung cấp API bạn chọn có thể tính phí riêng. Không cần đăng ký tiện ích mở rộng này cho chế độ mang khóa của riêng bạn. DeepL không cung cấp nhận dạng hình ảnh.
 
