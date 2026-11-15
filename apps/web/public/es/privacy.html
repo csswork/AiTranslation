@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidad</h2>
-        <p class="updated">Última actualización: 2026-11-06 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
+        <p class="updated">Última actualización: 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -83,11 +83,11 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>En una frase</h3>
-          <p>Los servicios de cuenta, puntos y suscripción ya están disponibles con 2.0.0; a continuación se describe el tratamiento de datos de estos servicios.</p>
-          <p>Huaci tiene dos modos de uso. <b>Clave propia</b>: el contenido que quieres traducir se envía directamente a la plataforma de IA que configures, sin pasar por nosotros. <b>Traducción por puntos</b>: el contenido pasa por nuestro servidor hacia el proveedor del modelo para completar la traducción; el servidor <b>no guarda el original ni la traducción</b>. La cuenta, la facturación y la prevención de abusos solo conservan los datos necesarios para su funcionamiento; no se usan para publicidad ni se venden.</p>
+          <p>A continuación se explica cómo se tratan los datos en los servicios de traducción, cuenta, puntos y suscripción.</p>
+          <p>Huaci admite traducción local, clave propia y traducción por puntos. <b>Traducción local</b>: el texto solo se procesa en el dispositivo. <b>Clave propia</b>: el contenido que deseas traducir se envía directamente a la plataforma de IA que hayas configurado, sin pasar por nosotros. <b>Traducción por puntos</b>: el contenido se transmite a través de nuestros servidores al proveedor del modelo para completar la traducción; el servidor <b>no guarda el texto original ni la traducción</b>. La cuenta, la facturación y la prevención de abusos solo conservan los datos necesarios para su funcionamiento; no se usan para publicidad ni se venden.</p>
 
           <h3>Contenido que se envía al traducir</h3>
-          <p>Solo cuando <b>activas la traducción manualmente</b> (menú contextual, atajo de teclado, clic en el botón de traducir), el siguiente contenido se envía mediante HTTPS:</p>
+          <p>Cuando traduces de forma activa o activas la traducción automática de un sitio web, el modo de traducción en línea envía el siguiente contenido mediante HTTPS; la traducción local de texto no envía este contenido:</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -95,6 +95,7 @@
               </thead>
               <tbody>
                 <tr><td>El texto que seleccionas</td><td>Al usar la traducción por selección</td><td>La plataforma que elijas</td><td>Nuestro servidor, y luego al proveedor del modelo</td></tr>
+                <tr><td>Texto cercano al área visible en sitios con traducción de todo el sitio activada</td><td>Traducción automática al activarla y en visitas posteriores a ese sitio</td><td>La plataforma que elijas</td><td>Nuestro servidor, y luego al proveedor del modelo</td></tr>
                 <tr><td>El texto de la zona que señalas</td><td>Al hacer clic en el botón de traducir en el área</td><td>Ídem</td><td>Ídem</td></tr>
                 <tr><td>El texto que escribes en el panel de traducción</td><td>Al pulsar Traducir</td><td>Ídem</td><td>Ídem</td></tr>
                 <tr><td>Texto reconocido de los subtítulos del video</td><td>Al activar la traducción de subtítulos de video</td><td>Ídem</td><td>Ídem</td></tr>
@@ -115,7 +116,12 @@
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>No se envía</b>: contenido de páginas que no hayas traducido manualmente, historial de navegación, cookies ni datos de formularios. La extensión no escanea ni sube nada automáticamente en segundo plano.</p>
+          <p><b>No se envía</b>: contenido de páginas que no has traducido de forma activa, historial de navegación, cookies ni datos de formularios. La traducción automática solo se aplica en los sitios que hayas habilitado explícitamente.</p>
+
+          <h3>Traducción local</h3>
+          <p>La traducción local utiliza el modelo integrado del navegador. Los paquetes de idioma los descarga y gestiona el navegador; una vez completada la descarga, se puede traducir texto sin conexión. El texto original, la traducción y las preferencias de términos no se envían a nosotros ni a plataformas de traducción, y no generan registros de uso alojado. La traducción local solo procesa texto; no admite reconocimiento de imágenes ni reformulación de palabras con un clic.</p>
+          <h3>Traducción automática de todo el sitio</h3>
+          <p>Solo después de que marques con el botón derecho «Traducir este sitio» se traducirá automáticamente el texto cercano al área visible de ese sitio; seguirá vigente en visitas posteriores al mismo sitio hasta que desmarques la opción. El mismo texto reutiliza la traducción en la misma página. La lista de sitios y la selección de plataforma dedicada solo se guardan localmente; con la traducción local el texto no se sube, y con clave propia o traducción por puntos se envía según la tabla anterior. La primera vez que se habilite una plataforma de pago se solicitará confirmación.</p>
 
           <h3>Procesamiento de audio de los subtítulos de vídeo experimentales</h3>
           <p>Los subtítulos de vídeo están desactivados de forma predeterminada. Al activarlos, de forma predeterminada se reconoce localmente el audio de la pestaña actual, lo que puede requerir la descarga del paquete de idioma del navegador; solo cuando seleccionas manualmente «usar reconocimiento en la nube» se envía el audio al servicio de reconocimiento de voz del navegador: Chrome usa Google (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad de Google</a>), Microsoft Edge usa Microsoft Azure (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Declaración de privacidad de Microsoft</a>). El reconocimiento local solo está disponible en versiones de navegador e idiomas compatibles; la extensión no cambia automáticamente al reconocimiento en la nube. El texto de los subtítulos reconocidos se envía después a la plataforma de traducción o a nuestro servidor según el modo de traducción seleccionado. No recibimos ni almacenamos vídeo ni audio, y no ofrecemos transcripción alojada de audio y vídeo.</p>
@@ -161,7 +167,8 @@
             <li><b>API Key</b>: se utiliza únicamente para autenticarte ante la plataforma que elijas en el encabezado de la solicitud; no se nos envía</li>
             <li><b>Token de inicio de sesión de la extensión</b>: se envía únicamente a <code>app.huaci.app</code>, para la traducción con puntos y el estado de la cuenta</li>
             <li><b>Preferencias</b>: idioma de destino, modelo utilizado, distintos interruptores</li>
-            <li><b>Reglas de traducción por zona</b>: «dominio + selector CSS» que añadas manualmente</li>
+            <li><b>Traducción de todo el sitio</b>: dominio del sitio habilitado y selección de plataforma dedicada</li>
+            <li><b>Reglas de traducción por región</b>: «dominio + selector CSS» que hayas añadido manualmente</li>
             <li><b>Preferencias de términos</b>: las variantes que has cambiado en las traducciones (palabra original y traducción); al traducir, las entradas relevantes se envían con la solicitud, como se describe arriba</li>
             <li><b>Artículos guardados</b>: los artículos y traducciones que guardas en la lectura bilingüe permanecen solo en este dispositivo y pueden eliminarse desde el lado derecho de la página de lectura</li>
           </ul>

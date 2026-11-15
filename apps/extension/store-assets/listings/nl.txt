@@ -1,70 +1,78 @@
 Selecteer, klik met de rechtermuisknop en blijf lezen. Lees hele artikelen naast elkaar met hun vertaling, en vertaal geselecteerde tekst, afbeeldingen en PDF's direct waar ze staan—zonder van tabblad te wisselen of te kopiëren en plakken.
 
-Huaci – AI-vertaler & tweetalige lezer is een opensource-browserextensie gebouwd op Manifest V3. Begin direct na installatie met vertalen met tegoeden zonder sleutel, of gebruik je eigen OpenAI-, DeepSeek- of DeepL-API Key.
+Huaci – AI-vertaler & tweetalige lezer is een open-source browserextensie gebouwd op Manifest V3. Gebruik gratis lokale tekstvertaling waar ondersteund, sleutelvrije gehoste credits, of je eigen OpenAI-, DeepSeek- of DeepL-API-sleutel.
 
-▍Tweetalig lezen (nieuw in 2.2.0)
+LOKALE EN AUTOMATISCHE WEBSITEPVERTALING (NIEUW IN 2.3.0)
 
-Klik ergens op een pagina met de rechtermuisknop zonder tekst te selecteren en kies "Lees dit artikel tweetalig". Een lichtbundel gaat over de pagina terwijl de titel en hoofdtekst worden gedetecteerd, waarna ernaast een overzichtelijke leespagina opent met elke originele alinea naast de bijbehorende vertaling. Navigatie, zijbalken, advertentieruimtes en aanbevelingswidgets worden weggelaten en nooit ter vertaling verstuurd.
+• Lokale tekstvertaling: op ondersteunde browsers en apparaten kun je in Instellingen taalparen downloaden en gratis offline vertalen, zonder API-sleutel of credits. Tekst blijft op je apparaat. Gebruik het voor selecties, paginaregio's, websites, het tekstpaneel, PDF's, tweetalig lezen en herkende ondertitels. Beschikbaarheid en talen zijn afhankelijk van de browser en gedownloade pakketten. Lokale modus biedt geen beeldherkenning of alternatieve formuleringen; niet-ondersteunde bedieningselementen worden verborgen.
+• Automatische websitevertaling: klik met de rechtermuisknop en schakel "Deze website vertalen" in. Tekst nabij de viewport wordt vertaald terwijl je scrolt, ook bij latere bezoeken, totdat je het uitschakelt. Herhaalde tekst op een pagina hergebruikt vertalingen. Kies een aparte provider in Instellingen; bij het eerste gebruik van een betaalde provider wordt om bevestiging gevraagd.
+• Natuurlijkere formulering: herziene stijlgidsen verbeteren formulering, terminologie en toon voor Chinees en andere doeltalen.
+• Betere automatische beeldvertaling: verbeterde tekstvormen, lettergrootte, uitlijning, verticale tekst en achtergrondkleuren. Verplaats een passage, bewerk de vertaling of grootte, of vertaal alleen die passage opnieuw. Geëxporteerde afbeeldingen behouden je bewerkingen. Vertaal optioneel geluidseffecten; herkende afbeeldingen worden op de huidige pagina in de cache opgeslagen, met navigatie tussen afbeeldingen.
 
-• Naast elkaar begint elk alineapaar op dezelfde hoogte; je kunt ze ook onder elkaar zetten, of alleen de vertaling of alleen het origineel tonen
-• Licht, donker of het systeem volgen, plus aanpasbaar kleurenpalet, lettertype, grootte, regelhoogte en paginabreedte—alles wordt onthouden
-• "Opslaan" bewaart het artikel en de vertaling op je apparaat; open het opnieuw uit de lijst aan de rechterkant zonder het opnieuw te vertalen, of verwijder het wanneer je het niet meer nodig hebt
+▍Tweetalig lezen
+
+Klik met de rechtermuisknop ergens op een pagina zonder tekst te selecteren en kies "Lees dit artikel tweetalig". Een lichte gloed trekt over de pagina terwijl de titel en hoofdtekst worden gedetecteerd, waarna een overzichtelijke leespagina ernaast opent met elke originele alinea naast de vertaling. Navigatie, zijbalken, advertentieruimtes en aanbevelingswidgets worden weggelaten en nooit ter vertaling verzonden.
+
+• Naast elkaar begint elk alineapaar op dezelfde hoogte; je kunt ze ook stapelen, of alleen de vertaling of alleen het origineel tonen
+• Licht, donker of volg-systeem uiterlijk, plus aanpasbaar kleurenpalet, lettertype, grootte, regelhoogte en paginabreedte—alles wordt onthouden
+• "Opslaan" bewaart het artikel en de vertaling op je apparaat; open het opnieuw uit de lijst aan de rechterkant zonder opnieuw te vertalen, of verwijder het wanneer je het niet meer nodig hebt
 
 ▍Klik op een woord voor een andere formulering—en behoud je voorkeurstermen
 
-Op de leespagina, in de selectiepopup, in het vertaalpaneel en op de PDF-pagina kun je op een woord in de vertaling klikken—of over een paar woorden slepen—om verschillende alternatieve weergaven met korte toelichtingen te zien, of je eigen tekst typen. Vervang hetzelfde woord elders in één keer.
+Op de leespagina, in de selectiepopup, in het vertaalpaneel en op de PDF-pagina kun je op een woord in de vertaling klikken—of over een paar woorden slepen—om verschillende alternatieve weergaven met korte notities te zien, of je eigen tekst typen. Vervang hetzelfde woord elders in één keer.
 
-Formuleringen die je kiest, worden op je apparaat onthouden als woordvoorkeuren: latere vertalingen van tekst die dezelfde bronterm bevat, volgen je keuze. Bekijk en verwijder ze in Instellingen.
+Formuleringen die je kiest, worden op je apparaat onthouden als formuleringvoorkeuren: latere vertalingen van tekst die dezelfde bronterm bevat volgen je keuze. Bekijk en verwijder ze in Instellingen.
 
-▍Zes manieren om te vertalen, allemaal in het rechtermuisknopmenu
+▍Vertaaltools
 
 • Geselecteerde tekst
-Selecteer tekst en kies "Direct vertalen" in het rechtermuisknopmenu. De vertaling verschijnt in een gecentreerde popup, woord voor woord waar de provider streaming ondersteunt. Je kunt ook de zwevende knop naast een selectie gebruiken, of de sneltoets ⌘⇧Y op macOS / Alt+Shift+T elders. De popup kan worden versleept, toont het origineel op verzoek en vertaalt het origineel opnieuw wanneer je de doeltaal wisselt.
+Selecteer tekst en kies "Vertalen naar…" in het rechtermuisknopmenu. De vertaling verschijnt in een gecentreerde popup, woord voor woord waar de provider streaming ondersteunt. Je kunt ook de zwevende knop naast een selectie gebruiken, of de sneltoets ⌘⇧Y op macOS / Alt+Shift+T elders. De popup kan worden versleept, toont het origineel op verzoek en vertaalt het origineel opnieuw wanneer je de doeltaal wijzigt.
 
 • Afbeeldingen
-Klik met de rechtermuisknop op een afbeelding om de tekst ervan te herkennen. Elk tekstblok wordt langs de lijnen omlijnd en de vertaling wordt over het origineel geplaatst zonder dat de blokken elkaar bedekken. Verticale Japanse tekst, zoals in manga, blijft verticaal wanneer deze naar het Chinees, Japans of Koreaans wordt vertaald. Controleer eerst de gedetecteerde vormen—verplaats, bewerk, verwijder of teken nieuwe—voordat je vertaalt, of selecteer alleen de gebieden die je nodig hebt (rechthoeken of cirkels). Download of kopieer het resultaat als een nieuwe afbeelding.
+Klik met de rechtermuisknop op een afbeelding om de tekst te herkennen. Elke passage wordt langs de contouren omlijnd en de vertaling wordt over het origineel geplaatst zonder dat de passages elkaar bedekken. Verticale Japanse tekst, zoals in manga, blijft verticaal bij vertaling naar Chinees, Japans of Koreaans. Controleer eerst de gedetecteerde vormen—verplaats, bewerk, verwijder of teken nieuwe—voordat je vertaalt, of selecteer alleen de gebieden die je nodig hebt (rechthoeken of cirkels). Download of kopieer het resultaat als een nieuwe afbeelding.
 
 • Volledige PDF's
-Klik in de ingebouwde PDF-viewer van de browser met de rechtermuisknop zonder tekst te selecteren om het hele document te vertalen op een pagina ernaast. Vertalingen worden over de originele posities gelegd, zodat de lay-out, figuren en tabel lijnen op hun plaats blijven. Vergelijk naast elkaar, toon alleen de vertaling of alleen het origineel, en sla het resultaat op als PDF via het afdrukdialoogvenster. Je kunt ook een lokale PDF naar de vertaalpagina slepen.
+In de ingebouwde PDF-viewer van de browser klik je met de rechtermuisknop zonder tekst te selecteren om het hele document op een pagina ernaast te vertalen. Vertalingen worden over de originele posities gelegd, zodat lay-out, figuren en tabellijnen op hun plaats blijven. Vergelijk naast elkaar, toon alleen de vertaling of alleen het origineel, en sla het resultaat op als PDF via het afdrukdialoogvenster. Je kunt ook een lokale PDF naar de vertaalpagina slepen.
 
-• Paginagebieden
+• Paginaregio's
 Klik met de rechtermuisknop op een gebied van een pagina om er een vertaalknop aan toe te voegen. Klik één keer om de tekst in dat gebied te vervangen door de vertaling, en nogmaals om het origineel te herstellen. Regels worden per website onthouden.
 
 • Vertaalpaneel
-Een aparte pagina met het origineel aan de linkerkant en de vertaling aan de rechterkant, voor langere passages of tekst van buiten de browser. Detecteer de brontaal automatisch of kies deze zelf.
+Een speciale pagina met het origineel links en de vertaling rechts, voor langere passages of tekst van buiten de browser. Detecteer de brontaal automatisch of kies deze zelf.
 
-24 interface- en doeltalen: Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thai, Japans en Koreaans. Interface-, bron- en doeltalen zijn onafhankelijke instellingen, en Arabische, Hebreeuwse, Perzische en Urdu-interfaces gebruiken een lay-out van rechts naar links.
+24 interface- en doeltalen: Vereenvoudigd Chinees, Traditioneel Chinees, Engels, Spaans, Portugees, Frans, Duits, Italiaans, Nederlands, Russisch, Oekraïens, Pools, Turks, Arabisch, Hebreeuws, Perzisch, Hindi, Bengaals, Urdu, Indonesisch, Vietnamees, Thai, Japans en Koreaans. Interface-, bron- en doeltalen zijn onafhankelijke instellingen, en Arabische, Hebreeuwse, Perzische en Urdu-interfaces gebruiken een rechts-naar-links lay-out.
 
-▍Twee manieren om het te gebruiken
+▍Vertaalmodi
 
-• Vertalen met tegoeden zonder sleutel
-Een nieuwe geschikte installatie ontvangt een gastproefperiode (aanvragen zijn beperkt per netwerk), en aanmelden met e-mail of Google voegt meer tegoeden toe. Tegoeden verlopen nooit en worden afgetrokken op basis van de hoeveelheid daadwerkelijk vertaalde tekst (1 tegoed per 500 tekens); mislukte vertalingen worden niet in rekening gebracht. Zodra de proeftegoeden op zijn, vereist vertalen met tegoeden een abonnement, dat onbeperkt gebruik biedt (fair use), automatisch wordt verlengd en op elk moment kan worden opgezegd. Zie de website en je accountcentrum voor de actuele proefbedragen en prijzen.
+• Sleutelvrije creditvertaling
+Een nieuwe in aanmerking komende installatie ontvangt een gastproefperiode (claims zijn beperkt per netwerk), en aanmelden met e-mail of Google voegt meer credits toe. Credits verlopen nooit en worden afgetrokken op basis van de hoeveelheid daadwerkelijk vertaalde tekst (1 credit per 500 tekens); mislukte vertalingen worden niet in rekening gebracht. Zodra proefcredits op zijn, vereist creditvertaling een abonnement, dat onbeperkt gebruik geeft (fair use), automatisch wordt verlengd en op elk moment kan worden opgezegd. Zie de website en je accountcentrum voor actuele proefbedragen en prijzen.
 
-• Je eigen API Key
-Voer je eigen OpenAI-, DeepSeek- of DeepL-sleutel in. Verzoeken gaan rechtstreeks van je browser naar die provider, die je voor gebruik factureert. Beeldherkenning vereist een model met visuele mogelijkheden; DeepL biedt geen beeldherkenning of alternatieve formuleringen.
+• Je eigen API-sleutel
+Voer je eigen OpenAI-, DeepSeek- of DeepL-sleutel in. Verzoeken gaan rechtstreeks van je browser naar die provider, die je voor gebruik factureert. Beeldherkenning vereist een vision-capabel model; DeepL biedt geen beeldherkenning of alternatieve formuleringen.
 
 ▍Privacy
 
-• Inhoud wordt alleen verzonden wanneer je ervoor kiest deze te vertalen. De extensie scant of uploadt nooit pagina's op de achtergrond.
+• Lokale vertaling houdt tekst op je apparaat. Online modi sturen aangevraagde inhoud naar de gekozen service. Automatische websitevertaling verwerkt tekst alleen op websites die je expliciet inschakelt, ook bij latere bezoeken.
 • Met je eigen sleutel gaat inhoud rechtstreeks naar de provider die je hebt gekozen, nooit via ons.
-• Bij vertalen met tegoeden gaat inhoud via onze server naar een modelprovider; de server slaat je tekst, vertalingen of afbeeldingen niet op.
-• API-sleutels, woordvoorkeuren en opgeslagen artikelen blijven op je apparaat en worden niet gesynchroniseerd via je browseraccount.
+• Bij creditvertaling gaat inhoud via onze server naar een modelprovider; de server slaat je tekst, vertalingen of afbeeldingen niet op.
+• API-sleutels, formuleringvoorkeuren en opgeslagen artikelen blijven op je apparaat en worden niet gesynchroniseerd via je browseraccount.
 • Geen advertenties, tracking of analyses van derden. De volledige broncode is beschikbaar onder GPL-3.0.
 
-Live videolabels zijn een experimentele functie, standaard uitgeschakeld. Spraak wordt standaard op je apparaat herkend; als je expliciet voor cloudherkenning kiest, wordt audio naar de spraakherkenningsdienst van je browser verzonden.
+Live video-ondertitels zijn een experimentele functie, standaard uitgeschakeld. Spraak wordt standaard op je apparaat herkend; als je expliciet cloudherkenning kiest, wordt audio naar de spraakherkenningsservice van je browser verzonden.
 
 ▍Bekende beperkingen
 
-• Door de browser beschermde pagina's, zoals interne chrome://-pagina's en de extensiestores, kunnen niet worden gebruikt.
-• Een enkele selectie kan maximaal 6.000 tekens bevatten; langere selecties worden afgekapt met een melding.
+• Door de browser beschermde pagina's, zoals interne chrome:// pagina's en de extensiestores, kunnen niet worden gebruikt.
+• Een enkele selectie kan maximaal 6,000 tekens bevatten; langere selecties worden afgekapt met een melding.
 • Tweetalig lezen detecteert artikelen op basis van de paginastructuur; forums, sociale netwerken en pagina's achter een login worden mogelijk niet volledig gedetecteerd.
-• Gescande en met een wachtwoord beveiligde PDF's worden nog niet ondersteund.
-• Beschikbare talen, beeldherkenning en streaming zijn afhankelijk van de provider en het model die je kiest.
+• Gescande en met wachtwoord beveiligde PDF's worden nog niet ondersteund.
+• Beschikbare talen, beeldherkenning en streaming zijn afhankelijk van de provider en het model dat je kiest.
 
 Vereist Chrome of Edge 116 of later.
 
-Een onafhankelijk opensource-project, niet gelieerd aan, goedgekeurd door of gesponsord door OpenAI, DeepSeek, DeepL of hun filialen. ChatGPT, DeepSeek, DeepL en andere namen zijn handelsmerken van hun respectieve eigenaren en worden alleen gebruikt om compatibele diensten aan te duiden.
+Een onafhankelijk open-sourceproject, niet verbonden aan, goedgekeurd door of gesponsord door OpenAI, DeepSeek, DeepL of hun filialen. ChatGPT, DeepSeek, DeepL en andere namen zijn handelsmerken van hun respectieve eigenaren en worden alleen gebruikt om compatibele services te identificeren.
 
+Ondersteuning: support@huaci.app
 Website: https://huaci.app/
 Broncode en probleemmeldingen: https://github.com/csswork/AiTranslation
 Privacybeleid: https://huaci.app/privacy.html

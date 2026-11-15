@@ -1,61 +1,69 @@
 Lee mientras traduces: convierte un artículo web en una página de lectura bilingüe en paralelo, o selecciona texto, haz clic derecho y ve la traducción directamente en la página.
 
-Huaci – Traductor de IA y lector bilingüe es una extensión de código abierto para Microsoft Edge para lectura bilingüe y para traducir texto seleccionado, regiones de páginas web, imágenes y documentos PDF completos. Usa la traducción alojada sin clave de API, o conecta tu propia cuenta de OpenAI, DeepSeek o DeepL.
+Huaci – Traductor de IA y lector bilingüe es una extensión de código abierto para Microsoft Edge para lectura bilingüe y para traducir texto seleccionado, regiones de páginas web, imágenes y documentos PDF completos. Usa traducción alojada sin clave API, o conecta tu propia cuenta de OpenAI, DeepSeek o DeepL.
 
-LECTURA BILINGÜE (NOVEDAD EN 2.2.0)
+TRADUCCIÓN LOCAL Y AUTOMÁTICA DE SITIOS WEB (NUEVO EN 2.3.0)
 
-Haz clic derecho en una página web normal sin seleccionar texto y elige «Leer este artículo de forma bilingüe». La extensión detecta el título y el cuerpo del artículo en tu dispositivo, omite la navegación, las barras laterales, los espacios publicitarios y los widgets de recomendaciones, y abre una página de lectura limpia junto a la pestaña con cada párrafo original alineado junto a su traducción. Solo se envía para traducción el texto del artículo ya limpio.
+• Traducción local de texto: en navegadores y dispositivos compatibles, descarga pares de idiomas en Configuración y traduce sin conexión de forma gratuita, sin clave API ni créditos. El texto permanece en tu dispositivo. Úsalo para selecciones, regiones de página, sitios web, el panel de texto, PDF, lectura bilingüe y subtítulos reconocidos. La disponibilidad e idiomas dependen del navegador y los paquetes descargados. El modo local no proporciona reconocimiento de imágenes ni redacciones alternativas; los controles no compatibles están ocultos.
+• Traducción automática de sitios web: haz clic derecho y activa "Traducir este sitio web". El texto cerca de la ventana gráfica se traduce mientras desplazas, incluso en visitas posteriores, hasta que lo desactives. El texto repetido en una página reutiliza traducciones. Elige un proveedor separado en Configuración; el primer uso de un proveedor de pago requiere confirmación.
+• Redacción más natural: guías de estilo revisadas mejoran la fraseología, terminología y tono para chino y otros idiomas de destino.
+• Mejor traducción automática de imágenes: formas de texto, tamaño de fuente, alineación, texto vertical y colores de fondo mejorados. Mueve un pasaje, edita su traducción o tamaño, o retraduce solo ese pasaje. Las imágenes exportadas conservan tus ediciones. Opcionalmente traduce efectos de sonido; las imágenes reconocidas se almacenan en caché en la página actual, con navegación entre imágenes.
 
-• En paralelo, apilado, solo traducción o solo original; apariencia clara, oscura o según el sistema; paleta de colores, fuente, tamaño, altura de línea y ancho de página ajustables.
-• Guarda un artículo con su traducción en tu dispositivo y vuelve a abrirlo más tarde desde la lista de la derecha sin traducirlo de nuevo; elimina los artículos guardados en cualquier momento.
+LECTURA BILINGÜE
 
-FORMULACIONES ALTERNATIVAS Y PREFERENCIAS DE FORMULACIÓN
+Haz clic derecho en una página web normal sin seleccionar texto y elige "Leer este artículo de forma bilingüe". La extensión detecta el título y el cuerpo del artículo en tu dispositivo, omite navegación, barras laterales, espacios publicitarios y widgets de recomendación, y abre una página de lectura limpia junto a la pestaña con cada párrafo original alineado junto a su traducción. Solo el texto del artículo limpio es procesado por el modo de traducción seleccionado.
 
-En la página de lectura, en la ventana emergente de selección, en el panel de traducción y en la página del PDF, haz clic en una palabra de la traducción (o selecciona algunas palabras) para ver formulaciones alternativas con notas breves, o escribe la tuya. Tus elecciones se guardan en tu dispositivo como preferencias de formulación y se aplican a traducciones posteriores que contengan el mismo término de origen. Gestiónalas en los ajustes. DeepL no proporciona formulaciones alternativas.
+• Lado a lado, apilado, solo traducción o solo original; apariencia clara, oscura o seguir sistema; paleta de colores, fuente, tamaño, altura de línea y ancho de página ajustables.
+• Guarda un artículo con su traducción en tu dispositivo y reábrelo más tarde desde la lista de la derecha sin volver a traducirlo; elimina artículos guardados en cualquier momento.
 
-SEIS FORMAS DE TRADUCIR
+REDACCIONES ALTERNATIVAS Y PREFERENCIAS DE REDACCIÓN
+
+En la página de lectura, en la ventana emergente de selección, en el panel de traducción y en la página PDF, haz clic en una palabra de la traducción (o selecciona algunas palabras) para ver redacciones alternativas con notas breves, o escribe la tuya. Tus elecciones se guardan en tu dispositivo como preferencias de redacción y se aplican a traducciones posteriores que contengan el mismo término de origen. Gestiónalas en configuración. DeepL y la traducción local no proporcionan redacciones alternativas.
+
+HERRAMIENTAS DE TRADUCCIÓN
 
 • Lectura bilingüe: descrita arriba.
-• Texto seleccionado: traduce texto en cualquier idioma, incluido el chino, en una ventana emergente móvil. Transmite el resultado en streaming donde sea compatible, expande el original para comparar, copia la traducción o cambia el idioma de destino.
-• Regiones de páginas web: añade un botón de traducción a una parte elegida de un sitio web. Las reglas se guardan por dominio y puedes restaurar el texto original.
-• Imágenes: reconoce texto, delimita cada pasaje a lo largo de sus trazos y coloca la traducción sobre el original sin que los pasajes se cubran entre sí. El texto vertical japonés permanece vertical al traducirse al chino, japonés o coreano. Revisa y edita las formas detectadas antes de traducir, traduce una región seleccionada y exporta la imagen traducida. El reconocimiento requiere un modelo con capacidad de visión; el modo alojado incluye reconocimiento de imágenes.
-• PDF completos: abre un PDF en el navegador y elige la traducción de todo el documento desde el menú contextual. El PDF se analiza localmente; solo se envía para traducción el texto extraído. Compara el original y la traducción, conserva el diseño de página, las figuras y las tablas, e imprime o guarda como PDF. Las páginas escaneadas sin texto extraíble no son compatibles con la traducción de todo el documento.
-• Panel de traducción: pega un pasaje en una vista dedicada de origen y traducción, elige un idioma de origen y de destino, y tradúcelo sin seleccionar nada en una página web.
+• Texto seleccionado: traduce texto en cualquier idioma, incluido chino, en una ventana emergente movible. Transmite el resultado donde sea compatible, expande el original para comparar, copia la traducción o cambia el idioma de destino.
+• Regiones de página web: añade un botón de traducción a una parte elegida de un sitio web. Las reglas se guardan por dominio y puedes restaurar el texto original.
+• Imágenes: reconoce texto, delinea cada pasaje a lo largo de sus trazos y coloca la traducción sobre el original sin que los pasajes se cubran entre sí. El texto vertical japonés permanece vertical cuando se traduce a chino, japonés o coreano. Revisa y edita las formas detectadas antes de traducir, traduce una región seleccionada y exporta la imagen traducida. El reconocimiento requiere un modelo con capacidad de visión; el modo alojado incluye reconocimiento de imágenes.
+• PDF completos: abre un PDF en el navegador y elige traducción de documento completo desde el menú contextual. El PDF se analiza localmente; solo el texto extraído es procesado por el modo de traducción seleccionado. Compara el original y la traducción, conserva el diseño de página, figuras y tablas, e imprime o guarda como PDF. Las páginas escaneadas sin texto extraíble no son compatibles con la traducción de documento completo.
+• Panel de traducción: pega un pasaje en una vista dedicada de origen y traducción, elige un idioma de origen y destino, y tradúcelo sin selección de página web.
 
 24 IDIOMAS
 
-Elige chino simplificado, chino tradicional, inglés, español, portugués, francés, alemán, italiano, neerlandés, ruso, ucraniano, polaco, turco, árabe, hebreo, persa, hindi, bengalí, urdu, indonesio, vietnamita, tailandés, japonés o coreano. El idioma de la interfaz, el idioma de origen y el destino de la traducción son independientes. La compatibilidad del proveedor varía según el idioma y la función. Se admiten interfaces de derecha a izquierda.
+Elige chino simplificado, chino tradicional, inglés, español, portugués, francés, alemán, italiano, neerlandés, ruso, ucraniano, polaco, turco, árabe, hebreo, persa, hindi, bengalí, urdu, indonesio, vietnamita, tailandés, japonés o coreano. El idioma de la interfaz, el idioma de origen y el destino de traducción son independientes. La compatibilidad del proveedor varía según el idioma y la función. Se admiten interfaces de derecha a izquierda.
 
 CUENTAS, PRUEBA GRATUITA Y SUSCRIPCIONES OPCIONALES
 
-La traducción alojada no necesita clave de API. Una nueva instalación elegible del navegador recibe una prueba de invitado; iniciar sesión con un código de verificación por correo electrónico o con Google proporciona una cuenta y créditos de prueba adicionales. Los créditos de prueba no caducan y se descuentan según la cantidad de texto traducido (1 crédito por cada 500 caracteres); las traducciones fallidas no se cobran. Tu saldo, suscripción y uso se comparten con el centro de usuarios en https://app.huaci.app/.
+La traducción alojada no necesita clave API. Una nueva instalación elegible del navegador recibe una prueba de invitado; iniciar sesión con un código de verificación por correo electrónico o Google proporciona una cuenta y créditos de prueba adicionales. Los créditos de prueba no caducan y se deducen por la cantidad de texto traducido (1 crédito por 500 caracteres); las traducciones fallidas no se cobran. Tu saldo, suscripción y uso se comparten con el centro de usuarios en https://app.huaci.app/.
 
-Cuando se agoten los créditos de prueba, la traducción alojada requiere una suscripción activa. Los planes actuales son US$3.99 al mes o US$29.99 al año, más los impuestos aplicables. Las suscripciones se renuevan automáticamente hasta que se cancelen. Cancela la renovación futura en el centro de usuarios; el acceso continúa hasta que finalice el período pagado. El uso alojado está sujeto a límites razonables de uso y de prevención de abusos. Creem procesa los pagos. Confirma el precio y las condiciones actuales en la página de planes antes de comprar: https://app.huaci.app/plans.
+Después de agotar los créditos de prueba, la traducción alojada requiere una suscripción activa. Los planes actuales son US$3.99 por mes o US$29.99 por año, más impuestos aplicables. Las suscripciones se renuevan automáticamente hasta su cancelación. Cancela la renovación futura en el centro de usuarios; el acceso continúa hasta que finalice el período pagado. El uso alojado está sujeto a límites de uso razonable y prevención de abusos. Creem procesa los pagos. Confirma el precio y los términos actuales en la página de planes antes de comprar: https://app.huaci.app/plans.
 
-Instalar la extensión y usar tu propia clave de API es gratis. Tu proveedor de API seleccionado puede cobrar por separado. No se requiere una suscripción a esta extensión para el modo de clave propia. DeepL no proporciona reconocimiento de imágenes.
+Instalar la extensión y usar tu propia clave API es gratis. Tu proveedor de API seleccionado puede cobrar por separado. No se requiere una suscripción a esta extensión para el modo de clave propia. DeepL no proporciona reconocimiento de imágenes.
 
-SUBTÍTULOS DE VÍDEO EXPERIMENTALES
+SUBTÍTULOS DE VIDEO EXPERIMENTALES
 
-Los subtítulos de vídeo opcionales están desactivados de forma predeterminada. El reconocimiento de voz depende de la versión del navegador, el dispositivo y el idioma, y puede no estar disponible. Se usa el reconocimiento local cuando es compatible; nunca cambia silenciosamente al reconocimiento en la nube. Solo si eliges explícitamente el reconocimiento en la nube se envía el audio de la pestaña al servicio de voz del navegador (Microsoft Azure en Edge). El texto reconocido sigue el modo de traducción que hayas seleccionado. No proporcionamos transcripción de audio/vídeo alojada. Esta función experimental no garantiza que todos los vídeos puedan traducirse.
+Los subtítulos de video opcionales están desactivados por defecto. El reconocimiento de voz depende de la versión del navegador, el dispositivo y el idioma y puede no estar disponible. Se usa reconocimiento local cuando es compatible; nunca cambia silenciosamente a reconocimiento en la nube. Solo si eliges explícitamente el reconocimiento en la nube, el audio de la pestaña se envía al servicio de voz del navegador (Microsoft Azure en Edge). El texto reconocido sigue tu modo de traducción seleccionado. No proporcionamos transcripción de audio/video alojada. Esta función experimental no garantiza que todos los videos puedan traducirse.
 
 PRIVACIDAD
 
-• Las solicitudes con clave propia van directamente a tu proveedor seleccionado o al endpoint HTTPS. Tu clave permanece en el almacenamiento local de la extensión y no se sincroniza a través de tu cuenta del navegador.
-• El modo alojado envía el texto o las imágenes solicitados a través de nuestro servidor a un proveedor de modelos. Nuestro servidor no conserva el texto original, las imágenes ni las traducciones.
-• Los archivos PDF completos se procesan localmente y no se suben. La lectura bilingüe detecta artículos en tu dispositivo; los artículos guardados y las preferencias de formulación permanecen en el almacenamiento local de la extensión.
-• Las cuentas conservan la dirección de correo electrónico, el nombre de usuario y los registros necesarios para la autenticación, el uso, los créditos y la facturación. Sin publicidad, SDK de seguimiento ni huellas digitales del dispositivo.
+• La traducción local de texto permanece en tu dispositivo. La traducción automática se ejecuta solo en sitios web que habilites explícitamente, incluidas visitas posteriores.
+• Las solicitudes con clave propia van directamente a tu proveedor seleccionado o punto de conexión HTTPS. Tu clave permanece en el almacenamiento local de la extensión y no se sincroniza a través de tu cuenta del navegador.
+• El modo alojado envía el texto o las imágenes solicitadas a través de nuestro servidor a un proveedor de modelos. Nuestro servidor no retiene texto original, imágenes ni traducciones.
+• Los archivos PDF completos se procesan localmente y no se suben. La lectura bilingüe detecta artículos en tu dispositivo; los artículos guardados y las preferencias de redacción permanecen en el almacenamiento local de la extensión.
+• Las cuentas conservan la dirección de correo electrónico, el nombre de usuario y los registros necesarios para autenticación, uso, créditos y facturación. Sin publicidad, SDK de seguimiento ni huellas digitales de dispositivos.
 • Todo el código ejecutable de la extensión está incluido en el paquete. El código fuente está disponible bajo GPL-3.0.
 
 PRIMEROS PASOS
 
-Instala, selecciona tu idioma de destino preferido y usa la prueba alojada o configura tu propia clave de API en los ajustes. En una página web normal, haz clic derecho sin seleccionar texto y elige «Leer este artículo de forma bilingüe», o selecciona texto y elige «Traducir a…». Atajo de teclado: Alt+Shift+T, o Command+Shift+Y en macOS.
+Instala, selecciona tu idioma de destino preferido y usa la prueba alojada o configura tu propia clave API en la configuración. En una página web normal, haz clic derecho sin seleccionar texto y elige "Leer este artículo de forma bilingüe", o selecciona texto y elige "Traducir a…". Atajo de teclado: Alt+Shift+T, o Command+Shift+Y en macOS.
 
-Las páginas protegidas por el navegador y las tiendas de extensiones no permiten superposiciones de traducción. Las solicitudes de texto individuales están limitadas a 6,000 caracteres; la traducción de PDF, de regiones y de lectura bilingüe usa lotes. La detección de artículos es heurística, por lo que los foros, las redes sociales y las páginas detrás de un inicio de sesión pueden no detectarse por completo. Los endpoints de API personalizados requieren HTTPS y permiso para el host elegido.
+Las páginas protegidas por el navegador y las tiendas de extensiones no permiten superposiciones de traducción. Las solicitudes de texto único están limitadas a 6,000 caracteres; la traducción de PDF, regiones y lectura bilingüe usan lotes. La detección de artículos es heurística, por lo que los foros, redes sociales y páginas detrás de un inicio de sesión pueden no detectarse completamente. Los puntos de conexión de API personalizados requieren HTTPS y permiso para el host elegido.
 
-Proyecto independiente; no afiliado a Microsoft, OpenAI, DeepSeek ni DeepL. Los nombres identifican servicios compatibles y siguen siendo marcas registradas de sus propietarios.
+Proyecto independiente; no afiliado a Microsoft, OpenAI, DeepSeek o DeepL. Los nombres identifican servicios compatibles y siguen siendo marcas registradas de sus propietarios.
 
 Sitio web: https://huaci.app/
 Soporte: support@huaci.app
-Código fuente e incidencias: https://github.com/csswork/AiTranslation
+Código fuente y problemas: https://github.com/csswork/AiTranslation
 Política de privacidad: https://huaci.app/privacy.html
 Términos y reembolsos: https://huaci.app/terms.html

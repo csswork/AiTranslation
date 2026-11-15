@@ -4,13 +4,13 @@
 
 **Huaci — AI Translator & Bilingual Reader.** Previously called “AI 划词翻译 / AI Translator”; renamed in 2.2.0 with the same extension IDs and store listings.
 
-Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Bring your own API key or use hosted translation with credits, without a key.
+Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Use free on-device text translation with downloaded language packs where supported, bring your own API key, or use hosted credits. Version 2.3.0 adds automatic website translation, revised translation style guides and improved image layout and editing.
 
 [Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Extension guide](apps/extension/README.md)
 
 ## Preview
 
-These screenshots and recordings show the current **2.2.0 development build** loaded in Chrome, using real models for recognition and translation. Bilingual reading, alternative wording, and image translation that follows text shapes are being prepared for release. See the [Extension guide](apps/extension/README.md#account-and-credits-hosted-mode) for store availability.
+These screenshots and recordings show a **2.2.0 source build** loaded in Chrome on 2026-11-13, using real models for recognition and translation. See the [Extension guide](apps/extension/README.md#account-and-credits-hosted-mode) for store availability.
 
 **Image recognition and translation:** Detect text, overlay translations following the text shapes, compare with the original, edit individual translations, or select regions manually.
 
@@ -40,7 +40,7 @@ One repository, three applications: an HTML website on Vercel, a backend on a VP
 | --- | --- | --- | --- |
 | Website | [apps/web](apps/web/README.md) | Vercel | Product pages, privacy, terms, and changelog in 11 languages; the header reads the sign-in state from app.huaci.app |
 | Backend | [apps/backend](apps/backend/README.md) | VPS | Authentication, account and admin interfaces, extension API, guest trials, precise credit accounting, hosted text and images, and Creem subscriptions; the first release is deployed |
-| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | Store version: 2.1.0. Source version: 2.2.0, adding bilingual reading, alternative wording, wording preferences, and image translation following text shapes; release in preparation |
+| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | Source version: 2.3.0, adding local translation, automatic website translation, translation style guides and image improvements; [release status](docs/extension/releases/2.3.0.md) |
 
 ## Layout
 

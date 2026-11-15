@@ -192,6 +192,69 @@
       "changelog.html"
     ]
   },
+  "本机翻译、整站翻译与图片自动翻译优化": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "新增免费、不需要 Key 的本机文字翻译，支持按网站自动翻译，并优化文字译文风格与图片自动翻译效果。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>本机翻译</b>：在支持浏览器内置翻译的设备上，下载语言包后即可离线翻译，不上传文字、不消耗点数；可用于划词、区域、翻译面板、PDF、双语阅读和字幕文字。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>语言包管理</b>：在设置页下载原文到目标语言的语言包，查看进度和已下载语言；翻译时只列出可用语言。本机翻译只处理文字，不提供识图和点词换说法。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>整站翻译</b>：右键勾选「翻译这个网站」，以后打开该网站会自动翻译视口附近的文字，滚动时继续；取消勾选恢复原文。可单独选择平台，首次使用收费平台会先确认。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>译文风格</b>：优化中文、日文和其他目标语言的翻译风格指南，让措辞更自然，术语与语气更一致。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>图片自动翻译</b>：改进文字形状、字号、对齐、竖排和相近色背景的处理，减少译文遮挡和不自然的换行；可选翻译音效字。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>修改图片译文</b>：可以拖动单段译文、修改文字与字号，或只重翻这一段；下载和复制保留修改。同一张图复用识别结果，并支持在多张图片间切换。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>阅读与演示</b>：保存的文章支持拖动排序和键盘排序；更新功能演示、实机截图与多语言使用文档。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
   "双语阅读、点词换说法与图片翻译增强": {
     "kind": "text",
     "tag": "h3",
@@ -558,7 +621,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.2.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.3.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -572,7 +635,7 @@
       "index.html"
     ]
   },
-  "网页上的一句话、一张图片、一份 PDF，或者一整篇文章，右键就能翻译成你的语言。装好就能用，不用先填 API Key；想用自己的 OpenAI、DeepSeek 或 DeepL Key 也可以。": {
+  "网页上的一句话、一张图片、一份 PDF，或者一整篇文章，右键就能翻译成你的语言。装好就能用，不用先填 API Key；支持的浏览器还可下载语言包，免费在本机翻译文字。也可以使用自己的 OpenAI、DeepSeek 或 DeepL Key。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -663,14 +726,14 @@
       "index.html"
     ]
   },
-  "六个入口，都在右键菜单里": {
+  "从一句话到整个网站，右键就能翻译": {
     "kind": "text",
     "tag": "h2",
     "pages": [
       "index.html"
     ]
   },
-  "每一种都配了一段演示，往下看。": {
+  "划词、图片、PDF 和双语阅读都有演示。右键勾选「翻译这个网站」，还可在滚动时自动翻译网页文字。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -768,7 +831,7 @@
       "index.html"
     ]
   },
-  "右键一张图片，图里的文字会被识别出来，译文盖在原来的位置上。译好的图可以下载或复制。": {
+  "右键一张图片，按文字形状自动识别并排版，改进字号、对齐与背景色。译文可逐段拖动、改字、调字号或重翻，下载和复制会保留修改；音效字也可选择翻译。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1000,6 +1063,27 @@
       "index.html"
     ]
   },
+  "文字在本机翻译，免费也能离线用": {
+    "kind": "text",
+    "tag": "h2",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "在提供内置翻译能力的浏览器和设备上，选择「本机翻译」，在设置里下载语言包。之后翻译文字不需要 Key、不消耗点数，原文不上传。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "支持划词、区域、整站、翻译面板、PDF、双语阅读和字幕文字。本机翻译只处理文字，不支持图片识别和点词换说法；可用语言取决于浏览器与已下载的语言包。不支持的浏览器不会显示这个平台。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "index.html"
+    ]
+  },
   "哪些内容会离开你的浏览器": {
     "kind": "text",
     "tag": "h2",
@@ -1007,7 +1091,7 @@
       "index.html"
     ]
   },
-  "只有你主动翻译的内容会被发送。用自己的 Key 时，内容直接发给你选的平台；用点数翻译时，内容经我们的服务器转给模型服务商，服务器不保存图片、原文和译文。视频字幕的声音处理方式见隐私政策。": {
+  "本机翻译的文字不离开设备。用自己的 Key 时，内容直接发给你选的平台；用点数翻译时，内容经我们的服务器转给模型服务商，服务器不保存图片、原文和译文。启用整站翻译后，指定网站上视口附近的文字会按所选平台自动处理。视频字幕的声音处理方式见隐私政策。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1210,7 +1294,7 @@
       "index.html"
     ]
   },
-  "用邮箱验证码或 Google 账户登录，点数、订阅和订单在<a class=\"link\" href=\"https://app.huaci.app/\">用户中心</a>查看。点数翻译和自带 Key 可以随时切换。": {
+  "用邮箱验证码或 Google 账户登录，点数、订阅和订单在<a class=\"link\" href=\"https://app.huaci.app/\">用户中心</a>查看。本机翻译、点数翻译和自带 Key 可以随时切换；本机文字翻译免费，不需要订阅。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1364,7 +1448,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-11-06 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-11-15 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1378,14 +1462,14 @@
       "privacy.html"
     ]
   },
-  "账户、点数与订阅服务已随 2.0.0 上线，以下说明这些服务的数据处理方式。": {
+  "以下说明翻译、账户、点数与订阅服务的数据处理方式。": {
     "kind": "text",
     "tag": "p",
     "pages": [
       "privacy.html"
     ]
   },
-  "划词有两种用法。<b>自带 Key</b>：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 <b>点数翻译</b>：内容经我们的服务器转给模型服务商完成翻译，服务器<b>不保存原文和译文</b>。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。": {
+  "划词支持本机翻译、自带 Key 和点数翻译。<b>本机翻译</b>：文字只在设备上处理。<b>自带 Key</b>：你要翻译的内容直接发往你自己配置的 AI 平台，不经过我们。 <b>点数翻译</b>：内容经我们的服务器转给模型服务商完成翻译，服务器<b>不保存原文和译文</b>。 账户、计费与防滥用只保留运行所必需的数据，不用于广告，也不出售。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1399,7 +1483,7 @@
       "privacy.html"
     ]
   },
-  "只有在你<b>主动触发翻译</b>时（右键菜单、快捷键、点击翻译按钮），以下内容才会通过 HTTPS 发送：": {
+  "你主动翻译或启用某个网站的自动翻译后，在线翻译模式会通过 HTTPS 发送以下内容；本机文字翻译不发送这些内容：": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1456,6 +1540,20 @@
     ]
   },
   "我们的服务器，再转给模型服务商": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "开着整站翻译的网站上，视口附近的文字": {
+    "kind": "text",
+    "tag": "td",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "开启后及以后访问该网站时自动翻译": {
     "kind": "text",
     "tag": "td",
     "pages": [
@@ -1630,7 +1728,35 @@
       "privacy.html"
     ]
   },
-  "<b>不会发送</b>：你没有主动翻译的页面内容、浏览历史、Cookie、表单数据。扩展不会在后台自动扫描或上传任何东西。": {
+  "<b>不会发送</b>：你没有主动翻译的页面内容、浏览历史、Cookie、表单数据。只在你明确启用的网站上自动翻译。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "本机翻译": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "本机翻译使用浏览器内置模型。语言包由浏览器下载和管理，下载完成后可离线翻译文字；原文、译文和用词偏好不发给我们或翻译平台，不产生托管用量记录。本机翻译只处理文字，不支持图片识别和点词换说法。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "整站自动翻译": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "只有你右键勾选「翻译这个网站」后，该网站视口附近的文字才会自动翻译；以后访问同一网站继续生效，直到取消勾选。相同文字在同一页面复用译文。网站名单和专用平台选择只存本机；使用本机翻译时文字不上传，使用自带 Key 或点数翻译时按上表发送，首次启用收费平台会先确认。": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1833,7 +1959,14 @@
       "privacy.html"
     ]
   },
-  "<b>区域翻译规则</b>——你手动添加的「域名 + CSS 选择器」": {
+  "<b>整站翻译</b>：启用的网站域名与专用平台选择": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "<b>区域翻译规则</b>：你手动添加的「域名 + CSS 选择器」": {
     "kind": "text",
     "tag": "li",
     "pages": [

@@ -1,8 +1,15 @@
 Select, right-click, and keep reading. Read whole articles side by side with their translation, and translate selected text, images and PDFs right where they are—without switching tabs or copying and pasting.
 
-Huaci – AI Translator & Bilingual Reader is an open-source browser extension built on Manifest V3. Start translating right after installation with key-free credits, or use your own OpenAI, DeepSeek or DeepL API key.
+Huaci – AI Translator & Bilingual Reader is an open-source browser extension built on Manifest V3. Use free local text translation where supported, key-free hosted credits, or your own OpenAI, DeepSeek or DeepL API key.
 
-▍Bilingual reading (new in 2.2.0)
+LOCAL AND AUTOMATIC WEBSITE TRANSLATION (NEW IN 2.3.0)
+
+• Local text translation: on supported browsers and devices, download language pairs in Settings and translate offline for free, without an API key or credits. Text stays on your device. Use it for selections, page regions, websites, the text panel, PDFs, bilingual reading and recognized captions. Availability and languages depend on the browser and downloaded packs. Local mode does not provide image recognition or alternative wordings; unsupported controls are hidden.
+• Automatic website translation: right-click and enable “Translate this website”. Text near the viewport is translated as you scroll, including on later visits, until you disable it. Repeated text on a page reuses translations. Choose a separate provider in Settings; the first use of a paid provider asks for confirmation.
+• More natural wording: revised style guides improve phrasing, terminology and tone for Chinese and other target languages.
+• Better automatic image translation: improved text shapes, font sizing, alignment, vertical text and background colors. Move a passage, edit its translation or size, or retranslate just that passage. Exported images keep your edits. Optionally translate sound effects; recognized images are cached on the current page, with navigation between images.
+
+▍Bilingual reading
 
 Right-click anywhere on a page without selecting text and choose “Read this article bilingually”. A light sweeps across the page as the title and body are detected, then a clean reading page opens next to it with each original paragraph aligned beside its translation. Navigation, sidebars, ad slots and recommendation widgets are left out and never sent for translation.
 
@@ -16,7 +23,7 @@ On the reading page, in the selection popup, in the translation panel and on the
 
 Wordings you choose are remembered on your device as wording preferences: later translations of text that contains the same source term follow your choice. Review and delete them in Settings.
 
-▍Six ways to translate, all in the right-click menu
+▍Translation tools
 
 • Selected text
 Select text and choose “Translate to…” from the right-click menu. The translation appears in a centered popup, word by word where the provider supports streaming. You can also use the floating button next to a selection, or the shortcut ⌘⇧Y on macOS / Alt+Shift+T elsewhere. The popup can be dragged, shows the original on demand, and translates the original again when you switch the target language.
@@ -35,7 +42,7 @@ A dedicated page with the original on the left and the translation on the right,
 
 24 interface and target languages: Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese, French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean. Interface, source and target languages are independent settings, and Arabic, Hebrew, Persian and Urdu interfaces use a right-to-left layout.
 
-▍Two ways to use it
+▍Translation modes
 
 • Key-free credit translation
 A new eligible installation receives a guest trial (claims are limited per network), and signing up with email or Google adds more credits. Credits never expire and are deducted by the amount of text actually translated (1 credit per 500 characters); failed translations are not charged. Once trial credits run out, credit translation requires a subscription, which gives unlimited use (fair use), renews automatically and can be canceled at any time. See the website and your account center for current trial amounts and prices.
@@ -45,7 +52,7 @@ Enter your own OpenAI, DeepSeek or DeepL key. Requests go directly from your bro
 
 ▍Privacy
 
-• Content is sent only when you choose to translate it. The extension never scans or uploads pages in the background.
+• Local translation keeps text on your device. Online modes send requested content to the chosen service. Automatic website translation processes text only on websites you explicitly enable, including later visits.
 • With your own key, content goes directly to the provider you chose, never through us.
 • With credit translation, content passes through our server to a model provider; the server does not store your text, translations or images.
 • API keys, wording preferences and saved articles stay on your device and are not synced through your browser account.
@@ -65,6 +72,7 @@ Requires Chrome or Edge 116 or later.
 
 An independent open-source project, not affiliated with, endorsed by or sponsored by OpenAI, DeepSeek, DeepL or their affiliates. ChatGPT, DeepSeek, DeepL and other names are trademarks of their respective owners and are used only to identify compatible services.
 
+Support: support@huaci.app
 Website: https://huaci.app/
 Source code and issue reports: https://github.com/csswork/AiTranslation
 Privacy policy: https://huaci.app/privacy.html

@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="Huaci: select, right-click, and keep reading." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"Huaci","url":"https://huaci.app/en/","description":"Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.2.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"Huaci","url":"https://huaci.app/en/","description":"Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.3.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -83,9 +83,9 @@
   <section class="hero slide" data-slide>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <a class="release-pill" href="/en/changelog.html#v2-2-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.2.0</span> <span>New: bilingual reading turns web articles into a paragraph-by-paragraph reading page.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
+        <a class="release-pill" href="/en/changelog.html#v2-3-0" data-latest-release><span class="mono release-ver" data-extension-version>v2.3.0</span> <span>New: Bilingual reading turns web articles into paragraph-by-paragraph reading pages.</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
         <h1>Select, right-click,<br /><span class="dim">then keep reading.</span></h1>
-        <p class="hero-sub">A sentence, an image, a PDF, or an entire article on a web page can be translated into your language with a right-click. It works right after installation, with no API Key required; you can also use your own OpenAI, DeepSeek, or DeepL Key.</p>
+        <p class="hero-sub">A sentence, an image, a PDF, or an entire article on a web page can be translated into your language with a right-click. Works right after installation with no API Key required; supported browsers can also download language packs to translate text on-device for free. You can also use your own OpenAI, DeepSeek, or DeepL key.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
              main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
              main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
@@ -208,8 +208,8 @@
       <div class="wrap">
         <div class="section-head wide reveal">
           <p class="kicker">Features</p>
-          <h2>Six entry points, all in the right-click menu</h2>
-          <p>Each one comes with a demo; see below.</p>
+          <h2>From a single sentence to an entire website, translate with a right-click</h2>
+          <p>Demos are available for selected text, images, PDFs, and bilingual reading. Right-click and check "Translate this website" to also translate web page text automatically as you scroll.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-copy reveal">
@@ -267,7 +267,7 @@
           <div class="feature-copy reveal">
             <p class="no">03</p>
             <h3>Image translation</h3>
-            <p>Right-click an image and the text in it is recognized, with the translation overlaid in place. The translated image can be downloaded or copied.</p>
+            <p>Right-click an image to automatically recognize and lay out text by shape, with improved font size, alignment, and background color. Translations can be dragged segment by segment, edited, resized, or retranslated; downloads and copies preserve edits; sound-effect text can also optionally be translated.</p>
             <ul>
               <li>Vertical text in Japanese manga stays vertical when translated into Chinese, Japanese, or Korean</li>
               <li>You can select only the part to translate, or adjust the recognized text regions before translating</li>
@@ -401,13 +401,24 @@
     </div>
   </section>
 
+  <section class="section slide" id="local-translation" data-slide>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Local translation</p>
+        <h2>Text is translated on-device, free and usable offline</h2>
+        <p>On browsers and devices that offer built-in translation, select "On-device translation" and download a language pack in settings. After that, translating text requires no key and consumes no credits, and the original text is not uploaded.</p>
+      </div>
+      <p class="after-facts reveal">Supports selected text, regions, whole sites, the translation panel, PDFs, bilingual reading, and subtitle text. On-device translation handles text only and does not support image recognition or click-a-word alternatives; available languages depend on the browser and downloaded language packs. This platform is not shown in unsupported browsers.</p>
+    </div>
+  </section>
+
   <!-- ===================================================== 隐私 -->
   <section class="section slide slide-split" id="privacy" data-slide>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Privacy</p>
         <h2>What leaves your browser</h2>
-        <p>Only content you actively translate is sent. When using your own Key, content goes directly to the platform you choose; when translating with credits, content is relayed through our server to the model provider, and the server does not store images, source text, or translations. See the privacy policy for how audio from video subtitles is handled.</p>
+        <p>Text translated on-device never leaves the device. When using your own key, content is sent directly to the platform you choose; when translating with credits, content is relayed through our servers to the model provider, and the servers do not store images, original text, or translations. When whole-site translation is enabled, text near the viewport on specified websites is processed automatically by the selected platform. For how audio is handled for video subtitles, see the privacy policy.</p>
       </div>
 
       <div class="facts reveal">
@@ -473,7 +484,7 @@
         </div>
       </div>
 
-      <p class="after-facts reveal">Sign in with an email verification code or a Google account. View credits, subscriptions, and orders in the <a class="link" href="https://app.huaci.app/">user center</a>. You can switch between credit-based translation and your own API Key at any time.</p>
+      <p class="after-facts reveal">Sign in with an email verification code or a Google account; view credits, subscriptions, and orders in the <a class="link" href="https://app.huaci.app/">user center</a>. You can switch between on-device translation, credit-based translation, and your own key at any time; on-device text translation is free and requires no subscription.</p>
       <p class="after-facts reveal">Actual prices are as displayed in the user center. Prices are in USD and taxes may apply. Payments are processed by <a class="link" href="https://www.creem.io" target="_blank" rel="noopener">Creem</a> as merchant of record; we do not handle card information. See the <a class="link" href="/en/terms.html">Terms of Service</a> for details.</p>
     </div>
   </section>
