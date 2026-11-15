@@ -8,9 +8,18 @@
 
 [公式サイト](https://huaci.app/) · [Chrome ウェブストア](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge アドオン](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [拡張機能ガイド](../../apps/extension/README.md)
 
+## 2.3.0 の更新
+
+**2026-11-15** に Chrome ウェブストアと Microsoft Edge アドオンへ提出し、現在審査待ちです。承認後、各ストアで更新できます。[更新履歴](https://huaci.app/ja/changelog.html#v2-3-0)と[公開状況](../extension/releases/2.3.0.md)をご覧ください。
+
+- **無料の端末内テキスト翻訳**：設定で言語ペアをダウンロードすれば、API キーやクレジットを使わず、テキストを送信せずにオフラインで翻訳できます。ブラウザーの対応が必要です。このモードでは画像認識と言い換えは使えません。
+- **サイトの自動翻訳**：右クリックでサイトの翻訳を有効にすると、スクロールに合わせて表示領域付近のテキストを翻訳し、次回のアクセスでも継続します。専用の翻訳サービスを選択でき、有料サービスの初回利用時には確認します。
+- **自然な訳文**：中国語やその他の翻訳先言語のスタイルガイドを改善し、表現、用語、語調を整えました。
+- **画像の自動翻訳を改善**：文字の形、サイズ、配置、背景の処理を改善。訳文ごとの移動、編集、サイズ変更、再翻訳ができ、書き出した画像にも反映されます。効果音の翻訳は任意です。
+
 ## プレビュー
 
-以下は現在の **2.2.0 開発版**を Chrome に読み込んだ実際のスクリーンショットと操作録画です。認識と翻訳には実際のモデルを使用しています。バイリンガル読書、言い換え、文字の形に沿った画像翻訳などの新機能はリリース準備中です。ストアでの公開状況は[拡張機能ガイド](../../apps/extension/README.md#account-and-credits-hosted-mode)をご覧ください。
+以下は **2026-11-13** に Chrome へ読み込んだ **2.2.0 ソース版**のスクリーンショットと操作録画です。認識と翻訳には実際のモデルを使用し、バイリンガル読書、言い換え、画像翻訳を紹介しています。新版の変更点は上記、ストアの状況は[拡張機能ガイド](../../apps/extension/README.md#account-and-credits-hosted-mode)をご覧ください。
 
 **画像内テキストの認識と翻訳：** 文字を認識し、その形に沿って訳文を重ねます。原画像との比較、個別の訳文の編集、手動での範囲選択ができます。
 
@@ -40,7 +49,7 @@
 | --- | --- | --- | --- |
 | サイト | [apps/web](../../apps/web/README.md) | Vercel | 製品紹介、プライバシー、利用規約、更新履歴を 11 言語で提供。ヘッダーは app.huaci.app のログイン状態を取得 |
 | バックエンド | [apps/backend](../../apps/backend/README.md) | VPS | 認証、アカウント画面、管理者画面、拡張機能 API、ゲスト試用、正確なクレジット管理、テキスト・画像のホスト型翻訳、Creem サブスクリプションの初版をデプロイ済み |
-| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | ソースは 2.3.0。端末内翻訳、サイト自動翻訳、訳文スタイルと画像翻訳の改善。[公開状況](../../docs/extension/releases/2.3.0.md) |
+| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | 2.3.0 は 2026-11-15 に Chrome と Edge へ提出済み、審査待ち。[公開状況](../extension/releases/2.3.0.md) |
 
 ## ディレクトリ構成
 

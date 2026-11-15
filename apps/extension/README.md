@@ -46,7 +46,7 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Chrome's public listing shows **2.2.0** (verified 2026-11-15); Edge has an existing public listing. Source version **2.3.0** adds local translation, automatic website translation, translation style guides and image improvements. Packaging, submission and deployment status are recorded in [the 2.3.0 release record](../../docs/extension/releases/2.3.0.md). Accounts, hosted trials and subscriptions are available at `app.huaci.app`; bring-your-own-key providers remain available.
+Version **2.3.0** was submitted to Chrome and Edge on **2026-11-15** and is awaiting review. It adds local text translation and automatic website translation, and improves translation style guides and automatic image translation. Store updates become available after approval; the currently installable version may still be the previous release. See [the 2.3.0 release record](../../docs/extension/releases/2.3.0.md) for submission and deployment details. Accounts, hosted trials and subscriptions are available at `app.huaci.app`; bring-your-own-key providers remain available.
 
 Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
 

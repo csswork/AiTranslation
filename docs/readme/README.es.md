@@ -8,9 +8,18 @@ Lee artículos en otros idiomas y traduce imágenes y PDF directamente en el nav
 
 [Sitio web](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Complementos de Edge](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Guía de la extensión](../../apps/extension/README.md)
 
+## Novedades de la versión 2.3.0
+
+Enviada a Chrome Web Store y Microsoft Edge Add-ons el **2026-11-15**; ambas solicitudes están en revisión. La actualización estará disponible en cada tienda tras su aprobación. Consulta el [registro de cambios](https://huaci.app/es/changelog.html#v2-3-0) y el [estado de publicación](../extension/releases/2.3.0.md).
+
+- **Traducción local gratuita de texto**: descarga los pares de idiomas en Ajustes y traduce sin conexión, sin clave API, sin créditos y sin enviar el texto. Requiere un navegador compatible; este modo no ofrece reconocimiento de imágenes ni expresiones alternativas.
+- **Traducción automática de sitios**: actívala para traducir el texto cercano al área visible mientras te desplazas, también en visitas posteriores. Puedes elegir otro proveedor; los proveedores de pago piden confirmación la primera vez.
+- **Traducciones más naturales**: las guías de estilo revisadas para chino y otros idiomas de destino mejoran la expresión, la terminología y el tono.
+- **Mejor traducción automática de imágenes**: mejoras en las formas del texto, el tamaño, la alineación y los fondos. Mueve, edita, cambia el tamaño o vuelve a traducir cada fragmento; la imagen exportada conserva los cambios. La traducción de onomatopeyas es opcional.
+
 ## Vista previa
 
-Estas capturas y grabaciones muestran la **versión de desarrollo 2.2.0** actual cargada en Chrome, con modelos reales para el reconocimiento y la traducción. La lectura bilingüe, las expresiones alternativas y la traducción de imágenes siguiendo la forma del texto están en preparación. Consulta la [Guía de la extensión](../../apps/extension/README.md#account-and-credits-hosted-mode) para conocer la disponibilidad en las tiendas.
+Estas capturas y grabaciones se realizaron el **2026-11-13** con una **versión 2.2.0 cargada desde el código fuente** en Chrome y modelos reales para el reconocimiento y la traducción. Muestran la lectura bilingüe, las expresiones alternativas y la traducción de imágenes. Las novedades se describen arriba; consulta la [guía de la extensión](../../apps/extension/README.md#account-and-credits-hosted-mode) para conocer la disponibilidad en las tiendas.
 
 **Reconocimiento y traducción de imágenes:** Detecta el texto, superpone la traducción siguiendo su forma, compara con el original, edita traducciones individuales o selecciona zonas manualmente.
 
@@ -40,7 +49,7 @@ Un repositorio, tres aplicaciones: un sitio HTML en Vercel, un backend en un VPS
 | --- | --- | --- | --- |
 | Sitio web | [apps/web](../../apps/web/README.md) | Vercel | Presentación, privacidad, condiciones e historial de cambios en 11 idiomas; la cabecera consulta el estado de sesión en app.huaci.app |
 | Backend | [apps/backend](../../apps/backend/README.md) | VPS | Autenticación, interfaces de usuario y administración, API de la extensión, prueba para visitantes, contabilidad precisa de créditos, traducción alojada de texto e imágenes y suscripciones con Creem; primera versión desplegada |
-| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | Código fuente: 2.3.0. Traducción local, traducción automática de sitios y mejoras de estilo e imágenes. [Estado de publicación](../../docs/extension/releases/2.3.0.md) |
+| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | 2.3.0 enviada a Chrome y Edge el 2026-11-15; en revisión. [Estado de publicación](../extension/releases/2.3.0.md) |
 
 ## Estructura
 

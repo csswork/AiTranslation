@@ -8,9 +8,18 @@
 
 [官网](https://huaci.app/) · [Chrome 商店](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge 商店](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [扩展使用说明](../../apps/extension/README.md)
 
+## 2.3.0 更新
+
+已于 **2026-11-15** 提交 Chrome 和 Microsoft Edge 商店审核，通过后即可在对应商店更新。查看[完整更新日志](https://huaci.app/changelog.html#v2-3-0)与[发布状态](../extension/releases/2.3.0.md)。
+
+- **免费本机文字翻译**：在设置里下载语言包后，可离线翻译，不需要 Key、不消耗点数、文字不上传。需浏览器支持；此模式不支持图片识别和点词换说法。
+- **整站翻译**：右键勾选「翻译这个网站」，滚动时翻译视口附近的文字，以后访问继续生效。可单独选择平台，首次启用收费平台会先确认。
+- **更自然的译文**：优化中文和其他目标语言的翻译风格指南，改进措辞、术语与语气的一致性。
+- **图片自动翻译优化**：改进文字形状、字号、对齐与背景处理。可逐段拖动、改字、调字号或重翻，导出保留修改；音效字可选择翻译。
+
 ## 功能预览
 
-以下为 2026-11-13 将 **2.2.0 源码版**加载到 Chrome 后的实际截图与操作录屏，识别和翻译均调用真实模型。商店发布状态见[扩展说明](../../apps/extension/README.md#account-and-credits-hosted-mode)。
+以下截图与录屏拍摄于 **2026-11-13**，使用加载到 Chrome 的 **2.2.0 源码版**，识别和翻译均调用真实模型，展示双语阅读、换说法与图片翻译。新版变化见上方更新说明，商店状态见[扩展说明](../../apps/extension/README.md#account-and-credits-hosted-mode)。
 
 **图片识别与翻译**：识别图中文字、按文字形状覆盖译文，切换原图对照，点击单段修改，也能手动框选范围。
 
@@ -40,7 +49,7 @@
 | --- | --- | --- | --- |
 | 网站 | [apps/web](../../apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
 | 后端 | [apps/backend](../../apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
-| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge | 当前源码 2.3.0：新增本机翻译、整站翻译，优化译文风格与图片自动翻译；[发布状态](../../docs/extension/releases/2.3.0.md) |
+| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge | 2.3.0 已于 2026-11-15 提交 Chrome 与 Edge 审核，等待通过；[发布状态](../extension/releases/2.3.0.md) |
 
 ## 目录
 

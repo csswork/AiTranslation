@@ -4,13 +4,22 @@
 
 **Huaci — AI Translator & Bilingual Reader.** Previously called “AI 划词翻译 / AI Translator”; renamed in 2.2.0 with the same extension IDs and store listings.
 
-Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Use free on-device text translation with downloaded language packs where supported, bring your own API key, or use hosted credits. Version 2.3.0 adds automatic website translation, revised translation style guides and improved image layout and editing.
+Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Use free on-device text translation with downloaded language packs where supported, bring your own API key, or use hosted credits.
 
 [Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Extension guide](apps/extension/README.md)
 
+## What’s new in 2.3.0
+
+Submitted to the Chrome Web Store and Microsoft Edge Add-ons on **2026-11-15**; both submissions are awaiting review. The update will be available in each store after approval. See the [full changelog](https://huaci.app/en/changelog.html#v2-3-0) and [release status](docs/extension/releases/2.3.0.md).
+
+- **Free on-device text translation:** download language pairs in Settings, then translate offline without an API key, credits or uploading text. Requires browser support; image recognition and alternative wording are unavailable in this mode.
+- **Automatic website translation:** enable “Translate this website” to translate text near the viewport as you scroll, including future visits. Choose a separate provider; paid providers ask for confirmation on first use.
+- **More natural translations:** revised style guides improve phrasing, terminology and tone for Chinese and other target languages.
+- **Better automatic image translation:** improved text shapes, font sizing, alignment and backgrounds. Move or edit individual translations, change their size, retranslate one passage, and retain edits when exporting. Sound-effect translation is optional.
+
 ## Preview
 
-These screenshots and recordings show a **2.2.0 source build** loaded in Chrome on 2026-11-13, using real models for recognition and translation. See the [Extension guide](apps/extension/README.md#account-and-credits-hosted-mode) for store availability.
+These screenshots and recordings were captured on **2026-11-13** using a **2.2.0 source build** loaded in Chrome, with real models for recognition and translation. They illustrate bilingual reading, alternative wording and image translation; the version update is described above. See the [Extension guide](apps/extension/README.md#account-and-credits-hosted-mode) for store availability.
 
 **Image recognition and translation:** Detect text, overlay translations following the text shapes, compare with the original, edit individual translations, or select regions manually.
 
@@ -40,7 +49,7 @@ One repository, three applications: an HTML website on Vercel, a backend on a VP
 | --- | --- | --- | --- |
 | Website | [apps/web](apps/web/README.md) | Vercel | Product pages, privacy, terms, and changelog in 11 languages; the header reads the sign-in state from app.huaci.app |
 | Backend | [apps/backend](apps/backend/README.md) | VPS | Authentication, account and admin interfaces, extension API, guest trials, precise credit accounting, hosted text and images, and Creem subscriptions; the first release is deployed |
-| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | Source version: 2.3.0, adding local translation, automatic website translation, translation style guides and image improvements; [release status](docs/extension/releases/2.3.0.md) |
+| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | 2.3.0 submitted to Chrome and Edge on 2026-11-15; awaiting review. [Release status](docs/extension/releases/2.3.0.md) |
 
 ## Layout
 

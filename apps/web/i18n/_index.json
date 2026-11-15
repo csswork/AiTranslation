@@ -199,6 +199,13 @@
       "changelog.html"
     ]
   },
+  "<b>发布状态</b>：已提交 Chrome 与 Edge 商店审核，审核通过后发布；当前商店安装的版本可能仍是上一版。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
   "新增免费、不需要 Key 的本机文字翻译，支持按网站自动翻译，并优化文字译文风格与图片自动翻译效果。": {
     "kind": "text",
     "tag": "p",
@@ -621,7 +628,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.3.0</span> <span>新版：双语阅读，把网页文章变成逐段对照的阅读页。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.3.0</span> <span>新版：本机翻译、整站翻译与图片自动翻译优化。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [
@@ -645,6 +652,13 @@
   "<a class=\"btn btn-primary btn-lg\" href=\"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj\" target=\"_blank\" rel=\"noopener\" data-install data-edge-href=\"https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe\"> <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11M7 10.5l5 5 5-5M5 20h14\"/></svg> <span data-for-browser=\"chrome\">安装到 Chrome</span> <span data-for-browser=\"edge\" hidden>安装到 Edge</span> </a> <a class=\"btn btn-ghost btn-lg\" href=\"https://github.com/csswork/AiTranslation\" target=\"_blank\" rel=\"noopener\">查看源码</a>": {
     "kind": "text",
     "tag": "div",
+    "pages": [
+      "index.html"
+    ]
+  },
+  "新版已提交 Chrome 与 Edge 商店审核，通过后可在商店更新。主要更新：免费本机文字翻译、更自然的译文，以及更好的图片自动识别与排版。": {
+    "kind": "text",
+    "tag": "p",
     "pages": [
       "index.html"
     ]
