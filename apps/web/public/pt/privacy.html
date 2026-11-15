@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidade</h2>
-        <p class="updated">Última atualização: 2026-11-06 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original em Markdown</a></p>
+        <p class="updated">Última atualização: 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original em Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -83,11 +83,11 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>Em uma frase</h3>
-          <p>Os serviços de conta, pontos e subscrição já estão disponíveis com a 2.0.0; as descrições seguintes explicam o tratamento de dados desses serviços.</p>
-          <p>O Huaci tem dois modos de uso. <b>Chave própria</b>: o conteúdo a traduzir é enviado diretamente à plataforma de IA que você configurou, sem passar por nós. <b>Tradução por pontos</b>: o conteúdo passa pelos nossos servidores até o provedor do modelo para concluir a tradução, e o servidor <b>não armazena o texto original nem a tradução</b>. Conta, cobrança e prevenção de abuso retêm apenas os dados necessários à operação, não são usados para publicidade nem vendidos.</p>
+          <p>A seguir, descreve-se como os dados são tratados nos serviços de tradução, conta, pontos e assinatura.</p>
+          <p>O Huaci oferece tradução local, chave própria e tradução por pontos. <b>Tradução local</b>: o texto é processado apenas no dispositivo. <b>Chave própria</b>: o conteúdo a traduzir é enviado diretamente para a plataforma de IA que configurou, sem passar por nós. <b>Tradução por pontos</b>: o conteúdo é encaminhado pelos nossos servidores ao fornecedor do modelo para concluir a tradução, e o servidor <b>não armazena o texto original nem a tradução</b>. A conta, a cobrança e a prevenção de abusos retêm apenas os dados necessários ao funcionamento, não são usados para publicidade nem vendidos.</p>
 
           <h3>Conteúdo enviado durante a tradução</h3>
-          <p>Somente quando você <b>aciona a tradução ativamente</b> (menu de contexto, atalho de teclado, clique no botão de tradução), o conteúdo a seguir é enviado via HTTPS:</p>
+          <p>Quando traduz ativamente ou ativa a tradução automática de um site, o modo de tradução online envia o seguinte conteúdo via HTTPS; a tradução local de texto não envia esses conteúdos:</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -95,6 +95,7 @@
               </thead>
               <tbody>
                 <tr><td>O texto que você selecionou</td><td>Ao usar a tradução de seleção</td><td>O provedor que você escolheu</td><td>Nosso servidor, que encaminha ao provedor do modelo</td></tr>
+                <tr><td>Texto próximo à área visível em sites com tradução de todo o site ativada</td><td>Tradução automática ao ativar e em acessos posteriores a esse site</td><td>O provedor que você escolheu</td><td>Nosso servidor, que encaminha ao provedor do modelo</td></tr>
                 <tr><td>O texto dentro da área que você marcou</td><td>Ao clicar no botão de tradução sobre a área</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>O texto que você digita no painel de tradução</td><td>Ao clicar em traduzir</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Texto reconhecido das legendas de vídeo</td><td>Ao ativar a tradução de legendas de vídeo</td><td>Idem</td><td>Idem</td></tr>
@@ -115,7 +116,12 @@
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>Não é enviado</b>: conteúdo de páginas que você não traduziu ativamente, histórico de navegação, cookies, dados de formulários. A extensão não escaneia nem envia nada automaticamente em segundo plano.</p>
+          <p><b>Não é enviado</b>: conteúdo de páginas que não traduziu ativamente, histórico de navegação, cookies, dados de formulários. A tradução automática ocorre apenas nos sites que ativou explicitamente.</p>
+
+          <h3>Tradução local</h3>
+          <p>A tradução local usa o modelo integrado do navegador. Os pacotes de idioma são baixados e gerenciados pelo navegador; após a conclusão do download, é possível traduzir texto offline. O texto original, a tradução e as preferências de vocabulário não são enviados a nós nem às plataformas de tradução, e não geram registros de uso hospedado. A tradução local processa apenas texto e não oferece reconhecimento de imagens nem reformulação por clique em palavra.</p>
+          <h3>Tradução automática de todo o site</h3>
+          <p>Somente após marcar «Traduzir este site» no menu de contexto é que o texto próximo à área visível desse site é traduzido automaticamente; isso continua valendo em acessos posteriores ao mesmo site até que a marcação seja removida. Textos iguais são reutilizados na mesma página. A lista de sites e a seleção de plataforma dedicada são armazenadas apenas localmente; com a tradução local, o texto não é enviado; com chave própria ou tradução por pontos, o envio segue a tabela acima, e a primeira ativação de uma plataforma paga exige confirmação.</p>
 
           <h3>Processamento de áudio das legendas de vídeo experimentais</h3>
           <p>As legendas de vídeo ficam desativadas por padrão. Quando ativadas, o áudio da aba atual é reconhecido localmente por padrão, podendo ser necessário baixar o pacote de idioma do navegador; somente quando você optar ativamente por «usar reconhecimento na nuvem» o áudio será enviado ao serviço de reconhecimento de voz do navegador: o Chrome usa o Google (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>) e o Microsoft Edge usa o Microsoft Azure (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Declaração de Privacidade da Microsoft</a>). O reconhecimento local aplica-se apenas a versões de navegador e idiomas compatíveis; a extensão não alterna automaticamente para o reconhecimento na nuvem. O texto das legendas reconhecido é então enviado à plataforma de tradução ou ao nosso servidor conforme o modo de tradução selecionado. Não recebemos nem armazenamos vídeo ou áudio e não oferecemos transcrição hospedada de áudio e vídeo.</p>
@@ -161,7 +167,8 @@
             <li><b>API Key</b> — usada apenas para autenticar no cabeçalho da requisição junto à plataforma que você escolher; não é enviada para nós</li>
             <li><b>Token de login da extensão</b> — enviado apenas para <code>app.huaci.app</code>, usado para traduções pagas e status da conta</li>
             <li><b>Preferências</b> — idioma de destino, modelo usado, cada opção de ativação</li>
-            <li><b>Regras de tradução por área</b> — «domínio + seletor CSS» adicionados manualmente por você</li>
+            <li><b>Tradução de todo o site</b>: domínios dos sites ativados e seleção de plataforma dedicada</li>
+            <li><b>Regras de tradução por região</b>: «domínio + seletor CSS» adicionados manualmente</li>
             <li><b>Preferências de terminologia</b> — as expressões que você alterou nas traduções (termo original e tradução); ao traduzir, os itens relevantes são enviados com a solicitação, conforme descrito acima</li>
             <li><b>Artigos salvos</b> — os artigos e traduções que você salvou na leitura bilíngue ficam apenas neste dispositivo e podem ser excluídos no lado direito da página de leitura</li>
           </ul>

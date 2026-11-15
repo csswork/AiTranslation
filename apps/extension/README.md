@@ -2,7 +2,11 @@
 
 划词 – AI 翻译与双语阅读（formerly “AI 划词翻译 / AI Translator”; renamed in 2.2.0, same extension IDs and store listings).
 
-A Chrome extension for translating selected text, page regions, images, whole PDF documents and experimental video captions into your chosen language. Bring your own ChatGPT (OpenAI), DeepSeek or DeepL API key.
+A Chrome and Edge extension for bilingual reading and translating selected text, websites, images, whole PDF documents and experimental video captions. Use free on-device text translation where supported, hosted credits, or your own OpenAI, DeepSeek or DeepL API key.
+
+- **Local translation (2.3.0):** download browser-managed language packs in Settings, then translate text offline without a key, credits or uploading text. Available only when the browser provides the Translator API. Image recognition and alternative wordings are unavailable in this mode. See [local translation](../../docs/extension/local-translation.md).
+- **Automatic website translation (2.3.0):** enable “Translate this website” in the context menu to translate text near the viewport, including future visits. Disable it to restore the original. A separate provider can be chosen; paid providers require confirmation on first use. See [website translation](../../docs/extension/site-translation.md).
+- **Translation quality (2.3.0):** revised style guides for Chinese and other targets; improved automatic image shapes, font sizing, alignment and background colors. Edit, move or retranslate individual image passages, optionally translate sound effects, and retain edits in exported images.
 
 - **24 language choices throughout the extension:** Simplified Chinese, Traditional Chinese, English, Spanish, Portuguese (Brazil), French, German, Italian, Dutch, Russian, Ukrainian, Polish, Turkish, Arabic, Hebrew, Persian, Hindi, Bengali, Urdu, Indonesian, Vietnamese, Thai, Japanese and Korean.
 - **Independent preferences:** interface language, default translation target, and source language are separate. A new installation chooses its default target from Chrome's language; upgrades preserve the existing target and API configuration.
@@ -24,11 +28,11 @@ A Chrome extension for translating selected text, page regions, images, whole PD
 
 The options page opens automatically on first install.
 
-Microsoft Edge distribution is being prepared, not yet published. `npm run package:edge` from the repository root builds a separate production ZIP. See [Edge release](../../docs/extension/edge-release.md) for store registration, backend ID allowlisting, review materials and browser validation. Loading this source directory directly continues to use local development services.
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) or [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe). `npm run package:edge` builds a separate production ZIP. See [Edge release](../../docs/extension/edge-release.md) for publishing and browser validation. Loading this source directory directly continues to use local development services.
 
 ## Configure
 
-Pick a provider on the options page and paste in an API key:
+Choose local translation and download a language pair where supported, use the hosted trial, or configure one of these providers with your own key:
 
 | Provider | Get a key | Default model | Base URL |
 | --- | --- | --- | --- |
@@ -42,14 +46,14 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Version **2.1.0 is live on the [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) and [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe)** (whole-PDF translation, image region selection and export); **2.2.0** (bilingual reading, word alternatives and wording preferences, shape-based image translation) is in preparation. Accounts, hosted trials and subscriptions are available through the account service at `app.huaci.app`; bring-your-own-key providers remain available in settings.
+Chrome's public listing shows **2.2.0** (verified 2026-11-15); Edge has an existing public listing. Source version **2.3.0** adds local translation, automatic website translation, translation style guides and image improvements. Packaging, submission and deployment status are recorded in [the 2.3.0 release record](../../docs/extension/releases/2.3.0.md). Accounts, hosted trials and subscriptions are available at `app.huaci.app`; bring-your-own-key providers remain available.
 
 Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
 
 - **Guest trial**: right after install, the service worker silently claims a guest session with free credits (`POST /api/extension/guest`). It then opens the account site's welcome page, which recognizes a reinstall in the same browser. Translation works immediately, with no sign-up. If the account service is unreachable at install time, the options page shows the old welcome with both paths, and the first credit translation claims the guest session later.
 - **Credits and subscription**: when the free credits run out, guests are asked to register, which gives more credits and moves the remaining guest credits over. Registered users are asked to subscribe. Subscribers see **Unlimited** instead of a balance.
 
-- **Environment**: `src/lib/env.js` decides it from the manifest. Store builds have `update_url` and use `https://app.huaci.app` and `https://huaci.app`. Unpacked builds use the local dev servers, `http://localhost:8787` (`npm run dev:backend`) and `http://localhost:8788` (`npm run dev:web`), for the API, account links and privacy link. The options footer then shows a `DEV · localhost:8787` badge. All external addresses come from this file.
+- **Environment**: the packager marks `src/lib/env.js` as production in its temporary staging directory, so store ZIPs use `https://app.huaci.app` and `https://huaci.app` without depending on `update_url`. Unpacked source uses `http://localhost:8787` (`npm run dev:backend`) and `http://localhost:8788` (`npm run dev:web`); the options footer shows a `DEV · localhost:8787` badge. All external addresses come from this file.
 - **Dev tools**: unpacked builds show a dashed “开发工具” panel at the bottom of the options page (`src/options/dev-tools.js`; store builds render nothing). It shows the locally stored account state: session type, whether a guest trial was already claimed (`guestClaimed`, which is kept permanently so the extension never re-claims on its own), onboarding state, and the cached balance. It can clear that state, or clear it and simulate a fresh install, which claims a guest trial and opens the welcome page. The server still applies its own per-network limit and the welcome page's browser marker.
 - **Sign-in** opens the account site's authorization page in a new tab in the current window. It does not use `launchWebAuthFlow`, which opens a separate window. After approval the site redirects to the extension's own `src/auth/callback.html` with a one-time code. That page is the only web-accessible resource, and only for the account origins. It hands its URL to the service worker. The worker checks `state` and exchanges the code with the PKCE verifier for an extension session token, stored in `chrome.storage.local` only. The verifier waits in `chrome.storage.session`. The worker then switches back to the tab that started sign-in and closes the callback tab; started from the popup, the callback tab becomes the options page.
 - **Status**: account type (guest or registered), username, credit balance, subscription and the sign-up bonus are cached as `accountStatus`. The options page and toolbar popup listen for storage changes, so balance updates after every hosted translation; the options page also refreshes when it is opened or becomes visible. An expired or revoked session returns to signed-out.
@@ -77,11 +81,14 @@ src/
     content.js             Selection reporting + the Shadow DOM popup
     elements.js            Region (element) translation buttons from saved rules
     image.js               In-page image translation overlay
+    site.js                Automatic translation on websites explicitly enabled by the user
     pdf.js                 Built-in PDF viewer: reports PDF tabs and hands the file's bytes to the PDF page
     reader.js              Bilingual reading: scan animation + article detection, injected on demand
     video.js               Experimental video caption overlay, injected on demand
   lib/
     providers.js           OpenAI-compatible, DeepL and hosted requests, SSE parsing, error mapping
+    local.js               Browser Translator / LanguageDetector and language-pack management
+    sites.js               Locally stored automatic website translation list
     env.js                 Store vs. unpacked build: account, API and website origins
     account.js             Account login (PKCE), status cache and hosted translation; service worker only
     settings.js            Provider definitions and settings storage

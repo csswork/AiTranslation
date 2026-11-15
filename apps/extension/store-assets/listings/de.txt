@@ -1,70 +1,78 @@
-Auswählen, Rechtsklick und einfach weiterlesen. Lies ganze Artikel Absatz für Absatz neben ihrer Übersetzung und übersetze ausgewählten Text, Bilder und PDFs direkt an Ort und Stelle – ohne Tab-Wechsel oder Kopieren und Einfügen.
+Auswählen, rechtsklicken und weiterlesen. Lesen Sie ganze Artikel Seite an Seite mit ihrer Übersetzung und übersetzen Sie ausgewählten Text, Bilder und PDFs direkt an Ort und Stelle – ohne Tab-Wechsel oder Kopieren und Einfügen.
 
-Huaci – KI-Übersetzer & zweisprachiger Reader ist eine Open-Source-Browsererweiterung auf Basis von Manifest V3. Übersetze direkt nach der Installation mit schlüsselfreien Credits oder verwende deinen eigenen API Key von OpenAI, DeepSeek oder DeepL.
+Huaci – KI-Übersetzer & zweisprachiger Reader ist eine Open-Source-Browsererweiterung auf Basis von Manifest V3. Nutzen Sie kostenlose lokale Textübersetzung, wo unterstützt, schlüsselfreie gehostete Credits oder Ihren eigenen OpenAI-, DeepSeek- oder DeepL-API-Schlüssel.
 
-▍Zweisprachiges Lesen (neu in 2.2.0)
+LOKALE UND AUTOMATISCHE WEBSITE-ÜBERSETZUNG (NEU IN 2.3.0)
 
-Klicke irgendwo auf einer Seite mit der rechten Maustaste, ohne Text auszuwählen, und wähle „Diesen Artikel zweisprachig lesen“. Ein Lichtstreifen zieht über die Seite, während Titel und Fließtext erkannt werden, und daneben öffnet sich eine übersichtliche Leseseite, auf der jeder Originalabsatz neben seiner Übersetzung ausgerichtet ist. Navigation, Seitenleisten, Werbeplätze und Empfehlungsmodule werden weggelassen und nie zur Übersetzung gesendet.
+• Lokale Textübersetzung: Auf unterstützten Browsern und Geräten laden Sie Sprachpaare in den Einstellungen herunter und übersetzen offline kostenlos, ohne API-Schlüssel oder Credits. Der Text bleibt auf Ihrem Gerät. Verwenden Sie sie für Auswahlen, Seitenbereiche, Websites, das Textpanel, PDFs, zweisprachiges Lesen und erkannte Untertitel. Verfügbarkeit und Sprachen hängen vom Browser und den heruntergeladenen Paketen ab. Der lokale Modus bietet keine Bilderkennung und keine alternativen Formulierungen; nicht unterstützte Steuerelemente werden ausgeblendet.
+• Automatische Website-Übersetzung: Rechtsklicken und „Diese Website übersetzen“ aktivieren. Text in der Nähe des Viewports wird beim Scrollen übersetzt, auch bei späteren Besuchen, bis Sie es deaktivieren. Wiederholter Text auf einer Seite verwendet Übersetzungen erneut. Wählen Sie in den Einstellungen einen separaten Anbieter; die erste Nutzung eines kostenpflichtigen Anbieters erfordert eine Bestätigung.
+• Natürlichere Formulierungen: Überarbeitete Stilrichtlinien verbessern Ausdrucksweise, Terminologie und Ton für Chinesisch und andere Zielsprachen.
+• Bessere automatische Bildübersetzung: Verbesserte Textformen, Schriftgrößen, Ausrichtung, vertikaler Text und Hintergrundfarben. Verschieben Sie eine Passage, bearbeiten Sie ihre Übersetzung oder Größe oder übersetzen Sie nur diese Passage erneut. Exportierte Bilder behalten Ihre Bearbeitungen. Übersetzen Sie optional Soundeffekte; erkannte Bilder werden auf der aktuellen Seite zwischengespeichert, mit Navigation zwischen Bildern.
 
-• Bei der Anordnung nebeneinander beginnt jedes Absatzpaar auf derselben Höhe; du kannst sie auch untereinander anordnen oder nur die Übersetzung bzw. nur das Original anzeigen
-• Helles, dunkles oder systemabhängiges Erscheinungsbild, dazu anpassbare Farbpalette, Schrift, Größe, Zeilenhöhe und Seitenbreite – alles wird gespeichert
-• „Speichern“ behält den Artikel und seine Übersetzung auf deinem Gerät; öffne ihn später über die Liste rechts erneut, ohne ihn noch einmal zu übersetzen, oder lösche ihn, wenn du ihn nicht mehr brauchst
+▍Zweisprachiges Lesen
 
-▍Klicke auf ein Wort für eine andere Formulierung – und behalte deine bevorzugten Begriffe
+Rechtsklicken Sie irgendwo auf einer Seite, ohne Text auszuwählen, und wählen Sie „Diesen Artikel zweisprachig lesen“. Ein Lichtstreifen zieht über die Seite, während Titel und Text erkannt werden, dann öffnet sich daneben eine übersichtliche Leseseite, auf der jeder Originalabsatz neben seiner Übersetzung ausgerichtet ist. Navigation, Seitenleisten, Werbeplätze und Empfehlungs-Widgets werden ausgelassen und nie zur Übersetzung gesendet.
 
-Auf der Leseseite, im Auswahl-Popup, im Übersetzungsbereich und auf der PDF-Seite klickst du auf ein Wort in der Übersetzung – oder markierst per Ziehen einige Wörter –, um mehrere alternative Formulierungen mit kurzen Hinweisen zu sehen, oder tippst deine eigene ein. Ersetze dasselbe Wort an anderer Stelle auf einmal.
+• Seite an Seite beginnt jedes Absatzpaar auf derselben Höhe; Sie können sie auch stapeln oder nur die Übersetzung oder nur das Original anzeigen
+• Helles, dunkles oder systemabhängiges Erscheinungsbild sowie anpassbare Farbpalette, Schrift, Größe, Zeilenhöhe und Seitenbreite – alles wird gespeichert
+• „Speichern“ behält den Artikel und seine Übersetzung auf Ihrem Gerät; öffnen Sie ihn erneut aus der Liste rechts, ohne ihn erneut zu übersetzen, oder löschen Sie ihn, wenn Sie ihn nicht mehr benötigen
 
-Gewählte Formulierungen werden auf deinem Gerät als Wording-Präferenzen gespeichert: Spätere Übersetzungen von Text mit demselben Ausgangsbegriff folgen deiner Wahl. Prüfe und lösche sie in den Einstellungen.
+▍Klicken Sie auf ein Wort für eine andere Formulierung – und behalten Sie Ihre bevorzugten Begriffe
 
-▍Sechs Arten zu übersetzen, alle im Rechtsklick-Menü
+Auf der Leseseite, im Auswahl-Popup, im Übersetzungs-Panel und auf der PDF-Seite klicken Sie auf ein Wort in der Übersetzung – oder ziehen Sie über einige Wörter –, um mehrere alternative Wiedergaben mit kurzen Hinweisen zu sehen, oder geben Sie Ihre eigene ein. Ersetzen Sie dasselbe Wort an anderer Stelle auf einmal.
+
+Von Ihnen gewählte Formulierungen werden auf Ihrem Gerät als Formulierungspräferenzen gespeichert: Spätere Übersetzungen von Text, der denselben Ausgangsbegriff enthält, folgen Ihrer Wahl. Überprüfen und löschen Sie sie in den Einstellungen.
+
+▍Übersetzungswerkzeuge
 
 • Ausgewählter Text
-Wähle Text aus und wähle im Rechtsklick-Menü „Direkt übersetzen“. Die Übersetzung erscheint in einem zentrierten Popup, bei Anbietern mit Streaming-Unterstützung Wort für Wort. Du kannst auch die schwebende Schaltfläche neben einer Auswahl verwenden oder das Tastenkürzel ⌘⇧Y unter macOS / Alt+Shift+T anderswo. Das Popup lässt sich verschieben, zeigt das Original auf Wunsch und übersetzt das Original erneut, wenn du die Zielsprache wechselst.
+Wählen Sie Text aus und wählen Sie „Übersetzen nach…“ im Rechtsklick-Menü. Die Übersetzung erscheint in einem zentrierten Popup, Wort für Wort, wo der Anbieter Streaming unterstützt. Sie können auch die schwebende Schaltfläche neben einer Auswahl oder die Tastenkombination ⌘⇧Y auf macOS / Alt+Shift+T anderswo verwenden. Das Popup kann verschoben werden, zeigt das Original auf Anfrage und übersetzt das Original erneut, wenn Sie die Zielsprache wechseln.
 
 • Bilder
-Klicke mit der rechten Maustaste auf ein Bild, um seinen Text zu erkennen. Jeder Abschnitt wird entlang seiner Konturen umrandet, und die Übersetzung wird über das Original gelegt, ohne dass sich die Abschnitte gegenseitig verdecken. Vertikaler japanischer Text, wie in Manga, bleibt vertikal, wenn er ins Chinesische, Japanische oder Koreanische übersetzt wird. Prüfe die erkannten Formen zuerst – verschieben, bearbeiten, löschen oder neue zeichnen –, bevor du übersetzt, oder wähle nur die Bereiche aus, die du brauchst (Rechtecke oder Kreise). Lade das Ergebnis als neues Bild herunter oder kopiere es.
+Rechtsklicken Sie auf ein Bild, um seinen Text zu erkennen. Jede Passage wird entlang ihrer Striche umrandet, und die Übersetzung wird über das Original gelegt, ohne dass sich die Passagen gegenseitig überdecken. Vertikaler japanischer Text, wie in Manga, bleibt vertikal, wenn er ins Chinesische, Japanische oder Koreanische übersetzt wird. Überprüfen Sie zuerst die erkannten Formen – verschieben, bearbeiten, löschen oder zeichnen Sie neue –, bevor Sie übersetzen, oder wählen Sie nur die Bereiche aus, die Sie benötigen (Rechtecke oder Kreise). Laden Sie das Ergebnis als neues Bild herunter oder kopieren Sie es.
 
 • Ganze PDFs
-Klicke im integrierten PDF-Betrachter des Browsers mit der rechten Maustaste, ohne Text auszuwählen, um das gesamte Dokument auf einer Seite daneben zu übersetzen. Übersetzungen werden über die Originalpositionen gelegt, sodass Layout, Abbildungen und Tabellenlinien erhalten bleiben. Vergleiche nebeneinander, zeige nur die Übersetzung oder nur das Original an und speichere das Ergebnis über den Druckdialog als PDF. Du kannst auch eine lokale PDF-Datei auf die Übersetzungsseite ziehen.
+Im integrierten PDF-Viewer des Browsers rechtsklicken Sie, ohne Text auszuwählen, um das gesamte Dokument auf einer Seite daneben zu übersetzen. Übersetzungen werden über die Originalpositionen gelegt, sodass Layout, Abbildungen und Tabellenlinien an Ort und Stelle bleiben. Vergleichen Sie Seite an Seite, zeigen Sie nur die Übersetzung oder nur das Original an und speichern Sie das Ergebnis über den Druckdialog als PDF. Sie können auch ein lokales PDF auf die Übersetzungsseite ziehen.
 
 • Seitenbereiche
-Klicke mit der rechten Maustaste auf einen Bereich einer Seite, um ihm eine Übersetzungsschaltfläche hinzuzufügen. Klicke einmal, um den Text in diesem Bereich durch seine Übersetzung zu ersetzen, und erneut, um das Original wiederherzustellen. Regeln werden pro Website gespeichert.
+Rechtsklicken Sie auf einen Bereich einer Seite, um ihm eine Übersetzungsschaltfläche hinzuzufügen. Klicken Sie einmal, um den Text in diesem Bereich durch seine Übersetzung zu ersetzen, und erneut, um das Original wiederherzustellen. Regeln werden pro Website gespeichert.
 
-• Übersetzungsbereich
-Eine eigene Seite mit dem Original links und der Übersetzung rechts, für längere Passagen oder Text von außerhalb des Browsers. Erkenne die Ausgangssprache automatisch oder wähle sie selbst.
+• Übersetzungs-Panel
+Eine eigene Seite mit dem Original links und der Übersetzung rechts, für längere Passagen oder Text von außerhalb des Browsers. Erkennen Sie die Ausgangssprache automatisch oder wählen Sie sie selbst.
 
-24 Oberflächen- und Zielsprachen: Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch und Koreanisch. Oberflächen-, Ausgangs- und Zielsprache sind unabhängige Einstellungen, und Oberflächen in Arabisch, Hebräisch, Persisch und Urdu verwenden ein Rechts-nach-links-Layout.
+24 Oberflächen- und Zielsprachen: Vereinfachtes Chinesisch, Traditionelles Chinesisch, Englisch, Spanisch, Portugiesisch, Französisch, Deutsch, Italienisch, Niederländisch, Russisch, Ukrainisch, Polnisch, Türkisch, Arabisch, Hebräisch, Persisch, Hindi, Bengalisch, Urdu, Indonesisch, Vietnamesisch, Thailändisch, Japanisch und Koreanisch. Oberflächen-, Ausgangs- und Zielsprachen sind unabhängige Einstellungen, und arabische, hebräische, persische und Urdu-Oberflächen verwenden ein Rechts-nach-links-Layout.
 
-▍Zwei Arten der Nutzung
+▍Übersetzungsmodi
 
 • Schlüsselfreie Credit-Übersetzung
-Eine neue berechtigte Installation erhält eine Gast-Testphase (Ansprüche sind pro Netzwerk begrenzt), und die Registrierung per E-Mail oder Google fügt weitere Credits hinzu. Credits verfallen nie und werden nach der tatsächlich übersetzten Textmenge abgezogen (1 Credit pro 500 Zeichen); fehlgeschlagene Übersetzungen werden nicht berechnet. Sobald die Test-Credits aufgebraucht sind, erfordert die Credit-Übersetzung ein Abonnement, das unbegrenzte Nutzung bietet (Fair Use), sich automatisch verlängert und jederzeit gekündigt werden kann. Aktuelle Testbeträge und Preise findest du auf der Website und in deinem Konto-Center.
+Eine neue berechtigte Installation erhält eine Gast-Testversion (Ansprüche sind pro Netzwerk begrenzt), und die Anmeldung mit E-Mail oder Google fügt weitere Credits hinzu. Credits verfallen nie und werden nach der tatsächlich übersetzten Textmenge abgezogen (1 Credit pro 500 Zeichen); fehlgeschlagene Übersetzungen werden nicht berechnet. Sobald die Test-Credits aufgebraucht sind, erfordert die Credit-Übersetzung ein Abonnement, das unbegrenzte Nutzung bietet (Fair Use), sich automatisch verlängert und jederzeit gekündigt werden kann. Aktuelle Testbeträge und Preise finden Sie auf der Website und in Ihrem Kontocenter.
 
-• Dein eigener API Key
-Gib deinen eigenen OpenAI-, DeepSeek- oder DeepL-Key ein. Anfragen gehen direkt von deinem Browser an den jeweiligen Anbieter, der dir die Nutzung in Rechnung stellt. Die Bilderkennung erfordert ein visionsfähiges Modell; DeepL bietet weder Bilderkennung noch alternative Formulierungen.
+• Ihr eigener API-Schlüssel
+Geben Sie Ihren eigenen OpenAI-, DeepSeek- oder DeepL-Schlüssel ein. Anfragen gehen direkt von Ihrem Browser an diesen Anbieter, der Ihnen die Nutzung in Rechnung stellt. Die Bilderkennung erfordert ein visionsfähiges Modell; DeepL bietet keine Bilderkennung und keine alternativen Formulierungen.
 
 ▍Datenschutz
 
-• Inhalte werden nur gesendet, wenn du sie übersetzen möchtest. Die Erweiterung durchsucht oder lädt niemals Seiten im Hintergrund hoch.
-• Mit deinem eigenen Key gehen Inhalte direkt an den von dir gewählten Anbieter, niemals über uns.
-• Bei der Credit-Übersetzung laufen Inhalte über unseren Server zu einem Modellanbieter; der Server speichert weder deinen Text noch Übersetzungen oder Bilder.
-• API Keys, Wording-Präferenzen und gespeicherte Artikel bleiben auf deinem Gerät und werden nicht über dein Browserkonto synchronisiert.
-• Keine Werbung, kein Tracking, keine Analyse durch Dritte. Der vollständige Quellcode ist unter GPL-3.0 verfügbar.
+• Die lokale Übersetzung behält den Text auf Ihrem Gerät. Online-Modi senden den angeforderten Inhalt an den gewählten Dienst. Die automatische Website-Übersetzung verarbeitet Text nur auf Websites, die Sie ausdrücklich aktivieren, auch bei späteren Besuchen.
+• Mit Ihrem eigenen Schlüssel gehen Inhalte direkt an den von Ihnen gewählten Anbieter, niemals über uns.
+• Bei der Credit-Übersetzung passiert der Inhalt unseren Server zu einem Modellanbieter; der Server speichert Ihre Texte, Übersetzungen oder Bilder nicht.
+• API-Schlüssel, Formulierungspräferenzen und gespeicherte Artikel bleiben auf Ihrem Gerät und werden nicht über Ihr Browserkonto synchronisiert.
+• Keine Werbung, kein Tracking und keine Analysen von Drittanbietern. Der vollständige Quellcode ist unter GPL-3.0 verfügbar.
 
-Live-Videountertitel sind eine experimentelle Funktion, standardmäßig deaktiviert. Sprache wird standardmäßig auf deinem Gerät erkannt; wenn du ausdrücklich die Cloud-Erkennung wählst, wird Audio an den Spracherkennungsdienst deines Browsers gesendet.
+Live-Video-Untertitel sind eine experimentelle Funktion, standardmäßig deaktiviert. Sprache wird standardmäßig auf Ihrem Gerät erkannt; wenn Sie ausdrücklich die Cloud-Erkennung wählen, wird Audio an den Spracherkennungsdienst Ihres Browsers gesendet.
 
 ▍Bekannte Einschränkungen
 
-• Vom Browser geschützte Seiten wie interne chrome://-Seiten und die Erweiterungs-Store-Seiten können nicht verwendet werden.
-• Eine einzelne Auswahl kann bis zu 6.000 Zeichen enthalten; längere Auswahlen werden mit einem Hinweis gekürzt.
+• Vom Browser geschützte Seiten, wie interne chrome://-Seiten und die Erweiterungs-Stores, können nicht verwendet werden.
+• Eine einzelne Auswahl kann bis zu 6,000 Zeichen enthalten; längere Auswahlen werden mit einem Hinweis abgeschnitten.
 • Das zweisprachige Lesen erkennt Artikel anhand der Seitenstruktur; Foren, soziale Netzwerke und Seiten hinter einem Login werden möglicherweise nicht vollständig erkannt.
 • Gescannte und passwortgeschützte PDFs werden noch nicht unterstützt.
 • Verfügbare Sprachen, Bilderkennung und Streaming hängen vom gewählten Anbieter und Modell ab.
 
-Erfordert Chrome oder Edge 116 oder neuer.
+Erfordert Chrome oder Edge 116 oder höher.
 
-Ein unabhängiges Open-Source-Projekt, nicht verbunden mit OpenAI, DeepSeek, DeepL oder deren Tochtergesellschaften, weder von ihnen unterstützt noch gesponsert. ChatGPT, DeepSeek, DeepL und andere Namen sind Marken ihrer jeweiligen Inhaber und werden nur zur Kennzeichnung kompatibler Dienste verwendet.
+Ein unabhängiges Open-Source-Projekt, nicht verbunden mit, unterstützt von oder gesponsert von OpenAI, DeepSeek, DeepL oder deren verbundenen Unternehmen. ChatGPT, DeepSeek, DeepL und andere Namen sind Marken ihrer jeweiligen Inhaber und werden nur zur Identifizierung kompatibler Dienste verwendet.
 
+Support: support@huaci.app
 Website: https://huaci.app/
 Quellcode und Fehlerberichte: https://github.com/csswork/AiTranslation
-Datenschutzerklärung: https://huaci.app/privacy.html
+Datenschutzrichtlinie: https://huaci.app/privacy.html

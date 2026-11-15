@@ -1,70 +1,78 @@
-Zaznacz, kliknij prawym przyciskiem myszy i czytaj dalej. Czytaj całe artykuły obok ich tłumaczenia i tłumacz zaznaczony tekst, obrazy oraz pliki PDF na miejscu—bez przełączania kart i kopiowania oraz wklejania.
+Zaznacz, kliknij prawym przyciskiem myszy i czytaj dalej. Czytaj całe artykuły obok ich tłumaczenia i tłumacz zaznaczony tekst, obrazy oraz pliki PDF w miejscu, w którym się znajdują—bez przełączania kart i kopiowania oraz wklejania.
 
-Huaci – tłumacz AI i czytnik dwujęzyczny to open-source’owe rozszerzenie przeglądarki zbudowane na Manifest V3. Zacznij tłumaczyć zaraz po instalacji dzięki kredytom niewymagającym klucza lub użyj własnego klucza API OpenAI, DeepSeek lub DeepL.
+Huaci – tłumacz AI i czytnik dwujęzyczny to rozszerzenie przeglądarki o otwartym kodzie źródłowym zbudowane na Manifest V3. Korzystaj z darmowego lokalnego tłumaczenia tekstu, tam gdzie jest obsługiwane, z bezpłatnych kredytów hostowanych bez klucza lub z własnego klucza API OpenAI, DeepSeek lub DeepL.
 
-▍Czytanie dwujęzyczne (nowość w 2.2.0)
+LOKALNE I AUTOMATYCZNE TŁUMACZENIE STRON (NOWOŚĆ W 2.3.0)
 
-Kliknij prawym przyciskiem myszy w dowolnym miejscu strony bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”. Gdy tytuł i treść zostaną wykryte, przez stronę przebiega świetlny pas, a obok otwiera się przejrzysta strona do czytania, na której każdy oryginalny akapit jest wyrównany z jego tłumaczeniem. Nawigacja, panele boczne, miejsca reklamowe i widżety z rekomendacjami są pomijane i nigdy nie są wysyłane do tłumaczenia.
+• Lokalne tłumaczenie tekstu: w obsługiwanych przeglądarkach i na obsługiwanych urządzeniach pobierz pary językowe w Ustawieniach i tłumacz offline za darmo, bez klucza API i bez kredytów. Tekst pozostaje na Twoim urządzeniu. Używaj go do zaznaczeń, obszarów strony, stron internetowych, panelu tekstowego, plików PDF, czytania dwujęzycznego i rozpoznanych napisów. Dostępność i języki zależą od przeglądarki i pobranych pakietów. Tryb lokalny nie zapewnia rozpoznawania obrazów ani alternatywnych sformułowań; nieobsługiwane elementy sterujące są ukryte.
+• Automatyczne tłumaczenie stron: kliknij prawym przyciskiem myszy i włącz „Przetłumacz tę stronę”. Tekst w pobliżu widoku jest tłumaczony podczas przewijania, także przy późniejszych wizytach, dopóki nie wyłączysz tej funkcji. Powtarzający się tekst na stronie ponownie wykorzystuje tłumaczenia. Wybierz osobnego dostawcę w Ustawieniach; pierwsze użycie płatnego dostawcy wymaga potwierdzenia.
+• Bardziej naturalne sformułowania: zaktualizowane przewodniki stylu poprawiają frazowanie, terminologię i ton dla języka chińskiego i innych języków docelowych.
+• Lepsze automatyczne tłumaczenie obrazów: ulepszone kształty tekstu, rozmiar czcionki, wyrównanie, tekst pionowy i kolory tła. Przenieś fragment, edytuj jego tłumaczenie lub rozmiar albo przetłumacz ponownie tylko ten fragment. Wyeksportowane obrazy zachowują Twoje zmiany. Opcjonalnie tłumacz efekty dźwiękowe; rozpoznane obrazy są buforowane na bieżącej stronie, z nawigacją między obrazami.
 
-• W widoku obok siebie każda para akapitów zaczyna się na tej samej wysokości; możesz też ułożyć je jeden pod drugim albo pokazać tylko tłumaczenie lub tylko oryginał
-• Wygląd jasny, ciemny lub zgodny z systemem, a także regulowana paleta kolorów, czcionka, rozmiar, wysokość wiersza i szerokość strony—wszystko jest zapamiętywane
-• „Zapisz” zachowuje artykuł i jego tłumaczenie na Twoim urządzeniu; otwórz go ponownie z listy po prawej stronie bez ponownego tłumaczenia lub usuń, gdy nie jest już potrzebny
+▍Czytanie dwujęzyczne
+
+Kliknij prawym przyciskiem myszy w dowolnym miejscu strony bez zaznaczania tekstu i wybierz „Czytaj ten artykuł dwujęzycznie”. Po stronie przebiega jasny pas, gdy wykrywany jest tytuł i treść, a następnie obok otwiera się czysta strona do czytania, na której każdy oryginalny akapit jest wyrównany obok swojego tłumaczenia. Nawigacja, paski boczne, miejsca reklamowe i widżety rekomendacji są pomijane i nigdy nie są wysyłane do tłumaczenia.
+
+• Obok siebie, każda para akapitów zaczyna się na tej samej wysokości; możesz też ułożyć je jedno pod drugim albo pokazać tylko tłumaczenie lub tylko oryginał
+• Jasny, ciemny lub zgodny z systemem wygląd, a także regulowana paleta kolorów, czcionka, rozmiar, wysokość wiersza i szerokość strony—wszystko zapamiętywane
+• „Zapisz” zachowuje artykuł i jego tłumaczenie na Twoim urządzeniu; otwórz go ponownie z listy po prawej bez ponownego tłumaczenia albo usuń, gdy nie jest już potrzebny
 
 ▍Kliknij słowo, aby zobaczyć inne sformułowanie—i zachowaj preferowane terminy
 
-Na stronie do czytania, w okienku zaznaczenia, w panelu tłumaczenia i na stronie PDF kliknij słowo w tłumaczeniu—lub przeciągnij po kilku słowach—aby zobaczyć kilka alternatywnych wariantów z krótkimi objaśnieniami, albo wpisz własny. Zastąp to samo słowo w innych miejscach za jednym razem.
+Na stronie do czytania, w okienku zaznaczenia, w panelu tłumaczenia i na stronie PDF kliknij słowo w tłumaczeniu—lub przeciągnij po kilku słowach—aby zobaczyć kilka alternatywnych wariantów z krótkimi uwagami, albo wpisz własny. Zastąp to samo słowo w innych miejscach za jednym razem.
 
-Wybrane sformułowania są zapamiętywane na Twoim urządzeniu jako preferencje tłumaczenia: późniejsze tłumaczenia tekstu zawierającego ten sam termin źródłowy będą zgodne z Twoim wyborem. Przeglądaj je i usuwaj w Ustawieniach.
+Wybrane przez Ciebie sformułowania są zapamiętywane na Twoim urządzeniu jako preferencje sformułowań: późniejsze tłumaczenia tekstu zawierającego ten sam termin źródłowy będą zgodne z Twoim wyborem. Przeglądaj je i usuwaj w Ustawieniach.
 
-▍Sześć sposobów tłumaczenia, wszystkie w menu po kliknięciu prawym przyciskiem myszy
+▍Narzędzia tłumaczenia
 
 • Zaznaczony tekst
-Zaznacz tekst i wybierz „Tłumacz na…” z menu po kliknięciu prawym przyciskiem myszy. Tłumaczenie pojawia się w wyśrodkowanym okienku, słowo po słowie, gdy dostawca obsługuje strumieniowanie. Możesz też użyć pływającego przycisku obok zaznaczenia lub skrótu ⌘⇧Y w macOS / Alt+Shift+T w innych systemach. Okienko można przeciągać, pokazuje oryginał na żądanie i ponownie tłumaczy oryginał po zmianie języka docelowego.
+Zaznacz tekst i wybierz „Przetłumacz na…” z menu po kliknięciu prawym przyciskiem myszy. Tłumaczenie pojawia się w wyśrodkowanym okienku, słowo po słowie, jeśli dostawca obsługuje strumieniowanie. Możesz też użyć pływającego przycisku obok zaznaczenia lub skrótu ⌘⇧Y w systemie macOS / Alt+Shift+T w innych systemach. Okienko można przeciągać, pokazuje oryginał na żądanie i ponownie tłumaczy oryginał po zmianie języka docelowego.
 
 • Obrazy
-Kliknij obraz prawym przyciskiem myszy, aby rozpoznać jego tekst. Każdy fragment jest obrysowany wzdłuż swoich konturów, a tłumaczenie jest umieszczane z powrotem na oryginale, bez wzajemnego zasłaniania fragmentów. Pionowy tekst japoński, jak w mandze, pozostaje pionowy po przetłumaczeniu na chiński, japoński lub koreański. Przed tłumaczeniem przejrzyj wykryte kształty—przenieś, edytuj, usuń lub narysuj nowe—albo zaznacz tylko potrzebne obszary (prostokąty lub okręgi). Pobierz lub skopiuj wynik jako nowy obraz.
+Kliknij obraz prawym przyciskiem myszy, aby rozpoznać jego tekst. Każdy fragment jest obrysowany wzdłuż konturów, a tłumaczenie jest umieszczane z powrotem nad oryginałem, bez nakładania się fragmentów na siebie. Pionowy tekst japoński, jak w mandze, pozostaje pionowy po przetłumaczeniu na chiński, japoński lub koreański. Najpierw przejrzyj wykryte kształty—przenieś, edytuj, usuń lub narysuj nowe—przed tłumaczeniem albo zaznacz tylko potrzebne obszary (prostokąty lub okręgi). Pobierz lub skopiuj wynik jako nowy obraz.
 
 • Całe pliki PDF
 W wbudowanej przeglądarce PDF przeglądarki kliknij prawym przyciskiem myszy bez zaznaczania tekstu, aby przetłumaczyć cały dokument na stronie obok. Tłumaczenia są nakładane na oryginalne pozycje, więc układ, ryciny i linie tabel pozostają na miejscu. Porównuj obok siebie, pokazuj tylko tłumaczenie lub tylko oryginał i zapisz wynik jako PDF przez okno drukowania. Możesz też przeciągnąć lokalny plik PDF na stronę tłumaczenia.
 
-• Regiony strony
-Kliknij prawym przyciskiem myszy obszar strony, aby dodać do niego przycisk tłumaczenia. Kliknij raz, aby zastąpić tekst w tym obszarze tłumaczeniem, i ponownie, aby przywrócić oryginał. Reguły są zapamiętywane dla każdej witryny.
+• Obszary strony
+Kliknij prawym przyciskiem myszy obszar strony, aby dodać do niego przycisk tłumaczenia. Kliknij raz, aby zastąpić tekst w tym obszarze jego tłumaczeniem, i ponownie, aby przywrócić oryginał. Reguły są zapamiętywane dla każdej witryny.
 
 • Panel tłumaczenia
 Dedykowana strona z oryginałem po lewej i tłumaczeniem po prawej, dla dłuższych fragmentów lub tekstu spoza przeglądarki. Wykryj język źródłowy automatycznie lub wybierz go samodzielnie.
 
-24 języki interfejsu i języki docelowe: chiński uproszczony, chiński tradycyjny, angielski, hiszpański, portugalski, francuski, niemiecki, włoski, niderlandzki, rosyjski, ukraiński, polski, turecki, arabski, hebrajski, perski, hindi, bengalski, urdu, indonezyjski, wietnamski, tajski, japoński i koreański. Język interfejsu, język źródłowy i język docelowy to niezależne ustawienia, a interfejsy w języku arabskim, hebrajskim, perskim i urdu używają układu od prawej do lewej.
+24 języki interfejsu i docelowe: chiński uproszczony, chiński tradycyjny, angielski, hiszpański, portugalski, francuski, niemiecki, włoski, niderlandzki, rosyjski, ukraiński, polski, turecki, arabski, hebrajski, perski, hindi, bengalski, urdu, indonezyjski, wietnamski, tajski, japoński i koreański. Języki interfejsu, źródłowy i docelowe są niezależnymi ustawieniami, a interfejsy w języku arabskim, hebrajskim, perskim i urdu używają układu od prawej do lewej.
 
-▍Dwa sposoby korzystania
+▍Tryby tłumaczenia
 
-• Tłumaczenie kredytowe bez klucza
-Nowa kwalifikująca się instalacja otrzymuje próbę dla gościa (liczba roszczeń jest ograniczona na sieć), a rejestracja przez e-mail lub Google dodaje więcej kredytów. Kredyty nigdy nie wygasają i są odejmowane za ilość faktycznie przetłumaczonego tekstu (1 kredyt na 500 znaków); nieudane tłumaczenia nie są obciążane opłatą. Gdy kredyty próbne się wyczerpią, tłumaczenie kredytowe wymaga subskrypcji, która daje nieograniczone korzystanie (uczciwe korzystanie), odnawia się automatycznie i można ją anulować w dowolnym momencie. Aktualne kwoty próbne i ceny znajdziesz na stronie internetowej i w centrum konta.
+• Tłumaczenie na kredyty bez klucza
+Nowa kwalifikująca się instalacja otrzymuje próbę gościa (roszczenia są ograniczone na sieć), a rejestracja przez e-mail lub Google dodaje więcej kredytów. Kredyty nigdy nie wygasają i są odejmowane za ilość faktycznie przetłumaczonego tekstu (1 kredyt na 500 znaków); nieudane tłumaczenia nie są obciążane. Gdy kredyty próbne się wyczerpią, tłumaczenie na kredyty wymaga subskrypcji, która zapewnia nieograniczone użycie (uczciwe użycie), odnawia się automatycznie i można ją anulować w dowolnym momencie. Aktualne kwoty próbne i ceny znajdziesz na stronie internetowej i w centrum konta.
 
 • Własny klucz API
 Wprowadź własny klucz OpenAI, DeepSeek lub DeepL. Żądania trafiają bezpośrednio z Twojej przeglądarki do tego dostawcy, który rozlicza Cię za użycie. Rozpoznawanie obrazów wymaga modelu obsługującego wizję; DeepL nie oferuje rozpoznawania obrazów ani alternatywnych sformułowań.
 
 ▍Prywatność
 
-• Treść jest wysyłana tylko wtedy, gdy zdecydujesz się ją przetłumaczyć. Rozszerzenie nigdy nie skanuje ani nie przesyła stron w tle.
+• Lokalne tłumaczenie pozostawia tekst na Twoim urządzeniu. Tryby online wysyłają żądaną treść do wybranej usługi. Automatyczne tłumaczenie stron przetwarza tekst tylko w witrynach, które wyraźnie włączysz, także przy późniejszych wizytach.
 • Z własnym kluczem treść trafia bezpośrednio do wybranego przez Ciebie dostawcy, nigdy przez nas.
-• Przy tłumaczeniu kredytowym treść przechodzi przez nasz serwer do dostawcy modelu; serwer nie przechowuje Twojego tekstu, tłumaczeń ani obrazów.
-• Klucze API, preferencje tłumaczenia i zapisane artykuły pozostają na Twoim urządzeniu i nie są synchronizowane przez Twoje konto przeglądarki.
-• Bez reklam, śledzenia i analityki firm trzecich. Pełny kod źródłowy jest dostępny na licencji GPL-3.0.
+• W przypadku tłumaczenia na kredyty treść przechodzi przez nasz serwer do dostawcy modelu; serwer nie przechowuje Twojego tekstu, tłumaczeń ani obrazów.
+• Klucze API, preferencje sformułowań i zapisane artykuły pozostają na Twoim urządzeniu i nie są synchronizowane przez Twoje konto przeglądarki.
+• Brak reklam, śledzenia i analityki podmiotów trzecich. Pełny kod źródłowy jest dostępny na licencji GPL-3.0.
 
 Napisy do wideo na żywo to funkcja eksperymentalna, domyślnie wyłączona. Mowa jest domyślnie rozpoznawana na Twoim urządzeniu; jeśli wyraźnie wybierzesz rozpoznawanie w chmurze, dźwięk jest wysyłany do usługi rozpoznawania mowy Twojej przeglądarki.
 
 ▍Znane ograniczenia
 
 • Strony chronione przez przeglądarkę, takie jak wewnętrzne strony chrome:// i sklepy z rozszerzeniami, nie mogą być używane.
-• Pojedyncze zaznaczenie może zawierać do 6 000 znaków; dłuższe zaznaczenia są skracane z powiadomieniem.
+• Pojedyncze zaznaczenie może zawierać do 6,000 znaków; dłuższe zaznaczenia są obcinane z powiadomieniem.
 • Czytanie dwujęzyczne wykrywa artykuły na podstawie struktury strony; fora, sieci społecznościowe i strony za logowaniem mogą nie zostać wykryte w pełni.
 • Zeskanowane i chronione hasłem pliki PDF nie są jeszcze obsługiwane.
 • Dostępne języki, rozpoznawanie obrazów i strumieniowanie zależą od wybranego dostawcy i modelu.
 
 Wymaga Chrome lub Edge 116 lub nowszego.
 
-Niezależny projekt open source, niepowiązany z OpenAI, DeepSeek, DeepL ani ich podmiotami stowarzyszonymi, przez nie wspierany ani sponsorowany. ChatGPT, DeepSeek, DeepL i inne nazwy są znakami towarowymi ich właścicieli i są używane wyłącznie do identyfikacji kompatybilnych usług.
+Niezależny projekt o otwartym kodzie źródłowym, niepowiązany z OpenAI, DeepSeek, DeepL ani ich podmiotami stowarzyszonymi, przez nie wspierany ani sponsorowany. ChatGPT, DeepSeek, DeepL i inne nazwy są znakami towarowymi ich właścicieli i są używane wyłącznie do identyfikacji kompatybilnych usług.
 
+Wsparcie: support@huaci.app
 Strona internetowa: https://huaci.app/
-Kod źródłowy i zgłaszanie problemów: https://github.com/csswork/AiTranslation
+Kod źródłowy i zgłoszenia problemów: https://github.com/csswork/AiTranslation
 Polityka prywatności: https://huaci.app/privacy.html

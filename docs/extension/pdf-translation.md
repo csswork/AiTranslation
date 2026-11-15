@@ -1,6 +1,6 @@
 # 整份 PDF 翻译
 
-> 状态：随扩展 **2.1.0** 打包（2026-10-21），**待上传商店**（商店当前为 2.0.0）。
+> 状态：基础功能已随 **2.1.0** 进入商店；当前 **2.3.0** 可选择本机文字翻译，文件仍只在本机解析。实际商店状态见 [发布记录](releases/2.3.0.md)。
 > 本地在无头 Chrome for Testing 150 与正式版 Chrome 155 上验证过；原生右键菜单无法自动点击，由人工在 Chrome 里确认。
 > 文末「发布前待办」里还有人工确认、真实平台长文档与商店素材三项未完成。
 
@@ -135,7 +135,7 @@ PDF 只有一串带坐标的文字片段，没有段落。按内容流顺序做�
 `src/vendor/pdfjs/README.md` 记录了版本与保留的文件。升级时：
 
 1. `npm pack pdfjs-dist@<版本>` 到临时目录（不进仓库），确认许可证不变。
-2. 用 **legacy 构建**的 `pdf.min.mjs`、`pdf.worker.min.mjs` 整体替换；标准构建依赖较新的 JS 特性（例如 `Map.prototype.getOrInsertComputed`），扩展最低支持 Chrome 116。
+2. 用 **legacy 构建**的 `pdf.mjs`、`pdf.worker.mjs` 整体替换；标准构建依赖较新的 JS 特性（例如 `Map.prototype.getOrInsertComputed`），扩展最低支持 Chrome 116。
 3. 同步替换 `cmaps/`、`standard_fonts/` 与 `wasm/` 里的 `*_nowasm_fallback.js` 及许可证文件。
 4. 更新 README 里的版本号，跑扩展测试与上面的端到端脚本。
 

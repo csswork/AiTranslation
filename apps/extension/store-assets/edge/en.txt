@@ -2,24 +2,31 @@ Read while you translate: turn a web article into a side-by-side bilingual readi
 
 Huaci – AI Translator & Bilingual Reader is an open-source Microsoft Edge extension for bilingual reading and for translating selected text, webpage regions, images and whole PDF documents. Use hosted translation without an API key, or connect your own OpenAI, DeepSeek or DeepL account.
 
-BILINGUAL READING (NEW IN 2.2.0)
+LOCAL AND AUTOMATIC WEBSITE TRANSLATION (NEW IN 2.3.0)
 
-Right-click an ordinary webpage without selecting text and choose “Read this article bilingually”. The extension detects the article's title and body on your device, leaves out navigation, sidebars, ad slots and recommendation widgets, and opens a clean reading page next to the tab with each original paragraph aligned beside its translation. Only the cleaned-up article text is sent for translation.
+• Local text translation: on supported browsers and devices, download language pairs in Settings and translate offline for free, without an API key or credits. Text stays on your device. Use it for selections, page regions, websites, the text panel, PDFs, bilingual reading and recognized captions. Availability and languages depend on the browser and downloaded packs. Local mode does not provide image recognition or alternative wordings; unsupported controls are hidden.
+• Automatic website translation: right-click and enable “Translate this website”. Text near the viewport is translated as you scroll, including on later visits, until you disable it. Repeated text on a page reuses translations. Choose a separate provider in Settings; the first use of a paid provider asks for confirmation.
+• More natural wording: revised style guides improve phrasing, terminology and tone for Chinese and other target languages.
+• Better automatic image translation: improved text shapes, font sizing, alignment, vertical text and background colors. Move a passage, edit its translation or size, or retranslate just that passage. Exported images keep your edits. Optionally translate sound effects; recognized images are cached on the current page, with navigation between images.
+
+BILINGUAL READING
+
+Right-click an ordinary webpage without selecting text and choose “Read this article bilingually”. The extension detects the article's title and body on your device, leaves out navigation, sidebars, ad slots and recommendation widgets, and opens a clean reading page next to the tab with each original paragraph aligned beside its translation. Only the cleaned-up article text is processed by the selected translation mode.
 
 • Side by side, stacked, translation only or original only; light, dark or follow-system appearance; adjustable color palette, font, size, line height and page width.
 • Save an article with its translation on your device and reopen it later from the list on the right without translating it again; delete saved articles at any time.
 
 ALTERNATIVE WORDINGS AND WORDING PREFERENCES
 
-On the reading page, in the selection popup, in the translation panel and on the PDF page, click a word in the translation (or select a few words) to see alternative renderings with short notes, or type your own. Your choices are saved on your device as wording preferences and are applied to later translations that contain the same source term. Manage them in settings. DeepL does not provide alternative wordings.
+On the reading page, in the selection popup, in the translation panel and on the PDF page, click a word in the translation (or select a few words) to see alternative renderings with short notes, or type your own. Your choices are saved on your device as wording preferences and are applied to later translations that contain the same source term. Manage them in settings. DeepL and local translation do not provide alternative wordings.
 
-SIX WAYS TO TRANSLATE
+TRANSLATION TOOLS
 
 • Bilingual reading: described above.
 • Selected text: translate text in any language, including Chinese, in a movable popup. Stream the result where supported, expand the original for comparison, copy the translation, or change the target language.
 • Webpage regions: add a translation button to a chosen part of a website. Rules are saved by domain, and you can restore the original text.
 • Images: recognize text, outline each passage along its strokes and place the translation back over the original without passages covering each other. Vertical Japanese text stays vertical when translated into Chinese, Japanese or Korean. Review and edit the detected shapes before translating, translate a selected region, and export the translated image. Recognition requires a vision-capable model; hosted mode includes image recognition.
-• Whole PDFs: open a PDF in the browser and choose whole-document translation from the context menu. The PDF is parsed locally; only extracted text is sent for translation. Compare the original and translation, retain page layout, figures and tables, and print or save as PDF. Scanned pages without extractable text are not supported by whole-document translation.
+• Whole PDFs: open a PDF in the browser and choose whole-document translation from the context menu. The PDF is parsed locally; only extracted text is processed by the selected translation mode. Compare the original and translation, retain page layout, figures and tables, and print or save as PDF. Scanned pages without extractable text are not supported by whole-document translation.
 • Translation panel: paste a passage into a dedicated source-and-translation view, choose a source and target language, and translate it without a webpage selection.
 
 24 LANGUAGES
@@ -40,6 +47,7 @@ Optional video captions are off by default. Speech recognition depends on browse
 
 PRIVACY
 
+• Local text translation stays on your device. Automatic translation runs only on websites you explicitly enable, including later visits.
 • Bring-your-own-key requests go directly to your selected provider or HTTPS endpoint. Your key stays in local extension storage and is not synced through your browser account.
 • Hosted mode sends requested text or images through our server to a model provider. Our server does not retain original text, images or translations.
 • Whole PDF files are processed locally and are not uploaded. Bilingual reading detects articles on your device; saved articles and wording preferences stay in local extension storage.

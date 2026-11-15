@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Politique de confidentialité</h2>
-        <p class="updated">Dernière mise à jour : 2026-11-06 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown</a></p>
+        <p class="updated">Dernière mise à jour : 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -83,11 +83,11 @@
         <!-- ============================================================ 中文 -->
         <section>
           <h3>En une phrase</h3>
-          <p>Les services de compte, de points et d'abonnement sont lancés avec la version 2.0.0 ; les explications suivantes décrivent le traitement des données pour ces services.</p>
-          <p>Huaci propose deux modes d'utilisation. <b>Clé personnelle</b> : le contenu à traduire est envoyé directement à la plateforme d'IA que vous avez configurée, sans passer par nous. <b>Traduction par points</b> : le contenu transite par nos serveurs vers le fournisseur de modèles pour la traduction ; les serveurs <b>ne conservent ni le texte source ni la traduction</b>. Le compte, la facturation et la prévention des abus ne conservent que les données nécessaires au fonctionnement, sans usage publicitaire ni revente.</p>
+          <p>Les sections suivantes décrivent le traitement des données pour la traduction, le compte, les points et les services d'abonnement.</p>
+          <p>Huaci prend en charge la traduction locale, la clé personnelle et la traduction par points. <b>Traduction locale</b> : le texte est traité uniquement sur l'appareil. <b>Clé personnelle</b> : le contenu à traduire est envoyé directement à la plateforme d'IA que vous avez configurée, sans passer par nous. <b>Traduction par points</b> : le contenu est transmis via nos serveurs au fournisseur de modèles pour la traduction ; le serveur <b>ne conserve ni le texte source ni la traduction</b>. Le compte, la facturation et la prévention des abus ne conservent que les données nécessaires au fonctionnement, ne sont pas utilisées à des fins publicitaires et ne sont pas vendues.</p>
 
           <h3>Contenu envoyé lors de la traduction</h3>
-          <p>Ce n'est que lorsque vous <b>déclenchez activement une traduction</b> (menu contextuel, raccourci clavier, clic sur le bouton de traduction) que les contenus suivants sont envoyés via HTTPS :</p>
+          <p>Lorsque vous lancez une traduction manuellement ou activez la traduction automatique d'un site, le mode de traduction en ligne envoie les éléments suivants via HTTPS ; la traduction locale du texte ne les envoie pas :</p>
           <div class="table-wrap">
             <table>
               <thead>
@@ -95,6 +95,7 @@
               </thead>
               <tbody>
                 <tr><td>Le texte que vous avez sélectionné</td><td>Lors d’une traduction par sélection</td><td>La plateforme que vous avez choisie</td><td>Notre serveur, puis transmis au fournisseur de modèles</td></tr>
+                <tr><td>Texte à proximité de la zone visible sur un site dont la traduction intégrale est activée</td><td>Traduction automatique lors de l'activation puis des visites ultérieures du site</td><td>La plateforme que vous avez choisie</td><td>Notre serveur, puis transmis au fournisseur de modèles</td></tr>
                 <tr><td>Le texte contenu dans la zone que vous avez désignée</td><td>Lors d'un clic sur le bouton de traduction dans la zone concernée</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte que vous saisissez dans le panneau de traduction</td><td>Lorsque vous cliquez sur Traduire</td><td>Idem</td><td>Idem</td></tr>
                 <tr><td>Le texte reconnu des sous-titres vidéo</td><td>Lorsque la traduction des sous-titres vidéo est activée</td><td>Idem</td><td>Idem</td></tr>
@@ -115,7 +116,12 @@
             <li>DeepL：<a class="link" href="https://www.deepl.com/en/privacy" target="_blank" rel="noopener">deepl.com/en/privacy</a></li>
             <li>Fireworks AI：<a class="link" href="https://fireworks.ai/privacy-policy" target="_blank" rel="noopener">fireworks.ai/privacy-policy</a></li>
           </ul>
-          <p><b>Non envoyés</b> : le contenu des pages que vous n'avez pas traduit activement, l'historique de navigation, les cookies, les données de formulaire. L'extension n'analyse ni ne téléverse rien automatiquement en arrière-plan.</p>
+          <p><b>Non envoyés</b> : le contenu des pages que vous n'avez pas traduit manuellement, l'historique de navigation, les cookies, les données de formulaire. La traduction automatique ne s'applique qu'aux sites que vous avez explicitement activés.</p>
+
+          <h3>Traduction locale</h3>
+          <p>La traduction locale utilise le modèle intégré au navigateur. Les packs de langues sont téléchargés et gérés par le navigateur ; une fois le téléchargement terminé, la traduction du texte fonctionne hors ligne. Le texte source, la traduction et les préférences terminologiques ne nous sont pas envoyés, ni à la plateforme de traduction, et ne génèrent aucun enregistrement d'utilisation hébergée. La traduction locale ne traite que le texte ; elle ne prend pas en charge la reconnaissance d'images ni la reformulation par clic sur un mot.</p>
+          <h3>Traduction automatique intégrale du site</h3>
+          <p>Ce n'est qu'après avoir coché « Traduire ce site » dans le menu contextuel que le texte à proximité de la zone visible du site est traduit automatiquement ; cela reste actif lors des visites ultérieures du même site jusqu'à ce que la case soit décochée. Les textes identiques réutilisent la même traduction sur une même page. La liste des sites et le choix de la plateforme dédiée sont stockés uniquement en local ; avec la traduction locale, le texte n'est pas téléversé, avec la clé personnelle ou la traduction par points, il est envoyé conformément au tableau ci-dessus, et la première activation d'une plateforme payante fait l'objet d'une confirmation préalable.</p>
 
           <h3>Traitement audio des sous-titres vidéo expérimentaux</h3>
           <p>Les sous-titres vidéo sont désactivés par défaut. Une fois activés, l'audio de l'onglet actif est reconnu par défaut en local, ce qui peut nécessiter le téléchargement d'un pack de langue du navigateur ; l'audio n'est envoyé au service de reconnaissance vocale du navigateur que si vous choisissez explicitement « Utiliser la reconnaissance cloud » : Google pour Chrome (<a class="link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Règles de confidentialité de Google</a>), Microsoft Azure pour Microsoft Edge (<a class="link" href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Déclaration de confidentialité Microsoft</a>). La reconnaissance locale n'est disponible que pour les versions de navigateur et les langues prises en charge ; l'extension ne bascule pas automatiquement vers la reconnaissance cloud. Le texte des sous-titres reconnus est ensuite envoyé à la plateforme de traduction ou à nos serveurs selon le mode de traduction choisi. Nous ne recevons ni ne conservons les vidéos ou les fichiers audio, et ne proposons pas de transcription audio ou vidéo hébergée.</p>
@@ -161,7 +167,8 @@
             <li><b>API Key</b> — utilisée uniquement pour l'authentification dans l'en-tête de requête auprès de la plateforme que vous choisissez ; elle ne nous est pas transmise</li>
             <li><b>Jeton de connexion de l'extension</b> — envoyé uniquement à <code>app.huaci.app</code>, pour la traduction par points et l'état du compte</li>
             <li><b>Préférences</b> — langue cible, modèle utilisé, différents interrupteurs</li>
-            <li><b>Règles de traduction par zone</b> — les « domaine + sélecteur CSS » que vous ajoutez manuellement</li>
+            <li><b>Traduction intégrale du site</b> : domaines des sites activés et choix de la plateforme dédiée</li>
+            <li><b>Règles de traduction par zone</b> : « domaine + sélecteur CSS » ajoutés manuellement</li>
             <li><b>Préférences terminologiques</b> — les formulations que vous avez modifiées dans la traduction (terme source et traduction) ; lors de la traduction, les entrées concernées sont envoyées avec la requête, voir ci-dessus</li>
             <li><b>Articles enregistrés</b> — les articles et leurs traductions enregistrés dans la lecture bilingue restent uniquement sur cet appareil et peuvent être supprimés sur le côté droit de la page de lecture</li>
           </ul>
