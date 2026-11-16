@@ -4,6 +4,13 @@ import { readConfig } from '../src/config/index.js';
 
 const base = { DATABASE_URL: 'postgres://localhost/x', AUTH_SECRET: 'x'.repeat(64) };
 
+test('Firefox 只接受固定正式 ID，不接受随机 UUID 或任意邮箱形式 ID', () => {
+  assert.deepEqual(readConfig({ ...base, EXTENSION_IDS: 'huaci@huaci.app' }).extensionIds, ['huaci@huaci.app']);
+  for (const id of ['other@example.com', '*', 'moz-extension://random', '{f5e67305-39be-4263-917b-08d9d85a5d83}']) {
+    assert.throws(() => readConfig({ ...base, EXTENSION_IDS: id }), /EXTENSION_IDS/);
+  }
+});
+
 test('开发环境默认值', () => {
   const config = readConfig({ DATABASE_URL: 'postgres://localhost/x' });
   assert.equal(config.appOrigin, 'http://localhost:8787');

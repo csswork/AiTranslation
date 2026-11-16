@@ -4,7 +4,7 @@
  */
 import { randomBytes, randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
-import { createAuthCode, extensionIdFromRedirect, isValidChallenge } from '../../src/auth/extension.js';
+import { createAuthCode, extensionIdFromRedirect, FIREFOX_CALLBACK_PATH, isValidChallenge } from '../../src/auth/extension.js';
 import { finishGoogleAuth, startGoogleAuth } from '../../src/auth/google.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import { verifyReviewAccess } from '../../src/auth/review.js';
@@ -335,10 +335,18 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
     }
   };
   // 授权页的 CSP 只放行这次请求的扩展来源（Node 的 URL 不给 chrome-extension: 计算 origin，按扩展 ID 拼）。
-  const extensionOrigin = (pending) => `chrome-extension://${extensionIdFromRedirect(pending.redirectUri, config)}`;
+  const extensionOrigin = (pending) => pending.redirectUri.startsWith(config.appOrigin + '/')
+    ? config.appOrigin : `chrome-extension://${extensionIdFromRedirect(pending.redirectUri, config)}`;
   const invalidExtensionRequest = (c) => render(c, views.errorPage, {
     status: 400, user: c.get('auth')?.user, message: k('扩展登录请求无效或已过期，请回到扩展重新登录。'),
   }, 400);
+
+  app.get(FIREFOX_CALLBACK_PATH, (c) => {
+    if (!extensionIdFromRedirect(config.appOrigin + FIREFOX_CALLBACK_PATH, config)) return c.notFound();
+    // No scripts, third-party resources or reflected query parameters. Firefox immediately
+    // opens its private callback page; authorization codes must not leak through Referer.
+    return c.html('<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Huaci</title></head><body><p>Huaci</p></body></html>');
+  });
 
   app.get('/extension/authorize', (c) => {
     const { redirect_uri: redirectUri, code_challenge: codeChallenge, code_challenge_method: method, state = '' } = c.req.query();

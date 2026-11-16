@@ -16,7 +16,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
-import { extensionIdFromOrigin, isAllowedExtension, recordExtension, redeemAuthCode } from '../auth/extension.js';
+import { extensionIdFromOrigin, extensionIdFromRedirect, FIREFOX_EXTENSION_ID, isAllowedExtension, recordExtension, redeemAuthCode } from '../auth/extension.js';
 import { createSession, revokeExtensionLogin, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
@@ -105,7 +105,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const body = await readJson(c);
     const uiLang = LANGUAGES[body.uiLanguage] ? body.uiLanguage : null;
     // 扩展 ID 区分来源商店（Chrome / Edge），只用于报表与管理端。
-    const extensionId = extensionIdFromOrigin(c.req.header('origin'));
+    // Firefox's supplied add-on ID is only a store reporting label, never authentication.
+    const extensionId = extensionIdFromOrigin(c.req.header('origin'))
+      || (body.extensionId === FIREFOX_EXTENSION_ID && isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null);
     const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId });
     return c.json({
       token: result.token,
@@ -151,7 +153,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       transferred = await transaction(pool, (client) => mergeGuest(client, guest.user.id, userId));
     }
     const token = await createSession(pool, config, userId, 'extension', { webSessionId });
-    await recordExtension(pool, userId, extensionIdFromOrigin(c.req.header('origin')));
+    await recordExtension(pool, userId, extensionIdFromRedirect(body.redirect_uri, config));
     return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred) });
   });
 

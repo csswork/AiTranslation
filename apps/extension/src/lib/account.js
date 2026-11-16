@@ -21,7 +21,8 @@
   const PENDING_KEY = 'accountLoginPending';
   const GUEST_CLAIMED_KEY = 'guestClaimed';
   const PENDING_TTL = 30 * 60 * 1000; // 授权页上可能还要先注册、收验证码
-  const CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
+  const EXTENSION_CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
+  const CALLBACK_URL = AITrEnv.firefox ? `${API_ORIGIN}/extension/firefox/callback` : EXTENSION_CALLBACK_URL;
   // 网络请求可以并发；令牌与状态的检查、写入必须串行，避免旧响应覆盖新登录。
   let stateTask = Promise.resolve();
   const updateState = (task) => {
@@ -167,6 +168,9 @@
    */
   async function completeLogin(callbackUrl) {
     const back = new URL(callbackUrl);
+    if (back.href.split(/[?#]/)[0] !== EXTENSION_CALLBACK_URL) {
+      throw new AccountError(t('登录请求无效，请重试'), 'callback');
+    }
     const pending = (await chrome.storage.session.get(PENDING_KEY))[PENDING_KEY];
     if (!pending || Date.now() - pending.createdAt > PENDING_TTL || back.searchParams.get('state') !== pending.state) {
       throw new AccountError(t('登录请求无效，请重试'), 'state');
@@ -196,7 +200,10 @@
     if (await readToken()) return null;
     if ((await chrome.storage.local.get(GUEST_CLAIMED_KEY))[GUEST_CLAIMED_KEY]) return null;
     // 带上扩展界面语言（24 种语言 ID 之一），只用于运营报表的语言统计。
-    const { response, data } = await call('/guest', { method: 'POST', auth: false, body: { uiLanguage: AITrI18n.locale?.() || undefined } });
+    const { response, data } = await call('/guest', { method: 'POST', auth: false, body: {
+      uiLanguage: AITrI18n.locale?.() || undefined,
+      ...(AITrEnv.firefox ? { extensionId: chrome.runtime.id } : {}),
+    } });
     if (!response.ok || !data.token) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'guest');
     const accepted = await updateState(async () => {
       if (await readToken()) return false;

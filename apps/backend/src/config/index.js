@@ -68,7 +68,7 @@ export function readConfig(env = process.env) {
 
   // 允许登录的 Chrome 扩展 ID（逗号分隔）。生产环境未配置时扩展无法登录；开发环境未配置时接受任意扩展。
   const extensionIds = (env.EXTENSION_IDS || '').split(',').map((s) => s.trim()).filter(Boolean);
-  for (const id of extensionIds) if (!/^[a-p]{32}$/.test(id)) problems.push(`EXTENSION_IDS 中的扩展 ID 无效：${id}`);
+  for (const id of extensionIds) if (!/^[a-p]{32}$/.test(id) && id !== 'huaci@huaci.app') problems.push(`EXTENSION_IDS 中的扩展 ID 无效：${id}`);
 
   // 管理员界面（管理端）的独立地址。开发环境默认 http://admin.localhost:8787（*.localhost 指向本机），
   // 与用户端同一进程、按主机名区分；生产环境未配置时不提供管理端。

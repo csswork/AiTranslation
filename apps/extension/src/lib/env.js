@@ -16,6 +16,7 @@
   const packaged = false; // @store-package: 打包器只在临时目录中替换为 true。
   const dev = !packaged && !manifest.update_url;
   const edge = /\bEdg\//.test(globalThis.navigator?.userAgent || '');
+  const firefox = Boolean(manifest.browser_specific_settings?.gecko?.id);
   const accountOrigin = dev ? 'http://localhost:8787' : 'https://app.huaci.app';
   const websiteOrigin = dev ? 'http://localhost:8788' : 'https://huaci.app';
   // Vercel 可能把裸域与 www 互相跳转；两个来源都是官网，链接仍用 websiteOrigin。
@@ -23,7 +24,8 @@
 
   globalThis.AITrEnv = Object.freeze({
     dev,
-    extensionsShortcuts: edge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts',
+    firefox,
+    extensionsShortcuts: firefox ? 'about:addons' : edge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts',
     accountOrigin,
     websiteOrigin,
     // 内容脚本匹配范围可覆盖其他端口；同步时仍按完整 origin 检查。

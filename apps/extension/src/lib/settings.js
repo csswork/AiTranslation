@@ -172,7 +172,7 @@
       showOriginal: input.showOriginal !== false,
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
-      videoEnabled: input.videoEnabled === true,
+      videoEnabled: input.videoEnabled === true && !globalThis.AITrEnv?.firefox,
       videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : Object.values(VIDEO_LANGS).find((v) => v.languageId === AITrLanguages.match(input.videoLang))?.id || DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,

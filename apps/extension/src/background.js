@@ -328,6 +328,15 @@ chrome.tabs.onActivated?.addListener(({ tabId }) => syncPageMenus(tabId));
 // 同一个标签页打开了别的网站：「翻译这个网站」的勾选要跟着变
 chrome.tabs.onUpdated?.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url && tab?.active) syncPageMenus(tabId);
+  if (globalThis.AITrEnv?.firefox && changeInfo.url) {
+    const url = new URL(changeInfo.url);
+    if (url.origin === AITrEnv.accountOrigin && url.pathname === '/extension/firefox/callback'
+      && !url.username && !url.password && !url.hash) {
+      // Browser-provided tab URL only. PKCE/state are checked in the private extension page.
+      chrome.tabs.update(tabId, { url: chrome.runtime.getURL('src/auth/callback.html') + url.search })
+        .catch((err) => console.warn('[Huaci] Firefox login callback:', err));
+    }
+  }
 });
 // 名单在别处改了（页面上的「关闭整站翻译」、设置页移除）
 AITrSites.onChange(() => syncActiveTab());

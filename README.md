@@ -100,6 +100,7 @@ npm run i18n:extension        # Refresh extension UI translations locally
 npm run check:extension       # Check generated extension translations
 npm run package:extension     # dist/extension/ai-translation-<version>.zip
 npm run package:edge          # dist/extension/ai-translation-edge-<version>.zip
+npm run package:firefox       # dist/extension/ai-translation-firefox-<version>.zip
 npm run test:backend          # Requires the PostgreSQL database huaci_test
 npm run migrate:backend       # Apply backend database migrations
 npm run dev:backend           # http://localhost:8787 — account interface

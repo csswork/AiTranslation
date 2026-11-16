@@ -24,6 +24,7 @@
     keyText: $('keyText'),
     panel: $('panel'),
     image: $('image'),
+    pdf: $('pdf'),
     video: $('video'),
     open: $('open'),
   };
@@ -203,6 +204,8 @@
     renderAccount();
     // 视频字幕默认关闭：没打开时连入口都不显示
     el.video.hidden = !settings.videoEnabled;
+    // Firefox protects its built-in PDF viewer from content scripts. Select the file locally.
+    el.pdf.hidden = !globalThis.AITrEnv?.firefox;
     // 与右键菜单一致：本机翻译、DeepL 不能识图，图片翻译入口不出现
     el.image.hidden = !S.supportsVision(settings.provider);
   }
@@ -225,6 +228,10 @@
   });
   el.image.addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('src/image/image.html') });
+    close();
+  });
+  el.pdf.addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('src/pdf/pdf.html') });
     close();
   });
   // 打开这个弹窗时，Chrome 已经给了当前标签页 activeTab 授权，后台截取声音靠的就是它

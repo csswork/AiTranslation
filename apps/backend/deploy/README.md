@@ -63,6 +63,8 @@ sudoedit /etc/huaci/backend.env
 
 仓库 Secret：`DEPLOY_HOST`（服务器 IP）、`DEPLOY_SSH_KEY`（部署私钥）、`DEPLOY_KNOWN_HOSTS`（服务器主机公钥，`ssh-keyscan -t ed25519 <IP>` 的输出）。
 
+Firefox 登录另需在 `EXTENSION_IDS` 保留 Chrome/Edge ID 并追加固定 add-on ID `huaci@huaci.app`，同时部署迁移 `014_firefox_extension_source.sql`。只允许 `APP_ORIGIN` 下的 `/extension/firefox/callback`，不配置或放开随机 `moz-extension` 来源。详见 [Firefox 发布说明](../../../docs/extension/firefox-release.md)。
+
 迁移执行后不会自动回滚代码；需要回退时按下面各迁移的说明恢复备份，再把 `current` 指回旧版本并重启。
 
 迁移 `007_link_extension_sessions.sql` 将扩展会话关联到授权它的网页会话，网页登出会撤销关联扩展。旧版正式扩展会话需重新登录一次，访客会话保留。本地运行 `npm run migrate:backend` 后重启后端，并在 Chrome 重新加载扩展、刷新用户端页面，以启用新增的状态同步内容脚本；生产按上面的迁移和发布顺序更新。两种环境只接受各自的用户端来源（本地 `http://localhost:8787`；生产 `https://app.huaci.app`），不会跨环境同步。

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { webcrypto } from 'node:crypto';
 
 const root = new URL('../', import.meta.url);
 const source = (file) => fs.readFileSync(new URL(file, root), 'utf8');
@@ -17,7 +18,7 @@ for (const origin of ['http://localhost', 'https://app.huaci.app', 'https://huac
   assert.ok(manifest.content_scripts.some((entry) => entry.js.includes('src/content/account.js') && entry.matches.includes(`${origin}/*`)));
 }
 
-function boot(production = false) {
+function boot(production = false, firefox = false) {
   const store = { accountSession: { token: 'original-token' }, accountStatus: { ...signedIn }, guestClaimed: true };
   const changes = event();
   const area = (data) => ({
@@ -30,18 +31,22 @@ function boot(production = false) {
     remove: async (key) => { delete data[key]; },
   });
   const runtime = {
-    id: ID, getManifest: () => production ? { update_url: 'https://clients2.google.com/service/update2/crx' } : {},
-    getURL: (path) => `${extensionOrigin}/${path}`,
+    id: firefox ? 'huaci@huaci.app' : ID,
+    getManifest: () => ({ ...(production ? { update_url: 'https://clients2.google.com/service/update2/crx' } : {}),
+      ...(firefox ? { browser_specific_settings: { gecko: { id: 'huaci@huaci.app' } } } : {}) }),
+    getURL: (path) => `${firefox ? 'moz-extension://f5e67305-39be-4263-917b-08d9d85a5d83' : extensionOrigin}/${path}`,
     onInstalled: event(), onStartup: event(), onMessage: event(), onConnect: event(),
   };
   const calls = [];
-  const tabs = [], notifications = [];
-  const context = vm.createContext({ console: { info() {}, warn() {} }, URL, Date, setTimeout, TextDecoder, AbortController,
+  const tabs = [], notifications = [], updates = [];
+  const context = vm.createContext({ console: { info() {}, warn() {} }, URL, URLSearchParams, Date, setTimeout, TextDecoder, TextEncoder, AbortController, crypto: webcrypto, btoa,
     AITrI18n: { ready: Promise.resolve(), t: (s) => s, onChange() {} },
     AITrSettings: { migrateSettings: async () => {}, loadSettings: async () => ({ provider: 'hosted' }), isHosted: (id) => id === 'hosted', targetMenu: () => 'English', supportsVision: () => false },
     chrome: { runtime, storage: { local: area(store), session: area({}), onChanged: changes },
       contextMenus: { removeAll: async () => {}, create: (_props, cb) => cb(), onClicked: event() },
-      tabs: { onRemoved: event(), query: async () => tabs,
+      tabs: { onRemoved: event(), onUpdated: event(), query: async () => tabs,
+        create: async (tab) => { tabs.push(tab); return tab; },
+        update: async (id, tab) => { updates.push({ id, ...tab }); },
         sendMessage: async (id, message, options) => { notifications.push({ id, message, options }); },
       }, commands: { onCommand: event() },
     },
@@ -57,7 +62,41 @@ function boot(production = false) {
     const wait = runtime.onMessage.listeners[0]({ type: 'account-web-changed', ...payload }, { ...sender, ...overrides }, resolve);
     if (!wait) resolve(null);
   });
-  return { context, store, calls, message, sender, accountOrigin, tabs, notifications };
+  return { context, store, calls, message, sender, accountOrigin, tabs, notifications, runtime, updates };
+}
+
+{
+  const { context, runtime, tabs, calls, updates } = boot(true, true);
+  const callback = 'https://app.huaci.app/extension/firefox/callback';
+  await context.AITrAccount.login({ tabId: 9, windowId: 2 });
+  const authorization = new URL(tabs[0].url);
+  assert.equal(authorization.searchParams.get('redirect_uri'), callback);
+  assert.equal(tabs[0].windowId, 2, 'Firefox login stays in the originating window');
+  const state = authorization.searchParams.get('state');
+  const query = `?code=one-time-code&state=${state}`;
+  const onUpdated = context.chrome.tabs.onUpdated.listeners[0];
+  for (const url of ['https://evil.example/extension/firefox/callback', 'https://app.huaci.app:444/extension/firefox/callback',
+    'https://app.huaci.app/extension/firefox/callback/other', 'http://localhost:8787/extension/firefox/callback']) {
+    onUpdated(10, { url: url + query }, { active: false });
+  }
+  assert.equal(updates.length, 0, 'Untrusted callbacks cannot open the private extension page');
+  onUpdated(10, { url: callback + query }, { active: false });
+  assert.equal(updates[0].url, runtime.getURL('src/auth/callback.html') + query);
+  await assert.rejects(context.AITrAccount.completeLogin(callback + query), (err) => err.code === 'callback');
+  await assert.rejects(context.AITrAccount.completeLogin(runtime.getURL('src/auth/callback.html') + '?code=c&state=wrong'), (err) => err.code === 'state');
+  context.fetch = async (url, init) => {
+    calls.push({ url, init });
+    return { ok: true, status: 200, json: async () => url.endsWith('/token') ? { token: 'firefox-session' } : signedIn };
+  };
+  const result = await context.AITrAccount.completeLogin(updates[0].url);
+  assert.equal(result.returnTabId, 9);
+  assert.equal(result.status.signedIn, true);
+  const exchange = JSON.parse(calls.find((call) => call.url.endsWith('/token')).init.body);
+  assert.equal(exchange.redirect_uri, callback);
+  assert.equal(exchange.code, 'one-time-code');
+  assert.equal(exchange.code_verifier.length, 43);
+  await assert.rejects(context.AITrAccount.completeLogin(updates[0].url), (err) => err.code === 'state');
+  console.log('✓ Firefox fixed HTTPS callback, private extension page, state and one-time PKCE exchange');
 }
 
 for (const production of [false, true]) {

@@ -17,6 +17,7 @@
     "eval:translation": "node apps/extension/eval/run.mjs",
     "package:extension": "bash package.sh",
     "package:edge": "bash apps/extension/package.sh edge",
+    "package:firefox": "bash apps/extension/package.sh firefox",
     "dev:web": "python3 -m http.server 8788 --directory apps/web/public",
     "dev:backend": "npm --prefix apps/backend run dev",
     "migrate:backend": "npm --prefix apps/backend run migrate"

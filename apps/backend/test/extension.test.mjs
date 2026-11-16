@@ -3,6 +3,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import fs from 'node:fs';
 import { after, before, beforeEach, test } from 'node:test';
 import { LANGUAGES } from '../src/translation/languages.js';
+import { extensionIdFromRedirect, FIREFOX_EXTENSION_ID, FIREFOX_CALLBACK_PATH } from '../src/auth/extension.js';
 import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
 let pool;
@@ -43,6 +44,45 @@ function api(app, config, path, { method = 'GET', token, body, origin = ORIGIN }
   }
   return app.request(new URL(`/api/extension${path}`, config.appOrigin), { method, headers, body: encoded });
 }
+
+test('Firefox：只允许明确列出的扩展使用固定 HTTPS 回调，PKCE 换取会话且不放开随机来源', async () => {
+  const config = testConfig({ EXTENSION_IDS: `${EXT_ID},${FIREFOX_EXTENSION_ID}` });
+  const redirect = config.appOrigin + FIREFOX_CALLBACK_PATH;
+  const { app, mailbox } = buildApp({ pool, config });
+  assert.equal(extensionIdFromRedirect(redirect, config), FIREFOX_EXTENSION_ID);
+  assert.equal(extensionIdFromRedirect(redirect, testConfig({ EXTENSION_IDS: EXT_ID })), null);
+  for (const invalid of [redirect + '?x=1', redirect + '#hash', redirect + '/',
+    'https://evil.example' + FIREFOX_CALLBACK_PATH, 'moz-extension://f5e67305-39be-4263-917b-08d9d85a5d83/src/auth/callback.html']) {
+    assert.equal(extensionIdFromRedirect(invalid, config), null, invalid);
+  }
+  const b = await signInWithEmail(app, config, mailbox, 'firefox@example.com');
+  const { verifier, challenge } = pkce();
+  await b.get(authorizeUrl(challenge, redirect));
+  const consent = await b.get('/extension/authorize/confirm');
+  assert.ok(!consent.headers.get('content-security-policy').includes('moz-extension:'));
+  const approved = await b.post('/extension/authorize/confirm', { decision: 'approve' });
+  const back = new URL(approved.headers.get('location'));
+  assert.equal(back.origin + back.pathname, redirect);
+  assert.ok(back.searchParams.get('code'));
+  assert.equal(back.searchParams.has('token'), false);
+  const landing = await b.get(back.href);
+  assert.equal(landing.status, 200);
+  assert.equal(landing.headers.get('referrer-policy'), 'no-referrer');
+  assert.ok(!(await landing.text()).includes(back.searchParams.get('code')), 'Callback never reflects the authorization code');
+  const origin = 'moz-extension://f5e67305-39be-4263-917b-08d9d85a5d83';
+  const tokenReply = await api(app, config, '/token', { method: 'POST', origin,
+    body: { code: back.searchParams.get('code'), code_verifier: verifier, redirect_uri: redirect } });
+  const { token } = await tokenReply.json();
+  assert.ok(token);
+  assert.equal((await api(app, config, '/me', { token, origin })).status, 200);
+  assert.equal(tokenReply.headers.has('access-control-allow-origin'), false, 'No wildcard or random Firefox origin CORS');
+  const { rows } = await pool.query('SELECT extension_id FROM user_extensions');
+  assert.equal(rows[0].extension_id, FIREFOX_EXTENSION_ID);
+  assert.equal((await api(app, config, '/token', { method: 'POST', origin,
+    body: { code: back.searchParams.get('code'), code_verifier: verifier, redirect_uri: redirect } })).status, 400);
+  assert.equal((await api(app, config, '/logout', { method: 'POST', token, origin })).status, 200);
+  assert.equal((await api(app, config, '/me', { token, origin })).status, 401);
+});
 
 test('扩展登录：未登录先去登录页，确认后带一次性授权码回到扩展，PKCE 换取扩展会话', async () => {
   const { app, config, mailbox } = buildApp({ pool });

@@ -30,7 +30,7 @@ export function securityHeaders(config, { checkout = Boolean(config.creem) } = {
     const headers = c.res.headers;
     headers.set('Content-Security-Policy', c.get('oneTap') ? withOneTap : c.get('extensionAuth') ? policy(false, c.get('extensionAuth')) : strict);
     headers.set('X-Content-Type-Options', 'nosniff');
-    headers.set('Referrer-Policy', 'same-origin');
+    headers.set('Referrer-Policy', c.req.path === '/extension/firefox/callback' ? 'no-referrer' : 'same-origin');
     headers.set('X-Frame-Options', 'DENY');
     if (config.secureCookies) headers.set('Strict-Transport-Security', 'max-age=31536000');
     if (!headers.has('Cache-Control')) headers.set('Cache-Control', 'no-store');

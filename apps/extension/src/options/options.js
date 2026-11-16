@@ -7,6 +7,7 @@
   const $ = (id) => document.getElementById(id);
   // 外部链接按运行环境取；未打包的开发版本在页脚标出连接的本机用户端
   $('privacyLink').href = AITrEnv.links.privacy;
+  if (AITrEnv.firefox) $('videoEnabled').closest('section').hidden = true;
   if (AITrEnv.dev) {
     $('envBadge').textContent = `DEV · ${new URL(AITrEnv.accountOrigin).host}`;
     $('envBadge').title = AITrEnv.accountOrigin;

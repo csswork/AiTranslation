@@ -10,6 +10,8 @@ const sha256 = (value) => createHash('sha256').update(value).digest();
 const hashCode = (code) => sha256(code).toString('hex');
 
 export const EXTENSION_CALLBACK_PATH = '/src/auth/callback.html';
+export const FIREFOX_EXTENSION_ID = 'huaci@huaci.app';
+export const FIREFOX_CALLBACK_PATH = '/extension/firefox/callback';
 
 /** 回调地址必须是扩展的回调页；配置了 EXTENSION_IDS 时只接受名单里的扩展。 */
 export function extensionIdFromRedirect(redirectUri, config) {
@@ -19,7 +21,14 @@ export function extensionIdFromRedirect(redirectUri, config) {
   } catch {
     return null;
   }
+  // Firefox's moz-extension host is random per installation. Use one fixed HTTPS callback;
+  // the extension observes its tab, then exchanges the code with the same PKCE verifier.
+  // Never whitelist arbitrary moz-extension UUIDs or reflect them into redirects/CORS.
+  if (url.href === config.appOrigin + FIREFOX_CALLBACK_PATH) {
+    return isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null;
+  }
   const match = url.protocol === 'chrome-extension:' && !url.port && !url.search && !url.hash
+    && !url.username && !url.password
     && url.pathname === EXTENSION_CALLBACK_PATH && url.hostname.match(/^([a-p]{32})$/);
   if (!match) return null;
   return isAllowedExtension(match[1], config) ? match[1] : null;
@@ -38,6 +47,7 @@ export function isAllowedExtension(id, config) {
 export const EXTENSION_STORES = {
   hogimafgjmlpdlnepojgigjkhaccbcbj: 'Chrome',
   mojcgjimlkkbohomcijkmoefpeekmohe: 'Edge',
+  [FIREFOX_EXTENSION_ID]: 'Firefox',
 };
 export const extensionStore = (id) => (id ? EXTENSION_STORES[id] || '其他' : null);
 
