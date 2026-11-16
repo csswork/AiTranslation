@@ -1,13 +1,13 @@
 # Firefox Add-ons 发布
 
-首次发布准备中，尚未获 Mozilla 审核通过。安装包版本沿用扩展 manifest；当前为 2.3.0。只提交桌面 Firefox，不宣称支持 Android。
+首次发布准备中，尚未获 Mozilla 审核通过。Firefox 使用 manifest 基础版本加商店修订号 `.1`，当前为 2.3.0.1；初始 2.3.0 草稿已在发布前取消，由包含 PDF 入口的最终包替代。Chrome/Edge 的版本号保持不变。只提交桌面 Firefox，不宣称支持 Android。
 
 ## 打包
 
 ```sh
 npm run test:extension
 npm run package:firefox
-# dist/extension/ai-translation-firefox-2.3.0.zip
+# dist/extension/ai-translation-firefox-2.3.0.1.zip
 ```
 
 打包器只在临时目录转换 manifest：后台使用 module 类型的 `background.scripts`，移除 Chrome 的最低版本和 `offscreen`、`tabCapture` 权限；生产服务地址仍由现有 `@store-package` 标记决定。Firefox 最低版本为 142，固定 add-on ID 为 `huaci@huaci.app`。这是扩展的公开标识，不是邮箱，不要求创建对应邮箱。Chrome/Edge manifest 与包名保持原样。

@@ -1,0 +1,23 @@
+Huaci brings AI translation to the page you are reading: selected text, bilingual articles, images, PDFs and the websites you choose to translate automatically.
+
+READ AND TRANSLATE
+- Select text and right-click to translate, or use the floating selection button or a keyboard shortcut.
+- Read an article in a clean bilingual reader with aligned original and translated paragraphs. Adjust the layout, appearance and typography, then save the article and translation in this browser.
+- Add translation buttons to the webpage regions you use regularly.
+- Translate text in images. Review and adjust text regions locally, correct the layout and export a translated image.
+- Open the toolbar popup > Translate entire PDF, then select a local text-based PDF. The file is parsed on your device; only extracted text is sent for translation. Compare original and translated pages and print the result as a PDF.
+- Enable Translate this website from the page context menu. Huaci remembers that domain locally and translates text near the viewport as you browse it, until you turn the feature off.
+- Click a word in a translation for alternative wording on supported AI providers, and save your preferred terms locally.
+
+CHOOSE YOUR TRANSLATION SERVICE
+Use hosted translation with a free trial and account credits, or connect your own OpenAI, DeepSeek, DeepL or compatible HTTPS API. Provider features vary; DeepL does not support image recognition or alternative wording.
+
+Hosted translation is a paid service after the free credits are used. Text is billed at 1 credit per 500 Unicode characters, with no per-request minimum. Optional subscriptions and current pricing are shown at https://app.huaci.app/plans. When using your own API key, your provider may charge for usage. Installing the extension does not start a paid subscription.
+
+PRIVACY
+Provider keys, settings, website rules, wording preferences and saved articles stay in local extension storage and are not synced through your browser account. Hosted translation sends the content you request to the Huaci account service and its configured model providers; bring-your-own-key requests go to your chosen provider. Whole PDF files are not uploaded. Huaci does not collect your browsing history.
+
+Firefox desktop 142 or later is required. Firefox does not provide the browser's built-in Translator or the Chrome tab-audio APIs used by the experimental video captions, so those features are unavailable in this edition. Protected browser pages and the built-in PDF viewer cannot be modified; use the local PDF file picker instead.
+
+Website and privacy policy: https://huaci.app/ and https://huaci.app/privacy.html
+Support: support@huaci.app

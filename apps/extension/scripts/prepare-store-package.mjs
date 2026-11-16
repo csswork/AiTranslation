@@ -31,6 +31,8 @@ export function prepareStorePackage(root, staging, target = 'chrome') {
     resource.matches = resource.matches.filter((origin) => !origin.startsWith('http://localhost'));
   }
   if (target === 'firefox') {
+    // Firefox store revision; the initial 2.3.0 draft was replaced before publication.
+    manifest.version += '.1';
     delete manifest.minimum_chrome_version;
     manifest.background = { scripts: ['src/background.js'], type: 'module' };
     manifest.permissions = manifest.permissions.filter((permission) => !['offscreen', 'tabCapture'].includes(permission));

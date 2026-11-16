@@ -25,6 +25,7 @@ try {
     assert.equal(manifest.update_url, undefined);
     assert.equal(manifest.optional_host_permissions, undefined, 'All-site access already covers custom HTTPS providers; a redundant optional permission is only a Chromium warning');
     if (target === 'firefox') {
+      assert.equal(manifest.version, JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'))).version + '.1');
       assert.equal(manifest.web_accessible_resources, undefined, 'Firefox callback page stays private');
       assert.deepEqual(manifest.background, { scripts: ['src/background.js'], type: 'module' });
       assert.ok(!manifest.permissions.some((p) => ['offscreen', 'tabCapture'].includes(p)));

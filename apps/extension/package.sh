@@ -14,6 +14,9 @@ node scripts/sync-extension-i18n.mjs
 node scripts/build-extension-i18n.mjs --check
 
 VERSION=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])")
+if [[ "$TARGET" == firefox ]]; then
+  VERSION="${VERSION}.1"
+fi
 mkdir -p "$REPOSITORY_ROOT/dist/extension"
 OUT="$REPOSITORY_ROOT/dist/extension/ai-translation-${VERSION}.zip"
 if [[ "$TARGET" != chrome ]]; then
