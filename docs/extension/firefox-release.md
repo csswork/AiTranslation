@@ -38,7 +38,9 @@ Firefox 后台根据既有 host_permissions 调用固定 API，不要求 CORS �
 
 后端提交 `830268a212f304d62c60e80fff47460fc4705a72` 已通过[生产部署](https://github.com/csswork/AiTranslation/actions/runs/43869594258)，迁移 014 已执行。生产配置备份为 `/etc/huaci/backend.env.bak-firefox-20261116`，保留 Chrome/Edge ID 并追加 `huaci@huaci.app` 后重启；外部健康检查及固定回调均返回 200，回调使用 no-store 和 no-referrer。
 
-商店已填写英文名称/说明、语言工具分类、收费提示、GPLv3、隐私说明和审核步骤。按用户要求不建立审核账号、不分享任何凭据；审核人员使用访客试用或自行注册/登录。初次访客按网络限频，共享审核网络可能没有剩余试用点数，此限制已在审核备注说明。没有修改现有发放、价格或限流规则。
+商店已填写语言工具分类、收费提示、GPLv3、隐私说明和审核步骤。2026-11-17 已补齐当前 AMO 编辑器支持的 18 种对应商店语言的名称、短介绍与完整长介绍；扩展包内保留 24 种界面语言。另 6 种在当前编辑器中没有选项，文案已准备但未作为独立商店语言上传。已保存扩展图标和 4 张共用界面功能图；没有使用写有 Chrome PDF 右键入口的截图。AMO 媒体表单没有视频字段，现有宣传片也包含 Firefox 不支持的功能，未上传为 Firefox 视频。语言代码、素材来源与重新生成命令见[Firefox 商店资料](../../apps/extension/store-assets/firefox/README.md)。
+
+按用户要求不建立审核账号、不分享任何凭据；审核人员使用访客试用或自行注册/登录。初次访客按网络限频，共享审核网络可能没有剩余试用点数，此限制已在审核备注说明。没有修改现有发放、价格或限流规则。
 
 可重建的源码包已准备为 `dist/extension/ai-translation-firefox-source-2.3.0.1.zip`（没有上传到 AMO 的源码附件字段）；审核备注提供公开仓库、构建步骤及第三方原始来源。最终安装包为 `dist/extension/ai-translation-firefox-2.3.0.1.zip`。审核通过并取得公开页面后再增加官网安装链接。
 
