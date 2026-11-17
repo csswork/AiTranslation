@@ -169,6 +169,24 @@ const country = (code) => `${regionNames.of(code) || code} · ${code}`;
 const language = (code) => (code === 'auto' ? '自动检测' : (() => { try { return languageNames.of(code); } catch { return code; } })());
 
 const AUDIENCE = { guest: ['访客', 'c3'], member: ['注册用户', 'c1'], subscriber: ['订阅用户', 'c2'] };
+const SURFACE = { selection: '划词弹窗', panel: '翻译面板', page: '网页元素', site: '整站翻译', image: '图片', pdf: 'PDF', reader: '双语阅读', subtitle: '视频字幕' };
+/** 响应速度表：样本太少时百分位没有意义，只显示请求数。 */
+const SPEED_MIN_SAMPLE = 20;
+const ms = (value, sample) => (value != null && sample >= SPEED_MIN_SAMPLE ? `${num(value)} ms` : '—');
+
+/** 响应速度：一个维度一张表，列出总耗时、首字、准备与模型耗时，以及备用、缓存与失败比例。 */
+function speedTable(rows, label) {
+  return html`<div class="table-wrap"><table>
+    <thead><tr><th>${label[0]}</th><th class="num">请求</th><th class="num">总耗时 P50</th><th class="num">总耗时 P90</th><th class="num">首字 P50</th><th class="num">首字 P90</th><th class="num">准备 P50</th><th class="num">模型 P50</th><th class="num">模型 P90</th><th class="num">改用备用</th><th class="num">缓存命中</th><th class="num">失败</th></tr></thead>
+    <tbody>${rows.map((r) => html`<tr>
+      <td>${label[1](r.key)}</td><td class="num">${num(r.n)}</td>
+      <td class="num">${ms(r.server_p50, r.timed)}</td><td class="num">${ms(r.server_p90, r.timed)}</td>
+      <td class="num">${ms(r.ttft_p50, r.streamed)}</td><td class="num">${ms(r.ttft_p90, r.streamed)}</td>
+      <td class="num">${ms(r.precheck_p50, r.timed)}</td><td class="num">${ms(r.model_p50, r.n - r.cached)}</td><td class="num">${ms(r.model_p90, r.n - r.cached)}</td>
+      <td class="num">${r.fallback ? pct(r.fallback, r.n) : '—'}</td><td class="num">${r.cached ? pct(r.cached, r.n) : '—'}</td><td class="num">${r.failed ? pct(r.failed, r.n) : '—'}</td>
+    </tr>`)}</tbody></table></div>`;
+}
+
 const PROVIDER = { primary: ['主力模型', 'c1'], cache: ['缓存命中', 'c2'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
 const ERRORS = { primary_failed: '主力失败、备用成功', timeout: '超时', network: '网络错误', empty: '模型无内容', batch_parse: '批量结果解析失败', batch_shape: '批量条数不符' };
 
@@ -325,6 +343,11 @@ ${!r.countries.installs.length && !r.countries.usage.length && !geoConfigured &&
   ${panel('请求字数', hasUsage ? histogram(sizeBuckets, { cls: 'c1' }) : '', { note: '每次请求的字符数' })}
   ${panel('异常与降级', r.errors.length ? barList(r.errors.map((e) => ({ label: ERRORS[e.key] || e.key, value: e.n })), { cls: 'c5' }) : '')}
 </div>
+${r.speed.length ? html`<details class="dashboard-details" open><summary>响应速度<span>按国家、人群与场景 · 文字请求 · 少于 ${SPEED_MIN_SAMPLE} 条不计百分位</span></summary><div class="panels dashboard-grid">
+  ${panel('按国家', speedTable(r.speed.filter((x) => x.dim === 'country').slice(0, 15), ['国家', (k) => (k ? country(k) : '未记录')]), { wide: true, note: '总耗时 = 收到请求到响应就绪（服务端，不含网络往返）；首字仅流式；准备 = 鉴权、额度检查与预扣' })}
+  ${panel('按人群', speedTable(r.speed.filter((x) => x.dim === 'audience'), ['人群', (k) => KIND[k] || '未记录']), { wide: true })}
+  ${panel('按场景', speedTable(r.speed.filter((x) => x.dim === 'surface'), ['场景', (k) => SURFACE[k] || '未标记（旧版扩展）']), { wide: true })}
+</div></details>` : ''}
 ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最高的用户<span>按翻译字数排序 · 前 10 位</span></summary><div class="table-wrap"><table>
     <thead><tr><th>用户</th><th>类型</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本</th></tr></thead>
     <tbody>${r.topUsers.map((u) => html`<tr><td><a href="/users/${u.user_id}">${u.kind === 'guest' ? '访客' : u.username}</a></td><td>${KIND[u.audience] || KIND[u.kind]}</td><td class="num">${num(u.requests)}</td><td class="num">${num(u.chars)}</td><td class="num">${usd(u.cost_micros)}</td></tr>`)}</tbody>

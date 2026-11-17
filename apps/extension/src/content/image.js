@@ -1213,7 +1213,7 @@
     try {
       const reply = await AITrRequests.request({
         type: 'translate-batch', texts: worth.map((b) => b.text),
-        targetId, providerId: settings.provider,
+        targetId, providerId: settings.provider, surface: 'image',
       }, { signal });
       if (token !== generation) return;
       if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
@@ -1373,7 +1373,7 @@
         progress(t('正在翻译 $1 段…', [worth.length]));
         const reply = await AITrRequests.request({
           type: 'translate-batch', texts: worth.map((shape) => shape.source),
-          targetId, providerId: settings.provider,
+          targetId, providerId: settings.provider, surface: 'image',
         }, { signal });
         if (token !== generation) return;
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
@@ -1542,7 +1542,7 @@
       again.disabled = true;
       try {
         const reply = await AITrRequests.request({ type: 'translate-batch', texts: [raw.source],
-          targetId: imageResult.targetId, providerId: imageResult.settings.provider });
+          targetId: imageResult.targetId, providerId: imageResult.settings.provider, surface: 'image' });
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
         const text = String(reply.texts[0] || '').trim();
         if (text && panel.bubbleEditor?.node === node) {

@@ -198,6 +198,7 @@
         // LLM 收自然语言描述，DeepL 收语言代码，两者都给，由平台自己取
         targetLanguage: prompt(targetId),
         targetId,
+        surface: 'panel',
         signal,
       })) {
         if (signal.aborted) return;

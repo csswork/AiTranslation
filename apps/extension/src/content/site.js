@@ -247,7 +247,7 @@
     const texts = [...new Set(batch.map((item) => item.core))];
     try {
       const reply = await Requests.request({
-        type: 'translate-batch', texts, targetId: current.targetId, providerId: current.providerId,
+        type: 'translate-batch', texts, targetId: current.targetId, providerId: current.providerId, surface: 'site',
       }, { signal: current.controller.signal });
       if (session !== current) return;
       if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });

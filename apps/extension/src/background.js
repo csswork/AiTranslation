@@ -632,7 +632,7 @@ async function startTranslation({ tabId, text, providerId, targetId }) {
   const startedAt = Date.now();
   try {
     let received = false;
-    for await (const chunk of AITrProviders.translate({ text: payload, settings, signal: controller.signal })) {
+    for await (const chunk of AITrProviders.translate({ text: payload, settings, surface: 'selection', signal: controller.signal })) {
       if (closed) return;
       received = true;
       post({ type: 'delta', chunk });
@@ -840,7 +840,7 @@ chrome.runtime.onConnect.addListener((port) => {
     started = true;
     try {
       for await (const chunk of AITrAccount.translateStream({
-        text: String(message?.text || ''), target: message?.target, source: message?.source, glossary: message?.glossary, signal: controller.signal,
+        text: String(message?.text || ''), target: message?.target, source: message?.source, glossary: message?.glossary, surface: message?.surface, signal: controller.signal,
       })) post({ type: 'delta', chunk });
       post({ type: 'done' });
     } catch (err) {
@@ -868,7 +868,7 @@ chrome.runtime.onConnect.addListener((port) => {
         const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
-        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts }) };
+        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts, surface: message.surface }) };
       } else if (message.type === 'alternatives') {
         // 划词弹窗里点译文的词：内容脚本不能直接请求接口，由这里代发
         const result = await AITrProviders.alternatives({
@@ -1009,7 +1009,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         const stored = await AITrSettings.loadSettings();
         const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
-        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings });
+        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings, surface: message.surface });
         sendResponse({ ok: true, texts });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err) });
@@ -1114,7 +1114,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (type === 'account-refresh' && fromExtensionPage) return accountReply(AITrAccount.refresh());
   if (type === 'hosted-translate' && fromExtensionPage) {
-    AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source, glossary: message.glossary })
+    AITrAccount.translate({ texts: message.texts, target: message.target, source: message.source, glossary: message.glossary, surface: message.surface })
       .then((texts) => sendResponse({ ok: true, texts }))
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err), action: err?.action || null }));
     return true;

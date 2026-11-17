@@ -456,6 +456,7 @@
       const translations = await P.translateBatch({
         texts: translatable.map((b) => b.text),
         settings: requestSettings,
+        surface: 'image',
         signal,
       });
       if (signal.aborted) return;

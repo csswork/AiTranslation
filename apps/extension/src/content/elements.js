@@ -503,7 +503,7 @@
     try {
       for (const batch of batches) {
         const texts = batch.map((node) => records.get(node).text);
-        const reply = await AITrRequests.request({ type: 'translate-batch', texts, targetId: settings.target, providerId: settings.provider }, { signal });
+        const reply = await AITrRequests.request({ type: 'translate-batch', texts, targetId: settings.target, providerId: settings.provider, surface: 'page' }, { signal });
         if (signal.aborted) return;
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
         batch.forEach((node, index) => {

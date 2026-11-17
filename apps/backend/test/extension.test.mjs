@@ -693,3 +693,28 @@ test('托管翻译缓存：相同请求不再调用模型，照常扣点，用�
     hosted.cache.close();
   }
 });
+
+test('响应速度拆分：记录准备、首字与服务端耗时、是否流式和使用场景；未知场景按未提供处理', async () => {
+  const { hosted } = fakeHosted();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'speed@example.com');
+  await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'fr', surface: 'site' } });
+  await sseEvents(await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'fr', stream: true, surface: 'selection' } }));
+  await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello', 'World'], target: 'fr', stream: true, surface: '<script>' } });
+  const { rows } = await pool.query('SELECT surface, stream, precheck_ms, ttft_ms, server_ms, latency_ms FROM usage_events ORDER BY created_at');
+  assert.deepEqual(rows.map((r) => [r.surface, r.stream, r.ttft_ms === null]), [['site', false, true], ['selection', true, false], [null, false, true]],
+    '多段请求不流式；首字耗时只在流式时记录');
+  for (const r of rows) {
+    assert.ok(Number.isInteger(r.precheck_ms) && r.precheck_ms >= 0);
+    assert.ok(r.server_ms >= r.precheck_ms, '总耗时包含准备阶段');
+    if (r.ttft_ms !== null) assert.ok(r.ttft_ms >= r.precheck_ms && r.ttft_ms <= r.server_ms);
+  }
+
+  const failing = fakeHosted({ fail: true });
+  const built = buildApp({ pool, hosted: failing.hosted });
+  const other = await extensionLogin(built.app, built.config, built.mailbox, 'speed-fail@example.com');
+  await api(built.app, built.config, '/translate', { method: 'POST', token: other.token, body: { texts: ['Hello'], target: 'fr', surface: 'pdf' } });
+  const { rows: [failed] } = await pool.query("SELECT status, surface, server_ms FROM usage_events WHERE status = 'failed'");
+  assert.equal(failed.surface, 'pdf');
+  assert.ok(Number.isInteger(failed.server_ms), '失败的请求也记录耗时');
+});

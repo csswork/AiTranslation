@@ -498,7 +498,7 @@
       for (const group of Layout.batches(blocks)) {
         if (group.every((index) => blocks[index].translated)) continue; // 上次停下前已经翻好
         const texts = group.map((index) => blocks[index].text);
-        const result = await P.translateBatch({ texts, settings: requestSettings, targetId: target, signal });
+        const result = await P.translateBatch({ texts, settings: requestSettings, targetId: target, surface: 'pdf', signal });
         if (signal.aborted) return;
         if (!Array.isArray(result) || result.length !== texts.length) {
           throw new Error(t("翻译结果的段数不对，重试或换个模型试试"));

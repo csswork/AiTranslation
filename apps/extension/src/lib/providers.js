@@ -54,16 +54,16 @@
    * 在扩展页面（翻译面板）里交给 service worker 代发。
    * @returns {Promise<string[]>}
    */
-  async function hostedTranslate({ texts, target, source, glossary, signal }) {
+  async function hostedTranslate({ texts, target, source, glossary, surface, signal }) {
     if (globalThis.AITrAccount) {
       try {
-        return await globalThis.AITrAccount.translate({ texts, target, source, glossary, signal });
+        return await globalThis.AITrAccount.translate({ texts, target, source, glossary, surface, signal });
       } catch (err) {
         if (err?.name === 'AbortError') throw err;
         throw new TranslateError(err.message, err.action);
       }
     }
-    const reply = await chrome.runtime.sendMessage({ type: 'hosted-translate', texts, target, source, glossary });
+    const reply = await chrome.runtime.sendMessage({ type: 'hosted-translate', texts, target, source, glossary, surface });
     if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
     if (reply?.ok) return reply.texts;
     throw new TranslateError(reply?.error || t("点数翻译失败"), reply?.action);
@@ -74,10 +74,10 @@
    * 扩展页面（翻译面板）经长连接让 service worker 代发，断开连接即取消。
    * @returns {AsyncGenerator<string>}
    */
-  async function* hostedStream({ text, target, source, glossary, signal }) {
+  async function* hostedStream({ text, target, source, glossary, surface, signal }) {
     if (globalThis.AITrAccount) {
       try {
-        yield* globalThis.AITrAccount.translateStream({ text, target, source, glossary, signal });
+        yield* globalThis.AITrAccount.translateStream({ text, target, source, glossary, surface, signal });
       } catch (err) {
         if (err?.name === 'AbortError') throw err;
         throw new TranslateError(err.message, err.action);
@@ -93,7 +93,7 @@
     port.onDisconnect.addListener(() => push({ type: 'disconnect' }));
     const onAbort = () => push({ type: 'abort' });
     signal?.addEventListener('abort', onAbort, { once: true });
-    port.postMessage({ text, target, source, glossary });
+    port.postMessage({ text, target, source, glossary, surface });
     try {
       for (;;) {
         if (!queue.length) await new Promise((resolve) => { wake = resolve; });
@@ -392,7 +392,7 @@
    * 翻译。异步生成器，逐段吐出译文片段。
    * @returns {AsyncGenerator<string>}
    */
-  async function* translate({ text, settings, providerId, targetLanguage, targetId, sourceId, signal }) {
+  async function* translate({ text, settings, providerId, targetLanguage, targetId, sourceId, surface, signal }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const terms = await termsFor([text], targetId || settings.target);
@@ -401,10 +401,10 @@
     // 托管翻译：默认流式，关闭「流式输出」时一次性返回整段译文
     if (provider.kind === 'hosted') {
       if (settings.stream !== false) {
-        yield* hostedStream({ text, target: targetId || settings.target, source: sourceId, glossary, signal });
+        yield* hostedStream({ text, target: targetId || settings.target, source: sourceId, glossary, surface, signal });
         return;
       }
-      const [out] = await hostedTranslate({ texts: [text], target: targetId || settings.target, source: sourceId, glossary, signal });
+      const [out] = await hostedTranslate({ texts: [text], target: targetId || settings.target, source: sourceId, glossary, surface, signal });
       if (out) yield out;
       return;
     }
@@ -527,13 +527,13 @@
    * 一次翻译多段文字，返回等长、同序的译文数组。
    * @returns {Promise<string[]>}
    */
-  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, signal }) {
+  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, surface, signal }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const terms = await termsFor(texts, targetId || settings.target);
 
     if (provider.kind === 'hosted') {
-      return hostedTranslate({ texts, target: targetId || settings.target, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, signal });
+      return hostedTranslate({ texts, target: targetId || settings.target, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, surface, signal });
     }
 
     if (provider.kind === 'local') {
@@ -699,7 +699,7 @@
     const before = context.filter(Boolean).join('\n');
 
     if (provider.kind === 'hosted') {
-      const [out] = await hostedTranslate({ texts: [text], target: settings.target, signal });
+      const [out] = await hostedTranslate({ texts: [text], target: settings.target, surface: 'subtitle', signal });
       return String(out || '').trim();
     }
 

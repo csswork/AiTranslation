@@ -285,6 +285,12 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.deepEqual(claims.map((c) => [c.country, c.ui_lang]), [['JP', 'ja'], ['US', 'en'], ['US', 'en'], [null, 'de']], 'XX 视为未知');
   const { rows: events } = await pool.query('SELECT country, target_lang FROM usage_events ORDER BY created_at');
   assert.deepEqual(events.map((e) => e.target_lang), ['zh-Hans', 'zh-Hans', 'ja', 'en']);
+  // 响应速度：20 条流式划词请求与 2 条缓存命中（样本够 20 条才显示百分位）
+  const { rows: [{ user_id: speedUser }] } = await pool.query('SELECT user_id FROM usage_events LIMIT 1');
+  await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, audience, country, surface, stream, provider, latency_ms, precheck_ms, ttft_ms, server_ms)
+    SELECT $1, 'text', 10, 10, 'ok', 'member', 'SG', 'selection', true, 'deepseek', 700, 12, 300, 800 FROM generate_series(1, 20)`, [speedUser]);
+  await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, audience, country, surface, stream, provider, latency_ms, precheck_ms, server_ms)
+    SELECT $1, 'text', 10, 10, 'ok', 'member', 'SG', 'selection', false, 'cache', 0, 10, 5 FROM generate_series(1, 2)`, [speedUser]);
 
   const { a } = await adminLogin(app, config, mailbox);
   const page = await a.text('/?days=7');
@@ -302,6 +308,12 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/?days=7&map=constructor'), /aria-label="世界地图 · 使用分布"/);
   assert.match(page, /使用时段[\s\S]*class="chart heat"/);
   assert.match(page, /响应耗时[\s\S]*P50/);
+  assert.match(page, /<summary>响应速度[\s\S]*按国家[\s\S]*按人群[\s\S]*按场景/);
+  const sg = page.match(/SG<\/td>([\s\S]*?)<\/tr>/)?.[1].match(/<td class="num">[^<]*<\/td>/g).map((td) => td.replace(/<[^>]+>/g, ''));
+  assert.deepEqual(sg, ['22', '800 ms', '800 ms', '300 ms', '300 ms', '12 ms', '700 ms', '700 ms', '—', '9.1%', '—'],
+    '总耗时含缓存命中；首字只算流式；模型耗时不含缓存命中');
+  assert.match(page, /<td>划词弹窗<\/td><td class="num">22<\/td>/);
+  assert.match(page, /<td>未标记（旧版扩展）<\/td><td class="num">4<\/td>\s*<td class="num">—/, '样本不足 20 条时不显示百分位');
   assert.match(page, /data-chart-date="[^"]+ Asia\/Shanghai"/);
   assert.match(page, /data-chart-values="[^<]*合计[^<]*7,200/);
   assert.match(page, /<details class="dashboard-details"><summary>消耗与异常明细/);

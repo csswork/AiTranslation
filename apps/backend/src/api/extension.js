@@ -9,6 +9,7 @@
  *                    可带 glossary（扩展本机保存的用词偏好，最多 20 条）：只放进提示词，不保存、不计费。
  *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
  *                    开启进程内缓存时，相同请求直接返回上次的译文（扣点不变，用量记为 provider 'cache'），见 translation/cache.js
+ *                    可带 surface（扩展里的使用场景，见 SURFACES），只用于响应速度报表。
  *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
  *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围，'regions-sfx' 时连音效字一起找）；文字随后走 /translate，按实际文字扣点
  *
@@ -33,6 +34,9 @@ const MAX_ITEMS = 100;
 const MAX_CONTEXT = 4000;
 const MAX_SELECTED = 200;
 const MAX_IMAGE_BODY = 8 * 1024 * 1024;
+/** 扩展里的使用场景（响应速度报表按此分组）；不认识的取值按未提供处理。 */
+export const SURFACES = ['selection', 'panel', 'page', 'site', 'image', 'pdf', 'reader', 'subtitle'];
+const readSurface = (value) => (SURFACES.includes(value) ? value : null);
 
 /** 用词偏好：[{ source, target }]，最多 20 条，每项 1–100 个字符。缺省为空；格式不对返回 null。 */
 function readGlossary(value) {
@@ -70,6 +74,8 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
   const guestLimiter = createRateLimiter({ limit: 10, windowMs: 60 * 60_000 });
 
   app.use('*', async (c, next) => {
+    // 响应速度拆分（precheck_ms、ttft_ms、server_ms）都从这里开始计时。
+    c.set('startedAt', performance.now());
     const origin = c.req.header('origin') || '';
     const id = extensionIdFromOrigin(origin);
     const allowed = id && isAllowedExtension(id, config);
@@ -197,6 +203,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     return c.json({ ok: true });
   });
 
+  /** 从收到请求到现在的毫秒数。 */
+  const since = (c) => Math.max(0, Math.round(performance.now() - c.get('startedAt')));
+
   /** 订阅用户本月已用字数（隐藏上限用）。 */
   const monthChars = async (userId) => (await pool.query(
     `SELECT COALESCE(SUM(chars), 0)::int AS chars FROM usage_events
@@ -236,29 +245,32 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       return true;
     });
     if (!accepted) return c.json({ error: 'rate_limited' }, 429);
+    const precheckMs = since(c);
     const record = (meta, state, error = null) => pool.query(
       `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,
-       output_tokens = $7, cost_micros = $8, latency_ms = $9, error = $10 WHERE id = $1`,
+       output_tokens = $7, cost_micros = $8, latency_ms = $9, error = $10, precheck_ms = $11, server_ms = $12 WHERE id = $1`,
       [eventId, state, meta?.provider ?? null, meta?.model ?? null, meta?.inputTokens ?? null, meta?.cachedTokens ?? null,
         meta?.outputTokens ?? null, meta?.inputTokens != null ? estimateCostMicros(s, meta.providerKey, meta) : null,
-        meta?.latencyMs ?? null, error]);
+        meta?.latencyMs ?? null, error, precheckMs, since(c)]);
     let result;
     try {
       result = await hosted.readImageText({ image: body.image, purpose: ['regions', 'regions-sfx'].includes(body.purpose) ? body.purpose : 'text' });
     } catch (err) {
       // 不把模型响应或请求内容写进日志；识别没有扣点，不需要写返还流水。
+      const state = await status(user);
       await record(err.meta, 'failed', /^[a-z_\d]{1,60}$/.test(err.code) ? err.code : 'image_failed');
-      return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
+      return c.json({ error: 'translation_failed', ...state }, 502);
     }
+    const state = await status(user);
     await record(result.meta, 'ok');
-    return c.json({ raw: result.raw, ...(await status(user)) });
+    return c.json({ raw: result.raw, ...state });
   });
 
   /**
    * 托管文字请求（翻译、其他译法）共用的前置检查与预扣：可用性、冻结、长度、限频、订阅合理用量、余额。
-   * 通过时返回 { eventId, cost, record }（record 写回用量元数据）；被拒时返回 { response }，并记一条 usage_rejections。
+   * 通过时返回 { eventId, cost, record }（record 写回用量元数据与耗时拆分）；被拒时返回 { response }，并记一条 usage_rejections。
    */
-  async function startCharge(c, s, user, { chars, target, source }) {
+  async function startCharge(c, s, user, { chars, target, source, surface = null, stream = false }) {
     const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
     const audience = subscribed ? 'subscriber' : user.kind;
     /** 记录一次被拒绝的请求并返回对应的响应（不调用模型、不扣点、不保存原文）。 */
@@ -283,9 +295,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang)
-         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8)`,
-        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source],
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream)
+         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10)`,
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);
@@ -293,12 +305,13 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     });
     if (!reserved) return reject('insufficient_credits', 402, { cost: displayCredits(cost), ...(await status(user)) }, cost);
 
+    /** fields：status、error，以及 precheckMs、ttftMs；server_ms 取写记录这一刻（调用方先准备好响应内容再写）。 */
     const record = (meta, fields) => pool.query(
       `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,
-         output_tokens = $7, cost_micros = $8, latency_ms = $9, error = $10 WHERE id = $1`,
+         output_tokens = $7, cost_micros = $8, latency_ms = $9, error = $10, precheck_ms = $11, ttft_ms = $12, server_ms = $13 WHERE id = $1`,
       [eventId, fields.status, meta?.provider ?? null, meta?.model ?? null, meta?.inputTokens ?? null, meta?.cachedTokens ?? null,
         meta?.outputTokens ?? null, meta?.inputTokens != null ? estimateCostMicros(s, meta.providerKey, meta) : null,
-        meta?.latencyMs ?? null, fields.error ?? null],
+        meta?.latencyMs ?? null, fields.error ?? null, fields.precheckMs ?? null, fields.ttftMs ?? null, since(c)],
     );
     return { eventId, cost, record };
   }
@@ -314,30 +327,38 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     if (!glossary) return c.json({ error: 'invalid_glossary' }, 400);
     const chars = countCharacters(texts);
     if (!chars) return c.json({ error: 'invalid_texts' }, 400);
-    const charge = await startCharge(c, s, user, { chars, target: body.target, source: body.source || null });
+    const streaming = body.stream === true && texts.length === 1 && Boolean(hosted?.stream);
+    const charge = await startCharge(c, s, user, { chars, target: body.target, source: body.source || null, surface: readSurface(body.surface), stream: streaming });
     if (charge.response) return charge.response;
     const { eventId, cost, record } = charge;
+    const precheckMs = since(c);
 
     // 单段文字可以流式返回（划词弹窗、翻译面板），边生成边显示；扣点、返还与记录和一次性返回相同。
     // 客户端中途断开时继续读完模型输出并照常结算，与一次性返回的行为一致。
-    if (body.stream === true && texts.length === 1 && hosted.stream) {
+    if (streaming) {
       const encoder = new TextEncoder();
       let sink, open = true;
       const send = (payload) => {
         if (!open) return;
         try { sink.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`)); } catch { open = false; }
       };
+      let ttftMs = null;
       const run = async () => {
         try {
-          const result = await hosted.stream({ text: texts[0], target: body.target, source: body.source || null, glossary }, (delta) => send({ delta }));
-          await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
-          send({ done: true, cost: displayCredits(cost), ...(await status(user)) });
+          const result = await hosted.stream({ text: texts[0], target: body.target, source: body.source || null, glossary }, (delta) => {
+            if (ttftMs === null) ttftMs = since(c);
+            send({ delta });
+          });
+          const state = await status(user);
+          await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null, precheckMs, ttftMs });
+          send({ done: true, cost: displayCredits(cost), ...state });
         } catch (err) {
           try {
             await refundCredits(pool, eventId);
-            await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });
+            const state = await status(user);
+            await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60), precheckMs, ttftMs });
             log.warn(`托管翻译失败：${err.code || err.message}`);
-            send({ error: 'translation_failed', ...(await status(user)) });
+            send({ error: 'translation_failed', ...state });
           } catch (inner) {
             log.error(`托管翻译结算失败：${inner.message}`);
             send({ error: 'translation_failed' });
@@ -360,12 +381,14 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       result = await hosted({ texts, target: body.target, source: body.source || null, glossary });
     } catch (err) {
       await refundCredits(pool, eventId);
-      await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });
+      const state = await status(user);
+      await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60), precheckMs });
       log.warn(`托管翻译失败：${err.code || err.message}`);
-      return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
+      return c.json({ error: 'translation_failed', ...state }, 502);
     }
-    await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
-    return c.json({ translations: result.translations, cost: displayCredits(cost), ...(await status(user)) });
+    const state = await status(user);
+    await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null, precheckMs });
+    return c.json({ translations: result.translations, cost: displayCredits(cost), ...state });
   });
 
   // 其他译法：模型要同时看原文段落与整段译文，按原文段落字数扣点（与重新翻译这一段相同），失败返还。
@@ -384,20 +407,23 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const note = LANGUAGES[body.note] ? body.note : 'en';
     if (!hosted?.alternatives) return c.json({ error: 'hosted_unavailable' }, 503);
     const chars = countCharacters([source]);
-    const charge = await startCharge(c, s, user, { chars, target: body.target, source: null });
+    const charge = await startCharge(c, s, user, { chars, target: body.target, source: null, surface: readSurface(body.surface) });
     if (charge.response) return charge.response;
     const { eventId, cost, record } = charge;
+    const precheckMs = since(c);
     let result;
     try {
       result = await hosted.alternatives({ source, translation, start, end, target: body.target, note });
     } catch (err) {
       await refundCredits(pool, eventId);
-      await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60) });
+      const state = await status(user);
+      await record(err.meta, { status: 'failed', error: String(err.code || 'error').slice(0, 60), precheckMs });
       log.warn(`其他译法失败：${err.code || err.message}`);
-      return c.json({ error: 'translation_failed', ...(await status(user)) }, 502);
+      return c.json({ error: 'translation_failed', ...state }, 502);
     }
-    await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null });
-    return c.json({ source: result.source, options: result.options, cost: displayCredits(cost), ...(await status(user)) });
+    const state = await status(user);
+    await record(result.meta, { status: 'ok', error: result.meta.fellBack ? 'primary_failed' : null, precheckMs });
+    return c.json({ source: result.source, options: result.options, cost: displayCredits(cost), ...state });
   });
 
   return app;

@@ -46,7 +46,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
   const window = [from, now];
 
   const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers, browserDays,
-    installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers] = await Promise.all([
+    installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
     q(`SELECT plan, COUNT(*)::int AS n FROM subscriptions WHERE ${ACTIVE_SUB} GROUP BY plan`, [ENTITLED]),
@@ -131,6 +131,23 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
        FROM usage_events e JOIN users u ON u.id = e.user_id
        WHERE e.status = 'ok' AND e.created_at >= $1 AND e.created_at < $2
        GROUP BY e.user_id, u.username, u.kind ORDER BY chars DESC LIMIT 10`, window),
+    // 响应速度：按国家、人群、场景分别汇总文字请求的耗时拆分（见迁移 015）。percentile 忽略空值，
+    // 所以总耗时、准备、首字只统计迁移之后的请求；模型耗时（latency_ms）包含更早的数据。
+    q(`SELECT CASE WHEN GROUPING(country) = 0 THEN 'country' WHEN GROUPING(audience) = 0 THEN 'audience' ELSE 'surface' END AS dim,
+              COALESCE(country, audience, surface) AS key, COUNT(*)::int AS n,
+              COUNT(server_ms)::int AS timed, COUNT(ttft_ms)::int AS streamed,
+              (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY server_ms))::int AS server_p50,
+              (PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY server_ms))::int AS server_p90,
+              (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY ttft_ms))::int AS ttft_p50,
+              (PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY ttft_ms))::int AS ttft_p90,
+              (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY precheck_ms))::int AS precheck_p50,
+              (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY latency_ms) FILTER (WHERE provider IS DISTINCT FROM 'cache'))::int AS model_p50,
+              (PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY latency_ms) FILTER (WHERE provider IS DISTINCT FROM 'cache'))::int AS model_p90,
+              COUNT(*) FILTER (WHERE status = 'failed')::int AS failed,
+              COUNT(*) FILTER (WHERE error = 'primary_failed')::int AS fallback,
+              COUNT(*) FILTER (WHERE provider = 'cache')::int AS cached
+       FROM usage_events WHERE kind = 'text' AND created_at >= $1 AND created_at < $2
+       GROUP BY GROUPING SETS ((country), (audience), (surface)) ORDER BY n DESC`, window),
   ]);
 
   const rejectionQuery = (a, b) => q(
@@ -173,6 +190,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     heat,
     latency: latency[0],
     sizes: sizes[0],
+    speed,
     outcomes,
     errors,
     topUsers,
