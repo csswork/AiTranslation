@@ -79,6 +79,8 @@ export function readConfig(env = process.env) {
 
   // 托管翻译的备用模型（OpenAI 兼容接口，默认 Fireworks 美国节点上的 DeepSeek V4.1 Flash）：主力失败或超时时改用它。
   const fallbackKey = env.HOSTED_FALLBACK_API_KEY || '';
+  const cacheMb = int(env.HOSTED_CACHE_MB, 64, 'HOSTED_CACHE_MB');
+  const cacheHours = Math.max(1, int(env.HOSTED_CACHE_HOURS, 24, 'HOSTED_CACHE_HOURS'));
 
   // Creem 收款与订阅：API Key、Webhook 密钥和两个商品 ID 都配置后才开放结账。
   // 生产环境配了一部分视为配置错误；开发环境只提示（warnings），照常启动、暂不开放结账。
@@ -160,6 +162,9 @@ export function readConfig(env = process.env) {
           baseUrl: (env.HOSTED_FALLBACK_BASE_URL || 'https://us.api.fireworks.ai/inference/v1').replace(/\/+$/, ''),
         }
         : null,
+      // 相同文字请求的进程内缓存（见 src/translation/cache.js）：HOSTED_CACHE_MB 为内存上限（默认 64），0 表示关闭；
+      // HOSTED_CACHE_HOURS 为每条最多保留的小时数（默认 24）。
+      cache: cacheMb > 0 ? { maxBytes: cacheMb * 1024 * 1024, ttlMs: cacheHours * 3_600_000 } : null,
     },
     creem,
     hostedMaxChars: Math.max(1, int(env.HOSTED_MAX_CHARS, 6000, 'HOSTED_MAX_CHARS')),

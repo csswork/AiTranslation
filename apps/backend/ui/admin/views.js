@@ -169,7 +169,7 @@ const country = (code) => `${regionNames.of(code) || code} · ${code}`;
 const language = (code) => (code === 'auto' ? '自动检测' : (() => { try { return languageNames.of(code); } catch { return code; } })());
 
 const AUDIENCE = { guest: ['访客', 'c3'], member: ['注册用户', 'c1'], subscriber: ['订阅用户', 'c2'] };
-const PROVIDER = { primary: ['主力模型', 'c1'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
+const PROVIDER = { primary: ['主力模型', 'c1'], cache: ['缓存命中', 'c2'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
 const ERRORS = { primary_failed: '主力失败、备用成功', timeout: '超时', network: '网络错误', empty: '模型无内容', batch_parse: '批量结果解析失败', batch_shape: '批量条数不符' };
 
 /** 环比：上一周期为 0 时只在有增长时显示「新」。 */
@@ -347,7 +347,7 @@ const REJECTIONS = {
   fair_use: '超过订阅月度上限',
   hosted_unavailable: '托管服务停用',
 };
-const PROVIDER_NAMES = { deepseek: 'DeepSeek 官方', fireworks: 'Fireworks' };
+const PROVIDER_NAMES = { deepseek: 'DeepSeek 官方', fireworks: 'Fireworks', cache: '缓存命中' };
 const sumBy = (rows, f) => rows.reduce((n, r) => n + f(r), 0);
 const cumulativeOf = (values) => values.reduce((out, v) => [...out, (out[out.length - 1] || 0) + v], []);
 
@@ -487,7 +487,7 @@ function financeSections(r) {
       { label: '合计', value: num(tokens[i].input + tokens[i].cached + tokens[i].output), total: true },
     ],
   }) || emptyChart('模型返回用量数据后，将在这里展示每日消耗'), { span: 'main', note: '输入含缓存命中 · 按天堆叠', value: `${num(totalInput + totalOutput)} token` })}
-  ${panel('模型路由', donut(r.providers.map((p) => ({ label: PROVIDER[p.key]?.[0] || p.key, value: p.requests, cls: PROVIDER[p.key]?.[1] || 'c1' }))) || emptyChart('暂无模型调用'), { span: 'side', note: '主力、备用与失败请求' })}
+  ${panel('模型路由', donut(r.providers.map((p) => ({ label: PROVIDER[p.key]?.[0] || p.key, value: p.requests, cls: PROVIDER[p.key]?.[1] || 'c1' }))) || emptyChart('暂无模型调用'), { span: 'side', note: '主力、缓存、备用与失败请求' })}
   ${panel('托管请求', chart({ labels: r.daily.map((d) => d.day), width: 460, height: 230, stacked: true, series: [
     { name: '成功请求', values: r.daily.map((d) => d.requests - d.failed), cls: 'c1', kind: 'bar' },
     { name: '失败请求', values: r.daily.map((d) => d.failed), cls: 'c5', kind: 'bar' },

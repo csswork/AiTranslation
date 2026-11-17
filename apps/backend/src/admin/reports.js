@@ -75,7 +75,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     q(`SELECT COALESCE(audience, 'member') AS key, COUNT(*)::int AS requests, COUNT(DISTINCT user_id)::int AS users,
               COALESCE(SUM(chars) FILTER (WHERE status = 'ok'), 0)::bigint AS chars, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
        FROM usage_events WHERE created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY requests DESC`, window),
-    q(`SELECT CASE WHEN error = 'primary_failed' THEN 'fallback' WHEN status = 'failed' THEN 'failed' ELSE 'primary' END AS key,
+    q(`SELECT CASE WHEN provider = 'cache' THEN 'cache' WHEN error = 'primary_failed' THEN 'fallback' WHEN status = 'failed' THEN 'failed' ELSE 'primary' END AS key,
               COUNT(*)::int AS requests, COALESCE(SUM(cost_micros), 0)::bigint AS cost_micros
        FROM usage_events WHERE created_at >= $1 AND created_at < $2 GROUP BY 1 ORDER BY requests DESC`, window),
     q(`SELECT target_lang AS key, COUNT(*)::int AS requests, COUNT(DISTINCT user_id)::int AS users, COALESCE(SUM(chars), 0)::bigint AS chars

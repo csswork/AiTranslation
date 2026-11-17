@@ -661,3 +661,35 @@ test('图片托管：访客不足显示精度的正余额可识图；订阅用�
   assert.equal((await res.json()).error, 'fair_use');
   assert.equal(images.length, 2);
 });
+
+test('托管翻译缓存：相同请求不再调用模型，照常扣点，用量记为 cache、成本为 0；流式同样命中', async () => {
+  const { createHostedTranslator } = await import('../src/translation/hosted.js');
+  let modelCalls = 0;
+  const hosted = createHostedTranslator({ hosted: { apiKey: 'test-key', baseUrl: 'https://api.deepseek.com', model: 'deepseek-flash', fallback: null,
+    cache: { maxBytes: 1024 * 1024, ttlMs: 60_000 } } }, { fetchImpl: async () => {
+    modelCalls++;
+    return Response.json({ choices: [{ message: { content: 'Bonjour' } }], usage: { prompt_tokens: 1_000_000, completion_tokens: 1_000_000 } });
+  } });
+  try {
+    const { app, config, mailbox } = buildApp({ pool, hosted });
+    const { token } = await extensionLogin(app, config, mailbox, 'cache@example.com');
+    const body = { texts: ['Hello'], target: 'fr' };
+    let res = await api(app, config, '/translate', { method: 'POST', token, body });
+    assert.deepEqual((await res.json()).translations, ['Bonjour']);
+    res = await api(app, config, '/translate', { method: 'POST', token, body });
+    const second = await res.json();
+    assert.deepEqual(second.translations, ['Bonjour']);
+    assert.equal(second.cost, '0.01', '命中缓存照常按字数扣点');
+    assert.equal(second.credits.balance, '99.98');
+    const events = await sseEvents(await api(app, config, '/translate', { method: 'POST', token, body: { ...body, stream: true } }));
+    assert.deepEqual(events.filter((e) => e.delta).map((e) => e.delta), ['Bonjour']);
+    assert.equal(events.at(-1).done, true);
+    assert.equal(modelCalls, 1);
+    const { rows } = await pool.query('SELECT status, provider, input_tokens, cost_micros, cost_units FROM usage_events ORDER BY created_at');
+    assert.deepEqual(rows.map((r) => [r.status, r.provider, r.input_tokens, String(r.cost_micros), r.cost_units]).slice(1), [
+      ['ok', 'cache', 0, '0', '5'], ['ok', 'cache', 0, '0', '5']]);
+    assert.equal(rows[0].provider, 'deepseek');
+  } finally {
+    hosted.cache.close();
+  }
+});

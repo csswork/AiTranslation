@@ -91,3 +91,12 @@ test('发信：生产环境用 Resend，需要 API Key 与发件地址', async (
   const failing = createMailer(config, { fetchImpl: async () => new Response('{}', { status: 422 }) });
   await assert.rejects(failing.sendCode({ to: 'a@example.com', code: '1', purpose: 'login' }), /resend_422/);
 });
+
+test('托管翻译缓存默认开启 64 MB、24 小时；HOSTED_CACHE_MB 与 HOSTED_CACHE_HOURS 换算成字节与毫秒', () => {
+  const base = { DATABASE_URL: 'postgres://localhost/x' };
+  assert.deepEqual(readConfig(base).hosted.cache, { maxBytes: 64 * 1024 * 1024, ttlMs: 24 * 3_600_000 });
+  assert.equal(readConfig({ ...base, HOSTED_CACHE_MB: '0' }).hosted.cache, null);
+  assert.deepEqual(readConfig({ ...base, HOSTED_CACHE_MB: '64' }).hosted.cache, { maxBytes: 64 * 1024 * 1024, ttlMs: 24 * 3_600_000 });
+  assert.deepEqual(readConfig({ ...base, HOSTED_CACHE_MB: '8', HOSTED_CACHE_HOURS: '2' }).hosted.cache, { maxBytes: 8 * 1024 * 1024, ttlMs: 2 * 3_600_000 });
+  assert.throws(() => readConfig({ ...base, HOSTED_CACHE_MB: '-1' }), /HOSTED_CACHE_MB/);
+});

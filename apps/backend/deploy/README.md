@@ -38,6 +38,7 @@
 | `HOSTED_FALLBACK_API_KEY` | 建议设置 | 文字翻译的备用模型 Key（OpenAI 兼容，默认 Fireworks）；主力失败或超时时改用。图片识别固定使用 DeepSeek Flash，不向未验证视觉能力的备用模型发送图片 |
 | `HOSTED_FALLBACK_MODEL` / `HOSTED_FALLBACK_BASE_URL` | 默认 `accounts/fireworks/routers/deepseek-v4p1-flash-us` / `https://us.api.fireworks.ai/inference/v1` | 备用模型与接口地址 |
 | `HOSTED_MAX_CHARS` | 默认 6000 | 单次最多 Unicode 字符数的默认值；管理员界面里的设置优先。500 字符 = 1 点固定换算，不再使用 `CHARS_PER_CREDIT` |
+| `HOSTED_CACHE_MB` / `HOSTED_CACHE_HOURS` | 默认 `64` / `24`；`HOSTED_CACHE_MB=0` 关闭 | 相同文字请求（目标语言、源语言、用词偏好与全部原文一致）的进程内缓存：命中时直接返回上次译文、不调用模型，照常扣点，用量记为服务商 `cache`。只在本进程内存，不查库、不加延迟；存加密译文与 HMAC 摘要，没有原文无法还原，到期删除，重启清空。约 1 MB 可存数百至上千段译文 |
 | `CREEM_API_KEY` | 收款必填 | Creem API Key；设置后以下三项必填 |
 | `CREEM_WEBHOOK_SECRET` | 收款必填 | Creem Webhook 签名密钥；Webhook 地址填 `<APP_ORIGIN>/webhooks/creem` |
 | `CREEM_PRODUCT_MONTHLY` / `CREEM_PRODUCT_YEARLY` | 收款必填 | 月付、年付商品 ID；商品价格需与管理员界面的价格展示一致 |

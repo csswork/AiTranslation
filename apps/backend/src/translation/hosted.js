@@ -3,6 +3,7 @@
  * 只负责调用模型并解析结果；扣点、返还和用量记录由 api/extension.js 处理。
  * 原文与译文只在内存中经过，不写日志或数据库。
  */
+import { createTranslationCache } from './cache.js';
 import { LANGUAGES } from './languages.js';
 
 const ENDPOINT = '/chat/completions';
@@ -357,13 +358,22 @@ async function streamModel(provider, { text, target, source, glossary }, onDelta
   }
 }
 
+/** 缓存键材料：影响译文的全部输入。单段与多段由 texts 的长度区分（提示词不同）；流式与一次性返回共用。 */
+const cacheMaterial = ({ texts, target, source, glossary }) =>
+  JSON.stringify([target, source || '', (glossary || []).map(({ source: s, target: t }) => [s, t]), texts]);
+
 /**
  * 主力模型（DeepSeek 官方）失败或超时时，改用备用模型（默认 Fireworks 美国节点上的同款模型）。
  * 返回 { translations, meta }：meta 是统计用的元数据（服务商、模型、token、耗时），不含原文译文。
  * 两个都失败时抛错，err.meta 记录最后一次尝试。未配置托管模型 Key 时返回 null（托管翻译不可用）。
+ * 配置了 config.hosted.cache（{ maxBytes, ttlMs }）时，相同的文字请求命中进程内缓存（见 cache.js），
+ * meta 为 provider 'cache'、token 与成本为 0；扣点由调用方照常处理。
  */
 export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(...args) } = {}) {
   if (!config.hosted.apiKey) return null;
+  const cache = config.hosted.cache ? createTranslationCache(config.hosted.cache) : null;
+  const cacheMeta = (started) => ({ providerKey: 'cache', provider: 'cache', model: 'memory',
+    inputTokens: 0, cachedTokens: 0, outputTokens: 0, latencyMs: Date.now() - started, fellBack: false });
   const providers = [
     // DeepSeek 的 temperature 会在服务端换算，翻译场景官方建议 1.3；thinking 需显式关闭。
     { key: 'primary', name: 'deepseek', ...config.hosted, extraBody: { thinking: { type: 'disabled' }, temperature: 1.3 } },
@@ -375,12 +385,17 @@ export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(
   const timeouts = providers.length > 1 ? [20_000, 25_000] : [45_000];
 
   const translate = async function translate(request) {
+    const material = cache && cacheMaterial(request);
+    const hitStarted = Date.now();
+    const hit = material && cache.get(material);
+    if (hit) return { translations: hit, meta: cacheMeta(hitStarted) };
     let lastError;
     for (const [index, provider] of providers.entries()) {
       const started = Date.now();
       const meta = { providerKey: provider.key, provider: provider.name, model: provider.model };
       try {
         const { translations, usage } = await callModel(provider, request, fetchImpl, timeouts[index]);
+        if (material) cache.set(material, translations);
         return { translations, meta: { ...meta, ...usage, latencyMs: Date.now() - started, fellBack: index > 0 } };
       } catch (err) {
         lastError = Object.assign(err, { meta: { ...meta, latencyMs: Date.now() - started } });
@@ -393,12 +408,21 @@ export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(
    * 返回 { translation, meta }，与 translate 的 meta 相同。
    */
   translate.stream = async function stream(request, onDelta) {
+    // 命中缓存时一次给出整段译文，与一次性返回共用同一份缓存。
+    const material = cache && cacheMaterial({ ...request, texts: [request.text] });
+    const hitStarted = Date.now();
+    const hit = material && cache.get(material);
+    if (hit) {
+      onDelta(hit[0]);
+      return { translation: hit[0], meta: cacheMeta(hitStarted) };
+    }
     let lastError;
     for (const [index, provider] of providers.entries()) {
       const started = Date.now();
       const meta = { providerKey: provider.key, provider: provider.name, model: provider.model };
       try {
         const { translation, usage } = await streamModel(provider, request, onDelta, fetchImpl, timeouts[index], 90_000);
+        if (material) cache.set(material, [translation]);
         return { translation, meta: { ...meta, ...usage, latencyMs: Date.now() - started, fellBack: index > 0 } };
       } catch (err) {
         lastError = Object.assign(err, { meta: { ...meta, latencyMs: Date.now() - started } });
@@ -443,5 +467,6 @@ export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(
       throw Object.assign(err, { meta: { ...meta, latencyMs: Date.now() - started } });
     }
   };
+  translate.cache = cache;
   return translate;
 }
