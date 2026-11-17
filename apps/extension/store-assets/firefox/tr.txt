@@ -1,0 +1,23 @@
+Huaci, okuduğunuz sayfaya yapay zeka çevirisi getirir: seçili metin, iki dilli makaleler, görseller, PDF'ler ve otomatik çevrilmesini seçtiğiniz siteler.
+
+OKUMA VE ÇEVİRİ
+- Metni seçip sağ tıklayarak çevirin; kayan seçim düğmesini veya klavye kısayolunu da kullanabilirsiniz.
+- Bir makaleyi, özgün ve çevrilmiş paragrafların hizalı olduğu temiz bir iki dilli okuyucuda okuyun. Düzeni, görünümü ve tipografiyi ayarlayın; makaleyi ve çevirisini bu tarayıcıda kaydedin.
+- Düzenli kullandığınız web sayfası bölgelerine çeviri düğmeleri ekleyin.
+- Görsellerdeki metni çevirin. Metin bölgelerini yerel olarak inceleyip ayarlayın, düzeni düzeltin ve çevrilmiş görseli dışa aktarın.
+- Araç çubuğu açılır penceresini açın > Tüm PDF'yi çevir'e tıklayın, ardından yerel bir metin tabanlı PDF seçin. Dosya cihazınızda işlenir; yalnızca çıkarılan metin çeviri için gönderilir. Özgün ve çevrilmiş sayfaları karşılaştırın, sonucu PDF olarak yazdırın.
+- Sayfa bağlam menüsünden Bu web sitesini çevir'i etkinleştirin. Huaci bu alan adını yerel olarak hatırlar ve özelliği kapatana kadar gezinirken görünüm alanına yakın metni çevirir.
+- Desteklenen yapay zeka sağlayıcılarında alternatif ifadeler için çevirideki bir sözcüğe tıklayın ve tercih ettiğiniz terimleri yerel olarak kaydedin.
+
+ÇEVİRİ HİZMETİNİZİ SEÇİN
+Ücretsiz deneme ve hesap kredileriyle barındırılan çeviriyi kullanın veya kendi OpenAI, DeepSeek, DeepL ya da uyumlu HTTPS API'nizi bağlayın. Sağlayıcı özellikleri değişir; DeepL görsel tanımayı ve alternatif ifadeleri desteklemez.
+
+Barındırılan çeviri, ücretsiz krediler tükendikten sonra ücretli bir hizmettir. Metin, istek başına minimum olmaksızın 500 Unicode karakter başına 1 kredi olarak faturalandırılır. İsteğe bağlı abonelikler ve güncel fiyatlar https://app.huaci.app/plans adresinde gösterilir. Kendi API anahtarınızı kullanırken sağlayıcınız kullanım için ücret alabilir. Uzantıyı yüklemek ücretli bir abonelik başlatmaz.
+
+GİZLİLİK
+Sağlayıcı anahtarları, ayarlar, web sitesi kuralları, ifade tercihleri ve kaydedilen makaleler yerel uzantı depolamasında kalır ve tarayıcı hesabınız üzerinden eşitlenmez. Barındırılan çeviri, istediğiniz içeriği Huaci hesap hizmetine ve yapılandırılmış model sağlayıcılarına gönderir; kendi anahtarınızı getirdiğiniz istekler seçtiğiniz sağlayıcıya gider. PDF dosyalarının tamamı yüklenmez. Huaci tarama geçmişinizi toplamaz.
+
+Firefox masaüstü 142 veya üzeri gerekir. Firefox, tarayıcının yerleşik Çevirici'sini ve deneysel video altyazılarının kullandığı Chrome sekme sesi API'lerini sunmadığından bu özellikler bu sürümde kullanılamaz. Korumalı tarayıcı sayfaları ve yerleşik PDF görüntüleyici değiştirilemez; bunun yerine yerel PDF dosya seçiciyi kullanın.
+
+Web sitesi ve gizlilik politikası: https://huaci.app/ ve https://huaci.app/privacy.html
+Destek: support@huaci.app

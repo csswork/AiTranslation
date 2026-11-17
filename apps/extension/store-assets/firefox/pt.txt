@@ -1,0 +1,23 @@
+O Huaci leva a tradução por IA à página que você está lendo: texto selecionado, artigos bilíngues, imagens, PDFs e os sites que você escolher traduzir automaticamente.
+
+LER E TRADUZIR
+- Selecione o texto e clique com o botão direito para traduzir, ou use o botão flutuante de seleção ou um atalho de teclado.
+- Leia um artigo em um leitor bilíngue limpo, com parágrafos originais e traduzidos alinhados. Ajuste o layout, a aparência e a tipografia e salve o artigo e a tradução neste navegador.
+- Adicione botões de tradução às regiões da página que você usa com frequência.
+- Traduza texto em imagens. Revise e ajuste as regiões de texto localmente, corrija o layout e exporte uma imagem traduzida.
+- Abra o popup da barra de ferramentas > Traduzir PDF inteiro e selecione um PDF local baseado em texto. O arquivo é processado no seu dispositivo; apenas o texto extraído é enviado para tradução. Compare as páginas original e traduzida e imprima o resultado como PDF.
+- Ative Traduzir este site no menu de contexto da página. O Huaci memoriza esse domínio localmente e traduz o texto próximo à área visível enquanto você navega, até você desativar o recurso.
+- Clique em uma palavra em uma tradução para ver formulações alternativas nos provedores de IA compatíveis e salve seus termos preferidos localmente.
+
+ESCOLHA SEU SERVIÇO DE TRADUÇÃO
+Use a tradução hospedada com teste gratuito e créditos da conta, ou conecte sua própria API HTTPS OpenAI, DeepSeek, DeepL ou compatível. Os recursos variam conforme o provedor; o DeepL não oferece reconhecimento de imagens nem formulações alternativas.
+
+A tradução hospedada é um serviço pago após o uso dos créditos gratuitos. O texto é cobrado a 1 crédito por 500 caracteres Unicode, sem mínimo por solicitação. Assinaturas opcionais e preços atuais são mostrados em https://app.huaci.app/plans . Ao usar sua própria chave de API, seu provedor pode cobrar pelo uso. Instalar a extensão não inicia uma assinatura paga.
+
+PRIVACIDADE
+Chaves de provedores, configurações, regras de sites, preferências de formulação e artigos salvos ficam no armazenamento local da extensão e não são sincronizados pela conta do navegador. A tradução hospedada envia o conteúdo solicitado ao serviço da conta Huaci e aos provedores de modelo configurados; solicitações com chave própria vão para o provedor escolhido. Arquivos PDF inteiros não são enviados. O Huaci não coleta seu histórico de navegação.
+
+É necessário Firefox para desktop 142 ou posterior. O Firefox não oferece o Tradutor integrado do navegador nem as APIs de áudio de abas do Chrome usadas pelas legendas de vídeo experimentais, portanto esses recursos não estão disponíveis nesta edição. Páginas protegidas do navegador e o visualizador de PDF integrado não podem ser modificados; use o seletor de arquivo PDF local.
+
+Site e política de privacidade: https://huaci.app/ e https://huaci.app/privacy.html
+Suporte: support@huaci.app

@@ -1,0 +1,23 @@
+Huaci mang dịch AI đến trang bạn đang đọc: văn bản chọn, bài viết song ngữ, hình ảnh, PDF và các trang web bạn chọn tự động dịch.
+
+ĐỌC VÀ DỊCH
+- Chọn văn bản và nhấp chuột phải để dịch, hoặc dùng nút nổi khi chọn văn bản hoặc phím tắt.
+- Đọc bài viết trong trình đọc song ngữ gọn gàng với đoạn gốc và đoạn dịch được căn chỉnh. Điều chỉnh bố cục, giao diện và kiểu chữ, sau đó lưu bài viết và bản dịch trong trình duyệt này.
+- Thêm nút dịch vào các vùng trang web bạn thường dùng.
+- Dịch văn bản trong hình ảnh. Xem lại và điều chỉnh vùng văn bản cục bộ, sửa bố cục và xuất hình ảnh đã dịch.
+- Mở cửa sổ công cụ > Dịch toàn bộ PDF, rồi chọn tệp PDF văn bản cục bộ. Tệp được phân tích trên thiết bị của bạn; chỉ văn bản trích xuất được gửi để dịch. So sánh trang gốc và trang dịch, in kết quả dưới dạng PDF.
+- Bật Dịch trang web này từ menu ngữ cảnh của trang. Huaci ghi nhớ tên miền đó cục bộ và dịch văn bản gần khung nhìn khi bạn duyệt, cho đến khi bạn tắt tính năng.
+- Nhấp vào một từ trong bản dịch để xem cách diễn đạt thay thế trên các nhà cung cấp AI được hỗ trợ, và lưu thuật ngữ ưa thích cục bộ.
+
+CHỌN DỊCH VỤ DỊCH
+Dùng dịch máy chủ với bản dùng thử miễn phí và tín dụng tài khoản, hoặc kết nối API HTTPS của riêng bạn với OpenAI, DeepSeek, DeepL hoặc tương thích. Tính năng nhà cung cấp khác nhau; DeepL không hỗ trợ nhận dạng hình ảnh hoặc cách diễn đạt thay thế.
+
+Dịch máy chủ là dịch vụ trả phí sau khi hết tín dụng miễn phí. Văn bản tính 1 tín dụng mỗi 500 ký tự Unicode, không có mức tối thiểu mỗi yêu cầu. Gói đăng ký tùy chọn và giá hiện tại hiển thị tại https://app.huaci.app/plans . Khi dùng khóa API riêng, nhà cung cấp có thể tính phí sử dụng. Cài tiện ích không bắt đầu gói đăng ký trả phí.
+
+QUYỀN RIÊNG TƯ
+Khóa nhà cung cấp, cài đặt, quy tắc trang web, tùy chọn thuật ngữ và bài viết đã lưu nằm trong bộ nhớ tiện ích cục bộ và không đồng bộ qua tài khoản trình duyệt. Dịch máy chủ gửi nội dung bạn yêu cầu đến dịch vụ tài khoản Huaci và các nhà cung cấp mô hình đã cấu hình; yêu cầu dùng khóa riêng gửi đến nhà cung cấp bạn chọn. Toàn bộ tệp PDF không được tải lên. Huaci không thu thập lịch sử duyệt web của bạn.
+
+Yêu cầu Firefox desktop 142 trở lên. Firefox không cung cấp Translator tích hợp của trình duyệt hoặc API âm thanh tab của Chrome dùng cho phụ đề video thử nghiệm, nên các tính năng đó không khả dụng trong phiên bản này. Trang trình duyệt được bảo vệ và trình xem PDF tích hợp không thể sửa đổi; hãy dùng trình chọn tệp PDF cục bộ thay thế.
+
+Trang web và chính sách quyền riêng tư: https://huaci.app/ và https://huaci.app/privacy.html
+Hỗ trợ: support@huaci.app

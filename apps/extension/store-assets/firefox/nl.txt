@@ -1,0 +1,23 @@
+Huaci brengt AI-vertaling naar de pagina die je leest: geselecteerde tekst, tweetalige artikelen, afbeeldingen, pdf's en websites die je automatisch laat vertalen.
+
+LEZEN EN VERTALEN
+- Selecteer tekst en klik met de rechtermuisknop om te vertalen, of gebruik de zwevende selectieknop of een sneltoets.
+- Lees een artikel in een overzichtelijke tweetalige lezer met uitgelijnde originele en vertaalde alinea's. Pas de lay-out, het uiterlijk en de typografie aan en sla het artikel en de vertaling op in deze browser.
+- Voeg vertaalknoppen toe aan de delen van een webpagina die je vaak gebruikt.
+- Vertaal tekst in afbeeldingen. Controleer en pas tekstgebieden lokaal aan, corrigeer de lay-out en exporteer een vertaalde afbeelding.
+- Open de pop-up van de werkbalk > Volledige pdf vertalen en kies een lokaal pdf-bestand met tekst. Het bestand wordt op je apparaat verwerkt; alleen de geëxtraheerde tekst wordt verzonden om te vertalen. Vergelijk originele en vertaalde pagina's en print het resultaat als pdf.
+- Schakel Deze website vertalen in via het contextmenu van de pagina. Huaci onthoudt dat domein lokaal en vertaalt tekst bij het viewport terwijl je browst, tot je de functie uitzet.
+- Klik op een woord in een vertaling voor alternatieve formuleringen bij ondersteunde AI-providers en sla je voorkeurstermen lokaal op.
+
+KIES JE VERTAALDIENST
+Gebruik gehoste vertaling met een gratis proefperiode en accounttegoed, of koppel je eigen OpenAI-, DeepSeek-, DeepL- of compatibele HTTPS-API. Functies verschillen per provider; DeepL ondersteunt geen beeldherkenning of alternatieve formuleringen.
+
+Gehoste vertaling is een betaalde dienst zodra het gratis tegoed op is. Tekst wordt gefactureerd tegen 1 credit per 500 Unicode-tekens, zonder minimum per verzoek. Optionele abonnementen en actuele prijzen staan op https://app.huaci.app/plans . Bij gebruik van je eigen API-sleutel kan je provider kosten rekenen. Het installeren van de extensie start geen betaald abonnement.
+
+PRIVACY
+Providersleutels, instellingen, websiteregels, voorkeurstermen en opgeslagen artikelen blijven in de lokale opslag van de extensie en worden niet via je browseraccount gesynchroniseerd. Gehoste vertaling stuurt de inhoud die je aanvraagt naar de accountdienst van Huaci en de geconfigureerde modelproviders; verzoeken met je eigen sleutel gaan naar je gekozen provider. Volledige pdf-bestanden worden niet geüpload. Huaci verzamelt je browsegeschiedenis niet.
+
+Firefox desktop 142 of later is vereist. Firefox biedt niet de ingebouwde Translator van de browser of de Chrome-tab-audio-API's die de experimentele videobijschriften gebruiken, dus die functies zijn niet beschikbaar in deze editie. Beveiligde browserpagina's en de ingebouwde pdf-viewer kunnen niet worden aangepast; gebruik in plaats daarvan de lokale pdf-bestandskiezer.
+
+Website en privacybeleid: https://huaci.app/ en https://huaci.app/privacy.html
+Ondersteuning: support@huaci.app

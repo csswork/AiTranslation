@@ -1,0 +1,23 @@
+Huaci wprowadza tłumaczenie AI na czytaną stronę: zaznaczony tekst, artykuły dwujęzyczne, obrazy, pliki PDF i wybrane witryny tłumaczone automatycznie.
+
+CZYTANIE I TŁUMACZENIE
+- Zaznacz tekst i kliknij prawym przyciskiem, aby przetłumaczyć, lub użyj pływającego przycisku zaznaczenia bądź skrótu klawiszowego.
+- Czytaj artykuł w przejrzystym czytniku dwujęzycznym z wyrównanymi akapitami oryginału i tłumaczenia. Dostosuj układ, wygląd i typografię, a następnie zapisz artykuł i tłumaczenie w tej przeglądarce.
+- Dodaj przyciski tłumaczenia do często używanych obszarów strony.
+- Tłumacz tekst na obrazach. Przeglądaj i poprawiaj obszary tekstowe lokalnie, koryguj układ i eksportuj przetłumaczony obraz.
+- Otwórz okno rozszerzenia > Przetłumacz cały PDF, a następnie wybierz lokalny plik PDF z tekstem. Plik jest przetwarzany na Twoim urządzeniu; do tłumaczenia wysyłany jest tylko wyodrębniony tekst. Porównaj strony oryginału i tłumaczenia i wydrukuj wynik jako PDF.
+- Włącz opcję Przetłumacz tę witrynę w menu kontekstowym strony. Huaci zapamiętuje tę domenę lokalnie i tłumaczy tekst w pobliżu widoku podczas przeglądania, dopóki nie wyłączysz tej funkcji.
+- Kliknij słowo w tłumaczeniu, aby uzyskać alternatywne sformułowania u obsługiwanych dostawców AI, i zapisz preferowane terminy lokalnie.
+
+WYBIERZ USŁUGĘ TŁUMACZENIA
+Korzystaj z tłumaczenia hostowanego z bezpłatnym okresem próbnym i kredytami na koncie albo podłącz własny klucz API OpenAI, DeepSeek, DeepL lub zgodny interfejs HTTPS. Funkcje dostawców się różnią; DeepL nie obsługuje rozpoznawania obrazów ani alternatywnych sformułowań.
+
+Tłumaczenie hostowane to usługa płatna po wykorzystaniu bezpłatnych kredytów. Tekst jest rozliczany po 1 kredycie za 500 znaków Unicode, bez minimalnej opłaty za żądanie. Opcjonalne subskrypcje i aktualne ceny są pokazane na https://app.huaci.app/plans . W przypadku własnego klucza API dostawca może naliczyć opłaty za użycie. Zainstalowanie rozszerzenia nie rozpoczyna płatnej subskrypcji.
+
+PRYWATNOŚĆ
+Klucze dostawców, ustawienia, reguły witryn, preferencje sformułowań i zapisane artykuły pozostają w lokalnej pamięci rozszerzenia i nie są synchronizowane przez konto przeglądarki. Tłumaczenie hostowane wysyła żądaną treść do usługi konta Huaci i skonfigurowanych dostawców modeli; żądania z własnym kluczem trafiają do wybranego dostawcy. Całe pliki PDF nie są przesyłane. Huaci nie zbiera historii przeglądania.
+
+Wymagany jest Firefox na komputerach w wersji 142 lub nowszej. Firefox nie udostępnia wbudowanego Tłumacza ani interfejsów API dźwięku kart Chrome używanych przez eksperymentalne napisy do filmów, więc te funkcje są niedostępne w tej edycji. Chronionych stron przeglądarki i wbudowanego czytnika PDF nie można modyfikować; zamiast tego użyj wyboru lokalnego pliku PDF.
+
+Strona internetowa i polityka prywatności: https://huaci.app/ i https://huaci.app/privacy.html
+Pomoc: support@huaci.app

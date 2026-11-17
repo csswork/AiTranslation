@@ -1,0 +1,23 @@
+Huaci bringt KI-Übersetzung auf die Seite, die Sie gerade lesen: markierter Text, zweisprachige Artikel, Bilder, PDFs und Websites, die Sie automatisch übersetzen lassen.
+
+LESEN UND ÜBERSETZEN
+- Text markieren und per Rechtsklick übersetzen oder den schwebenden Auswahl-Button bzw. ein Tastenkürzel nutzen.
+- Artikel in einem übersichtlichen zweisprachigen Reader mit ausgerichteten Original- und Übersetzungsabsätzen lesen. Layout, Darstellung und Typografie anpassen und Artikel samt Übersetzung in diesem Browser speichern.
+- Übersetzungs-Buttons zu regelmäßig genutzten Bereichen einer Webseite hinzufügen.
+- Text in Bildern übersetzen. Textbereiche lokal prüfen und anpassen, Layout korrigieren und ein übersetztes Bild exportieren.
+- Toolbar-Popup öffnen > Gesamtes PDF übersetzen und eine lokale textbasierte PDF auswählen. Die Datei wird auf Ihrem Gerät verarbeitet; nur extrahierter Text wird zur Übersetzung gesendet. Original- und übersetzte Seiten vergleichen und das Ergebnis als PDF drucken.
+- „Diese Website übersetzen“ im Seiten-Kontextmenü aktivieren. Huaci merkt sich die Domain lokal und übersetzt Text nahe dem sichtbaren Bereich beim Surfen, bis Sie die Funktion ausschalten.
+- In einer Übersetzung auf ein Wort klicken, um bei unterstützten KI-Anbietern alternative Formulierungen zu sehen, und bevorzugte Begriffe lokal speichern.
+
+ÜBERSETZUNGSDIENST WÄHLEN
+Gehostete Übersetzung mit kostenloser Testphase und Kontoguthaben nutzen oder eine eigene OpenAI-, DeepSeek-, DeepL- oder kompatible HTTPS-API verbinden. Die Funktionen der Anbieter unterscheiden sich; DeepL unterstützt keine Bilderkennung und keine alternativen Formulierungen.
+
+Die gehostete Übersetzung ist nach Verbrauch der kostenlosen Credits kostenpflichtig. Text wird mit 1 Credit pro 500 Unicode-Zeichen abgerechnet, ohne Mindestbetrag pro Anfrage. Optionale Abonnements und aktuelle Preise finden Sie unter https://app.huaci.app/plans . Bei eigenem API-Schlüssel kann Ihr Anbieter Nutzungskosten berechnen. Die Installation der Erweiterung startet kein kostenpflichtiges Abonnement.
+
+DATENSCHUTZ
+Anbieterschlüssel, Einstellungen, Website-Regeln, Wortpräferenzen und gespeicherte Artikel bleiben im lokalen Speicher der Erweiterung und werden nicht über Ihr Browserkonto synchronisiert. Die gehostete Übersetzung sendet die angeforderten Inhalte an den Huaci-Kontodienst und dessen konfigurierte Modellanbieter; Anfragen mit eigenem Schlüssel gehen an Ihren gewählten Anbieter. Vollständige PDF-Dateien werden nicht hochgeladen. Huaci erfasst keinen Verlauf Ihres Surfverhaltens.
+
+Firefox Desktop 142 oder neuer ist erforderlich. Firefox bietet weder den integrierten Übersetzer des Browsers noch die Chrome-Tab-Audio-APIs für die experimentellen Video-Untertitel, daher sind diese Funktionen in dieser Edition nicht verfügbar. Geschützte Browserseiten und der integrierte PDF-Betrachter können nicht verändert werden; nutzen Sie stattdessen die lokale PDF-Dateiauswahl.
+
+Website und Datenschutzerklärung: https://huaci.app/ und https://huaci.app/privacy.html
+Support: support@huaci.app

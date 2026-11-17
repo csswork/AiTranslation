@@ -1,0 +1,23 @@
+Huaci menghadirkan terjemahan AI ke halaman yang Anda baca: teks terpilih, artikel bilingual, gambar, PDF, dan situs web yang Anda pilih untuk diterjemahkan secara otomatis.
+
+BACA DAN TERJEMAHKAN
+- Pilih teks lalu klik kanan untuk menerjemahkan, atau gunakan tombol mengambang pada seleksi atau pintasan papan ketik.
+- Baca artikel dalam pembaca bilingual yang bersih dengan paragraf asli dan terjemahan yang sejajar. Sesuaikan tata letak, tampilan, dan tipografi, lalu simpan artikel beserta terjemahannya di peramban ini.
+- Tambahkan tombol terjemahan ke area halaman web yang sering Anda gunakan.
+- Terjemahkan teks dalam gambar. Tinjau dan sesuaikan area teks secara lokal, perbaiki tata letak, dan ekspor gambar hasil terjemahan.
+- Buka popup bilah alat > Terjemahkan seluruh PDF, lalu pilih berkas PDF lokal berbasis teks. Berkas diurai di perangkat Anda; hanya teks yang diekstrak yang dikirim untuk diterjemahkan. Bandingkan halaman asli dan terjemahan serta cetak hasilnya sebagai PDF.
+- Aktifkan Terjemahkan situs web ini dari menu konteks halaman. Huaci mengingat domain tersebut secara lokal dan menerjemahkan teks di sekitar area pandang saat Anda menjelajah, hingga Anda menonaktifkan fitur ini.
+- Klik sebuah kata dalam terjemahan untuk melihat pilihan kata lain pada penyedia AI yang mendukung, dan simpan istilah pilihan Anda secara lokal.
+
+PILIH LAYANAN TERJEMAHAN ANDA
+Gunakan terjemahan terkelola dengan uji coba gratis dan kredit akun, atau hubungkan API HTTPS OpenAI, DeepSeek, DeepL, atau yang kompatibel milik Anda sendiri. Fitur tiap penyedia berbeda; DeepL tidak mendukung pengenalan gambar atau pilihan kata lain.
+
+Terjemahan terkelola adalah layanan berbayar setelah kredit gratis habis. Teks ditagih 1 kredit per 500 karakter Unicode, tanpa minimum per permintaan. Langganan opsional dan harga terkini ditampilkan di https://app.huaci.app/plans . Saat menggunakan kunci API Anda sendiri, penyedia Anda dapat mengenakan biaya penggunaan. Memasang ekstensi ini tidak memulai langganan berbayar.
+
+PRIVASI
+Kunci penyedia, pengaturan, aturan situs web, preferensi pilihan kata, dan artikel tersimpan tetap berada di penyimpanan lokal ekstensi dan tidak disinkronkan melalui akun peramban Anda. Terjemahan terkelola mengirim konten yang Anda minta ke layanan akun Huaci dan penyedia model yang dikonfigurasi; permintaan dengan kunci Anda sendiri dikirim ke penyedia pilihan Anda. Berkas PDF utuh tidak diunggah. Huaci tidak mengumpulkan riwayat penjelajahan Anda.
+
+Diperlukan Firefox desktop 142 atau lebih baru. Firefox tidak menyediakan Penerjemah bawaan peramban atau API audio tab Chrome yang digunakan oleh takarir video eksperimental, sehingga fitur tersebut tidak tersedia dalam edisi ini. Halaman peramban yang dilindungi dan penampil PDF bawaan tidak dapat dimodifikasi; gunakan pemilih berkas PDF lokal sebagai gantinya.
+
+Situs web dan kebijakan privasi: https://huaci.app/ dan https://huaci.app/privacy.html
+Dukungan: support@huaci.app
