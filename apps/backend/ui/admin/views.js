@@ -188,6 +188,68 @@ function speedTable(rows, label) {
     </tr>`)}</tbody></table></div>`;
 }
 
+/* ---------- 首页：最近 7 天安装 ---------- */
+
+const BROWSER_TONE = { Chrome: 'c1', Edge: 'c4', Firefox: 'c3' };
+const INSTALL_NOTE = { reinstall: '重装', claimed_member: '老用户新装', ip_limited: '同网络超限', daily_cap: '当日额满' };
+/** 相对时间：刚刚、N 分钟前、N 小时前、N 天前。 */
+function ago(value, now = Date.now()) {
+  const minutes = Math.max(0, Math.floor((now - new Date(value).getTime()) / 60_000));
+  if (minutes < 1) return '刚刚';
+  if (minutes < 60) return `${minutes} 分钟前`;
+  if (minutes < 24 * 60) return `${Math.floor(minutes / 60)} 小时前`;
+  return `${Math.floor(minutes / 1440)} 天前`;
+}
+/** 报表时区里的日期分组标题：今天、昨天、11月14日 周五。 */
+function dayLabel(value, now = Date.now()) {
+  const key = (t) => new Date(t).toLocaleDateString('en-CA', { timeZone });
+  const day = key(value);
+  if (day === key(now)) return '今天';
+  if (day === key(now - 86_400_000)) return '昨天';
+  return new Date(value).toLocaleDateString('zh-CN', { timeZone, month: 'long', day: 'numeric', weekday: 'short' });
+}
+
+/**
+ * 最近安装列表：只放判断「这个安装有没有变成真实用户」需要的信息——谁（账户或访客）、现在的状态、
+ * 来自哪个浏览器与版本、在哪里、用什么界面语言，以及装完之后用了几次。按天分组，最近的在前。
+ */
+function recentInstallList(recent) {
+  const now = Date.now();
+  let lastDay = '';
+  const rows = recent.rows.map((r) => {
+    const store = browserLabel(r.extension_id);
+    const status = !r.kind ? ['已移除', 'muted'] : r.subscribed ? ['订阅', 'sub'] : r.kind === 'member' ? ['已注册', 'member'] : ['访客', 'guest'];
+    const name = r.kind === 'member' ? r.username : r.kind === 'guest' ? `#${shortId(r.account_id)}` : '—';
+    const meta = [
+      r.country ? regionNames.of(r.country) || r.country : '',
+      r.ui_lang ? language(r.ui_lang) : '',
+      r.version ? `v${r.version}` : '',
+      INSTALL_NOTE[r.outcome] || '',
+    ].filter(Boolean).join(' · ');
+    const day = dayLabel(r.created_at, now);
+    const header = day !== lastDay ? html`<li class="install-day">${day}</li>` : '';
+    lastDay = day;
+    return html`${header}<li class="install-row">
+  <span class="install-avatar ${BROWSER_TONE[store] || 'c6'}" title="${store}" aria-hidden="true">${store.slice(0, 1)}</span>
+  <span class="install-main">
+    <span class="install-name">${r.account_id && r.kind ? html`<a class="install-label" href="/users/${r.account_id}">${name}</a>` : html`<span class="install-label">${name}</span>`}<span class="install-tag ${status[1]}">${status[0]}</span></span>
+    <span class="install-meta">${meta || store}</span>
+  </span>
+  <span class="install-side">
+    <time datetime="${new Date(r.created_at).toISOString()}" title="${dt(r.created_at)}">${ago(r.created_at, now)}</time>
+    <span class="install-use${r.requests ? ' on' : ''}">${r.requests ? `用了 ${num(r.requests)} 次` : '还没用过'}</span>
+  </span>
+</li>`;
+  });
+  return html`<div class="install-summary">
+  <span><strong>${num(recent.installs)}</strong>次安装</span>
+  <span><strong>${pct(recent.registered, recent.installs)}</strong>已注册</span>
+  <span><strong>${pct(recent.used, recent.installs)}</strong>已开始使用</span>
+</div>
+<ul class="install-list" data-recent-installs>${rows}</ul>
+${recent.installs > recent.rows.length ? html`<p class="install-more">只列出最近 ${num(recent.rows.length)} 次</p>` : ''}`;
+}
+
 const PROVIDER = { primary: ['主力模型', 'c1'], cache: ['缓存命中', 'c2'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
 const ERRORS = { primary_failed: '主力失败、备用成功', timeout: '超时', network: '网络错误', empty: '模型无内容', batch_parse: '批量结果解析失败', batch_shape: '批量条数不符' };
 
@@ -331,6 +393,7 @@ ${money.expenses}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
   ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
+  ${panel('最近 7 天安装', r.recentInstalls.installs ? recentInstallList(r.recentInstalls) : '', { wide: true, note: '最近的在前 · 不随上方时间范围变化' })}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
   ${panel('订阅方案', planDonut, { note: '当前有效订阅' })}

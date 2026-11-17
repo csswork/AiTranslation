@@ -373,3 +373,32 @@ th a:hover, th a[aria-current] { color: var(--text); }
 .danger-zone .tag.warn { display: inline-block; padding: .5rem .75rem; }
 .confirm-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: .5rem; }
 .confirm-actions .button { margin-top: 0; }
+
+/* 首页：最近 7 天安装：整行宽，按天分组，每天的安装排成多列小卡片 */
+.install-summary { display: flex; flex-wrap: wrap; gap: 8px; margin: -10px 0 16px; }
+.install-summary span { display: flex; align-items: baseline; gap: 6px; padding: 7px 12px; border-radius: 30px; background: var(--surface-2); color: var(--text-3); font-size: .72rem; }
+.install-summary strong { color: var(--text); font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.install-list { list-style: none; margin: 0 -6px; padding: 0 0 2px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 2px 14px;
+  max-height: 460px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.install-day { grid-column: 1 / -1; position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 10px; padding: 12px 6px 6px; background: var(--surface);
+  color: var(--text-3); font-size: .68rem; font-weight: 550; letter-spacing: .06em; }
+.install-day::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.install-day:first-child { padding-top: 0; }
+.install-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 10px; }
+.install-row:hover { background: var(--surface-2); }
+.install-avatar { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; font-size: .74rem; font-weight: 650;
+  color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+.install-main, .install-side { display: grid; gap: 3px; min-width: 0; }
+.install-name { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: .8rem; font-weight: 550; }
+.install-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); text-decoration: none; }
+a.install-label:hover { color: var(--accent-ink); }
+.install-tag { flex: none; padding: 1px 6px; border-radius: 20px; font-size: .62rem; font-weight: 500; color: var(--text-3); background: var(--surface-2); }
+.install-tag.member { color: var(--c2); background: color-mix(in srgb, var(--c2) 12%, transparent); }
+.install-tag.sub { color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.install-row:hover .install-tag.guest, .install-row:hover .install-tag.muted { background: var(--surface); }
+.install-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-3); font-size: .69rem; }
+.install-side { justify-items: end; text-align: end; }
+.install-side time { color: var(--text-2); font-size: .69rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.install-use { color: var(--text-3); font-size: .66rem; white-space: nowrap; }
+.install-use.on { color: var(--c2); font-weight: 550; }
+.install-more { margin: 12px 0 0; color: var(--text-3); font-size: .68rem; text-align: center; }

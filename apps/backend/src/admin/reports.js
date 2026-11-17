@@ -12,6 +12,8 @@ import { dayLabels, financeReport } from './finance.js';
 
 const ENTITLED = ['active', 'trialing', 'paid', 'scheduled_cancel', 'past_due'];
 const ACTIVE_SUB = `status = ANY($1) AND (current_period_end IS NULL OR current_period_end > now())`;
+/** 首页「最近 7 天安装」最多列出的条数。 */
+const RECENT_INSTALLS = 60;
 
 /** 当前周期与上一周期各算一次的核心指标。 */
 async function periodTotals(db, from, to) {
@@ -46,7 +48,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
   const window = [from, now];
 
   const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers, browserDays,
-    installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed, versions] = await Promise.all([
+    installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed, versions, recentInstalls, recentTotals] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
     q(`SELECT plan, COUNT(*)::int AS n FROM subscriptions WHERE ${ACTIVE_SUB} GROUP BY plan`, [ENTITLED]),
@@ -153,6 +155,25 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     q(`SELECT version, extension_id, COUNT(DISTINCT user_id)::int AS users FROM user_extensions
        WHERE version IS NOT NULL AND version_seen_at >= $1 AND version_seen_at < $2
        GROUP BY 1, 2 ORDER BY string_to_array(version, '.')::int[] DESC, users DESC`, window),
+    // 最近 7 天安装（固定 7 天，不随所选范围变化）：每次安装现在对应的账户、在用版本，以及安装之后用了多少次托管翻译。
+    // 访客合并后 user_id 置空，取合并进的账户；重装接回或浏览器已注册时取关联的账户。
+    q(`WITH c AS (
+         SELECT g.id, g.created_at, g.country, g.ui_lang, g.extension_id, g.outcome,
+                COALESCE(g.merged_user_id, CASE WHEN g.outcome IN ('reinstall', 'claimed_member') THEN g.linked_user_id END, g.user_id) AS account_id
+         FROM guest_claims g WHERE g.created_at > now() - interval '7 days'
+         ORDER BY g.created_at DESC LIMIT ${RECENT_INSTALLS}
+       )
+       SELECT c.*, u.username, u.kind,
+         EXISTS (SELECT 1 FROM subscriptions s WHERE s.user_id = u.id AND ${ACTIVE_SUB}) AS subscribed,
+         (SELECT e.version FROM user_extensions e WHERE e.user_id = u.id AND e.extension_id = c.extension_id) AS version,
+         (SELECT COUNT(*) FROM usage_events ev WHERE ev.user_id = u.id AND ev.status = 'ok' AND ev.created_at >= c.created_at)::int AS requests
+       FROM c LEFT JOIN users u ON u.id = c.account_id
+       ORDER BY c.created_at DESC`, [ENTITLED]),
+    q(`SELECT COUNT(*)::int AS installs,
+              COUNT(*) FILTER (WHERE merged_user_id IS NOT NULL)::int AS registered,
+              COUNT(*) FILTER (WHERE EXISTS (SELECT 1 FROM usage_events ev WHERE ev.user_id = COALESCE(g.merged_user_id, g.user_id)
+                                              AND ev.status = 'ok' AND ev.created_at >= g.created_at))::int AS used
+       FROM guest_claims g WHERE g.created_at > now() - interval '7 days'`),
   ]);
 
   const rejectionQuery = (a, b) => q(
@@ -197,6 +218,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     sizes: sizes[0],
     speed,
     versions,
+    recentInstalls: { rows: recentInstalls, ...recentTotals[0] },
     outcomes,
     errors,
     topUsers,

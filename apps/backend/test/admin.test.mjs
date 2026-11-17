@@ -308,6 +308,12 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/?days=7&map=constructor'), /aria-label="世界地图 · 使用分布"/);
   assert.match(page, /使用时段[\s\S]*class="chart heat"/);
   assert.match(page, /响应耗时[\s\S]*P50/);
+  const installs = page.match(/<ul class="install-list" data-recent-installs>[\s\S]*?<\/ul>/)?.[0] || '';
+  assert.equal((installs.match(/class="install-row"/g) || []).length, 4, '最近 7 天安装逐条列出');
+  assert.match(installs, /<li class="install-day">今天<\/li>/);
+  assert.match(installs, /日本 · 日语[\s\S]*?用了 \d+ 次/, '国家、界面语言与安装后的使用次数');
+  assert.match(installs, /#[0-9a-f]{8}<\/a><span class="install-tag guest">访客<\/span>/, '访客显示短 ID，状态标签说明是访客');
+  assert.match(page, /<div class="install-summary">\s*<span><strong>4<\/strong>次安装<\/span>\s*<span><strong>0\.0%<\/strong>已注册<\/span>\s*<span><strong>100\.0%<\/strong>已开始使用/);
   assert.match(page, /<summary>响应速度[\s\S]*按国家[\s\S]*按人群[\s\S]*按场景/);
   const sg = page.match(/SG<\/td>([\s\S]*?)<\/tr>/)?.[1].match(/<td class="num">[^<]*<\/td>/g).map((td) => td.replace(/<[^>]+>/g, ''));
   assert.deepEqual(sg, ['22', '800 ms', '800 ms', '300 ms', '300 ms', '12 ms', '700 ms', '700 ms', '—', '9.1%', '—'],
