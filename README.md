@@ -86,7 +86,7 @@ PRIVACY.md           Preserved public privacy-policy path
 
 ## Local development
 
-Development tools require Node.js 22 or later. Website preview and extension packaging also require Python 3. The extension itself requires Chrome 116 or later. Website and extension builds and tests use standard libraries, without npm dependencies. The backend has its own dependencies (`cd apps/backend && npm ci`) and requires local PostgreSQL; `npm test` skips the backend if its dependencies are not installed.
+Development tools require Node.js 22 or later. Website preview and extension packaging also require Python 3. The extension itself requires Chrome 128 or later. Website and extension builds and tests use standard libraries, without npm dependencies. The backend has its own dependencies (`cd apps/backend && npm ci`) and requires local PostgreSQL; `npm test` skips the backend if its dependencies are not installed.
 
 ```sh
 npm run dev                   # Start local services; Ctrl+C stops them together

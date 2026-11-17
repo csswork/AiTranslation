@@ -86,7 +86,7 @@ PRIVACY.md           Chemin public historique de la politique de confidentialit�
 
 ## Développement local
 
-Les outils de développement nécessitent Node.js 22 ou ultérieur. L’aperçu du site et la création des paquets nécessitent aussi Python 3. L’extension elle-même requiert Chrome 116 ou ultérieur. Le site et l’extension utilisent les bibliothèques standard pour la compilation et les tests, sans dépendances npm. Le backend possède ses propres dépendances (`cd apps/backend && npm ci`) et nécessite PostgreSQL en local. `npm test` ignore le backend si ses dépendances ne sont pas installées.
+Les outils de développement nécessitent Node.js 22 ou ultérieur. L’aperçu du site et la création des paquets nécessitent aussi Python 3. L’extension elle-même requiert Chrome 128 ou ultérieur. Le site et l’extension utilisent les bibliothèques standard pour la compilation et les tests, sans dépendances npm. Le backend possède ses propres dépendances (`cd apps/backend && npm ci`) et nécessite PostgreSQL en local. `npm test` ignore le backend si ses dépendances ne sont pas installées.
 
 ```sh
 npm run dev                   # Démarrer les services locaux ; Ctrl+C les arrête ensemble

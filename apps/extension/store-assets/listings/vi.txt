@@ -68,7 +68,7 @@ Phụ đề video trực tiếp là một tính năng thử nghiệm, mặc đ�
 • PDF quét và được bảo vệ bằng mật khẩu chưa được hỗ trợ.
 • Ngôn ngữ khả dụng, nhận dạng hình ảnh và truyền phát phụ thuộc vào nhà cung cấp và mô hình bạn chọn.
 
-Yêu cầu Chrome hoặc Edge 116 trở lên.
+Yêu cầu Chrome hoặc Edge 128 trở lên.
 
 Một dự án mã nguồn mở độc lập, không liên kết với, được xác nhận bởi hoặc tài trợ bởi OpenAI, DeepSeek, DeepL hoặc các chi nhánh của họ. ChatGPT, DeepSeek, DeepL và các tên khác là nhãn hiệu của chủ sở hữu tương ứng và chỉ được sử dụng để xác định các dịch vụ tương thích.
 

@@ -68,7 +68,7 @@
 • 尚不支援掃描和受密碼保護的 PDF。
 • 可用語言、圖像辨識和串流取決於您選擇的供應商和模型。
 
-需要 Chrome 或 Edge 116 或更新版本。
+需要 Chrome 或 Edge 128 或更新版本。
 
 獨立開源專案，與 OpenAI、DeepSeek、DeepL 或其關係企業無關，亦未經其背書或贊助。ChatGPT、DeepSeek、DeepL 及其他名稱是其各自所有者的商標，僅用於識別相容的服務。
 

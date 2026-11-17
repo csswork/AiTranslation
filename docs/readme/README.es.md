@@ -86,7 +86,7 @@ PRIVACY.md           Ruta pública histórica de la política de privacidad
 
 ## Desarrollo local
 
-Las herramientas de desarrollo requieren Node.js 22 o posterior. La vista previa del sitio y el empaquetado de la extensión también requieren Python 3. La extensión necesita Chrome 116 o posterior. Las compilaciones y pruebas del sitio y la extensión usan bibliotecas estándar, sin dependencias npm. El backend tiene sus propias dependencias (`cd apps/backend && npm ci`) y requiere PostgreSQL local. `npm test` omite el backend si no están instaladas sus dependencias.
+Las herramientas de desarrollo requieren Node.js 22 o posterior. La vista previa del sitio y el empaquetado de la extensión también requieren Python 3. La extensión necesita Chrome 128 o posterior. Las compilaciones y pruebas del sitio y la extensión usan bibliotecas estándar, sin dependencias npm. El backend tiene sus propias dependencias (`cd apps/backend && npm ci`) y requiere PostgreSQL local. `npm test` omite el backend si no están instaladas sus dependencias.
 
 ```sh
 npm run dev                   # Iniciar los servicios locales; Ctrl+C los detiene juntos

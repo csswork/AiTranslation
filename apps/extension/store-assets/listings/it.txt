@@ -68,7 +68,7 @@ I sottotitoli video in tempo reale sono una funzione sperimentale, disattivata p
 • I PDF scansionati e protetti da password non sono ancora supportati.
 • Le lingue disponibili, il riconoscimento delle immagini e lo streaming dipendono dal provider e dal modello scelti.
 
-Richiede Chrome o Edge 116 o versioni successive.
+Richiede Chrome o Edge 128 o versioni successive.
 
 Un progetto open source indipendente, non affiliato, approvato o sponsorizzato da OpenAI, DeepSeek, DeepL o loro affiliate. ChatGPT, DeepSeek, DeepL e altri nomi sono marchi dei rispettivi proprietari e sono usati solo per identificare servizi compatibili.
 

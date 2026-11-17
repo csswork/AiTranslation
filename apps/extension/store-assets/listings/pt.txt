@@ -68,7 +68,7 @@ Legendas de vídeo ao vivo são um recurso experimental, desativado por padrão.
 • PDFs digitalizados e protegidos por senha ainda não são suportados.
 • Idiomas disponíveis, reconhecimento de imagem e streaming dependem do provedor e modelo escolhidos.
 
-Requer Chrome ou Edge 116 ou posterior.
+Requer Chrome ou Edge 128 ou posterior.
 
 Um projeto independente de código aberto, não afiliado, endossado ou patrocinado pela OpenAI, DeepSeek, DeepL ou suas afiliadas. ChatGPT, DeepSeek, DeepL e outros nomes são marcas registradas de seus respectivos proprietários e são usados apenas para identificar serviços compatíveis.
 

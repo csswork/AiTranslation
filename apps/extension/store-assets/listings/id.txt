@@ -68,7 +68,7 @@ Takarir video langsung adalah fitur eksperimental, nonaktif secara default. Ucap
 • PDF hasil pindai dan yang dilindungi kata sandi belum didukung.
 • Bahasa yang tersedia, pengenalan gambar, dan streaming bergantung pada penyedia dan model yang Anda pilih.
 
-Memerlukan Chrome atau Edge 116 atau lebih baru.
+Memerlukan Chrome atau Edge 128 atau lebih baru.
 
 Proyek open-source independen, tidak berafiliasi dengan, didukung oleh, atau disponsori oleh OpenAI, DeepSeek, DeepL atau afiliasinya. ChatGPT, DeepSeek, DeepL dan nama lain adalah merek dagang pemiliknya masing-masing dan digunakan hanya untuk mengidentifikasi layanan yang kompatibel.
 

@@ -86,7 +86,7 @@ PRIVACY.md           Beibehaltener öffentlicher Pfad der Datenschutzerklärung
 
 ## Lokale Entwicklung
 
-Die Entwicklungswerkzeuge benötigen Node.js 22 oder neuer. Für die Website-Vorschau und die Paketierung der Erweiterung wird außerdem Python 3 benötigt. Die Erweiterung selbst setzt Chrome 116 oder neuer voraus. Builds und Tests von Website und Erweiterung verwenden Standardbibliotheken ohne npm-Abhängigkeiten. Das Backend hat eigene Abhängigkeiten (`cd apps/backend && npm ci`) und benötigt lokales PostgreSQL. Sind diese Abhängigkeiten nicht installiert, überspringt `npm test` das Backend.
+Die Entwicklungswerkzeuge benötigen Node.js 22 oder neuer. Für die Website-Vorschau und die Paketierung der Erweiterung wird außerdem Python 3 benötigt. Die Erweiterung selbst setzt Chrome 128 oder neuer voraus. Builds und Tests von Website und Erweiterung verwenden Standardbibliotheken ohne npm-Abhängigkeiten. Das Backend hat eigene Abhängigkeiten (`cd apps/backend && npm ci`) und benötigt lokales PostgreSQL. Sind diese Abhängigkeiten nicht installiert, überspringt `npm test` das Backend.
 
 ```sh
 npm run dev                   # Lokale Dienste starten; Strg+C beendet sie gemeinsam

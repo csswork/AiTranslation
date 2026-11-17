@@ -59,7 +59,7 @@ Travel  Well-being  │  Make Chrome Yours: Accessibility · Functionality & UI 
 
 | 说法 | 依据 |
 | --- | --- |
-| Manifest V3、Chrome / Edge 116+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version`；Edge 版见 `docs/extension/edge-release.md` |
+| Manifest V3、Chrome / Edge 128+ | `manifest.json` 的 `manifest_version` / `minimum_chrome_version`；Edge 版见 `docs/extension/edge-release.md` |
 | 双语阅读：扫描识别、去广告、逐段对齐、明暗 / 跟随系统、保存到本机 | `docs/extension/reader.md`，`src/reader/`、`src/content/reader.js`、`src/lib/article.js` |
 | 点词换说法、用词偏好只存本机 | `docs/extension/word-alternatives.md`，`src/lib/word-picker.js`、`src/lib/terms.js` |
 | 图片按笔画勾形状、竖排、先看形状再翻译、框选、导出 | `docs/extension/image-translation.md` |

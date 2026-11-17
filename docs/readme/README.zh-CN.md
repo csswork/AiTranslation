@@ -86,7 +86,7 @@ PRIVACY.md           保留既有公开隐私政策路径
 
 ## 本地开发
 
-开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 116 或更高版本。网站与扩展的构建和测试使用标准库，不需要安装 npm 依赖；后端有自己的依赖（`cd apps/backend && npm ci`）并需要本机 PostgreSQL，未安装依赖时 `npm test` 会跳过后端。
+开发工具使用 Node.js 22 或更高版本；网站预览和扩展打包需要 Python 3。扩展运行仍要求 Chrome 128 或更高版本。网站与扩展的构建和测试使用标准库，不需要安装 npm 依赖；后端有自己的依赖（`cd apps/backend && npm ci`）并需要本机 PostgreSQL，未安装依赖时 `npm test` 会跳过后端。
 
 ```sh
 npm run dev                   # 启动全部本地服务并列出地址，Ctrl+C 一起停止（见下）

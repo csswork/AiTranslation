@@ -68,7 +68,7 @@ Los subtítulos de vídeo en directo son una función experimental, desactivada 
 • Los PDF escaneados y protegidos con contraseña aún no son compatibles.
 • Los idiomas disponibles, el reconocimiento de imágenes y la transmisión dependen del proveedor y el modelo que elijas.
 
-Requiere Chrome o Edge 116 o posterior.
+Requiere Chrome o Edge 128 o posterior.
 
 Un proyecto independiente de código abierto, no afiliado, respaldado ni patrocinado por OpenAI, DeepSeek, DeepL ni sus filiales. ChatGPT, DeepSeek, DeepL y otros nombres son marcas comerciales de sus respectivos propietarios y se usan solo para identificar servicios compatibles.
 

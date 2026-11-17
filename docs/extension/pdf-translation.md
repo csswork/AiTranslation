@@ -135,9 +135,10 @@ PDF 只有一串带坐标的文字片段，没有段落。按内容流顺序做�
 `src/vendor/pdfjs/README.md` 记录了版本与保留的文件。升级时：
 
 1. `npm pack pdfjs-dist@<版本>` 到临时目录（不进仓库），确认许可证不变。
-2. 用 **legacy 构建**的 `pdf.mjs`、`pdf.worker.mjs` 整体替换；标准构建依赖较新的 JS 特性（例如 `Map.prototype.getOrInsertComputed`），扩展最低支持 Chrome 116。
-3. 同步替换 `cmaps/`、`standard_fonts/` 与 `wasm/` 里的 `*_nowasm_fallback.js` 及许可证文件。
-4. 更新 README 里的版本号，跑扩展测试与上面的端到端脚本。
+2. 用**标准构建**（`build/`）的 `pdf.mjs`、`pdf.worker.mjs` 及 source map 整体替换。不要用 legacy 构建：它打包了 core-js 垫片，Chrome 商店以 Red Titanium（代码混淆）拒审过。也不要放入单行压缩的 `*.min.mjs` 或 `wasm/*_nowasm_fallback.js`。
+3. 核对标准构建用到、但扩展最低版本（`manifest.json` 的 `minimum_chrome_version`，目前 128）还没有的内置 API，在 `src/pdf/compat.js` 里补上；目前补的是 `Map`/`WeakMap` 的 `getOrInsert(Computed)`、`Math.sumPrecise`、`Uint8Array` 的 Base64 与十六进制转换、`Response`/`Blob` 的 `bytes()`。worker 入口 `src/pdf/worker.mjs` 先导入补丁再导入 `pdf.worker.mjs`。
+4. 同步替换 `cmaps/`、`standard_fonts/` 及许可证文件。
+5. 更新 README 里的版本号，跑扩展测试与上面的端到端脚本，并在删掉上述新 API 的环境里（如 Node）确认 `compat.js` 足以解析 PDF。
 
 `src/vendor/` 已从界面文案提取、文案监听和语法检查中排除。
 

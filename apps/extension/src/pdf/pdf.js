@@ -199,7 +199,8 @@
   async function loadPdfjs() {
     if (pdfjs) return pdfjs;
     pdfjs = await import(`${VENDOR}pdf.mjs`);
-    pdfjs.GlobalWorkerOptions.workerSrc = `${VENDOR}pdf.worker.mjs`;
+    // worker 入口先载入 compat.js，再载入原样的 pdf.worker.mjs。
+    pdfjs.GlobalWorkerOptions.workerSrc = chrome.runtime.getURL('src/pdf/worker.mjs');
     return pdfjs;
   }
 
@@ -235,7 +236,6 @@
         cMapUrl: `${VENDOR}cmaps/`,
         cMapPacked: true,
         standardFontDataUrl: `${VENDOR}standard_fonts/`,
-        wasmUrl: `${VENDOR}wasm/`,
         useWasm: false,
         isEvalSupported: false,
         enableXfa: false,

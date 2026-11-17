@@ -68,7 +68,7 @@ Les sous-titres vidéo en direct sont une fonctionnalité expérimentale, désac
 • Les PDF numérisés et protégés par mot de passe ne sont pas encore pris en charge.
 • Les langues disponibles, la reconnaissance d'image et le streaming dépendent du fournisseur et du modèle que vous choisissez.
 
-Nécessite Chrome ou Edge 116 ou version ultérieure.
+Nécessite Chrome ou Edge 128 ou version ultérieure.
 
 Projet open source indépendant, non affilié à, approuvé par ou sponsorisé par OpenAI, DeepSeek, DeepL ou leurs affiliés. ChatGPT, DeepSeek, DeepL et d'autres noms sont des marques de leurs propriétaires respectifs et sont utilisés uniquement pour identifier des services compatibles.
 

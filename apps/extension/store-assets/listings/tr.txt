@@ -68,7 +68,7 @@ Canlı video altyazıları deneysel bir özelliktir ve varsayılan olarak kapal�
 • Taranmış ve parola korumalı PDF'ler henüz desteklenmemektedir.
 • Kullanılabilir diller, görsel tanıma ve akış, seçtiğiniz sağlayıcıya ve modele bağlıdır.
 
-Chrome veya Edge 116 ya da üstünü gerektirir.
+Chrome veya Edge 128 ya da üstünü gerektirir.
 
 Bağımsız bir açık kaynak projesi; OpenAI, DeepSeek, DeepL veya bağlı kuruluşlarıyla ilişkili değildir, onlar tarafından onaylanmamış veya desteklenmemiştir. ChatGPT, DeepSeek, DeepL ve diğer adlar ilgili sahiplerinin ticari markalarıdır ve yalnızca uyumlu hizmetleri tanımlamak için kullanılır.
 

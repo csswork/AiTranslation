@@ -68,7 +68,7 @@ Napisy do wideo na żywo to funkcja eksperymentalna, domyślnie wyłączona. Mow
 • Zeskanowane i chronione hasłem pliki PDF nie są jeszcze obsługiwane.
 • Dostępne języki, rozpoznawanie obrazów i strumieniowanie zależą od wybranego dostawcy i modelu.
 
-Wymaga Chrome lub Edge 116 lub nowszego.
+Wymaga Chrome lub Edge 128 lub nowszego.
 
 Niezależny projekt o otwartym kodzie źródłowym, niepowiązany z OpenAI, DeepSeek, DeepL ani ich podmiotami stowarzyszonymi, przez nie wspierany ani sponsorowany. ChatGPT, DeepSeek, DeepL i inne nazwy są znakami towarowymi ich właścicieli i są używane wyłącznie do identyfikacji kompatybilnych usług.
 

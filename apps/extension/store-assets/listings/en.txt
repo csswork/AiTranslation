@@ -68,7 +68,7 @@ Live video captions are an experimental feature, off by default. Speech is recog
 • Scanned and password-protected PDFs are not supported yet.
 • Available languages, image recognition and streaming depend on the provider and model you choose.
 
-Requires Chrome or Edge 116 or later.
+Requires Chrome or Edge 128 or later.
 
 An independent open-source project, not affiliated with, endorsed by or sponsored by OpenAI, DeepSeek, DeepL or their affiliates. ChatGPT, DeepSeek, DeepL and other names are trademarks of their respective owners and are used only to identify compatible services.
 

@@ -68,7 +68,7 @@ Live-Video-Untertitel sind eine experimentelle Funktion, standardmäßig deaktiv
 • Gescannte und passwortgeschützte PDFs werden noch nicht unterstützt.
 • Verfügbare Sprachen, Bilderkennung und Streaming hängen vom gewählten Anbieter und Modell ab.
 
-Erfordert Chrome oder Edge 116 oder höher.
+Erfordert Chrome oder Edge 128 oder höher.
 
 Ein unabhängiges Open-Source-Projekt, nicht verbunden mit, unterstützt von oder gesponsert von OpenAI, DeepSeek, DeepL oder deren verbundenen Unternehmen. ChatGPT, DeepSeek, DeepL und andere Namen sind Marken ihrer jeweiligen Inhaber und werden nur zur Identifizierung kompatibler Dienste verwendet.
 

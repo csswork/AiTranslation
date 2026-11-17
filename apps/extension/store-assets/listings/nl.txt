@@ -68,7 +68,7 @@ Live video-ondertitels zijn een experimentele functie, standaard uitgeschakeld. 
 • Gescande en met wachtwoord beveiligde PDF's worden nog niet ondersteund.
 • Beschikbare talen, beeldherkenning en streaming zijn afhankelijk van de provider en het model dat je kiest.
 
-Vereist Chrome of Edge 116 of later.
+Vereist Chrome of Edge 128 of later.
 
 Een onafhankelijk open-sourceproject, niet verbonden aan, goedgekeurd door of gesponsord door OpenAI, DeepSeek, DeepL of hun filialen. ChatGPT, DeepSeek, DeepL en andere namen zijn handelsmerken van hun respectieve eigenaren en worden alleen gebruikt om compatibele services te identificeren.
 
