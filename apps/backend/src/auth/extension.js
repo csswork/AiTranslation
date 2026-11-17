@@ -54,6 +54,31 @@ export const extensionStore = (id) => (id ? EXTENSION_STORES[id] || '其他' : n
 /** 请求来源里的扩展 ID（chrome-extension://<ID>），格式不对时为 null。 */
 export const extensionIdFromOrigin = (origin) => String(origin || '').match(/^chrome-extension:\/\/([a-p]{32})$/)?.[1] || null;
 
+/** 扩展请求头 X-Huaci-Version 里的版本号（manifest version，一到四段数字）；格式不对时为 null。 */
+export const readExtensionVersion = (value) => {
+  const version = String(value || '').trim();
+  return /^\d{1,5}(\.\d{1,5}){0,3}$/.test(version) ? version : null;
+};
+
+/**
+ * 请求来自哪个扩展（只用于统计）：Chrome / Edge 取 Origin 里的扩展 ID；Firefox 的 moz-extension 主机名
+ * 每次安装随机，扩展另在 X-Huaci-Extension 里带上固定 ID，只接受这一个值。不在白名单里时为 null。
+ */
+export function requestExtensionId(origin, header, config) {
+  const id = extensionIdFromOrigin(origin);
+  if (id) return isAllowedExtension(id, config) ? id : null;
+  return header === FIREFOX_EXTENSION_ID && isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null;
+}
+
+/** 记录账户在用的扩展版本，同时更新最近使用时间；没有这条扩展记录时新建。 */
+export async function recordExtensionVersion(db, userId, extensionId, version) {
+  await db.query(
+    `INSERT INTO user_extensions (user_id, extension_id, version, version_seen_at) VALUES ($1, $2, $3, now())
+     ON CONFLICT (user_id, extension_id) DO UPDATE SET version = EXCLUDED.version, version_seen_at = now(), last_seen_at = now()`,
+    [userId, extensionId, version],
+  );
+}
+
 /** 记录账户用过这个扩展：建立扩展会话时调用，首次时间保留，最近时间更新。 */
 export async function recordExtension(db, userId, extensionId) {
   if (!extensionId) return;
@@ -67,11 +92,15 @@ export async function recordExtension(db, userId, extensionId) {
 /** 访客合并或重装接回时，把访客的扩展记录并入目标账户（访客随后删除）。 */
 export async function moveExtensions(db, fromUserId, toUserId) {
   await db.query(
-    `INSERT INTO user_extensions (user_id, extension_id, first_seen_at, last_seen_at)
-     SELECT $2, extension_id, first_seen_at, last_seen_at FROM user_extensions WHERE user_id = $1
+    `INSERT INTO user_extensions (user_id, extension_id, first_seen_at, last_seen_at, version, version_seen_at)
+     SELECT $2, extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1
      ON CONFLICT (user_id, extension_id) DO UPDATE SET
        first_seen_at = LEAST(user_extensions.first_seen_at, EXCLUDED.first_seen_at),
-       last_seen_at = GREATEST(user_extensions.last_seen_at, EXCLUDED.last_seen_at)`,
+       last_seen_at = GREATEST(user_extensions.last_seen_at, EXCLUDED.last_seen_at),
+       -- 版本取最近看到的那一边
+       version = CASE WHEN EXCLUDED.version_seen_at > user_extensions.version_seen_at OR user_extensions.version_seen_at IS NULL
+                      THEN COALESCE(EXCLUDED.version, user_extensions.version) ELSE user_extensions.version END,
+       version_seen_at = GREATEST(user_extensions.version_seen_at, EXCLUDED.version_seen_at)`,
     [fromUserId, toUserId],
   );
 }

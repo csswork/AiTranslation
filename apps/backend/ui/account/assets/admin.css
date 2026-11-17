@@ -148,6 +148,11 @@ body.admin {
 .search { display: flex; align-items: center; gap: .5rem; max-width: 520px; margin-bottom: var(--s2); }
 .search input { flex: 1; min-width: 0; }
 .search .button { flex: none; white-space: nowrap; }
+.search.filters { flex-wrap: wrap; max-width: none; }
+.search.filters input { flex: 1 1 14rem; }
+.search.filters select { font: inherit; border: 1px solid var(--btn-line); background: var(--bg); color: var(--text); max-width: 100%; }
+.version-dist { margin: 0 0 .25rem; font-size: .85rem; }
+.pager { display: flex; gap: var(--s2); justify-content: center; margin: var(--s2) 0; }
 .actions { display: grid; gap: var(--s2); }
 form.inline { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; }
 form.inline input { width: auto; flex: 1 1 160px; }

@@ -25,6 +25,8 @@
   globalThis.AITrEnv = Object.freeze({
     dev,
     firefox,
+    // 扩展版本号：账户请求带在 X-Huaci-Version 里，管理端据此按版本统计。
+    version: manifest.version,
     extensionsShortcuts: firefox ? 'about:addons' : edge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts',
     accountOrigin,
     websiteOrigin,

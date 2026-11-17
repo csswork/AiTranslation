@@ -11,6 +11,7 @@ import { INCOME_TYPES } from '../../src/usage/activity.js';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
+import { USER_FILTERS, USERS_PER_PAGE } from '../../src/admin/user-list.js';
 import { barList, donut, funnel, heatmap, histogram, sparkline, timeChart as renderTimeChart } from './charts.js';
 import { MAP_MODES, mapMode as normalizeMapMode, worldMap } from './world-map.js';
 import { activityCharts } from '../credit-activity.js';
@@ -250,6 +251,15 @@ export function overviewPage({ admin, r, geoConfigured, mapMode = 'usage' }) {
     ].filter((s) => s.values.some((v) => v > 0)) })
     : '';
   const money = financeSections(r);
+  // 扩展版本：同一版本合并各浏览器，说明里列出各浏览器的账户数。
+  const versionBars = [...new Set(r.versions.map((v) => v.version))].map((version) => {
+    const rows = r.versions.filter((v) => v.version === version);
+    return {
+      label: html`<a href="/users?version=${encodeURIComponent(version)}&active=${r.days <= 7 ? 7 : r.days <= 30 ? 30 : 90}">${version}</a>`,
+      value: rows.reduce((n, v) => n + v.users, 0),
+      note: rows.map((v) => `${browserLabel(v.extension_id)} ${num(v.users)}`).join(' · '),
+    };
+  });
 
   // 安装来源：Chrome / Edge 按扩展商店区分，每日堆叠柱状图 + 占比。
   const sourceOrder = [...Object.values(EXTENSION_STORES), '其他', '未记录'];
@@ -319,6 +329,7 @@ ${money.expenses}
   ${panel('请求来自', audienceDonut || emptyChart('暂无托管请求'), { span: 'side', note: '按请求时的用户类型' })}
   ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
+  ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
   ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
@@ -343,10 +354,11 @@ ${!r.countries.installs.length && !r.countries.usage.length && !geoConfigured &&
   ${panel('请求字数', hasUsage ? histogram(sizeBuckets, { cls: 'c1' }) : '', { note: '每次请求的字符数' })}
   ${panel('异常与降级', r.errors.length ? barList(r.errors.map((e) => ({ label: ERRORS[e.key] || e.key, value: e.n })), { cls: 'c5' }) : '')}
 </div>
-${r.speed.length ? html`<details class="dashboard-details" open><summary>响应速度<span>按国家、人群与场景 · 文字请求 · 少于 ${SPEED_MIN_SAMPLE} 条不计百分位</span></summary><div class="panels dashboard-grid">
+${r.speed.length ? html`<details class="dashboard-details" open><summary>响应速度<span>按国家、人群、场景与扩展版本 · 文字请求 · 少于 ${SPEED_MIN_SAMPLE} 条不计百分位</span></summary><div class="panels dashboard-grid">
   ${panel('按国家', speedTable(r.speed.filter((x) => x.dim === 'country').slice(0, 15), ['国家', (k) => (k ? country(k) : '未记录')]), { wide: true, note: '总耗时 = 收到请求到响应就绪（服务端，不含网络往返）；首字仅流式；准备 = 鉴权、额度检查与预扣' })}
   ${panel('按人群', speedTable(r.speed.filter((x) => x.dim === 'audience'), ['人群', (k) => KIND[k] || '未记录']), { wide: true })}
   ${panel('按场景', speedTable(r.speed.filter((x) => x.dim === 'surface'), ['场景', (k) => SURFACE[k] || '未标记（旧版扩展）']), { wide: true })}
+  ${panel('按扩展版本', speedTable(r.speed.filter((x) => x.dim === 'version'), ['版本', (k) => k || '未记录（旧版扩展）']), { wide: true })}
 </div></details>` : ''}
 ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最高的用户<span>按翻译字数排序 · 前 10 位</span></summary><div class="table-wrap"><table>
     <thead><tr><th>用户</th><th>类型</th><th class="num">请求</th><th class="num">字数</th><th class="num">成本</th></tr></thead>
@@ -613,23 +625,59 @@ ${expenses.length ? html`<section class="card">
 
 /* ---------- A3 / A6 用户 ---------- */
 
-export function usersPage({ admin, q, browser = '', users }) {
+/** 扩展版本：「Chrome 2.3.0 · Edge 2.2.0」。 */
+const versionsOf = (versions) => (versions?.length ? versions.map((v) => `${browserLabel(v.extensionId)} ${v.version}`).join(' · ') : '—');
+
+export function usersPage({ admin, filters, users, total, versions = [], latest = null }) {
+  const f = filters;
+  // 当前筛选组成的链接参数；翻页、改排序与点版本分布时保留其他条件。
+  const link = (changes) => {
+    const params = new URLSearchParams();
+    for (const key of ['q', 'kind', 'browser', 'version', 'sub', 'active', 'frozen', 'sort', 'page']) {
+      const value = key in changes ? changes[key] : f[key];
+      if (value && !(key === 'sort' && value === 'created') && !(key === 'page' && value === 1)) params.set(key, value);
+    }
+    const query = params.toString();
+    return `/users${query ? `?${query}` : ''}`;
+  };
+  const select = (name, label, options, value, empty) => html`<select name="${name}" aria-label="${label}">${empty ? html`<option value="">${empty}</option>` : ''}${Object.entries(options).map(([key, text]) => html`<option value="${key}"${value === key ? html` selected` : ''}>${text}</option>`)}</select>`;
+  const versionOptions = {
+    ...(latest ? { outdated: `非最新版（低于 ${latest}）` } : {}),
+    ...Object.fromEntries(versions.map((v) => [v.version, `${v.version}${v.version === latest ? '（最新）' : ''} · ${num(v.users)} 人`])),
+    none: '未记录版本',
+  };
+  const pages = Math.max(1, Math.ceil(total / USERS_PER_PAGE));
+  const anyFilter = ['q', 'kind', 'browser', 'version', 'sub', 'active', 'frozen'].some((k) => f[k]);
   return layout({
     title: '用户',
     admin,
     active: 'users',
     body: html`<h1>用户</h1>
-<form method="get" action="/users" class="search"><input name="q" value="${q}" placeholder="邮箱、用户名或用户 ID" dir="ltr">
-  <select name="browser" aria-label="浏览器"><option value="">全部浏览器</option>${Object.values(EXTENSION_STORES).map((name) => html`<option value="${name.toLowerCase()}"${browser === name.toLowerCase() ? html` selected` : ''}>${name}</option>`)}</select>
-  <button class="button" type="submit">搜索</button></form>
+<form method="get" action="/users" class="search filters">
+  <input name="q" value="${f.q}" placeholder="邮箱、用户名或用户 ID" dir="ltr">
+  ${select('kind', '用户类型', USER_FILTERS.kind, f.kind, f.q ? '全部类型' : '注册用户（默认）')}
+  <select name="browser" aria-label="浏览器"><option value="">全部浏览器</option>${Object.values(EXTENSION_STORES).map((name) => html`<option value="${name.toLowerCase()}"${f.browser === name.toLowerCase() ? html` selected` : ''}>${name}</option>`)}</select>
+  ${select('version', '扩展版本', versionOptions, f.version, '全部版本')}
+  ${select('sub', '订阅', USER_FILTERS.sub, f.sub, '订阅不限')}
+  ${select('active', '最近使用', USER_FILTERS.active, f.active, '使用时间不限')}
+  ${select('frozen', '托管状态', USER_FILTERS.frozen, f.frozen, '托管不限')}
+  ${select('sort', '排序', Object.fromEntries(Object.entries(USER_FILTERS.sort).map(([k, v]) => [k, `按${v}`])), f.sort)}
+  <button class="button" type="submit">筛选</button>${anyFilter ? html` <a href="/users">清除</a>` : ''}
+</form>
+${versions.length ? html`<p class="muted version-dist">扩展版本：${versions.map((v, i) => html`${i ? ' · ' : ''}<a href="${link({ version: v.version, page: 1 })}">${v.version}</a> ${num(v.users)} 人`)}</p>` : ''}
+<p class="muted" data-user-total>共 ${num(total)} 位${pages > 1 ? html` · 第 ${num(f.page)} / ${num(pages)} 页` : ''}</p>
 <div class="table-wrap"><table>
-  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th class="num">安装</th><th>浏览器</th><th>订阅</th><th>注册时间</th><th>托管</th></tr></thead>
+  <thead><tr><th>用户名</th><th>邮箱</th><th>类型</th><th class="num">点数</th><th class="num">安装</th><th>浏览器</th><th>扩展版本</th><th>订阅</th><th>注册时间</th><th>最近使用</th><th class="num">30 天字数</th><th>托管</th></tr></thead>
   <tbody>${users.map((u) => html`<tr>
     <td><a href="/users/${u.id}">${u.username}</a></td><td dir="ltr">${u.email || '—'}</td><td>${KIND[u.kind]}</td>
-    <td class="num">${displayCredits(u.balance_units)}</td><td class="num">${u.installs ? num(u.installs) : '—'}</td><td data-browsers>${browsersOf(u.extension_ids)}</td><td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
+    <td class="num">${displayCredits(u.balance_units)}</td><td class="num">${u.installs ? num(u.installs) : '—'}</td><td data-browsers>${browsersOf(u.extension_ids)}</td>
+    <td data-versions>${versionsOf(u.versions)}${u.outdated ? html` <span class="tag warn">旧版</span>` : ''}</td>
+    <td>${u.sub_status || '—'}</td><td>${d(u.created_at)}</td><td>${d(u.last_active)}</td><td class="num">${Number(u.chars_30d) ? num(u.chars_30d) : '—'}</td>
+    <td>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结</span>` : '正常'}</td>
   </tr>`)}</tbody>
 </table></div>
-${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}`,
+${users.length ? '' : html`<p class="muted">没有匹配的用户。</p>`}
+${pages > 1 ? html`<nav class="pager" aria-label="分页">${f.page > 1 ? html`<a href="${link({ page: f.page - 1 })}">← 上一页</a>` : ''}${f.page < pages ? html`<a href="${link({ page: f.page + 1 })}">下一页 →</a>` : ''}</nav>` : ''}`,
   });
 }
 
@@ -712,7 +760,7 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
       <dt>类型</dt><dd>${KIND[u.kind]}</dd>
       <dt>邮箱</dt><dd dir="ltr">${u.email || '—'}${u.email_verified_at ? '（已验证）' : ''}</dd>
       <dt>注册时间</dt><dd>${dt(u.created_at)}</dd>
-      <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}</span>`) : '—'}</dd>
+      <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)}${e.version ? ` ${e.version}` : ''} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}${e.version ? ` · 版本记录于 ${dt(e.version_seen_at)}` : ''}</span>`) : '—'}</dd>
       <dt>有效会话</dt><dd>${sessions}</dd>
       <dt>托管服务</dt><dd>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结 · ${dt(u.hosted_frozen_at)}</span>` : '正常'}</dd>
     </dl>

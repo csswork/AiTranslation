@@ -34,8 +34,8 @@ async function extensionLogin(app, config, mailbox, email) {
   return { token: (await token.json()).token, browser: b };
 }
 
-function api(app, config, path, { method = 'GET', token, body, origin = ORIGIN } = {}) {
-  const headers = { origin };
+function api(app, config, path, { method = 'GET', token, body, origin = ORIGIN, headers: extra = {} } = {}) {
+  const headers = { origin, ...extra };
   if (token) headers.authorization = `Bearer ${token}`;
   const encoded = body ? JSON.stringify(body) : undefined;
   if (encoded) {
@@ -718,3 +718,41 @@ test('响应速度拆分：记录准备、首字与服务端耗时、是否流�
   assert.equal(failed.surface, 'pdf');
   assert.ok(Number.isInteger(failed.server_ms), '失败的请求也记录耗时');
 });
+
+test('扩展版本：请求头里的版本记到账户的扩展记录与用量；版本变化立即更新，同一版本每小时至多写一次；Firefox 用固定 ID', async () => {
+  const { hosted } = fakeHosted();
+  const { app, config, mailbox } = buildApp({ pool, hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'version@example.com');
+  const { rows: [{ id: userId }] } = await pool.query("SELECT id FROM users WHERE email = 'version@example.com'");
+  const row = async (id = EXT_ID) => (await pool.query('SELECT version, version_seen_at FROM user_extensions WHERE user_id = $1 AND extension_id = $2', [userId, id])).rows[0];
+  const v = (version) => ({ 'x-huaci-version': version });
+
+  assert.equal((await api(app, config, '/me', { token, headers: v('2.3.0') })).status, 200);
+  assert.equal((await row()).version, '2.3.0');
+  await api(app, config, '/translate', { method: 'POST', token, headers: v('2.3.0'), body: { texts: ['Hello'], target: 'fr' } });
+  await api(app, config, '/translate', { method: 'POST', token, headers: v('not-a-version'), body: { texts: ['Hi'], target: 'fr' } });
+  const { rows: events } = await pool.query('SELECT ext_version FROM usage_events ORDER BY created_at');
+  assert.deepEqual(events.map((e) => e.ext_version), ['2.3.0', null], '格式不对的版本号不记录');
+
+  // 同一版本一小时内不重复写库
+  await pool.query("UPDATE user_extensions SET version_seen_at = now() - interval '10 minutes' WHERE user_id = $1", [userId]);
+  const before = (await row()).version_seen_at;
+  await api(app, config, '/me', { token, headers: v('2.3.0') });
+  assert.equal((await row()).version_seen_at.getTime(), before.getTime());
+  await api(app, config, '/me', { token, headers: v('2.4.0') });
+  assert.equal((await row()).version, '2.4.0', '升级后立即记录新版本');
+  await api(app, config, '/me', { token, headers: v('bad') });
+  assert.equal((await row()).version, '2.4.0');
+
+  // Firefox：来源每次安装随机，只接受固定的扩展 ID
+  const moz = 'moz-extension://f5e67305-39be-4263-917b-08d9d85a5d83';
+  await api(app, config, '/me', { token, origin: moz, headers: { ...v('2.3.1'), 'x-huaci-extension': 'other@example.com' } });
+  assert.equal(await row(FIREFOX_EXTENSION_ID), undefined);
+  await api(app, config, '/me', { token, origin: moz, headers: { ...v('2.3.1'), 'x-huaci-extension': FIREFOX_EXTENSION_ID } });
+  assert.equal((await row(FIREFOX_EXTENSION_ID)).version, '2.3.1');
+
+  // 跨来源预检放行这两个请求头
+  const preflight = await app.request(new URL('/api/extension/me', config.appOrigin), { method: 'OPTIONS', headers: { origin: ORIGIN } });
+  assert.match(preflight.headers.get('access-control-allow-headers'), /x-huaci-version/);
+});
+

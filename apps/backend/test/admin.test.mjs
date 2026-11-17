@@ -461,3 +461,70 @@ test('每位用户的 API 使用都有记录：成功、失败与被拒（点数
   assert.ok(overview.indexOf('API 消耗') < overview.indexOf('用户与使用'), 'API 消耗在首页最前面');
   assert.match(overview, /被拒绝的请求<\/span><span class="delta down">新增/);
 });
+
+test('用户列表：显示扩展版本与最近使用；按类型、浏览器、版本、订阅、使用时间、冻结筛选，可排序与分页', async () => {
+  const config = testConfig({ ADMIN_REQUIRE_2FA: '1' });
+  const { app, mailbox } = buildApp({ pool, config });
+  const { a } = await adminLogin(app, config, mailbox);
+  const CHROME = 'hogimafgjmlpdlnepojgigjkhaccbcbj';
+  const EDGE = 'mojcgjimlkkbohomcijkmoefpeekmohe';
+  const user = async (username, kind = 'member') => (await pool.query(
+    `INSERT INTO users (kind, email, username) VALUES ($1, $2, $3) RETURNING id`,
+    [kind, kind === 'member' ? `${username}@example.com` : null, username])).rows[0].id;
+  const ext = (id, extensionId, version, seenDaysAgo = 1) => pool.query(
+    `INSERT INTO user_extensions (user_id, extension_id, version, version_seen_at, last_seen_at)
+     VALUES ($1, $2, $3, CASE WHEN $3::text IS NULL THEN NULL ELSE now() END, now() - make_interval(days => $4))`,
+    [id, extensionId, version, seenDaysAgo]);
+  const newest = await user('newest');
+  await ext(newest, CHROME, '2.3.0');
+  const older = await user('older');
+  await ext(older, CHROME, '2.2.0', 40);
+  await ext(older, EDGE, '2.10.0', 40);
+  const edgeOld = await user('edgeold');
+  await ext(edgeOld, EDGE, '2.2.0', 3);
+  const unknown = await user('unknown');
+  await ext(unknown, CHROME, null, 100);
+  const frozen = await user('frozenuser');
+  await pool.query('UPDATE users SET hosted_frozen_at = now() WHERE id = $1', [frozen]);
+  await pool.query(`INSERT INTO subscriptions (user_id, provider, provider_subscription_id, plan, status, current_period_end, last_event_at)
+    VALUES ($1, 'creem', 'sub_1', 'monthly', 'active', now() + interval '20 days', now())`, [newest]);
+  await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status) VALUES ($1, 'text', 900, 900, 'ok')`, [edgeOld]);
+  const guest = await user('guestuser', 'guest');
+  await ext(guest, CHROME, '2.3.0');
+
+  const { rows: [{ username: boss }] } = await pool.query("SELECT username FROM users WHERE email = 'boss@example.com'");
+  const names = async (query) => [...(await a.text(`/users${query}`)).matchAll(/<td><a href="\/users\/[^"]+">([^<]+)<\/a><\/td>/g)].map((m) => m[1]).filter((n) => n !== boss);
+  const list = await a.text('/users');
+  assert.match(list, /<td data-versions>Chrome 2\.2\.0 · Edge 2\.10\.0<\/td>/, '版本号按数字比较：2.10.0 比 2.3.0 新，不标旧版');
+  assert.match(list, /<td data-versions>Edge 2\.2\.0 <span class="tag warn">旧版<\/span><\/td>/);
+  assert.match(list, /<option value="outdated">非最新版（低于 2\.10\.0）<\/option>/);
+  assert.match(list, /扩展版本：<a href="\/users\?version=2\.10\.0">2\.10\.0<\/a> 1 人/);
+  assert.doesNotMatch(list, /guestuser/, '默认只列注册用户');
+
+  assert.deepEqual((await names('?kind=guest')).sort(), ['guestuser']);
+  assert.deepEqual((await names('?version=2.2.0')).sort(), ['edgeold', 'older']);
+  assert.deepEqual(await names('?version=2.2.0&browser=edge'), ['edgeold'], '浏览器与版本作用于同一条扩展记录');
+  assert.deepEqual((await names('?version=outdated')).sort(), ['edgeold', 'newest']);
+  assert.deepEqual((await names('?version=none')).sort(), ['frozenuser', 'unknown']);
+  assert.deepEqual(await names('?sub=active'), ['newest']);
+  assert.ok(!(await names('?sub=none')).includes('newest'));
+  assert.deepEqual((await names('?active=7')).sort(), ['edgeold', 'newest']);
+  assert.deepEqual((await names('?active=idle30')).sort(), ['older', 'unknown']);
+  assert.deepEqual(await names('?frozen=1'), ['frozenuser']);
+  assert.equal((await names('?sort=usage'))[0], 'edgeold');
+  assert.deepEqual((await names('?sort=active')).slice(0, 2), ['edgeold', 'newest'], '最近使用取扩展请求与托管请求中较晚的一个');
+  assert.deepEqual(await names('?q=older&kind=guest'), []);
+  assert.match(await a.text('/users?version=nonsense&sort=bogus&page=-3'), /共 \d+ 位/, '无效参数按未设置处理');
+  assert.match(await a.text(`/users/${older}`), /<dd data-extensions>Chrome 2\.2\.0 <span class="muted">首次 [^<]+ · 版本记录于 /);
+
+  // 分页：每页 100 位
+  await pool.query(`INSERT INTO users (kind, email, username) SELECT 'member', 'bulk' || i || '@example.com', 'bulk' || i FROM generate_series(1, 120) AS i`);
+  const first = await a.text('/users?sort=created');
+  assert.match(first, /共 126 位 · 第 1 \/ 2 页/);
+  assert.match(first, /<a href="\/users\?page=2">下一页 →<\/a>/);
+  const second = await a.text('/users?page=2');
+  assert.match(second, /<a href="\/users">← 上一页<\/a>/);
+  assert.equal((await names('?page=2')).length + 1, 26, '第二页 26 位（含管理员）');
+  assert.match(await a.text('/users?page=9'), /共 126 位/, '越过最后一页仍显示总数');
+});
+

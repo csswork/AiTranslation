@@ -76,6 +76,8 @@ Firefox 登录另需在 `EXTENSION_IDS` 保留 Chrome/Edge ID 并追加固定 ad
 
 ## 上线前必须完成
 
+迁移 `016_extension_versions.sql` 记录扩展版本：扩展在账户请求头 `X-Huaci-Version` 里带上 manifest 版本号（Firefox 另带固定 ID `X-Huaci-Extension`），后端写入 `user_extensions.version` 与托管请求的 `usage_events.ext_version`，同一账户同一版本每小时至多写一次。只是公开的发布标识，不需要更新隐私说明。旧版扩展不带版本，管理端显示为「未记录」；用户列表可按版本、非最新版、订阅、最近使用、冻结与类型筛选。
+
 商店审核专用账号：部署迁移 `011_review_access.sql` 后，按 [审核账号说明](../../../docs/backend/review-access.md) 在服务器创建。明文凭据只写入操作者指定的 `0600` 私有文件，不进入部署产物或日志。回退到不识别审核期限的旧代码前先撤销全部审核账号会话。
 
 1. 开通 `support@huaci.app` 收信（例如 Cloudflare Email Routing 转发到个人邮箱），在 Resend 验证 huaci.app 并设置 `MAIL_TRANSPORT=resend`、`RESEND_API_KEY`、`MAIL_FROM`。

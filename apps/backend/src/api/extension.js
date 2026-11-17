@@ -18,7 +18,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
-import { extensionIdFromOrigin, extensionIdFromRedirect, FIREFOX_EXTENSION_ID, isAllowedExtension, recordExtension, redeemAuthCode } from '../auth/extension.js';
+import { extensionIdFromOrigin, extensionIdFromRedirect, FIREFOX_EXTENSION_ID, isAllowedExtension, readExtensionVersion, recordExtension, recordExtensionVersion, redeemAuthCode, requestExtensionId } from '../auth/extension.js';
 import { createSession, revokeExtensionLogin, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
@@ -76,6 +76,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
   app.use('*', async (c, next) => {
     // 响应速度拆分（precheck_ms、ttft_ms、server_ms）都从这里开始计时。
     c.set('startedAt', performance.now());
+    c.set('extVersion', readExtensionVersion(c.req.header('x-huaci-version')));
     const origin = c.req.header('origin') || '';
     const id = extensionIdFromOrigin(origin);
     const allowed = id && isAllowedExtension(id, config);
@@ -84,7 +85,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       return c.body(null, 204, {
         'Access-Control-Allow-Origin': origin,
         'Access-Control-Allow-Methods': 'GET, POST',
-        'Access-Control-Allow-Headers': 'authorization, content-type',
+        'Access-Control-Allow-Headers': 'authorization, content-type, x-huaci-version, x-huaci-extension',
         'Access-Control-Max-Age': '600',
         Vary: 'Origin',
       });
@@ -116,6 +117,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const extensionId = extensionIdFromOrigin(c.req.header('origin'))
       || (body.extensionId === FIREFOX_EXTENSION_ID && isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null);
     const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId });
+    await noteVersion(c, result.userId);
     return c.json({
       token: result.token,
       tokenType: 'Bearer',
@@ -164,12 +166,35 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred) });
   });
 
+  /**
+   * 扩展版本（X-Huaci-Version）：版本变化时立即写入 user_extensions，同一版本每小时至多再写一次（顺带更新最近使用时间）。
+   * 进程内只记最近写过的值，不为每个请求多写一次库；重启后各账户首个请求补写一次。
+   */
+  const versionWrites = new Map();
+  const noteVersion = async (c, userId) => {
+    const version = c.get('extVersion');
+    const extensionId = requestExtensionId(c.req.header('origin'), c.req.header('x-huaci-extension'), config);
+    if (!version || !extensionId) return;
+    const key = `${userId}:${extensionId}`;
+    const last = versionWrites.get(key);
+    if (last && last.version === version && Date.now() - last.at < 3_600_000) return;
+    if (versionWrites.size >= 100_000) versionWrites.clear();
+    versionWrites.set(key, { version, at: Date.now() });
+    try {
+      await recordExtensionVersion(pool, userId, extensionId, version);
+    } catch (err) {
+      versionWrites.delete(key);
+      log.warn(`记录扩展版本失败：${err.message}`);
+    }
+  };
+
   /** 只接受扩展会话；令牌无效、过期或已在用户端被退出时返回 401，扩展据此回到未登录状态。 */
   const requireExtension = async (c, next) => {
     const token = (c.req.header('authorization') || '').match(/^Bearer ([\w-]{20,100})$/)?.[1];
     const auth = token && await validateSession(pool, config, token);
     if (!auth || auth.session.client !== 'extension') return c.json({ error: 'unauthorized' }, 401);
     c.set('auth', auth);
+    await noteVersion(c, auth.user.id);
     await next();
   };
 
@@ -239,9 +264,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         "SELECT COUNT(*)::int AS requests FROM usage_events WHERE user_id = $1 AND kind = 'image' AND created_at >= now() - interval '1 hour'", [user.id]);
       if (row.requests >= s.hosted_image_hourly_requests) return false;
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country)
-         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4)`,
-        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config)]);
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, ext_version)
+         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4, $5)`,
+        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config), c.get('extVersion')]);
       return true;
     });
     if (!accepted) return c.json({ error: 'rate_limited' }, 429);
@@ -295,9 +320,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream)
-         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10)`,
-        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream],
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream, ext_version)
+         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10, $11)`,
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream, c.get('extVersion')],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);

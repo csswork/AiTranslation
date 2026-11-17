@@ -89,7 +89,11 @@
   }
 
   async function call(path, { method = 'GET', body, auth = true, authToken, signal, stream = false } = {}) {
-    const headers = {};
+    // 版本号与来源商店只用于管理端统计。Firefox 的扩展来源每次安装随机，另外带上固定的扩展 ID。
+    const headers = {
+      ...(AITrEnv.version ? { 'x-huaci-version': AITrEnv.version } : {}),
+      ...(AITrEnv.firefox ? { 'x-huaci-extension': chrome.runtime.id } : {}),
+    };
     const token = auth ? authToken ?? await readToken() : '';
     if (body) headers['content-type'] = 'application/json';
     if (auth) {

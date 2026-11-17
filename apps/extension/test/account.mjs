@@ -32,7 +32,7 @@ function boot(production = false, firefox = false) {
   });
   const runtime = {
     id: firefox ? 'huaci@huaci.app' : ID,
-    getManifest: () => ({ ...(production ? { update_url: 'https://clients2.google.com/service/update2/crx' } : {}),
+    getManifest: () => ({ version: '2.3.0', ...(production ? { update_url: 'https://clients2.google.com/service/update2/crx' } : {}),
       ...(firefox ? { browser_specific_settings: { gecko: { id: 'huaci@huaci.app' } } } : {}) }),
     getURL: (path) => `${firefox ? 'moz-extension://f5e67305-39be-4263-917b-08d9d85a5d83' : extensionOrigin}/${path}`,
     onInstalled: event(), onStartup: event(), onMessage: event(), onConnect: event(),
@@ -255,6 +255,8 @@ for (const production of [false, true]) {
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, `${accountOrigin}/api/extension/logout`);
   assert.equal(calls[0].init.headers.authorization, 'Bearer original-token');
+  assert.equal(calls[0].init.headers['x-huaci-version'], context.AITrEnv.version, '账户请求带上扩展版本号，供管理端统计');
+  assert.match(String(context.AITrEnv.version), /^\d+(\.\d+){1,3}$/);
   assert.equal(calls[0].init.credentials, 'omit');
   assert.deepEqual(notifications.map(({ id }) => id), [1, 2, 3], '只通知同环境用户端与官网，不影响管理端或其他端口');
   assert.ok(notifications.every(({ message, options }) => JSON.stringify(message) === '{"type":"account-session-changed"}' && options.frameId === 0));
