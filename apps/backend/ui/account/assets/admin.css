@@ -396,7 +396,12 @@ a.install-label:hover { color: var(--accent-ink); }
 .install-tag.member { color: var(--c2); background: color-mix(in srgb, var(--c2) 12%, transparent); }
 .install-tag.sub { color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 14%, transparent); }
 .install-row:hover .install-tag.guest, .install-row:hover .install-tag.muted { background: var(--surface); }
-.install-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-3); font-size: .69rem; }
+.install-meta { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text-3); font-size: .69rem; }
+.install-meta > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.install-ver { flex: none; padding: 0 5px; border-radius: 5px; border: 1px solid var(--line); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.install-ver.unknown { color: var(--text-3); border-style: dashed; }
+.install-panel { padding-top: 18px; }
+.install-panel .install-summary { margin-top: 0; }
 .install-side { justify-items: end; text-align: end; }
 .install-side time { color: var(--text-2); font-size: .69rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .install-use { color: var(--text-3); font-size: .66rem; white-space: nowrap; }

@@ -274,7 +274,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   const { app, mailbox } = buildApp({ pool, config, hosted });
   const ext = (path, { body, token, ip, country }) => app.request(new URL(`/api/extension${path}`, config.appOrigin), {
     method: 'POST',
-    headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop', 'content-type': 'application/json', 'x-forwarded-for': ip, 'cf-ipcountry': country, ...(token ? { authorization: `Bearer ${token}` } : {}) },
+    headers: { origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop', 'content-type': 'application/json', 'x-forwarded-for': ip, 'cf-ipcountry': country, 'x-huaci-version': '2.3.0', ...(token ? { authorization: `Bearer ${token}` } : {}) },
     body: JSON.stringify(body || {}),
   });
   for (const [ip, country, uiLanguage, target] of [['1.1.1.1', 'JP', 'ja', 'zh-Hans'], ['1.1.1.2', 'US', 'en', 'zh-Hans'], ['1.1.1.3', 'US', 'en', 'ja'], ['1.1.1.4', 'XX', 'de', 'en']]) {
@@ -313,6 +313,9 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(installs, /<li class="install-day">今天<\/li>/);
   assert.match(installs, /日本 · 日语[\s\S]*?用了 \d+ 次/, '国家、界面语言与安装后的使用次数');
   assert.match(installs, /#[0-9a-f]{8}<\/a><span class="install-tag guest">访客<\/span>/, '访客显示短 ID，状态标签说明是访客');
+  assert.match(installs, /<span class="install-ver" title="安装时的扩展版本">其他 2\.3\.0<\/span>/, '显示安装时的扩展版本');
+  assert.ok(page.indexOf('id="installs"') < page.indexOf('id="api"'), '最近安装放在首页最上面');
+  assert.match(page, /<a href="#installs">最近安装<\/a><a href="#api">/);
   assert.match(page, /<div class="install-summary">\s*<span><strong>4<\/strong>次安装<\/span>\s*<span><strong>0\.0%<\/strong>已注册<\/span>\s*<span><strong>100\.0%<\/strong>已开始使用/);
   assert.match(page, /<summary>响应速度[\s\S]*按国家[\s\S]*按人群[\s\S]*按场景/);
   const sg = page.match(/SG<\/td>([\s\S]*?)<\/tr>/)?.[1].match(/<td class="num">[^<]*<\/td>/g).map((td) => td.replace(/<[^>]+>/g, ''));
@@ -521,7 +524,9 @@ test('用户列表：显示扩展版本与最近使用；按类型、浏览器�
   assert.deepEqual((await names('?sort=active')).slice(0, 2), ['edgeold', 'newest'], '最近使用取扩展请求与托管请求中较晚的一个');
   assert.deepEqual(await names('?q=older&kind=guest'), []);
   assert.match(await a.text('/users?version=nonsense&sort=bogus&page=-3'), /共 \d+ 位/, '无效参数按未设置处理');
-  assert.match(await a.text(`/users/${older}`), /<dd data-extensions>Chrome 2\.2\.0 <span class="muted">首次 [^<]+ · 版本记录于 /);
+  const detail = await a.text(`/users/${older}`);
+  assert.match(detail, /<dd data-ext-versions>Chrome <strong dir="ltr">2\.2\.0<\/strong> <span class="tag warn">旧版 · 最新 2\.10\.0<\/span> <span class="muted">记录于 [^<]+<\/span><br>Edge <strong dir="ltr">2\.10\.0<\/strong> <span class="tag ok">最新<\/span>/);
+  assert.match(await a.text(`/users/${unknown}`), /<dd data-ext-versions>Chrome <span class="muted">未记录/);
 
   // 分页：每页 100 位
   await pool.query(`INSERT INTO users (kind, email, username) SELECT 'member', 'bulk' || i || '@example.com', 'bulk' || i FROM generate_series(1, 120) AS i`);

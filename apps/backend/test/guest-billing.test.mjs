@@ -466,7 +466,7 @@ test('扩展来源：按扩展 ID 记录 Chrome / Edge，访客合并后并入�
   await a.post('/login/verify', { code: mailbox.last('both@example.com') });
   const detail = await a.text(`/users/${member.id}`);
   assert.match(detail, /<dd data-extensions>Edge <span class="muted">首次 [^<]+<\/span><br>Chrome /);
-  assert.match(detail, /<td>Edge<\/td>\s*<td>已发放<\/td>/, '安装记录显示浏览器');
+  assert.match(detail, /<td>Edge<\/td>\s*<td dir="ltr">[^<]*<\/td>\s*<td>已发放<\/td>/, '安装记录显示浏览器与安装版本');
   const edgeOnly = await a.text('/users?browser=edge');
   assert.match(edgeOnly, /both@example\.com/);
   assert.match(edgeOnly, /<td data-browsers>Edge · Chrome<\/td>/);

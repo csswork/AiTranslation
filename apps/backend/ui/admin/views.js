@@ -223,9 +223,13 @@ function recentInstallList(recent) {
     const meta = [
       r.country ? regionNames.of(r.country) || r.country : '',
       r.ui_lang ? language(r.ui_lang) : '',
-      r.version ? `v${r.version}` : '',
       INSTALL_NOTE[r.outcome] || '',
     ].filter(Boolean).join(' · ');
+    // 版本：安装时的版本；之后升级过就显示「安装版本 → 现在版本」；旧版扩展没带版本时用账户现在的版本。
+    const installed = r.ext_version || r.current_version;
+    const version = installed
+      ? html`<span class="install-ver" title="${r.ext_version ? '安装时的扩展版本' : '账户现在的扩展版本（安装时未记录）'}">${store} ${installed}${r.ext_version && r.current_version && r.current_version !== r.ext_version ? ` → ${r.current_version}` : ''}</span>`
+      : html`<span class="install-ver unknown" title="旧版扩展不带版本号">${store} · 版本未记录</span>`;
     const day = dayLabel(r.created_at, now);
     const header = day !== lastDay ? html`<li class="install-day">${day}</li>` : '';
     lastDay = day;
@@ -233,7 +237,7 @@ function recentInstallList(recent) {
   <span class="install-avatar ${BROWSER_TONE[store] || 'c6'}" title="${store}" aria-hidden="true">${store.slice(0, 1)}</span>
   <span class="install-main">
     <span class="install-name">${r.account_id && r.kind ? html`<a class="install-label" href="/users/${r.account_id}">${name}</a>` : html`<span class="install-label">${name}</span>`}<span class="install-tag ${status[1]}">${status[0]}</span></span>
-    <span class="install-meta">${meta || store}</span>
+    <span class="install-meta">${version}${meta ? html`<span>${meta}</span>` : ''}</span>
   </span>
   <span class="install-side">
     <time datetime="${new Date(r.created_at).toISOString()}" title="${dt(r.created_at)}">${ago(r.created_at, now)}</time>
@@ -376,7 +380,11 @@ export function overviewPage({ admin, r, geoConfigured, mapMode = 'usage' }) {
 <div class="dashboard-heading"><div><p class="dashboard-eyebrow">HUACI / OVERVIEW</p><h1>运营概览</h1><p class="muted">用量、收支与用户增长，一处掌握。</p></div>
   <div class="dashboard-period"><nav class="seg" aria-label="统计时间范围">${[7, 30, 90].map((n) => html`<a href="/?days=${n}&map=${mapMode}"${n === r.days ? html` aria-current="page"` : ''}>近 ${n} 天</a>`)}</nav><span>${labels[0]} — ${labels.at(-1)}</span></div>
 </div>
-<div class="dashboard-toolbar"><nav aria-label="概览分区"><a href="#api">API 消耗</a><a href="#business">经营收支</a><a href="#growth">用户增长</a><a href="#audience">语言与地区</a><a href="#performance">性能与异常</a></nav><span>环比上期 · ${r.timeZone}</span></div>
+<div class="dashboard-toolbar"><nav aria-label="概览分区">${r.recentInstalls.installs ? html`<a href="#installs">最近安装</a>` : ''}<a href="#api">API 消耗</a><a href="#business">经营收支</a><a href="#growth">用户增长</a><a href="#audience">语言与地区</a><a href="#performance">性能与异常</a></nav><span>环比上期 · ${r.timeZone}</span></div>
+${r.recentInstalls.installs ? html`<section class="dashboard-section" id="installs">
+<div class="dashboard-section-head"><div><h2 class="section-title">最近 7 天安装</h2><p>新装的人是谁、来自哪个版本，装完有没有开始用。固定看最近 7 天，不随时间范围变化。</p></div><a href="/users?kind=all&amp;sort=created">查看全部用户 ↗</a></div>
+<section class="card panel install-panel">${recentInstallList(r.recentInstalls)}</section>
+</section>` : ''}
 ${money.api}
 <section class="dashboard-section" id="business">
 ${money.profit}
@@ -393,7 +401,6 @@ ${money.expenses}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
   ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
-  ${panel('最近 7 天安装', r.recentInstalls.installs ? recentInstallList(r.recentInstalls) : '', { wide: true, note: '最近的在前 · 不随上方时间范围变化' })}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
   ${panel('订阅方案', planDonut, { note: '当前有效订阅' })}
@@ -768,6 +775,16 @@ const requestDetails = (events, showUser = false) => html`<details class="card a
   </table></div>` : html`<p class="muted">暂无托管请求。</p>`}
 </details>`;
 
+/** 版本与当前最新版本比较：最新、旧版；不知道最新版本时不标。 */
+const versionTag = (version, latest) => {
+  if (!version || !latest) return '';
+  const cmp = (a, b) => {
+    const x = a.split('.').map(Number), y = b.split('.').map(Number);
+    for (let i = 0; i < Math.max(x.length, y.length); i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0);
+    return 0;
+  };
+  return cmp(version, latest) >= 0 ? html`<span class="tag ok">最新</span>` : html`<span class="tag warn">旧版 · 最新 ${latest}</span>`;
+};
 const shortId = (id) => (id ? String(id).slice(0, 8) : '');
 const installRelation = (r, u) => {
   const merged = r.merged_username ? html`<a href="/users/${r.merged_user_id}">${r.merged_username}</a>` : '本账户';
@@ -789,11 +806,12 @@ const installsSection = (installs, u) => {
   <h2>安装与访客记录</h2>
   ${rows.length ? html`<p class="fine">共 ${summary.installs} 次安装${summary.merged ? html`；合并访客 ${summary.merged} 个，转入 ${displayCredits(summary.transferredUnits)} 点${summary.notTransferred ? html`（${summary.notTransferred} 个未转入：每个账户只接收一个访客的点数，或点数已用完）` : ''}` : ''}。网络是 IP 带密钥哈希的前 8 位，相同即同一网络。</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>安装时间</th><th>访客</th><th>浏览器</th><th>领取结果</th><th class="num">赠送</th><th class="num">转入</th><th>关系</th><th>网络</th><th>国家</th><th>界面语言</th></tr></thead>
+    <thead><tr><th>安装时间</th><th>访客</th><th>浏览器</th><th>安装版本</th><th>领取结果</th><th class="num">赠送</th><th class="num">转入</th><th>关系</th><th>网络</th><th>国家</th><th>界面语言</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-relation="${r.relation}">
       <td>${dt(r.created_at)}</td>
       <td dir="ltr">${r.guest_id ? html`<code>${shortId(r.guest_id)}</code>` : '—'}${r.guest_alive && r.guest_id !== u.id ? html` <a href="/users/${r.guest_id}">查看</a>` : ''}</td>
       <td>${browserLabel(r.extension_id)}</td>
+      <td dir="ltr">${r.ext_version || '—'}</td>
       <td>${OUTCOME[r.outcome] || r.outcome}</td>
       <td class="num">${displayCredits(r.granted_units)}</td>
       <td class="num">${r.relation === 'merged' ? (r.transferred_units == null ? '—' : displayCredits(r.transferred_units)) : ''}</td>
@@ -806,7 +824,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, note }) {
   return layout({
     title: u.username,
     admin,
@@ -823,7 +841,8 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
       <dt>类型</dt><dd>${KIND[u.kind]}</dd>
       <dt>邮箱</dt><dd dir="ltr">${u.email || '—'}${u.email_verified_at ? '（已验证）' : ''}</dd>
       <dt>注册时间</dt><dd>${dt(u.created_at)}</dd>
-      <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)}${e.version ? ` ${e.version}` : ''} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}${e.version ? ` · 版本记录于 ${dt(e.version_seen_at)}` : ''}</span>`) : '—'}</dd>
+      <dt>扩展版本</dt><dd data-ext-versions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} ${e.version ? html`<strong dir="ltr">${e.version}</strong> ${versionTag(e.version, latest)} <span class="muted">记录于 ${dt(e.version_seen_at)}</span>` : html`<span class="muted">未记录（旧版扩展不带版本号）</span>`}`) : '—'}</dd>
+      <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}</span>`) : '—'}</dd>
       <dt>有效会话</dt><dd>${sessions}</dd>
       <dt>托管服务</dt><dd>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结 · ${dt(u.hosted_frozen_at)}</span>` : '正常'}</dd>
     </dl>

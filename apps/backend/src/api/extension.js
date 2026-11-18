@@ -116,7 +116,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     // Firefox's supplied add-on ID is only a store reporting label, never authentication.
     const extensionId = extensionIdFromOrigin(c.req.header('origin'))
       || (body.extensionId === FIREFOX_EXTENSION_ID && isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null);
-    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId });
+    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId, extVersion: c.get('extVersion') });
     await noteVersion(c, result.userId);
     return c.json({
       token: result.token,

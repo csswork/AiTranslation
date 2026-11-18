@@ -265,7 +265,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users/:id', requireAdmin, async (c) => {
     const u = await loadUser(c.req.param('id'));
     if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, activity, sessions, api, installs, extensions] = await Promise.all([
+    const [state, subs, activity, sessions, api, installs, extensions, versions] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
@@ -273,9 +273,10 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       apiUsageForUser(pool, u.id, 30),
       installHistory(pool, u.id),
       pool.query('SELECT extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [u.id]),
+      extensionVersions(pool),
     ]);
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),
     }));
   });
 

@@ -751,6 +751,10 @@ test('扩展版本：请求头里的版本记到账户的扩展记录与用量�
   await api(app, config, '/me', { token, origin: moz, headers: { ...v('2.3.1'), 'x-huaci-extension': FIREFOX_EXTENSION_ID } });
   assert.equal((await row(FIREFOX_EXTENSION_ID)).version, '2.3.1');
 
+  // 访客领取时记下安装版本
+  await api(app, config, '/guest', { method: 'POST', headers: v('2.3.0'), body: {} });
+  assert.deepEqual((await pool.query('SELECT ext_version FROM guest_claims')).rows.map((r) => r.ext_version).filter(Boolean), ['2.3.0']);
+
   // 跨来源预检放行这两个请求头
   const preflight = await app.request(new URL('/api/extension/me', config.appOrigin), { method: 'OPTIONS', headers: { origin: ORIGIN } });
   assert.match(preflight.headers.get('access-control-allow-headers'), /x-huaci-version/);

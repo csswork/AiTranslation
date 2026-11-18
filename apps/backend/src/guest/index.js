@@ -42,7 +42,7 @@ export const ipHash = (config, address) => createHmac('sha256', config.authSecre
  * 新建访客：在一个事务里判断是否赠送点数、建账户、写领取记录、建扩展会话和欢迎页关联码。
  * dimensions 是报表用的国家与扩展界面语言（可为空）。返回 { token, linkCode, outcome, granted }。
  */
-export async function createGuest(pool, config, settings, address, { country = null, uiLang = null, extensionId = null } = {}) {
+export async function createGuest(pool, config, settings, address, { country = null, uiLang = null, extensionId = null, extVersion = null } = {}) {
   const hash = ipHash(config, address);
   return transaction(pool, async (client) => {
     // 串行处理领取，保证每日总量与同一网络次数准确。
@@ -63,9 +63,9 @@ export async function createGuest(pool, config, settings, address, { country = n
     const user = await createGuestUser(client);
     await grantGuest(client, granted, user.id);
     await client.query(
-      `INSERT INTO guest_claims (user_id, guest_id, ip_hash, granted_units, outcome, country, ui_lang, extension_id)
-       VALUES ($1, $1, $2, $3, $4, $5, $6, $7)`,
-      [user.id, hash, grantedUnits, outcome, country, uiLang, extensionId],
+      `INSERT INTO guest_claims (user_id, guest_id, ip_hash, granted_units, outcome, country, ui_lang, extension_id, ext_version)
+       VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8)`,
+      [user.id, hash, grantedUnits, outcome, country, uiLang, extensionId, extVersion],
     );
     await recordExtension(client, user.id, extensionId);
     const token = await createSession(client, config, user.id, 'extension');
