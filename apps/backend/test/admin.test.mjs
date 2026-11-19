@@ -340,7 +340,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
 
-test('托管功能排行复用既有请求，按账户数排序并隐藏小样本', async () => {
+test('托管功能排行复用既有请求，按账户数排序，不设展示门槛', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
   const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
@@ -373,8 +373,11 @@ test('托管功能排行复用既有请求，按账户数排序并隐藏小样�
     .filter((cells) => cells.length === 5);
   assert.deepEqual(entries, [
     ['双语阅读', '6', '100.0%', '6', '1.0'], ['图片翻译', '5', '83.3%', '18', '3.6'],
+    ['整份 PDF 翻译', '4', '66.7%', '12', '3.0'],
   ]);
   assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
+  assert.match(page, /成功请求[\s\S]*?36[\s\S]*?人均 6\.0 次/, '合计按数字相加');
+  assert.doesNotMatch(page, /展示门槛|每项至少/);
 });
 
 test('托管功能统计在管理端展示，用户端只保留常规用量页面', async () => {

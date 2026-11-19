@@ -487,7 +487,7 @@ ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最
 
 /** 功能使用统计：单独子页面，按功能列出使用人数与成功请求数。 */
 export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
-  const { rows, minAccounts, activeAccounts } = ranking;
+  const { rows, activeAccounts } = ranking;
   const totalRequests = rows.reduce((n, row) => n + row.requests, 0);
   const average = activeAccounts ? totalRequests / activeAccounts : 0;
   return layout({
@@ -502,7 +502,7 @@ export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
 </div>
 <section class="kpis">
   ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有可归类成功请求' })}
-  ${kpiCard({ label: '展示功能', value: num(rows.length), sub: `每项至少 ${minAccounts} 个账户` })}
+  ${kpiCard({ label: '展示功能', value: num(rows.length), sub: '有成功请求的功能' })}
   ${kpiCard({ label: '成功请求', value: num(totalRequests), sub: `人均 ${average.toFixed(1)} 次` })}
 </section>
 ${rows.length ? html`<section class="card"><div class="table-wrap"><table data-feature-usage>
@@ -515,7 +515,7 @@ ${rows.length ? html`<section class="card"><div class="table-wrap"><table data-f
     <td class="num">${accounts ? (requests / accounts).toFixed(1) : '—'}</td>
   </tr>`)}</tbody>
 </table></div>
-<p class="fine">覆盖率以有可归类成功请求的账户为分母。日期按 ${timeZone} 统计；每项至少有 ${minAccounts} 个账户才展示，避免小样本暴露个人。</p></section>` : html`<section class="card"><p class="muted">所选范围内暂无达到展示门槛的功能。</p></section>`}`,
+<p class="fine">覆盖率以有可归类成功请求的账户为分母。日期按 ${timeZone} 统计。</p></section>` : html`<section class="card"><p class="muted">所选范围内暂无托管功能使用记录。</p></section>`}`,
   });
 }
 

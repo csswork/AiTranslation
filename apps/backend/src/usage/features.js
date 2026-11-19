@@ -1,6 +1,5 @@
 import { dayLabels } from '../admin/finance.js';
 
-const FEATURE_USAGE_MIN_ACCOUNTS = 5;
 const FEATURE_USAGE_DAYS = 30;
 
 export const FEATURE_LABELS = {
@@ -18,20 +17,13 @@ export async function featureUsageRanking(db, { from, to }) {
        SELECT ${FEATURE} AS key, user_id
        FROM usage_events WHERE ${CLASSIFIED} AND created_at >= $1 AND created_at < $2
      )
-     SELECT key, COUNT(*)::bigint AS requests, COUNT(DISTINCT user_id)::int AS accounts,
+     SELECT key, COUNT(*)::int AS requests, COUNT(DISTINCT user_id)::int AS accounts,
             (SELECT COUNT(DISTINCT user_id)::int FROM classified) AS active_accounts
-     FROM classified GROUP BY key HAVING COUNT(DISTINCT user_id) >= $3
+     FROM classified GROUP BY key
      ORDER BY accounts DESC, requests DESC, key`,
-    [from, to, FEATURE_USAGE_MIN_ACCOUNTS],
-  );
-  if (rows.length) return { rows, minAccounts: FEATURE_USAGE_MIN_ACCOUNTS, activeAccounts: rows[0].active_accounts || 0 };
-  // 没有达到展示门槛的功能时，仍返回活跃账户总数，避免页面把「有使用但样本小」显示成 0。
-  const { rows: [totals] } = await db.query(
-    `SELECT COUNT(DISTINCT user_id)::int AS active_accounts FROM usage_events
-     WHERE ${CLASSIFIED} AND created_at >= $1 AND created_at < $2`,
     [from, to],
   );
-  return { rows, minAccounts: FEATURE_USAGE_MIN_ACCOUNTS, activeAccounts: totals.active_accounts };
+  return { rows, activeAccounts: rows[0]?.active_accounts || 0 };
 }
 
 /** 查询范围为最近 30 个自然日（含今天），endDay 是今天的日期。 */
