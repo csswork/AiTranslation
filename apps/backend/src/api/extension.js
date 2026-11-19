@@ -297,23 +297,37 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
   )).rows[0].chars;
 
   // 被拒绝的请求也记录（usage_rejections），但每个用户每种原因每分钟最多记 10 条，避免被刷写库。
+  // 按功能分开计数，一个功能被拒刷满不会挤掉其他功能的记录（功能统计按天去重，每天有一条即可）。
   const rejectionLogLimiter = createRateLimiter({ limit: 10, windowMs: 60_000 });
+  const logRejection = async (c, user, reason, { audience, chars = 0, cost = null, target = null, surface = null }) => {
+    if (!rejectionLogLimiter(`${user.id}:${reason}:${surface || ''}`)) return;
+    await pool.query(
+      `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost_units, target_lang, country, surface)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [user.id, reason, audience, chars, cost, target, requestCountry(c, config), surface],
+    );
+  };
 
   app.post('/read-image', requireExtension, async (c) => {
     const s = await settings.all();
     const { user } = c.get('auth');
-    if (!hosted?.readImageText || !s.hosted_enabled || !s.hosted_image_hourly_requests) return c.json({ error: 'hosted_unavailable' }, 503);
-    if (user.hosted_frozen_at) return c.json({ error: 'frozen' }, 403);
+    const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
+    // 被拒的识图也记一条（功能为图片翻译），功能统计才能看到点数用完后仍想用的需求。
+    const reject = async (reason, code, extra = {}) => {
+      await logRejection(c, user, reason, { audience: subscribed ? 'subscriber' : user.kind, surface: 'image' });
+      return c.json({ error: reason, ...extra }, code);
+    };
+    if (!hosted?.readImageText || !s.hosted_enabled || !s.hosted_image_hourly_requests) return reject('hosted_unavailable', 503);
+    if (user.hosted_frozen_at) return reject('frozen', 403);
     const body = await readJson(c);
     if (!validImage(body.image)) return c.json({ error: 'invalid_image' }, 400);
-    const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
     if (!subscribed && (await creditBalance(pool, user.id)) <= 0n) {
-      return c.json({ error: 'insufficient_credits', ...(await status(user)) }, 402);
+      return reject('insufficient_credits', 402, await status(user));
     }
     if (subscribed && s.subscriber_monthly_chars && (await monthChars(user.id)) >= s.subscriber_monthly_chars) {
-      return c.json({ error: 'fair_use' }, 429);
+      return reject('fair_use', 429);
     }
-    if (!translateLimiter(user.id)) return c.json({ error: 'rate_limited' }, 429);
+    if (!translateLimiter(user.id)) return reject('rate_limited', 429);
     const eventId = randomUUID();
     const accepted = await transaction(pool, async (client) => {
       // 包括 pending 与 failed；并发与连续失败不能绕过图片次数上限。
@@ -328,7 +342,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
           c.get('client').browser, c.get('client').browserMajor, c.get('client').os]);
       return true;
     });
-    if (!accepted) return c.json({ error: 'rate_limited' }, 429);
+    if (!accepted) return reject('rate_limited', 429);
     const precheckMs = since(c);
     const record = (meta, state, error = null) => pool.query(
       `UPDATE usage_events SET status = $2, provider = $3, model = $4, input_tokens = $5, cached_tokens = $6,
@@ -359,12 +373,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const audience = subscribed ? 'subscriber' : user.kind;
     /** 记录一次被拒绝的请求并返回对应的响应（不调用模型、不扣点、不保存原文）。 */
     const reject = async (reason, status, extra = {}, cost = null) => {
-      if (rejectionLogLimiter(`${user.id}:${reason}`)) {
-        await pool.query(
-          `INSERT INTO usage_rejections (user_id, reason, audience, chars, cost_units, target_lang, country) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-          [user.id, reason, audience, chars, cost, target, requestCountry(c, config)],
-        );
-      }
+      await logRejection(c, user, reason, { audience, chars, cost, target, surface });
       return { response: c.json({ error: reason, ...extra }, status) };
     };
 

@@ -340,7 +340,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
 
-test('托管功能排行复用既有请求，列出全部功能，旧版未分类请求单列', async () => {
+test('功能统计：同一账户同一功能同一天只算 1 次；失败也算使用，仅被拒单列，旧版未分类请求单列', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
   const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
@@ -365,25 +365,35 @@ test('托管功能排行复用既有请求，列出全部功能，旧版未分�
     [accounts.slice(0, users), kind, surface, status, requests, age, reference]);
   }
 
+  // 被拒：用户 1 在三天前被拒双语阅读（那天没用成，两条去重成 1 天）；被拒整站翻译（从没用过）；
+  // 当天已经用过 PDF 的被拒不重复计入。
+  await pool.query(`INSERT INTO usage_rejections (user_id, reason, surface, created_at) VALUES
+    ($1, 'insufficient_credits', 'reader', $2::timestamptz - interval '3 days'),
+    ($1, 'rate_limited', 'reader', $2::timestamptz - interval '3 days'),
+    ($1, 'insufficient_credits', 'site', $2::timestamptz - interval '1 day'),
+    ($1, 'insufficient_credits', 'pdf', $2::timestamptz - interval '1 day')`, [accounts[0], reference]);
+
   const page = await a.text('/features?days=7');
   const ranking = page.match(/<table data-feature-usage>[\s\S]*?<\/table>/)?.[0];
   assert.ok(ranking);
   const entries = [...ranking.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)]
     .map(([, row]) => [...row.matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map((cell) => cell[1]))
-    .filter((cells) => cells.length === 5);
-  // 全部功能都列出，没用过的为 0；旧版扩展未带功能类别的文字请求单列在最后，失败请求与范围外请求不计。
+    .filter((cells) => cells.length === 7);
+  // 列：功能、使用天次、使用人数、人均天数、覆盖率、仅被拒天次、请求数。范围外（8 天前）的请求不计。
   assert.deepEqual(entries, [
-    ['双语阅读', '6', '100.0%', '6', '1.0'], ['图片翻译', '5', '83.3%', '18', '3.6'],
-    ['整份 PDF 翻译', '4', '66.7%', '12', '3.0'],
-    ['划词翻译', '0', '0.0%', '0', '—'], ['翻译面板', '0', '0.0%', '0', '—'], ['网页区域', '0', '0.0%', '0', '—'],
-    ['整站翻译', '0', '0.0%', '0', '—'], ['视频字幕', '0', '0.0%', '0', '—'], ['其他译法', '0', '0.0%', '0', '—'],
-    ['未区分（旧版扩展）', '6', '100.0%', '6', '1.0'],
+    ['双语阅读', '6', '6', '1.0', '100.0%', '1', '6'],
+    ['整份 PDF 翻译', '6', '6', '1.0', '100.0%', '0', '18'],
+    ['图片翻译', '5', '5', '1.0', '83.3%', '0', '18'],
+    ['整站翻译', '0', '0', '—', '0.0%', '1', '0'],
+    ['划词翻译', '0', '0', '—', '0.0%', '0', '0'], ['翻译面板', '0', '0', '—', '0.0%', '0', '0'],
+    ['网页区域', '0', '0', '—', '0.0%', '0', '0'], ['视频字幕', '0', '0', '—', '0.0%', '0', '0'],
+    ['其他译法', '0', '0', '—', '0.0%', '0', '0'],
+    ['未区分（旧版扩展）', '6', '6', '1.0', '100.0%', '0', '6'],
   ]);
-  assert.match(ranking, /<tr class="muted">\s*<td>划词翻译<\/td>/, '没用过的功能淡化显示');
+  assert.match(ranking, /<tr class="muted">\s*<td>划词翻译<\/td>/, '没用过也没被拒的功能淡化显示');
   assert.doesNotMatch(ranking, /report-/);
-  assert.match(page, /已使用功能[\s\S]*?3 \/ 9/);
-  assert.match(page, /成功请求[\s\S]*?42[\s\S]*?人均 7\.0 次/, '合计按数字相加，含未区分请求');
-  assert.doesNotMatch(page, /展示门槛|每项至少/);
+  assert.match(page, /使用天次[\s\S]*?23[\s\S]*?已使用功能 3 \/ 9/);
+  assert.match(page, /仅被拒天次[\s\S]*?>2</);
 });
 
 test('托管功能统计在管理端展示，用户端只保留常规用量页面', async () => {
@@ -406,7 +416,8 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
     ) AS e(kind, surface, status, age)`, [id, period.endDay, timeZone, 'chrome', 142, 'windows']);
 
   const detail = `/users/${id}`;
-  const counts = /整份 PDF 翻译<\/td><td class="num">3<\/td>[\s\S]*图片翻译<\/td><td class="num">2<\/td>/;
+  // 列：功能、使用天数、请求数。PDF 三条请求落在两天；识图与图片文字翻译同一天算 1 天；失败的整站翻译也算使用。
+  const counts = /整份 PDF 翻译<\/td><td class="num">2<\/td><td class="num">3<\/td>[\s\S]*图片翻译<\/td><td class="num">1<\/td><td class="num">2<\/td>/;
   const personal = await customer.text('/usage');
   assert.match(personal, /用量与点数/);
   assert.doesNotMatch(personal, /\/usage\/features|托管功能使用/);
@@ -416,8 +427,8 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   const featureTable = adminDetail.match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
   assert.ok(featureTable);
   assert.match(featureTable, counts);
-  assert.match(featureTable, /翻译面板<\/td><td class="num">1<\/td>/);
-  assert.doesNotMatch(featureTable, /整站翻译/);
+  assert.match(featureTable, /翻译面板<\/td><td class="num">1<\/td><td class="num">1<\/td>/);
+  assert.match(featureTable, /整站翻译<\/td><td class="num">1<\/td><td class="num">1<\/td>/);
   assert.doesNotMatch(adminDetail, /查看用户已授权的功能统计|授权范围内|向技术支持分享统计/);
   assert.match(adminDetail, /<dt>最近客户端<\/dt><dd>Chrome 142 · Windows<\/dd>/);
   assert.equal((await a.post(detail + '/feature-usage', {})).status, 404, '旧的授权查看入口已移除');

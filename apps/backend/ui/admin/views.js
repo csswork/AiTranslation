@@ -487,38 +487,39 @@ ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最
   });
 }
 
-/** 功能使用统计：单独子页面，按功能列出使用人数与成功请求数。 */
+/** 功能使用统计：单独子页面。同一账户、同一功能、同一自然日只算 1 次，按使用天次排序。 */
 export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
   const { rows, activeAccounts } = ranking;
-  const totalRequests = rows.reduce((n, row) => n + row.requests, 0);
-  const used = rows.filter((row) => row.key !== UNCLASSIFIED_FEATURE && row.requests).length;
-  const average = activeAccounts ? totalRequests / activeAccounts : 0;
+  const sum = (field) => rows.reduce((n, row) => n + row[field], 0);
+  const used = rows.filter((row) => row.key !== UNCLASSIFIED_FEATURE && row.userDays).length;
   return layout({
     title: '托管功能使用统计',
     admin,
     active: 'features',
     body: html`<div class="dashboard-heading">
   <div><p class="dashboard-eyebrow">HUACI / FEATURES</p><h1>托管功能使用统计</h1>
-    <p class="muted">只统计成功的托管请求；一次 PDF 或整站翻译可能发起多条请求。</p></div>
+    <p class="muted">同一账户、同一功能、同一天只算 1 次；一次 PDF、整站或图片翻译发出的多条请求不重复计算。</p></div>
   <div class="dashboard-period"><nav class="seg" aria-label="统计时间范围">${[7, 30, 90].map((n) => html`<a href="/features?days=${n}"${n === days ? html` aria-current="page"` : ''}>近 ${n} 天</a>`)}</nav>
     <span>${labels[0]} — ${labels.at(-1)} · ${timeZone}</span></div>
 </div>
 <section class="kpis">
-  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有成功托管请求' })}
-  ${kpiCard({ label: '已使用功能', value: `${num(used)} / ${num(Object.keys(FEATURE_LABELS).length)}`, sub: '有成功请求的功能' })}
-  ${kpiCard({ label: '成功请求', value: num(totalRequests), sub: `人均 ${average.toFixed(1)} 次` })}
+  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有托管请求被受理' })}
+  ${kpiCard({ label: '使用天次', value: num(sum('userDays')), sub: `已使用功能 ${num(used)} / ${num(Object.keys(FEATURE_LABELS).length)}` })}
+  ${kpiCard({ label: '仅被拒天次', value: num(sum('rejectedDays')), sub: '点数不足、限频等，当天没用成' })}
 </section>
 <section class="card"><div class="table-wrap"><table data-feature-usage>
-  <thead><tr><th>功能</th><th class="num">使用人数</th><th class="num">覆盖率</th><th class="num">成功请求数</th><th class="num">人均请求</th></tr></thead>
-  <tbody>${rows.map(({ key, accounts, requests }) => html`<tr${requests ? '' : html` class="muted"`}>
+  <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用天次</th><th class="num">使用人数</th><th class="num">人均天数</th><th class="num">覆盖率</th><th class="num">仅被拒天次</th><th class="num">请求数</th></tr></thead>
+  <tbody>${rows.map(({ key, userDays, accounts, requests, rejectedDays }) => html`<tr${userDays || rejectedDays ? '' : html` class="muted"`}>
     <td>${featureLabel(key)}</td>
+    <td class="num">${num(userDays)}</td>
     <td class="num">${num(accounts)}</td>
+    <td class="num">${accounts ? (userDays / accounts).toFixed(1) : '—'}</td>
     <td class="num">${pct(accounts, activeAccounts)}</td>
+    <td class="num">${num(rejectedDays)}</td>
     <td class="num">${num(requests)}</td>
-    <td class="num">${accounts ? (requests / accounts).toFixed(1) : '—'}</td>
   </tr>`)}</tbody>
 </table></div>
-<p class="fine">覆盖率以有成功托管请求的账户为分母。日期按 ${timeZone} 统计。2.3.0 及更早的扩展不上报功能类别，它们的文字翻译请求记为「${UNCLASSIFIED_LABEL}」；独立的识图请求仍计入图片翻译。</p></section>`,
+<p class="fine">使用天次：账户 × 自然日（${timeZone}），当天这个功能至少有一条被受理的托管请求（成功、失败或处理中）就算 1 次。仅被拒天次：当天只有被拒绝的请求。覆盖率以活跃账户为分母。请求数只作参考，一次操作可能发出多条请求。2.3.0 及更早的扩展不上报功能类别，记为「${UNCLASSIFIED_LABEL}」；它们的识图请求仍计入图片翻译，但识图后的文字翻译计入未区分。只统计点数翻译，自带 Key 和本机翻译不经过服务器，不在此列。</p></section>`,
   });
 }
 
@@ -963,10 +964,10 @@ ${installsSection(installs, u)}
 
 ${featureUsage ? html`<section class="card" id="feature-usage">
   <h2>托管功能使用</h2>
-  <p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。一次翻译操作可能发起多条请求。</p>
+  <p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。同一功能同一天只算 1 天；请求含失败与处理中。</p>
   ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
-    <thead><tr><th>功能</th><th class="num">成功请求数</th></tr></thead>
-    <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${featureLabel(key)}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
+    <thead><tr><th>功能</th><th class="num">使用天数</th><th class="num">请求数</th></tr></thead>
+    <tbody>${featureUsage.rows.map(({ key, days, requests }) => html`<tr><td>${featureLabel(key)}</td><td class="num">${num(days)}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
   </table></div>` : html`<p class="muted">这段时间暂无托管功能使用记录。</p>`}
 </section>` : ''}
 

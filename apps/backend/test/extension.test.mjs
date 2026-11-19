@@ -659,6 +659,21 @@ test('图片托管：未登录、网页凭据、空余额、冻结、暂停与�
   await settings.set('hosted_enabled', false);
   assert.equal((await read()).status, 503);
   assert.equal(images.length, 0);
+  // 被拒的识图记为图片翻译功能，功能统计才能看到被拒的需求；非法图片属于请求错误，不记。
+  const { rows } = await pool.query('SELECT reason, surface FROM usage_rejections ORDER BY created_at');
+  assert.deepEqual(rows.map((r) => `${r.reason}:${r.surface}`), ['insufficient_credits:image', 'frozen:image', 'hosted_unavailable:image']);
+});
+
+test('被拒的文字请求记录功能类别；非法类别记为空', async () => {
+  const { app, config, mailbox } = buildApp({ pool, hosted: fakeHosted().hosted });
+  const { token } = await extensionLogin(app, config, mailbox, 'reject-surface@example.com');
+  await pool.query('DELETE FROM credit_ledger');
+  for (const surface of ['site', 'site', 'pdf', 'bogus']) {
+    const res = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'ja', surface } });
+    assert.equal(res.status, 402);
+  }
+  const { rows } = await pool.query("SELECT COALESCE(surface, '-') AS surface, COUNT(*)::int AS n FROM usage_rejections GROUP BY 1 ORDER BY 1");
+  assert.deepEqual(rows, [{ surface: '-', n: 1 }, { surface: 'pdf', n: 1 }, { surface: 'site', n: 2 }]);
 });
 
 test('图片托管：模型失败不扣点，失败及并发请求也受可配置的小时上限约束', async () => {

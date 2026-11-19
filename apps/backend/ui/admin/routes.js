@@ -213,7 +213,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const labels = dayLabels(days, config.reportTimeZone);
     const { rows: [{ start }] } = await pool.query(
       'SELECT $1::date::timestamp AT TIME ZONE $2 AS start', [labels[0], config.reportTimeZone]);
-    const ranking = await featureUsageRanking(pool, { from: start, to: new Date() });
+    const ranking = await featureUsageRanking(pool, { from: start, to: new Date(), timeZone: config.reportTimeZone });
     return page(c, () => views.featureUsagePage({
       admin: admin(c), days, labels, timeZone: config.reportTimeZone, ranking,
     }), 200, '/features');
