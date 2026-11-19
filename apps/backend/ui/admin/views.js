@@ -19,6 +19,7 @@ import { activityCharts } from '../credit-activity.js';
 
 const NAV = [
   { href: '/', label: '运营概览', key: 'overview' },
+  { href: '/features', label: '功能统计', key: 'features' },
   { href: '/api-usage', label: 'API 用量', key: 'api' },
   { href: '/expenses', label: '收支', key: 'expenses' },
   { href: '/users', label: '用户', key: 'users' },
@@ -292,19 +293,6 @@ const panel = (title, body, { note = '', wide = false, span = '', value = '' } =
 
 const emptyChart = (text = '所选范围内暂无可展示的数据') => html`<div class="dashboard-empty">${text}</div>`;
 
-function featureUsageTable({ rows, minAccounts, activeAccounts }) {
-  const body = rows.length ? html`<div class="table-wrap"><table>
-    <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用账户数</th><th class="num">覆盖率</th><th class="num">成功请求数</th></tr></thead>
-    <tbody>${rows.map(({ key, requests, accounts }) => html`<tr>
-      <td>${FEATURE_LABELS[key]}</td><td class="num">${num(accounts)}</td><td class="num">${pct(accounts, activeAccounts)}</td><td class="num">${num(requests)}</td>
-    </tr>`)}</tbody>
-  </table></div>` : emptyChart('所选范围内暂无达到展示门槛的功能');
-  return panel('托管功能使用排行', body, {
-    wide: true,
-    note: `使用现有托管请求记录。覆盖率以有可归类成功请求的账户为分母。一次 PDF 或整站翻译可能发起多条请求。每项至少有 ${minAccounts} 个账户才展示。`,
-  });
-}
-
 // 日期已经按报表时区切分；不要在浏览器把 YYYY-MM-DD 再换算成另一时区。
 const timeChart = ({ timeZone, ...options }) => renderTimeChart({
   width: 760, height: 260, interactive: true, labelFormat: (day) => day.slice(5).replace('-', '/'),
@@ -431,7 +419,7 @@ export function overviewPage({ admin, r, geoConfigured, mapMode = 'usage' }) {
 <div class="dashboard-heading"><div><p class="dashboard-eyebrow">HUACI / OVERVIEW</p><h1>运营概览</h1><p class="muted">用量、收支与用户增长，一处掌握。</p></div>
   <div class="dashboard-period"><nav class="seg" aria-label="统计时间范围">${[7, 30, 90].map((n) => html`<a href="/?days=${n}&map=${mapMode}"${n === r.days ? html` aria-current="page"` : ''}>近 ${n} 天</a>`)}</nav><span>${labels[0]} — ${labels.at(-1)}</span></div>
 </div>
-<div class="dashboard-toolbar"><nav aria-label="概览分区">${r.recentInstalls.installs ? html`<a href="#installs">最近安装</a>` : ''}<a href="#api">API 消耗</a><a href="#business">经营收支</a><a href="#growth">用户增长</a><a href="#audience">语言与地区</a><a href="#performance">性能与异常</a></nav><span>环比上期 · ${r.timeZone}</span></div>
+<div class="dashboard-toolbar"><nav aria-label="概览分区">${r.recentInstalls.installs ? html`<a href="#installs">最近安装</a>` : ''}<a href="/features">功能统计</a><a href="#api">API 消耗</a><a href="#business">经营收支</a><a href="#growth">用户增长</a><a href="#audience">语言与地区</a><a href="#performance">性能与异常</a></nav><span>环比上期 · ${r.timeZone}</span></div>
 ${r.recentInstalls.installs ? html`<section class="dashboard-section" id="installs">
 <div class="dashboard-section-head"><div><h2 class="section-title">最近 7 天安装</h2><p>新装的人是谁、来自哪个版本，装完有没有开始用。固定看最近 7 天，不随时间范围变化。</p></div><a href="/users?kind=all&amp;sort=created">查看全部用户 ↗</a></div>
 <section class="card panel install-panel">${recentInstallList(r.recentInstalls)}</section>
@@ -448,7 +436,6 @@ ${money.expenses}
 <div class="panels dashboard-grid">
   ${panel('增长趋势', growth || emptyChart(), { span: 'main', note: '安装 · 注册 · 活跃 · 新订阅' })}
   ${panel('请求来自', audienceDonut || emptyChart('暂无托管请求'), { span: 'side', note: '按请求时的用户类型' })}
-  ${featureUsageTable(r.featureUsage)}
   ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
@@ -495,6 +482,40 @@ ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最
 <p class="dashboard-note">日期与时段均按 ${r.timeZone} 统计；环比为上一个等长周期。模型成本与手续费为估算，收入为 USD 税前金额，其他币种单列。</p>
 </div>
 `,
+  });
+}
+
+/** 功能使用统计：单独子页面，按功能列出使用人数与成功请求数。 */
+export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
+  const { rows, minAccounts, activeAccounts } = ranking;
+  const totalRequests = rows.reduce((n, row) => n + row.requests, 0);
+  const average = activeAccounts ? totalRequests / activeAccounts : 0;
+  return layout({
+    title: '托管功能使用统计',
+    admin,
+    active: 'features',
+    body: html`<div class="dashboard-heading">
+  <div><p class="dashboard-eyebrow">HUACI / FEATURES</p><h1>托管功能使用统计</h1>
+    <p class="muted">只统计成功的托管请求；一次 PDF 或整站翻译可能发起多条请求。</p></div>
+  <div class="dashboard-period"><nav class="seg" aria-label="统计时间范围">${[7, 30, 90].map((n) => html`<a href="/features?days=${n}"${n === days ? html` aria-current="page"` : ''}>近 ${n} 天</a>`)}</nav>
+    <span>${labels[0]} — ${labels.at(-1)} · ${timeZone}</span></div>
+</div>
+<section class="kpis">
+  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有可归类成功请求' })}
+  ${kpiCard({ label: '展示功能', value: num(rows.length), sub: `每项至少 ${minAccounts} 个账户` })}
+  ${kpiCard({ label: '成功请求', value: num(totalRequests), sub: `人均 ${average.toFixed(1)} 次` })}
+</section>
+${rows.length ? html`<section class="card"><div class="table-wrap"><table data-feature-usage>
+  <thead><tr><th>功能</th><th class="num">使用人数</th><th class="num">覆盖率</th><th class="num">成功请求数</th><th class="num">人均请求</th></tr></thead>
+  <tbody>${rows.map(({ key, accounts, requests }) => html`<tr>
+    <td>${FEATURE_LABELS[key]}</td>
+    <td class="num">${num(accounts)}</td>
+    <td class="num">${pct(accounts, activeAccounts)}</td>
+    <td class="num">${num(requests)}</td>
+    <td class="num">${accounts ? (requests / accounts).toFixed(1) : '—'}</td>
+  </tr>`)}</tbody>
+</table></div>
+<p class="fine">覆盖率以有可归类成功请求的账户为分母。日期按 ${timeZone} 统计；每项至少有 ${minAccounts} 个账户才展示，避免小样本暴露个人。</p></section>` : html`<section class="card"><p class="muted">所选范围内暂无达到展示门槛的功能。</p></section>`}`,
   });
 }
 

@@ -24,13 +24,20 @@ export async function featureUsageRanking(db, { from, to }) {
      ORDER BY accounts DESC, requests DESC, key`,
     [from, to, FEATURE_USAGE_MIN_ACCOUNTS],
   );
-  return { rows, minAccounts: FEATURE_USAGE_MIN_ACCOUNTS, activeAccounts: rows[0]?.active_accounts || 0 };
+  if (rows.length) return { rows, minAccounts: FEATURE_USAGE_MIN_ACCOUNTS, activeAccounts: rows[0].active_accounts || 0 };
+  // 没有达到展示门槛的功能时，仍返回活跃账户总数，避免页面把「有使用但样本小」显示成 0。
+  const { rows: [totals] } = await db.query(
+    `SELECT COUNT(DISTINCT user_id)::int AS active_accounts FROM usage_events
+     WHERE ${CLASSIFIED} AND created_at >= $1 AND created_at < $2`,
+    [from, to],
+  );
+  return { rows, minAccounts: FEATURE_USAGE_MIN_ACCOUNTS, activeAccounts: totals.active_accounts };
 }
 
-/** 查询范围为之前完整的 30 个自然日，endDay 是不包含在内的今天。 */
+/** 查询范围为最近 30 个自然日（含今天），endDay 是今天的日期。 */
 function featureUsagePeriod(endDay, timeZone) {
   const day = new Date(`${endDay}T00:00:00Z`);
-  const labels = dayLabels(FEATURE_USAGE_DAYS, 'UTC', 1, day);
+  const labels = dayLabels(FEATURE_USAGE_DAYS, 'UTC', 0, day);
   return { fromDay: labels[0], lastDay: labels.at(-1), endDay, timeZone };
 }
 
@@ -42,7 +49,8 @@ export async function featureUsageForAccount(db, userId, period) {
   const { rows } = await db.query(
     `SELECT ${FEATURE} AS key, COUNT(*)::int AS requests
      FROM usage_events WHERE user_id = $1 AND ${CLASSIFIED}
-       AND created_at >= ($2::date::timestamp AT TIME ZONE $4) AND created_at < ($3::date::timestamp AT TIME ZONE $4)
+       AND created_at >= ($2::date::timestamp AT TIME ZONE $4)
+       AND created_at < (($3::date::timestamp AT TIME ZONE $4) + interval '1 day')
      GROUP BY 1 ORDER BY requests DESC, key`,
     [userId, period.fromDay, period.endDay, period.timeZone],
   );

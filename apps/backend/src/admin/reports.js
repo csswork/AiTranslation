@@ -9,7 +9,6 @@
  */
 
 import { dayLabels, financeReport } from './finance.js';
-import { featureUsageRanking } from '../usage/features.js';
 
 const ENTITLED = ['active', 'trialing', 'paid', 'scheduled_cancel', 'past_due'];
 const ACTIVE_SUB = `status = ANY($1) AND (current_period_end IS NULL OR current_period_end > now())`;
@@ -50,7 +49,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
 
   const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers, browserDays,
     installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed,
-    versions, recentInstalls, recentTotals, featureUsage, upgrades, requestClients] = await Promise.all([
+    versions, recentInstalls, recentTotals, upgrades, requestClients] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
     q(`SELECT plan, COUNT(*)::int AS n FROM subscriptions WHERE ${ACTIVE_SUB} GROUP BY plan`, [ENTITLED]),
@@ -176,7 +175,6 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
               COUNT(*) FILTER (WHERE EXISTS (SELECT 1 FROM usage_events ev WHERE ev.user_id = COALESCE(g.merged_user_id, g.user_id)
                                               AND ev.status = 'ok' AND ev.created_at >= g.created_at))::int AS used
        FROM guest_claims g WHERE g.created_at > now() - interval '7 days'`),
-    featureUsageRanking(db, { from, to: now }),
     q(`SELECT to_char(reported_at AT TIME ZONE $3, 'YYYY-MM-DD') AS day, extension_id, from_version, to_version, COUNT(*)::int AS upgrades
        FROM extension_upgrades WHERE reported_at >= $1 AND reported_at < $2
        GROUP BY 1, 2, 3, 4 ORDER BY day DESC, upgrades DESC, extension_id, from_version, to_version`, [...window, timeZone]),
@@ -231,7 +229,6 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     upgrades,
     requestClients,
     recentInstalls: { rows: recentInstalls, ...recentTotals[0] },
-    featureUsage,
     outcomes,
     errors,
     topUsers,

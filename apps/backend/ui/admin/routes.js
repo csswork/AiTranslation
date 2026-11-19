@@ -25,7 +25,7 @@ import { clearPreference, setPreference } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter, limitBody } from '../../src/http/security.js';
 import { SETTINGS } from '../../src/settings/index.js';
 import { creditActivity } from '../../src/usage/activity.js';
-import { featureUsageForAccount, recentFeatureUsagePeriod } from '../../src/usage/features.js';
+import { featureUsageForAccount, featureUsageRanking, recentFeatureUsagePeriod } from '../../src/usage/features.js';
 import { THEMES, safePath } from '../account/context.js';
 import * as views from './views.js';
 
@@ -204,6 +204,19 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const days = [7, 30, 90].includes(Number(c.req.query('days'))) ? Number(c.req.query('days')) : 30;
     const r = await overview(pool, days, { settings: await settings.all(), timeZone: config.reportTimeZone });
     return page(c, () => views.overviewPage({ admin: admin(c), r, geoConfigured: Boolean(config.geoCountryHeader), mapMode: c.req.query('map') }));
+  });
+
+  /* ---------- 功能使用统计 ---------- */
+
+  app.get('/features', requireAdmin, async (c) => {
+    const days = [7, 30, 90].includes(Number(c.req.query('days'))) ? Number(c.req.query('days')) : 30;
+    const labels = dayLabels(days, config.reportTimeZone);
+    const { rows: [{ start }] } = await pool.query(
+      'SELECT $1::date::timestamp AT TIME ZONE $2 AS start', [labels[0], config.reportTimeZone]);
+    const ranking = await featureUsageRanking(pool, { from: start, to: new Date() });
+    return page(c, () => views.featureUsagePage({
+      admin: admin(c), days, labels, timeZone: config.reportTimeZone, ranking,
+    }), 200, '/features');
   });
 
   /* ---------- API 用量：每位用户 ---------- */

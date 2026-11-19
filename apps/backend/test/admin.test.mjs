@@ -115,7 +115,8 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
   // 核心指标保留零值，主要图表显示空状态，不伪造曲线、构成或排行。
   assert.match(overview, /API 消耗[\s\S]*输入 token[\s\S]*经营[\s\S]*净收入[\s\S]*US\$0\.00[\s\S]*收入[\s\S]*支出[\s\S]*用户与使用[\s\S]*托管请求[\s\S]*有效订阅[\s\S]*增长趋势/);
   assert.match(overview, /暂无托管请求[\s\S]*暂无模型成本数据/);
-  assert.match(overview, /托管功能使用排行[\s\S]*所选范围内暂无达到展示门槛的功能/);
+  assert.doesNotMatch(overview, /托管功能使用排行/);
+  assert.match(overview, /href="\/features">功能统计/);
   assert.doesNotMatch(overview, /转化漏斗|每日收入|每日支出|按服务商与模型|class="arc |class="chart heat"/);
   assert.match(overview, /<script src="\/assets\/chart-tooltip\.js\?v=[a-f0-9]+" defer/);
   const headers = (await a.get('/')).headers;
@@ -320,7 +321,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(installs, /#[0-9a-f]{8}<\/a><span class="install-tag guest">访客<\/span>/, '访客显示短 ID，状态标签说明是访客');
   assert.match(installs, /<span class="install-ver" title="安装时的扩展版本">其他 2\.3\.0<\/span>/, '显示安装时的扩展版本');
   assert.ok(page.indexOf('id="installs"') < page.indexOf('id="api"'), '最近安装放在首页最上面');
-  assert.match(page, /<a href="#installs">最近安装<\/a><a href="#api">/);
+  assert.match(page, /<a href="#installs">最近安装<\/a><a href="\/features">功能统计<\/a><a href="#api">/);
   assert.match(page, /<div class="install-summary">\s*<span><strong>4<\/strong>次安装<\/span>\s*<span><strong>0\.0%<\/strong>已注册<\/span>\s*<span><strong>100\.0%<\/strong>已开始使用/);
   assert.match(page, /<summary>响应速度[\s\S]*按国家[\s\S]*按人群[\s\S]*按场景/);
   const sg = page.match(/SG<\/td>([\s\S]*?)<\/tr>/)?.[1].match(/<td class="num">[^<]*<\/td>/g).map((td) => td.replace(/<[^>]+>/g, ''));
@@ -364,12 +365,14 @@ test('托管功能排行复用既有请求，按账户数排序并隐藏小样�
     [accounts.slice(0, users), kind, surface, status, requests, age, reference]);
   }
 
-  const page = await a.text('/?days=7');
-  const ranking = page.match(/<h2>托管功能使用排行<\/h2>[\s\S]*?<\/section>/)?.[0];
+  const page = await a.text('/features?days=7');
+  const ranking = page.match(/<table data-feature-usage>[\s\S]*?<\/table>/)?.[0];
   assert.ok(ranking);
-  const entries = [...ranking.matchAll(/<td>([^<]+)<\/td>(?:<td class="num">[^<]+<\/td>){3}/g)];
-  assert.deepEqual(entries.map(([row]) => [...row.matchAll(/>([^<>]+)<\/td>/g)].map((entry) => entry[1])), [
-    ['双语阅读', '6', '100.0%', '6'], ['图片翻译', '5', '83.3%', '18'],
+  const entries = [...ranking.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+    .map(([, row]) => [...row.matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map((cell) => cell[1]))
+    .filter((cells) => cells.length === 5);
+  assert.deepEqual(entries, [
+    ['双语阅读', '6', '100.0%', '6', '1.0'], ['图片翻译', '5', '83.3%', '18', '3.6'],
   ]);
   assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
 });
@@ -404,7 +407,8 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   const featureTable = adminDetail.match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
   assert.ok(featureTable);
   assert.match(featureTable, counts);
-  assert.doesNotMatch(featureTable, /整站翻译|翻译面板/);
+  assert.match(featureTable, /翻译面板<\/td><td class="num">1<\/td>/);
+  assert.doesNotMatch(featureTable, /整站翻译/);
   assert.doesNotMatch(adminDetail, /查看用户已授权的功能统计|授权范围内|向技术支持分享统计/);
   assert.match(adminDetail, /<dt>最近客户端<\/dt><dd>Chrome 142 · Windows<\/dd>/);
   assert.equal((await a.post(detail + '/feature-usage', {})).status, 404, '旧的授权查看入口已移除');
