@@ -109,7 +109,7 @@ test('历史安装归为 Chrome：只补 012 之前没有来源的记录与账�
     );
     await pool.query(`INSERT INTO user_extensions (user_id, extension_id, first_seen_at) VALUES ($1, $2, '2026-10-27T01:00:00Z')`, [fresh, EDGE]);
 
-    assert.deepEqual(await migrate(pool), ['013_backfill_chrome_source.sql', '014_firefox_extension_source.sql', '015_latency_breakdown.sql', '016_extension_versions.sql', '017_install_versions.sql', '018_feature_usage.sql', '019_extension_upgrades.sql', '020_feature_usage_share_scope.sql', '021_remove_feature_usage_shares.sql']);
+    assert.deepEqual(await migrate(pool), ['013_backfill_chrome_source.sql', '014_firefox_extension_source.sql', '015_latency_breakdown.sql', '016_extension_versions.sql', '017_install_versions.sql', '018_feature_usage.sql', '019_extension_upgrades.sql', '020_feature_usage_share_scope.sql', '021_remove_feature_usage_shares.sql', '022_client_dimensions.sql']);
     const ext = async (id) => (await pool.query('SELECT extension_id FROM guest_claims WHERE id = $1', [id])).rows[0].extension_id;
     assert.equal(await ext(oldGuestClaim), CHROME);
     assert.equal(await ext(mergedClaim), CHROME);

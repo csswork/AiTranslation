@@ -264,7 +264,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
 
   const renderUser = async (c, u) => {
     const period = u.kind === 'member' ? recentFeatureUsagePeriod(config.reportTimeZone) : null;
-    const [state, subs, activity, sessions, api, installs, extensions, versions, featureRows] = await Promise.all([
+    const [state, subs, activity, sessions, api, installs, extensions, versions, featureRows, clientRows] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
@@ -274,11 +274,13 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       pool.query('SELECT extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [u.id]),
       extensionVersions(pool),
       period ? featureUsageForAccount(pool, u.id, period) : [],
+      pool.query(`SELECT browser, browser_major, os FROM usage_events
+        WHERE user_id = $1 AND browser IS NOT NULL ORDER BY created_at DESC LIMIT 1`, [u.id]),
     ]);
     const featureUsage = period ? { ...period, rows: featureRows } : null;
     return page(c, () => views.userPage({
       admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),
-      featureUsage,
+      featureUsage, client: clientRows.rows[0] || null,
     }), 200, `/users/${u.id}`);
   };
 

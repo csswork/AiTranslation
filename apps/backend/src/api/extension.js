@@ -25,6 +25,7 @@ import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.
 import { countCharacters, creditsToUnits, displayCredits } from '../credits/units.js';
 import { transaction } from '../db/index.js';
 import { createGuest, ipHash, mergeGuest } from '../guest/index.js';
+import { requestClient } from '../http/client.js';
 import { clientAddress, createRateLimiter, limitBody, requestCountry } from '../http/security.js';
 import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
@@ -78,6 +79,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     // 响应速度拆分（precheck_ms、ttft_ms、server_ms）都从这里开始计时。
     c.set('startedAt', performance.now());
     c.set('extVersion', readExtensionVersion(c.req.header('x-huaci-version')));
+    c.set('client', requestClient(c));
     const origin = c.req.header('origin') || '';
     const id = extensionIdFromOrigin(origin);
     const allowed = id && isAllowedExtension(id, config);
@@ -125,7 +127,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     // 扩展 ID 区分来源商店（Chrome / Edge），只用于报表与管理端。
     // Firefox's supplied add-on ID is only a store reporting label, never authentication.
     const extensionId = matchExtension(c, body.extensionId);
-    const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId, extVersion: c.get('extVersion') });
+    const result = await createGuest(pool, config, await settings.all(), address, {
+      country: requestCountry(c, config), uiLang, extensionId, extVersion: c.get('extVersion'), ...c.get('client'),
+    });
     return c.json({
       token: result.token,
       tokenType: 'Bearer',
@@ -318,9 +322,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         "SELECT COUNT(*)::int AS requests FROM usage_events WHERE user_id = $1 AND kind = 'image' AND created_at >= now() - interval '1 hour'", [user.id]);
       if (row.requests >= s.hosted_image_hourly_requests) return false;
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, ext_version)
-         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4, $5)`,
-        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config), c.get('extVersion')]);
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, ext_version, browser, browser_major, os)
+         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4, $5, $6, $7, $8)`,
+        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config), c.get('extVersion'),
+          c.get('client').browser, c.get('client').browserMajor, c.get('client').os]);
       return true;
     });
     if (!accepted) return c.json({ error: 'rate_limited' }, 429);
@@ -374,9 +379,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream, ext_version)
-         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10, $11)`,
-        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream, c.get('extVersion')],
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream, ext_version, browser, browser_major, os)
+         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream, c.get('extVersion'),
+          c.get('client').browser, c.get('client').browserMajor, c.get('client').os],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);

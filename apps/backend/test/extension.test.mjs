@@ -68,6 +68,27 @@ test('扩展升级复用已匹配的商店 ID，重试只留一条记录，常�
   assert.equal((await pool.query('SELECT version FROM user_extensions')).rows[0].version, to);
 });
 
+test('托管请求记录浏览器家族、主版本与系统，不保存原始 User-Agent', async () => {
+  const config = testConfig({ EXTENSION_IDS: `${EXT_ID},${FIREFOX_EXTENSION_ID}` });
+  const { hosted } = fakeHosted();
+  const { app } = buildApp({ pool, config, hosted });
+  const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36';
+  const guest = await api(app, config, '/guest', {
+    method: 'POST', body: { extensionId: EXT_ID }, headers: { 'x-huaci-version': '2.3.0', 'user-agent': ua },
+  });
+  const { token } = await guest.json();
+  const { rows: [claim] } = await pool.query('SELECT browser, browser_major, os FROM guest_claims');
+  assert.deepEqual(claim, { browser: 'chrome', browser_major: 142, os: 'windows' });
+
+  const translated = await api(app, config, '/translate', {
+    method: 'POST', token, headers: { 'user-agent': ua }, body: { texts: ['Hello'], target: 'fr' },
+  });
+  assert.equal(translated.status, 200);
+  const { rows: [event] } = await pool.query('SELECT browser, browser_major, os FROM usage_events');
+  assert.deepEqual(event, { browser: 'chrome', browser_major: 142, os: 'windows' });
+  assert.ok(!(await pool.query("SELECT column_name FROM information_schema.columns WHERE table_name = 'usage_events' AND column_name ILIKE '%agent%'")).rowCount);
+});
+
 test('Firefox：只允许明确列出的扩展使用固定 HTTPS 回调，PKCE 换取会话且不放开随机来源', async () => {
   const config = testConfig({ EXTENSION_IDS: `${EXT_ID},${FIREFOX_EXTENSION_ID}` });
   const redirect = config.appOrigin + FIREFOX_CALLBACK_PATH;

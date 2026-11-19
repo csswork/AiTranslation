@@ -382,8 +382,8 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   const customer = await signInWithEmail(app, config, mailbox, 'feature-user@example.com');
   const { rows: [{ id }] } = await pool.query("SELECT id FROM users WHERE email = 'feature-user@example.com'");
   const period = recentFeatureUsagePeriod(timeZone);
-  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at)
-    SELECT $1, kind, surface, status, 0, 0, ($2::date::timestamp + age) AT TIME ZONE $3 FROM (VALUES
+  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, browser, browser_major, os)
+    SELECT $1, kind, surface, status, 0, 0, ($2::date::timestamp + age) AT TIME ZONE $3, $4, $5, $6 FROM (VALUES
       ('text', 'pdf', 'ok', interval '-3 days 16 hours'),
       ('text', 'pdf', 'ok', interval '-3 days 19 hours'),
       ('text', 'pdf', 'ok', interval '-1 day 1 hour'),
@@ -391,7 +391,7 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
       ('text', 'image', 'ok', interval '-2 days 2 hours'),
       ('text', 'site', 'failed', interval '-1 day 1 hour'),
       ('text', 'panel', 'ok', interval '0 hours')
-    ) AS e(kind, surface, status, age)`, [id, period.endDay, timeZone]);
+    ) AS e(kind, surface, status, age)`, [id, period.endDay, timeZone, 'chrome', 142, 'windows']);
 
   const detail = `/users/${id}`;
   const counts = /整份 PDF 翻译<\/td><td class="num">3<\/td>[\s\S]*图片翻译<\/td><td class="num">2<\/td>/;
@@ -406,9 +406,31 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   assert.match(featureTable, counts);
   assert.doesNotMatch(featureTable, /整站翻译|翻译面板/);
   assert.doesNotMatch(adminDetail, /查看用户已授权的功能统计|授权范围内|向技术支持分享统计/);
+  assert.match(adminDetail, /<dt>最近客户端<\/dt><dd>Chrome 142 · Windows<\/dd>/);
   assert.equal((await a.post(detail + '/feature-usage', {})).status, 404, '旧的授权查看入口已移除');
   assert.equal((await customer.post('/usage/features/share', {})).status, 404, '分享入口已移除');
   assert.equal((await customer.post('/usage/features/revoke', {})).status, 404, '撤回入口已移除');
+});
+
+test('运营概览：浏览器与系统按托管请求汇总', async () => {
+  const { overview } = await import('../src/admin/reports.js');
+  const { overviewPage } = await import('../ui/admin/views.js');
+  const { rows: [user] } = await pool.query(
+    "INSERT INTO users (email, username) VALUES ('client@example.com', 'client') RETURNING id",
+  );
+  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, browser, browser_major, os, created_at)
+    VALUES ($1, 'text', 'pdf', 'ok', 10, 10, 'chrome', 142, 'windows', now()),
+           ($1, 'text', 'pdf', 'ok', 10, 10, 'edge', 142, 'windows', now()),
+           ($1, 'text', 'reader', 'ok', 10, 10, 'firefox', 141, 'macos', now())`, [user.id]);
+  const report = await overview(pool, 7, { timeZone: 'Asia/Shanghai' });
+  assert.deepEqual(Object.fromEntries(report.requestClients.map((row) => [
+    `${row.browser}:${row.browser_major}:${row.os}`, row.requests,
+  ])), { 'chrome:142:windows': 1, 'edge:142:windows': 1, 'firefox:141:macos': 1 });
+  const page = String(await overviewPage({ admin: { email: 'client@example.com' }, r: report, geoConfigured: false }));
+  assert.match(page, /浏览器与系统/);
+  assert.match(page, /Chrome 142/);
+  assert.match(page, /Windows/);
+  assert.match(page, /macOS/);
 });
 
 test('运营首页：同一时区的自然日汇总与图表一致，历史无服务商记录也计入 token，缓存不重复', async () => {

@@ -255,6 +255,15 @@ function recentInstallList(recent) {
 ${recent.installs > recent.rows.length ? html`<p class="install-more">只列出最近 ${num(recent.rows.length)} 次</p>` : ''}`;
 }
 
+const BROWSER_NAMES = { chrome: 'Chrome', edge: 'Edge', firefox: 'Firefox', other: '其他' };
+const OS_NAMES = { windows: 'Windows', macos: 'macOS', linux: 'Linux', chromeos: 'ChromeOS', other: '其他' };
+/** 最近请求的客户端：浏览器家族 + 主版本 + 系统。 */
+const clientName = (row) => [row.browser ? `${BROWSER_NAMES[row.browser] || row.browser}${row.browser_major ? ` ${row.browser_major}` : ''}` : '',
+  row.os ? OS_NAMES[row.os] || row.os : ''].filter(Boolean).join(' · ');
+/** 安装记录里紧跟商店渠道的简短版本与系统。 */
+const clientSuffix = (row) => [row.browser_major ? `v${row.browser_major}` : '', row.os ? OS_NAMES[row.os] || row.os : '']
+  .filter(Boolean).join(' · ');
+
 const PROVIDER = { primary: ['主力模型', 'c1'], cache: ['缓存命中', 'c2'], fallback: ['主力失败 · 备用成功', 'c4'], failed: ['失败（已返还）', 'c5'] };
 const ERRORS = { primary_failed: '主力失败、备用成功', timeout: '超时', network: '网络错误', empty: '模型无内容', batch_parse: '批量结果解析失败', batch_shape: '批量条数不符' };
 
@@ -342,6 +351,33 @@ export function overviewPage({ admin, r, geoConfigured, mapMode = 'usage' }) {
     };
   });
 
+  // 客户端维度：按请求量汇总浏览器家族、系统与浏览器主版本；旧记录没有这些字段时不显示。
+  const requestClients = r.requestClients || [];
+  const browserTotals = Object.keys(BROWSER_NAMES).map((browser) => ({
+    label: BROWSER_NAMES[browser],
+    value: requestClients.filter((row) => row.browser === browser).reduce((n, row) => n + row.requests, 0),
+  })).filter((item) => item.value);
+  const osTotals = Object.keys(OS_NAMES).map((os) => ({
+    label: OS_NAMES[os],
+    value: requestClients.filter((row) => row.os === os).reduce((n, row) => n + row.requests, 0),
+  })).filter((item) => item.value);
+  const clientVersions = new Map();
+  for (const row of requestClients) {
+    const key = `${row.browser}:${row.browser_major || ''}`;
+    const item = clientVersions.get(key) || { browser: row.browser, major: row.browser_major, requests: 0 };
+    item.requests += row.requests;
+    clientVersions.set(key, item);
+  }
+  const clientVersionBars = [...clientVersions.values()].sort((a, b) => b.requests - a.requests).slice(0, 8).map((row) => ({
+    label: `${BROWSER_NAMES[row.browser] || row.browser}${row.major ? ` ${row.major}` : ''}`,
+    value: row.requests,
+  }));
+  const clientPanel = requestClients.length ? html`<div class="client-grid">
+    <div><h3>浏览器</h3>${barList(browserTotals, { cls: 'c1' })}</div>
+    <div><h3>系统</h3>${barList(osTotals, { cls: 'c2' })}</div>
+    <div><h3>浏览器主版本</h3>${barList(clientVersionBars, { cls: 'c3' })}</div>
+  </div>` : emptyChart('所选范围内暂无客户端数据（旧记录不含这些字段）');
+
   // 安装来源：Chrome / Edge 按扩展商店区分，每日堆叠柱状图 + 占比。
   const sourceOrder = [...Object.values(EXTENSION_STORES), '其他', '未记录'];
   const sourceCls = { Chrome: 'c1', Edge: 'c2', 其他: 'c4', 未记录: 'c6' };
@@ -416,6 +452,7 @@ ${money.expenses}
   ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
+  ${panel('浏览器与系统', clientPanel, { wide: true, note: '按托管请求 · 只保存浏览器家族、主版本与系统家族，不保存原始 User-Agent' })}
   ${panel('扩展升级记录', r.upgrades.length ? html`<div class="table-wrap"><table data-extension-upgrades>
     <thead><tr><th>上报日期</th><th>浏览器</th><th>原版本</th><th>升级到</th><th class="num">次数</th></tr></thead>
     <tbody>${r.upgrades.map((row) => html`<tr><td>${row.day}</td><td>${browserLabel(row.extension_id)}</td><td dir="ltr">${row.from_version}</td><td dir="ltr">${row.to_version}</td><td class="num">${num(row.upgrades)}</td></tr>`)}</tbody>
@@ -830,7 +867,7 @@ const installsSection = (installs, u) => {
     <tbody>${rows.map((r) => html`<tr data-relation="${r.relation}">
       <td>${dt(r.created_at)}</td>
       <td dir="ltr">${r.guest_id ? html`<code>${shortId(r.guest_id)}</code>` : '—'}${r.guest_alive && r.guest_id !== u.id ? html` <a href="/users/${r.guest_id}">查看</a>` : ''}</td>
-      <td>${browserLabel(r.extension_id)}</td>
+      <td>${browserLabel(r.extension_id)}${clientSuffix(r) ? html`<br><span class="muted">${clientSuffix(r)}</span>` : ''}</td>
       <td dir="ltr">${r.ext_version || '—'}</td>
       <td>${OUTCOME[r.outcome] || r.outcome}</td>
       <td class="num">${displayCredits(r.granted_units)}</td>
@@ -844,7 +881,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureUsage, note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureUsage, client = null, note }) {
   return layout({
     title: u.username,
     admin,
@@ -863,6 +900,7 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
       <dt>注册时间</dt><dd>${dt(u.created_at)}</dd>
       <dt>扩展版本</dt><dd data-ext-versions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} ${e.version ? html`<strong dir="ltr">${e.version}</strong> ${versionTag(e.version, latest)} <span class="muted">记录于 ${dt(e.version_seen_at)}</span>` : html`<span class="muted">未记录（旧版扩展不带版本号）</span>`}`) : '—'}</dd>
       <dt>扩展来源</dt><dd data-extensions>${extensions.length ? extensions.map((e, i) => html`${i ? html`<br>` : ''}${browserLabel(e.extension_id)} <span class="muted">首次 ${dt(e.first_seen_at)} · 最近 ${dt(e.last_seen_at)}</span>`) : '—'}</dd>
+      <dt>最近客户端</dt><dd>${client ? clientName(client) : '—'}</dd>
       <dt>有效会话</dt><dd>${sessions}</dd>
       <dt>托管服务</dt><dd>${u.hosted_frozen_at ? html`<span class="tag warn">已冻结 · ${dt(u.hosted_frozen_at)}</span>` : '正常'}</dd>
     </dl>

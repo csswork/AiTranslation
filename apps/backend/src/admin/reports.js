@@ -50,7 +50,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
 
   const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers, browserDays,
     installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed,
-    versions, recentInstalls, recentTotals, featureUsage, upgrades] = await Promise.all([
+    versions, recentInstalls, recentTotals, featureUsage, upgrades, requestClients] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
     q(`SELECT plan, COUNT(*)::int AS n FROM subscriptions WHERE ${ACTIVE_SUB} GROUP BY plan`, [ENTITLED]),
@@ -180,6 +180,10 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     q(`SELECT to_char(reported_at AT TIME ZONE $3, 'YYYY-MM-DD') AS day, extension_id, from_version, to_version, COUNT(*)::int AS upgrades
        FROM extension_upgrades WHERE reported_at >= $1 AND reported_at < $2
        GROUP BY 1, 2, 3, 4 ORDER BY day DESC, upgrades DESC, extension_id, from_version, to_version`, [...window, timeZone]),
+    // 客户端维度：只按低基数枚举汇总，旧记录或未带 UA 的请求不显示。
+    q(`SELECT browser, browser_major, os, COUNT(*)::int AS requests
+       FROM usage_events WHERE browser IS NOT NULL AND created_at >= $1 AND created_at < $2
+       GROUP BY 1, 2, 3 ORDER BY requests DESC`, window),
   ]);
 
   const rejectionQuery = (a, b) => q(
@@ -225,6 +229,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     speed,
     versions,
     upgrades,
+    requestClients,
     recentInstalls: { rows: recentInstalls, ...recentTotals[0] },
     featureUsage,
     outcomes,
