@@ -13,7 +13,7 @@
  */
 import { createHash, createHmac, randomBytes } from 'node:crypto';
 import { isIPv4, isIPv6 } from 'node:net';
-import { moveExtensions, recordExtension } from '../auth/extension.js';
+import { moveExtensions, recordExtension, recordExtensionVersion } from '../auth/extension.js';
 import { createSession } from '../auth/sessions.js';
 import { createGuestUser } from '../auth/users.js';
 import { grantGuest, transferGuestCredits, voidRemaining } from '../credits/ledger.js';
@@ -67,8 +67,9 @@ export async function createGuest(pool, config, settings, address, { country = n
        VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8)`,
       [user.id, hash, grantedUnits, outcome, country, uiLang, extensionId, extVersion],
     );
-    await recordExtension(client, user.id, extensionId);
-    const token = await createSession(client, config, user.id, 'extension');
+    if (extensionId && extVersion) await recordExtensionVersion(client, user.id, extensionId, extVersion);
+    else await recordExtension(client, user.id, extensionId);
+    const token = await createSession(client, config, user.id, 'extension', { extensionId, extVersion });
     const linkCode = randomBytes(24).toString('base64url');
     await client.query(
       `INSERT INTO guest_link_codes (code_hash, user_id, expires_at) VALUES ($1, $2, now() + make_interval(mins => $3))`,

@@ -60,6 +60,16 @@ export const readExtensionVersion = (value) => {
   return /^\d{1,5}(\.\d{1,5}){0,3}$/.test(version) ? version : null;
 };
 
+export function compareExtensionVersions(a, b) {
+  const left = a.split('.').map(Number);
+  const right = b.split('.').map(Number);
+  for (let i = 0; i < 4; i++) {
+    const difference = (left[i] || 0) - (right[i] || 0);
+    if (difference) return difference;
+  }
+  return 0;
+}
+
 /**
  * 请求来自哪个扩展（只用于统计）：Chrome / Edge 取 Origin 里的扩展 ID；Firefox 的 moz-extension 主机名
  * 每次安装随机，扩展另在 X-Huaci-Extension 里带上固定 ID，只接受这一个值。不在白名单里时为 null。
@@ -91,6 +101,7 @@ export async function recordExtension(db, userId, extensionId) {
 
 /** 访客合并或重装接回时，把访客的扩展记录并入目标账户（访客随后删除）。 */
 export async function moveExtensions(db, fromUserId, toUserId) {
+  await db.query('UPDATE extension_upgrades SET user_id = $2 WHERE user_id = $1', [fromUserId, toUserId]);
   await db.query(
     `INSERT INTO user_extensions (user_id, extension_id, first_seen_at, last_seen_at, version, version_seen_at)
      SELECT $2, extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1

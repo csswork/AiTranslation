@@ -19,7 +19,7 @@
  */
 import { randomUUID } from 'node:crypto';
 import { Hono } from 'hono';
-import { extensionIdFromOrigin, extensionIdFromRedirect, FIREFOX_EXTENSION_ID, isAllowedExtension, readExtensionVersion, recordExtension, recordExtensionVersion, redeemAuthCode, requestExtensionId } from '../auth/extension.js';
+import { compareExtensionVersions, extensionIdFromOrigin, extensionIdFromRedirect, FIREFOX_EXTENSION_ID, isAllowedExtension, readExtensionVersion, recordExtension, recordExtensionVersion, redeemAuthCode, requestExtensionId } from '../auth/extension.js';
 import { createSession, revokeExtensionLogin, validateSession } from '../auth/sessions.js';
 import { accountState, activeSubscription } from '../billing/entitlements.js';
 import { creditBalance, refundCredits, reserveCredits } from '../credits/ledger.js';
@@ -107,6 +107,15 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     }
   };
 
+  // 保留 Origin / Firefox 固定 ID 匹配。浏览器未发送 Origin 时才核对客户端提供的公开商店 ID。
+  const matchExtension = (c, reportedId) => {
+    const origin = c.req.header('origin');
+    const matched = requestExtensionId(origin, reportedId, config);
+    if (matched || origin) return matched;
+    const id = extensionIdFromOrigin(`chrome-extension://${reportedId}`);
+    return id && isAllowedExtension(id, config) ? id : null;
+  };
+
   app.post('/guest', async (c) => {
     const address = clientAddress(c, config);
     if (!guestLimiter(address)) return c.json({ error: 'rate_limited' }, 429);
@@ -115,15 +124,14 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const uiLang = LANGUAGES[body.uiLanguage] ? body.uiLanguage : null;
     // 扩展 ID 区分来源商店（Chrome / Edge），只用于报表与管理端。
     // Firefox's supplied add-on ID is only a store reporting label, never authentication.
-    const extensionId = extensionIdFromOrigin(c.req.header('origin'))
-      || (body.extensionId === FIREFOX_EXTENSION_ID && isAllowedExtension(FIREFOX_EXTENSION_ID, config) ? FIREFOX_EXTENSION_ID : null);
+    const extensionId = matchExtension(c, body.extensionId);
     const result = await createGuest(pool, config, await settings.all(), address, { country: requestCountry(c, config), uiLang, extensionId, extVersion: c.get('extVersion') });
-    await noteVersion(c, result.userId);
     return c.json({
       token: result.token,
       tokenType: 'Bearer',
       outcome: result.outcome,
       granted: displayCredits(result.grantedUnits),
+      extensionRegistered: Boolean(extensionId),
       welcomeUrl: `${config.appOrigin}/welcome?link=${encodeURIComponent(result.linkCode)}`,
     });
   });
@@ -162,9 +170,12 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     if (guest && guest.user.kind === 'guest' && guest.session.client === 'extension') {
       transferred = await transaction(pool, (client) => mergeGuest(client, guest.user.id, userId));
     }
-    const token = await createSession(pool, config, userId, 'extension', { webSessionId });
-    await recordExtension(pool, userId, extensionIdFromRedirect(body.redirect_uri, config));
-    return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred) });
+    const extensionId = extensionIdFromRedirect(body.redirect_uri, config);
+    const extVersion = c.get('extVersion');
+    const token = await createSession(pool, config, userId, 'extension', { webSessionId, extensionId, extVersion });
+    if (extensionId && extVersion) await recordExtensionVersion(pool, userId, extensionId, extVersion);
+    else await recordExtension(pool, userId, extensionId);
+    return c.json({ token, tokenType: 'Bearer', transferred: displayCredits(transferred), extensionRegistered: Boolean(extensionId) });
   });
 
   /**
@@ -195,9 +206,50 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const auth = token && await validateSession(pool, config, token);
     if (!auth || auth.session.client !== 'extension') return c.json({ error: 'unauthorized' }, 401);
     c.set('auth', auth);
-    await noteVersion(c, auth.user.id);
+    // 兼容旧扩展。新版常规请求不再发送版本，性能报表读取这个会话自己的版本。
+    if (c.req.header('x-huaci-version') !== undefined) await noteVersion(c, auth.user.id);
+    else c.set('extVersion', auth.session.extVersion);
     await next();
   };
+
+  app.post('/version', requireExtension, async (c) => {
+    const { session, user } = c.get('auth');
+    const body = await readJson(c);
+    const version = readExtensionVersion(body.version);
+    const supplied = body.upgrades ?? [];
+    if (!version || !Array.isArray(supplied) || supplied.length > 32) return c.json({ error: 'invalid_version' }, 400);
+    const upgrades = supplied.map((event) => ({
+      id: event?.id, from: readExtensionVersion(event?.from), to: readExtensionVersion(event?.to),
+    }));
+    if (upgrades.some(({ id, from, to }) => typeof id !== 'string' || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id)
+      || !from || !to || compareExtensionVersions(from, to) >= 0)) return c.json({ error: 'invalid_upgrade' }, 400);
+
+    const browserId = matchExtension(c, body.extensionId);
+    if (!session.extensionId && !browserId) return c.json({ error: 'unknown_extension' }, 400);
+    const recorded = await transaction(pool, async (client) => {
+      const { rows: [saved] } = await client.query(
+        `SELECT extension_id, ext_version FROM sessions WHERE id = $1 AND user_id = $2
+         AND revoked_at IS NULL AND expires_at > now() FOR UPDATE`, [session.id, user.id],
+      );
+      if (!saved) return false;
+      const extensionId = saved.extension_id || browserId;
+      if (browserId && browserId !== extensionId) return false;
+      if (upgrades.length) {
+        await client.query(
+          `INSERT INTO extension_upgrades (id, user_id, extension_id, from_version, to_version)
+           SELECT id, $1, $2, from_version, to_version FROM unnest($3::uuid[], $4::text[], $5::text[]) AS x(id, from_version, to_version)
+           ON CONFLICT (id) DO NOTHING`,
+          [user.id, extensionId, upgrades.map((x) => x.id), upgrades.map((x) => x.from), upgrades.map((x) => x.to)],
+        );
+      }
+      if (!saved.ext_version || compareExtensionVersions(version, saved.ext_version) > 0) {
+        await client.query('UPDATE sessions SET extension_id = $2, ext_version = $3 WHERE id = $1', [session.id, extensionId, version]);
+        await recordExtensionVersion(client, user.id, extensionId, version);
+      }
+      return true;
+    });
+    return recorded ? c.body(null, 204) : c.json({ error: 'extension_session_changed' }, 409);
+  });
 
   const status = async (user) => {
     const { kind, credits, subscription } = await accountState(pool, user);
