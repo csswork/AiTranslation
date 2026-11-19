@@ -422,10 +422,12 @@ test('运营概览：浏览器与系统按托管请求汇总', async () => {
   const { rows: [user] } = await pool.query(
     "INSERT INTO users (email, username) VALUES ('client@example.com', 'client') RETURNING id",
   );
+  // 报表上界是 Node 的毫秒级 new Date()，PostgreSQL 的 now() 精确到微秒；
+  // 两者落在同一毫秒时刚写入的行会被 created_at < 上界排除，所以写在一分钟前。
   await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, browser, browser_major, os, created_at)
-    VALUES ($1, 'text', 'pdf', 'ok', 10, 10, 'chrome', 142, 'windows', now()),
-           ($1, 'text', 'pdf', 'ok', 10, 10, 'edge', 142, 'windows', now()),
-           ($1, 'text', 'reader', 'ok', 10, 10, 'firefox', 141, 'macos', now())`, [user.id]);
+    VALUES ($1, 'text', 'pdf', 'ok', 10, 10, 'chrome', 142, 'windows', now() - interval '1 minute'),
+           ($1, 'text', 'pdf', 'ok', 10, 10, 'edge', 142, 'windows', now() - interval '1 minute'),
+           ($1, 'text', 'reader', 'ok', 10, 10, 'firefox', 141, 'macos', now() - interval '1 minute')`, [user.id]);
   const report = await overview(pool, 7, { timeZone: 'Asia/Shanghai' });
   assert.deepEqual(Object.fromEntries(report.requestClients.map((row) => [
     `${row.browser}:${row.browser_major}:${row.os}`, row.requests,
