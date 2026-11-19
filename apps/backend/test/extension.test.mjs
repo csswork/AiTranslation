@@ -460,7 +460,7 @@ test('其他译法：按原文段落字数扣点并记用量；失败返还；�
   const { app, config, mailbox } = buildApp({ pool, hosted });
   const { token } = await extensionLogin(app, config, mailbox, 'alt@example.com');
   const source = '新功能今天上线，'.repeat(25); // 200 个字
-  const request = { source, translation: 'The new function ships today.', start: 8, end: 16, target: 'en', note: 'zh-Hans' };
+  const request = { source, translation: 'The new function ships today.', start: 8, end: 16, target: 'en', note: 'zh-Hans', countFeatureUse: true };
   let res = await api(app, config, '/alternatives', { method: 'POST', token, body: request });
   assert.equal(res.status, 200);
   let body = await res.json();
@@ -469,8 +469,8 @@ test('其他译法：按原文段落字数扣点并记用量；失败返还；�
   assert.equal(body.cost, '0.40', '按原文 200 字扣 0.4 点');
   assert.equal(body.credits.balance, '99.60');
   assert.deepEqual(calls.at(-1).alternatives, { source, selected: 'function', target: 'en', note: 'zh-Hans' });
-  const { rows: [event] } = await pool.query("SELECT kind, status, chars, cost_units, target_lang FROM usage_events");
-  assert.deepEqual([event.kind, event.status, event.chars, event.cost_units, event.target_lang], ['text', 'ok', 200, '200', 'en']);
+  const { rows: [event] } = await pool.query('SELECT kind, status, chars, cost_units, target_lang, surface, count_feature_use FROM usage_events');
+  assert.deepEqual(event, { kind: 'text', status: 'ok', chars: 200, cost_units: '200', target_lang: 'en', surface: 'alternatives', count_feature_use: true });
 
   res = await api(app, config, '/alternatives', { method: 'POST', token, body: { ...request, note: 'xx' } });
   assert.equal(res.status, 200);

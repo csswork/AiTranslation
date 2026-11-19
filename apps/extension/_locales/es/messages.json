@@ -2844,6 +2844,21 @@
   "m_4b1db520af460460": {
     "message": "Imagen original"
   },
+  "m_2e561f38cd3e93f1": {
+    "message": "Estadísticas de uso de funciones"
+  },
+  "m_da3298fd86c722c4": {
+    "message": "Compartir el uso de las funciones de traducción por puntos"
+  },
+  "m_86b5e7736912b49d": {
+    "message": "Se usa para mejorar las funciones de traducción. Cuando está activado, cada función envía como máximo un marcador de estadísticas por cuenta y navegador cada 24 horas. Los marcadores se envían junto con las solicitudes de traducción existentes. Puedes desactivarlo en cualquier momento."
+  },
+  "m_aeb25336a2949ff8": {
+    "message": "Si se permite que la extensión se ejecute en ventanas privadas, las estadísticas de funciones se pausarán."
+  },
+  "m_153c176c61b5bc1f": {
+    "message": "Se usa para mejorar la traducción. Cuando está activado, cada función se cuenta como máximo una vez cada 24 horas por cuenta en este navegador. Se envía un marcador estadístico con las solicitudes de traducción existentes. Puedes desactivarlo en cualquier momento."
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

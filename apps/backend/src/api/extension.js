@@ -9,7 +9,8 @@
  *                    可带 glossary（扩展本机保存的用词偏好，最多 20 条）：只放进提示词，不保存、不计费。
  *                    单段文字带 stream: true 时以 SSE 返回：data: {delta} … 最后 data: {done, cost, credits…} 或 data: {error…}
  *                    开启进程内缓存时，相同请求直接返回上次的译文（扣点不变，用量记为 provider 'cache'），见 translation/cache.js
- *                    可带 surface（扩展里的使用场景，见 SURFACES），只用于响应速度报表。
+ *                    可带 surface（扩展里的使用场景，见 SURFACES），用于响应速度报表。
+ *                    countFeatureUse 仅由已启用统计的扩展发送，由客户端按功能限频。
  *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
  *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围，'regions-sfx' 时连音效字一起找）；文字随后走 /translate，按实际文字扣点
  *
@@ -264,9 +265,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
         "SELECT COUNT(*)::int AS requests FROM usage_events WHERE user_id = $1 AND kind = 'image' AND created_at >= now() - interval '1 hour'", [user.id]);
       if (row.requests >= s.hosted_image_hourly_requests) return false;
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, ext_version)
-         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4, $5)`,
-        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config), c.get('extVersion')]);
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, ext_version, count_feature_use)
+         VALUES ($1, $2, 'image', 0, 0, 'pending', $3, $4, $5, $6)`,
+        [eventId, user.id, subscribed ? 'subscriber' : user.kind, requestCountry(c, config), c.get('extVersion'), body.countFeatureUse === true]);
       return true;
     });
     if (!accepted) return c.json({ error: 'rate_limited' }, 429);
@@ -295,7 +296,7 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
    * 托管文字请求（翻译、其他译法）共用的前置检查与预扣：可用性、冻结、长度、限频、订阅合理用量、余额。
    * 通过时返回 { eventId, cost, record }（record 写回用量元数据与耗时拆分）；被拒时返回 { response }，并记一条 usage_rejections。
    */
-  async function startCharge(c, s, user, { chars, target, source, surface = null, stream = false }) {
+  async function startCharge(c, s, user, { chars, target, source, surface = null, stream = false, countFeatureUse = false }) {
     const subscribed = user.kind === 'member' && Boolean(await activeSubscription(pool, user.id));
     const audience = subscribed ? 'subscriber' : user.kind;
     /** 记录一次被拒绝的请求并返回对应的响应（不调用模型、不扣点、不保存原文）。 */
@@ -320,9 +321,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const eventId = randomUUID();
     const reserved = await transaction(pool, async (client) => {
       await client.query(
-        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream, ext_version)
-         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10, $11)`,
-        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream, c.get('extVersion')],
+        `INSERT INTO usage_events (id, user_id, kind, chars, cost_units, status, audience, country, target_lang, source_lang, surface, stream, ext_version, count_feature_use)
+         VALUES ($1, $2, 'text', $3, $4, 'pending', $5, $6, $7, $8, $9, $10, $11, $12)`,
+        [eventId, user.id, chars, cost, audience, requestCountry(c, config), target, source, surface, stream, c.get('extVersion'), Boolean(surface) && countFeatureUse],
       );
       if (await reserveCredits(client, user.id, cost, eventId)) return true;
       await client.query('DELETE FROM usage_events WHERE id = $1', [eventId]);
@@ -353,7 +354,10 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const chars = countCharacters(texts);
     if (!chars) return c.json({ error: 'invalid_texts' }, 400);
     const streaming = body.stream === true && texts.length === 1 && Boolean(hosted?.stream);
-    const charge = await startCharge(c, s, user, { chars, target: body.target, source: body.source || null, surface: readSurface(body.surface), stream: streaming });
+    const charge = await startCharge(c, s, user, {
+      chars, target: body.target, source: body.source || null, surface: readSurface(body.surface), stream: streaming,
+      countFeatureUse: body.countFeatureUse === true,
+    });
     if (charge.response) return charge.response;
     const { eventId, cost, record } = charge;
     const precheckMs = since(c);
@@ -432,7 +436,9 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
     const note = LANGUAGES[body.note] ? body.note : 'en';
     if (!hosted?.alternatives) return c.json({ error: 'hosted_unavailable' }, 503);
     const chars = countCharacters([source]);
-    const charge = await startCharge(c, s, user, { chars, target: body.target, source: null, surface: readSurface(body.surface) });
+    const charge = await startCharge(c, s, user, {
+      chars, target: body.target, source: null, surface: 'alternatives', countFeatureUse: body.countFeatureUse === true,
+    });
     if (charge.response) return charge.response;
     const { eventId, cost, record } = charge;
     const precheckMs = since(c);

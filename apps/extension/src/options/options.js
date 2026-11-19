@@ -7,6 +7,17 @@
   const $ = (id) => document.getElementById(id);
   // 外部链接按运行环境取；未打包的开发版本在页脚标出连接的本机用户端
   $('privacyLink').href = AITrEnv.links.privacy;
+  const usageToggle = $('featureUsageEnabled');
+  const refreshUsageToggle = async () => { usageToggle.checked = await AITrFeatureUsage.enabled().catch(() => false); };
+  refreshUsageToggle();
+  usageToggle.addEventListener('change', async () => {
+    usageToggle.disabled = true;
+    await AITrFeatureUsage.setEnabled(usageToggle.checked).catch(() => {});
+    await refreshUsageToggle();
+    usageToggle.disabled = false;
+  });
+  chrome.permissions?.onAdded?.addListener(refreshUsageToggle);
+  chrome.permissions?.onRemoved?.addListener(refreshUsageToggle);
   if (AITrEnv.firefox) $('videoEnabled').closest('section').hidden = true;
   if (AITrEnv.dev) {
     $('envBadge').textContent = `DEV · ${new URL(AITrEnv.accountOrigin).host}`;
@@ -645,6 +656,7 @@
   // 弹窗里切换了平台也同步过来。
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') return;
+    if (changes[AITrFeatureUsage.KEY]) refreshUsageToggle();
     if (changes[AITrTerms.KEY]) renderTerms();
     if (changes[ACCOUNT_KEY]) {
       account = changes[ACCOUNT_KEY].newValue || { signedIn: false };

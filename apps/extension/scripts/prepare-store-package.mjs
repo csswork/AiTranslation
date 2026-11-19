@@ -39,7 +39,7 @@ export function prepareStorePackage(root, staging, target = 'chrome') {
     manifest.browser_specific_settings = { gecko: {
       id: 'huaci@huaci.app',
       strict_min_version: '142.0',
-      data_collection_permissions: { required: ['authenticationInfo', 'websiteContent'] },
+      data_collection_permissions: { required: ['authenticationInfo', 'websiteContent'], optional: ['technicalAndInteraction'] },
     } };
     // Firefox observes the same-origin HTTPS callback and opens its own private callback page.
     delete manifest.web_accessible_resources;

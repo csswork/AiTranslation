@@ -11,6 +11,7 @@ import './lib/settings.js';
 import './lib/terms.js';
 import './lib/local.js';
 import './lib/providers.js';
+import './lib/feature-usage.js';
 import './lib/account.js';
 import './lib/sites.js';
 

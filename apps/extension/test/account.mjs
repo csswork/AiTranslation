@@ -53,6 +53,7 @@ function boot(production = false, firefox = false) {
     fetch: async (url, init) => { calls.push({ url, init }); return { ok: true, status: 200, json: async () => ({ ...signedIn }) }; },
   });
   vm.runInContext(source('src/lib/env.js'), context);
+  vm.runInContext(source('src/lib/feature-usage.js'), context);
   vm.runInContext(source('src/lib/account.js'), context);
   vm.runInContext(source('src/lib/sites.js'), context);
   vm.runInContext(source('src/background.js').replace(/^import .*$/gm, ''), context);
@@ -409,5 +410,65 @@ const sse = (events) => {
   other.context.fetch = async (url) => { other.calls.push({ url }); return { ok: true, status: 204 }; };
   await other.context.AITrAccount.warm();
   assert.equal(other.calls.length, 0, '自带 Key 时不预热');
+}
+{
+  const { context, store, calls } = boot(true);
+  let now = Date.parse('2026-11-18T15:30:00Z');
+  context.Date = class extends Date { static now() { return now; } };
+  context.fetch = async (url, init) => {
+    calls.push({ url, init });
+    return { ok: true, status: 200, json: async () => ({ translations: ['Bonjour'], raw: '[]', options: [] }) };
+  };
+  const translate = (surface) => context.AITrAccount.translate({ texts: ['Hello'], target: 'fr', surface });
+  const marked = () => calls.map(({ init }) => JSON.parse(init.body).countFeatureUse === true);
+  await translate('pdf');
+  assert.deepEqual(marked(), [false], '默认关闭');
+  assert.equal(store.featureUsageMarks, undefined);
+  await context.AITrFeatureUsage.setEnabled(true);
+  await Promise.all([translate('pdf'), translate('pdf'), translate('pdf')]);
+  assert.equal(marked().slice(1).filter(Boolean).length, 1, '同一功能并发只标记一个原请求');
+  const first = now;
+  now += 60 * 60 * 1000;
+  await translate('pdf');
+  assert.equal(marked().at(-1), false, '跨午夜仍按滚动时间判断');
+  await context.AITrAccount.readImageText({ image: 'synthetic' });
+  await translate('image');
+  assert.deepEqual(marked().slice(-2), [true, false], '识图和图片翻译共用功能限频');
+  now = first + 24 * 60 * 60 * 1000;
+  await translate('pdf');
+  assert.equal(marked().at(-1), false, '必须超过 24 小时');
+  now += 1;
+  await translate('pdf');
+  assert.equal(marked().at(-1), true);
+  store.accountStatus.username = 'other_member';
+  await translate('pdf');
+  assert.equal(marked().at(-1), true, '按本机当前账户分别限频');
+  await context.AITrFeatureUsage.setEnabled(false);
+  await translate('reader');
+  assert.equal(marked().at(-1), false);
+  assert.equal(store.featureUsageMarks, undefined);
+  assert.equal(calls.length, 11, '只使用原有翻译和识图请求');
+}
+{
+  const { context, calls } = boot(true, true);
+  let granted = false;
+  context.browser = { permissions: { contains: async () => granted } };
+  context.fetch = async (url, init) => {
+    calls.push({ url, init });
+    return sse([{ done: true }]);
+  };
+  const translate = async (surface) => { for await (const _ of context.AITrAccount.translateStream({ text: 'Hi', target: 'fr', surface })) {} };
+  const marked = () => JSON.parse(calls.at(-1).init.body).countFeatureUse === true;
+  await translate('selection');
+  assert.equal(marked(), false);
+  granted = true;
+  await translate('selection');
+  assert.equal(marked(), true);
+  context.chrome.extension = { isAllowedIncognitoAccess: async () => true };
+  await translate('panel');
+  assert.equal(marked(), false, '共用后台的隐私窗口可用时暂停统计');
+  granted = false;
+  await translate('reader');
+  assert.equal(marked(), false);
 }
 console.log('✓ 账户同步、托管识图、流式翻译与连接预热：来源、本地/生产环境、会话及余额检查通过');

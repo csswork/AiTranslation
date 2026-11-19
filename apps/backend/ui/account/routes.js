@@ -26,6 +26,9 @@ import { clientAddress, createRateLimiter } from '../../src/http/security.js';
 import { isLocale, k } from '../../src/i18n/index.js';
 import { usageOverview } from '../../src/usage/overview.js';
 import { creditActivity } from '../../src/usage/activity.js';
+import {
+  activeFeatureUsageShare, featureUsageForAccount, recentFeatureUsagePeriod, revokeFeatureUsageShare, shareFeatureUsage,
+} from '../../src/usage/features.js';
 import { THEMES, safePath, uiContext } from './context.js';
 import * as views from './views.js';
 
@@ -475,6 +478,24 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
   app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
     user: user(c), activity: await creditActivity(pool, user(c).id, { period: c.req.query('period') }),
   }));
+  app.get('/usage/features', requireUser, async (c) => {
+    const account = user(c);
+    const share = await activeFeatureUsageShare(pool, account.id);
+    const period = share || recentFeatureUsagePeriod(config.reportTimeZone);
+    const rows = await featureUsageForAccount(pool, account.id, period);
+    return render(c, views.featureUsagePage, { user: account, share, period, rows });
+  });
+  app.post('/usage/features/share', requireUser, async (c) => {
+    const period = recentFeatureUsagePeriod(config.reportTimeZone);
+    const body = await c.req.parseBody();
+    // 跨过午夜或报表时区调整后先重新显示期间，让用户确认实际分享的范围。
+    if (body.endDay === period.endDay && body.timeZone === period.timeZone) await shareFeatureUsage(pool, user(c).id, period);
+    return c.redirect('/usage/features', 303);
+  });
+  app.post('/usage/features/revoke', requireUser, async (c) => {
+    await revokeFeatureUsageShare(pool, user(c).id);
+    return c.redirect('/usage/features', 303);
+  });
   app.get('/help', requireUser, (c) => render(c, views.helpPage, { user: user(c) }));
 
   /* ---------- U6 邮箱、用户名与登录方式 ---------- */

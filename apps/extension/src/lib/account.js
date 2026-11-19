@@ -273,16 +273,32 @@
   }
 
   const failure = (status, data) => (FAILURES[status] || (() => new AccountError(t('点数翻译失败（$1）', [status]), 'failed')))(data);
+  const releaseUsage = (mark) => mark && AITrFeatureUsage.release(mark).catch(() => {});
 
   /**
    * 托管请求统一处理认证、余额同步和错误。
    */
   async function hostedRequest(path, body, signal, options = {}) {
     // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
-    if (!(await readToken())) await claimGuest().catch(() => null);
-    const result = await call(path, { method: 'POST', body, signal, ...options });
+    const usage = AITrFeatureUsage;
+    const keys = [SESSION_KEY, STATUS_KEY, usage.KEY];
+    let local = await chrome.storage.local.get(keys);
+    if (!local[SESSION_KEY]?.token) {
+      await claimGuest().catch(() => null);
+      local = await chrome.storage.local.get(keys);
+    }
+    const session = local[SESSION_KEY];
+    const feature = path === '/read-image' ? 'image' : path === '/alternatives' ? 'alternatives' : body.surface;
+    const username = local[STATUS_KEY]?.username;
+    const owner = session?.guest ? 'guest' : username && `member:${username}`;
+    const mark = !signal?.aborted && (local[usage.KEY] === true || AITrEnv.firefox) && session?.token && feature && owner
+      ? await usage.reserve(feature, owner).catch(() => null) : null;
+    const result = await call(path, {
+      method: 'POST', body: mark ? { ...body, countFeatureUse: true } : body, signal, authToken: session?.token || '', ...options,
+    });
     const { response, data, token } = result;
-    if (!data) return result; // 流式响应由调用方读取
+    if (!data) return { ...result, mark }; // 流式响应由调用方读取
+    if (!response.ok) await releaseUsage(mark);
     await syncCredits(data, token);
     if (response.ok) return data;
     if (path === '/read-image' && response.status === 413) throw new AccountError(t('图片过大，请缩小后重试'), 'too_large');
@@ -338,10 +354,13 @@
     await syncCredits(final, reply.token);
     // 连接中途断开：服务端仍会结算，余额在下次刷新时更新。
     if (!final) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'network');
-    if (final.error) throw failure(502, final);
+    if (final.error) {
+      await releaseUsage(reply.mark);
+      throw failure(502, final);
+    }
   }
 
-  /** surface 是使用场景（划词、面板、网页等），服务端只用于响应速度报表。 */
+  /** surface 是使用场景，用于响应速度。可选的功能统计另由客户端限频。 */
   async function translate({ texts, target, source, glossary, surface, signal }) {
     const data = await hostedRequest('/translate', { texts, target, source: source || undefined, glossary: glossaryOf(glossary), surface: surface || undefined }, signal);
     if (!Array.isArray(data.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');

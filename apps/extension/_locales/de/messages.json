@@ -2844,6 +2844,21 @@
   "m_4b1db520af460460": {
     "message": "Originalbild"
   },
+  "m_2e561f38cd3e93f1": {
+    "message": "Funktionsnutzungsstatistiken"
+  },
+  "m_da3298fd86c722c4": {
+    "message": "Nutzungsdaten für punktbasierte Übersetzungsfunktionen teilen"
+  },
+  "m_86b5e7736912b49d": {
+    "message": "Wird zur Verbesserung der Übersetzungsfunktionen verwendet. Wenn aktiviert, sendet jede Funktion pro Konto und Browser höchstens alle 24 Stunden eine Statistikmarkierung. Die Markierungen werden mit bestehenden Übersetzungsanfragen gesendet. Du kannst dies jederzeit deaktivieren."
+  },
+  "m_aeb25336a2949ff8": {
+    "message": "Wenn die Erweiterung in privaten Fenstern ausgeführt werden darf, werden die Funktionsstatistiken pausiert."
+  },
+  "m_153c176c61b5bc1f": {
+    "message": "Wird zur Verbesserung der Übersetzung verwendet. Wenn aktiviert, wird jede Funktion pro Konto in diesem Browser höchstens einmal alle 24 Stunden gezählt. Ein Statistikmarker wird mit bestehenden Übersetzungsanfragen gesendet. Du kannst dies jederzeit deaktivieren."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

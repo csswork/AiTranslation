@@ -680,7 +680,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "es": {
     "跟随浏览器": "Follow browser",
@@ -1363,7 +1368,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "pt": {
     "跟随浏览器": "Follow browser",
@@ -2046,7 +2056,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "fr": {
     "跟随浏览器": "Follow browser",
@@ -2729,7 +2744,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "de": {
     "跟随浏览器": "Follow browser",
@@ -3412,7 +3432,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "it": {
     "跟随浏览器": "Follow browser",
@@ -4095,7 +4120,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "nl": {
     "跟随浏览器": "Follow browser",
@@ -4778,7 +4808,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "ru": {
     "跟随浏览器": "Follow browser",
@@ -5461,7 +5496,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "uk": {
     "跟随浏览器": "Follow browser",
@@ -6144,7 +6184,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "pl": {
     "跟随浏览器": "Follow browser",
@@ -6827,7 +6872,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "tr": {
     "跟随浏览器": "Follow browser",
@@ -7510,7 +7560,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "ar": {
     "跟随浏览器": "Follow browser",
@@ -8193,7 +8248,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "he": {
     "跟随浏览器": "Follow browser",
@@ -8876,7 +8936,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "fa": {
     "跟随浏览器": "Follow browser",
@@ -9559,7 +9624,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "hi": {
     "跟随浏览器": "Follow browser",
@@ -10242,7 +10312,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "bn": {
     "跟随浏览器": "Follow browser",
@@ -10925,7 +11000,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "ur": {
     "跟随浏览器": "Follow browser",
@@ -11608,7 +11688,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "id": {
     "跟随浏览器": "Follow browser",
@@ -12291,7 +12376,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "vi": {
     "跟随浏览器": "Follow browser",
@@ -12974,7 +13064,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "th": {
     "跟随浏览器": "Follow browser",
@@ -13657,7 +13752,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "ja": {
     "跟随浏览器": "Follow browser",
@@ -14340,7 +14440,12 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   },
   "ko": {
     "跟随浏览器": "Follow browser",
@@ -15023,6 +15128,11 @@
     "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
     "调整文字形状": "Adjust text shape",
     "选项": "Options",
-    "原图": "Original image"
+    "原图": "Original image",
+    "功能使用统计": "Feature usage statistics",
+    "分享点数翻译的功能使用情况": "Share usage data for point-based translation features",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time.",
+    "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "If the extension is allowed to run in private windows, feature statistics will be paused.",
+    "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
   }
 }

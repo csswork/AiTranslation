@@ -2844,6 +2844,21 @@
   "m_4b1db520af460460": {
     "message": "Immagine originale"
   },
+  "m_2e561f38cd3e93f1": {
+    "message": "Statistiche di utilizzo delle funzionalità"
+  },
+  "m_da3298fd86c722c4": {
+    "message": "Condividi i dati di utilizzo delle funzionalità di traduzione a punti"
+  },
+  "m_86b5e7736912b49d": {
+    "message": "Utilizzato per migliorare le funzionalità di traduzione. Se attivato, ogni funzionalità invia al massimo un marcatore statistico per account per browser ogni 24 ore. I marcatori vengono inviati insieme alle richieste di traduzione esistenti. Puoi disattivarlo in qualsiasi momento."
+  },
+  "m_aeb25336a2949ff8": {
+    "message": "Se l'estensione è autorizzata a funzionare nelle finestre private, le statistiche delle funzionalità verranno sospese."
+  },
+  "m_153c176c61b5bc1f": {
+    "message": "Utilizzato per migliorare la traduzione. Se attivato, ogni funzione viene conteggiata al massimo una volta ogni 24 ore per account su questo browser. Un marcatore statistico viene inviato con le richieste di traduzione esistenti. Puoi disattivarlo in qualsiasi momento."
+  },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"
   },

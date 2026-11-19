@@ -2844,6 +2844,21 @@
   "m_4b1db520af460460": {
     "message": "Gambar asli"
   },
+  "m_2e561f38cd3e93f1": {
+    "message": "Statistik penggunaan fitur"
+  },
+  "m_da3298fd86c722c4": {
+    "message": "Bagikan data penggunaan fitur terjemahan berbasis poin"
+  },
+  "m_86b5e7736912b49d": {
+    "message": "Digunakan untuk meningkatkan fitur terjemahan. Saat diaktifkan, setiap fitur mengirim paling banyak satu penanda statistik per akun per browser setiap 24 jam. Penanda dikirim bersama permintaan terjemahan yang ada. Anda dapat menonaktifkannya kapan saja."
+  },
+  "m_aeb25336a2949ff8": {
+    "message": "Jika ekstensi diizinkan berjalan di jendela privat, statistik fitur akan dijeda."
+  },
+  "m_153c176c61b5bc1f": {
+    "message": "Digunakan untuk meningkatkan fitur terjemahan. Jika diaktifkan, setiap fitur dihitung paling banyak sekali per 24 jam per akun di browser ini. Penanda statistik dikirim bersama permintaan terjemahan yang ada. Anda dapat menonaktifkannya kapan saja."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

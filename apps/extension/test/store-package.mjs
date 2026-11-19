@@ -32,6 +32,7 @@ try {
       assert.equal(manifest.minimum_chrome_version, undefined);
       assert.equal(manifest.browser_specific_settings.gecko.id, 'huaci@huaci.app');
       assert.deepEqual(manifest.browser_specific_settings.gecko.data_collection_permissions.required, ['authenticationInfo', 'websiteContent']);
+      assert.deepEqual(manifest.browser_specific_settings.gecko.data_collection_permissions.optional, ['technicalAndInteraction']);
     } else {
       assert.equal(manifest.web_accessible_resources.length, 1);
       assert.deepEqual(manifest.web_accessible_resources[0].matches, ['https://app.huaci.app/*']);

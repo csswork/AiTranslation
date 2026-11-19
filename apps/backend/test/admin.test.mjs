@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { createAdminSession, markVerified, validateAdminSession } from '../src/admin/auth.js';
 import { base32Decode, base32Encode, currentStep, totpCode, verifyTotp } from '../src/admin/totp.js';
+import { recentFeatureUsagePeriod } from '../src/usage/features.js';
 import { browser, buildApp, createTestPool, resetData, signInWithEmail, testConfig } from './helpers.mjs';
 
 let pool;
@@ -114,6 +115,7 @@ test('管理端：独立入口，只有指定的管理员能登录，必须二�
   // 核心指标保留零值，主要图表显示空状态，不伪造曲线、构成或排行。
   assert.match(overview, /API 消耗[\s\S]*输入 token[\s\S]*经营[\s\S]*净收入[\s\S]*US\$0\.00[\s\S]*收入[\s\S]*支出[\s\S]*用户与使用[\s\S]*托管请求[\s\S]*有效订阅[\s\S]*增长趋势/);
   assert.match(overview, /暂无托管请求[\s\S]*暂无模型成本数据/);
+  assert.match(overview, /托管功能使用排行[\s\S]*所选范围内暂无达到展示门槛的功能/);
   assert.doesNotMatch(overview, /转化漏斗|每日收入|每日支出|按服务商与模型|class="arc |class="chart heat"/);
   assert.match(overview, /<script src="\/assets\/chart-tooltip\.js\?v=[a-f0-9]+" defer/);
   const headers = (await a.get('/')).headers;
@@ -332,6 +334,97 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   // 配色与用户端共用 theme Cookie
   await a.post('/preferences/theme', { theme: 'dark', next: '/' });
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
+});
+
+test('托管功能排行只累计扩展标记的成功使用，按次数排序并隐藏小样本', async () => {
+  const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
+  const { a } = await adminLogin(app, config, mailbox);
+  const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
+    SELECT CASE WHEN n > 1 THEN 'report-' || n || '@example.com' END, 'report-' || n,
+           CASE WHEN n = 1 THEN 'guest' ELSE 'member' END
+    FROM generate_series(1, 6) n RETURNING id`);
+  const accounts = rows.map(({ id }) => id);
+  const reference = new Date();
+  for (const [kind, surface, status, users, requests, age, counted] of [
+    ['text', 'reader', 'ok', 6, 1, '1 day', true],
+    ['text', 'image', 'ok', 5, 1, '1 day', true],
+    ['image', null, 'ok', 3, 1, '1 day', true],
+    ['text', 'image', 'ok', 5, 2, '1 day', false],
+    ['text', 'pdf', 'ok', 4, 3, '1 day', true],
+    ['text', 'pdf', 'failed', 6, 1, '1 day', true],
+    ['text', 'pdf', 'ok', 6, 1, '8 days', true],
+    ['text', null, 'ok', 6, 1, '0 seconds', false],
+  ]) {
+    await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, count_feature_use)
+      SELECT account, $2, $3, $4, 0, 0, $7::timestamptz - $6::interval, $8
+      FROM unnest($1::uuid[]) AS u(account) CROSS JOIN generate_series(1, $5::int)`,
+    [accounts.slice(0, users), kind, surface, status, requests, age, reference, counted]);
+  }
+
+  const page = await a.text('/?days=7');
+  const ranking = page.match(/<h2>托管功能使用排行<\/h2>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(ranking);
+  const entries = [...ranking.matchAll(/<td>([^<]+)<\/td>(?:<td class="num">[^<]+<\/td>){4}/g)];
+  assert.deepEqual(entries.map(([row]) => [...row.matchAll(/>([^<>]+)<\/td>/g)].map((entry) => entry[1])), [
+    ['图片翻译', '8', '5', '83.3%', '60.0%'], ['双语阅读', '6', '6', '100.0%', '0.0%'],
+  ]);
+  assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
+});
+
+test('用户功能统计累计客户端标记，管理端查看须有本人授权并写审计', async () => {
+  const timeZone = 'America/Los_Angeles';
+  const config = testConfig({ REPORT_TIMEZONE: timeZone, ADMIN_REQUIRE_2FA: '1' });
+  const { app, mailbox } = buildApp({ pool, config });
+  const { a } = await adminLogin(app, config, mailbox);
+  const customer = await signInWithEmail(app, config, mailbox, 'feature-user@example.com');
+  const other = await signInWithEmail(app, config, mailbox, 'other@example.com');
+  const { rows: [{ id }] } = await pool.query("SELECT id FROM users WHERE email = 'feature-user@example.com'");
+  const period = recentFeatureUsagePeriod(timeZone);
+  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, count_feature_use)
+    SELECT $1, kind, surface, status, 0, 0, ($2::date::timestamp + age) AT TIME ZONE $3, counted FROM (VALUES
+      ('text', 'pdf', 'ok', interval '-3 days 16 hours', true),
+      ('text', 'pdf', 'ok', interval '-3 days 19 hours', true),
+      ('text', 'pdf', 'ok', interval '-1 day 1 hour', false),
+      ('image', NULL, 'ok', interval '-2 days 1 hour', true),
+      ('text', 'image', 'ok', interval '-2 days 2 hours', false),
+      ('text', 'site', 'failed', interval '-1 day 1 hour', true),
+      ('text', 'panel', 'ok', interval '0 hours', true)
+    ) AS e(kind, surface, status, age, counted)`, [id, period.endDay, timeZone]);
+
+  const detail = `/users/${id}`;
+  const view = `${detail}/feature-usage`;
+  const counts = /整份 PDF 翻译<\/td><td class="num">2<\/td>[\s\S]*图片翻译<\/td><td class="num">1<\/td>/;
+  const personal = await customer.text('/usage/features');
+  assert.match(personal, counts);
+  assert.doesNotMatch(personal, /整站翻译|翻译面板/);
+  assert.doesNotMatch(await other.text('/usage/features'), /data-account-feature-usage/);
+  assert.doesNotMatch(await a.text(detail), /data-user-feature-usage|查看用户已授权的功能统计/);
+  assert.equal((await a.post(view, {})).status, 303);
+
+  const form = { endDay: period.endDay, timeZone };
+  assert.equal((await customer.request('/usage/features/share', { method: 'POST', form, headers: { origin: 'https://other.example' } })).status, 403);
+  await customer.post('/usage/features/share', { ...form, endDay: period.lastDay });
+  assert.equal((await a.post(view, {})).status, 303, '过期页面需要重新确认日期范围');
+  await customer.post('/usage/features/share', form);
+  const authorizedDetail = await a.text(detail);
+  assert.match(authorizedDetail, /action="\/users\/[^"/]+\/feature-usage#feature-usage"[\s\S]*查看用户已授权的功能统计/);
+  assert.doesNotMatch(authorizedDetail, /data-user-feature-usage/, '需要管理员主动打开');
+  assert.equal((await a.get(view)).status, 404);
+  const shared = await a.post(view, {});
+  assert.equal(shared.status, 200);
+  assert.equal(shared.headers.get('cache-control'), 'no-store');
+  assert.match(await shared.text(), counts);
+  const { rows: audits } = await pool.query("SELECT target_id, detail FROM admin_audit WHERE action = 'user.view_feature_usage'");
+  assert.deepEqual(audits, [{ target_id: id, detail: { fromDay: period.fromDay, lastDay: period.lastDay, timeZone } }]);
+
+  await pool.query("UPDATE feature_usage_shares SET expires_at = now() - interval '1 second' WHERE user_id = $1", [id]);
+  assert.equal((await a.post(view, {})).status, 303);
+  await customer.post('/usage/features/share', form);
+  await other.post('/usage/features/revoke', { userId: id });
+  assert.match(await a.text(detail), /查看用户已授权的功能统计/, '其他账户不能撤回该用户授权');
+  await customer.post('/usage/features/revoke', {});
+  assert.equal((await a.post(view, {})).status, 303);
+  assert.doesNotMatch(await a.text(detail), /data-user-feature-usage|查看用户已授权的功能统计/);
 });
 
 test('运营首页：同一时区的自然日汇总与图表一致，历史无服务商记录也计入 token，缓存不重复', async () => {

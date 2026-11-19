@@ -21,10 +21,12 @@ import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
 import { accountState } from '../../src/billing/entitlements.js';
 import { adjustCredits } from '../../src/credits/ledger.js';
 import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
+import { transaction } from '../../src/db/index.js';
 import { clearPreference, setPreference } from '../../src/http/cookies.js';
 import { clientAddress, createRateLimiter, limitBody } from '../../src/http/security.js';
 import { SETTINGS } from '../../src/settings/index.js';
 import { creditActivity } from '../../src/usage/activity.js';
+import { activeFeatureUsageShare, featureUsageForAccount } from '../../src/usage/features.js';
 import { THEMES, safePath } from '../account/context.js';
 import * as views from './views.js';
 
@@ -94,9 +96,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   const reasonOf = (body) => String(body.reason || '').trim().slice(0, 200);
 
   /** 渲染管理端页面：带上与用户端共用的配色（theme Cookie）和当前路径。 */
-  const page = (c, render, status = 200) => {
+  const page = (c, render, status = 200, path = c.req.method === 'GET' ? c.req.path : '/') => {
     const theme = THEMES.includes(getCookie(c, 'theme')) ? getCookie(c, 'theme') : null;
-    const path = c.req.method === 'GET' ? c.req.path : '/';
     return c.html(views.withPage({ theme, cookieDomain: config.sharedCookieDomain, path }, render), status);
   };
 
@@ -262,10 +263,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     ? (await pool.query('SELECT id, kind, email, username, email_verified_at, hosted_frozen_at, created_at FROM users WHERE id = $1', [id])).rows[0]
     : null);
 
-  app.get('/users/:id', requireAdmin, async (c) => {
-    const u = await loadUser(c.req.param('id'));
-    if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
-    const [state, subs, activity, sessions, api, installs, extensions, versions] = await Promise.all([
+  const renderUser = async (c, u, featureUsage = null) => {
+    const [state, subs, activity, sessions, api, installs, extensions, versions, featureShare] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
@@ -274,10 +273,36 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       installHistory(pool, u.id),
       pool.query('SELECT extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [u.id]),
       extensionVersions(pool),
+      u.kind === 'member' && !featureUsage ? activeFeatureUsageShare(pool, u.id) : null,
     ]);
     return page(c, () => views.userPage({
       admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),
-    }));
+      featureShare, featureUsage,
+    }), 200, `/users/${u.id}`);
+  };
+
+  app.get('/users/:id', requireAdmin, async (c) => {
+    const u = await loadUser(c.req.param('id'));
+    if (!u) return page(c, () => views.errorPage({ admin: admin(c), status: 404, message: '找不到这个用户。' }), 404);
+    return renderUser(c, u);
+  });
+
+  app.post('/users/:id/feature-usage', requireAdmin, async (c) => {
+    const u = await loadUser(c.req.param('id'));
+    if (!u) return c.notFound();
+    const usage = u.kind === 'member' && await transaction(pool, async (client) => {
+      const share = await activeFeatureUsageShare(client, u.id, { lock: true });
+      if (!share) return null;
+      const rows = await featureUsageForAccount(client, u.id, share);
+      const { fromDay, lastDay, timeZone } = share;
+      await audit(client, {
+        adminId: admin(c).id, action: 'user.view_feature_usage', targetType: 'user', targetId: u.id,
+        reason: '用户已授权的翻译问题排查', detail: { fromDay, lastDay, timeZone },
+      });
+      return { ...share, rows };
+    });
+    c.header('Cache-Control', 'no-store');
+    return usage ? renderUser(c, u, usage) : back(c, `/users/${u.id}#feature-usage`, fail('授权不存在或已失效。'));
   });
 
   /** 用户操作：必须填写原因，写审计。 */

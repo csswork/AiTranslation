@@ -82,6 +82,10 @@ When you sign up or sign in, we keep:
 
 Each credit translation records the character count, credits charged, model and provider, input and output token counts, target and source language, latency, the outcome (success, failure, or rejection and why), and the **two-letter country code** supplied by our network provider. These records are used for billing, abuse prevention, and service statistics, and **contain no original text or translation**. You can see your own records under “Usage and credits” in your account.
 
+Where available, hosted requests include the feature used so we can measure response times. You can opt in to share feature usage to help us improve translation. Each feature can count at most once every 24 hours per account in a browser profile. The usage marker travels with an existing hosted request. You can turn sharing off in the extension settings.
+
+You can see the feature usage counts you shared in your account. If you ask for help with a translation issue, you can allow our support staff to view the feature names and counts for the date range shown. Access expires after 24 hours, and you can revoke it at any time. We log staff access.
+
 ### Preventing repeated free-trial claims
 
 The extension claims free credits once after installation. To stop the same network or browser from claiming repeatedly, we keep a **one-way keyed hash** of the network address (never the address itself; for IPv6 only the first 64 bits are used), and a **random marker cookie** set on `app.huaci.app` by the welcome page (only its hash is stored). We do not use device fingerprinting.
@@ -119,7 +123,7 @@ Account, credit, order, and usage records are kept until you delete your account
 ### What we do not do
 
 - Store the text you translate or its translation
-- Use advertising, telemetry, or third-party analytics SDKs
+- Use advertising or third-party analytics SDKs
 - Sell or rent your data, or use it for advertising
 - Train models on what you translate
 
@@ -219,6 +223,10 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 
 每次点数翻译会记录：字数、扣除的点数、模型与服务商、输入和输出的 token 数、目标语言与源语言、耗时、结果（成功、失败或被拒绝及原因）， 以及由网络服务商提供的**两位国家代码**。这些记录用于计费、防止滥用和服务统计，**不包含原文或译文**。 你可以在用户中心的「用量与点数」里查看自己的记录。
 
+托管请求可包含功能类别，用于统计响应速度。你可以选择分享功能使用统计，帮助我们改进翻译。每个浏览器配置内，同一账户的每项功能每 24 小时最多计一次。统计标记随现有托管请求发送。你可以在扩展设置中关闭分享。
+
+你可以在用户中心查看自己分享的功能使用次数。需要排查翻译问题时，你可以授权技术支持查看页面所示日期范围内的功能及次数。授权在 24 小时后失效，也可随时撤回。我们会记录技术支持的查看操作。
+
 ### 免费试用的防重复领取
 
 安装扩展后会自动领取一次免费点数。为防止同一网络或同一浏览器反复领取，我们保存：网络地址经加密处理后的**不可还原摘要**（不保存地址本身，IPv6 只取前 64 位）， 以及欢迎页在 `app.huaci.app` 上写入的一个**随机标记 Cookie**（数据库里只存它的摘要）。我们不使用设备指纹。
@@ -256,7 +264,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 ### 我们不做的事
 
 - 不保存你翻译的原文和译文
-- 不使用广告、埋点或第三方统计 SDK
+- 不使用广告或第三方统计 SDK
 - 不出售、不出租你的数据，也不用于广告
 - 不用你的翻译内容训练模型
 

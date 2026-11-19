@@ -8,6 +8,7 @@ import { EXTENSION_STORES, extensionStore } from '../../src/auth/extension.js';
 import { displayCredits } from '../../src/credits/units.js';
 import { createI18n } from '../../src/i18n/index.js';
 import { INCOME_TYPES } from '../../src/usage/activity.js';
+import { FEATURE_LABELS } from '../../src/usage/features.js';
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
@@ -170,7 +171,7 @@ const country = (code) => `${regionNames.of(code) || code} · ${code}`;
 const language = (code) => (code === 'auto' ? '自动检测' : (() => { try { return languageNames.of(code); } catch { return code; } })());
 
 const AUDIENCE = { guest: ['访客', 'c3'], member: ['注册用户', 'c1'], subscriber: ['订阅用户', 'c2'] };
-const SURFACE = { selection: '划词弹窗', panel: '翻译面板', page: '网页元素', site: '整站翻译', image: '图片', pdf: 'PDF', reader: '双语阅读', subtitle: '视频字幕' };
+const SURFACE = { ...FEATURE_LABELS, selection: '划词弹窗', page: '网页元素', image: '图片', pdf: 'PDF' };
 /** 响应速度表：样本太少时百分位没有意义，只显示请求数。 */
 const SPEED_MIN_SAMPLE = 20;
 const ms = (value, sample) => (value != null && sample >= SPEED_MIN_SAMPLE ? `${num(value)} ms` : '—');
@@ -281,6 +282,20 @@ const panel = (title, body, { note = '', wide = false, span = '', value = '' } =
   : '');
 
 const emptyChart = (text = '所选范围内暂无可展示的数据') => html`<div class="dashboard-empty">${text}</div>`;
+
+function featureUsageTable({ rows, minAccounts, activeAccounts }) {
+  const body = rows.length ? html`<div class="table-wrap"><table>
+    <thead><tr><th>功能</th><th class="num" aria-sort="descending">统计次数</th><th class="num">使用账户数</th><th class="num">覆盖率</th><th class="num">重复使用率</th></tr></thead>
+    <tbody>${rows.map(({ key, uses, accounts, repeat_accounts }) => html`<tr>
+      <td>${FEATURE_LABELS[key]}</td><td class="num">${num(uses)}</td><td class="num">${num(accounts)}</td><td class="num">${pct(accounts, activeAccounts)}</td><td class="num">${pct(repeat_accounts, accounts)}</td>
+    </tr>`)}</tbody>
+  </table></div>` : emptyChart('所选范围内暂无达到展示门槛的功能');
+  return panel('托管功能使用排行', body, {
+    wide: true,
+    note: `基于用户自愿分享的托管使用记录。扩展按账户、功能和浏览器配置每 24 小时最多标记一次。覆盖率以有统计记录的账户为分母。每项至少有 ${minAccounts} 个账户才展示。`,
+  });
+}
+
 // 日期已经按报表时区切分；不要在浏览器把 YYYY-MM-DD 再换算成另一时区。
 const timeChart = ({ timeZone, ...options }) => renderTimeChart({
   width: 760, height: 260, interactive: true, labelFormat: (day) => day.slice(5).replace('-', '/'),
@@ -397,6 +412,7 @@ ${money.expenses}
 <div class="panels dashboard-grid">
   ${panel('增长趋势', growth || emptyChart(), { span: 'main', note: '安装 · 注册 · 活跃 · 新订阅' })}
   ${panel('请求来自', audienceDonut || emptyChart('暂无托管请求'), { span: 'side', note: '按请求时的用户类型' })}
+  ${featureUsageTable(r.featureUsage)}
   ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
@@ -824,7 +840,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureShare, featureUsage, note }) {
   return layout({
     title: u.username,
     admin,
@@ -878,6 +894,18 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
 </section>
 
 ${installsSection(installs, u)}
+
+<section class="card" id="feature-usage">
+  <h2>托管功能使用</h2>
+  ${featureUsage ? html`<p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。每项功能按浏览器配置滚动 24 小时计数。</p>
+    ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
+      <thead><tr><th>功能</th><th class="num">统计次数</th></tr></thead>
+      <tbody>${featureUsage.rows.map(({ key, uses }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(uses)}</td></tr>`)}</tbody>
+    </table></div>` : html`<p class="muted">授权范围内暂无已分类的托管功能使用记录。</p>`}`
+    : featureShare ? html`<form method="post" action="/users/${u.id}/feature-usage#feature-usage">
+      <button class="button" type="submit">查看用户已授权的功能统计</button>
+    </form>` : html`<p class="muted">用户可在「用量与点数」页授权技术支持查看指定期间的功能统计。</p>`}
+</section>
 
 ${activityCharts(activityUI, activity, { action: `/users/${u.id}` })}
 <section class="card">

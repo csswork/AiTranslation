@@ -679,5 +679,10 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Tłumacz także dźwiękonaśladowcze wyrazy narysowane na obrazie: zachowaj oryginalny tekst i dopisz tłumaczenie obok drobnym drukiem.",
   "调整文字形状": "Dostosuj kształt tekstu",
   "选项": "Opcje",
-  "原图": "Oryginalny obraz"
+  "原图": "Oryginalny obraz",
+  "功能使用统计": "Statystyki użytkowania funkcji",
+  "分享点数翻译的功能使用情况": "Udostępniaj dane o użytkowaniu funkcji tłumaczenia punktowego",
+  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Używane do ulepszania funkcji tłumaczenia. Po włączeniu każda funkcja wysyła co najwyżej jeden znacznik statystyk na konto i przeglądarkę co 24 godziny. Znaczniki są wysyłane wraz z istniejącymi żądaniami tłumaczenia. Możesz to wyłączyć w dowolnym momencie.",
+  "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "Jeśli rozszerzenie może działać w oknach prywatnych, statystyki funkcji zostaną wstrzymane.",
+  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Używane do ulepszania tłumaczenia. Po włączeniu każda funkcja jest liczona najwyżej raz na 24 godziny na konto w tej przeglądarce. Znacznik statystyk jest wysyłany wraz z istniejącymi żądaniami tłumaczenia. Możesz to wyłączyć w dowolnym momencie."
 }

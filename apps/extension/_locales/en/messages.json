@@ -2844,6 +2844,21 @@
   "m_4b1db520af460460": {
     "message": "Original image"
   },
+  "m_2e561f38cd3e93f1": {
+    "message": "Feature usage statistics"
+  },
+  "m_da3298fd86c722c4": {
+    "message": "Share usage data for point-based translation features"
+  },
+  "m_86b5e7736912b49d": {
+    "message": "Used to improve translation features. When enabled, each feature sends at most one statistics marker per account per browser every 24 hours. Markers are sent along with existing translation requests. You can turn this off at any time."
+  },
+  "m_aeb25336a2949ff8": {
+    "message": "If the extension is allowed to run in private windows, feature statistics will be paused."
+  },
+  "m_153c176c61b5bc1f": {
+    "message": "Used to improve translation. When enabled, each feature is counted at most once per 24 hours per account on this browser. A statistics marker is sent with existing translation requests. You can turn this off at any time."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },
