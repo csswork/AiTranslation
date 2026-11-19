@@ -374,13 +374,12 @@ test('托管功能排行复用既有请求，按账户数排序并隐藏小样�
   assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
 });
 
-test('用户功能统计复用既有成功请求，管理端查看须有本人授权并写审计', async () => {
+test('托管功能统计在管理端展示，用户端只保留常规用量页面', async () => {
   const timeZone = 'America/Los_Angeles';
   const config = testConfig({ REPORT_TIMEZONE: timeZone, ADMIN_REQUIRE_2FA: '1' });
   const { app, mailbox } = buildApp({ pool, config });
   const { a } = await adminLogin(app, config, mailbox);
   const customer = await signInWithEmail(app, config, mailbox, 'feature-user@example.com');
-  const other = await signInWithEmail(app, config, mailbox, 'other@example.com');
   const { rows: [{ id }] } = await pool.query("SELECT id FROM users WHERE email = 'feature-user@example.com'");
   const period = recentFeatureUsagePeriod(timeZone);
   await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at)
@@ -395,42 +394,21 @@ test('用户功能统计复用既有成功请求，管理端查看须有本人�
     ) AS e(kind, surface, status, age)`, [id, period.endDay, timeZone]);
 
   const detail = `/users/${id}`;
-  const view = `${detail}/feature-usage`;
   const counts = /整份 PDF 翻译<\/td><td class="num">3<\/td>[\s\S]*图片翻译<\/td><td class="num">2<\/td>/;
-  const personal = await customer.text('/usage/features');
-  assert.match(personal, counts);
-  assert.doesNotMatch(personal, /整站翻译|翻译面板/);
-  assert.doesNotMatch(await other.text('/usage/features'), /data-account-feature-usage/);
-  assert.doesNotMatch(await a.text(detail), /data-user-feature-usage|查看用户已授权的功能统计/);
-  assert.equal((await a.post(view, {})).status, 303);
-  await pool.query(`INSERT INTO feature_usage_shares (user_id, end_day, time_zone, expires_at)
-    VALUES ($1, $2, $3, now() + interval '1 hour')`, [id, period.endDay, timeZone]);
-  assert.equal((await a.post(view, {})).status, 303, '旧范围授权不自动覆盖请求统计');
+  const personal = await customer.text('/usage');
+  assert.match(personal, /用量与点数/);
+  assert.doesNotMatch(personal, /\/usage\/features|托管功能使用/);
+  assert.equal((await customer.get('/usage/features')).status, 404);
 
-  const form = { endDay: period.endDay, timeZone };
-  assert.equal((await customer.request('/usage/features/share', { method: 'POST', form, headers: { origin: 'https://other.example' } })).status, 403);
-  await customer.post('/usage/features/share', { ...form, endDay: period.lastDay });
-  assert.equal((await a.post(view, {})).status, 303, '过期页面需要重新确认日期范围');
-  await customer.post('/usage/features/share', form);
-  const authorizedDetail = await a.text(detail);
-  assert.match(authorizedDetail, /action="\/users\/[^"/]+\/feature-usage#feature-usage"[\s\S]*查看用户已授权的功能统计/);
-  assert.doesNotMatch(authorizedDetail, /data-user-feature-usage/, '需要管理员主动打开');
-  assert.equal((await a.get(view)).status, 404);
-  const shared = await a.post(view, {});
-  assert.equal(shared.status, 200);
-  assert.equal(shared.headers.get('cache-control'), 'no-store');
-  assert.match(await shared.text(), counts);
-  const { rows: audits } = await pool.query("SELECT target_id, detail FROM admin_audit WHERE action = 'user.view_feature_usage'");
-  assert.deepEqual(audits, [{ target_id: id, detail: { fromDay: period.fromDay, lastDay: period.lastDay, timeZone } }]);
-
-  await pool.query("UPDATE feature_usage_shares SET expires_at = now() - interval '1 second' WHERE user_id = $1", [id]);
-  assert.equal((await a.post(view, {})).status, 303);
-  await customer.post('/usage/features/share', form);
-  await other.post('/usage/features/revoke', { userId: id });
-  assert.match(await a.text(detail), /查看用户已授权的功能统计/, '其他账户不能撤回该用户授权');
-  await customer.post('/usage/features/revoke', {});
-  assert.equal((await a.post(view, {})).status, 303);
-  assert.doesNotMatch(await a.text(detail), /data-user-feature-usage|查看用户已授权的功能统计/);
+  const adminDetail = await a.text(detail);
+  const featureTable = adminDetail.match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
+  assert.ok(featureTable);
+  assert.match(featureTable, counts);
+  assert.doesNotMatch(featureTable, /整站翻译|翻译面板/);
+  assert.doesNotMatch(adminDetail, /查看用户已授权的功能统计|授权范围内|向技术支持分享统计/);
+  assert.equal((await a.post(detail + '/feature-usage', {})).status, 404, '旧的授权查看入口已移除');
+  assert.equal((await customer.post('/usage/features/share', {})).status, 404, '分享入口已移除');
+  assert.equal((await customer.post('/usage/features/revoke', {})).status, 404, '撤回入口已移除');
 });
 
 test('运营首页：同一时区的自然日汇总与图表一致，历史无服务商记录也计入 token，缓存不重复', async () => {

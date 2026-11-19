@@ -9,7 +9,6 @@ import { html } from 'hono/html';
 import { k } from '../../src/i18n/index.js';
 import { assetUrl } from './assets.js';
 import { creditsToUnits, displayCredits } from '../../src/credits/units.js';
-import { FEATURE_LABELS, FEATURE_USAGE_SHARE_HOURS } from '../../src/usage/features.js';
 import { timeChart } from '../charts.js';
 import { activityCharts } from '../credit-activity.js';
 
@@ -424,7 +423,6 @@ export function usagePage(ui, { user, activity }) {
     active: 'usage',
     head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
     body: html`<h1>${t('用量与点数')}</h1>
-<p><a href="/usage/features">${t('托管功能使用')}</a></p>
 ${activityCharts(ui, activity, { action: '/usage' })}
 <section class="card">
   <h2>${t('点数收入')}</h2>
@@ -463,34 +461,6 @@ ${activityCharts(ui, activity, { action: '/usage' })}
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
   <p class="fine">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
 </details>`,
-  });
-}
-
-export function featureUsagePage(ui, { user, share, period, rows }) {
-  const { t } = ui;
-  return layout(ui, {
-    title: t('托管功能使用'), user, active: 'usage',
-    body: html`<p><a href="/usage">← ${t('用量与点数')}</a></p>
-<h1>${t('托管功能使用')}</h1>
-<section class="card">
-  <p dir="ltr">${period.fromDay} – ${period.lastDay} · ${period.timeZone}</p>
-  <p class="fine">${t('按已有托管请求统计。一次翻译操作可能发起多条请求。')}</p>
-  ${rows.length ? html`<div class="table-wrap"><table data-account-feature-usage>
-    <thead><tr><th>${t('功能')}</th><th class="num">${t('成功请求数')}</th></tr></thead>
-    <tbody>${rows.map(({ key, requests }) => html`<tr><td>${t(FEATURE_LABELS[key])}</td><td class="num">${requests}</td></tr>`)}</tbody>
-  </table></div>` : html`<p class="muted">${t('这段时间暂无托管功能使用记录。')}</p>`}
-</section>
-<section class="card">
-  <h2>${t('向技术支持分享统计')}</h2>
-  ${share ? html`<p>${t('技术支持可以查看上表中的功能和次数。授权到 {time} 失效，也可随时撤回。', { time: ui.dateTime(share.expiresAt) })}</p>
-    <form method="post" action="/usage/features/revoke"><button class="button" type="submit">${t('撤回授权')}</button></form>`
-    : html`<p>${t('如需排查翻译问题，你可以允许技术支持在接下来 {hours} 小时内查看上表中的功能和次数。你可以随时撤回授权。', { hours: FEATURE_USAGE_SHARE_HOURS })}</p>
-    ${rows.length ? html`<form method="post" action="/usage/features/share">
-      <input type="hidden" name="endDay" value="${period.endDay}">
-      <input type="hidden" name="timeZone" value="${period.timeZone}">
-      <button class="button" type="submit">${t('允许技术支持查看上表')}</button>
-    </form>` : ''}`}
-</section>`,
   });
 }
 

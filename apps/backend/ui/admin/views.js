@@ -844,7 +844,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureShare, featureUsage, note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureUsage, note }) {
   return layout({
     title: u.username,
     admin,
@@ -899,17 +899,14 @@ export function userPage({ admin, u, state, subs, activity, sessions, api, insta
 
 ${installsSection(installs, u)}
 
-<section class="card" id="feature-usage">
+${featureUsage ? html`<section class="card" id="feature-usage">
   <h2>托管功能使用</h2>
-  ${featureUsage ? html`<p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。一次翻译操作可能发起多条请求。</p>
-    ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
-      <thead><tr><th>功能</th><th class="num">成功请求数</th></tr></thead>
-      <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
-    </table></div>` : html`<p class="muted">授权范围内暂无已分类的托管功能使用记录。</p>`}`
-    : featureShare ? html`<form method="post" action="/users/${u.id}/feature-usage#feature-usage">
-      <button class="button" type="submit">查看用户已授权的功能统计</button>
-    </form>` : html`<p class="muted">用户可在「用量与点数」页授权技术支持查看指定期间的功能统计。</p>`}
-</section>
+  <p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。一次翻译操作可能发起多条请求。</p>
+  ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
+    <thead><tr><th>功能</th><th class="num">成功请求数</th></tr></thead>
+    <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
+  </table></div>` : html`<p class="muted">这段时间暂无托管功能使用记录。</p>`}
+</section>` : ''}
 
 ${activityCharts(activityUI, activity, { action: `/users/${u.id}` })}
 <section class="card">

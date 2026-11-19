@@ -84,8 +84,6 @@ Each credit translation records the character count, credits charged, model and 
 
 Where available, hosted requests include the feature used. We aggregate existing request records by feature to understand usage and response times.
 
-You can see the number of successful requests for each hosted feature in your account. If you ask for help with a translation issue, you can allow our support staff to view the feature names and counts for the date range shown. Access expires after 24 hours, and you can revoke it at any time. We log staff access.
-
 ### Preventing repeated free-trial claims
 
 The extension claims free credits once after installation. To stop the same network or browser from claiming repeatedly, we keep a **one-way keyed hash** of the network address (never the address itself; for IPv6 only the first 64 bits are used), and a **random marker cookie** set on `app.huaci.app` by the welcome page (only its hash is stored). We do not use device fingerprinting.
@@ -224,8 +222,6 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 每次点数翻译会记录：字数、扣除的点数、模型与服务商、输入和输出的 token 数、目标语言与源语言、耗时、结果（成功、失败或被拒绝及原因）， 以及由网络服务商提供的**两位国家代码**。这些记录用于计费、防止滥用和服务统计，**不包含原文或译文**。 你可以在用户中心的「用量与点数」里查看自己的记录。
 
 托管请求可包含功能类别。我们按功能汇总已有请求记录，了解使用情况和响应速度。
-
-你可以在用户中心查看各项托管功能的成功请求数。需要排查翻译问题时，你可以授权技术支持查看页面所示日期范围内的功能及次数。授权在 24 小时后失效，也可随时撤回。我们会记录技术支持的查看操作。
 
 ### 免费试用的防重复领取
 

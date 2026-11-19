@@ -26,8 +26,7 @@ pick the content — a text selection, the article on the current page for side-
 reading, a page region the user has marked, text inside an image the user right-clicks, a PDF the
 user opens for whole-document translation, or text typed into the extension's own translation panel.
 Hosted translation requests can include the feature used. Our server aggregates existing request records
-by feature to understand usage and response times. Users can view their successful request counts and
-explicitly authorize support to view them for a specified date range for 24 hours to help with a translation issue.
+by feature to understand usage and response times.
 ```
 
 **中文 — 直接粘贴：**
@@ -37,7 +36,6 @@ explicitly authorize support to view them for a specified date range for 24 hour
 这一个用途涵盖用户选定内容的几种方式——划选一段文字、把当前页面的文章打开成逐段对照的双语阅读页、
 标记过的页面区域、右键的一张图片、打开做整份翻译的 PDF，以及在扩展自带翻译面板里输入的文字。
 托管翻译请求可带上功能类别，服务端按功能汇总已有请求记录，了解使用情况和响应速度。
-用户可以查看自己的成功请求数，并在需要排查问题时，明确授权技术支持在 24 小时内查看指定日期范围的统计。
 ```
 
 > 审阅人最在意的是「窄且易懂」。这段刻意用「只有一个用途 + 几种选定内容的方式 + 明确排除清单」的结构，
