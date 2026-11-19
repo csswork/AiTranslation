@@ -340,7 +340,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
 
-test('托管功能排行复用既有请求，按账户数排序，不设展示门槛', async () => {
+test('托管功能排行复用既有请求，列出全部功能，旧版未分类请求单列', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
   const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
@@ -368,15 +368,21 @@ test('托管功能排行复用既有请求，按账户数排序，不设展示�
   const page = await a.text('/features?days=7');
   const ranking = page.match(/<table data-feature-usage>[\s\S]*?<\/table>/)?.[0];
   assert.ok(ranking);
-  const entries = [...ranking.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+  const entries = [...ranking.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)]
     .map(([, row]) => [...row.matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map((cell) => cell[1]))
     .filter((cells) => cells.length === 5);
+  // 全部功能都列出，没用过的为 0；旧版扩展未带功能类别的文字请求单列在最后，失败请求与范围外请求不计。
   assert.deepEqual(entries, [
     ['双语阅读', '6', '100.0%', '6', '1.0'], ['图片翻译', '5', '83.3%', '18', '3.6'],
     ['整份 PDF 翻译', '4', '66.7%', '12', '3.0'],
+    ['划词翻译', '0', '0.0%', '0', '—'], ['翻译面板', '0', '0.0%', '0', '—'], ['网页区域', '0', '0.0%', '0', '—'],
+    ['整站翻译', '0', '0.0%', '0', '—'], ['视频字幕', '0', '0.0%', '0', '—'], ['其他译法', '0', '0.0%', '0', '—'],
+    ['未区分（旧版扩展）', '6', '100.0%', '6', '1.0'],
   ]);
-  assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
-  assert.match(page, /成功请求[\s\S]*?36[\s\S]*?人均 6\.0 次/, '合计按数字相加');
+  assert.match(ranking, /<tr class="muted">\s*<td>划词翻译<\/td>/, '没用过的功能淡化显示');
+  assert.doesNotMatch(ranking, /report-/);
+  assert.match(page, /已使用功能[\s\S]*?3 \/ 9/);
+  assert.match(page, /成功请求[\s\S]*?42[\s\S]*?人均 7\.0 次/, '合计按数字相加，含未区分请求');
   assert.doesNotMatch(page, /展示门槛|每项至少/);
 });
 

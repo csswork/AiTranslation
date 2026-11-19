@@ -8,7 +8,9 @@ import { EXTENSION_STORES, extensionStore } from '../../src/auth/extension.js';
 import { displayCredits } from '../../src/credits/units.js';
 import { createI18n } from '../../src/i18n/index.js';
 import { INCOME_TYPES } from '../../src/usage/activity.js';
-import { FEATURE_LABELS } from '../../src/usage/features.js';
+import { FEATURE_LABELS, UNCLASSIFIED_FEATURE, UNCLASSIFIED_LABEL } from '../../src/usage/features.js';
+
+const featureLabel = (key) => key === UNCLASSIFIED_FEATURE ? UNCLASSIFIED_LABEL : FEATURE_LABELS[key];
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
@@ -489,6 +491,7 @@ ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最
 export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
   const { rows, activeAccounts } = ranking;
   const totalRequests = rows.reduce((n, row) => n + row.requests, 0);
+  const used = rows.filter((row) => row.key !== UNCLASSIFIED_FEATURE && row.requests).length;
   const average = activeAccounts ? totalRequests / activeAccounts : 0;
   return layout({
     title: '托管功能使用统计',
@@ -501,21 +504,21 @@ export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
     <span>${labels[0]} — ${labels.at(-1)} · ${timeZone}</span></div>
 </div>
 <section class="kpis">
-  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有可归类成功请求' })}
-  ${kpiCard({ label: '展示功能', value: num(rows.length), sub: '有成功请求的功能' })}
+  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有成功托管请求' })}
+  ${kpiCard({ label: '已使用功能', value: `${num(used)} / ${num(Object.keys(FEATURE_LABELS).length)}`, sub: '有成功请求的功能' })}
   ${kpiCard({ label: '成功请求', value: num(totalRequests), sub: `人均 ${average.toFixed(1)} 次` })}
 </section>
-${rows.length ? html`<section class="card"><div class="table-wrap"><table data-feature-usage>
+<section class="card"><div class="table-wrap"><table data-feature-usage>
   <thead><tr><th>功能</th><th class="num">使用人数</th><th class="num">覆盖率</th><th class="num">成功请求数</th><th class="num">人均请求</th></tr></thead>
-  <tbody>${rows.map(({ key, accounts, requests }) => html`<tr>
-    <td>${FEATURE_LABELS[key]}</td>
+  <tbody>${rows.map(({ key, accounts, requests }) => html`<tr${requests ? '' : html` class="muted"`}>
+    <td>${featureLabel(key)}</td>
     <td class="num">${num(accounts)}</td>
     <td class="num">${pct(accounts, activeAccounts)}</td>
     <td class="num">${num(requests)}</td>
     <td class="num">${accounts ? (requests / accounts).toFixed(1) : '—'}</td>
   </tr>`)}</tbody>
 </table></div>
-<p class="fine">覆盖率以有可归类成功请求的账户为分母。日期按 ${timeZone} 统计。</p></section>` : html`<section class="card"><p class="muted">所选范围内暂无托管功能使用记录。</p></section>`}`,
+<p class="fine">覆盖率以有成功托管请求的账户为分母。日期按 ${timeZone} 统计。2.3.0 及更早的扩展不上报功能类别，它们的文字翻译请求记为「${UNCLASSIFIED_LABEL}」；独立的识图请求仍计入图片翻译。</p></section>`,
   });
 }
 
@@ -963,7 +966,7 @@ ${featureUsage ? html`<section class="card" id="feature-usage">
   <p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。一次翻译操作可能发起多条请求。</p>
   ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
     <thead><tr><th>功能</th><th class="num">成功请求数</th></tr></thead>
-    <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
+    <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${featureLabel(key)}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
   </table></div>` : html`<p class="muted">这段时间暂无托管功能使用记录。</p>`}
 </section>` : ''}
 
