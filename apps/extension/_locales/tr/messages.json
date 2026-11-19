@@ -2844,21 +2844,6 @@
   "m_4b1db520af460460": {
     "message": "Orijinal görsel"
   },
-  "m_2e561f38cd3e93f1": {
-    "message": "Özellik kullanım istatistikleri"
-  },
-  "m_da3298fd86c722c4": {
-    "message": "Puan tabanlı çeviri özelliklerinin kullanım verilerini paylaşın"
-  },
-  "m_86b5e7736912b49d": {
-    "message": "Çeviri özelliklerini geliştirmek için kullanılır. Etkinleştirildiğinde, her özellik hesap ve tarayıcı başına en fazla 24 saatte bir istatistik işaretçisi gönderir. İşaretçiler mevcut çeviri istekleriyle birlikte gönderilir. Bunu istediğiniz zaman kapatabilirsiniz."
-  },
-  "m_aeb25336a2949ff8": {
-    "message": "Uzantının gizli pencerelerde çalışmasına izin verilirse özellik istatistikleri duraklatılır."
-  },
-  "m_153c176c61b5bc1f": {
-    "message": "Çeviri özelliğini geliştirmek için kullanılır. Etkinleştirildiğinde, bu tarayıcıda her hesap için her özellik 24 saatte en fazla bir kez sayılır. Mevcut çeviri istekleriyle birlikte bir istatistik işaretçisi gönderilir. Bunu istediğiniz zaman kapatabilirsiniz."
-  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

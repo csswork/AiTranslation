@@ -679,10 +679,5 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Terjemahkan juga onomatope yang digambar pada panel: pertahankan teks asli dan tambahkan terjemahan di sampingnya dengan huruf kecil.",
   "调整文字形状": "Sesuaikan bentuk teks",
   "选项": "Opsi",
-  "原图": "Gambar asli",
-  "功能使用统计": "Statistik penggunaan fitur",
-  "分享点数翻译的功能使用情况": "Bagikan data penggunaan fitur terjemahan berbasis poin",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Digunakan untuk meningkatkan fitur terjemahan. Saat diaktifkan, setiap fitur mengirim paling banyak satu penanda statistik per akun per browser setiap 24 jam. Penanda dikirim bersama permintaan terjemahan yang ada. Anda dapat menonaktifkannya kapan saja.",
-  "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "Jika ekstensi diizinkan berjalan di jendela privat, statistik fitur akan dijeda.",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Digunakan untuk meningkatkan fitur terjemahan. Jika diaktifkan, setiap fitur dihitung paling banyak sekali per 24 jam per akun di browser ini. Penanda statistik dikirim bersama permintaan terjemahan yang ada. Anda dapat menonaktifkannya kapan saja."
+  "原图": "Gambar asli"
 }

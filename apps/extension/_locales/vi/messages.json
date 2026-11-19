@@ -2844,21 +2844,6 @@
   "m_4b1db520af460460": {
     "message": "Ảnh gốc"
   },
-  "m_2e561f38cd3e93f1": {
-    "message": "Thống kê sử dụng tính năng"
-  },
-  "m_da3298fd86c722c4": {
-    "message": "Chia sẻ dữ liệu sử dụng của các tính năng dịch theo điểm"
-  },
-  "m_86b5e7736912b49d": {
-    "message": "Dùng để cải thiện các tính năng dịch. Khi bật, mỗi tính năng sẽ gửi tối đa một dấu thống kê cho mỗi tài khoản trên trình duyệt này mỗi 24 giờ. Các dấu này được gửi kèm với các yêu cầu dịch hiện có. Bạn có thể tắt bất cứ lúc nào."
-  },
-  "m_aeb25336a2949ff8": {
-    "message": "Nếu tiện ích được phép chạy trong cửa sổ riêng tư, thống kê tính năng sẽ tạm dừng."
-  },
-  "m_153c176c61b5bc1f": {
-    "message": "Dùng để cải thiện tính năng dịch. Khi bật, mỗi tính năng được tính tối đa một lần mỗi 24 giờ cho mỗi tài khoản trên trình duyệt này. Dấu thống kê được gửi kèm các yêu cầu dịch hiện có. Bạn có thể tắt bất cứ lúc nào."
-  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

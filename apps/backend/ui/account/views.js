@@ -474,10 +474,10 @@ export function featureUsagePage(ui, { user, share, period, rows }) {
 <h1>${t('托管功能使用')}</h1>
 <section class="card">
   <p dir="ltr">${period.fromDay} – ${period.lastDay} · ${period.timeZone}</p>
-  <p class="fine">${t('只包含你在扩展中选择分享的记录。每个浏览器配置对同一功能每 24 小时最多计一次。')}</p>
+  <p class="fine">${t('按已有托管请求统计。一次翻译操作可能发起多条请求。')}</p>
   ${rows.length ? html`<div class="table-wrap"><table data-account-feature-usage>
-    <thead><tr><th>${t('功能')}</th><th class="num">${t('统计次数')}</th></tr></thead>
-    <tbody>${rows.map(({ key, uses }) => html`<tr><td>${t(FEATURE_LABELS[key])}</td><td class="num">${uses}</td></tr>`)}</tbody>
+    <thead><tr><th>${t('功能')}</th><th class="num">${t('成功请求数')}</th></tr></thead>
+    <tbody>${rows.map(({ key, requests }) => html`<tr><td>${t(FEATURE_LABELS[key])}</td><td class="num">${requests}</td></tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('这段时间暂无托管功能使用记录。')}</p>`}
 </section>
 <section class="card">
@@ -550,7 +550,7 @@ export function sessionsPage(ui, { user, sessions, currentId, notice }) {
     notice,
     body: html`<h1>${t('登录会话')}</h1>
 <section class="card">
-  <p class="muted">${t('这里列出仍然有效的网站和扩展登录。会话只记录类型和时间，不记录设备型号或位置。')}</p>
+  <p class="muted">${t('这里列出仍然有效的网站和扩展登录。会话不记录设备型号或位置。')}</p>
   <div class="table-wrap"><table>
     <thead><tr><th>${t('类型')}</th><th>${t('登录时间')}</th><th>${t('最近使用')}</th><th>${t('到期')}</th><th></th></tr></thead>
     <tbody>${sessions.map((s) => html`<tr data-client="${s.client}">

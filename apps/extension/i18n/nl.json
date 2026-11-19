@@ -679,10 +679,5 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Vertaal ook klankwoorden die in het beeld zijn getekend: behoud de originele tekst en zet de vertaling ernaast in kleine letters.",
   "调整文字形状": "Tekstvorm aanpassen",
   "选项": "Opties",
-  "原图": "Originele afbeelding",
-  "功能使用统计": "Statistieken over functiegebruik",
-  "分享点数翻译的功能使用情况": "Deel gebruiksgegevens van vertaalfuncties op basis van punten",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Wordt gebruikt om vertaalfuncties te verbeteren. Indien ingeschakeld, verzendt elke functie per account en per browser maximaal één statistiekmarkering per 24 uur. Markeringen worden samen met bestaande vertaalverzoeken verzonden. Je kunt dit op elk moment uitschakelen.",
-  "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "Als de extensie in privévensters mag worden uitgevoerd, worden de functiestatistieken gepauzeerd.",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Wordt gebruikt om de vertaalfunctie te verbeteren. Indien ingeschakeld, wordt elke functie per account op deze browser maximaal één keer per 24 uur geteld. Er wordt een statistiekmarkering met bestaande vertaalverzoeken meegestuurd. Je kunt dit op elk moment uitschakelen."
+  "原图": "Originele afbeelding"
 }

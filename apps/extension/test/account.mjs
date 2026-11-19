@@ -53,7 +53,6 @@ function boot(production = false, firefox = false) {
     fetch: async (url, init) => { calls.push({ url, init }); return { ok: true, status: 200, json: async () => ({ ...signedIn }) }; },
   });
   vm.runInContext(source('src/lib/env.js'), context);
-  vm.runInContext(source('src/lib/feature-usage.js'), context);
   vm.runInContext(source('src/lib/account.js'), context);
   vm.runInContext(source('src/lib/sites.js'), context);
   vm.runInContext(source('src/background.js').replace(/^import .*$/gm, ''), context);
@@ -256,7 +255,7 @@ for (const production of [false, true]) {
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, `${accountOrigin}/api/extension/logout`);
   assert.equal(calls[0].init.headers.authorization, 'Bearer original-token');
-  assert.equal(calls[0].init.headers['x-huaci-version'], context.AITrEnv.version, '账户请求带上扩展版本号，供管理端统计');
+  assert.equal(calls[0].init.headers['x-huaci-version'], undefined, '常规账户请求无需重复发送版本号');
   assert.match(String(context.AITrEnv.version), /^\d+(\.\d+){1,3}$/);
   assert.equal(calls[0].init.credentials, 'omit');
   assert.deepEqual(notifications.map(({ id }) => id), [1, 2, 3], '只通知同环境用户端与官网，不影响管理端或其他端口');
@@ -411,64 +410,56 @@ const sse = (events) => {
   await other.context.AITrAccount.warm();
   assert.equal(other.calls.length, 0, '自带 Key 时不预热');
 }
+console.log('✓ 账户同步、托管识图、流式翻译与连接预热：来源、本地/生产环境、会话及余额检查通过');
+
 {
   const { context, store, calls } = boot(true);
-  let now = Date.parse('2026-11-18T15:30:00Z');
+  let now = Date.parse('2026-11-19T00:00:00Z');
+  const day = 24 * 60 * 60 * 1000;
   context.Date = class extends Date { static now() { return now; } };
+  let offline = false;
   context.fetch = async (url, init) => {
     calls.push({ url, init });
-    return { ok: true, status: 200, json: async () => ({ translations: ['Bonjour'], raw: '[]', options: [] }) };
+    if (offline) throw Error('offline');
+    return { ok: true, status: 204, json: async () => ({}) };
   };
-  const translate = (surface) => context.AITrAccount.translate({ texts: ['Hello'], target: 'fr', surface });
-  const marked = () => calls.map(({ init }) => JSON.parse(init.body).countFeatureUse === true);
-  await translate('pdf');
-  assert.deepEqual(marked(), [false], '默认关闭');
-  assert.equal(store.featureUsageMarks, undefined);
-  await context.AITrFeatureUsage.setEnabled(true);
-  await Promise.all([translate('pdf'), translate('pdf'), translate('pdf')]);
-  assert.equal(marked().slice(1).filter(Boolean).length, 1, '同一功能并发只标记一个原请求');
-  const first = now;
-  now += 60 * 60 * 1000;
-  await translate('pdf');
-  assert.equal(marked().at(-1), false, '跨午夜仍按滚动时间判断');
-  await context.AITrAccount.readImageText({ image: 'synthetic' });
-  await translate('image');
-  assert.deepEqual(marked().slice(-2), [true, false], '识图和图片翻译共用功能限频');
-  now = first + 24 * 60 * 60 * 1000;
-  await translate('pdf');
-  assert.equal(marked().at(-1), false, '必须超过 24 小时');
-  now += 1;
-  await translate('pdf');
-  assert.equal(marked().at(-1), true);
-  store.accountStatus.username = 'other_member';
-  await translate('pdf');
-  assert.equal(marked().at(-1), true, '按本机当前账户分别限频');
-  await context.AITrFeatureUsage.setEnabled(false);
-  await translate('reader');
-  assert.equal(marked().at(-1), false);
-  assert.equal(store.featureUsageMarks, undefined);
-  assert.equal(calls.length, 11, '只使用原有翻译和识图请求');
+  const body = () => JSON.parse(calls.at(-1).init.body);
+  await context.AITrAccount.checkVersion();
+  assert.deepEqual(body(), { version: '2.3.0', upgrades: [], extensionId: ID }, '旧会话只补登记一次 ID');
+  assert.equal(await context.AITrAccount.nextVersionCheckAt(), now + day);
+  await context.AITrAccount.checkVersion();
+  now += day;
+  await context.AITrAccount.checkVersion();
+  assert.equal(calls.length, 1, '每 24 小时在本机检查，版本相同无请求');
+  context.AITrEnv = { ...context.AITrEnv, version: '2.4.0' };
+  offline = true;
+  await assert.rejects(context.AITrAccount.checkVersion('2.3.0'), (error) => error.code === 'network');
+  assert.equal(body().extensionId, undefined);
+  assert.deepEqual({ ...body().upgrades[0], id: '' }, { id: '', from: '2.3.0', to: '2.4.0' });
+  const queued = body();
+  offline = false;
+  await context.AITrAccount.checkVersion();
+  assert.equal(calls.length, 2, '离线后不立即轮询服务器');
+  now += day;
+  await context.AITrAccount.checkVersion();
+  assert.deepEqual(body(), queued, '重试沿用首次生成的升级记录 ID');
+  await context.AITrAccount.checkVersion('2.3.0');
+  assert.equal(calls.length, 3, '重复浏览器升级通知不再写记录');
+  assert.equal(store.accountSession.versionSync.pending.length, 0);
 }
+
 {
   const { context, calls } = boot(true, true);
   let granted = false;
   context.browser = { permissions: { contains: async () => granted } };
   context.fetch = async (url, init) => {
     calls.push({ url, init });
-    return sse([{ done: true }]);
+    return { ok: true, status: 204, json: async () => ({}) };
   };
-  const translate = async (surface) => { for await (const _ of context.AITrAccount.translateStream({ text: 'Hi', target: 'fr', surface })) {} };
-  const marked = () => JSON.parse(calls.at(-1).init.body).countFeatureUse === true;
-  await translate('selection');
-  assert.equal(marked(), false);
+  await context.AITrAccount.checkVersion('2.2.0');
+  assert.equal(calls.length, 0, '未开启 Firefox 技术数据权限时不报告升级');
   granted = true;
-  await translate('selection');
-  assert.equal(marked(), true);
-  context.chrome.extension = { isAllowedIncognitoAccess: async () => true };
-  await translate('panel');
-  assert.equal(marked(), false, '共用后台的隐私窗口可用时暂停统计');
-  granted = false;
-  await translate('reader');
-  assert.equal(marked(), false);
+  await context.AITrAccount.checkVersion();
+  assert.equal(JSON.parse(calls[0].init.body).extensionId, 'huaci@huaci.app');
+  assert.deepEqual(JSON.parse(calls[0].init.body).upgrades, []);
 }
-console.log('✓ 账户同步、托管识图、流式翻译与连接预热：来源、本地/生产环境、会话及余额检查通过');

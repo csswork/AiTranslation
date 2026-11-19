@@ -25,10 +25,9 @@ picks on a web page into the user's chosen language. That single purpose covers 
 pick the content — a text selection, the article on the current page for side-by-side bilingual
 reading, a page region the user has marked, text inside an image the user right-clicks, a PDF the
 user opens for whole-document translation, or text typed into the extension's own translation panel.
-Hosted translation requests can include the feature used to measure response times. Users can opt in to
-feature usage statistics. Each feature can count at most once per account and browser profile every 24
-hours. The marker travels with an existing hosted request. Users can view their shared counts and
-explicitly authorize support to view a specified date range for 24 hours to help with a translation issue.
+Hosted translation requests can include the feature used. Our server aggregates existing request records
+by feature to understand usage and response times. Users can view their successful request counts and
+explicitly authorize support to view them for a specified date range for 24 hours to help with a translation issue.
 ```
 
 **中文 — 直接粘贴：**
@@ -37,8 +36,8 @@ explicitly authorize support to view a specified date range for 24 hours to help
 本扩展（划词 – AI 翻译与双语阅读）只有一个用途：把用户在网页上明确选定的内容译成其选择的语言。
 这一个用途涵盖用户选定内容的几种方式——划选一段文字、把当前页面的文章打开成逐段对照的双语阅读页、
 标记过的页面区域、右键的一张图片、打开做整份翻译的 PDF，以及在扩展自带翻译面板里输入的文字。
-托管翻译请求可带上功能类别，用于统计响应速度。用户可选择分享功能使用统计。开启后，同一账户在单个浏览器配置中对每项功能每 24 小时最多计一次，标记随原有托管请求发送。
-用户可以查看自己分享的功能使用次数，并在需要排查问题时，明确授权技术支持在 24 小时内查看指定日期范围的统计。
+托管翻译请求可带上功能类别，服务端按功能汇总已有请求记录，了解使用情况和响应速度。
+用户可以查看自己的成功请求数，并在需要排查问题时，明确授权技术支持在 24 小时内查看指定日期范围的统计。
 ```
 
 > 审阅人最在意的是「窄且易懂」。这段刻意用「只有一个用途 + 几种选定内容的方式 + 明确排除清单」的结构，
@@ -123,6 +122,24 @@ app.huaci.app.
 是 PDF 阅读器，以及双语阅读识别出的文章，浏览器关闭即清除。用户点「保存」的文章连同译文存在扩展自己
 的 IndexedDB 里。这些数据都不随 Chrome 账号同步。API Key 只随请求发往用户选定的平台；登录令牌只发给
 我们自己的账户 API（app.huaci.app）。
+```
+
+### `alarms`
+
+**EN**
+
+```
+Runs a local extension version check every 24 hours while the browser is available. After the
+account's initial registration, an unchanged version needs no network request. When the extension
+is upgraded, it sends the previous and new versions to our own account service so we can track
+release adoption and troubleshoot compatibility.
+```
+
+**中文**
+
+```
+在浏览器可用时每 24 小时检查一次本机扩展版本。账户首次登记后，版本无变化时只在本机检查。
+扩展升级时向我们自己的账户服务上报原版本和新版本，用于了解更新进度和排查兼容问题。
 ```
 
 ### `scripting`
@@ -283,7 +300,7 @@ PDF（由随包的 pdf.js 解析）。这些都不会作为代码执行。
 | **Location** | ✅ **勾** | 托管请求只记录网络服务商提供的两位国家代码；防止重复领取试用时保存网络地址的带密钥单向哈希，不保存地址本身；不请求定位、不采集精确位置 |
 | Health information | ❌ | 不涉及 |
 | Web history | ❌ | 不调用 `chrome.history`，不记录访问过的网址。保存的文章只带用户主动保存那一篇的网址，存在本机 |
-| User activity | ✅ 勾 | 用户可明确开启或关闭托管功能使用统计。统计标记随已有请求发送，用于汇总功能使用情况。无独立的点击、滚动或按键事件上报 |
+| User activity | ✅ 勾 | 服务端按已有托管请求里的功能类别汇总使用情况和响应速度。无独立的点击、滚动或按键事件上报 |
 | Personal communications | ❌（边界项，见下） | 产品不针对邮件/聊天做任何处理；用户若恰好在邮件页面上划词，那属于「网站内容」的范畴，已在隐私政策里说明「只有你主动触发翻译时内容才会发出」 |
 
 > 与 Edge 后台的数据披露保持一致：见 `edge/submission.json` 的 `dataPractices`。勾选项以后台实际显示的定义为准，**不能选「不收集任何数据」**，也不能写成「所有请求都直接发往第三方平台」。

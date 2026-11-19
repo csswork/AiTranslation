@@ -285,14 +285,14 @@ const emptyChart = (text = '所选范围内暂无可展示的数据') => html`<d
 
 function featureUsageTable({ rows, minAccounts, activeAccounts }) {
   const body = rows.length ? html`<div class="table-wrap"><table>
-    <thead><tr><th>功能</th><th class="num" aria-sort="descending">统计次数</th><th class="num">使用账户数</th><th class="num">覆盖率</th><th class="num">重复使用率</th></tr></thead>
-    <tbody>${rows.map(({ key, uses, accounts, repeat_accounts }) => html`<tr>
-      <td>${FEATURE_LABELS[key]}</td><td class="num">${num(uses)}</td><td class="num">${num(accounts)}</td><td class="num">${pct(accounts, activeAccounts)}</td><td class="num">${pct(repeat_accounts, accounts)}</td>
+    <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用账户数</th><th class="num">覆盖率</th><th class="num">成功请求数</th></tr></thead>
+    <tbody>${rows.map(({ key, requests, accounts }) => html`<tr>
+      <td>${FEATURE_LABELS[key]}</td><td class="num">${num(accounts)}</td><td class="num">${pct(accounts, activeAccounts)}</td><td class="num">${num(requests)}</td>
     </tr>`)}</tbody>
   </table></div>` : emptyChart('所选范围内暂无达到展示门槛的功能');
   return panel('托管功能使用排行', body, {
     wide: true,
-    note: `基于用户自愿分享的托管使用记录。扩展按账户、功能和浏览器配置每 24 小时最多标记一次。覆盖率以有统计记录的账户为分母。每项至少有 ${minAccounts} 个账户才展示。`,
+    note: `使用现有托管请求记录。覆盖率以有可归类成功请求的账户为分母。一次 PDF 或整站翻译可能发起多条请求。每项至少有 ${minAccounts} 个账户才展示。`,
   });
 }
 
@@ -416,6 +416,10 @@ ${money.expenses}
   ${panel('安装来源', sourceChart, { span: 'main', note: 'Chrome · Edge 每日安装（按扩展商店区分）' })}
   ${panel('来源占比', sourceDonut ? html`<div data-install-sources>${sourceDonut}${barList(sourceTotals.map((t) => ({ label: t.label, value: t.value, note: `${num(t.registered)} 注册` })), { cls: 'c2' })}</div>` : '', { span: 'side', note: '这段时间的安装与其中注册数' })}
   ${panel('扩展版本', versionBars.length ? html`<div data-extension-versions>${barList(versionBars, { cls: 'c3' })}</div>` : '', { wide: true, note: '这段时间有使用的账户在用哪个版本 · 点版本号查看用户' })}
+  ${panel('扩展升级记录', r.upgrades.length ? html`<div class="table-wrap"><table data-extension-upgrades>
+    <thead><tr><th>上报日期</th><th>浏览器</th><th>原版本</th><th>升级到</th><th class="num">次数</th></tr></thead>
+    <tbody>${r.upgrades.map((row) => html`<tr><td>${row.day}</td><td>${browserLabel(row.extension_id)}</td><td dir="ltr">${row.from_version}</td><td dir="ltr">${row.to_version}</td><td class="num">${num(row.upgrades)}</td></tr>`)}</tbody>
+  </table></div>` : emptyChart('所选范围内暂无升级上报'), { wide: true, note: '按上报日期、浏览器及版本变化汇总' })}
   ${panel('转化漏斗', r.funnel.installs ? funnel(funnelSteps) : '', { wide: true, note: '这段时间安装的用户后来做了什么' })}
 </div>
 ${planDonut || r.outcomes.length ? html`<details class="dashboard-details"><summary>订阅与访客领取<span>查看构成与领取结果</span></summary><div class="panels dashboard-grid">
@@ -897,10 +901,10 @@ ${installsSection(installs, u)}
 
 <section class="card" id="feature-usage">
   <h2>托管功能使用</h2>
-  ${featureUsage ? html`<p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。每项功能按浏览器配置滚动 24 小时计数。</p>
+  ${featureUsage ? html`<p class="fine">${featureUsage.fromDay} 至 ${featureUsage.lastDay} · ${featureUsage.timeZone}。一次翻译操作可能发起多条请求。</p>
     ${featureUsage.rows.length ? html`<div class="table-wrap"><table data-user-feature-usage>
-      <thead><tr><th>功能</th><th class="num">统计次数</th></tr></thead>
-      <tbody>${featureUsage.rows.map(({ key, uses }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(uses)}</td></tr>`)}</tbody>
+      <thead><tr><th>功能</th><th class="num">成功请求数</th></tr></thead>
+      <tbody>${featureUsage.rows.map(({ key, requests }) => html`<tr><td>${FEATURE_LABELS[key]}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
     </table></div>` : html`<p class="muted">授权范围内暂无已分类的托管功能使用记录。</p>`}`
     : featureShare ? html`<form method="post" action="/users/${u.id}/feature-usage#feature-usage">
       <button class="button" type="submit">查看用户已授权的功能统计</button>

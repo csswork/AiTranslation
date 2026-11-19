@@ -2844,21 +2844,6 @@
   "m_4b1db520af460460": {
     "message": "Imagem original"
   },
-  "m_2e561f38cd3e93f1": {
-    "message": "Estatísticas de uso de recursos"
-  },
-  "m_da3298fd86c722c4": {
-    "message": "Compartilhar dados de uso dos recursos de tradução por pontos"
-  },
-  "m_86b5e7736912b49d": {
-    "message": "Usado para melhorar os recursos de tradução. Quando ativado, cada recurso envia no máximo um marcador de estatísticas por conta por navegador a cada 24 horas. Os marcadores são enviados junto com as solicitações de tradução existentes. Você pode desativar isso a qualquer momento."
-  },
-  "m_aeb25336a2949ff8": {
-    "message": "Se a extensão puder ser executada em janelas privativas, as estatísticas de recursos serão pausadas."
-  },
-  "m_153c176c61b5bc1f": {
-    "message": "Usado para melhorar a tradução. Quando ativado, cada recurso é contado no máximo uma vez a cada 24 horas por conta neste navegador. Um marcador estatístico é enviado com as solicitações de tradução existentes. Você pode desativar isso a qualquer momento."
-  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

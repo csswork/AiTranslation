@@ -2844,21 +2844,6 @@
   "m_4b1db520af460460": {
     "message": "Oryginalny obraz"
   },
-  "m_2e561f38cd3e93f1": {
-    "message": "Statystyki użytkowania funkcji"
-  },
-  "m_da3298fd86c722c4": {
-    "message": "Udostępniaj dane o użytkowaniu funkcji tłumaczenia punktowego"
-  },
-  "m_86b5e7736912b49d": {
-    "message": "Używane do ulepszania funkcji tłumaczenia. Po włączeniu każda funkcja wysyła co najwyżej jeden znacznik statystyk na konto i przeglądarkę co 24 godziny. Znaczniki są wysyłane wraz z istniejącymi żądaniami tłumaczenia. Możesz to wyłączyć w dowolnym momencie."
-  },
-  "m_aeb25336a2949ff8": {
-    "message": "Jeśli rozszerzenie może działać w oknach prywatnych, statystyki funkcji zostaną wstrzymane."
-  },
-  "m_153c176c61b5bc1f": {
-    "message": "Używane do ulepszania tłumaczenia. Po włączeniu każda funkcja jest liczona najwyżej raz na 24 godziny na konto w tej przeglądarce. Znacznik statystyk jest wysyłany wraz z istniejącymi żądaniami tłumaczenia. Możesz to wyłączyć w dowolnym momencie."
-  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

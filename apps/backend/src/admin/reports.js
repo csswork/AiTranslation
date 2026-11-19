@@ -50,7 +50,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
 
   const [current, previous, subsNow, daily, funnel, audiences, providers, targetLangs, sourceLangs, uiLangs, browsers, browserDays,
     installCountries, usageCountries, revenueCountries, revenue, heat, latency, sizes, outcomes, errors, topUsers, speed,
-    versions, recentInstalls, recentTotals, featureUsage] = await Promise.all([
+    versions, recentInstalls, recentTotals, featureUsage, upgrades] = await Promise.all([
     periodTotals(db, from, now),
     periodTotals(db, prevFrom, from),
     q(`SELECT plan, COUNT(*)::int AS n FROM subscriptions WHERE ${ACTIVE_SUB} GROUP BY plan`, [ENTITLED]),
@@ -153,9 +153,9 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
               COUNT(*) FILTER (WHERE provider = 'cache')::int AS cached
        FROM usage_events WHERE kind = 'text' AND created_at >= $1 AND created_at < $2
        GROUP BY GROUPING SETS ((country), (audience), (surface), (ext_version)) ORDER BY n DESC`, window),
-    // 扩展版本：这段时间内有请求的账户在用的版本（user_extensions 每小时至多更新一次，见 api/extension.js）。
+    // 版本首次登记或升级时写入，是否活跃以最后使用时间为准。
     q(`SELECT version, extension_id, COUNT(DISTINCT user_id)::int AS users FROM user_extensions
-       WHERE version IS NOT NULL AND version_seen_at >= $1 AND version_seen_at < $2
+       WHERE version IS NOT NULL AND last_seen_at >= $1 AND last_seen_at < $2
        GROUP BY 1, 2 ORDER BY string_to_array(version, '.')::int[] DESC, users DESC`, window),
     // 最近 7 天安装（固定 7 天，不随所选范围变化）：每次安装现在对应的账户、安装时与现在的扩展版本，以及安装之后用了多少次托管翻译。
     // 访客合并后 user_id 置空，取合并进的账户；重装接回或浏览器已注册时取关联的账户。
@@ -177,6 +177,9 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
                                               AND ev.status = 'ok' AND ev.created_at >= g.created_at))::int AS used
        FROM guest_claims g WHERE g.created_at > now() - interval '7 days'`),
     featureUsageRanking(db, { from, to: now }),
+    q(`SELECT to_char(reported_at AT TIME ZONE $3, 'YYYY-MM-DD') AS day, extension_id, from_version, to_version, COUNT(*)::int AS upgrades
+       FROM extension_upgrades WHERE reported_at >= $1 AND reported_at < $2
+       GROUP BY 1, 2, 3, 4 ORDER BY day DESC, upgrades DESC, extension_id, from_version, to_version`, [...window, timeZone]),
   ]);
 
   const rejectionQuery = (a, b) => q(
@@ -221,6 +224,7 @@ export async function overview(db, days, { settings = {}, timeZone = 'Asia/Shang
     sizes: sizes[0],
     speed,
     versions,
+    upgrades,
     recentInstalls: { rows: recentInstalls, ...recentTotals[0] },
     featureUsage,
     outcomes,

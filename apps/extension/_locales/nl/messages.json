@@ -2844,21 +2844,6 @@
   "m_4b1db520af460460": {
     "message": "Originele afbeelding"
   },
-  "m_2e561f38cd3e93f1": {
-    "message": "Statistieken over functiegebruik"
-  },
-  "m_da3298fd86c722c4": {
-    "message": "Deel gebruiksgegevens van vertaalfuncties op basis van punten"
-  },
-  "m_86b5e7736912b49d": {
-    "message": "Wordt gebruikt om vertaalfuncties te verbeteren. Indien ingeschakeld, verzendt elke functie per account en per browser maximaal één statistiekmarkering per 24 uur. Markeringen worden samen met bestaande vertaalverzoeken verzonden. Je kunt dit op elk moment uitschakelen."
-  },
-  "m_aeb25336a2949ff8": {
-    "message": "Als de extensie in privévensters mag worden uitgevoerd, worden de functiestatistieken gepauzeerd."
-  },
-  "m_153c176c61b5bc1f": {
-    "message": "Wordt gebruikt om de vertaalfunctie te verbeteren. Indien ingeschakeld, wordt elke functie per account op deze browser maximaal één keer per 24 uur geteld. Er wordt een statistiekmarkering met bestaande vertaalverzoeken meegestuurd. Je kunt dit op elk moment uitschakelen."
-  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

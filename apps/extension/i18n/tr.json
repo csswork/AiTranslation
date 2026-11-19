@@ -679,10 +679,5 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Çizimde yer alan yansıma sözcükleri de çevir: özgün metni koru ve çevirisini yanına küçük harflerle ekle.",
   "调整文字形状": "Metin şeklini ayarla",
   "选项": "Seçenekler",
-  "原图": "Orijinal görsel",
-  "功能使用统计": "Özellik kullanım istatistikleri",
-  "分享点数翻译的功能使用情况": "Puan tabanlı çeviri özelliklerinin kullanım verilerini paylaşın",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Çeviri özelliklerini geliştirmek için kullanılır. Etkinleştirildiğinde, her özellik hesap ve tarayıcı başına en fazla 24 saatte bir istatistik işaretçisi gönderir. İşaretçiler mevcut çeviri istekleriyle birlikte gönderilir. Bunu istediğiniz zaman kapatabilirsiniz.",
-  "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "Uzantının gizli pencerelerde çalışmasına izin verilirse özellik istatistikleri duraklatılır.",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Çeviri özelliğini geliştirmek için kullanılır. Etkinleştirildiğinde, bu tarayıcıda her hesap için her özellik 24 saatte en fazla bir kez sayılır. Mevcut çeviri istekleriyle birlikte bir istatistik işaretçisi gönderilir. Bunu istediğiniz zaman kapatabilirsiniz."
+  "原图": "Orijinal görsel"
 }

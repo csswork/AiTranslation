@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import { after, before, beforeEach, test } from 'node:test';
 import { LANGUAGES } from '../src/translation/languages.js';
@@ -44,6 +44,29 @@ function api(app, config, path, { method = 'GET', token, body, origin = ORIGIN, 
   }
   return app.request(new URL(`/api/extension${path}`, config.appOrigin), { method, headers, body: encoded });
 }
+
+test('扩展升级复用已匹配的商店 ID，重试只留一条记录，常规请求从会话读取新版', async () => {
+  const config = testConfig({ EXTENSION_IDS: `${EXT_ID},${FIREFOX_EXTENSION_ID}` });
+  const { hosted } = fakeHosted();
+  const { app } = buildApp({ pool, config, hosted });
+  const guest = await api(app, config, '/guest', { method: 'POST', body: { extensionId: EXT_ID }, headers: { 'x-huaci-version': '2.3.0' } });
+  const { token, extensionRegistered } = await guest.json();
+  assert.equal(extensionRegistered, true);
+  const report = (body, origin = '') => api(app, config, '/version', { method: 'POST', token, origin, body });
+  const from = '2.3.0', to = '2.4.0';
+  const upgrade = { id: randomUUID(), from, to };
+  const body = { version: to, upgrades: [upgrade] };
+  assert.equal((await report({ version: to, upgrades: [{ ...upgrade, from: to, to: from }] })).status, 400);
+  const retry = await Promise.all([report(body), report(body)]);
+  assert.ok(retry.every((res) => res.status === 204));
+  const { rows } = await pool.query('SELECT extension_id, from_version, to_version FROM extension_upgrades');
+  assert.deepEqual(rows, [{ extension_id: EXT_ID, from_version: from, to_version: to }]);
+  assert.equal((await report({ version: from })).status, 204, '迟到的旧版登记不能覆盖新版');
+  const translated = await api(app, config, '/translate', { method: 'POST', token, body: { texts: ['Hello'], target: 'fr' } });
+  assert.equal(translated.status, 200);
+  assert.equal((await pool.query('SELECT ext_version FROM usage_events')).rows[0].ext_version, to);
+  assert.equal((await pool.query('SELECT version FROM user_extensions')).rows[0].version, to);
+});
 
 test('Firefox：只允许明确列出的扩展使用固定 HTTPS 回调，PKCE 换取会话且不放开随机来源', async () => {
   const config = testConfig({ EXTENSION_IDS: `${EXT_ID},${FIREFOX_EXTENSION_ID}` });
@@ -460,7 +483,7 @@ test('其他译法：按原文段落字数扣点并记用量；失败返还；�
   const { app, config, mailbox } = buildApp({ pool, hosted });
   const { token } = await extensionLogin(app, config, mailbox, 'alt@example.com');
   const source = '新功能今天上线，'.repeat(25); // 200 个字
-  const request = { source, translation: 'The new function ships today.', start: 8, end: 16, target: 'en', note: 'zh-Hans', countFeatureUse: true };
+  const request = { source, translation: 'The new function ships today.', start: 8, end: 16, target: 'en', note: 'zh-Hans' };
   let res = await api(app, config, '/alternatives', { method: 'POST', token, body: request });
   assert.equal(res.status, 200);
   let body = await res.json();
@@ -469,8 +492,8 @@ test('其他译法：按原文段落字数扣点并记用量；失败返还；�
   assert.equal(body.cost, '0.40', '按原文 200 字扣 0.4 点');
   assert.equal(body.credits.balance, '99.60');
   assert.deepEqual(calls.at(-1).alternatives, { source, selected: 'function', target: 'en', note: 'zh-Hans' });
-  const { rows: [event] } = await pool.query('SELECT kind, status, chars, cost_units, target_lang, surface, count_feature_use FROM usage_events');
-  assert.deepEqual(event, { kind: 'text', status: 'ok', chars: 200, cost_units: '200', target_lang: 'en', surface: 'alternatives', count_feature_use: true });
+  const { rows: [event] } = await pool.query('SELECT kind, status, chars, cost_units, target_lang, surface FROM usage_events');
+  assert.deepEqual(event, { kind: 'text', status: 'ok', chars: 200, cost_units: '200', target_lang: 'en', surface: 'alternatives' });
 
   res = await api(app, config, '/alternatives', { method: 'POST', token, body: { ...request, note: 'xx' } });
   assert.equal(res.status, 200);

@@ -125,6 +125,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
 
   const console2 = { info: () => {}, warn: (...a) => state.warns.push(a.join(' ')), log: () => {}, error: () => {} };
   globalThis.chrome = chrome;
+  globalThis.AITrAccount = { checkVersion: async () => {}, warm: async () => {} };
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
   installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');

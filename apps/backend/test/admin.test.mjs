@@ -289,6 +289,8 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.deepEqual(events.map((e) => e.target_lang), ['zh-Hans', 'zh-Hans', 'ja', 'en']);
   // 响应速度：20 条流式划词请求与 2 条缓存命中（样本够 20 条才显示百分位）
   const { rows: [{ user_id: speedUser }] } = await pool.query('SELECT user_id FROM usage_events LIMIT 1');
+  await pool.query(`INSERT INTO extension_upgrades (id, user_id, extension_id, from_version, to_version)
+    SELECT gen_random_uuid(), $1, 'hogimafgjmlpdlnepojgigjkhaccbcbj', '2.2.0', '2.3.0' FROM generate_series(1, 2)`, [speedUser]);
   await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, audience, country, surface, stream, provider, latency_ms, precheck_ms, ttft_ms, server_ms)
     SELECT $1, 'text', 10, 10, 'ok', 'member', 'SG', 'selection', true, 'deepseek', 700, 12, 300, 800 FROM generate_series(1, 20)`, [speedUser]);
   await pool.query(`INSERT INTO usage_events (user_id, kind, chars, cost_units, status, audience, country, surface, stream, provider, latency_ms, precheck_ms, server_ms)
@@ -310,6 +312,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/?days=7&map=constructor'), /aria-label="世界地图 · 使用分布"/);
   assert.match(page, /使用时段[\s\S]*class="chart heat"/);
   assert.match(page, /响应耗时[\s\S]*P50/);
+  assert.match(page, /扩展升级记录[\s\S]*data-extension-upgrades[\s\S]*Chrome<\/td><td dir="ltr">2\.2\.0<\/td><td dir="ltr">2\.3\.0<\/td><td class="num">2<\/td>/);
   const installs = page.match(/<ul class="install-list" data-recent-installs>[\s\S]*?<\/ul>/)?.[0] || '';
   assert.equal((installs.match(/class="install-row"/g) || []).length, 4, '最近 7 天安装逐条列出');
   assert.match(installs, /<li class="install-day">今天<\/li>/);
@@ -336,7 +339,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
 
-test('托管功能排行只累计扩展标记的成功使用，按次数排序并隐藏小样本', async () => {
+test('托管功能排行复用既有请求，按账户数排序并隐藏小样本', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
   const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
@@ -345,33 +348,33 @@ test('托管功能排行只累计扩展标记的成功使用，按次数排序�
     FROM generate_series(1, 6) n RETURNING id`);
   const accounts = rows.map(({ id }) => id);
   const reference = new Date();
-  for (const [kind, surface, status, users, requests, age, counted] of [
-    ['text', 'reader', 'ok', 6, 1, '1 day', true],
-    ['text', 'image', 'ok', 5, 1, '1 day', true],
-    ['image', null, 'ok', 3, 1, '1 day', true],
-    ['text', 'image', 'ok', 5, 2, '1 day', false],
-    ['text', 'pdf', 'ok', 4, 3, '1 day', true],
-    ['text', 'pdf', 'failed', 6, 1, '1 day', true],
-    ['text', 'pdf', 'ok', 6, 1, '8 days', true],
-    ['text', null, 'ok', 6, 1, '0 seconds', false],
+  for (const [kind, surface, status, users, requests, age] of [
+    ['text', 'reader', 'ok', 6, 1, '1 day'],
+    ['text', 'image', 'ok', 5, 1, '1 day'],
+    ['image', null, 'ok', 3, 1, '1 day'],
+    ['text', 'image', 'ok', 5, 2, '1 day'],
+    ['text', 'pdf', 'ok', 4, 3, '1 day'],
+    ['text', 'pdf', 'failed', 6, 1, '1 day'],
+    ['text', 'pdf', 'ok', 6, 1, '8 days'],
+    ['text', null, 'ok', 6, 1, '0 seconds'],
   ]) {
-    await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, count_feature_use)
-      SELECT account, $2, $3, $4, 0, 0, $7::timestamptz - $6::interval, $8
+    await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at)
+      SELECT account, $2, $3, $4, 0, 0, $7::timestamptz - $6::interval
       FROM unnest($1::uuid[]) AS u(account) CROSS JOIN generate_series(1, $5::int)`,
-    [accounts.slice(0, users), kind, surface, status, requests, age, reference, counted]);
+    [accounts.slice(0, users), kind, surface, status, requests, age, reference]);
   }
 
   const page = await a.text('/?days=7');
   const ranking = page.match(/<h2>托管功能使用排行<\/h2>[\s\S]*?<\/section>/)?.[0];
   assert.ok(ranking);
-  const entries = [...ranking.matchAll(/<td>([^<]+)<\/td>(?:<td class="num">[^<]+<\/td>){4}/g)];
+  const entries = [...ranking.matchAll(/<td>([^<]+)<\/td>(?:<td class="num">[^<]+<\/td>){3}/g)];
   assert.deepEqual(entries.map(([row]) => [...row.matchAll(/>([^<>]+)<\/td>/g)].map((entry) => entry[1])), [
-    ['图片翻译', '8', '5', '83.3%', '60.0%'], ['双语阅读', '6', '6', '100.0%', '0.0%'],
+    ['双语阅读', '6', '100.0%', '6'], ['图片翻译', '5', '83.3%', '18'],
   ]);
   assert.doesNotMatch(ranking, /report-|未标记（旧版扩展）/);
 });
 
-test('用户功能统计累计客户端标记，管理端查看须有本人授权并写审计', async () => {
+test('用户功能统计复用既有成功请求，管理端查看须有本人授权并写审计', async () => {
   const timeZone = 'America/Los_Angeles';
   const config = testConfig({ REPORT_TIMEZONE: timeZone, ADMIN_REQUIRE_2FA: '1' });
   const { app, mailbox } = buildApp({ pool, config });
@@ -380,26 +383,29 @@ test('用户功能统计累计客户端标记，管理端查看须有本人授�
   const other = await signInWithEmail(app, config, mailbox, 'other@example.com');
   const { rows: [{ id }] } = await pool.query("SELECT id FROM users WHERE email = 'feature-user@example.com'");
   const period = recentFeatureUsagePeriod(timeZone);
-  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, count_feature_use)
-    SELECT $1, kind, surface, status, 0, 0, ($2::date::timestamp + age) AT TIME ZONE $3, counted FROM (VALUES
-      ('text', 'pdf', 'ok', interval '-3 days 16 hours', true),
-      ('text', 'pdf', 'ok', interval '-3 days 19 hours', true),
-      ('text', 'pdf', 'ok', interval '-1 day 1 hour', false),
-      ('image', NULL, 'ok', interval '-2 days 1 hour', true),
-      ('text', 'image', 'ok', interval '-2 days 2 hours', false),
-      ('text', 'site', 'failed', interval '-1 day 1 hour', true),
-      ('text', 'panel', 'ok', interval '0 hours', true)
-    ) AS e(kind, surface, status, age, counted)`, [id, period.endDay, timeZone]);
+  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at)
+    SELECT $1, kind, surface, status, 0, 0, ($2::date::timestamp + age) AT TIME ZONE $3 FROM (VALUES
+      ('text', 'pdf', 'ok', interval '-3 days 16 hours'),
+      ('text', 'pdf', 'ok', interval '-3 days 19 hours'),
+      ('text', 'pdf', 'ok', interval '-1 day 1 hour'),
+      ('image', NULL, 'ok', interval '-2 days 1 hour'),
+      ('text', 'image', 'ok', interval '-2 days 2 hours'),
+      ('text', 'site', 'failed', interval '-1 day 1 hour'),
+      ('text', 'panel', 'ok', interval '0 hours')
+    ) AS e(kind, surface, status, age)`, [id, period.endDay, timeZone]);
 
   const detail = `/users/${id}`;
   const view = `${detail}/feature-usage`;
-  const counts = /整份 PDF 翻译<\/td><td class="num">2<\/td>[\s\S]*图片翻译<\/td><td class="num">1<\/td>/;
+  const counts = /整份 PDF 翻译<\/td><td class="num">3<\/td>[\s\S]*图片翻译<\/td><td class="num">2<\/td>/;
   const personal = await customer.text('/usage/features');
   assert.match(personal, counts);
   assert.doesNotMatch(personal, /整站翻译|翻译面板/);
   assert.doesNotMatch(await other.text('/usage/features'), /data-account-feature-usage/);
   assert.doesNotMatch(await a.text(detail), /data-user-feature-usage|查看用户已授权的功能统计/);
   assert.equal((await a.post(view, {})).status, 303);
+  await pool.query(`INSERT INTO feature_usage_shares (user_id, end_day, time_zone, expires_at)
+    VALUES ($1, $2, $3, now() + interval '1 hour')`, [id, period.endDay, timeZone]);
+  assert.equal((await a.post(view, {})).status, 303, '旧范围授权不自动覆盖请求统计');
 
   const form = { endDay: period.endDay, timeZone };
   assert.equal((await customer.request('/usage/features/share', { method: 'POST', form, headers: { origin: 'https://other.example' } })).status, 403);

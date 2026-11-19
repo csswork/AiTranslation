@@ -25,7 +25,7 @@
   globalThis.AITrEnv = Object.freeze({
     dev,
     firefox,
-    // 扩展版本号：账户请求带在 X-Huaci-Version 里，管理端据此按版本统计。
+    // 本机版本用于初次会话登记、升级报告和界面展示。
     version: manifest.version,
     extensionsShortcuts: firefox ? 'about:addons' : edge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts',
     accountOrigin,

@@ -75,16 +75,16 @@ When you sign up or sign in, we keep:
 
 - **Email and username**, for signing in, recovery, and contacting you. No name, avatar, or other profile data.
 - **Sign-in methods**: with Google sign-in, only the Google account identifier and verified email.
-- **Sessions**: only the type (website or extension) and times; no device model, location, or fingerprint.
+- **Sessions and extension versions.** We record the session type and times. For the extension, we also record its public store ID, version and reported upgrades to measure release adoption and help with compatibility. We do not record device models, locations or fingerprints as part of the session.
 - **Credits and subscription**: credit grants, deductions and refunds, subscription status, and order amount, currency, refund status, and billing country.
 
 ### Usage records
 
 Each credit translation records the character count, credits charged, model and provider, input and output token counts, target and source language, latency, the outcome (success, failure, or rejection and why), and the **two-letter country code** supplied by our network provider. These records are used for billing, abuse prevention, and service statistics, and **contain no original text or translation**. You can see your own records under “Usage and credits” in your account.
 
-Where available, hosted requests include the feature used so we can measure response times. You can opt in to share feature usage to help us improve translation. Each feature can count at most once every 24 hours per account in a browser profile. The usage marker travels with an existing hosted request. You can turn sharing off in the extension settings.
+Where available, hosted requests include the feature used. We aggregate existing request records by feature to understand usage and response times.
 
-You can see the feature usage counts you shared in your account. If you ask for help with a translation issue, you can allow our support staff to view the feature names and counts for the date range shown. Access expires after 24 hours, and you can revoke it at any time. We log staff access.
+You can see the number of successful requests for each hosted feature in your account. If you ask for help with a translation issue, you can allow our support staff to view the feature names and counts for the date range shown. Access expires after 24 hours, and you can revoke it at any time. We log staff access.
 
 ### Preventing repeated free-trial claims
 
@@ -216,16 +216,16 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 
 - **邮箱与用户名**——用于登录、找回和联系你。不保存姓名、头像或其他资料。
 - **登录方式**——用 Google 登录时只保存 Google 账户的标识与已验证的邮箱。
-- **登录会话**——只记录类型（网站或扩展）和时间，不记录设备型号、位置或设备指纹。
+- **登录会话与扩展版本**。我们记录会话类型和时间。扩展会话还记录公开的商店扩展 ID、版本和上报的升级，用于了解版本更新进度和排查兼容问题。会话不记录设备型号、位置或设备指纹。
 - **点数与订阅**——点数的发放、扣除与返还记录，订阅状态，以及订单的金额、币种、退款状态和账单国家。
 
 ### 使用记录
 
 每次点数翻译会记录：字数、扣除的点数、模型与服务商、输入和输出的 token 数、目标语言与源语言、耗时、结果（成功、失败或被拒绝及原因）， 以及由网络服务商提供的**两位国家代码**。这些记录用于计费、防止滥用和服务统计，**不包含原文或译文**。 你可以在用户中心的「用量与点数」里查看自己的记录。
 
-托管请求可包含功能类别，用于统计响应速度。你可以选择分享功能使用统计，帮助我们改进翻译。每个浏览器配置内，同一账户的每项功能每 24 小时最多计一次。统计标记随现有托管请求发送。你可以在扩展设置中关闭分享。
+托管请求可包含功能类别。我们按功能汇总已有请求记录，了解使用情况和响应速度。
 
-你可以在用户中心查看自己分享的功能使用次数。需要排查翻译问题时，你可以授权技术支持查看页面所示日期范围内的功能及次数。授权在 24 小时后失效，也可随时撤回。我们会记录技术支持的查看操作。
+你可以在用户中心查看各项托管功能的成功请求数。需要排查翻译问题时，你可以授权技术支持查看页面所示日期范围内的功能及次数。授权在 24 小时后失效，也可随时撤回。我们会记录技术支持的查看操作。
 
 ### 免费试用的防重复领取
 

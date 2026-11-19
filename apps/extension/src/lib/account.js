@@ -21,10 +21,12 @@
   const PENDING_KEY = 'accountLoginPending';
   const GUEST_CLAIMED_KEY = 'guestClaimed';
   const PENDING_TTL = 30 * 60 * 1000; // 授权页上可能还要先注册、收验证码
+  const VERSION_CHECK_INTERVAL = 24 * 60 * 60 * 1000;
   const EXTENSION_CALLBACK_URL = chrome.runtime.getURL('src/auth/callback.html');
   const CALLBACK_URL = AITrEnv.firefox ? `${API_ORIGIN}/extension/firefox/callback` : EXTENSION_CALLBACK_URL;
   // 网络请求可以并发；令牌与状态的检查、写入必须串行，避免旧响应覆盖新登录。
   let stateTask = Promise.resolve();
+  let versionTask = Promise.resolve();
   const updateState = (task) => {
     const next = stateTask.catch(() => {}).then(task);
     stateTask = next;
@@ -88,12 +90,8 @@
     };
   }
 
-  async function call(path, { method = 'GET', body, auth = true, authToken, signal, stream = false } = {}) {
-    // 版本号与来源商店只用于管理端统计。Firefox 的扩展来源每次安装随机，另外带上固定的扩展 ID。
-    const headers = {
-      ...(AITrEnv.version ? { 'x-huaci-version': AITrEnv.version } : {}),
-      ...(AITrEnv.firefox ? { 'x-huaci-extension': chrome.runtime.id } : {}),
-    };
+  async function call(path, { method = 'GET', body, auth = true, authToken, signal, stream = false, version } = {}) {
+    const headers = version ? { 'x-huaci-version': version } : {};
     const token = auth ? authToken ?? await readToken() : '';
     if (body) headers['content-type'] = 'application/json';
     if (auth) {
@@ -119,6 +117,89 @@
     }
     const data = await response.json().catch(() => ({}));
     return { response, data, token };
+  }
+
+  const manifestVersion = (value) => typeof value === 'string' && /^\d{1,5}(\.\d{1,5}){0,3}$/.test(value) ? value : null;
+  async function canShareVersion() {
+    if (!AITrEnv.firefox) return true;
+    try {
+      return await globalThis.browser?.permissions?.contains({ data_collection: ['technicalAndInteraction'] }) === true;
+    } catch {
+      return false;
+    }
+  }
+
+  function isUpgrade(previous, current) {
+    if (!previous) return false;
+    const a = previous.split('.').map(Number), b = current.split('.').map(Number);
+    for (let i = 0; i < 4; i++) {
+      const difference = (b[i] || 0) - (a[i] || 0);
+      if (difference) return difference > 0;
+    }
+    return false;
+  }
+
+  function sessionState(data, version, guest = false) {
+    const registered = data.extensionRegistered === true;
+    return {
+      token: data.token, guest, versionSync: {
+        registered, observed: version, reported: registered ? version : null,
+        checkedAt: registered && version ? Date.now() : 0,
+      },
+    };
+  }
+
+  /** 每 24 小时只比本机版本。浏览器明确通知升级时立即记录，离线的事件留到下次检查。 */
+  function checkVersion(previousVersion) {
+    const task = versionTask.catch(() => {}).then(async () => {
+      const current = manifestVersion(AITrEnv.version);
+      if (!current || !await canShareVersion()) return;
+      const detectedPrevious = manifestVersion(previousVersion);
+      const notification = detectedPrevious && detectedPrevious !== current;
+      const prepared = await updateState(async () => {
+        const session = await readSession();
+        if (!session?.token) return null;
+        const state = session.versionSync || {};
+        const now = Date.now();
+        if (!notification && state.checkedAt <= now && now - state.checkedAt < VERSION_CHECK_INTERVAL) return null;
+        const from = notification ? detectedPrevious : state.observed;
+        const pending = state.pending || [];
+        const transition = from && `${from}:${current}`;
+        const freshUpgrade = isUpgrade(from, current) && (state.observed !== current || state.transition !== transition);
+        const versionSync = {
+          ...state, observed: current, checkedAt: now,
+          transition: freshUpgrade ? transition : state.observed === current ? state.transition : null,
+          pending: freshUpgrade ? [...pending, { id: crypto.randomUUID(), from, to: current }] : pending,
+        };
+        await chrome.storage.local.set({ [SESSION_KEY]: { ...session, versionSync } });
+        return { token: session.token, versionSync };
+      });
+      if (!prepared) return;
+      const { token, versionSync } = prepared;
+      if (versionSync.registered && versionSync.reported && !isUpgrade(versionSync.reported, current) && !versionSync.pending.length) return;
+      const upgrades = versionSync.pending.slice(0, 32);
+      const result = await call('/version', {
+        method: 'POST', authToken: token, body: { version: current, upgrades,
+          ...(!versionSync.registered ? { extensionId: chrome.runtime.id } : {}) },
+      });
+      if (result.response.status !== 204) return;
+      await updateState(async () => {
+        const session = await readSession();
+        if (session?.token !== token) return;
+        await chrome.storage.local.set({ [SESSION_KEY]: { ...session, versionSync: {
+          ...versionSync, registered: true, reported: current, pending: versionSync.pending.slice(upgrades.length),
+        } } });
+      });
+    });
+    versionTask = task;
+    return task;
+  }
+
+  async function nextVersionCheckAt() {
+    const checkedAt = (await readSession())?.versionSync?.checkedAt;
+    const now = Date.now();
+    return checkedAt <= now && checkedAt + VERSION_CHECK_INTERVAL > now
+      ? checkedAt + VERSION_CHECK_INTERVAL : now + VERSION_CHECK_INTERVAL;
   }
 
   /**
@@ -186,13 +267,15 @@
 
     // 原来是访客：带上访客令牌，服务端把访客剩余点数并入这个账户。
     const session = await readSession();
+    const version = await canShareVersion() ? AITrEnv.version : null;
     const { response, data } = await call('/token', {
       method: 'POST',
       auth: false,
+      version,
       body: { code, code_verifier: pending.verifier, redirect_uri: CALLBACK_URL, guest_token: session?.guest ? session.token : undefined },
     });
     if (!response.ok || !data.token) throw new AccountError(t('登录失败，请重试'), 'token');
-    await updateState(() => chrome.storage.local.set({ [SESSION_KEY]: { token: data.token } }));
+    await updateState(() => chrome.storage.local.set({ [SESSION_KEY]: sessionState(data, version) }));
     return { status: await refresh(), returnTabId: pending.returnTabId };
   }
 
@@ -204,14 +287,15 @@
     if (await readToken()) return null;
     if ((await chrome.storage.local.get(GUEST_CLAIMED_KEY))[GUEST_CLAIMED_KEY]) return null;
     // 带上扩展界面语言（24 种语言 ID 之一），只用于运营报表的语言统计。
-    const { response, data } = await call('/guest', { method: 'POST', auth: false, body: {
+    const version = await canShareVersion() ? AITrEnv.version : null;
+    const { response, data } = await call('/guest', { method: 'POST', auth: false, version, body: {
       uiLanguage: AITrI18n.locale?.() || undefined,
-      ...(AITrEnv.firefox ? { extensionId: chrome.runtime.id } : {}),
+      extensionId: chrome.runtime.id,
     } });
     if (!response.ok || !data.token) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'guest');
     const accepted = await updateState(async () => {
       if (await readToken()) return false;
-      await chrome.storage.local.set({ [SESSION_KEY]: { token: data.token, guest: true }, [GUEST_CLAIMED_KEY]: true });
+      await chrome.storage.local.set({ [SESSION_KEY]: sessionState(data, version, true), [GUEST_CLAIMED_KEY]: true });
       return true;
     });
     if (!accepted) return null;
@@ -273,32 +357,16 @@
   }
 
   const failure = (status, data) => (FAILURES[status] || (() => new AccountError(t('点数翻译失败（$1）', [status]), 'failed')))(data);
-  const releaseUsage = (mark) => mark && AITrFeatureUsage.release(mark).catch(() => {});
 
   /**
    * 托管请求统一处理认证、余额同步和错误。
    */
   async function hostedRequest(path, body, signal, options = {}) {
     // 新安装时离线没领到访客试用：第一次使用点数翻译时补领（不打开欢迎页）。
-    const usage = AITrFeatureUsage;
-    const keys = [SESSION_KEY, STATUS_KEY, usage.KEY];
-    let local = await chrome.storage.local.get(keys);
-    if (!local[SESSION_KEY]?.token) {
-      await claimGuest().catch(() => null);
-      local = await chrome.storage.local.get(keys);
-    }
-    const session = local[SESSION_KEY];
-    const feature = path === '/read-image' ? 'image' : path === '/alternatives' ? 'alternatives' : body.surface;
-    const username = local[STATUS_KEY]?.username;
-    const owner = session?.guest ? 'guest' : username && `member:${username}`;
-    const mark = !signal?.aborted && (local[usage.KEY] === true || AITrEnv.firefox) && session?.token && feature && owner
-      ? await usage.reserve(feature, owner).catch(() => null) : null;
-    const result = await call(path, {
-      method: 'POST', body: mark ? { ...body, countFeatureUse: true } : body, signal, authToken: session?.token || '', ...options,
-    });
+    if (!(await readToken())) await claimGuest().catch(() => null);
+    const result = await call(path, { method: 'POST', body, signal, ...options });
     const { response, data, token } = result;
-    if (!data) return { ...result, mark }; // 流式响应由调用方读取
-    if (!response.ok) await releaseUsage(mark);
+    if (!data) return result; // 流式响应由调用方读取
     await syncCredits(data, token);
     if (response.ok) return data;
     if (path === '/read-image' && response.status === 413) throw new AccountError(t('图片过大，请缩小后重试'), 'too_large');
@@ -354,13 +422,10 @@
     await syncCredits(final, reply.token);
     // 连接中途断开：服务端仍会结算，余额在下次刷新时更新。
     if (!final) throw new AccountError(t('无法连接账户服务，请检查网络后重试'), 'network');
-    if (final.error) {
-      await releaseUsage(reply.mark);
-      throw failure(502, final);
-    }
+    if (final.error) throw failure(502, final);
   }
 
-  /** surface 是使用场景，用于响应速度。可选的功能统计另由客户端限频。 */
+  /** surface 是托管翻译请求的场景，用于服务端报表。 */
   async function translate({ texts, target, source, glossary, surface, signal }) {
     const data = await hostedRequest('/translate', { texts, target, source: source || undefined, glossary: glossaryOf(glossary), surface: surface || undefined }, signal);
     if (!Array.isArray(data.translations)) throw new AccountError(t('点数翻译失败'), 'invalid_response');
@@ -380,5 +445,5 @@
     return data.raw;
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, alternatives, readImageText, warm };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, alternatives, readImageText, warm, checkVersion, nextVersionCheckAt };
 })();

@@ -679,10 +679,5 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Também traduza as onomatopeias desenhadas na arte: mantenha o texto original e adicione a tradução ao lado em letras pequenas.",
   "调整文字形状": "Ajustar forma do texto",
   "选项": "Opções",
-  "原图": "Imagem original",
-  "功能使用统计": "Estatísticas de uso de recursos",
-  "分享点数翻译的功能使用情况": "Compartilhar dados de uso dos recursos de tradução por pontos",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上最多每 24 小时发送一次统计标记。标记随现有翻译请求发送。可以随时关闭。": "Usado para melhorar os recursos de tradução. Quando ativado, cada recurso envia no máximo um marcador de estatísticas por conta por navegador a cada 24 horas. Os marcadores são enviados junto com as solicitações de tradução existentes. Você pode desativar isso a qualquer momento.",
-  "如果允许扩展在隐私窗口中运行，功能统计会暂停。": "Se a extensão puder ser executada em janelas privativas, as estatísticas de recursos serão pausadas.",
-  "用于改进翻译功能。启用后，同一账户的每项功能在这台浏览器上每 24 小时最多计一次。统计标记随现有翻译请求发送。可以随时关闭。": "Usado para melhorar a tradução. Quando ativado, cada recurso é contado no máximo uma vez a cada 24 horas por conta neste navegador. Um marcador estatístico é enviado com as solicitações de tradução existentes. Você pode desativar isso a qualquer momento."
+  "原图": "Imagem original"
 }

@@ -11,7 +11,6 @@ import './lib/settings.js';
 import './lib/terms.js';
 import './lib/local.js';
 import './lib/providers.js';
-import './lib/feature-usage.js';
 import './lib/account.js';
 import './lib/sites.js';
 
@@ -179,9 +178,19 @@ function createMenu() {
   return menuTask;
 }
 
+const VERSION_ALARM = 'extension-version-check';
+const alarms = (globalThis.browser || chrome).alarms;
+
+async function scheduleVersionCheck() {
+  if (alarms) await alarms.create(VERSION_ALARM, { when: await AITrAccount.nextVersionCheckAt() });
+}
+
+const runVersionCheck = (previous) => AITrAccount.checkVersion(previous).catch(() => {}).finally(scheduleVersionCheck).catch(() => {});
+
 chrome.runtime.onInstalled.addListener(async (details) => {
   createMenu();
   if (details.reason !== 'install' && details.reason !== 'update') return;
+  if (details.reason === 'update') runVersionCheck(details.previousVersion);
   // 先记下已打开的标签页，再打开欢迎页：欢迎页会按 manifest 自动注入，不能再补一次
   const openTabs = await tabsByContentScript();
   if (details.reason === 'install') onFirstInstall();
@@ -208,7 +217,18 @@ async function onFirstInstall() {
     chrome.runtime.openOptionsPage();
   }
 }
-chrome.runtime.onStartup.addListener(createMenu);
+chrome.runtime.onStartup.addListener(() => {
+  createMenu();
+  runVersionCheck();
+});
+if (alarms) {
+  alarms.onAlarm.addListener(({ name }) => {
+    if (name === VERSION_ALARM) runVersionCheck();
+  });
+  (async () => {
+    if (!await alarms.get(VERSION_ALARM)) await scheduleVersionCheck();
+  })().catch(() => {});
+}
 AITrI18n.onChange(createMenu);
 
 // 光靠上面两个事件不够：重新加载已解压的扩展时它们未必触发，
