@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Originalbild"
   },
+  "m_564b68392376d90d": {
+    "message": "Übersetzungen lokal zwischenspeichern"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Wenn du mit deinem eigenen API Key (ChatGPT, DeepSeek, DeepL) übersetzt, werden die Übersetzungen verschlüsselt in diesem Browser gespeichert; gleiche Inhalte werden beim nächsten Mal sofort angezeigt, ohne dein Kontingent zu verbrauchen. Wird nicht für die Übersetzung per Guthaben und die lokale Übersetzung verwendet."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Cache leeren"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "$arg1$ Übersetzungen zwischengespeichert",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Noch keine zwischengespeicherten Übersetzungen"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Alle lokal zwischengespeicherten Übersetzungen löschen?"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

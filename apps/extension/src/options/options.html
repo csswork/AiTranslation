@@ -169,6 +169,18 @@
             </span>
           </label>
           <label class="switch">
+            <input id="cache" type="checkbox" />
+            <span>
+              <b>本机缓存译文</b>
+              <i>用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。</i>
+            </span>
+          </label>
+          <!-- 与快捷键那一行同样缩进到开关文字下方 -->
+          <div class="shortcut-row">
+            <span id="cacheCount"></span>
+            <button id="cacheClear" class="btn ghost small" type="button" hidden>清除缓存</button>
+          </div>
+          <label class="switch">
             <input id="floating" type="checkbox" />
             <span>
               <b>划词浮动按钮</b>
@@ -330,6 +342,7 @@
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
     <script src="../lib/terms.js"></script>
+    <script src="../lib/cache.js"></script>
     <script src="../lib/sites.js"></script>
     <script src="../lib/local.js"></script>
     <script src="../lib/speech.js"></script>

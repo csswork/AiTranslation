@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Original image"
   },
+  "m_564b68392376d90d": {
+    "message": "Cache translations locally"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "When you translate with your own API Key (ChatGPT, DeepSeek, DeepL), translations are stored encrypted in this browser, so the same content appears instantly next time without using your quota. Not used for Credit-based translation or Local translation."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Clear cache"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "$arg1$ translations cached",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "No cached translations yet"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Clear all locally cached translations?"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

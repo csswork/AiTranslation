@@ -1462,7 +1462,7 @@
       "privacy.html"
     ]
   },
-  "最后更新：2026-11-15 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
+  "最后更新：2026-11-21 · <a class=\"link\" href=\"#english\">English version below</a> · <a class=\"link\" href=\"https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md\" target=\"_blank\" rel=\"noopener\">Markdown 原稿</a>": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -1952,7 +1952,7 @@
       "privacy.html"
     ]
   },
-  "以下数据保存在<b>你这台设备上</b>（<code>chrome.storage.local</code>；保存的文章在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：": {
+  "以下数据保存在<b>你这台设备上</b>（<code>chrome.storage.local</code>；保存的文章与译文缓存在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：": {
     "kind": "text",
     "tag": "p",
     "pages": [
@@ -2002,6 +2002,13 @@
     ]
   },
   "<b>保存的文章</b>——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "privacy.html"
+    ]
+  },
+  "<b>译文缓存</b>——用自己的 API Key（ChatGPT、DeepSeek、DeepL）得到的译文与识图结果，加密保存；按带本机密钥的摘要查找，不保存原文。同样的内容再翻译时直接使用，30 天没用到自动删除，可在设置页关闭或清除。点数翻译和本机翻译不使用": {
     "kind": "text",
     "tag": "li",
     "pages": [

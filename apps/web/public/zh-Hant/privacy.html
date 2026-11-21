@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>隱私權政策</h2>
-        <p class="updated">最後更新：2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
+        <p class="updated">最後更新：2026-11-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown 原稿</a></p>
       </div>
 
       <div class="policy">
@@ -163,7 +163,7 @@
           <p>沒有廣告 Cookie，也沒有第三方統計 Cookie。</p>
 
           <h3>只儲存在你本機的內容</h3>
-          <p>以下資料保存在<b>你這台裝置上</b>（<code>chrome.storage.local</code>；儲存的文章在擴充功能自己的 IndexedDB 裡），不透過 Chrome 帳號同步：</p>
+          <p>以下資料儲存在<b>你這台裝置上</b>（<code>chrome.storage.local</code>；儲存的文章與譯文快取在擴充功能自己的 IndexedDB 裡），不透過 Chrome 帳號同步：</p>
           <ul>
             <li><b>API Key</b>——僅用於在請求標頭中向你選擇的平台鑑權，不會發給我們</li>
             <li><b>擴充功能的登入權杖</b>——僅發給 <code>app.huaci.app</code>，用於點數翻譯與帳戶狀態</li>
@@ -172,6 +172,7 @@
             <li><b>區域翻譯規則</b>：你手動新增的「網域 + CSS 選擇器」</li>
             <li><b>用詞偏好</b>——你在譯文裡換過的說法（原文詞語與譯法）；翻譯時相關條目會隨請求一併傳送，見上文</li>
             <li><b>儲存的文章</b>——你在雙語閱讀裡儲存的文章與譯文，只在本機，可在閱讀頁右側刪除</li>
+            <li><b>譯文快取</b>——使用自己的 API Key（ChatGPT、DeepSeek、DeepL）取得的譯文與識圖結果，加密儲存；以帶本機金鑰的摘要查找，不儲存原文。相同內容再次翻譯時直接使用，30 天未使用會自動刪除，可在設定頁關閉或清除。點數翻譯與本機翻譯不使用</li>
           </ul>
           <p>你可以隨時在設定頁清除這些資料（儲存的文章在閱讀頁右側刪除），或直接解除安裝擴充功能（解除安裝會一併刪除）。</p>
 

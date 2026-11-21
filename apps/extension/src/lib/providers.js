@@ -127,6 +127,56 @@
     throw new TranslateError(reply?.error || t('识别失败'), reply?.action);
   }
 
+  /**
+   * 本机缓存（见 cache.js）：只用于用户自带 Key 的大模型平台和 DeepL。
+   * 托管（点数）不走本机缓存，重复的文字交给服务端缓存，照常扣点；本机翻译本来就免费、够快。
+   */
+  function cacheFor(settings, provider) {
+    const cache = globalThis.AITrCache;
+    return cache?.usable(settings) && (provider.kind === 'llm' || provider.kind === 'mt') ? cache : null;
+  }
+
+  /**
+   * 每一项都是完整一段的批量来源（双语阅读、PDF、图片）逐段命中、只请求没命中的段落。
+   * 网页元素与整站翻译发的是文本节点，同一句话常被切成几段，单段译法依赖前后文，只能整批命中。
+   */
+  const SEGMENT_SURFACES = new Set(['reader', 'pdf', 'image']);
+
+  /**
+   * 带缓存的批量翻译。parts 是除原文外影响结果的因素；termsOf(list) 给出这些原文对应的用词偏好（进提示词的那部分），
+   * run(list) 真正发请求。fresh 时不查缓存，但用新结果覆盖。
+   */
+  async function cachedBatch({ cache, texts, surface, fresh, signal, parts, termsOf, run }) {
+    if (!cache || !texts.length) return run(texts);
+    const usable = (out, list) => Array.isArray(out) && out.length === list.length
+      && out.every((item, i) => typeof item === 'string' && (item.trim() || !String(list[i]).trim()));
+
+    if (!SEGMENT_SURFACES.has(surface)) {
+      const material = cache.material(...parts, termsOf(texts), texts);
+      if (!fresh) {
+        const [hit] = await cache.getMany([material]);
+        if (usable(hit, texts)) return hit;
+      }
+      const out = await run(texts);
+      if (!signal?.aborted && usable(out, texts)) cache.setMany([[material, out]]);
+      return out;
+    }
+
+    const materials = texts.map((text) => cache.material(...parts, termsOf([text]), text));
+    const hits = fresh ? [] : await cache.getMany(materials);
+    const missing = texts.map((_, i) => i).filter((i) => !(typeof hits[i] === 'string' && hits[i].trim()));
+    if (!missing.length) return hits;
+    const fetched = await run(missing.map((i) => texts[i]));
+    const out = texts.map((_, i) => hits[i]);
+    const store = [];
+    missing.forEach((index, j) => {
+      out[index] = fetched[j];
+      if (typeof fetched[j] === 'string' && fetched[j].trim()) store.push([materials[index], fetched[j]]);
+    });
+    if (!signal?.aborted && store.length) cache.setMany(store);
+    return out;
+  }
+
   /** 400 报的是「参数不支持」时，退回最小请求体重试一次。 */
   const PARAM_COMPLAINT =
     /param|unsupported|unrecognized|unknown field|not support|invalid_request/i;
@@ -392,7 +442,7 @@
    * 翻译。异步生成器，逐段吐出译文片段。
    * @returns {AsyncGenerator<string>}
    */
-  async function* translate({ text, settings, providerId, targetLanguage, targetId, sourceId, surface, signal }) {
+  async function* translate({ text, settings, providerId, targetLanguage, targetId, sourceId, surface, signal, fresh = false }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const terms = await termsFor([text], targetId || settings.target);
@@ -417,14 +467,17 @@
     }
 
     // 传统翻译接口：一次性返回，没有流式可言
+    // 缓存的是替换用词偏好之前的译文：改了偏好也不用作废缓存
     if (provider.kind === 'mt') {
-      const [out] = await deeplTranslate({
-        provider,
-        texts: [text],
-        targetCode: S.deeplCode(targetId || settings.target),
-        sourceCode: sourceId && S.deeplCode(sourceId),
-        signal,
-      });
+      const targetCode = S.deeplCode(targetId || settings.target);
+      const sourceCode = (sourceId && S.deeplCode(sourceId)) || '';
+      const cache = cacheFor(settings, provider);
+      const material = cache && cache.material('mt', provider.id, targetCode, sourceCode, text);
+      let out = material && !fresh ? (await cache.getMany([material]))[0] : undefined;
+      if (!(typeof out === 'string' && out)) {
+        [out] = await deeplTranslate({ provider, texts: [text], targetCode, sourceCode, signal });
+        if (material && out && !signal?.aborted) cache.setMany([[material, out]]);
+      }
       if (out) yield terms.length ? globalThis.AITrTerms.applyTo(text, out, terms) : out;
       return;
     }
@@ -438,6 +491,17 @@
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
 
+    // 完整的系统提示词（目标语言、源语言、风格指南、用词偏好）都在键里，改了任何一项就不会命中旧译文
+    const cache = cacheFor(settings, provider);
+    const material = cache && cache.material('llm', provider.id, provider.baseUrl, provider.model, system, text);
+    if (material && !fresh) {
+      const [hit] = await cache.getMany([material]);
+      if (typeof hit === 'string' && hit) {
+        yield hit;
+        return;
+      }
+    }
+
     if (!settings.stream) {
       const response = await request({
         provider,
@@ -448,8 +512,13 @@
         signal,
       });
       const data = await response.json();
-      const content = data?.choices?.[0]?.message?.content;
-      if (content) yield String(content);
+      const choice = data?.choices?.[0];
+      const content = choice?.message?.content;
+      if (content) {
+        // 因长度截断（finish_reason: length）的不完整译文不缓存
+        if (material && (!choice.finish_reason || choice.finish_reason === 'stop')) cache.setMany([[material, String(content)]]);
+        yield String(content);
+      }
       return;
     }
 
@@ -461,6 +530,8 @@
       stream: true,
       signal,
     });
+    let full = '';
+    let finish = '';
     for await (const payload of sseLines(response)) {
       let chunk;
       try {
@@ -470,10 +541,17 @@
       }
       // 流式返回里也可能夹带错误对象
       if (chunk?.error?.message) throw new TranslateError(chunk.error.message);
-      const delta = chunk?.choices?.[0]?.delta;
+      const choice = chunk?.choices?.[0];
+      if (choice?.finish_reason) finish = choice.finish_reason;
+      const delta = choice?.delta;
       // 思考型模型会先吐 reasoning_content，只取 content
-      if (delta && typeof delta.content === 'string' && delta.content) yield delta.content;
+      if (delta && typeof delta.content === 'string' && delta.content) {
+        full += delta.content;
+        yield delta.content;
+      }
     }
+    // 只缓存正常收尾（finish_reason: stop）的完整译文：断流、截断、中途取消的都不存
+    if (material && full && finish === 'stop' && !signal?.aborted) cache.setMany([[material, full]]);
   }
 
   /* ------------------------------------------------ 批量翻译（元素内逐段替换） */
@@ -527,27 +605,32 @@
    * 一次翻译多段文字，返回等长、同序的译文数组。
    * @returns {Promise<string[]>}
    */
-  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, surface, signal }) {
+  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, surface, signal, fresh = false }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
-    const terms = await termsFor(texts, targetId || settings.target);
+    const targetKey = targetId || settings.target;
+    const terms = await termsFor(texts, targetKey);
 
     if (provider.kind === 'hosted') {
-      return hostedTranslate({ texts, target: targetId || settings.target, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, surface, signal });
+      return hostedTranslate({ texts, target: targetKey, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, surface, signal });
     }
 
     if (provider.kind === 'local') {
-      const out = await localTranslate({ texts, targetId: targetId || settings.target, signal });
+      const out = await localTranslate({ texts, targetId: targetKey, signal });
       return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
     }
 
-    // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
+    const cache = cacheFor(settings, provider);
+
+    // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多。
+    // 缓存替换用词偏好之前的译文，偏好在取回后再套用
     if (provider.kind === 'mt') {
-      const out = await deeplTranslate({
-        provider,
-        texts,
-        targetCode: S.deeplCode(targetId || settings.target),
-        signal,
+      const targetCode = S.deeplCode(targetKey);
+      const out = await cachedBatch({
+        cache, texts, surface, fresh, signal,
+        parts: ['mt', provider.id, targetCode],
+        termsOf: () => '',
+        run: (list) => deeplTranslate({ provider, texts: list, targetCode, signal }),
       });
       return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
     }
@@ -556,16 +639,25 @@
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
-    const response = await request({
-      provider,
-      text: JSON.stringify(texts),
-      targetLanguage: target,
-      system: batchSystemPrompt(target, terms),
-      stream: false,
-      signal,
+    // 只取出现在这些原文里的用词偏好：逐段命中时，每段的键只受它自己用到的偏好影响
+    const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
+    return cachedBatch({
+      cache, texts, surface, fresh, signal,
+      parts: ['llm-batch', provider.id, provider.baseUrl, provider.model, batchSystemPrompt(target)],
+      termsOf: (list) => globalThis.AITrTerms?.promptLine(termsIn(list)) || '',
+      run: async (list) => {
+        const response = await request({
+          provider,
+          text: JSON.stringify(list),
+          targetLanguage: target,
+          system: batchSystemPrompt(target, list === texts ? terms : termsIn(list)),
+          stream: false,
+          signal,
+        });
+        const data = await response.json();
+        return parseBatch(data?.choices?.[0]?.message?.content, list.length);
+      },
     });
-    const data = await response.json();
-    return parseBatch(data?.choices?.[0]?.message?.content, texts.length);
   }
 
   /* ------------------------------------------------ 其他译法（双语阅读里点译文的词） */
@@ -660,15 +752,19 @@
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
     const selected = translation.slice(start, end);
-    const response = await request({
-      provider,
-      text: JSON.stringify({ source, before: translation.slice(0, start), selected, after: translation.slice(end) }),
-      system: alternativesPrompt(S.TARGETS[target]?.prompt || S.targetPrompt(settings), AITrLanguages.LANGUAGES[note]?.prompt || 'English'),
-      stream: false,
-      signal,
-    });
+    const text = JSON.stringify({ source, before: translation.slice(0, start), selected, after: translation.slice(end) });
+    const system = alternativesPrompt(S.TARGETS[target]?.prompt || S.targetPrompt(settings), AITrLanguages.LANGUAGES[note]?.prompt || 'English');
+    const cache = cacheFor(settings, provider);
+    const material = cache && cache.material('llm-alternatives', provider.id, provider.baseUrl, provider.model, system, text);
+    if (material && !args.fresh) {
+      const [hit] = await cache.getMany([material]);
+      if (Array.isArray(hit?.options) && hit.options.length) return hit;
+    }
+    const response = await request({ provider, text, system, stream: false, signal });
     const data = await response.json();
-    return parseAlternatives(data?.choices?.[0]?.message?.content, selected);
+    const result = parseAlternatives(data?.choices?.[0]?.message?.content, selected);
+    if (material && result.options.length && !signal?.aborted) cache.setMany([[material, result]]);
+    return result;
   }
 
   /* ------------------------------------------------ 视频字幕（逐行翻译） */
@@ -835,7 +931,7 @@
    *   regions-sfx 同时找出音效字并标上 sfx
    * @returns {Promise<{blocks: Array<{text: string, box: object|null}>, raw: string}>}
    */
-  async function readImageText({ image, settings, providerId, model, imageSize, order, purpose, signal }) {
+  async function readImageText({ image, settings, providerId, model, imageSize, order, purpose, signal, fresh = false }) {
     const sfx = purpose === 'regions-sfx';
     const regions = purpose === 'regions' || sfx;
     const S = globalThis.AITrSettings;
@@ -853,20 +949,26 @@
     }
 
     let raw;
+    let cache = null;
+    let material = null;
     if (base.kind === 'hosted') raw = await hostedReadImage({ image, purpose: sfx ? 'regions-sfx' : regions ? 'regions' : 'text', signal });
     else {
-      const response = await request({
-        provider,
-        text: regions
-          ? 'Find the text regions in this image and return a JSON array following the rules above.'
-          : 'Recognize all text in this image and return a JSON array following the rules above.',
-        image,
-        system: sfx ? REGION_SFX_PROMPT : regions ? REGION_PROMPT : IMAGE_PROMPT,
-        stream: false,
-        signal,
-      });
-      const data = await response.json();
-      raw = String(data?.choices?.[0]?.message?.content ?? '');
+      const text = regions
+        ? 'Find the text regions in this image and return a JSON array following the rules above.'
+        : 'Recognize all text in this image and return a JSON array following the rules above.';
+      const system = sfx ? REGION_SFX_PROMPT : regions ? REGION_PROMPT : IMAGE_PROMPT;
+      // 只缓存 data: 图片（按内容取摘要）；http(s) 地址背后的图片可能会变
+      cache = /^data:/i.test(String(image)) ? cacheFor(settings, provider) : null;
+      material = cache && cache.material('llm-image', provider.id, provider.baseUrl, provider.model, system, text, await cache.digest(image));
+      const hit = material && !fresh ? (await cache.getMany([material]))[0] : undefined;
+      if (typeof hit === 'string') {
+        raw = hit;
+        material = null; // 已经在缓存里
+      } else {
+        const response = await request({ provider, text, image, system, stream: false, signal });
+        const data = await response.json();
+        raw = String(data?.choices?.[0]?.message?.content ?? '');
+      }
     }
 
     let parsed;
@@ -876,6 +978,8 @@
       throw new TranslateError(t("模型没有返回合法的 JSON 数组"), null, raw);
     }
     if (!Array.isArray(parsed)) throw new TranslateError(t("模型返回的不是数组"), null, raw);
+    // 解析得出数组才缓存原始回复（坐标换算每次照常做）
+    if (material && !signal?.aborted) cache.setMany([[material, raw]]);
 
     const scale = detectScale(parsed.map((item) => item?.box), imageSize);
     const blocks = parsed

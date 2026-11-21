@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Politique de confidentialité</h2>
-        <p class="updated">Dernière mise à jour : 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown</a></p>
+        <p class="updated">Dernière mise à jour : 2026-11-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Version Markdown originale</a></p>
       </div>
 
       <div class="policy">
@@ -163,7 +163,7 @@
           <p>Aucun cookie publicitaire, ni cookie de statistiques tiers.</p>
 
           <h3>Ce qui reste sur votre machine</h3>
-          <p>Les données suivantes sont stockées <b>sur cet appareil</b> (<code>chrome.storage.local</code> ; les articles enregistrés se trouvent dans l'IndexedDB de l'extension) et ne sont pas synchronisées via le compte Chrome :</p>
+          <p>Les données suivantes sont stockées <b>sur cet appareil</b> (<code>chrome.storage.local</code> ; les articles et traductions en cache sont conservés dans l'IndexedDB de l'extension), sans synchronisation via le compte Chrome :</p>
           <ul>
             <li><b>API Key</b> — utilisée uniquement pour l'authentification dans l'en-tête de requête auprès de la plateforme que vous choisissez ; elle ne nous est pas transmise</li>
             <li><b>Jeton de connexion de l'extension</b> — envoyé uniquement à <code>app.huaci.app</code>, pour la traduction par points et l'état du compte</li>
@@ -172,6 +172,7 @@
             <li><b>Règles de traduction par zone</b> : « domaine + sélecteur CSS » ajoutés manuellement</li>
             <li><b>Préférences terminologiques</b> — les formulations que vous avez modifiées dans la traduction (terme source et traduction) ; lors de la traduction, les entrées concernées sont envoyées avec la requête, voir ci-dessus</li>
             <li><b>Articles enregistrés</b> — les articles et leurs traductions enregistrés dans la lecture bilingue restent uniquement sur cet appareil et peuvent être supprimés sur le côté droit de la page de lecture</li>
+            <li><b>Cache de traduction</b> — les traductions et résultats de reconnaissance d'image obtenus avec votre propre API Key (ChatGPT, DeepSeek, DeepL) sont enregistrés de manière chiffrée ; la recherche s'effectue par un condensé incluant une clé locale, sans conserver le texte original. Le même contenu est réutilisé directement lors d'une nouvelle traduction, et est supprimé automatiquement après 30 jours d'inutilisation ; il peut être désactivé ou effacé dans la page de paramètres. La traduction par points et la traduction locale ne l'utilisent pas</li>
           </ul>
           <p>Vous pouvez à tout moment effacer ces données dans la page de paramètres (les articles enregistrés se suppriment sur le côté droit de la page de lecture), ou désinstaller directement l'extension (la désinstallation les supprime également).</p>
 

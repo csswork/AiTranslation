@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Gambar asli"
   },
+  "m_564b68392376d90d": {
+    "message": "Terjemahan cache lokal"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Saat Anda menerjemahkan dengan API Key Anda sendiri (ChatGPT, DeepSeek, DeepL), terjemahan disimpan terenkripsi di browser ini; konten yang sama akan langsung ditampilkan saat diterjemahkan lagi tanpa memakai kuota. Tidak digunakan untuk terjemahan Poin dan terjemahan lokal."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Hapus cache"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "$arg1$ terjemahan di-cache",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Belum ada terjemahan yang di-cache"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Hapus semua terjemahan yang di-cache secara lokal?"
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

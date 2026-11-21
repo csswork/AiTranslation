@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "원본 이미지"
   },
+  "m_564b68392376d90d": {
+    "message": "로컬에 번역 캐시"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "자체 API Key(ChatGPT, DeepSeek, DeepL)로 번역할 때 번역문은 이 브라우저에 암호화되어 저장되며, 같은 내용을 다시 번역할 때 바로 표시되어 사용량을 소모하지 않습니다. 크레딧 번역과 로컬 번역에는 사용되지 않습니다."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "캐시 지우기"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "번역 $arg1$개 캐시됨",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "아직 캐시된 번역이 없습니다"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "로컬에 캐시된 모든 번역을 지우시겠습니까?"
+  },
   "extensionName": {
     "message": "Huaci – AI 번역 및 이중 언어 읽기"
   },

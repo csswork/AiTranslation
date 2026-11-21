@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Política de privacidad</h2>
-        <p class="updated">Última actualización: 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
+        <p class="updated">Última actualización: 2026-11-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Original en Markdown</a></p>
       </div>
 
       <div class="policy">
@@ -163,7 +163,7 @@
           <p>No hay cookies publicitarias ni cookies de estadísticas de terceros.</p>
 
           <h3>Lo que solo se guarda en tu dispositivo</h3>
-          <p>Los siguientes datos se guardan <b>en este dispositivo</b> (<code>chrome.storage.local</code>; los artículos guardados están en el IndexedDB propio de la extensión) y no se sincronizan con la cuenta de Chrome:</p>
+          <p>Los siguientes datos se guardan <b>en este dispositivo</b> (<code>chrome.storage.local</code>; los artículos guardados y las traducciones en caché se almacenan en el IndexedDB propio de la extensión) y no se sincronizan con la cuenta de Chrome:</p>
           <ul>
             <li><b>API Key</b>: se utiliza únicamente para autenticarte ante la plataforma que elijas en el encabezado de la solicitud; no se nos envía</li>
             <li><b>Token de inicio de sesión de la extensión</b>: se envía únicamente a <code>app.huaci.app</code>, para la traducción con puntos y el estado de la cuenta</li>
@@ -172,6 +172,7 @@
             <li><b>Reglas de traducción por región</b>: «dominio + selector CSS» que hayas añadido manualmente</li>
             <li><b>Preferencias de términos</b>: las variantes que has cambiado en las traducciones (palabra original y traducción); al traducir, las entradas relevantes se envían con la solicitud, como se describe arriba</li>
             <li><b>Artículos guardados</b>: los artículos y traducciones que guardas en la lectura bilingüe permanecen solo en este dispositivo y pueden eliminarse desde el lado derecho de la página de lectura</li>
+            <li><b>Caché de traducciones</b>: las traducciones y los resultados de reconocimiento de imágenes obtenidos con tu propia API Key (ChatGPT, DeepSeek, DeepL) se guardan cifrados; se buscan mediante un resumen con una clave local y no se guarda el texto original. El mismo contenido se reutiliza directamente al volver a traducirse, se elimina automáticamente tras 30 días sin uso y puede desactivarse o borrarse en la página de ajustes. La traducción por puntos y la traducción local no lo utilizan</li>
           </ul>
           <p>Puedes borrar estos datos en cualquier momento desde la página de ajustes (los artículos guardados se eliminan desde el lado derecho de la página de lectura) o desinstalar la extensión (la desinstalación también los elimina).</p>
 

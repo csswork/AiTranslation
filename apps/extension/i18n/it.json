@@ -679,5 +679,11 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Traduci anche le onomatopee disegnate nell'immagine: mantieni il testo originale e aggiungi la traduzione accanto in caratteri piccoli.",
   "调整文字形状": "Regola la forma del testo",
   "选项": "Opzioni",
-  "原图": "Immagine originale"
+  "原图": "Immagine originale",
+  "本机缓存译文": "Traduzioni memorizzate localmente",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "Quando traduci con la tua API Key (ChatGPT, DeepSeek, DeepL), le traduzioni vengono salvate in forma crittografata in questo browser, così lo stesso contenuto appare subito la volta successiva senza consumare la tua quota. Non viene usato per la traduzione a crediti né per la traduzione locale.",
+  "清除缓存": "Cancella cache",
+  "已缓存 $1 条译文": "$1 traduzioni memorizzate",
+  "还没有缓存的译文": "Nessuna traduzione memorizzata",
+  "清除本机缓存的全部译文？": "Cancellare tutte le traduzioni memorizzate localmente?"
 }

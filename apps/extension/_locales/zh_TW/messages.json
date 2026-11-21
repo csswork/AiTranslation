@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "原圖"
   },
+  "m_564b68392376d90d": {
+    "message": "本機快取譯文"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "使用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻譯時，譯文會加密儲存在這個瀏覽器中；再次翻譯相同內容時會直接顯示，不再消耗用量。點數翻譯和本機翻譯不使用。"
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "清除快取"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "已快取 $arg1$ 筆譯文",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "尚無快取的譯文"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "要清除本機快取的所有譯文嗎？"
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

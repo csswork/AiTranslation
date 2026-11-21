@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Oryginalny obraz"
   },
+  "m_564b68392376d90d": {
+    "message": "Lokalne tłumaczenia w pamięci podręcznej"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Gdy tłumaczysz za pomocą własnego klucza API (ChatGPT, DeepSeek, DeepL), tłumaczenia są przechowywane w tym przeglądarce w formie zaszyfrowanej, więc ta sama treść pojawi się natychmiast następnym razem, bez zużywania limitu. Nie dotyczy tłumaczenia za punkty ani tłumaczenia lokalnego."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Wyczyść pamięć podręczną"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "Liczba tłumaczeń w pamięci podręcznej: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Brak tłumaczeń w pamięci podręcznej"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Wyczyścić wszystkie tłumaczenia zapisane lokalnie w pamięci podręcznej?"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

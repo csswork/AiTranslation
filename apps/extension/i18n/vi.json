@@ -679,5 +679,11 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Dịch cả từ tượng thanh được vẽ trong tranh: giữ nguyên chữ gốc và thêm bản dịch cỡ nhỏ bên cạnh.",
   "调整文字形状": "Điều chỉnh hình dạng chữ",
   "选项": "Tùy chọn",
-  "原图": "Ảnh gốc"
+  "原图": "Ảnh gốc",
+  "本机缓存译文": "Bản dịch được lưu trong bộ nhớ đệm trên máy",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "Khi bạn dịch bằng API Key của riêng mình (ChatGPT, DeepSeek, DeepL), bản dịch được lưu mã hóa trong trình duyệt này; lần sau dịch lại nội dung tương tự sẽ hiển thị ngay mà không tốn thêm hạn mức. Không áp dụng cho dịch bằng điểm và dịch trên máy.",
+  "清除缓存": "Xóa bộ nhớ đệm",
+  "已缓存 $1 条译文": "Đã lưu $1 bản dịch trong bộ nhớ đệm",
+  "还没有缓存的译文": "Chưa có bản dịch nào được lưu trong bộ nhớ đệm",
+  "清除本机缓存的全部译文？": "Xóa toàn bộ bản dịch được lưu trong bộ nhớ đệm trên máy?"
 }

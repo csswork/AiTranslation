@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Imagen original"
   },
+  "m_564b68392376d90d": {
+    "message": "Traducciones en caché local"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Cuando traduces con tu propia API Key (ChatGPT, DeepSeek, DeepL), las traducciones se guardan cifradas en este navegador, de modo que el mismo contenido aparece al instante la próxima vez sin consumir tu cuota. No se usa para la traducción con créditos ni para la traducción local."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Borrar caché"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "$arg1$ traducciones en caché",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Aún no hay traducciones en caché"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "¿Borrar todas las traducciones almacenadas en caché local?"
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

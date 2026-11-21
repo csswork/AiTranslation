@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Ảnh gốc"
   },
+  "m_564b68392376d90d": {
+    "message": "Bản dịch được lưu trong bộ nhớ đệm trên máy"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Khi bạn dịch bằng API Key của riêng mình (ChatGPT, DeepSeek, DeepL), bản dịch được lưu mã hóa trong trình duyệt này; lần sau dịch lại nội dung tương tự sẽ hiển thị ngay mà không tốn thêm hạn mức. Không áp dụng cho dịch bằng điểm và dịch trên máy."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Xóa bộ nhớ đệm"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "Đã lưu $arg1$ bản dịch trong bộ nhớ đệm",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Chưa có bản dịch nào được lưu trong bộ nhớ đệm"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Xóa toàn bộ bản dịch được lưu trong bộ nhớ đệm trên máy?"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

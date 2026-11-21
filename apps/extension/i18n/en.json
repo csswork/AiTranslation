@@ -679,5 +679,11 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
   "调整文字形状": "Adjust text shape",
   "选项": "Options",
-  "原图": "Original image"
+  "原图": "Original image",
+  "本机缓存译文": "Cache translations locally",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "When you translate with your own API Key (ChatGPT, DeepSeek, DeepL), translations are stored encrypted in this browser, so the same content appears instantly next time without using your quota. Not used for Credit-based translation or Local translation.",
+  "清除缓存": "Clear cache",
+  "已缓存 $1 条译文": "$1 translations cached",
+  "还没有缓存的译文": "No cached translations yet",
+  "清除本机缓存的全部译文？": "Clear all locally cached translations?"
 }

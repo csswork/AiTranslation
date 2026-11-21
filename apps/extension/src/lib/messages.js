@@ -680,7 +680,13 @@ globalThis.AITrMessageIds = {
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "m_257f284111f75da4",
   "调整文字形状": "m_0c6548cc7ba699b8",
   "选项": "m_bb7486f4410fd370",
-  "原图": "m_4b1db520af460460"
+  "原图": "m_4b1db520af460460",
+  "本机缓存译文": "m_564b68392376d90d",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "m_341e2185d51f3c4a",
+  "清除缓存": "m_9a816c6580eff8d7",
+  "已缓存 $1 条译文": "m_58c570bc65fad6c5",
+  "还没有缓存的译文": "m_766e24edb52ed03b",
+  "清除本机缓存的全部译文？": "m_0ef7bc4d040ade31"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1363,5 +1369,11 @@ globalThis.AITrEnglish = {
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Also translate onomatopoeia drawn in the artwork: keep the original text and add the translation beside it in small type.",
   "调整文字形状": "Adjust text shape",
   "选项": "Options",
-  "原图": "Original image"
+  "原图": "Original image",
+  "本机缓存译文": "Cache translations locally",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "When you translate with your own API Key (ChatGPT, DeepSeek, DeepL), translations are stored encrypted in this browser, so the same content appears instantly next time without using your quota. Not used for Credit-based translation or Local translation.",
+  "清除缓存": "Clear cache",
+  "已缓存 $1 条译文": "$1 translations cached",
+  "还没有缓存的译文": "No cached translations yet",
+  "清除本机缓存的全部译文？": "Clear all locally cached translations?"
 };

@@ -10,6 +10,7 @@ import './lib/lang.js';
 import './lib/settings.js';
 import './lib/terms.js';
 import './lib/local.js';
+import './lib/cache.js';
 import './lib/providers.js';
 import './lib/account.js';
 import './lib/sites.js';
@@ -591,7 +592,7 @@ function pickText(cached, fromMenu) {
 }
 
 const translationRuns = new Map();
-async function startTranslation({ tabId, text, providerId, targetId }) {
+async function startTranslation({ tabId, text, providerId, targetId, fresh = false }) {
   if (!tabId || !text) return;
   translationRuns.get(tabId)?.abort();
   const controller = new AbortController();
@@ -653,7 +654,7 @@ async function startTranslation({ tabId, text, providerId, targetId }) {
   const startedAt = Date.now();
   try {
     let received = false;
-    for await (const chunk of AITrProviders.translate({ text: payload, settings, surface: 'selection', signal: controller.signal })) {
+    for await (const chunk of AITrProviders.translate({ text: payload, settings, surface: 'selection', signal: controller.signal, fresh })) {
       if (closed) return;
       received = true;
       post({ type: 'delta', chunk });
@@ -884,7 +885,8 @@ chrome.runtime.onConnect.addListener((port) => {
     try {
       const stored = await AITrSettings.loadSettings();
       const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
-      const options = { settings, signal: controller.signal };
+      // fresh：用户点了「重新识别 / 重新翻译」，不用本机缓存，新结果覆盖旧的
+      const options = { settings, signal: controller.signal, fresh: message.fresh === true };
       if (message.type === 'read-image') {
         const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
@@ -1015,6 +1017,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           purpose: message.purpose,
           settings,
           model: AITrSettings.visionModel(settings.provider),
+          fresh: message.fresh === true,
         });
         sendResponse({ ok: true, blocks: result.blocks });
       } catch (err) {
@@ -1030,7 +1033,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         const stored = await AITrSettings.loadSettings();
         const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
-        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings, surface: message.surface });
+        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings, surface: message.surface, fresh: message.fresh === true });
         sendResponse({ ok: true, texts });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err) });
@@ -1069,6 +1072,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       text: message.text,
       providerId: message.providerId,
       targetId: message.targetId,
+      fresh: message.fresh === true, // 弹窗里的「重新翻译」：不用本机缓存
     });
     return false;
   }

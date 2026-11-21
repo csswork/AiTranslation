@@ -1,7 +1,7 @@
 # Privacy Policy / 隐私政策
 
 **Huaci – AI Translator & Bilingual Reader (划词 – AI 翻译与双语阅读)**
-Last updated / 最后更新：2026-11-15
+Last updated / 最后更新：2026-11-21
 
 [English](#english) · [中文](#中文) · Web: <https://huaci.app/privacy.html> · Terms: <https://huaci.app/terms.html>
 
@@ -102,7 +102,7 @@ No advertising or third-party analytics cookies.
 
 ### What stays on your machine
 
-The following is stored on **your device** (`chrome.storage.local`; saved articles in the extension's own IndexedDB) and is not synced through your Chrome account:
+The following is stored on **your device** (`chrome.storage.local`; saved articles and the translation cache in the extension's own IndexedDB) and is not synced through your Chrome account:
 
 - **API key**: used only to authenticate requests to the provider you chose; never sent to us
 - **Extension sign-in token**: sent only to `app.huaci.app`, for credit translation and account status
@@ -111,6 +111,7 @@ The following is stored on **your device** (`chrome.storage.local`; saved articl
 - **Region translation rules**: the “domain + CSS selector” entries you added
 - **Wording preferences**: wordings you chose in translations (source terms and renderings); relevant entries are sent with translation requests, see above
 - **Saved articles**: articles and translations you saved in bilingual reading; kept only on your device and deletable from the reading page's side panel
+- **Translation cache**: translations and image-recognition results from your own API key (ChatGPT, DeepSeek, DeepL), stored encrypted; entries are looked up by a hash keyed with a local secret, and the original text is not stored. The same content is reused when you translate it again, entries unused for 30 days are deleted automatically, and you can turn it off or clear it in the options page. Credit translation and local translation don't use it
 
 You can clear all of it from the options page at any time (saved articles are deleted from the reading page's side panel), or uninstall the extension (which removes it all).
 
@@ -241,7 +242,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 
 ### 只保存在你本机的内容
 
-以下数据保存在**你这台设备上**（`chrome.storage.local`；保存的文章在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：
+以下数据保存在**你这台设备上**（`chrome.storage.local`；保存的文章与译文缓存在扩展自己的 IndexedDB 里），不走 Chrome 账号同步：
 
 - **API Key**——仅用于在请求头中向你选择的平台鉴权，不会发给我们
 - **扩展的登录令牌**——仅发给 `app.huaci.app`，用于点数翻译与账户状态
@@ -250,6 +251,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 - **区域翻译规则**：你手动添加的「域名 + CSS 选择器」
 - **用词偏好**——你在译文里换过的说法（原文词语与译法）；翻译时相关条目随请求发送，见上文
 - **保存的文章**——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除
+- **译文缓存**——用自己的 API Key（ChatGPT、DeepSeek、DeepL）得到的译文与识图结果，加密保存；按带本机密钥的摘要查找，不保存原文。同样的内容再翻译时直接使用，30 天没用到自动删除，可在设置页关闭或清除。点数翻译和本机翻译不使用
 
 你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。
 

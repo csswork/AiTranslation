@@ -33,6 +33,9 @@
     stream: $('stream'),
     streamHelp: $('streamHelp'),
     showOriginal: $('showOriginal'),
+    cache: $('cache'),
+    cacheCount: $('cacheCount'),
+    cacheClear: $('cacheClear'),
     floating: $('floating'),
     imageMode: $('imageMode'),
     imageDirect: $('imageDirect'),
@@ -459,6 +462,7 @@
     el.uiLanguage.value = settings.uiLanguage;
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
+    el.cache.checked = settings.cache;
     el.floating.checked = settings.floating;
     el.imageMode.value = settings.imageMode;
     el.imageDirect.checked = !settings.imageReview;
@@ -714,6 +718,7 @@
   });
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
+  el.cache.addEventListener('change', () => save({ cache: el.cache.checked }));
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
   el.imageDirect.addEventListener('change', () => save({ imageReview: !el.imageDirect.checked }));
@@ -853,6 +858,18 @@
     if (confirm(t("清除全部用词偏好？"))) await AITrTerms.clear();
   });
 
+  /** 本机译文缓存（lib/cache.js）：显示条数、全部清除。关掉开关只是不再读写，已有条目留着，要删就点清除。 */
+  async function renderCache() {
+    const count = await AITrCache.count().catch(() => 0);
+    el.cacheCount.textContent = count ? t("已缓存 $1 条译文", [count]) : t("还没有缓存的译文");
+    el.cacheClear.hidden = !count;
+  }
+  el.cacheClear.addEventListener('click', async () => {
+    if (!confirm(t("清除本机缓存的全部译文？"))) return;
+    await AITrCache.clear().catch(() => {});
+    renderCache();
+  });
+
   // 快捷键本身只能在 Chrome 自己的页面里改
   el.editShortcut.addEventListener('click', () => {
     chrome.tabs.create({ url: AITrEnv.extensionsShortcuts });
@@ -862,6 +879,7 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
     renderShortcutKey();
+    renderCache();
     // 切回设置页时更新账户状态（例如刚在网页端订阅或退出），30 秒内不重复请求
     if (Date.now() - lastRefresh > 30_000) refreshAccount();
   });
@@ -922,6 +940,7 @@
     renderShortcutKey();
     renderRuleCount();
     renderTerms();
+    renderCache();
     renderSiteProvider();
     renderSites();
     renderVideoLang();

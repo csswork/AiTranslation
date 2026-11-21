@@ -2844,6 +2844,29 @@
   "m_4b1db520af460460": {
     "message": "Originele afbeelding"
   },
+  "m_564b68392376d90d": {
+    "message": "Vertalingen lokaal cachen"
+  },
+  "m_341e2185d51f3c4a": {
+    "message": "Wanneer je vertaalt met je eigen API Key (ChatGPT, DeepSeek, DeepL), worden vertalingen versleuteld in deze browser opgeslagen, zodat dezelfde inhoud de volgende keer direct verschijnt zonder je tegoed te verbruiken. Niet gebruikt voor vertaling met punten of lokale vertaling."
+  },
+  "m_9a816c6580eff8d7": {
+    "message": "Cache wissen"
+  },
+  "m_58c570bc65fad6c5": {
+    "message": "$arg1$ vertalingen gecachet",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_766e24edb52ed03b": {
+    "message": "Nog geen gecachte vertalingen"
+  },
+  "m_0ef7bc4d040ade31": {
+    "message": "Alle lokaal gecachte vertalingen wissen?"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

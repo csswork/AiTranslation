@@ -75,7 +75,7 @@
       <div class="section-head">
         <p class="kicker">Privacy policy</p>
         <h2>Privacy policy</h2>
-        <p class="updated">Last updated: 2026-11-15 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
+        <p class="updated">Last updated: 2026-11-21 · <a class="link" href="https://github.com/csswork/AiTranslation/blob/main/PRIVACY.md" target="_blank" rel="noopener">Markdown source</a></p>
       </div>
 
       <div class="policy">
@@ -163,7 +163,7 @@
           <p>There are no advertising cookies and no third-party analytics cookies.</p>
 
           <h3>What stays on your machine</h3>
-          <p>The following data is stored <b>on your device</b> (<code>chrome.storage.local</code>; saved articles are kept in the extension's own IndexedDB) and is not synced through your Chrome account:</p>
+          <p>The following data is stored <b>on your device</b> (<code>chrome.storage.local</code>; saved articles and translation caches are stored in the extension's own IndexedDB) and is not synced through your Chrome account:</p>
           <ul>
             <li><b>API Key</b> — used only to authenticate with your chosen platform in request headers; it is never sent to us</li>
             <li><b>Extension login token</b> — sent only to <code>app.huaci.app</code>, used for point-based translation and account status</li>
@@ -172,6 +172,7 @@
             <li><b>Regional translation rules</b>: "domain + CSS selector" entries you add manually</li>
             <li><b>Terminology preferences</b> — the wording you have changed in translations (source term and your preferred translation); relevant entries are sent with translation requests, as described above</li>
             <li><b>Saved articles</b> — articles and translations you save in bilingual reading, stored only on this device; they can be deleted on the right side of the reading page</li>
+            <li><b>Translation cache</b> — translations and image recognition results obtained with your own API Key (ChatGPT, DeepSeek, DeepL) are stored encrypted; they are looked up by a digest keyed with a local key, and the original text is not stored. The same content is reused directly when translated again, and entries unused for 30 days are deleted automatically; this can be disabled or cleared on the settings page. Point-based translation and local translation do not use it</li>
           </ul>
           <p>You can clear this data at any time on the settings page (saved articles are deleted on the right side of the reading page), or simply uninstall the extension (uninstalling also deletes it).</p>
 

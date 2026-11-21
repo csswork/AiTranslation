@@ -392,7 +392,7 @@
 
       dom.close.addEventListener('click', () => hide());
       dom.backdrop.addEventListener('mousedown', () => hide());
-      dom.retry.addEventListener('click', () => retranslate());
+      dom.retry.addEventListener('click', () => retranslate(undefined, undefined, { fresh: true }));
       dom.provider.addEventListener('change', () => retranslate(dom.provider.value));
       dom.target.addEventListener('change', () => {
         if (dom.target.value === MORE_LANGUAGES) {
@@ -489,10 +489,11 @@
       releasePort();
     }
 
-    function retranslate(nextProvider, nextTarget) {
+    /** fresh：「重新翻译」按钮，不用本机缓存里的译文。 */
+    function retranslate(nextProvider, nextTarget, { fresh = false } = {}) {
       if (!sourceText) return;
       closePort();
-      send({ type: 'retranslate', text: sourceText, providerId: nextProvider || providerId, targetId: nextTarget || targetId });
+      send({ type: 'retranslate', text: sourceText, providerId: nextProvider || providerId, targetId: nextTarget || targetId, fresh });
     }
 
     async function copyResult() {

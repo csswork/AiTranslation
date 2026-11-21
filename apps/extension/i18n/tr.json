@@ -679,5 +679,11 @@
   "漫画里画在画面上的拟声词也一起翻译：原来的字保留，译文用小字标在旁边。": "Çizimde yer alan yansıma sözcükleri de çevir: özgün metni koru ve çevirisini yanına küçük harflerle ekle.",
   "调整文字形状": "Metin şeklini ayarla",
   "选项": "Seçenekler",
-  "原图": "Orijinal görsel"
+  "原图": "Orijinal görsel",
+  "本机缓存译文": "Çevirileri yerel olarak önbelleğe al",
+  "用自己的 API Key（ChatGPT、DeepSeek、DeepL）翻译时，译文加密保存在这个浏览器里；同样的内容再翻译时直接显示，不再消耗用量。点数翻译和本机翻译不使用。": "Kendi API Key'inizle (ChatGPT, DeepSeek, DeepL) çeviri yaptığınızda, çeviriler bu tarayıcıda şifrelenmiş olarak saklanır; aynı içerik bir dahaki sefere kotanızı kullanmadan anında görünür. Kredi tabanlı çeviri ve yerel çeviri için kullanılmaz.",
+  "清除缓存": "Önbelleği temizle",
+  "已缓存 $1 条译文": "$1 çeviri önbelleğe alındı",
+  "还没有缓存的译文": "Henüz önbelleğe alınmış çeviri yok",
+  "清除本机缓存的全部译文？": "Yerel olarak önbelleğe alınmış tüm çeviriler temizlensin mi?"
 }

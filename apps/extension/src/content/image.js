@@ -1314,13 +1314,14 @@
    * 自动识别的第一步：让模型找出值得翻译的文字块（忽略小字），再按笔画勾成互不重叠的多边形。
    * 长图同样分块识别再合并。被新的操作打断时返回 null。
    */
-  async function detectShapes(result, signal, token) {
+  /** fresh：「重新识别」时不用本机缓存里的识别结果。 */
+  async function detectShapes(result, signal, token, { fresh = false } = {}) {
     const { grabbed, settings } = result;
     const total = grabbed.parts.length;
     const perTile = [];
     for (let i = 0; i < total; i += 1) {
       progress(total > 1 ? t('正在找出文字范围 $1/$2…', [i + 1, total]) : t('正在找出图中的文字范围…'));
-      const reply = await AITrRequests.request({ type: 'read-image', purpose: settings.imageSfx ? 'regions-sfx' : 'regions',
+      const reply = await AITrRequests.request({ type: 'read-image', purpose: settings.imageSfx ? 'regions-sfx' : 'regions', fresh,
         image: grabbed.parts[i].image, imageSize: grabbed.parts[i].size, providerId: settings.provider }, { signal });
       if (token !== generation) return null;
       if (!reply?.ok) {
@@ -1350,7 +1351,7 @@
    * 按文字形状翻译：每个形状的原文合成一段送去翻译，译文按形状排版后画在图上。
    * 竖排的原文译成中日韩文时译文也竖排。成功后才把结果记为当前结果。
    */
-  async function translateShapes(result, shapes, targetId, token = ++generation) {
+  async function translateShapes(result, shapes, targetId, token = ++generation, { fresh = false } = {}) {
     controller?.abort();
     controller = new AbortController();
     const { signal } = controller;
@@ -1372,7 +1373,7 @@
         setWorking(true);
         progress(t('正在翻译 $1 段…', [worth.length]));
         const reply = await AITrRequests.request({
-          type: 'translate-batch', texts: worth.map((shape) => shape.source),
+          type: 'translate-batch', texts: worth.map((shape) => shape.source), fresh,
           targetId, providerId: settings.provider, surface: 'image',
         }, { signal });
         if (token !== generation) return;
@@ -1541,7 +1542,7 @@
     const again = button(t('重新翻译'), t('只重新翻译这一段'), async () => {
       again.disabled = true;
       try {
-        const reply = await AITrRequests.request({ type: 'translate-batch', texts: [raw.source],
+        const reply = await AITrRequests.request({ type: 'translate-batch', texts: [raw.source], fresh: true,
           targetId: imageResult.targetId, providerId: imageResult.settings.provider, surface: 'image' });
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
         const text = String(reply.texts[0] || '').trim();
@@ -1723,7 +1724,7 @@
       openPanel({ grabbed, blocks: [], targetId: settings.target, settings, meta: '' });
       if (!found) {
         setWorking(true);
-        const seen = await detectShapes(result, signal, token);
+        const seen = await detectShapes(result, signal, token, { fresh });
         if (!seen) return;
         found = { shapes: seen.shapes, blocks: seen.blocks, small: seen.small, translations: new Map() };
         remember(key, found);
@@ -1739,7 +1740,7 @@
       }
       imageResult = detected;
       if (!found.translations.has(settings.target)) drawShapePreview(found.shapes);
-      await translateShapes(detected, found.shapes, settings.target, token);
+      await translateShapes(detected, found.shapes, settings.target, token, { fresh });
     } catch (err) {
       if (token === generation) fail(String(err?.message || err));
     }
