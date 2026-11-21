@@ -34,6 +34,15 @@
 - `isWhole`：从节点往上走过计算后 `display` 为 `inline` / `contents` 的元素，到最近的块级容器，容器的全部文字（压缩空白后）就是这个节点自己才算完整。flex / grid 子项的 `display` 会被算成 `block`，所以 flex 导航里的链接各算一段。拿不到计算样式时按标签名判断。拿不准就当片段。必须在译文写回之前判断：区域翻译在收集节点时一次判断完，整站翻译在取批次时判断。
 - 整站翻译把同一批里相同的文字去重后发送；同样的文字只要有一处是片段，就整体按片段处理。页面内的去重仍由 `site.js` 的内存缓存负责。
 
+## 先显示命中的段落
+
+只在 service worker 里命中还不够快：一批里只要有一段没命中，整批就得等这次网络请求。所以区域翻译和整站翻译走两步（`src/lib/requests.js`）：
+
+1. `AITrRequests.lookupBatch` 发 `cache-lookup`，service worker 用 `AITrProviders.lookupBatch` 只读缓存（先整批、再逐段，不发请求），命中的段落立刻写到页面上。点数翻译、本机翻译、关掉缓存或缺 API Key 时不发这一步。
+2. `AITrRequests.translateBatch` 只把没命中的段落（片段总是在内）发 `translate-batch`，回来后按原顺序合并。这一步在 service worker 里照常查缓存、写缓存。
+
+整站翻译每批都这样做；区域翻译先把所有批次查一遍、写上命中的，再逐批请求剩下的。查询失败一律当作没命中，走原来的请求。
+
 ## 什么时候不写入
 
 - 被中断（`signal.aborted`）、出错、解析失败的结果。

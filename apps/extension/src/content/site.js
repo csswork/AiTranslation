@@ -248,15 +248,20 @@
     const texts = [...new Set(batch.map((item) => item.core))];
     // 同样的文字只要有一处是句子片段，就整体按片段处理
     const whole = texts.map((text) => batch.every((item) => item.core !== text || item.whole));
+    const write = (list) => {
+      if (session !== current) return;
+      const out = new Map(texts.map((text, i) => [text, list?.[i]]));
+      for (const [text, translated] of out) if (typeof translated === 'string') remember(text, translated);
+      for (const item of batch) if (typeof out.get(item.core) === 'string') apply(item.node, item.original, out.get(item.core));
+    };
     try {
-      const reply = await Requests.request({
+      // 本机缓存命中的段落先写上去，不用等这一批里其他段落的网络请求
+      const reply = await Requests.translateBatch({
         type: 'translate-batch', texts, whole, targetId: current.targetId, providerId: current.providerId, surface: 'site',
-      }, { signal: current.controller.signal });
+      }, { signal: current.controller.signal, settings: current.settings, onHits: write });
       if (session !== current) return;
       if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });
-      const out = new Map(texts.map((text, i) => [text, reply.texts?.[i]]));
-      for (const [text, translated] of out) remember(text, translated);
-      for (const item of batch) apply(item.node, item.original, out.get(item.core));
+      write(reply.texts);
     } catch (error) {
       if (session !== current || error?.name === 'AbortError') return;
       current.failed = error;

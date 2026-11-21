@@ -150,8 +150,29 @@
    */
   async function cachedBatch({ cache, texts, whole, surface, fresh, signal, parts, termsOf, run }) {
     if (!cache || !texts.length) return run(texts);
-    const valid = (item, text) => typeof item === 'string' && (item.trim() || !String(text).trim());
-    const usable = (out, list) => Array.isArray(out) && out.length === list.length && out.every((item, i) => valid(item, list[i]));
+    const found = await lookupCached({ cache, texts, whole, surface, fresh, parts, termsOf });
+    if (found.complete) return found.out;
+    const { out, materials, batchMaterial } = found;
+    const missing = texts.map((_, i) => i).filter((i) => out[i] === undefined);
+    const store = [];
+    const fetched = await run(missing.map((i) => texts[i]));
+    missing.forEach((index, j) => {
+      out[index] = fetched[j];
+      if (materials.has(index) && typeof fetched[j] === 'string' && fetched[j].trim()) store.push([materials.get(index), fetched[j]]);
+    });
+    if (batchMaterial && usableBatch(out, texts)) store.push([batchMaterial, out]);
+    if (!signal?.aborted && store.length) cache.setMany(store);
+    return out;
+  }
+
+  const usableBatch = (out, list) => Array.isArray(out) && out.length === list.length
+    && out.every((item, i) => typeof item === 'string' && (item.trim() || !String(list[i]).trim()));
+
+  /**
+   * 只查缓存：先看整批，再逐段（只查可以逐段命中的）。out 里没命中的是 undefined；
+   * complete 为真时整批都有了。materials / batchMaterial 留给写入用。
+   */
+  async function lookupCached({ cache, texts, whole, surface, fresh, parts, termsOf }) {
     const segmentsOnly = SEGMENT_SURFACES.has(surface);
     const flags = segmentsOnly ? texts.map(() => true)
       : Array.isArray(whole) && whole.length === texts.length ? whole.map((flag) => flag === true) : texts.map(() => false);
@@ -159,7 +180,7 @@
     const batchMaterial = segmentsOnly ? null : cache.material(...parts, termsOf(texts), texts);
     if (batchMaterial && !fresh) {
       const [hit] = await cache.getMany([batchMaterial]);
-      if (usable(hit, texts)) return hit;
+      if (usableBatch(hit, texts)) return { out: hit, complete: true };
     }
 
     const indexes = texts.map((_, i) => i).filter((i) => flags[i]);
@@ -169,18 +190,7 @@
     indexes.forEach((i, j) => {
       if (typeof hits[j] === 'string' && hits[j].trim()) out[i] = hits[j];
     });
-    const missing = texts.map((_, i) => i).filter((i) => out[i] === undefined);
-    const store = [];
-    if (missing.length) {
-      const fetched = await run(missing.map((i) => texts[i]));
-      missing.forEach((index, j) => {
-        out[index] = fetched[j];
-        if (materials.has(index) && typeof fetched[j] === 'string' && fetched[j].trim()) store.push([materials.get(index), fetched[j]]);
-      });
-    }
-    if (batchMaterial && usable(out, texts)) store.push([batchMaterial, out]);
-    if (!signal?.aborted && store.length) cache.setMany(store);
-    return out;
+    return { out, materials, batchMaterial, complete: out.every((item) => item !== undefined) };
   }
 
   /** 400 报的是「参数不支持」时，退回最小请求体重试一次。 */
@@ -608,6 +618,47 @@
   }
 
   /**
+   * 批量翻译在本机缓存里用的参数（与 translateBatch 发出的请求一一对应）。
+   * 点数翻译、本机翻译、关掉缓存或缺 API Key 时返回 null。
+   */
+  async function batchPlan({ texts, settings, providerId, targetLanguage, targetId }) {
+    const S = globalThis.AITrSettings;
+    const provider = S.resolveProvider(settings, providerId);
+    const cache = cacheFor(settings, provider);
+    if (!cache || !provider.apiKey) return null;
+    const targetKey = targetId || settings.target;
+    const terms = await termsFor(texts, targetKey);
+    // DeepL：缓存替换用词偏好之前的译文，偏好在取回后再套用
+    if (provider.kind === 'mt') {
+      const targetCode = S.deeplCode(targetKey);
+      return { cache, provider, terms, targetCode, parts: ['mt', provider.id, targetCode], termsOf: () => '' };
+    }
+    const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
+    // 只取出现在这些原文里的用词偏好：逐段命中时，每段的键只受它自己用到的偏好影响
+    const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
+    return {
+      cache, provider, terms, target, termsIn,
+      parts: ['llm-batch', provider.id, provider.baseUrl, provider.model, batchSystemPrompt(target)],
+      termsOf: (list) => globalThis.AITrTerms?.promptLine(termsIn(list)) || '',
+    };
+  }
+
+  /**
+   * 只查本机缓存、不发请求：区域翻译和整站翻译先用它把命中的段落立刻写到页面上，剩下的再走 translateBatch。
+   * 返回与 texts 等长的数组，没命中的是 null；不走本机缓存的平台全部是 null。
+   */
+  async function lookupBatch({ texts, whole, settings, providerId, targetLanguage, targetId, surface }) {
+    const misses = texts.map(() => null);
+    const plan = texts.length ? await batchPlan({ texts, settings, providerId, targetLanguage, targetId }) : null;
+    if (!plan) return misses;
+    const { out } = await lookupCached({ cache: plan.cache, texts, whole, surface, parts: plan.parts, termsOf: plan.termsOf });
+    return out.map((item, i) => {
+      if (typeof item !== 'string') return null;
+      return plan.provider.kind === 'mt' && plan.terms.length ? globalThis.AITrTerms.applyTo(texts[i], item, plan.terms) : item;
+    });
+  }
+
+  /**
    * 一次翻译多段文字，返回等长、同序的译文数组。
    * @returns {Promise<string[]>}
    */
@@ -615,42 +666,38 @@
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const targetKey = targetId || settings.target;
-    const terms = await termsFor(texts, targetKey);
 
     if (provider.kind === 'hosted') {
+      const terms = await termsFor(texts, targetKey);
       return hostedTranslate({ texts, target: targetKey, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, surface, signal });
     }
 
     if (provider.kind === 'local') {
+      const terms = await termsFor(texts, targetKey);
       const out = await localTranslate({ texts, targetId: targetKey, signal });
-      return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
-    }
-
-    const cache = cacheFor(settings, provider);
-
-    // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多。
-    // 缓存替换用词偏好之前的译文，偏好在取回后再套用
-    if (provider.kind === 'mt') {
-      const targetCode = S.deeplCode(targetKey);
-      const out = await cachedBatch({
-        cache, texts, whole, surface, fresh, signal,
-        parts: ['mt', provider.id, targetCode],
-        termsOf: () => '',
-        run: (list) => deeplTranslate({ provider, texts: list, targetCode, signal }),
-      });
       return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
     }
 
     if (!provider.apiKey) {
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
+    const plan = await batchPlan({ texts, settings, providerId, targetLanguage, targetId });
+    const terms = plan?.terms || await termsFor(texts, targetKey);
+
+    // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
+    if (provider.kind === 'mt') {
+      const targetCode = S.deeplCode(targetKey);
+      const out = await cachedBatch({
+        cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
+        run: (list) => deeplTranslate({ provider, texts: list, targetCode, signal }),
+      });
+      return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
+    }
+
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
-    // 只取出现在这些原文里的用词偏好：逐段命中时，每段的键只受它自己用到的偏好影响
     const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
     return cachedBatch({
-      cache, texts, whole, surface, fresh, signal,
-      parts: ['llm-batch', provider.id, provider.baseUrl, provider.model, batchSystemPrompt(target)],
-      termsOf: (list) => globalThis.AITrTerms?.promptLine(termsIn(list)) || '',
+      cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
       run: async (list) => {
         const response = await request({
           provider,
@@ -1144,6 +1191,7 @@
     hostedStream,
     deeplTranslate,
     translateBatch,
+    lookupBatch,
     translateCaption,
     alternatives,
     parseAlternatives,

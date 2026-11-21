@@ -501,23 +501,37 @@
     const batches = chunk(nodes);
     let done = 0;
     entry.button.title = t('正在将区域翻译成 $1', [AITrLanguages.label(settings.target)]);
+    const messageOf = (batch) => ({
+      type: 'translate-batch', texts: batch.map((node) => records.get(node).text), whole: batch.map((node) => records.get(node).whole),
+      targetId: settings.target, providerId: settings.provider, surface: 'page',
+    });
+    const write = (batch, list) => {
+      let wrote = false;
+      batch.forEach((node, index) => {
+        const record = records.get(node);
+        const translated = list?.[index];
+        // A live page may update a text node while a request is in flight.
+        if (node.isConnected && node.nodeValue === record.text && typeof translated === 'string' && translated) {
+          node.nodeValue = translated;
+          record.translated = translated;
+          wrote = true;
+        }
+      });
+      if (wrote) entry.element.dir = AITrLanguages.LANGUAGES[settings.target].dir;
+    };
     try {
+      // 先把每一批在本机缓存里命中的段落都写上去（几毫秒），再逐批请求剩下的
+      const found = [];
       for (const batch of batches) {
-        const texts = batch.map((node) => records.get(node).text);
-        const whole = batch.map((node) => records.get(node).whole);
-        const reply = await AITrRequests.request({ type: 'translate-batch', texts, whole, targetId: settings.target, providerId: settings.provider, surface: 'page' }, { signal });
+        found.push(await AITrRequests.lookupBatch(messageOf(batch), { signal, settings }));
+        if (signal.aborted) return;
+        write(batch, found.at(-1));
+      }
+      for (const [index, batch] of batches.entries()) {
+        const reply = await AITrRequests.translateBatch(messageOf(batch), { signal, settings, found: found[index] });
         if (signal.aborted) return;
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
-        batch.forEach((node, index) => {
-          const record = records.get(node);
-          const translated = reply.texts[index];
-          // A live page may update a text node while a request is in flight.
-          if (node.isConnected && node.nodeValue === record.text && typeof translated === 'string' && translated) {
-            node.nodeValue = translated;
-            record.translated = translated;
-          }
-        });
-        entry.element.dir = AITrLanguages.LANGUAGES[settings.target].dir;
+        write(batch, reply.texts);
         setState(entry, 'busy', `${++done}/${batches.length}`);
       }
       entry.targetId = settings.target;

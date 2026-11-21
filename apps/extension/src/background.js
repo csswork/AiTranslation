@@ -893,6 +893,9 @@ chrome.runtime.onConnect.addListener((port) => {
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
         reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface }) };
+      } else if (message.type === 'cache-lookup') {
+        // 只查本机缓存（几毫秒）：区域 / 整站翻译先把命中的段落写上去，剩下的再发 translate-batch
+        reply = { ok: true, texts: await AITrProviders.lookupBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface }) };
       } else if (message.type === 'alternatives') {
         // 划词弹窗里点译文的词：内容脚本不能直接请求接口，由这里代发
         const result = await AITrProviders.alternatives({

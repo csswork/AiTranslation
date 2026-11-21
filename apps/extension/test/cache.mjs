@@ -258,4 +258,68 @@ const base = S.normalize({ provider: 'openai', target: 'zh-Hans', openai: { apiK
   console.log('✓ 识图（只缓存 data: 图片、按用途区分）与换说法');
 }
 
+/* 7. 先显示：只查缓存的 lookupBatch，与内容脚本里先查再请求的 AITrRequests.translateBatch */
+{
+  await C.clear();
+  const settings = base;
+  mock((url, body) => llmReply(JSON.stringify(JSON.parse(body.messages[1].content).map((text) => `译:${text}`))));
+  await P.translateBatch({ texts: ['Home', 'Read the', 'docs'], whole: [true, false, false], settings, surface: 'site' });
+  await C.flush();
+  assert.deepEqual(await P.lookupBatch({ texts: ['Home', 'Read the', 'Blog'], whole: [true, false, true], settings, surface: 'site' }),
+    ['译:Home', null, null], '只查缓存：完整段命中，片段与没缓存的是 null');
+  assert.deepEqual(await P.lookupBatch({ texts: ['Home', 'Read the', 'docs'], whole: [true, false, false], settings, surface: 'site' }),
+    ['译:Home', '译:Read the', '译:docs'], '同样的一批整批命中，片段也有');
+  assert.equal(calls.length, 1, 'lookupBatch 不发请求');
+  assert.deepEqual(await P.lookupBatch({ texts: ['Home'], whole: [true], settings: { ...settings, provider: 'hosted' }, surface: 'site' }), [null], '点数翻译不查本机缓存');
+  assert.deepEqual(await P.lookupBatch({ texts: ['Home'], whole: [true], settings: { ...settings, cache: false }, surface: 'site' }), [null]);
+  assert.deepEqual(await P.lookupBatch({ texts: ['Home'], whole: [true], settings: { ...settings, openai: { apiKey: '' } }, surface: 'site' }), [null], '缺 Key 时不先显示，交给翻译请求报错');
+
+  // DeepL 命中后照样套用用词偏好
+  const deepl = { ...base, provider: 'deepl' };
+  mock((url, body) => (url.includes('/v3/languages') ? { ok: true, json: async () => deepLLanguages }
+    : { ok: true, json: async () => ({ translations: body.text.map(() => ({ text: '新功能' })) }) }));
+  await P.translateBatch({ texts: ['new feature'], whole: [true], settings: deepl, surface: 'site' });
+  await C.flush();
+  await T.remember({ source: 'feature', from: '功能', to: '特性', target: 'zh-Hans' });
+  assert.deepEqual(await P.lookupBatch({ texts: ['new feature'], whole: [true], settings: deepl, surface: 'site' }), ['新特性']);
+  await T.clear();
+
+  // 内容脚本一侧：命中的先交回，剩下的单独请求后按原顺序合并
+  mock((url, body) => llmReply(JSON.stringify(JSON.parse(body.messages[1].content).map((text) => `译:${text}`))));
+  const sent = [];
+  chrome.runtime = { connect: () => {
+    const listeners = [];
+    return {
+      onMessage: { addListener: (fn) => listeners.push(fn) },
+      onDisconnect: { addListener() {} },
+      disconnect() {},
+      postMessage: async (message) => {
+        sent.push(message);
+        const options = { settings, texts: message.texts, whole: message.whole, surface: message.surface };
+        const reply = message.type === 'cache-lookup' ? { ok: true, texts: await P.lookupBatch(options) }
+          : { ok: true, texts: await P.translateBatch(options) };
+        listeners.forEach((fn) => fn(reply));
+      },
+    };
+  } };
+  load('src/lib/requests.js');
+  const R = globalThis.AITrRequests;
+  let early = null;
+  const reply = await R.translateBatch({ type: 'translate-batch', texts: ['Home', 'Read the', 'manual'], whole: [true, false, false], providerId: 'openai', surface: 'site' },
+    { settings, onHits: (found) => { early = found; } });
+  assert.deepEqual(early, ['译:Home', null, null], '命中的段落先交回');
+  assert.deepEqual(reply.texts, ['译:Home', '译:Read the', '译:manual']);
+  assert.deepEqual(sent.map((m) => [m.type, m.texts]), [['cache-lookup', ['Home', 'Read the', 'manual']], ['translate-batch', ['Read the', 'manual']]],
+    '剩下的单独请求（片段仍在一起）');
+  assert.deepEqual(sent[1].whole, [false, false]);
+
+  sent.length = 0;
+  await R.translateBatch({ type: 'translate-batch', texts: ['x'], whole: [true], providerId: 'hosted', surface: 'site' }, { settings });
+  assert.deepEqual(sent.map((m) => m.type), ['translate-batch'], '点数翻译不先查缓存');
+  sent.length = 0;
+  await R.translateBatch({ type: 'translate-batch', texts: ['y'], whole: [true], providerId: 'openai', surface: 'page' }, { settings, found: [null] });
+  assert.deepEqual(sent.map((m) => m.type), ['translate-batch'], '传了查询结果就不再查一次');
+  console.log('✓ 先显示：lookupBatch 只查不请求；内容脚本先交回命中的段落、剩下的单独请求');
+}
+
 console.log('本机缓存测试全部通过');
