@@ -191,6 +191,20 @@ async function translateOne(sample, variantId) {
       for await (const piece of P.translate({ text: sample.text, settings, targetId })) text += piece;
       return text.trim();
     });
+    // 方案可以在初译之后再做一步（如审校改写），用同一个带缓存的接口
+    if (run.variant.after) {
+      const call = async (body) => {
+        const response = await chat(`${settings.deepseek.baseUrl || 'https://api.deepseek.com'}/chat/completions`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify({ model: run.sent.model, stream: false, ...body }),
+        });
+        if (!response.ok) throw new Error(`后续请求失败（${response.status}）`);
+        return String((await response.json())?.choices?.[0]?.message?.content || '').trim();
+      };
+      const final = await run.variant.after({ ...run.ctx, output, call });
+      return { output: final, draft: output, request: describe(run.sent) };
+    }
     return { output, request: describe(run.sent) };
   } catch (err) {
     return { error: String(err?.message || err), request: describe(run.sent) };

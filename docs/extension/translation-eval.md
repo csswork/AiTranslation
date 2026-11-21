@@ -51,6 +51,8 @@ npm run eval:translation -- --variants no-style,baseline --target en
 | `no-style` | 去掉中文风格指南，回看它带来的差别 |
 | `hosted`、`hosted-no-style` | 换成后台 `hosted.js` 的提示词（托管翻译的基础提示词与扩展不同），带与不带风格指南 |
 | `temp-0.7`、`temp-1.0`、`thinking` | 只改请求参数 |
+| `baseline-resample` | 与 `baseline` 同义、只是不命中缓存，量同一方案重新采样的波动 |
+| `refine` | 初译后再让同一模型对照原文审校改写一遍（只作用于整段），用来示范 `after` |
 
 风格指南落地时的结果（带指南 对 不带指南，胜 / 平 / 负，评审 `deepseek-flash`）：
 
@@ -64,6 +66,8 @@ npm run eval:translation -- --variants no-style,baseline --target en
 | 法语 | 通用版 | 48 / 16 / 16 | 未跑 | 3.76 → 4.31 |
 
 忠实分各语言持平或略降（不超过约 0.15）。其余目标语言没有评测；`deepseek-flash` 对小语种地道程度的判断也不可靠，结论只能当参考。
+
+2026-11 第二轮（目标简体中文，每方案 60 条）：宽泛重写的指南、加整段示例、温度 1.0、开启思考、`refine` 对 `baseline` 都在 `baseline-resample` 的波动范围内，没有一项能算整体改进。`thinking` 忠实分略升（4.75 → 4.84），但输出 token 约是不开的 4.7 倍，流式首字更晚；`refine` 忠实分下降（4.79 → 4.57）。落地的只有逐条对比里方向明确的三处：「微妙」示例改成「一般、说不上好」，范围号「〜」写成「～」或「到」，网页片段补「链接项保留自己的意思」与两组切分示例。
 
 改指南时：
 
@@ -91,5 +95,9 @@ npm run eval:translation -- --variants no-style,baseline --target en
   patch: withSystem((prompt, ctx) => (ctx.target.includes('Chinese') ? `${prompt}\n…` : prompt)),
 },
 ```
+
+要在初译之后再做一步（如审校改写），给方案加 `after({ mode, sample, target, output, call })`，`call(body)` 用同一个带缓存的接口再发一次请求，返回值作为最终译文（报告的 `results.json` 里另存初译 `draft`）。
+
+温度 1.3 下同一方案每次结果不同。判断差距是否超出波动，可以加一个只在提示词末尾多一个换行的「重新采样」方案（如 `baseline-resample`）一起跑：2026-11 的一轮里 `baseline-resample` 对 `baseline` 是 14 / 25 / 21，胜负差在这个范围内的候选不能算改进。
 
 方案验证有效后，再把改动落到 `src/lib/providers.js` 和后台 `src/translation/hosted.js`（两边保持一致），然后删掉对应的方案。
