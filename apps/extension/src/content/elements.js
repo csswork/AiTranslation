@@ -493,7 +493,8 @@
       setState(entry, 'error', t('无文字'));
       return;
     }
-    const originals = nodes.map((node) => ({ node, text: node.nodeValue, translated: null }));
+    // whole：独立成段的节点可以逐段命中本机缓存（见 lib/segments.js）；必须在任何译文写回之前判断
+    const originals = nodes.map((node) => ({ node, text: node.nodeValue, translated: null, whole: globalThis.AITrSegments?.isWhole(node) === true }));
     entry.originals = originals;
     entry.originalDir = entry.element.getAttribute('dir');
     const records = new Map(originals.map((item) => [item.node, item]));
@@ -503,7 +504,8 @@
     try {
       for (const batch of batches) {
         const texts = batch.map((node) => records.get(node).text);
-        const reply = await AITrRequests.request({ type: 'translate-batch', texts, targetId: settings.target, providerId: settings.provider, surface: 'page' }, { signal });
+        const whole = batch.map((node) => records.get(node).whole);
+        const reply = await AITrRequests.request({ type: 'translate-batch', texts, whole, targetId: settings.target, providerId: settings.provider, surface: 'page' }, { signal });
         if (signal.aborted) return;
         if (!reply?.ok) throw new Error(reply?.error || t('翻译失败'));
         batch.forEach((node, index) => {

@@ -60,6 +60,7 @@
         "src/lib/shape-editor.js",
         "src/lib/word-picker.js",
         "src/lib/sites.js",
+        "src/lib/segments.js",
         "src/content/content.js",
         "src/content/elements.js",
         "src/content/image.js",

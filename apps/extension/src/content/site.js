@@ -224,7 +224,8 @@
         current.queued.add(node);
         break;
       }
-      batch.push({ node, original, core });
+      // 独立成段的节点可以逐段命中本机缓存（见 lib/segments.js）；要在这批译文写回之前判断
+      batch.push({ node, original, core, whole: globalThis.AITrSegments?.isWhole(node) === true });
       chars += core.length;
     }
     return batch;
@@ -245,9 +246,11 @@
     current.active++;
     status.update();
     const texts = [...new Set(batch.map((item) => item.core))];
+    // 同样的文字只要有一处是句子片段，就整体按片段处理
+    const whole = texts.map((text) => batch.every((item) => item.core !== text || item.whole));
     try {
       const reply = await Requests.request({
-        type: 'translate-batch', texts, targetId: current.targetId, providerId: current.providerId, surface: 'site',
+        type: 'translate-batch', texts, whole, targetId: current.targetId, providerId: current.providerId, surface: 'site',
       }, { signal: current.controller.signal });
       if (session !== current) return;
       if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });

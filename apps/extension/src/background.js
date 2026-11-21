@@ -58,6 +58,7 @@ const CONTENT_FILES = [
   'src/lib/shape-editor.js',
   'src/lib/word-picker.js',
   'src/lib/sites.js',
+  'src/lib/segments.js',
   'src/content/content.js',
   'src/content/elements.js',
   'src/content/image.js',
@@ -891,7 +892,7 @@ chrome.runtime.onConnect.addListener((port) => {
         const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
-        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts, surface: message.surface }) };
+        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface }) };
       } else if (message.type === 'alternatives') {
         // 划词弹窗里点译文的词：内容脚本不能直接请求接口，由这里代发
         const result = await AITrProviders.alternatives({
@@ -1033,7 +1034,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         const stored = await AITrSettings.loadSettings();
         const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
-        const texts = await AITrProviders.translateBatch({ texts: message.texts, settings, surface: message.surface, fresh: message.fresh === true });
+        const texts = await AITrProviders.translateBatch({ texts: message.texts, whole: message.whole, settings, surface: message.surface, fresh: message.fresh === true });
         sendResponse({ ok: true, texts });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err) });

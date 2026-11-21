@@ -136,43 +136,49 @@
     return cache?.usable(settings) && (provider.kind === 'llm' || provider.kind === 'mt') ? cache : null;
   }
 
-  /**
-   * 每一项都是完整一段的批量来源（双语阅读、PDF、图片）逐段命中、只请求没命中的段落。
-   * 网页元素与整站翻译发的是文本节点，同一句话常被切成几段，单段译法依赖前后文，只能整批命中。
-   */
+  /** 每一项都是完整一段的批量来源（双语阅读、PDF、图片）：全部逐段命中、只请求没命中的段落。 */
   const SEGMENT_SURFACES = new Set(['reader', 'pdf', 'image']);
 
   /**
    * 带缓存的批量翻译。parts 是除原文外影响结果的因素；termsOf(list) 给出这些原文对应的用词偏好（进提示词的那部分），
    * run(list) 真正发请求。fresh 时不查缓存，但用新结果覆盖。
+   *
+   * 区域翻译（page）与整站翻译（site）发的是文本节点，同一句话常被行内标签切成几段，片段的译法依赖前后文：
+   * 内容脚本用 whole（与 texts 等长，见 lib/segments.js）标出独立成段的节点，只有这些逐段命中；
+   * 片段总是和没命中的段落一起发出去（片段都在，句子的前后文不受影响），不单独缓存。
+   * 这两种来源另外按整批缓存一次：同一区域再翻、同样的一批再来时整批命中，片段也不用再请求。
    */
-  async function cachedBatch({ cache, texts, surface, fresh, signal, parts, termsOf, run }) {
+  async function cachedBatch({ cache, texts, whole, surface, fresh, signal, parts, termsOf, run }) {
     if (!cache || !texts.length) return run(texts);
-    const usable = (out, list) => Array.isArray(out) && out.length === list.length
-      && out.every((item, i) => typeof item === 'string' && (item.trim() || !String(list[i]).trim()));
+    const valid = (item, text) => typeof item === 'string' && (item.trim() || !String(text).trim());
+    const usable = (out, list) => Array.isArray(out) && out.length === list.length && out.every((item, i) => valid(item, list[i]));
+    const segmentsOnly = SEGMENT_SURFACES.has(surface);
+    const flags = segmentsOnly ? texts.map(() => true)
+      : Array.isArray(whole) && whole.length === texts.length ? whole.map((flag) => flag === true) : texts.map(() => false);
 
-    if (!SEGMENT_SURFACES.has(surface)) {
-      const material = cache.material(...parts, termsOf(texts), texts);
-      if (!fresh) {
-        const [hit] = await cache.getMany([material]);
-        if (usable(hit, texts)) return hit;
-      }
-      const out = await run(texts);
-      if (!signal?.aborted && usable(out, texts)) cache.setMany([[material, out]]);
-      return out;
+    const batchMaterial = segmentsOnly ? null : cache.material(...parts, termsOf(texts), texts);
+    if (batchMaterial && !fresh) {
+      const [hit] = await cache.getMany([batchMaterial]);
+      if (usable(hit, texts)) return hit;
     }
 
-    const materials = texts.map((text) => cache.material(...parts, termsOf([text]), text));
-    const hits = fresh ? [] : await cache.getMany(materials);
-    const missing = texts.map((_, i) => i).filter((i) => !(typeof hits[i] === 'string' && hits[i].trim()));
-    if (!missing.length) return hits;
-    const fetched = await run(missing.map((i) => texts[i]));
-    const out = texts.map((_, i) => hits[i]);
-    const store = [];
-    missing.forEach((index, j) => {
-      out[index] = fetched[j];
-      if (typeof fetched[j] === 'string' && fetched[j].trim()) store.push([materials[index], fetched[j]]);
+    const indexes = texts.map((_, i) => i).filter((i) => flags[i]);
+    const materials = new Map(indexes.map((i) => [i, cache.material(...parts, termsOf([texts[i]]), texts[i])]));
+    const hits = fresh || !indexes.length ? [] : await cache.getMany(indexes.map((i) => materials.get(i)));
+    const out = texts.map(() => undefined);
+    indexes.forEach((i, j) => {
+      if (typeof hits[j] === 'string' && hits[j].trim()) out[i] = hits[j];
     });
+    const missing = texts.map((_, i) => i).filter((i) => out[i] === undefined);
+    const store = [];
+    if (missing.length) {
+      const fetched = await run(missing.map((i) => texts[i]));
+      missing.forEach((index, j) => {
+        out[index] = fetched[j];
+        if (materials.has(index) && typeof fetched[j] === 'string' && fetched[j].trim()) store.push([materials.get(index), fetched[j]]);
+      });
+    }
+    if (batchMaterial && usable(out, texts)) store.push([batchMaterial, out]);
     if (!signal?.aborted && store.length) cache.setMany(store);
     return out;
   }
@@ -605,7 +611,7 @@
    * 一次翻译多段文字，返回等长、同序的译文数组。
    * @returns {Promise<string[]>}
    */
-  async function translateBatch({ texts, settings, providerId, targetLanguage, targetId, surface, signal, fresh = false }) {
+  async function translateBatch({ texts, whole, settings, providerId, targetLanguage, targetId, surface, signal, fresh = false }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const targetKey = targetId || settings.target;
@@ -627,7 +633,7 @@
     if (provider.kind === 'mt') {
       const targetCode = S.deeplCode(targetKey);
       const out = await cachedBatch({
-        cache, texts, surface, fresh, signal,
+        cache, texts, whole, surface, fresh, signal,
         parts: ['mt', provider.id, targetCode],
         termsOf: () => '',
         run: (list) => deeplTranslate({ provider, texts: list, targetCode, signal }),
@@ -642,7 +648,7 @@
     // 只取出现在这些原文里的用词偏好：逐段命中时，每段的键只受它自己用到的偏好影响
     const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
     return cachedBatch({
-      cache, texts, surface, fresh, signal,
+      cache, texts, whole, surface, fresh, signal,
       parts: ['llm-batch', provider.id, provider.baseUrl, provider.model, batchSystemPrompt(target)],
       termsOf: (list) => globalThis.AITrTerms?.promptLine(termsIn(list)) || '',
       run: async (list) => {

@@ -159,10 +159,27 @@ const base = S.normalize({ provider: 'openai', target: 'zh-Hans', openai: { apiK
   assert.equal(calls.length, 4, '网页片段：不逐段命中');
   assert.deepEqual(JSON.parse(calls[3].body.messages[1].content), ['x', 'z'], '整批发出，保留前后文');
 
+  // 区域 / 整站翻译带 whole 标记：独立成段的逐段命中，片段总是随没命中的一起发出、不单独缓存
+  mock((url, body) => llmReply(JSON.stringify(JSON.parse(body.messages[1].content).map((text) => `译:${text}`))));
+  await P.translateBatch({ texts: ['Home', 'Read the', 'docs', 'About'], whole: [true, false, false, true], settings, surface: 'site' });
+  await C.flush();
+  assert.deepEqual(await P.translateBatch({ texts: ['About', 'Pricing', 'Home'], whole: [true, true, true], settings, surface: 'page' }),
+    ['译:About', '译:Pricing', '译:Home']);
+  assert.deepEqual(JSON.parse(calls[1].body.messages[1].content), ['Pricing'], '完整段跨页面、跨功能逐段命中');
+  await C.flush();
+  await P.translateBatch({ texts: ['Home', 'Read the', 'manual'], whole: [true, false, false], settings, surface: 'site' });
+  assert.deepEqual(JSON.parse(calls[2].body.messages[1].content), ['Read the', 'manual'], '片段不逐段命中，和同句的其他片段一起发出');
+  await C.flush();
+  await P.translateBatch({ texts: ['Home', 'Read the', 'manual'], whole: [true, false, false], settings, surface: 'site' });
+  assert.equal(calls.length, 3, '同样的一批（含片段）整批命中');
+  await P.translateBatch({ texts: ['Read the', 'About'], whole: [true], settings, surface: 'site' });
+  assert.deepEqual(JSON.parse(calls[3].body.messages[1].content), ['Read the', 'About'], 'whole 长度不对时全部按片段处理');
+  calls.length = 0;
+
   await P.translateBatch({ texts: ['q'], settings, surface: 'reader', fresh: true });
   await P.translateBatch({ texts: ['a'], settings, surface: 'reader', fresh: true });
-  assert.equal(calls.length, 6, 'fresh 时逐段也不查缓存');
-  console.log('✓ 批量：逐段命中只请求缺的段落；网页片段整批命中');
+  assert.equal(calls.length, 2, 'fresh 时逐段也不查缓存');
+  console.log('✓ 批量：逐段命中只请求缺的段落；网页片段整批命中，标为完整段的逐段命中');
 }
 
 /* 4. DeepL：缓存替换用词偏好之前的译文 */
