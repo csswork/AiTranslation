@@ -685,5 +685,21 @@
   "清除缓存": "Vider le cache",
   "已缓存 $1 条译文": "$1 traductions en cache",
   "还没有缓存的译文": "Aucune traduction en cache pour le moment",
-  "清除本机缓存的全部译文？": "Vider toutes les traductions mises en cache localement ?"
+  "清除本机缓存的全部译文？": "Vider toutes les traductions mises en cache localement ?",
+  "帮助改进": "Aider à améliorer",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Lorsque vous utilisez votre propre clé API ou la traduction locale, votre texte ne passe pas par nos serveurs, nous ne pouvons donc pas voir quelles fonctionnalités sont utilisées. Vous pouvez choisir de partager le nombre d'utilisations de ces fonctionnalités pour nous aider à décider quoi améliorer en priorité.",
+  "分享功能使用情况（不含翻译内容）": "Partager l'utilisation des fonctionnalités (sans le contenu traduit)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Envoyer chaque jour un récapitulatif des jours précédents, associé à votre compte : date, fonctionnalité (comme la traduction par sélection, la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte source, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. L'utilisation de la traduction par points est déjà enregistrée dans votre compte et n'est pas affectée par ce réglage. La désactivation efface les enregistrements non encore envoyés.",
+  "查看待发送的内容": "Voir les données en attente d'envoi",
+  "查看或删除已分享的记录": "Voir ou supprimer les enregistrements partagés",
+  "划词翻译": "Traduction de sélection",
+  "网页区域翻译": "Traduction de zone de page",
+  "整份 PDF 翻译": "Traduction complète de PDF",
+  "视频字幕": "Sous-titres vidéo",
+  "点词换说法": "Cliquer sur un mot pour reformuler",
+  "有 $1 条记录待发送": "$1 enregistrement(s) en attente d'envoi",
+  "还没有待发送的记录": "Aucun enregistrement en attente d'envoi",
+  "$1 次，失败 $2 次": "$1 appel(s), $2 échec(s)",
+  "$1 次": "$1 appel(s)",
+  "收起": "Réduire"
 }

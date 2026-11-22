@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Cancellare tutte le traduzioni memorizzate localmente?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Aiuta a migliorare"
+  },
+  "m_317549218826032a": {
+    "message": "Quando usi la tua API Key o la traduzione locale, il testo non passa dai nostri server, quindi non possiamo vedere quali funzioni vengono usate. Puoi scegliere di condividere il numero di utilizzi di queste funzioni per aiutarci a decidere cosa migliorare prima."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Condividi l'utilizzo delle funzioni (senza il contenuto tradotto)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Invia una volta al giorno un riepilogo dei giorni precedenti, associato al tuo account: data, funzione (come traduzione della parola, lettura bilingue), piattaforma (ChatGPT, DeepSeek, DeepL o traduzione locale), numero di chiamate e numero di errori. Non vengono inviati testo originale, traduzioni, URL, lingue o modelli, e l'utilizzo nelle finestre in incognito non viene conteggiato. L'utilizzo della traduzione a punti è già registrato nel tuo account e non è influenzato da questa opzione. Disattivandola, i record non ancora inviati vengono cancellati."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Visualizza i dati in attesa di invio"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Visualizza o elimina i record condivisi"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Traduzione della selezione"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Traduzione dell'area della pagina"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Traduzione completa del PDF"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Sottotitoli video"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Clicca la parola per riformulare"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ record in attesa di invio",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Nessun record in attesa di invio"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ chiamate, $arg2$ errori",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ chiamate",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Comprimi"
+  },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"
   },

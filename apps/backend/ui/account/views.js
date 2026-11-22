@@ -414,13 +414,41 @@ const ENTRY_LABELS = {
 const KIND_LABELS = { text: k('文字'), image: k('图片识别') };
 const STATUS_LABELS = { ok: k('成功'), failed: k('失败（已返还）'), pending: k('处理中') };
 
-export function usagePage(ui, { user, activity }) {
+const SHARED_FEATURE_LABELS = {
+  selection: k('划词翻译'), panel: k('翻译面板'), page: k('网页区域翻译'), site: k('整站翻译'), image: k('图片翻译'),
+  pdf: k('整份 PDF 翻译'), reader: k('双语阅读'), subtitle: k('视频字幕'), alternatives: k('其他译法'),
+};
+const SHARED_PROVIDER_NAMES = { openai: 'ChatGPT', deepseek: 'DeepSeek', deepl: 'DeepL', local: k('本机翻译') };
+
+/** 用户在扩展里自愿分享的「自带 Key / 本机翻译」功能使用情况，可一键删除。没有记录时整段不显示。 */
+function sharedUsageSection(ui, shared) {
+  const { t } = ui;
+  if (!shared?.rows.length) return '';
+  return html`<section class="card" id="shared-usage">
+  <h2>${t('你分享的功能使用情况')}</h2>
+  <p class="fine">${t('你在扩展设置里开启了「分享功能使用情况」。这里是最近 30 天收到的汇总：只有日期、功能、平台和次数，不含原文、译文或所在网页。点数翻译的用量见上方，不受这个开关影响。')}</p>
+  <div class="table-wrap"><table data-shared-usage>
+    <thead><tr><th>${t('功能')}</th><th>${t('平台')}</th><th class="num">${t('天数')}</th><th class="num">${t('次数')}</th></tr></thead>
+    <tbody>${shared.rows.map((r) => html`<tr>
+      <td>${t(SHARED_FEATURE_LABELS[r.key])}</td>
+      <td>${r.provider === 'local' ? t(SHARED_PROVIDER_NAMES.local) : SHARED_PROVIDER_NAMES[r.provider]}</td>
+      <td class="num">${r.days}</td>
+      <td class="num">${r.requests}</td>
+    </tr>`)}</tbody>
+  </table></div>
+  <p class="fine">${t('记录保留 {days} 天。要停止分享，请在扩展设置里关闭开关。', { days: shared.retentionDays })}</p>
+  <form method="post" action="/usage/shared/delete"><button class="btn ghost small" type="submit">${t('删除全部分享记录')}</button></form>
+</section>`;
+}
+
+export function usagePage(ui, { user, activity, shared = null, notice = null }) {
   const { t } = ui;
   const { income: entries, expenses, events } = activity;
   return layout(ui, {
     title: t('用量与点数'),
     user,
     active: 'usage',
+    notice,
     head: html`<script src="${assetUrl('chart-tooltip.js')}" defer></script>`,
     body: html`<h1>${t('用量与点数')}</h1>
 ${activityCharts(ui, activity, { action: '/usage' })}
@@ -460,7 +488,8 @@ ${activityCharts(ui, activity, { action: '/usage' })}
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
   <p class="fine">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
-</details>`,
+</details>
+${sharedUsageSection(ui, shared)}`,
   });
 }
 

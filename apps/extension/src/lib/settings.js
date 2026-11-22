@@ -153,6 +153,8 @@
     siteProvider: '',
     // 第一次用会花钱的平台（点数、API Key）整站翻译时已经确认过用量提醒
     siteCostConfirmed: false,
+    // 自愿分享功能使用情况（自带 Key / DeepL / 本机翻译的按天计数，见 usage.js），默认关闭
+    shareUsage: false,
     openai: { apiKey: '', model: '', baseUrl: '' },
     deepseek: { apiKey: '', model: '', baseUrl: '' },
   };
@@ -187,6 +189,7 @@
       imageShape: input.imageShape === 'ellipse' ? 'ellipse' : 'rect',
       siteProvider: PROVIDERS[input.siteProvider] ? input.siteProvider : '',
       siteCostConfirmed: input.siteCostConfirmed === true,
+      shareUsage: input.shareUsage === true,
     };
     for (const id of KEY_PROVIDERS) {
       const conf = input[id] && typeof input[id] === 'object' ? input[id] : {};

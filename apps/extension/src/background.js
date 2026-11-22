@@ -14,6 +14,7 @@ import './lib/cache.js';
 import './lib/providers.js';
 import './lib/account.js';
 import './lib/sites.js';
+import './lib/usage.js';
 
 const t = (...args) => AITrI18n.t(...args);
 
@@ -219,6 +220,13 @@ async function onFirstInstall() {
     chrome.runtime.openOptionsPage();
   }
 }
+/**
+ * 自愿分享的功能使用记录：每 6 小时检查一次，只发已结束日子的计数（每个日子通常只发一次），见 lib/usage.js。
+ * 没开启时什么都不发。
+ */
+const USAGE_ALARM = 'usage-share';
+const flushUsage = () => AITrUsage.flush((rows) => AITrAccount.shareUsage(rows)).catch(() => 0);
+
 chrome.runtime.onStartup.addListener(() => {
   createMenu();
   runVersionCheck();
@@ -226,9 +234,11 @@ chrome.runtime.onStartup.addListener(() => {
 if (alarms) {
   alarms.onAlarm.addListener(({ name }) => {
     if (name === VERSION_ALARM) runVersionCheck();
+    if (name === USAGE_ALARM) flushUsage();
   });
   (async () => {
     if (!await alarms.get(VERSION_ALARM)) await scheduleVersionCheck();
+    if (!await alarms.get(USAGE_ALARM)) await alarms.create(USAGE_ALARM, { delayInMinutes: 5, periodInMinutes: 360 });
   })().catch(() => {});
 }
 AITrI18n.onChange(createMenu);
@@ -653,9 +663,10 @@ async function startTranslation({ tabId, text, providerId, targetId, fresh = fal
   });
 
   const startedAt = Date.now();
+  const incognito = await chrome.tabs.get(tabId).then((tab) => tab?.incognito === true, () => false);
   try {
     let received = false;
-    for await (const chunk of AITrProviders.translate({ text: payload, settings, surface: 'selection', signal: controller.signal, fresh })) {
+    for await (const chunk of AITrProviders.translate({ text: payload, settings, surface: 'selection', signal: controller.signal, fresh, incognito })) {
       if (closed) return;
       received = true;
       post({ type: 'delta', chunk });
@@ -887,7 +898,8 @@ chrome.runtime.onConnect.addListener((port) => {
       const stored = await AITrSettings.loadSettings();
       const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
       // fresh：用户点了「重新识别 / 重新翻译」，不用本机缓存，新结果覆盖旧的
-      const options = { settings, signal: controller.signal, fresh: message.fresh === true };
+      // incognito：无痕窗口里的使用不计入自愿分享的功能统计（见 lib/usage.js）
+      const options = { settings, signal: controller.signal, fresh: message.fresh === true, incognito: port.sender?.tab?.incognito === true };
       if (message.type === 'read-image') {
         const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
@@ -901,7 +913,7 @@ chrome.runtime.onConnect.addListener((port) => {
         const result = await AITrProviders.alternatives({
           source: String(message.source || ''), translation: String(message.translation || ''),
           start: Number(message.start), end: Number(message.end),
-          settings, targetId: settings.target, noteId: message.noteId, signal: controller.signal,
+          settings, targetId: settings.target, noteId: message.noteId, signal: controller.signal, incognito: options.incognito,
         });
         reply = { ok: true, source: result.source, options: result.options };
       } else if (message.type === 'translate-caption') {
@@ -955,6 +967,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'ping') {
     sendResponse({ ok: true });
     return false;
+  }
+
+  // 扩展页面（阅读、PDF、图片、翻译面板）直接调用接口，计数交给这里串行写入。不接受内容脚本：它们的请求本来就经过这里。
+  if (type === 'usage-count') {
+    if (sender.id === chrome.runtime.id && String(sender.url || '').startsWith(chrome.runtime.getURL(''))) {
+      AITrUsage.record({ feature: message.feature, provider: message.provider, ok: message.ok === true, incognito: sender.tab?.incognito === true });
+    }
+    return false;
+  }
+
+  // 设置页「查看待发送的内容」
+  if (type === 'usage-pending') {
+    if (sender.id !== chrome.runtime.id || !String(sender.url || '').startsWith(chrome.runtime.getURL(''))) return false;
+    AITrUsage.pending().then((rows) => sendResponse({ ok: true, rows }), () => sendResponse({ ok: false, rows: [] }));
+    return true;
   }
 
   // 用词偏好：划词弹窗里换了说法后记下来（只存在本机，见 lib/terms.js）。只接受本扩展的页面与内容脚本
@@ -1022,6 +1049,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           settings,
           model: AITrSettings.visionModel(settings.provider),
           fresh: message.fresh === true,
+          incognito: sender.tab?.incognito === true,
         });
         sendResponse({ ok: true, blocks: result.blocks });
       } catch (err) {
@@ -1037,7 +1065,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         const stored = await AITrSettings.loadSettings();
         const settings = AITrSettings.normalize({ ...stored, provider: message.providerId || stored.provider, target: message.targetId || stored.target });
-        const texts = await AITrProviders.translateBatch({ texts: message.texts, whole: message.whole, settings, surface: message.surface, fresh: message.fresh === true });
+        const texts = await AITrProviders.translateBatch({ texts: message.texts, whole: message.whole, settings, surface: message.surface, fresh: message.fresh === true, incognito: sender.tab?.incognito === true });
         sendResponse({ ok: true, texts });
       } catch (err) {
         sendResponse({ ok: false, error: String(err?.message || err) });
@@ -1057,6 +1085,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           text: message.text,
           context: message.context,
           settings,
+          incognito: sender.tab?.incognito === true,
         });
         const elapsed = Date.now() - startedAt;
         // 翻译延迟只能用真实 Key 量，留一条日志方便对照

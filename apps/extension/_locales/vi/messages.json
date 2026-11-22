@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Xóa toàn bộ bản dịch được lưu trong bộ nhớ đệm trên máy?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Giúp cải thiện"
+  },
+  "m_317549218826032a": {
+    "message": "Khi bạn dùng API Key của riêng mình hoặc dịch cục bộ, văn bản không đi qua máy chủ của chúng tôi, nên chúng tôi không thể biết những tính năng nào đang được sử dụng. Bạn có thể chọn chia sẻ số lần sử dụng của phần này để giúp chúng tôi quyết định cải thiện điều gì trước."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Chia sẻ mức sử dụng tính năng (không gồm nội dung dịch)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Gửi mỗi ngày một lần bản tổng hợp của vài ngày trước, liên kết với tài khoản của bạn: ngày, tính năng (như dịch từ đã chọn, đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và mức sử dụng trong cửa sổ ẩn danh không được tính. Mức sử dụng dịch theo điểm vốn đã được ghi vào tài khoản và không bị ảnh hưởng bởi công tắc này. Khi tắt, các bản ghi chưa gửi sẽ bị xóa."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Xem nội dung chờ gửi"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Xem hoặc xóa các bản ghi đã chia sẻ"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Dịch văn bản chọn"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Dịch vùng trang web"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Dịch toàn bộ PDF"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Phụ đề video"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Nhấp từ để đổi cách diễn đạt"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "Có $arg1$ bản ghi chờ gửi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Chưa có bản ghi nào chờ gửi"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ lần, thất bại $arg2$ lần",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ lần",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Thu gọn"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

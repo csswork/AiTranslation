@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Limpar todas as traduções em cache local?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Ajude a melhorar"
+  },
+  "m_317549218826032a": {
+    "message": "Quando você usa sua própria API Key ou a tradução local, seu texto não passa pelos nossos servidores, então não conseguimos ver quais recursos as pessoas estão usando. Você pode optar por compartilhar as contagens de uso desses recursos para nos ajudar a decidir o que melhorar primeiro."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Compartilhar uso dos recursos (sem o conteúdo traduzido)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Envia diariamente um resumo dos últimos dias, vinculado à sua conta: data, recurso (como tradução por seleção, leitura bilíngue), plataforma (ChatGPT, DeepSeek, DeepL ou tradução local), número de chamadas e número de falhas. Não são enviados texto original, traduções, URLs, idiomas ou modelos, e o uso em janelas anônimas não é contabilizado. O uso da tradução por pontos já fica registrado na sua conta e não é afetado por esta opção. Ao desativar, os registros ainda não enviados são apagados."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Ver dados pendentes"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Ver ou excluir registros compartilhados"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Tradução de seleção"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Tradução de região da página"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Tradução de PDF completo"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Legendas de vídeo"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Clicar na palavra para reformular"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ registro(s) pendente(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Nenhum registro pendente"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ chamada(s), $arg2$ falha(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ chamada(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Recolher"
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

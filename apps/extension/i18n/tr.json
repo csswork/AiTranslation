@@ -685,5 +685,21 @@
   "清除缓存": "Önbelleği temizle",
   "已缓存 $1 条译文": "$1 çeviri önbelleğe alındı",
   "还没有缓存的译文": "Henüz önbelleğe alınmış çeviri yok",
-  "清除本机缓存的全部译文？": "Yerel olarak önbelleğe alınmış tüm çeviriler temizlensin mi?"
+  "清除本机缓存的全部译文？": "Yerel olarak önbelleğe alınmış tüm çeviriler temizlensin mi?",
+  "帮助改进": "Geliştirmeye yardımcı olun",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Kendi API Key'inizi veya yerel çeviriyi kullandığınızda metinleriniz sunucularımızdan geçmez, bu nedenle hangi özelliklerin kullanıldığını göremeyiz. Önce neyi geliştireceğimize karar vermemize yardımcı olmak için bu kullanım sayılarını paylaşmayı seçebilirsiniz.",
+  "分享功能使用情况（不含翻译内容）": "Özellik kullanımını paylaş (çeviri içeriği hariç)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Birkaç günün özetini günlük olarak hesabınızla ilişkilendirerek gönderin: tarih, özellik (kelime çevirisi, iki dilli okuma gibi), platform (ChatGPT, DeepSeek, DeepL veya yerel çeviri), çağrı sayısı ve hata sayısı. Kaynak metin, çeviri, URL, dil veya model gönderilmez; gizli pencerelerdeki kullanım sayılmaz. Puanlı çeviri kullanımı zaten hesabınızda kayıtlıdır ve bu anahtardan etkilenmez. Kapatıldığında henüz gönderilmemiş kayıtlar temizlenir.",
+  "查看待发送的内容": "Gönderilecek verileri görüntüle",
+  "查看或删除已分享的记录": "Paylaşılan kayıtları görüntüle veya sil",
+  "划词翻译": "Seçim çevirisi",
+  "网页区域翻译": "Sayfa bölgesi çevirisi",
+  "整份 PDF 翻译": "Tam PDF çevirisi",
+  "视频字幕": "Video altyazıları",
+  "点词换说法": "Kelimeye tıklayarak yeniden ifade et",
+  "有 $1 条记录待发送": "$1 kayıt gönderilmeyi bekliyor",
+  "还没有待发送的记录": "Gönderilmeyi bekleyen kayıt yok",
+  "$1 次，失败 $2 次": "$1 çağrı, $2 hata",
+  "$1 次": "$1 çağrı",
+  "收起": "Daralt"
 }

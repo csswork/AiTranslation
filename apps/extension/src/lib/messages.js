@@ -686,7 +686,23 @@ globalThis.AITrMessageIds = {
   "清除缓存": "m_9a816c6580eff8d7",
   "已缓存 $1 条译文": "m_58c570bc65fad6c5",
   "还没有缓存的译文": "m_766e24edb52ed03b",
-  "清除本机缓存的全部译文？": "m_0ef7bc4d040ade31"
+  "清除本机缓存的全部译文？": "m_0ef7bc4d040ade31",
+  "帮助改进": "m_e0b6abbfc5117adc",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "m_317549218826032a",
+  "分享功能使用情况（不含翻译内容）": "m_856142e2a74929ab",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "m_47fac8c9ffad2800",
+  "查看待发送的内容": "m_484339e8e0b97d54",
+  "查看或删除已分享的记录": "m_3f793ec4ed3fad68",
+  "划词翻译": "m_3b02edcd404ddddc",
+  "网页区域翻译": "m_52fcbd6017acc60b",
+  "整份 PDF 翻译": "m_38d5f14a99c0b630",
+  "视频字幕": "m_a8bf9aa0d72f9414",
+  "点词换说法": "m_f51a1be5ee31a578",
+  "有 $1 条记录待发送": "m_36343e19d8bf5a34",
+  "还没有待发送的记录": "m_0268cbcb32d7eab6",
+  "$1 次，失败 $2 次": "m_0c86bc72edb0a2d0",
+  "$1 次": "m_957dfee5820e61ee",
+  "收起": "m_afd4b783536b8297"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1375,5 +1391,21 @@ globalThis.AITrEnglish = {
   "清除缓存": "Clear cache",
   "已缓存 $1 条译文": "$1 translations cached",
   "还没有缓存的译文": "No cached translations yet",
-  "清除本机缓存的全部译文？": "Clear all locally cached translations?"
+  "清除本机缓存的全部译文？": "Clear all locally cached translations?",
+  "帮助改进": "Help improve",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
+  "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
+  "查看待发送的内容": "View pending data",
+  "查看或删除已分享的记录": "View or delete shared records",
+  "划词翻译": "Selection translation",
+  "网页区域翻译": "Page region translation",
+  "整份 PDF 翻译": "Full PDF translation",
+  "视频字幕": "Video subtitles",
+  "点词换说法": "Click word to rephrase",
+  "有 $1 条记录待发送": "$1 record(s) pending",
+  "还没有待发送的记录": "No pending records",
+  "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
+  "$1 次": "$1 call(s)",
+  "收起": "Collapse"
 };

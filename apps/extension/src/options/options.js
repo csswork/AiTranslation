@@ -1,6 +1,8 @@
 (async () => {
   await AITrI18n.ready;
   const t = (...args) => AITrI18n.t(...args);
+  /** 标记稍后用 t() 翻译的文案，供提取脚本识别。 */
+  const k = (key) => key;
   const S = globalThis.AITrSettings;
   const C = globalThis.AITrCredits;
   const ACCOUNT_KEY = 'accountStatus'; // 与 lib/account.js 的 STATUS_KEY 一致
@@ -35,6 +37,11 @@
     showOriginal: $('showOriginal'),
     cache: $('cache'),
     cacheCount: $('cacheCount'),
+    shareUsage: $('shareUsage'),
+    usagePendingCount: $('usagePendingCount'),
+    usagePendingToggle: $('usagePendingToggle'),
+    usagePendingList: $('usagePendingList'),
+    usageShared: $('usageShared'),
     cacheClear: $('cacheClear'),
     floating: $('floating'),
     imageMode: $('imageMode'),
@@ -463,6 +470,7 @@
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
     el.cache.checked = settings.cache;
+    el.shareUsage.checked = settings.shareUsage;
     el.floating.checked = settings.floating;
     el.imageMode.value = settings.imageMode;
     el.imageDirect.checked = !settings.imageReview;
@@ -650,6 +658,7 @@
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local') return;
     if (changes[AITrTerms.KEY]) renderTerms();
+    if (changes.usageShare) renderUsagePending();
     if (changes[ACCOUNT_KEY]) {
       account = changes[ACCOUNT_KEY].newValue || { signedIn: false };
       renderAccount();
@@ -719,6 +728,21 @@
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.cache.addEventListener('change', () => save({ cache: el.cache.checked }));
+  el.shareUsage.addEventListener('change', () => {
+    if (!el.shareUsage.checked) {
+      save({ shareUsage: false }).then(renderUsagePending);
+      return;
+    }
+    // Firefox 另需授予可选的「技术与交互数据」收集权限；必须在这次点击里直接请求，前面不能 await
+    const granted = AITrEnv.firefox
+      ? globalThis.browser.permissions.request({ data_collection: ['technicalAndInteraction'] }).catch(() => false)
+      : Promise.resolve(true);
+    granted.then(async (ok) => {
+      el.shareUsage.checked = ok === true;
+      if (ok === true) await save({ shareUsage: true });
+      renderUsagePending();
+    });
+  });
   el.floating.addEventListener('change', () => save({ floating: el.floating.checked }));
   el.imageMode.addEventListener('change', () => save({ imageMode: el.imageMode.value }));
   el.imageDirect.addEventListener('change', () => save({ imageReview: !el.imageDirect.checked }));
@@ -858,6 +882,56 @@
     if (confirm(t("清除全部用词偏好？"))) await AITrTerms.clear();
   });
 
+  /* 自愿分享的功能使用情况（lib/usage.js）：本机累加，service worker 每天发送已结束日子的计数。 */
+  const USAGE_FEATURES = {
+    selection: k("划词翻译"), panel: k("翻译面板"), page: k("网页区域翻译"), site: k("整站翻译"), image: k("图片翻译"),
+    pdf: k("整份 PDF 翻译"), reader: k("双语阅读"), subtitle: k("视频字幕"), alternatives: k("点词换说法"),
+  };
+  const USAGE_PROVIDERS = { openai: 'ChatGPT', deepseek: 'DeepSeek', deepl: 'DeepL', local: k("本机翻译") };
+  async function renderUsagePending() {
+    // Firefox 里在附加组件管理器撤销了数据收集权限：开关随之关闭（service worker 也已不再计数）
+    if (AITrEnv.firefox && settings.shareUsage) {
+      const ok = await globalThis.browser.permissions.contains({ data_collection: ['technicalAndInteraction'] }).catch(() => false);
+      if (!ok) {
+        el.shareUsage.checked = false;
+        await save({ shareUsage: false });
+      }
+    }
+    const reply = settings.shareUsage
+      ? await chrome.runtime.sendMessage({ type: 'usage-pending' }).catch(() => null)
+      : null;
+    const rows = reply?.ok ? reply.rows : [];
+    el.usagePendingCount.textContent = settings.shareUsage
+      ? (rows.length ? t("有 $1 条记录待发送", [rows.length]) : t("还没有待发送的记录"))
+      : '';
+    el.usagePendingToggle.hidden = !rows.length;
+    if (!rows.length) el.usagePendingList.hidden = true;
+    el.usagePendingList.replaceChildren(...rows.map((row) => {
+      const item = document.createElement('li');
+      const what = document.createElement('span');
+      what.className = 'term-pair';
+      const feature = document.createElement('b');
+      feature.textContent = t(USAGE_FEATURES[row.feature] || row.feature);
+      const provider = document.createElement('span');
+      provider.textContent = row.provider === 'local' ? t(USAGE_PROVIDERS.local) : USAGE_PROVIDERS[row.provider] || row.provider;
+      what.append(feature, provider);
+      const meta = document.createElement('span');
+      meta.className = 'term-meta';
+      meta.dir = 'auto';
+      meta.textContent = row.day;
+      const count = document.createElement('span');
+      count.className = 'term-meta';
+      count.textContent = row.failures ? t("$1 次，失败 $2 次", [row.requests, row.failures]) : t("$1 次", [row.requests]);
+      item.append(what, meta, count);
+      return item;
+    }));
+  }
+  el.usagePendingToggle.addEventListener('click', () => {
+    el.usagePendingList.hidden = !el.usagePendingList.hidden;
+    el.usagePendingToggle.textContent = el.usagePendingList.hidden ? t("查看待发送的内容") : t("收起");
+  });
+  el.usageShared.addEventListener('click', () => openLink('usage'));
+
   /** 本机译文缓存（lib/cache.js）：显示条数、全部清除。关掉开关只是不再读写，已有条目留着，要删就点清除。 */
   async function renderCache() {
     const count = await AITrCache.count().catch(() => 0);
@@ -941,6 +1015,7 @@
     renderRuleCount();
     renderTerms();
     renderCache();
+    renderUsagePending();
     renderSiteProvider();
     renderSites();
     renderVideoLang();

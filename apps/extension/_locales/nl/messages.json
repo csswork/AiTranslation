@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Alle lokaal gecachte vertalingen wissen?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Help ons verbeteren"
+  },
+  "m_317549218826032a": {
+    "message": "Wanneer je je eigen API Key of lokale vertaling gebruikt, gaat je tekst niet via onze servers, dus we kunnen niet zien welke functies mensen gebruiken. Je kunt ervoor kiezen om het gebruik van deze functies te delen, zodat we kunnen bepalen wat we eerst verbeteren."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Functiegebruik delen (zonder vertaalinhoud)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Stuurt dagelijks een samenvatting van de afgelopen dagen, gekoppeld aan je account: datum, functie (zoals woordvertaling, tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen brontekst, vertalingen, URL's, talen of modellen verstuurd, en gebruik in incognitovensters wordt niet meegeteld. Het gebruik van puntgebaseerde vertaling wordt al in je account bijgehouden en wordt niet beïnvloed door deze schakelaar. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Te verzenden gegevens bekijken"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Gedeelde gegevens bekijken of verwijderen"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Vertaling van selectie"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Vertaling van paginagedeelte"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Volledige PDF-vertaling"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Videondertiteling"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Op woord klikken om te herformuleren"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ record(s) in afwachting van verzending",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Geen records in afwachting van verzending"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ aanroep(en), $arg2$ mislukking(en)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ aanroep(en)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Inklappen"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

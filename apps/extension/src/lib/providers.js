@@ -1201,18 +1201,76 @@
     return { model: provider.model, sample: String(content).trim().slice(0, 60) };
   }
 
+  /* ------------------------------------------------ 自愿分享的功能使用计数（见 usage.js） */
+
+  /**
+   * 按本次调用的平台准备计数：只有用户在设置里开启分享、且平台是自带 Key / DeepL / 本机翻译时 usage.js 才记；
+   * 点数翻译不计。返回 finish(ok)，同一次调用只记一次。被调用方取消（AbortError）算一次使用、不算失败。
+   */
+  function tracker({ settings, providerId, incognito }, feature) {
+    const usage = globalThis.AITrUsage;
+    if (!usage || !settings) return () => {};
+    let provider;
+    try {
+      provider = globalThis.AITrSettings.resolveProvider(settings, providerId).id;
+    } catch {
+      return () => {};
+    }
+    let done = false;
+    return (ok) => {
+      if (done) return;
+      done = true;
+      usage.record({ feature, provider, ok, incognito: incognito === true });
+    };
+  }
+  const isAbort = (err) => err?.name === 'AbortError';
+
+  function counted(run, featureOf) {
+    return async (args) => {
+      const finish = tracker(args, featureOf(args));
+      try {
+        const out = await run(args);
+        finish(true);
+        return out;
+      } catch (err) {
+        finish(isAbort(err));
+        throw err;
+      }
+    };
+  }
+
+  async function* countedTranslate(args) {
+    const finish = tracker(args, args.surface);
+    let failed = false;
+    try {
+      yield* translate(args);
+    } catch (err) {
+      failed = !isAbort(err);
+      throw err;
+    } finally {
+      finish(!failed);
+    }
+  }
+
+  /** 只查缓存：全部命中时不会再发 translateBatch，这时算一次使用；部分命中的由随后的 translateBatch 计。 */
+  async function countedLookup(args) {
+    const out = await lookupBatch(args);
+    if (out.length && out.every((item) => typeof item === 'string')) tracker(args, args.surface)(true);
+    return out;
+  }
+
   globalThis.AITrProviders = {
-    translate,
+    translate: countedTranslate,
     hostedTranslate,
     hostedStream,
     deeplTranslate,
-    translateBatch,
-    lookupBatch,
-    translateCaption,
-    alternatives,
+    translateBatch: counted(translateBatch, (args) => args.surface),
+    lookupBatch: countedLookup,
+    translateCaption: counted(translateCaption, () => 'subtitle'),
+    alternatives: counted(alternatives, () => 'alternatives'),
     parseAlternatives,
     parseBatch,
-    readImageText,
+    readImageText: counted(readImageText, () => 'image'),
     normalizeBox,
     detectScale,
     testConnection,

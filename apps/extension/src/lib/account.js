@@ -68,6 +68,8 @@
     return updateState(async () => {
       if (await readToken() !== expectedToken) return readStatus();
       await chrome.storage.local.remove(SESSION_KEY);
+      // 待发送的功能使用计数属于这个会话的账户，不能记到下一个登录的账户上
+      await globalThis.AITrUsage?.clear();
       return writeStatus({ signedIn: false });
     });
   }
@@ -439,11 +441,27 @@
     return { source: typeof data.source === 'string' ? data.source : '', options: data.options };
   }
 
+  /**
+   * 自愿分享的功能使用计数（见 usage.js）。返回 'sent'、'rejected'（格式被拒，丢弃）或 'retry'。
+   * 没有扩展会话时不领访客、不发送，留到以后。
+   */
+  async function shareUsage(rows) {
+    const token = await readToken();
+    if (!token) return 'retry';
+    try {
+      const { response } = await call('/usage-share', { method: 'POST', authToken: token, body: { rows } });
+      if (response.status === 204) return 'sent';
+      return response.status === 400 ? 'rejected' : 'retry';
+    } catch {
+      return 'retry';
+    }
+  }
+
   async function readImageText({ image, purpose, signal }) {
     const data = await hostedRequest('/read-image', { image, ...(purpose === 'regions' || purpose === 'regions-sfx' ? { purpose } : {}) }, signal);
     if (typeof data.raw !== 'string') throw new AccountError(t('识别失败'), 'invalid_response');
     return data.raw;
   }
 
-  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, alternatives, readImageText, warm, checkVersion, nextVersionCheckAt };
+  globalThis.AITrAccount = { API_ORIGIN, STATUS_KEY, AccountError, login, completeLogin, claimGuest, devResetTrial, logout, refresh, readStatus, translate, translateStream, alternatives, readImageText, warm, checkVersion, nextVersionCheckAt, shareUsage };
 })();

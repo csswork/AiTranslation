@@ -685,5 +685,21 @@
   "清除缓存": "Cache leeren",
   "已缓存 $1 条译文": "$1 Übersetzungen zwischengespeichert",
   "还没有缓存的译文": "Noch keine zwischengespeicherten Übersetzungen",
-  "清除本机缓存的全部译文？": "Alle lokal zwischengespeicherten Übersetzungen löschen?"
+  "清除本机缓存的全部译文？": "Alle lokal zwischengespeicherten Übersetzungen löschen?",
+  "帮助改进": "Hilf mit, besser zu werden",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Wenn du deinen eigenen API Key oder die lokale Übersetzung verwendest, laufen deine Texte nicht über unsere Server, daher können wir nicht sehen, welche Funktionen genutzt werden. Du kannst die Nutzungszahlen dieser Funktionen teilen, damit wir entscheiden können, was wir zuerst verbessern.",
+  "分享功能使用情况（不含翻译内容）": "Funktionsnutzung teilen (ohne Übersetzungsinhalte)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Sende täglich eine Zusammenfassung der letzten Tage, verknüpft mit deinem Konto: Datum, Funktion (z. B. Wortübersetzung, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Ausgangstexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognito-Fenstern wird nicht gezählt. Die Nutzung der punktbasierten Übersetzung wird ohnehin in deinem Konto erfasst und ist von diesem Schalter nicht betroffen. Beim Ausschalten werden noch nicht gesendete Datensätze gelöscht.",
+  "查看待发送的内容": "Ausstehende Daten anzeigen",
+  "查看或删除已分享的记录": "Geteilte Datensätze anzeigen oder löschen",
+  "划词翻译": "Übersetzung der Auswahl",
+  "网页区域翻译": "Übersetzung von Seitenbereichen",
+  "整份 PDF 翻译": "Vollständige PDF-Übersetzung",
+  "视频字幕": "Video-Untertitel",
+  "点词换说法": "Wort anklicken zum Umformulieren",
+  "有 $1 条记录待发送": "$1 Datensatz/Datensätze ausstehend",
+  "还没有待发送的记录": "Keine ausstehenden Datensätze",
+  "$1 次，失败 $2 次": "$1 Aufruf(e), $2 Fehler",
+  "$1 次": "$1 Aufruf(e)",
+  "收起": "Einklappen"
 }

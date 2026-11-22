@@ -26,6 +26,7 @@ import { clientAddress, createRateLimiter, limitBody } from '../../src/http/secu
 import { SETTINGS } from '../../src/settings/index.js';
 import { creditActivity } from '../../src/usage/activity.js';
 import { featureUsageForAccount, featureUsageRanking, recentFeatureUsagePeriod } from '../../src/usage/features.js';
+import { sharedUsageForAccount, sharedUsageRanking } from '../../src/usage/shared.js';
 import { THEMES, safePath } from '../account/context.js';
 import * as views from './views.js';
 
@@ -213,9 +214,12 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const labels = dayLabels(days, config.reportTimeZone);
     const { rows: [{ start }] } = await pool.query(
       'SELECT $1::date::timestamp AT TIME ZONE $2 AS start', [labels[0], config.reportTimeZone]);
-    const ranking = await featureUsageRanking(pool, { from: start, to: new Date(), timeZone: config.reportTimeZone });
+    const [ranking, shared] = await Promise.all([
+      featureUsageRanking(pool, { from: start, to: new Date(), timeZone: config.reportTimeZone }),
+      sharedUsageRanking(pool, { fromDay: labels[0], lastDay: labels.at(-1) }),
+    ]);
     return page(c, () => views.featureUsagePage({
-      admin: admin(c), days, labels, timeZone: config.reportTimeZone, ranking,
+      admin: admin(c), days, labels, timeZone: config.reportTimeZone, ranking, shared,
     }), 200, '/features');
   });
 
@@ -276,8 +280,9 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     : null);
 
   const renderUser = async (c, u) => {
-    const period = u.kind === 'member' ? recentFeatureUsagePeriod(config.reportTimeZone) : null;
-    const [state, subs, activity, sessions, api, installs, extensions, versions, featureRows, clientRows] = await Promise.all([
+    const recent = recentFeatureUsagePeriod(config.reportTimeZone);
+    const period = u.kind === 'member' ? recent : null;
+    const [state, subs, activity, sessions, api, installs, extensions, versions, featureRows, clientRows, sharedRows] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
       creditActivity(pool, u.id, { period: c.req.query('period'), timeZone: config.reportTimeZone }),
@@ -289,11 +294,13 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       period ? featureUsageForAccount(pool, u.id, period) : [],
       pool.query(`SELECT browser, browser_major, os FROM usage_events
         WHERE user_id = $1 AND browser IS NOT NULL ORDER BY created_at DESC LIMIT 1`, [u.id]),
+      sharedUsageForAccount(pool, u.id, recent),
     ]);
     const featureUsage = period ? { ...period, rows: featureRows } : null;
+    const sharedUsage = { ...recent, rows: sharedRows };
     return page(c, () => views.userPage({
       admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),
-      featureUsage, client: clientRows.rows[0] || null,
+      featureUsage, sharedUsage, client: clientRows.rows[0] || null,
     }), 200, `/users/${u.id}`);
   };
 

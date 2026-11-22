@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Clear all locally cached translations?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Help improve"
+  },
+  "m_317549218826032a": {
+    "message": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Share feature usage (without translation content)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "View pending data"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "View or delete shared records"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Selection translation"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Page region translation"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Full PDF translation"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Video subtitles"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Click word to rephrase"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ record(s) pending",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "No pending records"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ call(s), $arg2$ failure(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ call(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Collapse"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

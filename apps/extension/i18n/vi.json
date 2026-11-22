@@ -685,5 +685,21 @@
   "清除缓存": "Xóa bộ nhớ đệm",
   "已缓存 $1 条译文": "Đã lưu $1 bản dịch trong bộ nhớ đệm",
   "还没有缓存的译文": "Chưa có bản dịch nào được lưu trong bộ nhớ đệm",
-  "清除本机缓存的全部译文？": "Xóa toàn bộ bản dịch được lưu trong bộ nhớ đệm trên máy?"
+  "清除本机缓存的全部译文？": "Xóa toàn bộ bản dịch được lưu trong bộ nhớ đệm trên máy?",
+  "帮助改进": "Giúp cải thiện",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Khi bạn dùng API Key của riêng mình hoặc dịch cục bộ, văn bản không đi qua máy chủ của chúng tôi, nên chúng tôi không thể biết những tính năng nào đang được sử dụng. Bạn có thể chọn chia sẻ số lần sử dụng của phần này để giúp chúng tôi quyết định cải thiện điều gì trước.",
+  "分享功能使用情况（不含翻译内容）": "Chia sẻ mức sử dụng tính năng (không gồm nội dung dịch)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Gửi mỗi ngày một lần bản tổng hợp của vài ngày trước, liên kết với tài khoản của bạn: ngày, tính năng (như dịch từ đã chọn, đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và mức sử dụng trong cửa sổ ẩn danh không được tính. Mức sử dụng dịch theo điểm vốn đã được ghi vào tài khoản và không bị ảnh hưởng bởi công tắc này. Khi tắt, các bản ghi chưa gửi sẽ bị xóa.",
+  "查看待发送的内容": "Xem nội dung chờ gửi",
+  "查看或删除已分享的记录": "Xem hoặc xóa các bản ghi đã chia sẻ",
+  "划词翻译": "Dịch văn bản chọn",
+  "网页区域翻译": "Dịch vùng trang web",
+  "整份 PDF 翻译": "Dịch toàn bộ PDF",
+  "视频字幕": "Phụ đề video",
+  "点词换说法": "Nhấp từ để đổi cách diễn đạt",
+  "有 $1 条记录待发送": "Có $1 bản ghi chờ gửi",
+  "还没有待发送的记录": "Chưa có bản ghi nào chờ gửi",
+  "$1 次，失败 $2 次": "$1 lần, thất bại $2 lần",
+  "$1 次": "$1 lần",
+  "收起": "Thu gọn"
 }

@@ -84,6 +84,12 @@ Each credit translation records the character count, credits charged, model and 
 
 Where available, hosted requests include the feature used. We aggregate existing request records by feature to understand usage and response times.
 
+### Optional feature usage sharing
+
+The extension options include a switch, **off by default**, called “Share feature usage”. Only if you turn it on does the extension send us daily counts of how you use **your own API key (ChatGPT, DeepSeek, DeepL) and local translation**, linked to your account: the date (your browser's local date), the feature (such as selection translation or bilingual reading), the provider, the number of calls and failures, plus the extension version and browser and operating-system type. It **does not include** original text, translations, URLs, languages, or models, and usage in incognito windows is not counted. The extension sends a summary of completed days once a day. Credit translation records are described above and are not affected by this switch.
+
+We use these records to see which features people use and decide what to improve first, and keep them for 180 days. You can view or delete them under “Usage and credits” in your account; turning the switch off stops sending and clears any counts not yet sent from your device. On Firefox, turning it on also requires granting the “technical and interaction data” permission.
+
 ### Preventing repeated free-trial claims
 
 The extension claims free credits once after installation. To stop the same network or browser from claiming repeatedly, we keep a **one-way keyed hash** of the network address (never the address itself; for IPv6 only the first 64 bits are used), and a **random marker cookie** set on `app.huaci.app` by the welcome page (only its hash is stored). We do not use device fingerprinting.
@@ -112,6 +118,7 @@ The following is stored on **your device** (`chrome.storage.local`; saved articl
 - **Wording preferences**: wordings you chose in translations (source terms and renderings); relevant entries are sent with translation requests, see above
 - **Saved articles**: articles and translations you saved in bilingual reading; kept only on your device and deletable from the reading page's side panel
 - **Translation cache**: translations and image-recognition results from your own API key (ChatGPT, DeepSeek, DeepL), stored encrypted; entries are looked up by a hash keyed with a local secret, and the original text is not stored. The same content is reused when you translate it again, entries unused for 30 days are deleted automatically, and you can turn it off or clear it in the options page. Credit translation and local translation don't use it
+- **Pending feature usage counts**: only when you turn on “Share feature usage”, see above; cleared when you turn it off or sign out
 
 You can clear all of it from the options page at any time (saved articles are deleted from the reading page's side panel), or uninstall the extension (which removes it all).
 
@@ -224,6 +231,12 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 
 托管请求可包含功能类别。我们按功能汇总已有请求记录，了解使用情况和响应速度。
 
+### 自愿分享的功能使用情况
+
+扩展设置里有一个默认关闭的开关「分享功能使用情况」。只有你打开它，扩展才会把**你自己的 API Key（ChatGPT、DeepSeek、DeepL）和本机翻译**的使用次数按天汇总发给我们，并与你的账户关联：日期（你浏览器的本地日期）、功能（如划词翻译、双语阅读）、平台、调用次数和失败次数，以及扩展版本、浏览器与系统类型。**不包含**原文、译文、网址、语言或模型，无痕窗口里的使用不计。扩展每天发送一次已结束日子的汇总。点数翻译的使用记录见上文，不受这个开关影响。
+
+这些记录用于了解哪些功能有人在用、决定先改进什么，保存 180 天。你可以在用户中心的「用量与点数」查看或删除；关闭开关后不再发送，本机尚未发送的记录随之清空。在 Firefox 中开启时还需要授予「技术与交互数据」权限。
+
 ### 免费试用的防重复领取
 
 安装扩展后会自动领取一次免费点数。为防止同一网络或同一浏览器反复领取，我们保存：网络地址经加密处理后的**不可还原摘要**（不保存地址本身，IPv6 只取前 64 位）， 以及欢迎页在 `app.huaci.app` 上写入的一个**随机标记 Cookie**（数据库里只存它的摘要）。我们不使用设备指纹。
@@ -252,6 +265,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 - **用词偏好**——你在译文里换过的说法（原文词语与译法）；翻译时相关条目随请求发送，见上文
 - **保存的文章**——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除
 - **译文缓存**——用自己的 API Key（ChatGPT、DeepSeek、DeepL）得到的译文与识图结果，加密保存；按带本机密钥的摘要查找，不保存原文。同样的内容再翻译时直接使用，30 天没用到自动删除，可在设置页关闭或清除。点数翻译和本机翻译不使用
+- **待发送的功能使用计数**——只在你开启「分享功能使用情况」后存在，见上文；关闭开关或退出登录时清空
 
 你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。
 

@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Vider toutes les traductions mises en cache localement ?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Aider à améliorer"
+  },
+  "m_317549218826032a": {
+    "message": "Lorsque vous utilisez votre propre clé API ou la traduction locale, votre texte ne passe pas par nos serveurs, nous ne pouvons donc pas voir quelles fonctionnalités sont utilisées. Vous pouvez choisir de partager le nombre d'utilisations de ces fonctionnalités pour nous aider à décider quoi améliorer en priorité."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Partager l'utilisation des fonctionnalités (sans le contenu traduit)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Envoyer chaque jour un récapitulatif des jours précédents, associé à votre compte : date, fonctionnalité (comme la traduction par sélection, la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte source, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. L'utilisation de la traduction par points est déjà enregistrée dans votre compte et n'est pas affectée par ce réglage. La désactivation efface les enregistrements non encore envoyés."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Voir les données en attente d'envoi"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Voir ou supprimer les enregistrements partagés"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Traduction de sélection"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Traduction de zone de page"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Traduction complète de PDF"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Sous-titres vidéo"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Cliquer sur un mot pour reformuler"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ enregistrement(s) en attente d'envoi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Aucun enregistrement en attente d'envoi"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ appel(s), $arg2$ échec(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ appel(s)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Réduire"
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

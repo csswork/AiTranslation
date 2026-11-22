@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Wyczyścić wszystkie tłumaczenia zapisane lokalnie w pamięci podręcznej?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Pomóż ulepszyć"
+  },
+  "m_317549218826032a": {
+    "message": "Gdy używasz własnego klucza API lub tłumaczenia lokalnego, Twoje teksty nie przechodzą przez nasze serwery, więc nie widzimy, z których funkcji korzystają użytkownicy. Możesz zdecydować się na udostępnianie liczby użyć tych funkcji, aby pomóc nam ustalić, co najpierw ulepszyć."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Udostępniaj dane o użyciu funkcji (bez treści tłumaczeń)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Codziennie wysyłaj podsumowanie z ostatnich dni powiązane z Twoim kontem: data, funkcja (np. tłumaczenie zaznaczonego tekstu, czytanie dwujęzyczne), platforma (ChatGPT, DeepSeek, DeepL lub tłumaczenie lokalne), liczba wywołań i liczba niepowodzeń. Nie wysyłamy tekstu źródłowego, tłumaczeń, adresów URL, języków ani modeli, a użycie w oknach incognito nie jest liczone. Użycie tłumaczenia punktowego jest już zapisywane na koncie i nie zależy od tego przełącznika. Po wyłączeniu niezapisane jeszcze rekordy zostaną usunięte."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Zobacz dane oczekujące na wysłanie"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Zobacz lub usuń udostępnione rekordy"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Tłumaczenie zaznaczenia"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Tłumaczenie obszaru strony"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Tłumaczenie całego PDF"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Napisy do filmów"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Kliknij słowo, aby przeformułować"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ rekord(ów) oczekuje na wysłanie",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Brak rekordów oczekujących na wysłanie"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ wywołań, $arg2$ niepowodzeń",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ wywołań",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Zwiń"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

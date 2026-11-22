@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Yerel olarak önbelleğe alınmış tüm çeviriler temizlensin mi?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Geliştirmeye yardımcı olun"
+  },
+  "m_317549218826032a": {
+    "message": "Kendi API Key'inizi veya yerel çeviriyi kullandığınızda metinleriniz sunucularımızdan geçmez, bu nedenle hangi özelliklerin kullanıldığını göremeyiz. Önce neyi geliştireceğimize karar vermemize yardımcı olmak için bu kullanım sayılarını paylaşmayı seçebilirsiniz."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Özellik kullanımını paylaş (çeviri içeriği hariç)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Birkaç günün özetini günlük olarak hesabınızla ilişkilendirerek gönderin: tarih, özellik (kelime çevirisi, iki dilli okuma gibi), platform (ChatGPT, DeepSeek, DeepL veya yerel çeviri), çağrı sayısı ve hata sayısı. Kaynak metin, çeviri, URL, dil veya model gönderilmez; gizli pencerelerdeki kullanım sayılmaz. Puanlı çeviri kullanımı zaten hesabınızda kayıtlıdır ve bu anahtardan etkilenmez. Kapatıldığında henüz gönderilmemiş kayıtlar temizlenir."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Gönderilecek verileri görüntüle"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Paylaşılan kayıtları görüntüle veya sil"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Seçim çevirisi"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Sayfa bölgesi çevirisi"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Tam PDF çevirisi"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Video altyazıları"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Kelimeye tıklayarak yeniden ifade et"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ kayıt gönderilmeyi bekliyor",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Gönderilmeyi bekleyen kayıt yok"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ çağrı, $arg2$ hata",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ çağrı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Daralt"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

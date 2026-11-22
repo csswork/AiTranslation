@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "要清除本機快取的所有譯文嗎？"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "協助改進"
+  },
+  "m_317549218826032a": {
+    "message": "使用自己的 API Key 或本機翻譯時，文字不會經過我們的伺服器，因此我們看不到哪些功能有人在使用。你可以選擇分享這部分的使用次數，協助我們決定優先改進什麼。"
+  },
+  "m_856142e2a74929ab": {
+    "message": "分享功能使用情況（不含翻譯內容）"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "每天傳送一次前幾天的彙總，並與你的帳戶關聯：日期、功能（如劃詞翻譯、雙語閱讀）、平台（ChatGPT、DeepSeek、DeepL 或本機翻譯）、呼叫次數和失敗次數。不會傳送原文、譯文、網址、語言或模型，無痕視窗中的使用也不計入。點數翻譯的用量本來就記錄在帳戶中，不受這個開關影響。關閉後會清除尚未傳送的記錄。"
+  },
+  "m_484339e8e0b97d54": {
+    "message": "查看待傳送的內容"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "查看或刪除已分享的記錄"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "劃詞翻譯"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "網頁區域翻譯"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "整份 PDF 翻譯"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "影片字幕"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "點詞換說法"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "有 $arg1$ 筆記錄待傳送",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "尚無待傳送的記錄"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ 次，失敗 $arg2$ 次",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ 次",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "收合"
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

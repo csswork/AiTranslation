@@ -26,6 +26,8 @@ import { clientAddress, createRateLimiter } from '../../src/http/security.js';
 import { isLocale, k } from '../../src/i18n/index.js';
 import { usageOverview } from '../../src/usage/overview.js';
 import { creditActivity } from '../../src/usage/activity.js';
+import { recentFeatureUsagePeriod } from '../../src/usage/features.js';
+import { deleteSharedUsage, SHARED_RETENTION_DAYS, sharedUsageForAccount } from '../../src/usage/shared.js';
 import { THEMES, safePath, uiContext } from './context.js';
 import * as views from './views.js';
 
@@ -56,6 +58,7 @@ const FLASH = {
   portal_failed: fail(k('暂时无法打开订阅管理页面，请稍后再试。')),
   already_subscribed: ok(k('你已经订阅，可以直接无限使用。')),
   checkout_done: ok(k('付款完成。订阅确认后会自动生效，通常只需几秒；刷新页面即可看到。')),
+  shared_usage_deleted: ok(k('已删除你分享的全部功能使用记录。')),
 };
 
 const verifyError = (result) => {
@@ -472,9 +475,20 @@ export function accountRoutes({ config, pool, mailer, google, googleIdToken = nu
       user: user(c), subscription: await latestSubscription(pool, user(c).id), orders, portalEnabled: Boolean(creem), notice: takeFlash(c),
     });
   });
-  app.get('/usage', requireUser, async (c) => render(c, views.usagePage, {
-    user: user(c), activity: await creditActivity(pool, user(c).id, { period: c.req.query('period') }),
-  }));
+  app.get('/usage', requireUser, async (c) => {
+    const period = recentFeatureUsagePeriod('UTC');
+    const [activity, sharedRows] = await Promise.all([
+      creditActivity(pool, user(c).id, { period: c.req.query('period') }),
+      sharedUsageForAccount(pool, user(c).id, period),
+    ]);
+    return render(c, views.usagePage, {
+      user: user(c), activity, shared: { rows: sharedRows, retentionDays: SHARED_RETENTION_DAYS }, notice: takeFlash(c),
+    });
+  });
+  app.post('/usage/shared/delete', requireUser, async (c) => {
+    await deleteSharedUsage(pool, user(c).id);
+    return back(c, 'shared_usage_deleted', '/usage');
+  });
   app.get('/help', requireUser, (c) => render(c, views.helpPage, { user: user(c) }));
 
   /* ---------- U6 邮箱、用户名与登录方式 ---------- */

@@ -11,6 +11,7 @@
  *                    开启进程内缓存时，相同请求直接返回上次的译文（扣点不变，用量记为 provider 'cache'），见 translation/cache.js
  *                    可带 surface（扩展里的使用场景，见 SURFACES），用于响应速度和功能报表。
  *   POST /alternatives 其他译法（双语阅读里点译文的词）：给出可直接替换选中部分的几种说法，按原文段落字数扣点
+ *   POST /usage-share 用户自愿分享的功能使用记录（自带 Key / DeepL / 本机翻译的按天计数，不含内容），见 usage/shared.js
  *   POST /read-image 托管图片识别（purpose: 'regions' 时只找值得翻译的文字范围，'regions-sfx' 时连音效字一起找）；文字随后走 /translate，按实际文字扣点
  *
  * 认证用 Authorization: Bearer <扩展会话令牌>，不用 Cookie，所以不受站内表单的同源校验约束；
@@ -29,6 +30,7 @@ import { requestClient } from '../http/client.js';
 import { clientAddress, createRateLimiter, limitBody, requestCountry } from '../http/security.js';
 import { estimateCostMicros } from '../settings/index.js';
 import { LANGUAGES } from '../translation/languages.js';
+import { pruneSharedUsage, readSharedRows, recordSharedUsage } from '../usage/shared.js';
 
 const MAX_ITEMS = 100;
 /** 其他译法：原文段落与译文的长度上限，选中部分最长 200 个 UTF-16 单位。 */
@@ -74,6 +76,8 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
   const translateLimiter = createRateLimiter({ limit: 60, windowMs: 60_000 });
   const guestLimiter = createRateLimiter({ limit: 10, windowMs: 60 * 60_000 });
   const versionLimiter = createRateLimiter({ limit: 12, windowMs: 60_000 });
+  // 扩展每天只发一次；留出重试余地。
+  const shareLimiter = createRateLimiter({ limit: 6, windowMs: 60 * 60_000 });
 
   app.use('*', async (c, next) => {
     // 响应速度拆分（precheck_ms、ttft_ms、server_ms）都从这里开始计时。
@@ -254,6 +258,24 @@ export function extensionApi({ config, pool, settings, hosted = null, log = cons
       return true;
     });
     return recorded ? c.body(null, 204) : c.json({ error: 'extension_session_changed' }, 409);
+  });
+
+  /**
+   * 自愿分享的功能使用记录（扩展设置里默认关闭）：只有自带 Key / DeepL / 本机翻译的按天计数，见 usage/shared.js。
+   * 顺带每小时至多清理一次超过保留期的记录。
+   */
+  let prunedAt = 0;
+  app.post('/usage-share', requireExtension, async (c) => {
+    const { user } = c.get('auth');
+    if (!shareLimiter(user.id)) return c.json({ error: 'rate_limited' }, 429);
+    const rows = readSharedRows((await readJson(c)).rows);
+    if (!rows) return c.json({ error: 'invalid_rows' }, 400);
+    await recordSharedUsage(pool, user.id, rows, { extVersion: c.get('extVersion'), ...c.get('client') });
+    if (Date.now() - prunedAt > 3_600_000) {
+      prunedAt = Date.now();
+      await pruneSharedUsage(pool).catch((err) => log.warn(`清理分享的功能使用记录失败：${err.message}`));
+    }
+    return c.body(null, 204);
   });
 
   const status = async (user) => {

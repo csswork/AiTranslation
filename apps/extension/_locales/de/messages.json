@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "Alle lokal zwischengespeicherten Übersetzungen löschen?"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "Hilf mit, besser zu werden"
+  },
+  "m_317549218826032a": {
+    "message": "Wenn du deinen eigenen API Key oder die lokale Übersetzung verwendest, laufen deine Texte nicht über unsere Server, daher können wir nicht sehen, welche Funktionen genutzt werden. Du kannst die Nutzungszahlen dieser Funktionen teilen, damit wir entscheiden können, was wir zuerst verbessern."
+  },
+  "m_856142e2a74929ab": {
+    "message": "Funktionsnutzung teilen (ohne Übersetzungsinhalte)"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "Sende täglich eine Zusammenfassung der letzten Tage, verknüpft mit deinem Konto: Datum, Funktion (z. B. Wortübersetzung, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Ausgangstexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognito-Fenstern wird nicht gezählt. Die Nutzung der punktbasierten Übersetzung wird ohnehin in deinem Konto erfasst und ist von diesem Schalter nicht betroffen. Beim Ausschalten werden noch nicht gesendete Datensätze gelöscht."
+  },
+  "m_484339e8e0b97d54": {
+    "message": "Ausstehende Daten anzeigen"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "Geteilte Datensätze anzeigen oder löschen"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "Übersetzung der Auswahl"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "Übersetzung von Seitenbereichen"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "Vollständige PDF-Übersetzung"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "Video-Untertitel"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "Wort anklicken zum Umformulieren"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "$arg1$ Datensatz/Datensätze ausstehend",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "Keine ausstehenden Datensätze"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ Aufruf(e), $arg2$ Fehler",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ Aufruf(e)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "Einklappen"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

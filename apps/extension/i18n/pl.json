@@ -685,5 +685,21 @@
   "清除缓存": "Wyczyść pamięć podręczną",
   "已缓存 $1 条译文": "Liczba tłumaczeń w pamięci podręcznej: $1",
   "还没有缓存的译文": "Brak tłumaczeń w pamięci podręcznej",
-  "清除本机缓存的全部译文？": "Wyczyścić wszystkie tłumaczenia zapisane lokalnie w pamięci podręcznej?"
+  "清除本机缓存的全部译文？": "Wyczyścić wszystkie tłumaczenia zapisane lokalnie w pamięci podręcznej?",
+  "帮助改进": "Pomóż ulepszyć",
+  "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Gdy używasz własnego klucza API lub tłumaczenia lokalnego, Twoje teksty nie przechodzą przez nasze serwery, więc nie widzimy, z których funkcji korzystają użytkownicy. Możesz zdecydować się na udostępnianie liczby użyć tych funkcji, aby pomóc nam ustalić, co najpierw ulepszyć.",
+  "分享功能使用情况（不含翻译内容）": "Udostępniaj dane o użyciu funkcji (bez treści tłumaczeń)",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Codziennie wysyłaj podsumowanie z ostatnich dni powiązane z Twoim kontem: data, funkcja (np. tłumaczenie zaznaczonego tekstu, czytanie dwujęzyczne), platforma (ChatGPT, DeepSeek, DeepL lub tłumaczenie lokalne), liczba wywołań i liczba niepowodzeń. Nie wysyłamy tekstu źródłowego, tłumaczeń, adresów URL, języków ani modeli, a użycie w oknach incognito nie jest liczone. Użycie tłumaczenia punktowego jest już zapisywane na koncie i nie zależy od tego przełącznika. Po wyłączeniu niezapisane jeszcze rekordy zostaną usunięte.",
+  "查看待发送的内容": "Zobacz dane oczekujące na wysłanie",
+  "查看或删除已分享的记录": "Zobacz lub usuń udostępnione rekordy",
+  "划词翻译": "Tłumaczenie zaznaczenia",
+  "网页区域翻译": "Tłumaczenie obszaru strony",
+  "整份 PDF 翻译": "Tłumaczenie całego PDF",
+  "视频字幕": "Napisy do filmów",
+  "点词换说法": "Kliknij słowo, aby przeformułować",
+  "有 $1 条记录待发送": "$1 rekord(ów) oczekuje na wysłanie",
+  "还没有待发送的记录": "Brak rekordów oczekujących na wysłanie",
+  "$1 次，失败 $2 次": "$1 wywołań, $2 niepowodzeń",
+  "$1 次": "$1 wywołań",
+  "收起": "Zwiń"
 }

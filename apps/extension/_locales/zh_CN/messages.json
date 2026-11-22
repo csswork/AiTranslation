@@ -2867,6 +2867,72 @@
   "m_0ef7bc4d040ade31": {
     "message": "清除本机缓存的全部译文？"
   },
+  "m_e0b6abbfc5117adc": {
+    "message": "帮助改进"
+  },
+  "m_317549218826032a": {
+    "message": "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。"
+  },
+  "m_856142e2a74929ab": {
+    "message": "分享功能使用情况（不含翻译内容）"
+  },
+  "m_47fac8c9ffad2800": {
+    "message": "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。"
+  },
+  "m_484339e8e0b97d54": {
+    "message": "查看待发送的内容"
+  },
+  "m_3f793ec4ed3fad68": {
+    "message": "查看或删除已分享的记录"
+  },
+  "m_3b02edcd404ddddc": {
+    "message": "划词翻译"
+  },
+  "m_52fcbd6017acc60b": {
+    "message": "网页区域翻译"
+  },
+  "m_38d5f14a99c0b630": {
+    "message": "整份 PDF 翻译"
+  },
+  "m_a8bf9aa0d72f9414": {
+    "message": "视频字幕"
+  },
+  "m_f51a1be5ee31a578": {
+    "message": "点词换说法"
+  },
+  "m_36343e19d8bf5a34": {
+    "message": "有 $arg1$ 条记录待发送",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0268cbcb32d7eab6": {
+    "message": "还没有待发送的记录"
+  },
+  "m_0c86bc72edb0a2d0": {
+    "message": "$arg1$ 次，失败 $arg2$ 次",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_957dfee5820e61ee": {
+    "message": "$arg1$ 次",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_afd4b783536b8297": {
+    "message": "收起"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

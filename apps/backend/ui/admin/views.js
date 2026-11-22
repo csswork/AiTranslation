@@ -9,6 +9,7 @@ import { displayCredits } from '../../src/credits/units.js';
 import { createI18n } from '../../src/i18n/index.js';
 import { INCOME_TYPES } from '../../src/usage/activity.js';
 import { FEATURE_LABELS, UNCLASSIFIED_FEATURE, UNCLASSIFIED_LABEL } from '../../src/usage/features.js';
+import { SHARED_PROVIDER_LABELS, SHARED_PROVIDERS, SHARED_RETENTION_DAYS } from '../../src/usage/shared.js';
 
 const featureLabel = (key) => key === UNCLASSIFIED_FEATURE ? UNCLASSIFIED_LABEL : FEATURE_LABELS[key];
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
@@ -487,17 +488,41 @@ ${r.topUsers.length ? html`<details class="dashboard-details"><summary>用量最
   });
 }
 
+/** 自愿分享的「自带 Key / 本机」功能使用：只含开启分享的账户，与托管数字分开显示、不相加。 */
+function sharedUsageSection(shared, labels) {
+  const { rows, sharingAccounts } = shared;
+  const used = rows.filter((row) => row.userDays).length;
+  const failRate = (failures, requests) => (requests ? pct(failures, requests) : '—');
+  return html`<section class="card" id="shared-usage">
+  <h2>自带 Key / 本机翻译（自愿分享）</h2>
+  <p class="muted">样本只含开启分享的 ${num(sharingAccounts)} 个账户，不代表全部用户；不要与上面的托管数字相加。</p>
+  ${sharingAccounts ? html`<div class="table-wrap"><table data-shared-usage>
+  <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用天次</th><th class="num">使用人数</th><th class="num">覆盖率</th><th class="num">请求数</th><th class="num">失败率</th>${SHARED_PROVIDERS.map((p) => html`<th class="num">${SHARED_PROVIDER_LABELS[p]}</th>`)}</tr></thead>
+  <tbody>${rows.map(({ key, userDays, accounts, requests, failures, providers }) => html`<tr${userDays ? '' : html` class="muted"`}>
+    <td>${featureLabel(key)}</td>
+    <td class="num">${num(userDays)}</td>
+    <td class="num">${num(accounts)}</td>
+    <td class="num">${pct(accounts, sharingAccounts)}</td>
+    <td class="num">${num(requests)}</td>
+    <td class="num">${failRate(failures, requests)}</td>
+    ${SHARED_PROVIDERS.map((p) => html`<td class="num" title="${SHARED_PROVIDER_LABELS[p]}：${providers[p].accounts} 人，${providers[p].requests} 次请求">${num(providers[p].userDays)}</td>`)}
+  </tr>`)}</tbody>
+</table></div>` : html`<p class="muted">这段时间没有收到分享的记录。</p>`}
+  <p class="fine">已使用功能 ${num(used)} / ${num(rows.length)}。日期是用户浏览器的本地日期（${labels[0]} — ${labels.at(-1)}），不按报表时区换算。使用天次：账户 × 日，当天这个功能至少有一次调用（含失败与本机缓存命中）。各平台列为该平台的使用天次，悬停看人数与请求数。用户在扩展设置里开启后才会分享，默认关闭；记录保留 ${SHARED_RETENTION_DAYS} 天。</p>
+</section>`;
+}
+
 /** 功能使用统计：单独子页面。同一账户、同一功能、同一自然日只算 1 次，按使用天次排序。 */
-export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
+export function featureUsagePage({ admin, days, labels, timeZone, ranking, shared }) {
   const { rows, activeAccounts } = ranking;
   const sum = (field) => rows.reduce((n, row) => n + row[field], 0);
   const used = rows.filter((row) => row.key !== UNCLASSIFIED_FEATURE && row.userDays).length;
   return layout({
-    title: '托管功能使用统计',
+    title: '功能使用统计',
     admin,
     active: 'features',
     body: html`<div class="dashboard-heading">
-  <div><p class="dashboard-eyebrow">HUACI / FEATURES</p><h1>托管功能使用统计</h1>
+  <div><p class="dashboard-eyebrow">HUACI / FEATURES</p><h1>功能使用统计</h1>
     <p class="muted">同一账户、同一功能、同一天只算 1 次；一次 PDF、整站或图片翻译发出的多条请求不重复计算。</p></div>
   <div class="dashboard-period"><nav class="seg" aria-label="统计时间范围">${[7, 30, 90].map((n) => html`<a href="/features?days=${n}"${n === days ? html` aria-current="page"` : ''}>近 ${n} 天</a>`)}</nav>
     <span>${labels[0]} — ${labels.at(-1)} · ${timeZone}</span></div>
@@ -507,7 +532,7 @@ export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
   ${kpiCard({ label: '使用天次', value: num(sum('userDays')), sub: `已使用功能 ${num(used)} / ${num(Object.keys(FEATURE_LABELS).length)}` })}
   ${kpiCard({ label: '仅被拒天次', value: num(sum('rejectedDays')), sub: '点数不足、限频等，当天没用成' })}
 </section>
-<section class="card"><div class="table-wrap"><table data-feature-usage>
+<section class="card"><h2>点数翻译（全部用户）</h2><div class="table-wrap"><table data-feature-usage>
   <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用天次</th><th class="num">使用人数</th><th class="num">人均天数</th><th class="num">覆盖率</th><th class="num">仅被拒天次</th><th class="num">请求数</th></tr></thead>
   <tbody>${rows.map(({ key, userDays, accounts, requests, rejectedDays }) => html`<tr${userDays || rejectedDays ? '' : html` class="muted"`}>
     <td>${featureLabel(key)}</td>
@@ -519,7 +544,8 @@ export function featureUsagePage({ admin, days, labels, timeZone, ranking }) {
     <td class="num">${num(requests)}</td>
   </tr>`)}</tbody>
 </table></div>
-<p class="fine">使用天次：账户 × 自然日（${timeZone}），当天这个功能至少有一条被受理的托管请求（成功、失败或处理中）就算 1 次。仅被拒天次：当天只有被拒绝的请求。覆盖率以活跃账户为分母。请求数只作参考，一次操作可能发出多条请求。2.3.0 及更早的扩展不上报功能类别，记为「${UNCLASSIFIED_LABEL}」；它们的识图请求仍计入图片翻译，但识图后的文字翻译计入未区分。只统计点数翻译，自带 Key 和本机翻译不经过服务器，不在此列。</p></section>`,
+<p class="fine">使用天次：账户 × 自然日（${timeZone}），当天这个功能至少有一条被受理的托管请求（成功、失败或处理中）就算 1 次。仅被拒天次：当天只有被拒绝的请求。覆盖率以活跃账户为分母。请求数只作参考，一次操作可能发出多条请求。2.3.0 及更早的扩展不上报功能类别，记为「${UNCLASSIFIED_LABEL}」；它们的识图请求仍计入图片翻译，但识图后的文字翻译计入未区分。这里只统计点数翻译；自带 Key 和本机翻译不经过服务器，只有用户自愿分享的部分列在下面。</p></section>
+${sharedUsageSection(shared, labels)}`,
   });
 }
 
@@ -906,7 +932,7 @@ const installsSection = (installs, u) => {
 </section>`;
 };
 
-export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureUsage, client = null, note }) {
+export function userPage({ admin, u, state, subs, activity, sessions, api, installs, extensions = [], latest = null, featureUsage, sharedUsage = null, client = null, note }) {
   return layout({
     title: u.username,
     admin,
@@ -969,6 +995,15 @@ ${featureUsage ? html`<section class="card" id="feature-usage">
     <thead><tr><th>功能</th><th class="num">使用天数</th><th class="num">请求数</th></tr></thead>
     <tbody>${featureUsage.rows.map(({ key, days, requests }) => html`<tr><td>${featureLabel(key)}</td><td class="num">${num(days)}</td><td class="num">${num(requests)}</td></tr>`)}</tbody>
   </table></div>` : html`<p class="muted">这段时间暂无托管功能使用记录。</p>`}
+</section>` : ''}
+
+${sharedUsage?.rows.length ? html`<section class="card" id="shared-usage">
+  <h2>自带 Key / 本机翻译（自愿分享）</h2>
+  <p class="fine">${sharedUsage.fromDay} 至 ${sharedUsage.lastDay}，用户浏览器的本地日期。只有用户在扩展里开启分享后才有记录。</p>
+  <div class="table-wrap"><table data-user-shared-usage>
+    <thead><tr><th>功能</th><th>平台</th><th class="num">使用天数</th><th class="num">请求数</th><th class="num">失败</th></tr></thead>
+    <tbody>${sharedUsage.rows.map(({ key, provider, days, requests, failures }) => html`<tr><td>${featureLabel(key)}</td><td>${SHARED_PROVIDER_LABELS[provider]}</td><td class="num">${num(days)}</td><td class="num">${num(requests)}</td><td class="num">${num(failures)}</td></tr>`)}</tbody>
+  </table></div>
 </section>` : ''}
 
 ${activityCharts(activityUI, activity, { action: `/users/${u.id}` })}

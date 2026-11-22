@@ -92,6 +92,7 @@ export async function mergeGuest(client, guestId, memberId, { moveSessions = fal
   const transferred = await transferGuestCredits(client, guestId, memberId);
   await client.query('UPDATE usage_events SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query('UPDATE usage_rejections SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
+  await client.query('UPDATE shared_feature_usage SET user_id = $2 WHERE user_id = $1', [guestId, memberId]);
   await client.query(
     'UPDATE guest_claims SET merged_user_id = $2, merged_at = now(), transferred_units = $3 WHERE user_id = $1',
     [guestId, memberId, transferred],
