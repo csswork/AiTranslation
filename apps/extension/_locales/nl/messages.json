@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Uitloggen"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "De brontekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd voor vertaling. We slaan de bron- en vertaalde tekst niet op; je account registreert alleen tekentellingen en creditafschrijvingen."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Bijgewerkt $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Functiegebruik delen (zonder vertaalinhoud)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Stuurt dagelijks een samenvatting van de afgelopen dagen, gekoppeld aan je account: datum, functie (zoals woordvertaling, tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen brontekst, vertalingen, URL's, talen of modellen verstuurd, en gebruik in incognitovensters wordt niet meegeteld. Het gebruik van puntgebaseerde vertaling wordt al in je account bijgehouden en wordt niet beïnvloed door deze schakelaar. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist."
-  },
   "m_484339e8e0b97d54": {
     "message": "Te verzenden gegevens bekijken"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Inklappen"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "De originele tekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd om te worden vertaald; wij bewaren de originele tekst en de vertaling niet."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Eén keer per dag wordt een samenvatting van de voorgaande dagen verzonden en aan je account gekoppeld: datum, functie (zoals vertaling van geselecteerde tekst of tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen originele tekst, vertaling, URL, taal of model verzonden, en gebruik in incognitovensters wordt niet meegeteld. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist."
   },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"

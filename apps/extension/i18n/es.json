@@ -324,7 +324,6 @@
   "剩余点数": "Puntos restantes",
   "管理账户": "Gestionar cuenta",
   "退出登录": "Cerrar sesión",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción. No almacenamos el texto original ni la traducción; tu cuenta solo registra el recuento de caracteres y los puntos descontados.",
   "更新于 $1": "Actualizado el $1",
   "点数翻译暂未开放，请先使用自己的 API Key。": "La traducción con créditos aún no está disponible. Por ahora, usa tu propia API Key.",
   "剩余 $1 点": "$1 créditos restantes",
@@ -689,7 +688,6 @@
   "帮助改进": "Ayuda a mejorar",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Cuando usas tu propia API Key o la traducción local, tu texto no pasa por nuestros servidores, así que no podemos ver qué funciones se están usando. Puedes optar por compartir el número de usos de estas para ayudarnos a decidir qué mejorar primero.",
   "分享功能使用情况（不含翻译内容）": "Compartir el uso de funciones (sin contenido de traducción)",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Enviar una vez al día un resumen de los últimos días, vinculado a tu cuenta: fecha, función (como traducción de palabras, lectura bilingüe), plataforma (ChatGPT, DeepSeek, DeepL o traducción local), número de llamadas y número de fallos. No se envían textos originales, traducciones, URLs, idiomas ni modelos, y el uso en ventanas de incógnito no se cuenta. El uso de traducción por puntos ya queda registrado en tu cuenta y no se ve afectado por este interruptor. Al desactivarlo se borran los registros aún no enviados.",
   "查看待发送的内容": "Ver los datos pendientes de envío",
   "查看或删除已分享的记录": "Ver o eliminar los registros compartidos",
   "划词翻译": "Traducción de selección",
@@ -701,5 +699,7 @@
   "还没有待发送的记录": "Aún no hay registros pendientes",
   "$1 次，失败 $2 次": "$1 llamada(s), $2 fallo(s)",
   "$1 次": "$1 llamada(s)",
-  "收起": "Contraer"
+  "收起": "Contraer",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción; no almacenamos el texto original ni la traducción.",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Una vez al día se envía un resumen de los días anteriores vinculado a tu cuenta: fecha, función (como traducción al seleccionar texto o lectura bilingüe), plataforma (ChatGPT, DeepSeek, DeepL o traducción local), número de llamadas y número de fallos. No se envían el texto original, la traducción, la URL, el idioma ni el modelo, y el uso en ventanas de incógnito no se cuenta. Al desactivarlo se borran los registros aún no enviados."
 }

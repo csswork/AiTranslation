@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Sair"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "O texto original é enviado pelos nossos servidores ao provedor do modelo (atualmente DeepSeek) para tradução. Não armazenamos o texto original nem a tradução; sua conta registra apenas a contagem de caracteres e os descontos de créditos."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Atualizado em $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Compartilhar uso dos recursos (sem o conteúdo traduzido)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Envia diariamente um resumo dos últimos dias, vinculado à sua conta: data, recurso (como tradução por seleção, leitura bilíngue), plataforma (ChatGPT, DeepSeek, DeepL ou tradução local), número de chamadas e número de falhas. Não são enviados texto original, traduções, URLs, idiomas ou modelos, e o uso em janelas anônimas não é contabilizado. O uso da tradução por pontos já fica registrado na sua conta e não é afetado por esta opção. Ao desativar, os registros ainda não enviados são apagados."
-  },
   "m_484339e8e0b97d54": {
     "message": "Ver dados pendentes"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Recolher"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "O texto original é enviado pelos nossos servidores ao provedor do modelo (atualmente DeepSeek) para tradução; não armazenamos o texto original nem a tradução."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Uma vez por dia, é enviado um resumo dos dias anteriores, vinculado à sua conta: data, recurso (como tradução por seleção ou leitura bilíngue), plataforma (ChatGPT, DeepSeek, DeepL ou tradução local), número de chamadas e número de falhas. Não são enviados texto original, tradução, URL, idioma ou modelo, e o uso em janelas anônimas não é contabilizado. Ao desativar, os registros ainda não enviados são apagados."
   },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"

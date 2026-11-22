@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Log out"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Updated $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Share feature usage (without translation content)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent."
-  },
   "m_484339e8e0b97d54": {
     "message": "View pending data"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Collapse"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"

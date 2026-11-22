@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Esci"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Il testo originale viene inviato tramite i nostri server al fornitore del modello (attualmente DeepSeek) per la traduzione. Non conserviamo il testo originale né quello tradotto; l'account registra solo il numero di caratteri e i crediti detratti."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Aggiornato il $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Condividi l'utilizzo delle funzioni (senza il contenuto tradotto)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Invia una volta al giorno un riepilogo dei giorni precedenti, associato al tuo account: data, funzione (come traduzione della parola, lettura bilingue), piattaforma (ChatGPT, DeepSeek, DeepL o traduzione locale), numero di chiamate e numero di errori. Non vengono inviati testo originale, traduzioni, URL, lingue o modelli, e l'utilizzo nelle finestre in incognito non viene conteggiato. L'utilizzo della traduzione a punti è già registrato nel tuo account e non è influenzato da questa opzione. Disattivandola, i record non ancora inviati vengono cancellati."
-  },
   "m_484339e8e0b97d54": {
     "message": "Visualizza i dati in attesa di invio"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Comprimi"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Il testo originale viene inviato tramite i nostri server al fornitore del modello (attualmente DeepSeek) per la traduzione; non conserviamo il testo originale né la traduzione."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Una volta al giorno viene inviato un riepilogo dei giorni precedenti, associato al tuo account: data, funzione (come traduzione con selezione o lettura bilingue), piattaforma (ChatGPT, DeepSeek, DeepL o traduzione locale), numero di chiamate e numero di errori. Non vengono inviati testo originale, traduzione, URL, lingua o modello, e l'utilizzo nelle finestre in incognito non viene conteggiato. Disattivando questa opzione, i record non ancora inviati vengono cancellati."
   },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"

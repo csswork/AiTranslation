@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Wyloguj się"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Tekst źródłowy jest wysyłany przez nasze serwery do dostawcy modelu (obecnie DeepSeek) w celu tłumaczenia. Nie przechowujemy tekstu źródłowego ani tłumaczenia; konto rejestruje tylko liczbę znaków i potrącenia punktów."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Zaktualizowano $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Udostępniaj dane o użyciu funkcji (bez treści tłumaczeń)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Codziennie wysyłaj podsumowanie z ostatnich dni powiązane z Twoim kontem: data, funkcja (np. tłumaczenie zaznaczonego tekstu, czytanie dwujęzyczne), platforma (ChatGPT, DeepSeek, DeepL lub tłumaczenie lokalne), liczba wywołań i liczba niepowodzeń. Nie wysyłamy tekstu źródłowego, tłumaczeń, adresów URL, języków ani modeli, a użycie w oknach incognito nie jest liczone. Użycie tłumaczenia punktowego jest już zapisywane na koncie i nie zależy od tego przełącznika. Po wyłączeniu niezapisane jeszcze rekordy zostaną usunięte."
-  },
   "m_484339e8e0b97d54": {
     "message": "Zobacz dane oczekujące na wysłanie"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Zwiń"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Oryginalny tekst jest wysyłany przez nasze serwery do dostawcy modelu (obecnie DeepSeek) w celu przetłumaczenia; nie przechowujemy oryginalnego tekstu ani tłumaczenia."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Raz dziennie wysyłane jest podsumowanie poprzednich dni powiązane z Twoim kontem: data, funkcja (np. tłumaczenie zaznaczonego tekstu, czytanie dwujęzyczne), platforma (ChatGPT, DeepSeek, DeepL lub tłumaczenie lokalne), liczba wywołań i liczba niepowodzeń. Nie są wysyłane oryginalny tekst, tłumaczenie, adres URL, język ani model, a użycie w oknach incognito nie jest liczone. Wyłączenie tej opcji usuwa jeszcze niewysłane rekordy."
   },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"

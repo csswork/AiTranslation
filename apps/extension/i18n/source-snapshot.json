@@ -325,7 +325,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -690,7 +689,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -702,7 +700,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "es": {
     "跟随浏览器": "Follow browser",
@@ -1030,7 +1030,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -1395,7 +1394,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -1407,7 +1405,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "pt": {
     "跟随浏览器": "Follow browser",
@@ -1735,7 +1735,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -2100,7 +2099,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -2112,7 +2110,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "fr": {
     "跟随浏览器": "Follow browser",
@@ -2440,7 +2440,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -2805,7 +2804,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -2817,7 +2815,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "de": {
     "跟随浏览器": "Follow browser",
@@ -3145,7 +3145,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -3510,7 +3509,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -3522,7 +3520,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "it": {
     "跟随浏览器": "Follow browser",
@@ -3850,7 +3850,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -4215,7 +4214,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -4227,7 +4225,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "nl": {
     "跟随浏览器": "Follow browser",
@@ -4555,7 +4555,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -4920,7 +4919,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -4932,7 +4930,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "ru": {
     "跟随浏览器": "Follow browser",
@@ -5260,7 +5260,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -5625,7 +5624,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -5637,7 +5635,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "uk": {
     "跟随浏览器": "Follow browser",
@@ -5965,7 +5965,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -6330,7 +6329,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -6342,7 +6340,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "pl": {
     "跟随浏览器": "Follow browser",
@@ -6670,7 +6670,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -7035,7 +7034,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -7047,7 +7045,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "tr": {
     "跟随浏览器": "Follow browser",
@@ -7375,7 +7375,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -7740,7 +7739,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -7752,7 +7750,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "ar": {
     "跟随浏览器": "Follow browser",
@@ -8080,7 +8080,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -8445,7 +8444,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -8457,7 +8455,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "he": {
     "跟随浏览器": "Follow browser",
@@ -8785,7 +8785,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -9150,7 +9149,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -9162,7 +9160,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "fa": {
     "跟随浏览器": "Follow browser",
@@ -9490,7 +9490,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -9855,7 +9854,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -9867,7 +9865,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "hi": {
     "跟随浏览器": "Follow browser",
@@ -10195,7 +10195,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -10560,7 +10559,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -10572,7 +10570,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "bn": {
     "跟随浏览器": "Follow browser",
@@ -10900,7 +10900,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -11265,7 +11264,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -11277,7 +11275,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "ur": {
     "跟随浏览器": "Follow browser",
@@ -11605,7 +11605,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -11970,7 +11969,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -11982,7 +11980,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "id": {
     "跟随浏览器": "Follow browser",
@@ -12310,7 +12310,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -12675,7 +12674,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -12687,7 +12685,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "vi": {
     "跟随浏览器": "Follow browser",
@@ -13015,7 +13015,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -13380,7 +13379,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -13392,7 +13390,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "th": {
     "跟随浏览器": "Follow browser",
@@ -13720,7 +13720,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -14085,7 +14084,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -14097,7 +14095,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "ja": {
     "跟随浏览器": "Follow browser",
@@ -14425,7 +14425,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -14790,7 +14789,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -14802,7 +14800,9 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
   "ko": {
     "跟随浏览器": "Follow browser",
@@ -15130,7 +15130,6 @@
     "剩余点数": "Remaining credits",
     "管理账户": "Manage account",
     "退出登录": "Log out",
-    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
     "更新于 $1": "Updated $1",
     "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
     "剩余 $1 点": "$1 credits remaining",
@@ -15495,7 +15494,6 @@
     "帮助改进": "Help improve",
     "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
     "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
     "查看待发送的内容": "View pending data",
     "查看或删除已分享的记录": "View or delete shared records",
     "划词翻译": "Selection translation",
@@ -15507,6 +15505,8 @@
     "还没有待发送的记录": "No pending records",
     "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
     "$1 次": "$1 call(s)",
-    "收起": "Collapse"
+    "收起": "Collapse",
+    "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+    "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   }
 }

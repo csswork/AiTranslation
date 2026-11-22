@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Abmelden"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Der Ausgangstext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet. Wir speichern weder Ausgangstext noch Übersetzung; Ihr Konto zeichnet nur Zeichenzahlen und Punkteabzüge auf."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Aktualisiert am $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Funktionsnutzung teilen (ohne Übersetzungsinhalte)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Sende täglich eine Zusammenfassung der letzten Tage, verknüpft mit deinem Konto: Datum, Funktion (z. B. Wortübersetzung, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Ausgangstexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognito-Fenstern wird nicht gezählt. Die Nutzung der punktbasierten Übersetzung wird ohnehin in deinem Konto erfasst und ist von diesem Schalter nicht betroffen. Beim Ausschalten werden noch nicht gesendete Datensätze gelöscht."
-  },
   "m_484339e8e0b97d54": {
     "message": "Ausstehende Daten anzeigen"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Einklappen"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Der Originaltext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet; wir speichern weder den Originaltext noch die Übersetzung."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Täglich wird eine Zusammenfassung der vorangegangenen Tage gesendet und mit deinem Konto verknüpft: Datum, Funktion (z. B. Übersetzung markierter Wörter, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Originaltexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognitofenstern wird nicht gezählt. Wenn du dies deaktivierst, werden noch nicht gesendete Datensätze gelöscht."
   },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"

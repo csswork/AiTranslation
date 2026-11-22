@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Keluar"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Teks sumber dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan. Kami tidak menyimpan teks sumber atau terjemahan; akun Anda hanya mencatat jumlah karakter dan pengurangan poin."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Diperbarui $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Bagikan penggunaan fitur (tanpa konten terjemahan)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Kirim ringkasan beberapa hari terakhir sekali sehari, yang dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan kata, bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks sumber, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Penggunaan terjemahan berbasis poin sudah tercatat di akun Anda dan tidak terpengaruh oleh sakelar ini. Jika dimatikan, catatan yang belum terkirim akan dihapus."
-  },
   "m_484339e8e0b97d54": {
     "message": "Lihat data yang tertunda"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Ciutkan"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Teks asli dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan; kami tidak menyimpan teks asli maupun terjemahannya."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Setiap hari, ringkasan beberapa hari sebelumnya dikirim dan dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan pilih kata atau bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks asli, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Menonaktifkan ini akan menghapus catatan yang belum terkirim."
   },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"

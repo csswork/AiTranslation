@@ -325,7 +325,6 @@ globalThis.AITrMessageIds = {
   "剩余点数": "m_283ba7d1fae5b0f0",
   "管理账户": "m_fb9399fb6acf3bf6",
   "退出登录": "m_3ab8cc15939f3b5c",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "m_918b7761e2f3dd27",
   "更新于 $1": "m_7db8e65b6b3a03bc",
   "点数翻译暂未开放，请先使用自己的 API Key。": "m_d3853afcfd2df4d7",
   "剩余 $1 点": "m_84378de635f8c238",
@@ -690,7 +689,6 @@ globalThis.AITrMessageIds = {
   "帮助改进": "m_e0b6abbfc5117adc",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "m_317549218826032a",
   "分享功能使用情况（不含翻译内容）": "m_856142e2a74929ab",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "m_47fac8c9ffad2800",
   "查看待发送的内容": "m_484339e8e0b97d54",
   "查看或删除已分享的记录": "m_3f793ec4ed3fad68",
   "划词翻译": "m_3b02edcd404ddddc",
@@ -702,7 +700,9 @@ globalThis.AITrMessageIds = {
   "还没有待发送的记录": "m_0268cbcb32d7eab6",
   "$1 次，失败 $2 次": "m_0c86bc72edb0a2d0",
   "$1 次": "m_957dfee5820e61ee",
-  "收起": "m_afd4b783536b8297"
+  "收起": "m_afd4b783536b8297",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "m_b5dee612f331e0f3",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "m_00f1d3acec98dbcf"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1030,7 +1030,6 @@ globalThis.AITrEnglish = {
   "剩余点数": "Remaining credits",
   "管理账户": "Manage account",
   "退出登录": "Log out",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "The source text is sent through our servers to the model provider (currently DeepSeek) for translation. We don't store the source or translated text; your account only records character counts and credit deductions.",
   "更新于 $1": "Updated $1",
   "点数翻译暂未开放，请先使用自己的 API Key。": "Credit-based translation is not yet available. Please use your own API Key for now.",
   "剩余 $1 点": "$1 credits remaining",
@@ -1395,7 +1394,6 @@ globalThis.AITrEnglish = {
   "帮助改进": "Help improve",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "When you use your own API Key or local translation, your text doesn't pass through our servers, so we can't see which features people are using. You can choose to share usage counts for these to help us decide what to improve first.",
   "分享功能使用情况（不含翻译内容）": "Share feature usage (without translation content)",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Send a daily summary of the past few days, linked to your account: date, feature (such as word translation, bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), call count, and failure count. No source text, translations, URLs, languages, or models are sent, and usage in incognito windows isn't counted. Point-based translation usage is already recorded in your account and isn't affected by this switch. Turning it off clears any records not yet sent.",
   "查看待发送的内容": "View pending data",
   "查看或删除已分享的记录": "View or delete shared records",
   "划词翻译": "Selection translation",
@@ -1407,5 +1405,7 @@ globalThis.AITrEnglish = {
   "还没有待发送的记录": "No pending records",
   "$1 次，失败 $2 次": "$1 call(s), $2 failure(s)",
   "$1 次": "$1 call(s)",
-  "收起": "Collapse"
+  "收起": "Collapse",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
 };

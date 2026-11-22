@@ -324,7 +324,6 @@
   "剩余点数": "Poin tersisa",
   "管理账户": "Kelola akun",
   "退出登录": "Keluar",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "Teks sumber dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan. Kami tidak menyimpan teks sumber atau terjemahan; akun Anda hanya mencatat jumlah karakter dan pengurangan poin.",
   "更新于 $1": "Diperbarui $1",
   "点数翻译暂未开放，请先使用自己的 API Key。": "Terjemahan berbasis kredit belum tersedia. Untuk saat ini, gunakan API Key Anda sendiri.",
   "剩余 $1 点": "Sisa $1 kredit",
@@ -689,7 +688,6 @@
   "帮助改进": "Bantu tingkatkan",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Saat Anda menggunakan API Key sendiri atau terjemahan lokal, teks Anda tidak melewati server kami, jadi kami tidak dapat melihat fitur mana yang digunakan orang. Anda dapat memilih untuk membagikan jumlah penggunaan ini guna membantu kami menentukan apa yang perlu ditingkatkan lebih dulu.",
   "分享功能使用情况（不含翻译内容）": "Bagikan penggunaan fitur (tanpa konten terjemahan)",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Kirim ringkasan beberapa hari terakhir sekali sehari, yang dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan kata, bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks sumber, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Penggunaan terjemahan berbasis poin sudah tercatat di akun Anda dan tidak terpengaruh oleh sakelar ini. Jika dimatikan, catatan yang belum terkirim akan dihapus.",
   "查看待发送的内容": "Lihat data yang tertunda",
   "查看或删除已分享的记录": "Lihat atau hapus catatan yang telah dibagikan",
   "划词翻译": "Terjemahan seleksi",
@@ -701,5 +699,7 @@
   "还没有待发送的记录": "Belum ada catatan tertunda",
   "$1 次，失败 $2 次": "$1 panggilan, $2 kegagalan",
   "$1 次": "$1 panggilan",
-  "收起": "Ciutkan"
+  "收起": "Ciutkan",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Teks asli dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan; kami tidak menyimpan teks asli maupun terjemahannya.",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Setiap hari, ringkasan beberapa hari sebelumnya dikirim dan dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan pilih kata atau bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks asli, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Menonaktifkan ini akan menghapus catatan yang belum terkirim."
 }

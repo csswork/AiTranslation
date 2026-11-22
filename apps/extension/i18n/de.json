@@ -324,7 +324,6 @@
   "剩余点数": "Verbleibende Punkte",
   "管理账户": "Konto verwalten",
   "退出登录": "Abmelden",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "Der Ausgangstext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet. Wir speichern weder Ausgangstext noch Übersetzung; Ihr Konto zeichnet nur Zeichenzahlen und Punkteabzüge auf.",
   "更新于 $1": "Aktualisiert am $1",
   "点数翻译暂未开放，请先使用自己的 API Key。": "Übersetzung mit Guthaben ist noch nicht verfügbar. Bitte verwenden Sie vorerst Ihren eigenen API Key.",
   "剩余 $1 点": "Noch $1 Guthaben",
@@ -689,7 +688,6 @@
   "帮助改进": "Hilf mit, besser zu werden",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Wenn du deinen eigenen API Key oder die lokale Übersetzung verwendest, laufen deine Texte nicht über unsere Server, daher können wir nicht sehen, welche Funktionen genutzt werden. Du kannst die Nutzungszahlen dieser Funktionen teilen, damit wir entscheiden können, was wir zuerst verbessern.",
   "分享功能使用情况（不含翻译内容）": "Funktionsnutzung teilen (ohne Übersetzungsinhalte)",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Sende täglich eine Zusammenfassung der letzten Tage, verknüpft mit deinem Konto: Datum, Funktion (z. B. Wortübersetzung, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Ausgangstexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognito-Fenstern wird nicht gezählt. Die Nutzung der punktbasierten Übersetzung wird ohnehin in deinem Konto erfasst und ist von diesem Schalter nicht betroffen. Beim Ausschalten werden noch nicht gesendete Datensätze gelöscht.",
   "查看待发送的内容": "Ausstehende Daten anzeigen",
   "查看或删除已分享的记录": "Geteilte Datensätze anzeigen oder löschen",
   "划词翻译": "Übersetzung der Auswahl",
@@ -701,5 +699,7 @@
   "还没有待发送的记录": "Keine ausstehenden Datensätze",
   "$1 次，失败 $2 次": "$1 Aufruf(e), $2 Fehler",
   "$1 次": "$1 Aufruf(e)",
-  "收起": "Einklappen"
+  "收起": "Einklappen",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Der Originaltext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet; wir speichern weder den Originaltext noch die Übersetzung.",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Täglich wird eine Zusammenfassung der vorangegangenen Tage gesendet und mit deinem Konto verknüpft: Datum, Funktion (z. B. Übersetzung markierter Wörter, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Originaltexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognitofenstern wird nicht gezählt. Wenn du dies deaktivierst, werden noch nicht gesendete Datensätze gelöscht."
 }

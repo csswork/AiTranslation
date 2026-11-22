@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Cerrar sesión"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción. No almacenamos el texto original ni la traducción; tu cuenta solo registra el recuento de caracteres y los puntos descontados."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Actualizado el $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Compartir el uso de funciones (sin contenido de traducción)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Enviar una vez al día un resumen de los últimos días, vinculado a tu cuenta: fecha, función (como traducción de palabras, lectura bilingüe), plataforma (ChatGPT, DeepSeek, DeepL o traducción local), número de llamadas y número de fallos. No se envían textos originales, traducciones, URLs, idiomas ni modelos, y el uso en ventanas de incógnito no se cuenta. El uso de traducción por puntos ya queda registrado en tu cuenta y no se ve afectado por este interruptor. Al desactivarlo se borran los registros aún no enviados."
-  },
   "m_484339e8e0b97d54": {
     "message": "Ver los datos pendientes de envío"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Contraer"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "El texto original se envía a través de nuestros servidores al proveedor del modelo (actualmente DeepSeek) para su traducción; no almacenamos el texto original ni la traducción."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Una vez al día se envía un resumen de los días anteriores vinculado a tu cuenta: fecha, función (como traducción al seleccionar texto o lectura bilingüe), plataforma (ChatGPT, DeepSeek, DeepL o traducción local), número de llamadas y número de fallos. No se envían el texto original, la traducción, la URL, el idioma ni el modelo, y el uso en ventanas de incógnito no se cuenta. Al desactivarlo se borran los registros aún no enviados."
   },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"

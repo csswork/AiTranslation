@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Se déconnecter"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Le texte source est envoyé via nos serveurs au fournisseur de modèle (actuellement DeepSeek) pour la traduction. Nous ne conservons ni le texte source ni la traduction ; votre compte enregistre uniquement le nombre de caractères et les points déduits."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Mis à jour le $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Partager l'utilisation des fonctionnalités (sans le contenu traduit)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Envoyer chaque jour un récapitulatif des jours précédents, associé à votre compte : date, fonctionnalité (comme la traduction par sélection, la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte source, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. L'utilisation de la traduction par points est déjà enregistrée dans votre compte et n'est pas affectée par ce réglage. La désactivation efface les enregistrements non encore envoyés."
-  },
   "m_484339e8e0b97d54": {
     "message": "Voir les données en attente d'envoi"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Réduire"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Le texte original est envoyé via nos serveurs au fournisseur de modèle (actuellement DeepSeek) pour traduction ; nous ne conservons ni le texte original ni la traduction."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Chaque jour, un résumé des jours précédents est envoyé et associé à votre compte : date, fonctionnalité (comme la traduction par sélection de texte ou la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte original, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. La désactivation efface les enregistrements non encore envoyés."
   },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"

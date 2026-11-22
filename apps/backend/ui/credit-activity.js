@@ -50,7 +50,7 @@ export function activityCharts(ui, activity, { action, incomeType = '' }) {
     <section class="overview-chart" data-chart="translation-requests">
       <div class="overview-chart-head"><h2>${t('翻译请求')}<span data-requests>${num(totals.requests)}</span></h2></div>
       ${chart([series(t('成功'), 'ok', 'usage-primary'), series(t('失败（已返还）'), 'failed', 'usage-failed'), series(t('处理中'), 'pending', 'usage-secondary')], t('请求次数'), 'requests', num, [[t('字数'), 'chars']])}
-      <p class="credit-activity-note">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
+      <p class="credit-activity-note">${t('不保存原文或译文。')}</p>
     </section>
   </div>
   <p class="overview-note">${t('图表统计所选范围内的全部记录，明细最多显示 {count} 条。', { count: activity.limit })}</p>

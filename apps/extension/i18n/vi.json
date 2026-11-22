@@ -324,7 +324,6 @@
   "剩余点数": "Điểm còn lại",
   "管理账户": "Quản lý tài khoản",
   "退出登录": "Đăng xuất",
-  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文，账户只记录字数与扣点。": "Văn bản gốc được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch. Chúng tôi không lưu văn bản gốc và bản dịch; tài khoản chỉ ghi số ký tự và điểm đã trừ.",
   "更新于 $1": "Cập nhật $1",
   "点数翻译暂未开放，请先使用自己的 API Key。": "Dịch bằng điểm chưa khả dụng, vui lòng sử dụng API Key của bạn.",
   "剩余 $1 点": "Còn $1 điểm",
@@ -689,7 +688,6 @@
   "帮助改进": "Giúp cải thiện",
   "用自己的 API Key 或本机翻译时，文字不经过我们的服务器，我们看不到哪些功能有人在用。你可以选择分享这部分的使用次数，帮助我们决定先改进什么。": "Khi bạn dùng API Key của riêng mình hoặc dịch cục bộ, văn bản không đi qua máy chủ của chúng tôi, nên chúng tôi không thể biết những tính năng nào đang được sử dụng. Bạn có thể chọn chia sẻ số lần sử dụng của phần này để giúp chúng tôi quyết định cải thiện điều gì trước.",
   "分享功能使用情况（不含翻译内容）": "Chia sẻ mức sử dụng tính năng (không gồm nội dung dịch)",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。点数翻译的用量本来就记在账户里，不受这个开关影响。关闭后清空尚未发送的记录。": "Gửi mỗi ngày một lần bản tổng hợp của vài ngày trước, liên kết với tài khoản của bạn: ngày, tính năng (như dịch từ đã chọn, đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và mức sử dụng trong cửa sổ ẩn danh không được tính. Mức sử dụng dịch theo điểm vốn đã được ghi vào tài khoản và không bị ảnh hưởng bởi công tắc này. Khi tắt, các bản ghi chưa gửi sẽ bị xóa.",
   "查看待发送的内容": "Xem nội dung chờ gửi",
   "查看或删除已分享的记录": "Xem hoặc xóa các bản ghi đã chia sẻ",
   "划词翻译": "Dịch văn bản chọn",
@@ -701,5 +699,7 @@
   "还没有待发送的记录": "Chưa có bản ghi nào chờ gửi",
   "$1 次，失败 $2 次": "$1 lần, thất bại $2 lần",
   "$1 次": "$1 lần",
-  "收起": "Thu gọn"
+  "收起": "Thu gọn",
+  "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Văn bản gốc sẽ được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch; chúng tôi không lưu văn bản gốc và bản dịch.",
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Mỗi ngày một lần, bản tóm tắt của những ngày trước đó được gửi và liên kết với tài khoản của bạn: ngày, tính năng (như dịch bằng chọn từ hoặc đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và việc sử dụng trong cửa sổ ẩn danh không được tính. Khi tắt tính năng này, các bản ghi chưa gửi sẽ bị xóa."
 }

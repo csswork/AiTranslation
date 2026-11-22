@@ -426,7 +426,7 @@ function sharedUsageSection(ui, shared) {
   if (!shared?.rows.length) return '';
   return html`<section class="card" id="shared-usage">
   <h2>${t('你分享的功能使用情况')}</h2>
-  <p class="fine">${t('你在扩展设置里开启了「分享功能使用情况」。这里是最近 30 天收到的汇总：只有日期、功能、平台和次数，不含原文、译文或所在网页。点数翻译的用量见上方，不受这个开关影响。')}</p>
+  <p class="fine">${t('你在扩展设置里开启了「分享功能使用情况」。这里是最近 30 天收到的汇总：只有日期、功能、平台和次数，不含原文、译文或所在网页。')}</p>
   <div class="table-wrap"><table data-shared-usage>
     <thead><tr><th>${t('功能')}</th><th>${t('平台')}</th><th class="num">${t('天数')}</th><th class="num">${t('次数')}</th></tr></thead>
     <tbody>${shared.rows.map((r) => html`<tr>
@@ -487,7 +487,7 @@ ${activityCharts(ui, activity, { action: '/usage' })}
       <td>${STATUS_LABELS[e.status] ? t(STATUS_LABELS[e.status]) : e.status}</td>
     </tr>`)}</tbody>
   </table></div>` : html`<p class="muted">${t('还没有托管翻译请求。在扩展里选择「点数翻译」后，每次请求会显示在这里。')}</p>`}
-  <p class="fine">${t('只记录类型、字数、扣点和结果，不保存原文或译文。')}</p>
+  <p class="fine">${t('不保存原文或译文。')}</p>
 </details>
 ${sharedUsageSection(ui, shared)}`,
   });

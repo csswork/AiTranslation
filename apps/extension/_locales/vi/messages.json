@@ -1382,9 +1382,6 @@
   "m_3ab8cc15939f3b5c": {
     "message": "Đăng xuất"
   },
-  "m_918b7761e2f3dd27": {
-    "message": "Văn bản gốc được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch. Chúng tôi không lưu văn bản gốc và bản dịch; tài khoản chỉ ghi số ký tự và điểm đã trừ."
-  },
   "m_7db8e65b6b3a03bc": {
     "message": "Cập nhật $arg1$",
     "placeholders": {
@@ -2876,9 +2873,6 @@
   "m_856142e2a74929ab": {
     "message": "Chia sẻ mức sử dụng tính năng (không gồm nội dung dịch)"
   },
-  "m_47fac8c9ffad2800": {
-    "message": "Gửi mỗi ngày một lần bản tổng hợp của vài ngày trước, liên kết với tài khoản của bạn: ngày, tính năng (như dịch từ đã chọn, đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và mức sử dụng trong cửa sổ ẩn danh không được tính. Mức sử dụng dịch theo điểm vốn đã được ghi vào tài khoản và không bị ảnh hưởng bởi công tắc này. Khi tắt, các bản ghi chưa gửi sẽ bị xóa."
-  },
   "m_484339e8e0b97d54": {
     "message": "Xem nội dung chờ gửi"
   },
@@ -2932,6 +2926,12 @@
   },
   "m_afd4b783536b8297": {
     "message": "Thu gọn"
+  },
+  "m_b5dee612f331e0f3": {
+    "message": "Văn bản gốc sẽ được gửi qua máy chủ của chúng tôi đến nhà cung cấp mô hình (hiện là DeepSeek) để dịch; chúng tôi không lưu văn bản gốc và bản dịch."
+  },
+  "m_00f1d3acec98dbcf": {
+    "message": "Mỗi ngày một lần, bản tóm tắt của những ngày trước đó được gửi và liên kết với tài khoản của bạn: ngày, tính năng (như dịch bằng chọn từ hoặc đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và việc sử dụng trong cửa sổ ẩn danh không được tính. Khi tắt tính năng này, các bản ghi chưa gửi sẽ bị xóa."
   },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
