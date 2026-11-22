@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Eén keer per dag wordt een samenvatting van de voorgaande dagen verzonden en aan je account gekoppeld: datum, functie (zoals vertaling van geselecteerde tekst of tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen originele tekst, vertaling, URL, taal of model verzonden, en gebruik in incognitovensters wordt niet meegeteld. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Werkt Huaci goed voor je?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Je vertaalt nu al meer dan een maand met je eigen API Key. Als je het nuttig vindt, kun je dan een minuutje nemen om een beoordeling in de store achter te laten? Zo vinden meer mensen het."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Beoordeling achterlaten"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Misschien later"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Niet meer tonen"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

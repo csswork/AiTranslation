@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Setiap hari, ringkasan beberapa hari sebelumnya dikirim dan dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan pilih kata atau bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks asli, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Menonaktifkan ini akan menghapus catatan yang belum terkirim."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Apakah Huaci berjalan lancar untuk Anda?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Anda sudah lebih dari sebulan menerjemahkan dengan API Key Anda sendiri. Jika menurut Anda berguna, maukah Anda meluangkan waktu sebentar untuk memberi ulasan di toko? Ini membantu lebih banyak orang menemukannya."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Beri ulasan di toko"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Nanti saja"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Jangan tampilkan lagi"
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

@@ -702,7 +702,12 @@ globalThis.AITrMessageIds = {
   "$1 次": "m_957dfee5820e61ee",
   "收起": "m_afd4b783536b8297",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "m_b5dee612f331e0f3",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "m_00f1d3acec98dbcf"
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "m_00f1d3acec98dbcf",
+  "划词用得顺手吗？": "m_e45d2655a5147e37",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "m_88b5ab31b8bc456c",
+  "去商店评价": "m_0c7964883c8474bf",
+  "以后再说": "m_9d2055b957c00318",
+  "不再提示": "m_a54a0add54472cb1"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1407,5 +1412,10 @@ globalThis.AITrEnglish = {
   "$1 次": "$1 call(s)",
   "收起": "Collapse",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "The original text is sent through our servers to the model provider (currently DeepSeek) for translation; we do not store the original text or the translation.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent.",
+  "划词用得顺手吗？": "Is Huaci working well for you?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "You've been translating with your own API Key for over a month now. If you find it useful, could you take a minute to leave a review in the store? It helps more people find it.",
+  "去商店评价": "Leave a review",
+  "以后再说": "Maybe later",
+  "不再提示": "Don't show again"
 };

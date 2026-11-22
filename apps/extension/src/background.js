@@ -14,6 +14,7 @@ import './lib/cache.js';
 import './lib/providers.js';
 import './lib/account.js';
 import './lib/sites.js';
+import './lib/review.js';
 import './lib/usage.js';
 
 const t = (...args) => AITrI18n.t(...args);
@@ -975,6 +976,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       AITrUsage.record({ feature: message.feature, provider: message.provider, ok: message.ok === true, incognito: sender.tab?.incognito === true });
     }
     return false;
+  }
+
+  // 设置页的商店评价邀请（lib/review.js）：只接受扩展自己的页面
+  if (type === 'review-check' || type === 'review-action') {
+    if (sender.id !== chrome.runtime.id || !String(sender.url || '').startsWith(chrome.runtime.getURL(''))) return false;
+    const task = type === 'review-check' ? AITrReview.check() : AITrReview.act(message.action).then(() => false);
+    task.then((show) => sendResponse({ ok: true, show }), () => sendResponse({ ok: false, show: false }));
+    return true;
   }
 
   // 设置页「查看待发送的内容」

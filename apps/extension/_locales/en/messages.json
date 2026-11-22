@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Once a day, a summary of the previous days is sent and linked to your account: date, feature (such as word-selection translation or bilingual reading), platform (ChatGPT, DeepSeek, DeepL, or local translation), number of calls, and number of failures. No original text, translation, URL, language, or model is sent, and usage in incognito windows is not counted. Turning this off clears any records not yet sent."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Is Huaci working well for you?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "You've been translating with your own API Key for over a month now. If you find it useful, could you take a minute to leave a review in the store? It helps more people find it."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Leave a review"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Maybe later"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Don't show again"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

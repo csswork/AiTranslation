@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Raz dziennie wysyłane jest podsumowanie poprzednich dni powiązane z Twoim kontem: data, funkcja (np. tłumaczenie zaznaczonego tekstu, czytanie dwujęzyczne), platforma (ChatGPT, DeepSeek, DeepL lub tłumaczenie lokalne), liczba wywołań i liczba niepowodzeń. Nie są wysyłane oryginalny tekst, tłumaczenie, adres URL, język ani model, a użycie w oknach incognito nie jest liczone. Wyłączenie tej opcji usuwa jeszcze niewysłane rekordy."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Czy Huaci działa u Ciebie dobrze?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Od ponad miesiąca tłumaczysz za pomocą własnego klucza API. Jeśli uważasz, że to przydatne, czy możesz poświęcić minutę na zostawienie opinii w sklepie? Pomaga to innym osobom go znaleźć."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Zostaw opinię"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Może później"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Nie pokazuj ponownie"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

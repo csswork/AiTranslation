@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Mỗi ngày một lần, bản tóm tắt của những ngày trước đó được gửi và liên kết với tài khoản của bạn: ngày, tính năng (như dịch bằng chọn từ hoặc đọc song ngữ), nền tảng (ChatGPT, DeepSeek, DeepL hoặc dịch cục bộ), số lần gọi và số lần thất bại. Không gửi văn bản gốc, bản dịch, URL, ngôn ngữ hay mô hình, và việc sử dụng trong cửa sổ ẩn danh không được tính. Khi tắt tính năng này, các bản ghi chưa gửi sẽ bị xóa."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Bạn dùng Huaci có thuận tiện không?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Bạn đã dịch bằng API Key của riêng mình hơn một tháng rồi. Nếu thấy hữu ích, bạn có thể dành một phút để đánh giá trên cửa hàng không? Điều này giúp nhiều người tìm thấy nó hơn."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Đánh giá trên cửa hàng"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Để sau"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Không hiển thị lại"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

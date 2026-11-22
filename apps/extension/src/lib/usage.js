@@ -5,6 +5,8 @@
  * 按「浏览器本地日期 × 功能 × 平台」在本机累加次数；service worker 每天把已结束日子的计数发给后台。
  * 点数翻译不计（服务端本来就有记录）；无痕窗口里的使用不计；不记原文、译文、网址、语言或模型。
  *
+ * 同一个计数点也交给 review.js 记录本机使用天数（商店评价邀请用，不上传，与分享开关无关）。
+ *
  * 计数只在 service worker 里写入 chrome.storage.local 并排队串行；扩展页面（阅读、PDF、图片、翻译面板）
  * 直接调用 providers.js，经消息交给 service worker 计数。关闭开关或本机退出登录时清空队列。
  */
@@ -79,12 +81,15 @@
    * 不在 service worker 时交给它计数，不等待结果。计数失败不影响翻译。
    */
   function record({ feature, provider, ok = true, incognito = false }) {
-    if (incognito || !FEATURES.includes(feature) || !PROVIDERS.includes(provider)) return;
+    if (incognito || !PROVIDERS.includes(provider)) return;
     if (globalThis.chrome?.extension?.inIncognitoContext) return;
     if (!isWorker) {
       try { chrome.runtime.sendMessage({ type: 'usage-count', feature, provider, ok: ok === true })?.catch?.(() => {}); } catch { /* 忽略 */ }
       return;
     }
+    // 商店评价邀请只看本机记录的使用天数（review.js），不依赖分享开关，也不上传
+    globalThis.AITrReview?.note({ provider, ok: ok === true }).catch(() => {});
+    if (!FEATURES.includes(feature)) return;
     add({ feature, provider, ok }).catch(() => {});
   }
 

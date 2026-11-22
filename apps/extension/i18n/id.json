@@ -701,5 +701,10 @@
   "$1 次": "$1 panggilan",
   "收起": "Ciutkan",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Teks asli dikirim melalui server kami ke penyedia model (saat ini DeepSeek) untuk diterjemahkan; kami tidak menyimpan teks asli maupun terjemahannya.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Setiap hari, ringkasan beberapa hari sebelumnya dikirim dan dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan pilih kata atau bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks asli, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Menonaktifkan ini akan menghapus catatan yang belum terkirim."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Setiap hari, ringkasan beberapa hari sebelumnya dikirim dan dikaitkan dengan akun Anda: tanggal, fitur (seperti terjemahan pilih kata atau bacaan bilingual), platform (ChatGPT, DeepSeek, DeepL, atau terjemahan lokal), jumlah panggilan, dan jumlah kegagalan. Teks asli, terjemahan, URL, bahasa, atau model tidak dikirim, dan penggunaan di jendela penyamaran tidak dihitung. Menonaktifkan ini akan menghapus catatan yang belum terkirim.",
+  "划词用得顺手吗？": "Apakah Huaci berjalan lancar untuk Anda?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Anda sudah lebih dari sebulan menerjemahkan dengan API Key Anda sendiri. Jika menurut Anda berguna, maukah Anda meluangkan waktu sebentar untuk memberi ulasan di toko? Ini membantu lebih banyak orang menemukannya.",
+  "去商店评价": "Beri ulasan di toko",
+  "以后再说": "Nanti saja",
+  "不再提示": "Jangan tampilkan lagi"
 }

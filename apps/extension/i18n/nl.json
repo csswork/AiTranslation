@@ -701,5 +701,10 @@
   "$1 次": "$1 aanroep(en)",
   "收起": "Inklappen",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "De originele tekst wordt via onze servers naar de modelprovider (momenteel DeepSeek) gestuurd om te worden vertaald; wij bewaren de originele tekst en de vertaling niet.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Eén keer per dag wordt een samenvatting van de voorgaande dagen verzonden en aan je account gekoppeld: datum, functie (zoals vertaling van geselecteerde tekst of tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen originele tekst, vertaling, URL, taal of model verzonden, en gebruik in incognitovensters wordt niet meegeteld. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Eén keer per dag wordt een samenvatting van de voorgaande dagen verzonden en aan je account gekoppeld: datum, functie (zoals vertaling van geselecteerde tekst of tweetalig lezen), platform (ChatGPT, DeepSeek, DeepL of lokale vertaling), aantal aanroepen en aantal mislukkingen. Er worden geen originele tekst, vertaling, URL, taal of model verzonden, en gebruik in incognitovensters wordt niet meegeteld. Als je dit uitschakelt, worden nog niet verzonden gegevens gewist.",
+  "划词用得顺手吗？": "Werkt Huaci goed voor je?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Je vertaalt nu al meer dan een maand met je eigen API Key. Als je het nuttig vindt, kun je dan een minuutje nemen om een beoordeling in de store achter te laten? Zo vinden meer mensen het.",
+  "去商店评价": "Beoordeling achterlaten",
+  "以后再说": "Misschien later",
+  "不再提示": "Niet meer tonen"
 }

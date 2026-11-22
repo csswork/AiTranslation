@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Una vez al día se envía un resumen de los días anteriores vinculado a tu cuenta: fecha, función (como traducción al seleccionar texto o lectura bilingüe), plataforma (ChatGPT, DeepSeek, DeepL o traducción local), número de llamadas y número de fallos. No se envían el texto original, la traducción, la URL, el idioma ni el modelo, y el uso en ventanas de incógnito no se cuenta. Al desactivarlo se borran los registros aún no enviados."
   },
+  "m_e45d2655a5147e37": {
+    "message": "¿Huaci funciona bien para ti?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Llevas más de un mes traduciendo con tu propia API Key. Si te resulta útil, ¿podrías tomarte un minuto para dejar una reseña en la tienda? Ayuda a que más gente lo encuentre."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Dejar una reseña"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Quizás más tarde"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "No volver a mostrar"
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

@@ -701,5 +701,10 @@
   "$1 次": "$1 appel(s)",
   "收起": "Réduire",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Le texte original est envoyé via nos serveurs au fournisseur de modèle (actuellement DeepSeek) pour traduction ; nous ne conservons ni le texte original ni la traduction.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Chaque jour, un résumé des jours précédents est envoyé et associé à votre compte : date, fonctionnalité (comme la traduction par sélection de texte ou la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte original, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. La désactivation efface les enregistrements non encore envoyés."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Chaque jour, un résumé des jours précédents est envoyé et associé à votre compte : date, fonctionnalité (comme la traduction par sélection de texte ou la lecture bilingue), plateforme (ChatGPT, DeepSeek, DeepL ou traduction locale), nombre d'appels et nombre d'échecs. Aucun texte original, traduction, URL, langue ou modèle n'est envoyé, et l'utilisation dans les fenêtres de navigation privée n'est pas comptée. La désactivation efface les enregistrements non encore envoyés.",
+  "划词用得顺手吗？": "Huaci vous donne-t-il satisfaction ?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Vous traduisez avec votre propre API Key depuis plus d'un mois. Si vous le trouvez utile, pourriez-vous prendre une minute pour laisser un avis dans la boutique ? Cela aide plus de gens à le découvrir.",
+  "去商店评价": "Laisser un avis",
+  "以后再说": "Plus tard",
+  "不再提示": "Ne plus afficher"
 }

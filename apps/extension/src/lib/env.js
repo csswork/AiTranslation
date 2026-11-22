@@ -17,6 +17,14 @@
   const dev = !packaged && !manifest.update_url;
   const edge = /\bEdg\//.test(globalThis.navigator?.userAgent || '');
   const firefox = Boolean(manifest.browser_specific_settings?.gecko?.id);
+  // 商店评价页：按扩展 ID 认商店；源码加载（开发）时按浏览器选
+  const STORE_REVIEWS = {
+    hogimafgjmlpdlnepojgigjkhaccbcbj: 'https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj/reviews',
+    mojcgjimlkkbohomcijkmoefpeekmohe: 'https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe',
+  };
+  const review = firefox ? 'https://addons.mozilla.org/firefox/addon/huaci-ai-translator/reviews/'
+    : STORE_REVIEWS[chrome.runtime.id]
+      || (edge ? STORE_REVIEWS.mojcgjimlkkbohomcijkmoefpeekmohe : STORE_REVIEWS.hogimafgjmlpdlnepojgigjkhaccbcbj);
   const accountOrigin = dev ? 'http://localhost:8787' : 'https://app.huaci.app';
   const websiteOrigin = dev ? 'http://localhost:8788' : 'https://huaci.app';
   // Vercel 可能把裸域与 www 互相跳转；两个来源都是官网，链接仍用 websiteOrigin。
@@ -44,6 +52,7 @@
       billing: `${accountOrigin}/billing`,
       website: `${websiteOrigin}/`,
       privacy: `${websiteOrigin}/privacy.html`,
+      review,
     }),
   });
 })();

@@ -701,5 +701,10 @@
   "$1 次": "$1 chamada(s)",
   "收起": "Recolher",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "O texto original é enviado pelos nossos servidores ao provedor do modelo (atualmente DeepSeek) para tradução; não armazenamos o texto original nem a tradução.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Uma vez por dia, é enviado um resumo dos dias anteriores, vinculado à sua conta: data, recurso (como tradução por seleção ou leitura bilíngue), plataforma (ChatGPT, DeepSeek, DeepL ou tradução local), número de chamadas e número de falhas. Não são enviados texto original, tradução, URL, idioma ou modelo, e o uso em janelas anônimas não é contabilizado. Ao desativar, os registros ainda não enviados são apagados."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Uma vez por dia, é enviado um resumo dos dias anteriores, vinculado à sua conta: data, recurso (como tradução por seleção ou leitura bilíngue), plataforma (ChatGPT, DeepSeek, DeepL ou tradução local), número de chamadas e número de falhas. Não são enviados texto original, tradução, URL, idioma ou modelo, e o uso em janelas anônimas não é contabilizado. Ao desativar, os registros ainda não enviados são apagados.",
+  "划词用得顺手吗？": "O Huaci está funcionando bem para você?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Você já usa sua própria API Key para traduzir há mais de um mês. Se achar útil, poderia reservar um minuto para deixar uma avaliação na loja? Isso ajuda mais pessoas a encontrá-lo.",
+  "去商店评价": "Avaliar na loja",
+  "以后再说": "Talvez mais tarde",
+  "不再提示": "Não mostrar novamente"
 }

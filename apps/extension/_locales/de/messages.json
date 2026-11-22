@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Täglich wird eine Zusammenfassung der vorangegangenen Tage gesendet und mit deinem Konto verknüpft: Datum, Funktion (z. B. Übersetzung markierter Wörter, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Originaltexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognitofenstern wird nicht gezählt. Wenn du dies deaktivierst, werden noch nicht gesendete Datensätze gelöscht."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Läuft Huaci gut für dich?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Du übersetzt seit über einem Monat mit deinem eigenen API Key. Wenn du es nützlich findest, könntest du eine Minute Zeit nehmen, um eine Bewertung im Store zu hinterlassen? So finden mehr Leute dazu."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Jetzt bewerten"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Später"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Nicht mehr anzeigen"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

@@ -701,5 +701,10 @@
   "$1 次": "$1 Aufruf(e)",
   "收起": "Einklappen",
   "原文会经我们的服务器发送给模型服务商（目前是 DeepSeek）完成翻译；我们不保存原文和译文。": "Der Originaltext wird über unsere Server an den Modellanbieter (derzeit DeepSeek) zur Übersetzung gesendet; wir speichern weder den Originaltext noch die Übersetzung.",
-  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Täglich wird eine Zusammenfassung der vorangegangenen Tage gesendet und mit deinem Konto verknüpft: Datum, Funktion (z. B. Übersetzung markierter Wörter, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Originaltexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognitofenstern wird nicht gezählt. Wenn du dies deaktivierst, werden noch nicht gesendete Datensätze gelöscht."
+  "每天发送一次前几天的汇总，与你的账户关联：日期、功能（如划词翻译、双语阅读）、平台（ChatGPT、DeepSeek、DeepL 或本机翻译）、调用次数和失败次数。不发送原文、译文、网址、语言或模型，无痕窗口里的使用不计。关闭后清空尚未发送的记录。": "Täglich wird eine Zusammenfassung der vorangegangenen Tage gesendet und mit deinem Konto verknüpft: Datum, Funktion (z. B. Übersetzung markierter Wörter, zweisprachiges Lesen), Plattform (ChatGPT, DeepSeek, DeepL oder lokale Übersetzung), Anzahl der Aufrufe und Anzahl der Fehler. Es werden keine Originaltexte, Übersetzungen, URLs, Sprachen oder Modelle gesendet, und die Nutzung in Inkognitofenstern wird nicht gezählt. Wenn du dies deaktivierst, werden noch nicht gesendete Datensätze gelöscht.",
+  "划词用得顺手吗？": "Läuft Huaci gut für dich?",
+  "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Du übersetzt seit über einem Monat mit deinem eigenen API Key. Wenn du es nützlich findest, könntest du eine Minute Zeit nehmen, um eine Bewertung im Store zu hinterlassen? So finden mehr Leute dazu.",
+  "去商店评价": "Jetzt bewerten",
+  "以后再说": "Später",
+  "不再提示": "Nicht mehr anzeigen"
 }

@@ -2933,6 +2933,21 @@
   "m_00f1d3acec98dbcf": {
     "message": "Her gün önceki günlerin özeti hesabınızla ilişkilendirilerek gönderilir: tarih, özellik (ör. Huaci ile çeviri, iki dilli okuma), platform (ChatGPT, DeepSeek, DeepL veya yerel çeviri), çağrı sayısı ve hata sayısı. Orijinal metin, çeviri, URL, dil veya model gönderilmez; gizli pencerelerdeki kullanım sayılmaz. Bu kapatıldığında henüz gönderilmemiş kayıtlar silinir."
   },
+  "m_e45d2655a5147e37": {
+    "message": "Huaci işinize yarıyor mu?"
+  },
+  "m_88b5ab31b8bc456c": {
+    "message": "Bir aydan fazla süredir kendi API Key'inizle çeviri yapıyorsunuz. İşinize yarıyorsa, mağazada yorum bırakmak için bir dakikanızı ayırır mısınız? Bu, daha fazla kişinin onu bulmasına yardımcı olur."
+  },
+  "m_0c7964883c8474bf": {
+    "message": "Yorum bırak"
+  },
+  "m_9d2055b957c00318": {
+    "message": "Daha sonra"
+  },
+  "m_a54a0add54472cb1": {
+    "message": "Bir daha gösterme"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

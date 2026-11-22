@@ -356,6 +356,17 @@
       </footer>
     </main>
 
+    <!-- 商店评价邀请：只对长期在用自带 API Key 的用户出现，条件见 lib/review.js -->
+    <dialog class="review-dialog" id="reviewDialog" aria-labelledby="reviewTitle">
+      <h2 id="reviewTitle">划词用得顺手吗？</h2>
+      <p>你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。</p>
+      <div class="review-actions">
+        <button class="btn" type="button" id="reviewRate">去商店评价</button>
+        <button class="btn ghost" type="button" id="reviewLater">以后再说</button>
+        <button class="btn ghost" type="button" id="reviewNever">不再提示</button>
+      </div>
+    </dialog>
+
     <script src="../lib/languages.js"></script>
     <script src="../lib/messages.js"></script>
     <script src="../lib/i18n.js"></script>
@@ -369,6 +380,7 @@
     <script src="../lib/local.js"></script>
     <script src="../lib/speech.js"></script>
     <script src="../lib/auth-ui.js"></script>
+    <script src="../lib/review.js"></script>
     <script src="options.js"></script>
     <script src="dev-tools.js"></script>
   </body>

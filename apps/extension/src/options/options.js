@@ -38,6 +38,10 @@
     cache: $('cache'),
     cacheCount: $('cacheCount'),
     shareUsage: $('shareUsage'),
+    reviewDialog: $('reviewDialog'),
+    reviewRate: $('reviewRate'),
+    reviewLater: $('reviewLater'),
+    reviewNever: $('reviewNever'),
     usagePendingCount: $('usagePendingCount'),
     usagePendingToggle: $('usagePendingToggle'),
     usagePendingList: $('usagePendingList'),
@@ -932,6 +936,34 @@
   });
   el.usageShared.addEventListener('click', () => openLink('usage'));
 
+  /**
+   * 商店评价邀请（lib/review.js）：长期在用自带 API Key 的用户打开设置页时出现。是否出现由 service worker 判断，
+   * 出现即记下（30 天内不再出现）；关掉对话框（含 Esc）等同「以后再说」。引导未完成或从语言下拉跳来时不打扰。
+   */
+  // 开发工具的「预览评价弹窗」：只显示，不记出现次数，按钮也不改记录
+  let reviewPreview = false;
+  document.addEventListener('aitr-review-preview', () => {
+    reviewPreview = true;
+    el.reviewDialog.showModal();
+  });
+  el.reviewDialog.addEventListener('close', () => { reviewPreview = false; });
+
+  async function maybeAskReview() {
+    if (onboarding === 'pending' || location.hash || typeof el.reviewDialog.showModal !== 'function') return;
+    const reply = await chrome.runtime.sendMessage({ type: 'review-check' }).catch(() => null);
+    if (reply?.show) el.reviewDialog.showModal();
+  }
+  const answerReview = (action) => {
+    if (!reviewPreview) chrome.runtime.sendMessage({ type: 'review-action', action }).catch(() => {});
+    el.reviewDialog.close();
+  };
+  el.reviewRate.addEventListener('click', () => {
+    openLink('review');
+    answerReview('rate');
+  });
+  el.reviewLater.addEventListener('click', () => answerReview('later'));
+  el.reviewNever.addEventListener('click', () => answerReview('never'));
+
   /** 本机译文缓存（lib/cache.js）：显示条数、全部清除。关掉开关只是不再读写，已有条目留着，要删就点清除。 */
   async function renderCache() {
     const count = await AITrCache.count().catch(() => 0);
@@ -1016,6 +1048,7 @@
     renderTerms();
     renderCache();
     renderUsagePending();
+    maybeAskReview();
     renderSiteProvider();
     renderSites();
     renderVideoLang();

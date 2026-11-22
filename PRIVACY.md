@@ -119,6 +119,7 @@ The following is stored on **your device** (`chrome.storage.local`; saved articl
 - **Saved articles**: articles and translations you saved in bilingual reading; kept only on your device and deletable from the reading page's side panel
 - **Translation cache**: translations and image-recognition results from your own API key (ChatGPT, DeepSeek, DeepL), stored encrypted; entries are looked up by a hash keyed with a local secret, and the original text is not stored. The same content is reused when you translate it again, entries unused for 30 days are deleted automatically, and you can turn it off or clear it in the options page. Credit translation and local translation don't use it
 - **Pending feature usage counts**: only when you turn on “Share feature usage”, see above; cleared when you turn it off or sign out
+- **Days of use**: dates on which you translated successfully with your own API key (last 60 days only), the first such date and the total number of days; used only to decide when the options page invites you to leave a store review, and never uploaded
 
 You can clear all of it from the options page at any time (saved articles are deleted from the reading page's side panel), or uninstall the extension (which removes it all).
 
@@ -266,6 +267,7 @@ For questions or data requests, email [support@huaci.app](mailto:support@huaci.a
 - **保存的文章**——你在双语阅读里保存的文章与译文，只在本机，可在阅读页右侧删除
 - **译文缓存**——用自己的 API Key（ChatGPT、DeepSeek、DeepL）得到的译文与识图结果，加密保存；按带本机密钥的摘要查找，不保存原文。同样的内容再翻译时直接使用，30 天没用到自动删除，可在设置页关闭或清除。点数翻译和本机翻译不使用
 - **待发送的功能使用计数**——只在你开启「分享功能使用情况」后存在，见上文；关闭开关或退出登录时清空
+- **使用天数**——用自己的 API Key 成功翻译过的日期（只留最近 60 天）、首次使用日期和累计天数，只用来决定何时在设置页邀请你去商店评价，不上传
 
 你可以随时在设置页清空这些数据（保存的文章在阅读页右侧删除），或直接卸载扩展（卸载会一并删除）。
 
