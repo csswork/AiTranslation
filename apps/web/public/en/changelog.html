@@ -81,6 +81,26 @@
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
       <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
+      <article class="log-entry reveal" id="v2-4-0" data-release-version="2.4.0">
+        <div class="log-when">
+          <span class="log-ver">v2.4.0</span>
+          <div>2026-11-23</div>
+        </div>
+        <div class="log-body">
+          <h3>Local translation cache: repeated content no longer consumes your tokens</h3>
+          <p><b>Release status</b>: Submitted for store review and will be released once approved; the version currently available in the store may still be the previous one.</p>
+          <p>When using your own Key, translated content is cached locally. When the same text appears again, the cache is used directly without requesting the translation platform, saving tokens and character quota, and with no waiting.</p>
+          <ul>
+            <li><b>Local translation cache</b>: Translation results from large models such as ChatGPT and DeepSeek, as well as DeepL, are encrypted and stored locally; when the same content is translated again, it is displayed directly and no longer counts toward platform usage.</li>
+            <li><b>Covers all translation modes</b>: Selected text, webpage regions, whole-website translation, bilingual reading, entire PDFs, image recognition, and alternative wordings all use the cache. Navigation, buttons, and headings that appear repeatedly across a website are translated only once across pages.</li>
+            <li><b>Show cached parts first</b>: Region translation and full-site translation fill in cached paragraphs first and request only the remaining content, so page translations appear faster.</li>
+            <li><b>No stale translations</b>: Changing the target language, model, style, or wording preference triggers retranslation; when needed, click "Retranslate", or for images click "Recognize and translate again" to skip the cache.</li>
+            <li><b>Manageable at any time</b>: On the settings page, you can disable the cache, view the number of cached entries, and clear them with one click. The cache is local only, not synced or uploaded; credit-based translation and local translation do not use this cache.</li>
+            <li><b>Translation style</b>: The style guide now includes examples, making wording, terminology, and tone more consistent.</li>
+          </ul>
+        </div>
+      </article>
+
       <article class="log-entry reveal" id="v2-3-0" data-release-version="2.3.0">
         <div class="log-when">
           <span class="log-ver">v2.3.0</span>

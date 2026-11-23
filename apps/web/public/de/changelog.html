@@ -81,6 +81,26 @@
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
       <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
+      <article class="log-entry reveal" id="v2-4-0" data-release-version="2.4.0">
+        <div class="log-when">
+          <span class="log-ver">v2.4.0</span>
+          <div>2026-11-23</div>
+        </div>
+        <div class="log-body">
+          <h3>Lokaler Übersetzungscache: Wiederholte Inhalte verbrauchen keine weiteren Token</h3>
+          <p><b>Veröffentlichungsstatus</b>: Zur Prüfung im Store eingereicht, Veröffentlichung nach Freigabe; die aktuell im Store installierbare Version kann noch die vorherige sein.</p>
+          <p>Bei Verwendung eines eigenen Keys werden übersetzte Inhalte lokal zwischengespeichert. Erscheint derselbe Text erneut, wird direkt der Cache verwendet, die Übersetzungsplattform nicht erneut angefragt, Token und Zeichenkontingent gespart und keine Wartezeit verursacht.</p>
+          <ul>
+            <li><b>Lokaler Übersetzungscache</b>: Übersetzungsergebnisse von großen Modellen wie ChatGPT, DeepSeek und von DeepL werden verschlüsselt lokal gespeichert; bei erneuter Übersetzung desselben Inhalts werden sie direkt angezeigt und nicht erneut auf das Plattformkontingent angerechnet.</li>
+            <li><b>Abdeckung aller Übersetzungsarten</b>: Huaci, Webseitenbereiche, Website-Übersetzung, zweisprachiges Lesen, ganze PDFs, Bilderkennung und Wortabfragen nutzen den Cache. Wiederkehrende Navigation, Schaltflächen und Überschriften einer Website werden seitenübergreifend nur einmal übersetzt.</li>
+            <li><b>Zuerst bereits gecachte Teile anzeigen</b>: Bei Bereichs- und Website-Übersetzung werden bereits gecachte Absätze zuerst eingefügt und nur die übrigen Inhalte angefragt, sodass die Seitenübersetzung schneller erscheint.</li>
+            <li><b>Keine falsche Verwendung alter Übersetzungen</b>: Bei Änderung von Zielsprache, Modell, Stil oder Wortpräferenzen wird neu übersetzt; bei Bedarf „Neu übersetzen“ anklicken, bei Bildern „Neu erkennen und übersetzen“, um den Cache zu umgehen.</li>
+            <li><b>Jederzeit verwaltbar</b>: In den Einstellungen lässt sich der Cache deaktivieren, die Anzahl der Einträge einsehen und mit einem Klick löschen. Der Cache bleibt lokal, wird nicht synchronisiert und nicht hochgeladen; Punktübersetzung und lokale Übersetzung nutzen diesen Cache nicht.</li>
+            <li><b>Übersetzungsstil</b>: Der Stilguide wurde um Beispiele ergänzt, wodurch Formulierung, Terminologie und Ton der Übersetzung stabiler werden.</li>
+          </ul>
+        </div>
+      </article>
+
       <article class="log-entry reveal" id="v2-3-0" data-release-version="2.3.0">
         <div class="log-when">
           <span class="log-ver">v2.3.0</span>

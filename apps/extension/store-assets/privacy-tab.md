@@ -130,7 +130,8 @@ app.huaci.app.
 Runs a local extension version check every 24 hours while the browser is available. After the
 account's initial registration, an unchanged version needs no network request. When the extension
 is upgraded, it sends the previous and new versions to our own account service so we can track
-release adoption and troubleshoot compatibility.
+release adoption and troubleshoot compatibility. Only when the user turns on the off-by-default
+Share feature usage option, a 6-hour alarm sends the counts of previous days.
 ```
 
 **中文**
@@ -138,6 +139,7 @@ release adoption and troubleshoot compatibility.
 ```
 在浏览器可用时每 24 小时检查一次本机扩展版本。账户首次登记后，版本无变化时只在本机检查。
 扩展升级时向我们自己的账户服务上报原版本和新版本，用于了解更新进度和排查兼容问题。
+只有用户在设置里打开默认关闭的「分享功能使用情况」后，才会每 6 小时发送一次此前各天的计数。
 ```
 
 ### `scripting`

@@ -81,6 +81,26 @@
       <!-- 新版本加在这里，复制下面一整个 .log-entry 改掉内容即可 -->
       <!-- 预告条目用 id="next"、不写 data-release-version；发布时补上版本号、日期与该属性，并同步 manifest 和首页版本 -->
 
+      <article class="log-entry reveal" id="v2-4-0" data-release-version="2.4.0">
+        <div class="log-when">
+          <span class="log-ver">v2.4.0</span>
+          <div>2026-11-23</div>
+        </div>
+        <div class="log-body">
+          <h3>Cache de traduction locale : les contenus répétés ne consomment plus vos Tokens</h3>
+          <p><b>Statut de publication</b> : soumis à la validation du store, publication après approbation ; la version actuellement installée depuis le store peut encore être la précédente.</p>
+          <p>Avec votre propre clé, les contenus traduits sont mis en cache localement. Lorsque le même texte réapparaît, le cache est utilisé directement, sans nouvelle requête à la plateforme de traduction, ce qui économise des Tokens et du quota de caractères, sans attente.</p>
+          <ul>
+            <li><b>Cache de traduction locale</b> : les résultats de traduction des grands modèles comme ChatGPT et DeepSeek ainsi que de DeepL sont stockés localement de manière chiffrée ; lors d'une nouvelle traduction du même contenu, ils s'affichent directement sans être recomptés dans l'usage de la plateforme.</li>
+            <li><b>Compatible avec tous les modes de traduction</b> : la sélection de texte, la traduction de zones de page, la traduction de site entier, la lecture bilingue, les PDF complets, la reconnaissance d'images et le changement de formulation au clic utilisent tous le cache. Les navigations, boutons et titres récurrents d'un site ne sont traduits qu'une seule fois, même d'une page à l'autre.</li>
+            <li><b>Affichage prioritaire des parties en cache</b> : la traduction de zones et de site entier remplit d'abord les paragraphes déjà en cache et ne demande que le reste, ce qui accélère l'apparition de la traduction.</li>
+            <li><b>Aucun risque d'ancienne traduction erronée</b> : changer la langue cible, le modèle, le style ou les préférences de vocabulaire déclenche une nouvelle traduction ; au besoin, cliquez sur « Retraduire », ou sur « Reconnaître et traduire à nouveau » pour les images, afin d'ignorer le cache.</li>
+            <li><b>Gérable à tout moment</b> : dans la page de paramètres, vous pouvez désactiver le cache, consulter le nombre d'entrées en cache et tout effacer en un clic. Le cache reste local, sans synchronisation ni envoi ; la traduction par points et la traduction locale n'utilisent pas ce cache.</li>
+            <li><b>Style de traduction</b> : le guide de style a été enrichi d'exemples, rendant la formulation, la terminologie et le ton plus stables.</li>
+          </ul>
+        </div>
+      </article>
+
       <article class="log-entry reveal" id="v2-3-0" data-release-version="2.3.0">
         <div class="log-when">
           <span class="log-ver">v2.3.0</span>

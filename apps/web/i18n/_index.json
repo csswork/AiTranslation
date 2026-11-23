@@ -192,6 +192,69 @@
       "changelog.html"
     ]
   },
+  "本机译文缓存：重复内容不再消耗你的 Token": {
+    "kind": "text",
+    "tag": "h3",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>发布状态</b>：已提交商店审核，审核通过后发布；当前商店安装的版本可能仍是上一版。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "使用自带 Key 时，翻译过的内容会缓存在本机。同样的文字再次出现时直接使用缓存，不再请求翻译平台，节省 Token 和字符额度，也不用等待。": {
+    "kind": "text",
+    "tag": "p",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>本机译文缓存</b>：ChatGPT、DeepSeek 等大模型和 DeepL 的翻译结果加密保存在本机；再次翻译相同内容时直接显示，不再计入平台用量。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>覆盖各种翻译方式</b>：划词、网页区域、整站翻译、双语阅读、整份 PDF、图片识别和点词换说法都会用到缓存。网站上反复出现的导航、按钮和标题，跨页面也只翻译一次。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>先显示已缓存的部分</b>：区域翻译和整站翻译会先填上已缓存的段落，只请求剩下的内容，页面译文出现得更快。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>不会用错旧译文</b>：换了目标语言、模型、风格或用词偏好，就会重新翻译；需要时点「重新翻译」，图片点「重新识别并翻译」，即可跳过缓存。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>随时可管理</b>：在设置页可以关闭缓存、查看已缓存的条数并一键清除。缓存只在本机，不同步、不上传；点数翻译和本机翻译不使用这项缓存。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
+  "<b>译文风格</b>：风格指南补充了示例，译文的措辞、术语和语气更稳定。": {
+    "kind": "text",
+    "tag": "li",
+    "pages": [
+      "changelog.html"
+    ]
+  },
   "本机翻译、整站翻译与图片自动翻译优化": {
     "kind": "text",
     "tag": "h3",
@@ -628,7 +691,7 @@
       "index.html"
     ]
   },
-  "<span class=\"mono release-ver\" data-extension-version>v2.3.0</span> <span>新版：本机翻译、整站翻译与图片自动翻译优化。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
+  "<span class=\"mono release-ver\" data-extension-version>v2.4.0</span> <span>新版：本机缓存译文，重复内容不再消耗 Token。</span> <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3.5 10.5 8 6 12.5\"/></svg>": {
     "kind": "text",
     "tag": "a",
     "pages": [

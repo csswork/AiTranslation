@@ -43,7 +43,9 @@ node apps/extension/store-assets/edge/build-listings.mjs --check
 
 `submission.json` 提供用途、权限理由、数据处理事实、支持网址、审核步骤与更新说明。逐项对照 Partner Center 的实际问题填写，不能勾选“完全不处理数据”或“所有请求都直连平台”。API 响应只作为数据；所有可执行代码均随包提供。
 
-现有 `icons/icon128.png` 可作商店 Logo（128×128）；`store-assets/screenshots/` 五张功能截图为 1280×800，`store-assets/promo/` 为 440×280 与 1400×560。现有截图来自 Chrome 中的真实扩展界面，未经 Edge 实测不要称作 Edge 实机截图；初次可以先只用 Logo，或重新录制 Edge 图。
+现有 `icons/icon128.png` 可作商店 Logo（128×128）；`store-assets/screenshots/en/` 与 `zh-Hans/` 各五张功能截图为 1280×800，`store-assets/promo/` 为 440×280 与 1400×560。现有截图来自 Chrome 中的真实扩展界面，未经 Edge 实测不要称作 Edge 实机截图；初次可以先只用 Logo，或重新录制 Edge 图。
+
+2026-11-23 已在 Partner Center 把 23 种商店语言的素材换成新版并保存为草稿：小宣传图、横幅与五张截图先在英文页上传，再用页面的「Duplicate … for all languages」复制到所有语言；简体中文页另换成 `zh-Hans/` 五张截图；23 种语言的 YouTube 链接都改为 `https://youtu.be/r2J_NAdy2ME`（Edge 没有复制视频链接的选项，逐个语言修改）。逐页核对过：每种语言 5 张截图、2 张宣传图、新视频链接。用脚本给链接输入框赋值时，页面有时提示已保存但并未存上，要用真实键盘输入并点击页面上的 Save draft，整页刷新后再核对。
 
 ## 隐私与兼容性验收
 

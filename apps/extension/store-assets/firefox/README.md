@@ -1,6 +1,6 @@
 # Firefox Add-ons 商店资料
 
-2026-11-17 已补齐 AMO 当前可选的 18 种对应语言的名称、短介绍与完整长介绍。扩展包本身仍提供 24 种界面语言。商店版本为 2.3.0.1，状态为等待审核。
+2026-11-17 已补齐 AMO 当前可选的 18 种对应语言的名称、短介绍与完整长介绍。扩展包本身仍提供 24 种界面语言。商店版本 2.3.0.1 已公开（2026-11-23 核实）：<https://addons.mozilla.org/firefox/addon/huaci-ai-translator/>。
 
 ## 文字资料
 
@@ -23,15 +23,8 @@ node apps/extension/store-assets/edge/build-listings.mjs --firefox --check
 
 ## 图标与截图
 
-图标使用 `../../icons/icon128.png`。商店共享以下 4 张 1280×800 的功能图，顺序如下：
+图标使用 `../../icons/icon128.png`。2026-11-23 起 AMO 截图换成[素材说明](../README.md)里 `screenshots/en/` 的五张（划词、图片、双语阅读、整份 PDF、整站翻译），每张配一句英文说明（en-US），旧的四张已删除；AMO 截图不分语言。图里是 Chrome 中的扩展界面，不是 Firefox 实机截图，五个功能 Firefox 版都有；PDF 图是对照页，不含 Chrome 内置 PDF 的右键入口。
 
-1. `../screenshots/01-selection-translate.png`：划词翻译与流式输出。
-2. `../screenshots/02-image-translate.png`：图片文字区域调整与导出。
-3. `../screenshots/04-block-translate.png`：网页区域翻译与原文切换。
-4. `../screenshots/05-translate-panel.png`：翻译面板、平台选择与复制。
-
-这些是既有 Chrome for Testing 拍摄的共用扩展界面宣传图，不是 Firefox 实机验证截图；拍摄与预置译文说明见[素材说明](../README.md)。未使用 `03-pdf-translate.png`，因为图上写的是 Chrome 内置 PDF 的右键入口，与 Firefox 的本机文件选择入口不同。
-
-当前 AMO 产品页面的媒体表单只有图标和截图，没有视频字段。现有宣传片包含 Firefox 不支持的本机翻译及 Chrome/Edge 信息，未作为 Firefox 宣传视频上传或链接。
+当前 AMO 产品页面的媒体表单只有图标和截图，没有视频字段。宣传片在 Chrome 中录制（PDF 段是 Chrome 内置阅读器的右键入口），YouTube 简介里注明了 Firefox 的 PDF 入口不同、没有本机翻译，并附上 AMO 链接。
 
 [编辑产品页面](https://addons.mozilla.org/zh-CN/developers/addon/huaci-ai-translator/edit) · [审核状态](https://addons.mozilla.org/zh-CN/developers/addon/huaci-ai-translator/versions)（需开发者登录）。
