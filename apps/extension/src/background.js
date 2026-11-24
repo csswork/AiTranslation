@@ -8,7 +8,6 @@ import './lib/i18n.js';
 import './lib/env.js';
 import './lib/lang.js';
 import './lib/settings.js';
-import './lib/preset-terms.js';
 import './lib/terms.js';
 import './lib/local.js';
 import './lib/cache.js';

@@ -197,18 +197,12 @@
   const PARAM_COMPLAINT =
     /param|unsupported|unrecognized|unknown field|not support|invalid_request/i;
 
-  /** 个人偏好对所有平台生效；预设词条只随支持该目标语言的大模型请求发送。 */
-  async function termsFor(texts, settings, provider, { targetId, targetLanguage, sourceId }) {
-    const terms = globalThis.AITrTerms;
-    if (!terms) return [];
-    const target = targetId || settings.target;
-    const usePresets = settings.presetTerms && (provider.kind === 'hosted' ||
-      (provider.kind === 'llm' && (!targetLanguage || targetLanguage === globalThis.AITrSettings.TARGETS[target]?.prompt)));
+  /** 用词偏好（见 terms.js）：原文里出现了用户改过的词，就按用户的译法翻。 */
+  async function termsFor(texts, targetId) {
     try {
-      const personal = await terms.relevant(texts, target, usePresets);
-      return usePresets ? terms.withPresets(personal, texts, target, sourceId) : personal;
+      return (await globalThis.AITrTerms?.relevant(texts, targetId)) || [];
     } catch {
-      return []; // 保持原有降级行为：本机词条异常不应打断翻译。
+      return [];
     }
   }
 
@@ -483,7 +477,7 @@
   async function* translate({ text, settings, providerId, targetLanguage, targetId, sourceId, surface, signal, fresh = false }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
-    const terms = await termsFor([text], settings, provider, { targetId, targetLanguage, sourceId });
+    const terms = await termsFor([text], targetId || settings.target);
     const glossary = terms.length ? globalThis.AITrTerms.glossary(terms) : undefined;
 
     // 托管翻译：默认流式，关闭「流式输出」时一次性返回整段译文
@@ -649,7 +643,7 @@
     const cache = cacheFor(settings, provider);
     if (!cache || !provider.apiKey) return null;
     const targetKey = targetId || settings.target;
-    const terms = await termsFor(texts, settings, provider, { targetId, targetLanguage });
+    const terms = await termsFor(texts, targetKey);
     // DeepL：缓存替换用词偏好之前的译文，偏好在取回后再套用
     if (provider.kind === 'mt') {
       const targetCode = S.deeplCode(targetKey);
@@ -657,7 +651,7 @@
     }
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
     // 只取出现在这些原文里的用词偏好：逐段命中时，每段的键只受它自己用到的偏好影响
-    const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey, settings.presetTerms) : []);
+    const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
     return {
       cache, provider, terms, target, termsIn,
       parts: ['llm-batch', provider.id, provider.baseUrl, provider.model, batchSystemPrompt(target)],
@@ -690,12 +684,12 @@
     const targetKey = targetId || settings.target;
 
     if (provider.kind === 'hosted') {
-      const terms = await termsFor(texts, settings, provider, { targetId });
+      const terms = await termsFor(texts, targetKey);
       return hostedTranslate({ texts, target: targetKey, glossary: terms.length ? globalThis.AITrTerms.glossary(terms) : undefined, surface, signal });
     }
 
     if (provider.kind === 'local') {
-      const terms = await termsFor(texts, settings, provider, { targetId });
+      const terms = await termsFor(texts, targetKey);
       const out = await localTranslate({ texts, targetId: targetKey, signal });
       return terms.length ? out.map((item, i) => globalThis.AITrTerms.applyTo(texts[i], item, terms)) : out;
     }
@@ -704,7 +698,7 @@
       throw new TranslateError(t("还没有配置 $1 的 API Key", [provider.label]), 'open-options');
     }
     const plan = await batchPlan({ texts, settings, providerId, targetLanguage, targetId });
-    const terms = plan?.terms || await termsFor(texts, settings, provider, { targetId, targetLanguage });
+    const terms = plan?.terms || await termsFor(texts, targetKey);
 
     // 传统翻译接口原生支持一次多段，比让模型吐 JSON 数组可靠得多
     if (provider.kind === 'mt') {
@@ -717,6 +711,7 @@
     }
 
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
+    const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
     return cachedBatch({
       cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
       run: async (list) => {
@@ -724,7 +719,7 @@
           provider,
           text: JSON.stringify(list),
           targetLanguage: target,
-          system: batchSystemPrompt(target, list === texts ? terms : plan.termsIn(list)),
+          system: batchSystemPrompt(target, list === texts ? terms : termsIn(list)),
           stream: false,
           signal,
         });

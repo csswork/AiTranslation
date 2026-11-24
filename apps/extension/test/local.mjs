@@ -13,7 +13,7 @@ const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
 installExtensionFixture(chrome);
 let chromeDetect = { isReliable: false, languages: [] };
 chrome.i18n.detectLanguage = async () => chromeDetect;
-load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/preset-terms.js'); load('src/lib/terms.js');
+load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/terms.js');
 
 /* 浏览器不支持时：不出现在平台列表里，已选的保留并给出原因 */
 {

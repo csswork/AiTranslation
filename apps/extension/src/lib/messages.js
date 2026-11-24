@@ -707,9 +707,7 @@ globalThis.AITrMessageIds = {
   "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "m_88b5ab31b8bc456c",
   "去商店评价": "m_0c7964883c8474bf",
   "以后再说": "m_9d2055b957c00318",
-  "不再提示": "m_a54a0add54472cb1",
-  "使用预设商品和云计算术语": "m_dc9408b348718378",
-  "适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。": "m_f72e773665d9add3"
+  "不再提示": "m_a54a0add54472cb1"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1419,7 +1417,5 @@ globalThis.AITrEnglish = {
   "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "You've been translating with your own API Key for over a month now. If you find it useful, could you take a minute to leave a review in the store? It helps more people find it.",
   "去商店评价": "Leave a review",
   "以后再说": "Maybe later",
-  "不再提示": "Don't show again",
-  "使用预设商品和云计算术语": "Use preset product and cloud computing terminology",
-  "适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。": "Large model translation between Chinese, English, Japanese, French, German, Spanish, and Arabic. Your preferred translations take priority."
+  "不再提示": "Don't show again"
 };

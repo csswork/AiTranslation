@@ -36,7 +36,6 @@
     streamHelp: $('streamHelp'),
     showOriginal: $('showOriginal'),
     cache: $('cache'),
-    presetTerms: $('presetTerms'),
     cacheCount: $('cacheCount'),
     shareUsage: $('shareUsage'),
     reviewDialog: $('reviewDialog'),
@@ -475,7 +474,6 @@
     el.stream.checked = settings.stream;
     el.showOriginal.checked = settings.showOriginal;
     el.cache.checked = settings.cache;
-    el.presetTerms.checked = settings.presetTerms;
     el.shareUsage.checked = settings.shareUsage;
     el.floating.checked = settings.floating;
     el.imageMode.value = settings.imageMode;
@@ -734,7 +732,6 @@
   el.stream.addEventListener('change', () => save({ stream: el.stream.checked }));
   el.showOriginal.addEventListener('change', () => save({ showOriginal: el.showOriginal.checked }));
   el.cache.addEventListener('change', () => save({ cache: el.cache.checked }));
-  el.presetTerms.addEventListener('change', () => save({ presetTerms: el.presetTerms.checked }));
   el.shareUsage.addEventListener('change', () => {
     if (!el.shareUsage.checked) {
       save({ shareUsage: false }).then(renderUsagePending);

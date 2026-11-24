@@ -52,6 +52,9 @@ const senseHints = [
   [/来年度/, '来年度 指下一个年度。按上下文区分学年、财年和自然年，类型不明时保留“下一年度”。'],
 ];
 
+// 现版会稳定译错的两条：撥水常被译成“防水”，来年度常被译成“明年”或照搬“明年度”。
+const jaSenseHints = senseHints.slice(1);
+
 const courtesyHints = [
   [/\bfor what it['’]s worth\b/i, 'for what it’s worth 用作插入语时是在谦逊地提供意见或经历，按语境处理这种分寸。'],
   [/誠に勝手ながら/, '誠に勝手ながら 表达因己方安排给人添麻烦的歉意；是否另行通知须看原文有无明说。'],
@@ -68,16 +71,12 @@ function withSenseHints(body, ctx, rules = senseHints) {
 
 export const variants = {
   baseline: { note: '线上现状', patch: (body) => body },
-  presets: { note: '在扩展翻译入口开启预设术语', presetTerms: true, patch: (body) => body },
-  'hosted-presets': { note: '托管翻译开启相同术语', presetTerms: true, patch: withSystem((prompt, ctx) => {
-    const terms = globalThis.AITrTerms;
-    const entries = terms.withPresets([], ctx.sample.texts || [ctx.sample.text], ctx.targetId);
-    return hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1, terms.glossary(entries));
-  }) },
   'zh-focus': { note: '简中按原文保留重点、限定和语气', patch: withSystem(chineseFocus) },
   'zh-sense': { note: '简中词义提示，含两条客套语试验', patch: (body, ctx) => withSenseHints(body, ctx, [...senseHints, ...courtesyHints]) },
   'zh-precision': { note: '简中仅在涉及需求水平、防泼水或年度时提示词义', patch: withSenseHints },
   'hosted-zh-precision': { note: '在托管提示词上试同样三条提示', patch: (body, ctx) => withSenseHints(withSystem(hosted)(body, ctx), ctx) },
+  'zh-sense-ja': { note: '简中只提示撥水与来年度', patch: (body, ctx) => withSenseHints(body, ctx, jaSenseHints) },
+  'hosted-zh-sense-ja': { note: '托管提示词上只提示撥水与来年度', patch: (body, ctx) => withSenseHints(withSystem(hosted)(body, ctx), ctx, jaSenseHints) },
 
   'temp-0.7': { note: '温度 0.7', patch: (body) => ({ ...body, temperature: 0.7 }) },
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
