@@ -32,7 +32,7 @@
 
   const MAX_NODES = 300;            // 单个元素最多翻译多少段
   const MAX_CHARS = 20000;          // 单个元素最多翻译多少字
-  const CHUNK_NODES = 25;           // 每批送多少段
+  const CHUNK_NODES = 50;           // 每批最多送多少段（短段落多的页面一批多看些上下文，译法更一致；字数上限照旧）
   const CHUNK_CHARS = 2200;         // 每批最多多少字
 
   const HOST = location.hostname;

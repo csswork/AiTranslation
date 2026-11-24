@@ -197,3 +197,38 @@ test('用词偏好放进翻译提示词（批量与流式都有），没有时�
   await hosted({ texts: ['a', 'b'], target: 'en' });
   assert.doesNotMatch(systems.at(-1), /prefers these renderings/);
 });
+
+test('多段翻译条数对不上或回复不是合法数组：同一模型拆半重发，用量相加；仍失败才改用备用', async () => {
+  const sent = [];
+  const answer = (texts, usage) => Response.json({ choices: [{ message: { content: texts } }],
+    usage: { prompt_tokens: usage, prompt_cache_hit_tokens: 1, completion_tokens: 2 } });
+  const hosted = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    const body = JSON.parse(init.body);
+    const user = body.messages[1].content;
+    sent.push({ url, user });
+    const list = user.startsWith('[') ? JSON.parse(user) : [user];
+    if (list.length === 4) return answer('["只回了一条"]', 100);
+    if (list.length === 2 && list[0] === 'a') return answer('["译:a", "译:b"', 50);
+    return answer(list.length === 1 ? `译:${list[0]}` : JSON.stringify(list.map((t) => `译:${t}`)), 10);
+  } });
+  const { translations, meta } = await hosted({ texts: ['a', 'b', 'c', 'd'], target: 'zh-Hans' });
+  assert.deepEqual(translations, ['译:a', '译:b', '译:c', '译:d']);
+  assert.ok(sent.every(({ url }) => url.startsWith('https://api.deepseek.com')), '拆半重发用同一个主力模型');
+  assert.deepEqual(sent.map(({ user }) => user).sort(), ['["a","b","c","d"]', '["a","b"]', '["c","d"]', 'a', 'b'].sort(), '单段按普通文字发送');
+  assert.equal(meta.inputTokens, 100 + 50 + 10 + 10 + 10, '格式不对的那几次也花了 token，计入用量');
+  assert.equal(meta.outputTokens, 2 * 5);
+  assert.equal(meta.fellBack, false);
+
+  // 网络、HTTP 错误不拆，直接改用备用模型
+  const urls = [];
+  const flaky = createHostedTranslator(config, { fetchImpl: async (url, init) => {
+    urls.push(url);
+    if (url.startsWith('https://api.deepseek.com')) return new Response('busy', { status: 503 });
+    const list = JSON.parse(JSON.parse(init.body).messages[1].content);
+    return Response.json({ choices: [{ message: { content: JSON.stringify(list.map((t) => `备:${t}`)) } }] });
+  } });
+  const fallback = await flaky({ texts: ['a', 'b'], target: 'zh-Hans' });
+  assert.deepEqual(fallback.translations, ['备:a', '备:b']);
+  assert.equal(urls.filter((url) => url.startsWith('https://api.deepseek.com')).length, 1);
+  assert.equal(fallback.meta.fellBack, true);
+});

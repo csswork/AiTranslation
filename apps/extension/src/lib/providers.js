@@ -641,6 +641,9 @@
     return text;
   }
 
+  /** 批量回复的格式问题（不是合法数组、条数对不上）：translateBatch 拆半重试，其他错误照常抛出。 */
+  const shapeError = (message) => Object.assign(new TranslateError(message), { shape: true });
+
   function parseBatch(content, expected) {
     const text = stripToJson(content, '[');
 
@@ -648,12 +651,12 @@
     try {
       parsed = JSON.parse(text);
     } catch {
-      throw new TranslateError(t("模型没有返回合法的 JSON 数组"));
+      throw shapeError(t("模型没有返回合法的 JSON 数组"));
     }
-    if (!Array.isArray(parsed)) throw new TranslateError(t("模型返回的不是数组"));
+    if (!Array.isArray(parsed)) throw shapeError(t("模型返回的不是数组"));
     // 条数对不上就不能用：会把译文安到错误的段落上
     if (parsed.length !== expected) {
-      throw new TranslateError(t("模型返回 $1 条，与原文 $2 条对不上", [parsed.length, expected]));
+      throw shapeError(t("模型返回 $1 条，与原文 $2 条对不上", [parsed.length, expected]));
     }
     return parsed.map((item) => (typeof item === 'string' ? item : String(item ?? '')));
   }
@@ -738,9 +741,10 @@
 
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
     const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
-    return cachedBatch({
-      cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
-      run: async (list) => {
+    // 模型偶尔少回、多回一条，或回复不是合法的 JSON 数组（如输出被截断）：把这一批拆成两半各自重发，
+    // 直到单段；只在这类格式问题上拆，网络、额度、Key 等错误照常抛出。正常回复不多花请求。
+    const translateList = async (list) => {
+      try {
         const response = await request({
           provider,
           text: JSON.stringify(list),
@@ -751,7 +755,16 @@
         });
         const data = await response.json();
         return parseBatch(data?.choices?.[0]?.message?.content, list.length);
-      },
+      } catch (err) {
+        if (!err?.shape || list.length < 2 || signal?.aborted) throw err;
+        const half = Math.ceil(list.length / 2);
+        const [head, tail] = await Promise.all([translateList(list.slice(0, half)), translateList(list.slice(half))]);
+        return [...head, ...tail];
+      }
+    };
+    return cachedBatch({
+      cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
+      run: translateList,
     });
   }
 

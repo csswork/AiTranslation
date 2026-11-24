@@ -75,7 +75,7 @@
     '[translate="no"]', '.notranslate', '[contenteditable=""]', '[contenteditable="true"]',
   ].join(',');
 
-  const CHUNK_NODES = 25;     // 每批送多少段
+  const CHUNK_NODES = 50;     // 每批最多送多少段（短段落多的页面一批多看些上下文，译法更一致；字数上限照旧）
   const CHUNK_CHARS = 2200;   // 每批最多多少字
   const MAX_ACTIVE = 2;       // 同时在途的请求数
   const MAX_TEXT = 1500;      // 单段文字超过这个长度就截断不翻（多半是数据而不是正文）

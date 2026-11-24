@@ -261,6 +261,13 @@ async function callModel(provider, { texts, target, source, image, purpose, glos
   const data = await response.json().catch(() => null);
   const content = data?.choices?.[0]?.message?.content;
   if (typeof content !== 'string' || !content.trim()) throw Object.assign(new Error('model_empty'), { code: 'empty' });
+  const u = data.usage || {};
+  const usage = {
+    inputTokens: u.prompt_tokens ?? 0,
+    // DeepSeek 用 prompt_cache_hit_tokens，OpenAI 兼容服务用 prompt_tokens_details.cached_tokens。
+    cachedTokens: u.prompt_cache_hit_tokens ?? u.prompt_tokens_details?.cached_tokens ?? 0,
+    outputTokens: u.completion_tokens ?? 0,
+  };
   let translations;
   try {
     if (image) {
@@ -275,18 +282,32 @@ async function callModel(provider, { texts, target, source, image, purpose, glos
         ({ text, box, ...(typeof vertical === 'boolean' ? { vertical } : {}), ...(sfx === true ? { sfx: true } : {}) })));
     } else translations = batch ? parseBatch(content, texts.length) : [content.trim()];
   } catch (err) {
-    throw Object.assign(new Error(image ? 'image_parse' : err.message), { code: image ? 'image_parse' : err.message });
+    // 回复格式不对时也带上这次的用量：拆半重发要把它算进总用量
+    throw Object.assign(new Error(image ? 'image_parse' : err.message), { code: image ? 'image_parse' : err.message, usage });
   }
-  const u = data.usage || {};
-  return {
-    ...(image ? { raw: translations } : { translations }),
-    usage: {
-      inputTokens: u.prompt_tokens ?? 0,
-      // DeepSeek 用 prompt_cache_hit_tokens，OpenAI 兼容服务用 prompt_tokens_details.cached_tokens。
-      cachedTokens: u.prompt_cache_hit_tokens ?? u.prompt_tokens_details?.cached_tokens ?? 0,
-      outputTokens: u.completion_tokens ?? 0,
-    },
-  };
+  return { ...(image ? { raw: translations } : { translations }), usage };
+}
+
+/**
+ * 多段翻译：模型偶尔少回、多回一条，或回复不是合法的 JSON 数组（如输出被截断）时，用同一个模型把这一批拆成两半各自重发，
+ * 直到单段（单段不要求 JSON）；token 用量相加。只在这类格式问题上拆，超时、网络、HTTP 错误照常抛出，由调用方改用备用模型。
+ */
+async function callModelSplitting(provider, request, fetchImpl, timeoutMs) {
+  try {
+    return await callModel(provider, request, fetchImpl, timeoutMs);
+  } catch (err) {
+    if (!['batch_shape', 'batch_parse'].includes(err?.code) || !(request.texts?.length > 1)) throw err;
+    const half = Math.ceil(request.texts.length / 2);
+    const parts = await Promise.all([request.texts.slice(0, half), request.texts.slice(half)]
+      .map((texts) => callModelSplitting(provider, { ...request, texts }, fetchImpl, timeoutMs)));
+    // 用量含格式不对的那次：它也花了 token
+    const usages = [err.usage, ...parts.map((part) => part.usage)].filter(Boolean);
+    return {
+      translations: parts.flatMap((part) => part.translations),
+      usage: Object.fromEntries(['inputTokens', 'cachedTokens', 'outputTokens']
+        .map((key) => [key, usages.reduce((sum, usage) => sum + (usage[key] || 0), 0)])),
+    };
+  }
 }
 
 /** 一次普通（非流式）对话调用，返回 { content, usage }。 */
@@ -433,7 +454,7 @@ export function createHostedTranslator(config, { fetchImpl = (...args) => fetch(
       const started = Date.now();
       const meta = { providerKey: provider.key, provider: provider.name, model: provider.model };
       try {
-        const { translations, usage } = await callModel(provider, request, fetchImpl, timeouts[index]);
+        const { translations, usage } = await callModelSplitting(provider, request, fetchImpl, timeouts[index]);
         if (material) cache.set(material, translations);
         return { translations, meta: { ...meta, ...usage, latencyMs: Date.now() - started, fellBack: index > 0 } };
       } catch (err) {

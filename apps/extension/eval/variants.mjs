@@ -39,6 +39,13 @@ const withoutSense = (prompt, ctx) => {
   return hints ? prompt.replace(`\n${hints}`, '') : prompt;
 };
 
+/** 网页上下文：样本带 context（如 { title, host }）时，在系统提示词末尾说明这些文字来自哪个网页。 */
+const pageContext = (prompt, ctx) => {
+  const page = ctx.sample.context;
+  if (!page) return prompt;
+  return `${prompt}\n这些文字摘自网页《${page.title}》（${page.host}）。先据此判断各项是什么（如栏目名、版块名、商品名、人名），按这个网站和它所属圈子的习惯理解网站特有的叫法和缩写，译出它实际指的东西。`;
+};
+
 /** 换成后台托管翻译的提示词（请求参数两边相同：不开思考、温度 1.3）。 */
 const hosted = (prompt, ctx) => hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1, undefined, sourceTexts(ctx));
 
@@ -97,6 +104,7 @@ export const variants = {
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
   'no-style': { note: '去掉中文风格指南（落地前的提示词）', patch: withSystem(withoutStyle) },
   'sense-candidate': { note: '义项提示候选（由 eval:sense 调用）', patch: withCandidateHint },
+  'page-context': { note: '批量翻译补一行网页上下文（标题与域名）', patch: withSystem(pageContext) },
   'no-sense': { note: '去掉已落地的义项提示', patch: withSystem(withoutSense) },
   'hosted-no-sense': { note: '后台托管提示词，去掉义项提示', patch: withSystem((prompt, ctx) => withoutSense(hosted(prompt, ctx), ctx)) },
   hosted: { note: '后台托管翻译的提示词', patch: withSystem(hosted) },
