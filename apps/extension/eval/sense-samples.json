@@ -23,5 +23,12 @@
   { "id": "ja-sense-16", "from": "ja", "genre": "news", "text": "男性は大家を刃物で脅し、現金十万円を奪った疑いが持たれている。", "watch": "大家=房东" },
   { "id": "ja-sense-17", "from": "ja", "genre": "web", "mode": "batch", "texts": ["駅前のアパートの", "大家", "から急に退去を求められた。"], "watch": "大家=房东；单独成段没有假名，线上不加提示" },
   { "id": "ja-sense-18", "from": "ja", "genre": "forum", "text": "彼は日本画の大家として知られ、多くの弟子を育てた。", "watch": "反例：大家=大师、名家" },
-  { "id": "ja-sense-19", "from": "ja", "genre": "news", "text": "演劇界の大家が若手俳優向けのワークショップを開催する。", "watch": "反例：大家=大师、名家" }
+  { "id": "ja-sense-19", "from": "ja", "genre": "news", "text": "演劇界の大家が若手俳優向けのワークショップを開催する。", "watch": "反例：大家=大师、名家" },
+  { "id": "en-sense-07", "from": "en", "genre": "news", "text": "He was educated at a top public school before going on to Oxford.", "watch": "英国语境：public school 是私立公学" },
+  { "id": "en-sense-08", "from": "en", "genre": "forum", "text": "Honestly, sending your kid to a public school costs more than most people's mortgage.", "watch": "英国语境：public school 是私立公学" },
+  { "id": "en-sense-09", "from": "en", "genre": "email", "text": "She spent five years teaching Latin at a public school in Surrey.", "watch": "英国语境：public school 是私立公学" },
+  { "id": "en-sense-10", "from": "en", "genre": "chat", "text": "Wait, you went to a public school? That explains the accent.", "watch": "英国语境：public school 是私立公学" },
+  { "id": "en-sense-11", "from": "en", "genre": "web", "mode": "batch", "texts": ["My grandfather was sent to a ", "public school", " in the 1930s, which was quite unusual for a farmer's son."], "watch": "英国语境：public school 是私立公学" },
+  { "id": "en-sense-12", "from": "en", "genre": "news", "text": "The district plans to open a new public school on the east side next fall.", "watch": "反例：美国等语境的公立学校" },
+  { "id": "en-sense-13", "from": "en", "genre": "forum", "text": "Anyone here have kids at the local public school? Curious about the teachers.", "watch": "反例：美国等语境的公立学校" }
 ]

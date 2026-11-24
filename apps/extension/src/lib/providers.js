@@ -300,20 +300,23 @@
 
   /**
    * 义项提示：原文里出现模型会稳定译错的词时，在系统提示词里补一句词义说明，最终译法仍由上下文决定。
-   * 只对简体中文目标、按这次待译的日文原文（含假名的段落）命中；没有命中时返回空串，提示词与原来完全相同。
+   * 只对简体中文目标、按这次待译的原文逐段命中（日语条目要求段落含假名）；没有命中时返回空串，提示词与原来完全相同。
    * 只收评测里现版反复译错、加提示后改对的词（见 docs/extension/translation-eval.md），不当术语表用。
    * 与后台 apps/backend/src/translation/hosted.js 的 senseHints 保持一致（test/style-guide.mjs 会对照）。
    */
   function senseHints(targetLanguage, texts) {
     if (!/Simplified Chinese/i.test(String(targetLanguage))) return '';
-    // 只看含假名的原文（日文）：大家 等词在中文里也常用，繁体原文译成简体时不能套用。
+    // 每条标明源语言。日语条目只看含假名的段落：大家 等词在中文里也常用，繁体原文译成简体时不能套用。
     // 逐段判断，批量翻译里每段的缓存键只受它自己命中的提示影响
-    const japanese = (texts || []).map(String).filter((text) => /[\p{Script=Hiragana}\p{Script=Katakana}]/u.test(text));
+    const kana = /[\p{Script=Hiragana}\p{Script=Katakana}]/u;
+    const list = (texts || []).map(String);
     const hints = [
-      [/撥水/, '商品说明要区分撥水（防泼水）和防水，保留原文所说的防护程度。'],
-      [/来年度/, '来年度 指下一个年度。按上下文区分学年、财年和自然年，类型不明时保留“下一年度”。'],
-      [/大家(?!族)/, '大家 在日语里多指「房东」，不是中文的「大家（所有人）」；表示「某领域的大师、名家」时照常译。按上下文判断。'],
-    ].filter(([pattern]) => japanese.some((text) => pattern.test(text))).map(([, hint]) => hint);
+      ['ja', /撥水/, '商品说明要区分撥水（防泼水）和防水，保留原文所说的防护程度。'],
+      ['ja', /来年度/, '来年度 指下一个年度。按上下文区分学年、财年和自然年，类型不明时保留“下一年度”。'],
+      ['ja', /大家(?!族)/, '大家 在日语里多指「房东」，不是中文的「大家（所有人）」；表示「某领域的大师、名家」时照常译。按上下文判断。'],
+      ['en', /(?<![\p{L}\p{N}])public schools?(?![\p{L}\p{N}])/iu, 'public school 默认照常译作“公立学校”；只有上下文明确是英国（伊顿、牛津剑桥、英国地名、学费昂贵、口音等线索）时，才是收费的私立公学，译作“公学”或“私立公学”。'],
+    ].filter(([lang, pattern]) => list.some((text) => (lang !== 'ja' || kana.test(text)) && pattern.test(text)))
+      .map(([, , hint]) => hint);
     return hints.length ? `根据上下文理解以下表达，仅在对应原文处参考：\n${hints.join('\n')}` : '';
   }
 

@@ -33,7 +33,7 @@ const withoutStyle = (prompt, ctx) => {
 
 const sourceTexts = (ctx) => ctx.sample.texts || [ctx.sample.text];
 
-/** 去掉已经落地的义项提示（撥水、来年度、大家），用来回看它带来的差别。 */
+/** 去掉已经落地的义项提示（撥水、来年度、大家、public school），用来回看它带来的差别。 */
 const withoutSense = (prompt, ctx) => {
   const hints = landedSenseHints(ctx.target, sourceTexts(ctx));
   return hints ? prompt.replace(`\n${hints}`, '') : prompt;
@@ -97,7 +97,7 @@ export const variants = {
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
   'no-style': { note: '去掉中文风格指南（落地前的提示词）', patch: withSystem(withoutStyle) },
   'sense-candidate': { note: '义项提示候选（由 eval:sense 调用）', patch: withCandidateHint },
-  'no-sense': { note: '去掉义项提示（撥水、来年度、大家落地前）', patch: withSystem(withoutSense) },
+  'no-sense': { note: '去掉已落地的义项提示', patch: withSystem(withoutSense) },
   'hosted-no-sense': { note: '后台托管提示词，去掉义项提示', patch: withSystem((prompt, ctx) => withoutSense(hosted(prompt, ctx), ctx)) },
   hosted: { note: '后台托管翻译的提示词', patch: withSystem(hosted) },
   'hosted-no-style': { note: '后台托管提示词，去掉中文风格指南', patch: withSystem((prompt, ctx) => withoutStyle(hosted(prompt, ctx), ctx)) },

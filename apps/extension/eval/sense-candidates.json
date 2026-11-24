@@ -58,7 +58,7 @@
   { "id": "en-subject", "from": "en", "word": "subject", "pattern": "subjects?", "sense": "（研究、试验的）受试者、实验对象", "trap": "主题、科目", "negative": "主题、科目" },
   { "id": "en-grade", "from": "en", "word": "grade", "sense": "（美式学制）年级，如 third grade 是三年级", "trap": "等级、成绩", "negative": "成绩、分数" },
   { "id": "en-public-school", "from": "en", "word": "public school", "pattern": "public schools?", "sense": "（英国）私立公学（收费的私立寄宿学校）", "trap": "公立学校", "negative": "（美国等）公立学校",
-    "hint": "public school 在英国语境里（有伊顿、牛津剑桥、英国地名、学费昂贵、口音等线索）指收费的私立公学，译作“公学”或“私立公学”；美国、加拿大、澳大利亚等语境，或看不出是英国时，照常译作“公立学校”。" },
+    "hint": "public school 默认照常译作“公立学校”；只有上下文明确是英国（伊顿、牛津剑桥、英国地名、学费昂贵、口音等线索）时，才是收费的私立公学，译作“公学”或“私立公学”。" },
   { "id": "en-issue", "from": "en", "word": "issue", "pattern": "issu(?:e|es|ed|ing)", "sense": "发放、签发、开具（退款、卡、证件、发票）", "trap": "问题", "negative": "问题" },
   { "id": "en-plant", "from": "en", "word": "plant", "pattern": "plants?", "sense": "工厂、发电厂", "trap": "植物", "negative": "植物" },
   { "id": "en-suit", "from": "en", "word": "suit", "pattern": "suits?", "sense": "诉讼（file a suit、lawsuit 的简称）", "trap": "西装、套装", "negative": "西装、套装" },

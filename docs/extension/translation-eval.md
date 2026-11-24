@@ -50,7 +50,7 @@ npm run eval:translation -- --variants no-style,baseline --target en
 | --- | --- |
 | `baseline` | 当前代码（自带 Key 的提示词） |
 | `no-style` | 去掉中文风格指南，回看它带来的差别 |
-| `no-sense`、`hosted-no-sense` | 去掉已落地的义项提示（撥水、来年度、大家），分别在自带 Key 与托管提示词上回看 |
+| `no-sense`、`hosted-no-sense` | 去掉已落地的义项提示（撥水、来年度、大家、public school），分别在自带 Key 与托管提示词上回看 |
 | `hosted`、`hosted-no-style` | 换成后台 `hosted.js` 的提示词（托管翻译的基础提示词与扩展不同），带与不带风格指南 |
 | `temp-0.7`、`temp-1.0`、`thinking` | 只改请求参数 |
 | `baseline-resample` | 与 `baseline` 同义、只是不命中缓存，量同一方案重新采样的波动 |
@@ -138,7 +138,7 @@ npm run eval:translation -- --variants no-sense,baseline --ids ja-news-01,ja-sho
    { "id": "ja-tegami", "from": "ja", "word": "手紙", "sense": "信、书信", "trap": "手纸" }
    ```
 
-   `sense` 是容易译错的义项，`trap` 是照字面会译成的错误意思。可选字段：`pattern`（正则，默认按 `word` 字面匹配，如 `(?<!大)丈夫`）、`negative`（照字面译本来就对的义项，会另写 2 条反例）、`hint`（不写就按模板生成）。
+   `sense` 是容易译错的义项，`trap` 是照字面会译成的错误意思。可选字段：`pattern`（正则；日语默认按 `word` 字面匹配，如 `(?<!大)丈夫`；英语默认整词、不分大小写，变形要写进来，如 `sanction(?:s|ed|ing)?`）、`negative`（照字面译本来就对的义项，会另写 2 条反例）、`hint`（不写就按模板生成）。
 2. 由 `deepseek-flash` 为每个候选写 4 条整段正例、1 组网页片段，有 `negative` 的另写 2 条反例。不含该词的样本丢掉。
 3. 调 `run.mjs` 用现版翻译（`baseline`），再请评审只判断这个词译对没有。
 4. 现版在正例里错 2 条及以上（`--min-errors`）的候选，用 `sense-candidate` 方案加上这一条提示重翻，整句盲评，再判一次词义。
@@ -178,6 +178,21 @@ npm run eval:translation -- --variants no-sense,baseline --ids ja-news-01,ja-sho
 ```sh
 npm run eval:translation -- --variants no-sense,baseline --samples apps/extension/eval/sense-samples.json --ids ja-sense-13,ja-sense-14,ja-sense-15,ja-sense-16,ja-sense-17,ja-sense-18,ja-sense-19
 ```
+
+### 第二轮：英语易错词（2026-11-24）
+
+同一份清单加了 36 个英语候选（`from: "en"`，用 `--from en` 单独跑）：一词多义（sanction 批准、moot 已无意义、outstanding 未付、appreciate 升值、tender 投标、fixture 赛程、stock 高汤等）、形容词与名词同形（minute、content、novel、sound）、英美用法差别（public school、grade、table、trunk）。英语默认整词、不分大小写匹配，变形写进 `pattern`；判词义用不举日语例子的那份提示。
+
+- 34 个现版正例错不到 2 条，结论「不需要」，其中 29 个一条没错。错 1 条的（patronize、sensible、bill、meaningful 等）多是漏译修饰语或可接受的说法。
+- public school：现版把英国语境（牛津、萨里、口音、学费昂贵）里的 5 条全部译成「公立学校」，意思正好相反。第一版提示把美国语境的反例也改成了「私立公学」（反例 0 → 2，有副作用）；改成「有英国线索时译公学或私立公学，美国等语境或看不出国别时照常译公立学校」后，筛选里正例全对，反例不变，整句盲评 6 胜 1 负，结论「建议落地」。落地前的复测见下。
+- novel（新颖的）：现版只有漏译，加提示后模型写成「新奇的想法」，整句盲评 2 胜 1 平 4 负，结论「有副作用」。
+
+落地 public school 时的复测与调整：
+
+- 托管提示词上，上面那版提示正例 5 条全对，但把美国语境的「local public school」和看不出国别的「Our public school just got new laptops」也译成了「公学」。另写 10 条美国或看不出国别的反例，连同原有 2 条共 12 条，托管路径错 2 条。网页上美国用法远多于英国用法，这个比例不能接受。
+- 改成先说默认：「public school 默认照常译作“公立学校”；只有上下文明确是英国（伊顿、牛津剑桥、英国地名、学费昂贵、口音等线索）时，才是收费的私立公学，译作“公学”或“私立公学”。」两条路径上 12 条反例全部保持「公立学校」，5 条英国正例改对 3 条（牛津、口音、祖父那句）；「a public school in Surrey」和只说学费比房贷贵的那句仍译成公立学校。整句盲评自带 Key 6 胜 9 平 2 负、托管 7 胜 8 平 2 负，负的几条都是重新采样的措辞差别。按这一版落地。
+- `senseHints` 的每条改为标明源语言：日语条目仍要求段落含假名，英语条目按整词、不分大小写匹配，不要求假名。
+- 正反例收进 `sense-samples.json`（`en-sense-07` 到 `en-sense-13`）。只改提示词时可以先在两条路径上用 `--no-judge` 数反例里出现「公学」的次数，再跑盲评。
 
 ## 添加样本
 

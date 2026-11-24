@@ -113,5 +113,11 @@ const batch = async (targetId) => { await P.translateBatch({ texts: ['a', 'b'], 
   // 批量逐段判断：中文段落里的 大家 不因同批有日文段落而带上提示
   await P.translateBatch({ texts: ['大家好', '表地です。'], settings, targetId: 'zh-Hans' });
   assert.doesNotMatch(system(), /根据上下文理解以下表达/);
-  console.log('✓ 义项提示只在简中目标、日文原文命中时出现，扩展与后台位置一致');
+  // 英语条目按整词匹配，不要求假名
+  assert.match(await run('He went to a public school before Oxford.', 'zh-Hans'), /public school 默认照常译作“公立学校”/);
+  assert.match(await run('Two Public Schools in Kent', 'zh-Hans'), /public school 默认照常译作“公立学校”/, '不分大小写，含复数');
+  assert.doesNotMatch(await run('The publicschool app is down.', 'zh-Hans'), /根据上下文理解以下表达/, '整词匹配');
+  assert.doesNotMatch(await run('He went to a public school.', 'en'), /根据上下文理解以下表达/);
+  assert.match(hosted('Simplified Chinese', undefined, false, undefined, ['a public school in Surrey']), /public school 默认照常译作“公立学校”/);
+  console.log('✓ 义项提示只在简中目标、原文逐段命中时出现（日语条目要求假名），扩展与后台位置一致');
 }
