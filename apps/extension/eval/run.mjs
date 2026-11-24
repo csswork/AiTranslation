@@ -111,6 +111,7 @@ async function chat(url, init) {
   const key = crypto.createHash('sha256').update(`${url}\n${init.body}`).digest('hex');
   if (!fresh && cache[key]) {
     stats.cached += 1;
+    noteUsage(cache[key].usage);
     return new Response(JSON.stringify(cache[key]), { status: 200, headers: { 'Content-Type': 'application/json' } });
   }
   stats.requests += 1;
@@ -124,11 +125,23 @@ async function chat(url, init) {
   if (!response.ok) return response;
   const data = await response.json();
   cache[key] = data;
+  noteUsage(data.usage);
   return new Response(JSON.stringify(data), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }
 
 // 扩展代码发请求时，按当前方案改写请求体
 const current = new AsyncLocalStorage();
+
+/** 记下翻译请求的 token 用量（命中评测缓存时是当初请求时的用量）。评审请求不在方案上下文里，不计。 */
+function noteUsage(usage) {
+  const run = current.getStore();
+  if (!run || !usage) return;
+  const total = run.usage ||= { prompt: 0, hit: 0, completion: 0, calls: 0 };
+  total.prompt += usage.prompt_tokens || 0;
+  total.hit += usage.prompt_cache_hit_tokens || 0;
+  total.completion += usage.completion_tokens || 0;
+  total.calls += 1;
+}
 globalThis.fetch = async (url, init) => {
   const run = current.getStore();
   if (!run) return realFetch(url, init);
@@ -203,9 +216,9 @@ async function translateOne(sample, variantId) {
         return String((await response.json())?.choices?.[0]?.message?.content || '').trim();
       };
       const final = await run.variant.after({ ...run.ctx, output, call });
-      return { output: final, draft: output, request: describe(run.sent) };
+      return { output: final, draft: output, request: describe(run.sent), usage: run.usage };
     }
-    return { output, request: describe(run.sent) };
+    return { output, request: describe(run.sent), usage: run.usage };
   } catch (err) {
     return { error: String(err?.message || err), request: describe(run.sent) };
   }
@@ -367,6 +380,19 @@ for (const id of variantIds) {
   md.push(`| \`${id}\` | ${VARIANTS[id].note || ''} | \`${JSON.stringify(sent)}\` | ${failed} |`);
 }
 
+// token 用量：DeepSeek 返回的 prompt_cache_hit_tokens 是命中前缀缓存的输入，价格远低于未命中的部分。
+// 要量缓存效果，用 --fresh --concurrency 1 按顺序重新请求；命中评测缓存时显示的是当初的用量。
+const usageLines = [];
+md.push('', '## token 用量', '', '| 方案 | 请求 | 平均输入 | 其中命中前缀缓存 | 命中率 | 平均输出 |', '| --- | --- | --- | --- | --- | --- |');
+for (const id of variantIds) {
+  const usages = rows.map((row) => row.outputs[id].usage).filter(Boolean);
+  const sum = (key) => usages.reduce((total, usage) => total + usage[key], 0);
+  const calls = sum('calls');
+  if (!calls) continue;
+  md.push(`| \`${id}\` | ${calls} | ${Math.round(sum('prompt') / calls)} | ${Math.round(sum('hit') / calls)} | ${(sum('hit') / Math.max(1, sum('prompt'))).toFixed(2)} | ${Math.round(sum('completion') / calls)} |`);
+  usageLines.push(`${id} token：平均输入 ${Math.round(sum('prompt') / calls)}，命中缓存 ${Math.round(sum('hit') / calls)}，平均输出 ${Math.round(sum('completion') / calls)}`);
+}
+
 const summary = {};
 for (const id of candidates) {
   if (!shouldJudge) break;
@@ -417,5 +443,6 @@ for (const id of candidates) {
 }
 const failures = rows.flatMap((row) => variantIds.filter((id) => row.outputs[id].error).map((id) => `${row.sample.id}/${id}: ${row.outputs[id].error}`));
 if (failures.length) console.log(`翻译失败 ${failures.length} 条：\n  ${failures.slice(0, 8).join('\n  ')}`);
+for (const line of usageLines) console.log(line);
 console.log(`请求 ${stats.requests} 次，命中缓存 ${stats.cached} 次`);
 console.log(`报告：${path.relative(repo, path.join(outDir, 'report.md'))}`);
