@@ -380,6 +380,13 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   state.listeners.activated({ tabId: 12 });
   await settle();
   assert.equal(site().checked, true, '切回开着整站翻译的网站');
+  // 子域名也算同一个网站
+  state.tabUrls[14] = 'https://m.news.example.com/c';
+  state.listeners.activated({ tabId: 14 });
+  await settle();
+  assert.equal(site().checked, true, '开着上级域名时子域名页面也是勾选的');
+  state.listeners.activated({ tabId: 12 });
+  await settle();
   // 新标签页、chrome:// 等页面翻译不了：菜单项不出现；拿不到网址（没有权限）也一样
   state.tabUrls[15] = 'chrome://newtab/';
   state.listeners.activated({ tabId: 15 });
