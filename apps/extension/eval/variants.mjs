@@ -9,7 +9,7 @@
  */
 
 // 后台托管翻译用的是另一份基础提示词，直接引用，评测托管路径时不用抄一份
-import { styleGuide, systemPrompt as hostedSystemPrompt } from '../../backend/src/translation/hosted.js';
+import { senseHints as landedSenseHints, styleGuide, systemPrompt as hostedSystemPrompt } from '../../backend/src/translation/hosted.js';
 
 /** 改系统提示词：fn(原提示词, ctx) 返回新的提示词。 */
 export function withSystem(fn) {
@@ -29,8 +29,16 @@ const withoutStyle = (prompt, ctx) => {
   return guide ? prompt.replace(`\n${guide}`, '') : prompt;
 };
 
+const sourceTexts = (ctx) => ctx.sample.texts || [ctx.sample.text];
+
+/** 去掉已经落地的义项提示（撥水、来年度），用来回看它带来的差别。 */
+const withoutSense = (prompt, ctx) => {
+  const hints = landedSenseHints(ctx.target, sourceTexts(ctx));
+  return hints ? prompt.replace(`\n${hints}`, '') : prompt;
+};
+
 /** 换成后台托管翻译的提示词（请求参数两边相同：不开思考、温度 1.3）。 */
-const hosted = (prompt, ctx) => hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1);
+const hosted = (prompt, ctx) => hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1, undefined, sourceTexts(ctx));
 
 // 简中实验：在现有指南原位替换三条写作建议。让模型按原文判断，无需调用方知道源语言。
 function chineseFocus(prompt, ctx) {
@@ -52,9 +60,6 @@ const senseHints = [
   [/来年度/, '来年度 指下一个年度。按上下文区分学年、财年和自然年，类型不明时保留“下一年度”。'],
 ];
 
-// 现版会稳定译错的两条：撥水常被译成“防水”，来年度常被译成“明年”或照搬“明年度”。
-const jaSenseHints = senseHints.slice(1);
-
 const courtesyHints = [
   [/\bfor what it['’]s worth\b/i, 'for what it’s worth 用作插入语时是在谦逊地提供意见或经历，按语境处理这种分寸。'],
   [/誠に勝手ながら/, '誠に勝手ながら 表达因己方安排给人添麻烦的歉意；是否另行通知须看原文有无明说。'],
@@ -63,7 +68,9 @@ const courtesyHints = [
 function withSenseHints(body, ctx, rules = senseHints) {
   if (ctx.target !== 'Simplified Chinese') return body;
   const source = body.messages.find((message) => message.role === 'user')?.content || '';
-  const hints = rules.filter(([pattern]) => pattern.test(source)).map(([, hint]) => hint);
+  // 撥水、来年度两条已落地（见 senseHints），提示词里已有的不再重复
+  const hints = rules.filter(([pattern]) => pattern.test(source)).map(([, hint]) => hint)
+    .filter((hint) => !body.messages[0].content.includes(hint));
   if (!hints.length) return body;
   return withSystem((prompt) => prompt.replace('译文风格：', () =>
     `根据上下文理解以下表达，仅在对应原文处参考：\n${hints.join('\n')}\n译文风格：`))(body, ctx);
@@ -75,12 +82,12 @@ export const variants = {
   'zh-sense': { note: '简中词义提示，含两条客套语试验', patch: (body, ctx) => withSenseHints(body, ctx, [...senseHints, ...courtesyHints]) },
   'zh-precision': { note: '简中仅在涉及需求水平、防泼水或年度时提示词义', patch: withSenseHints },
   'hosted-zh-precision': { note: '在托管提示词上试同样三条提示', patch: (body, ctx) => withSenseHints(withSystem(hosted)(body, ctx), ctx) },
-  'zh-sense-ja': { note: '简中只提示撥水与来年度', patch: (body, ctx) => withSenseHints(body, ctx, jaSenseHints) },
-  'hosted-zh-sense-ja': { note: '托管提示词上只提示撥水与来年度', patch: (body, ctx) => withSenseHints(withSystem(hosted)(body, ctx), ctx, jaSenseHints) },
 
   'temp-0.7': { note: '温度 0.7', patch: (body) => ({ ...body, temperature: 0.7 }) },
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
   'no-style': { note: '去掉中文风格指南（落地前的提示词）', patch: withSystem(withoutStyle) },
+  'no-sense': { note: '去掉义项提示（撥水、来年度落地前）', patch: withSystem(withoutSense) },
+  'hosted-no-sense': { note: '后台托管提示词，去掉义项提示', patch: withSystem((prompt, ctx) => withoutSense(hosted(prompt, ctx), ctx)) },
   hosted: { note: '后台托管翻译的提示词', patch: withSystem(hosted) },
   'hosted-no-style': { note: '后台托管提示词，去掉中文风格指南', patch: withSystem((prompt, ctx) => withoutStyle(hosted(prompt, ctx), ctx)) },
   thinking: { note: '开启思考', patch: (body) => ({ ...body, thinking: { type: 'enabled' } }) },

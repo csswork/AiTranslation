@@ -70,9 +70,39 @@ const batch = async (targetId) => { await P.translateBatch({ texts: ['a', 'b'], 
     return source.slice(start, end).split('\n').map((line) => line.trim())
       .filter((line) => line && !/^(\/\*\*|\*|\*\/|export$)/.test(line)).join('\n').replace(/\nexport$/, '');
   };
-  for (const [name, next] of [['generalStyleGuide', 'styleGuide'], ['styleGuide', 'systemPrompt']]) {
+  for (const [name, next] of [['generalStyleGuide', 'styleGuide'], ['styleGuide', 'senseHints'], ['senseHints', 'systemPrompt']]) {
     assert.equal(body(extension, name, next), body(backend, name, next), `扩展与后台的 ${name} 保持一致`);
-    assert.ok(body(extension, name, next).length > 500);
+    assert.ok(body(extension, name, next).length > (name === 'senseHints' ? 300 : 500));
   }
-  console.log('✓ 风格指南与后台 hosted.js 一致');
+  console.log('✓ 风格指南、义项提示与后台 hosted.js 一致');
+}
+
+/* 4. 义项提示：只对简体中文目标、只在原文命中时出现，放在风格指南之前；没命中时提示词不变 */
+{
+  const { systemPrompt: hosted } = await import('../../backend/src/translation/hosted.js');
+  const run = async (text, targetId) => { for await (const piece of P.translate({ text, settings, targetId })) void piece; return system(); };
+  const plain = await run('バッグです。', 'zh-Hans');
+  assert.doesNotMatch(plain, /根据上下文理解以下表达/);
+  assert.equal(plain, await run('普通の文です。', 'zh-Hans'), '没命中时提示词与原来相同');
+
+  const hit = await run('撥水加工の生地です。来年度も販売します。', 'zh-Hans');
+  assert.match(hit, /根据上下文理解以下表达，仅在对应原文处参考：\n商品说明要区分撥水（防泼水）和防水/);
+  assert.match(hit, /来年度 指下一个年度/);
+  assert.ok(hit.indexOf('根据上下文') < hit.indexOf('译文风格：'), '提示在风格指南之前');
+  for (const targetId of ['zh-Hant', 'en']) assert.doesNotMatch(await run('撥水加工の生地です。', targetId), /撥水（防泼水）/);
+
+  // 批量：按整批原文挑提示
+  await P.translateBatch({ texts: ['表地は撥水仕様です。', '縫い目'], settings, targetId: 'zh-Hans' });
+  assert.match(system(), /撥水（防泼水）/);
+  assert.doesNotMatch(system(), /来年度 指/);
+  await P.translateBatch({ texts: ['表地です。', '縫い目'], settings, targetId: 'zh-Hans' });
+  assert.doesNotMatch(system(), /根据上下文理解以下表达/);
+
+  // 后台：同样的位置与条件
+  const back = hosted('Simplified Chinese', undefined, false, undefined, ['撥水加工']);
+  assert.match(back, /撥水（防泼水）/);
+  assert.ok(back.indexOf('根据上下文') < back.indexOf('译文风格：'));
+  assert.equal(hosted('Simplified Chinese', undefined, false, undefined, ['普通']), hosted('Simplified Chinese', undefined, false));
+  assert.doesNotMatch(hosted('Traditional Chinese (Taiwan)', undefined, false, undefined, ['撥水加工']), /撥水（防泼水）/);
+  console.log('✓ 义项提示只在简中目标、原文命中时出现，扩展与后台位置一致');
 }

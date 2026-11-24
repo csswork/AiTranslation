@@ -182,6 +182,25 @@ const base = S.normalize({ provider: 'openai', target: 'zh-Hans', openai: { apiK
   console.log('✓ 批量：逐段命中只请求缺的段落；网页片段整批命中，标为完整段的逐段命中');
 }
 
+/* 义项提示只影响命中它的段落：其余段落的键不变，可以和不带提示的批次互相命中 */
+{
+  const settings = { ...base, target: 'zh-Hans' };
+  const texts = ['表地は撥水仕様です。', '縫い目は普通です。'];
+  mock((url, body) => {
+    const tag = body.messages[0].content.includes('撥水（防泼水）') ? '提示' : '原样';
+    return llmReply(JSON.stringify(JSON.parse(body.messages[1].content).map((text) => tag + text)));
+  });
+  await P.translateBatch({ texts: [texts[1]], settings, surface: 'reader' });
+  await C.flush();
+  assert.deepEqual(await P.lookupBatch({ texts, settings, surface: 'pdf' }), [null, '原样' + texts[1]]);
+  const out = await P.translateBatch({ texts, settings, surface: 'reader' });
+  assert.deepEqual(out, ['提示' + texts[0], '原样' + texts[1]]);
+  assert.deepEqual(JSON.parse(calls.at(-1).body.messages[1].content), [texts[0]], '只请求命中提示的那段');
+  await C.flush();
+  assert.deepEqual(await P.lookupBatch({ texts, settings, surface: 'pdf' }), out);
+  console.log('✓ 义项提示只改变命中段落的缓存键');
+}
+
 /* 4. DeepL：缓存替换用词偏好之前的译文 */
 {
   const settings = { ...base, provider: 'deepl' };

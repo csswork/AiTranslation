@@ -49,6 +49,7 @@ npm run eval:translation -- --variants no-style,baseline --target en
 | --- | --- |
 | `baseline` | 当前代码（自带 Key 的提示词） |
 | `no-style` | 去掉中文风格指南，回看它带来的差别 |
+| `no-sense`、`hosted-no-sense` | 去掉已落地的义项提示（撥水、来年度），分别在自带 Key 与托管提示词上回看 |
 | `hosted`、`hosted-no-style` | 换成后台 `hosted.js` 的提示词（托管翻译的基础提示词与扩展不同），带与不带风格指南 |
 | `temp-0.7`、`temp-1.0`、`thinking` | 只改请求参数 |
 | `baseline-resample` | 与 `baseline` 同义、只是不命中缓存，量同一方案重新采样的波动 |
@@ -99,6 +100,32 @@ npm run eval:translation -- --variants baseline,zh-precision --samples apps/exte
 ```
 
 托管对照将两个方案名换为 `hosted,hosted-zh-precision`。固定样本命中 `ja-news-01,ja-shop-02,en-shop-04`，专项样本命中 `en-sense-03,en-sense-04,en-sense-05,ja-sense-01,ja-sense-02,ja-sense-05,ja-sense-06`，可传给 `--ids` 单独复测。
+
+### 落地：只保留撥水与来年度两条
+
+逐条看译文，high demand 一条现版本来就译对，提示只换了措辞，不落地。撥水与来年度现版会稳定译错：撥水译成“防水”“拨水”“疏水”，来年度译成“明年”或照搬“明年度”。为此在 `sense-samples.json` 补了 6 条日译中样本（`ja-sense-07` 到 `ja-sense-12`，含规格表片段和财年、学年语境）。
+
+两条提示写进扩展 `providers.js` 与后台 `hosted.js` 的 `senseHints`（`test/style-guide.mjs` 对照两边），放在风格指南之前，只在目标为简体中文、待译原文命中时出现；没命中时提示词与原来完全相同。批量翻译按段挑提示，没命中的段落缓存键不变。繁体中文不加：台湾商品说明本来就常用「撥水」。
+
+只统计命中提示的 12 条日译中样本（专项 10 条加固定样本 `ja-news-01`、`ja-shop-02`），提示对现版的胜 / 平 / 负：
+
+| 路径 | 胜 / 平 / 负 | 忠实分 |
+| --- | --- | --- |
+| 自带 Key | 9 / 2 / 1 | 约 4.2 → 4.9 |
+| 托管提示词 | 9 / 1 / 2 | 约 4.3 → 4.9 |
+
+三场负的样本（`ja-sense-02`、`ja-sense-08`、`ja-news-01`）两版都译对了词义，差别只在措辞。落地后用下面的命令复现，请求与评测时逐字相同，全部命中缓存：
+
+```sh
+npm run eval:translation -- --variants no-sense,baseline --samples apps/extension/eval/sense-samples.json --ids ja-sense-01,ja-sense-02,ja-sense-05,ja-sense-06,ja-sense-07,ja-sense-08,ja-sense-09,ja-sense-10,ja-sense-11,ja-sense-12
+npm run eval:translation -- --variants no-sense,baseline --ids ja-news-01,ja-shop-02
+```
+
+托管对照换成 `hosted-no-sense,hosted`。要加新的义项提示时沿用这个做法：先找现版反复译错的词，写正反样本，在 `variants.mjs` 里做成方案对比，确认后两边一起改，并给 `no-sense` 留出回看的路径。
+
+### 未采用：七语预设术语库
+
+另试过随扩展附带 64 个商品与云计算概念的七语术语表，由用户在设置里开启。整句盲评对现版没有明显提升（译入简中 50 条：15 / 24 / 11；云计算类 7 / 7 / 8；译入德语、西班牙语、阿拉伯语、繁体中文均为负多于胜）。现版没用首选译名的地方，多数是可接受甚至更常用的说法，如钢丝棉、自动扩缩容、金丝雀发布。按字面匹配还会误报（「高碳钢」被提示成 carbon steel），而且规格表单元格这类片段常常过不了语境检查。真正有收益的只有撥水一类的词义区分，所以改用上面的义项提示。
 
 ## 添加样本
 
