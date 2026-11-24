@@ -33,7 +33,7 @@ if (flag('--help') || flag('-h')) {
     '用法：npm run eval:sense -- [选项]',
     '  --candidates 文件   候选清单（默认 apps/extension/eval/sense-candidates.json）',
     '  --ids a,b           只跑指定候选',
-    '  --from ja|en        只跑某个源语言的候选',
+    '  --from ja|en|ko     只跑某个源语言的候选',
     '  --limit N           最多跑 N 个候选',
     '  --positives N       每个候选的整段正例条数（默认 4，另有 1 组网页片段）',
     '  --min-errors N      现版在正例里至少错几条才试提示（默认 2）',
@@ -139,12 +139,13 @@ for (const candidate of candidates) {
   for (const field of ['id', 'from', 'word', 'sense', 'trap']) {
     if (!candidate[field]) throw new Error(`候选 ${candidate.id || candidate.word} 缺少 ${field}`);
   }
-  // 日文按字面匹配；英语等用空格分词的语言默认整词、不分大小写（变形写进 pattern，如 sanction(?:s|ed)?）
-  const cjk = candidate.from === 'ja';
+  // 日文、韩文按字面匹配（韩语词后面直接接助词、词尾，不能按整词）；
+  // 英语等用空格分词的语言默认整词、不分大小写（变形写进 pattern，如 sanction(?:s|ed)?）
+  const literal = ['ja', 'ko'].includes(candidate.from);
   const body = candidate.pattern || escape(candidate.word);
-  candidate.regex = cjk ? new RegExp(body, 'u') : new RegExp(`(?<![\\p{L}\\p{N}])(?:${body})(?![\\p{L}\\p{N}])`, candidate.flags || 'iu');
+  candidate.regex = literal ? new RegExp(body, 'u') : new RegExp(`(?<![\\p{L}\\p{N}])(?:${body})(?![\\p{L}\\p{N}])`, candidate.flags || 'iu');
   // 提示词默认按模板写；候选里写了 hint 就用候选的
-  candidate.hint ||= cjk
+  candidate.hint ||= candidate.from === 'ja'
     ? (candidate.negative
       ? `${candidate.word} 在日语里多指「${candidate.sense}」，不是中文的「${candidate.trap}」；表示「${candidate.negative}」时照常译。按上下文判断。`
       : `${candidate.word} 在日语里是「${candidate.sense}」的意思，不是中文的「${candidate.trap}」。按上下文判断。`)
@@ -227,9 +228,15 @@ const CHECK_PROMPTS = {
     '只判断这个词的意思在译文里有没有译对，不管译文其他地方好不好。',
     '把它按另一个常见义项或词典第一义去译、在这里意思不对，算错（例如把 run a business 的 run 译成“跑”、把 a cold reception 的 cold 译成“寒冷”）。',
   ],
+  // 韩语的汉字词与日语同理：照汉字读成中文同形词，常常意思不对
+  ko: [
+    '你是韩译中审校。下面给出一段原文、其中一个词在这里的意思，以及中文译文。',
+    '只判断这个词的意思在译文里有没有译对，不管译文其他地方好不好。',
+    '韩语汉字词照汉字写成中文里字形相同、但在中国大陆意思不同的词，算错（例如把 화장실 译成“化妆室”、把 경리 译成“经理”）；只是音译或照搬韩国称谓、中文读者看不懂或会误解的，也算错。',
+  ],
 };
 const checkPrompt = (from) => [
-  ...(from === 'ja' ? CHECK_PROMPTS.ja : CHECK_PROMPTS.other(LANG[from] || from)),
+  ...(from === 'ja' ? CHECK_PROMPTS.ja : CHECK_PROMPTS[from] || CHECK_PROMPTS.other(LANG[from] || from)),
   '意思译对了，即使换了说法、意译，或者融进句子里没有单独对应的词，也算对。',
   '只输出一个 JSON 对象：{"ok":true|false,"rendering":"译文里对应的说法","reason":"一句话"}',
 ].join('\n');
