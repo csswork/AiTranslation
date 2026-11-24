@@ -15,6 +15,7 @@
     "i18n:extension:watch": "node apps/extension/scripts/sync-extension-i18n.mjs --watch",
     "check:extension": "node apps/extension/scripts/build-extension-i18n.mjs --check",
     "eval:translation": "node apps/extension/eval/run.mjs",
+    "eval:sense": "node apps/extension/eval/sense.mjs",
     "package:extension": "bash package.sh",
     "package:edge": "bash apps/extension/package.sh edge",
     "package:firefox": "bash apps/extension/package.sh firefox",

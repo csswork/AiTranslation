@@ -99,10 +99,19 @@ const batch = async (targetId) => { await P.translateBatch({ texts: ['a', 'b'], 
   assert.doesNotMatch(system(), /根据上下文理解以下表达/);
 
   // 后台：同样的位置与条件
-  const back = hosted('Simplified Chinese', undefined, false, undefined, ['撥水加工']);
+  const back = hosted('Simplified Chinese', undefined, false, undefined, ['撥水加工です']);
   assert.match(back, /撥水（防泼水）/);
   assert.ok(back.indexOf('根据上下文') < back.indexOf('译文风格：'));
   assert.equal(hosted('Simplified Chinese', undefined, false, undefined, ['普通']), hosted('Simplified Chinese', undefined, false));
-  assert.doesNotMatch(hosted('Traditional Chinese (Taiwan)', undefined, false, undefined, ['撥水加工']), /撥水（防泼水）/);
-  console.log('✓ 义项提示只在简中目标、原文命中时出现，扩展与后台位置一致');
+  assert.doesNotMatch(hosted('Traditional Chinese (Taiwan)', undefined, false, undefined, ['撥水加工です']), /撥水（防泼水）/);
+  assert.doesNotMatch(hosted('Simplified Chinese', undefined, false, undefined, ['大家好，請告訴我']), /根据上下文/, '后台：繁体中文原文不套日语义项');
+  // 只对含假名的日文原文：大家 在中文里也常用，繁体原文译成简体时不能提示“房东”
+  assert.match(await run('来月から大家が変わるらしい。', 'zh-Hans'), /大家 在日语里多指「房东」/);
+  assert.doesNotMatch(await run('大家好，歡迎來到我們的商店。', 'zh-Hans'), /根据上下文理解以下表达/);
+  assert.doesNotMatch(await run('撥水加工', 'zh-Hans'), /根据上下文理解以下表达/, '没有假名的段落不算日文');
+  assert.doesNotMatch(await run('大家族で暮らしています。', 'zh-Hans'), /房东/, '大家族不是大家');
+  // 批量逐段判断：中文段落里的 大家 不因同批有日文段落而带上提示
+  await P.translateBatch({ texts: ['大家好', '表地です。'], settings, targetId: 'zh-Hans' });
+  assert.doesNotMatch(system(), /根据上下文理解以下表达/);
+  console.log('✓ 义项提示只在简中目标、日文原文命中时出现，扩展与后台位置一致');
 }

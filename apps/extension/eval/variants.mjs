@@ -8,6 +8,8 @@
  *   ctx:  { mode: 'single' | 'batch', sample, target }  target 是目标语言的英文名
  */
 
+import fs from 'node:fs';
+
 // 后台托管翻译用的是另一份基础提示词，直接引用，评测托管路径时不用抄一份
 import { senseHints as landedSenseHints, styleGuide, systemPrompt as hostedSystemPrompt } from '../../backend/src/translation/hosted.js';
 
@@ -31,7 +33,7 @@ const withoutStyle = (prompt, ctx) => {
 
 const sourceTexts = (ctx) => ctx.sample.texts || [ctx.sample.text];
 
-/** 去掉已经落地的义项提示（撥水、来年度），用来回看它带来的差别。 */
+/** 去掉已经落地的义项提示（撥水、来年度、大家），用来回看它带来的差别。 */
 const withoutSense = (prompt, ctx) => {
   const hints = landedSenseHints(ctx.target, sourceTexts(ctx));
   return hints ? prompt.replace(`\n${hints}`, '') : prompt;
@@ -68,12 +70,20 @@ const courtesyHints = [
 function withSenseHints(body, ctx, rules = senseHints) {
   if (ctx.target !== 'Simplified Chinese') return body;
   const source = body.messages.find((message) => message.role === 'user')?.content || '';
-  // 撥水、来年度两条已落地（见 senseHints），提示词里已有的不再重复
+  // 已落地的提示（见 senseHints）在提示词里已有的不再重复
   const hints = rules.filter(([pattern]) => pattern.test(source)).map(([, hint]) => hint)
     .filter((hint) => !body.messages[0].content.includes(hint));
   if (!hints.length) return body;
   return withSystem((prompt) => prompt.replace('译文风格：', () =>
     `根据上下文理解以下表达，仅在对应原文处参考：\n${hints.join('\n')}\n译文风格：`))(body, ctx);
+}
+
+// eval/sense.mjs 用：候选义项提示从 SENSE_HINTS_FILE 读，每条样本只套它自己那个候选的提示
+let candidateHints;
+function withCandidateHint(body, ctx) {
+  candidateHints ??= JSON.parse(fs.readFileSync(process.env.SENSE_HINTS_FILE, 'utf8'));
+  const rule = candidateHints[ctx.sample.candidate];
+  return rule ? withSenseHints(body, ctx, [[new RegExp(rule.pattern, 'u'), rule.hint]]) : body;
 }
 
 export const variants = {
@@ -86,7 +96,8 @@ export const variants = {
   'temp-0.7': { note: '温度 0.7', patch: (body) => ({ ...body, temperature: 0.7 }) },
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
   'no-style': { note: '去掉中文风格指南（落地前的提示词）', patch: withSystem(withoutStyle) },
-  'no-sense': { note: '去掉义项提示（撥水、来年度落地前）', patch: withSystem(withoutSense) },
+  'sense-candidate': { note: '义项提示候选（由 eval:sense 调用）', patch: withCandidateHint },
+  'no-sense': { note: '去掉义项提示（撥水、来年度、大家落地前）', patch: withSystem(withoutSense) },
   'hosted-no-sense': { note: '后台托管提示词，去掉义项提示', patch: withSystem((prompt, ctx) => withoutSense(hosted(prompt, ctx), ctx)) },
   hosted: { note: '后台托管翻译的提示词', patch: withSystem(hosted) },
   'hosted-no-style': { note: '后台托管提示词，去掉中文风格指南', patch: withSystem((prompt, ctx) => withoutStyle(hosted(prompt, ctx), ctx)) },
