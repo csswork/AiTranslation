@@ -6,16 +6,15 @@
 
 Lesen Sie fremdsprachige Artikel und übersetzen Sie Bilder und PDFs direkt im Browser. Original und Übersetzung stehen absatzweise nebeneinander. Klicken Sie auf ein übersetztes Wort, um eine andere Formulierung zu wählen, und speichern Sie Artikel mit Übersetzungen auf Ihrem Gerät. Huaci bietet außerdem die Übersetzung markierter Texte, einzelner Seitenbereiche und ein separates Übersetzungsfenster. Verwenden Sie Ihren eigenen API-Schlüssel oder die gehostete Übersetzung mit Guthaben ohne eigenen Schlüssel.
 
-[Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge-Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Anleitung zur Erweiterung](../../apps/extension/README.md)
+[Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge-Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Firefox-Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) · [Anleitung zur Erweiterung](../../apps/extension/README.md)
 
-## Neu in 2.3.0
+## Neu in 2.4.0
 
-Am **2026-11-15** beim Chrome Web Store und bei Microsoft Edge Add-ons eingereicht; beide Einreichungen werden geprüft. Nach der Freigabe ist das Update im jeweiligen Store verfügbar. Siehe [Änderungsprotokoll](https://huaci.app/de/changelog.html#v2-3-0) und [Veröffentlichungsstatus](../extension/releases/2.3.0.md).
+Am **2026-11-23** veröffentlicht und im Chrome Web Store, bei Microsoft Edge Add-ons und bei Firefox Add-ons erhältlich. Siehe [Änderungsprotokoll](https://huaci.app/de/changelog.html#v2-4-0) und [Veröffentlichungsnotizen](../extension/releases/2.4.0.md).
 
-- **Kostenlose lokale Textübersetzung**: Sprachpaare in den Einstellungen herunterladen und anschließend offline übersetzen, ohne API-Schlüssel, Guthaben oder Übertragung des Textes. Ein unterstützter Browser ist erforderlich; Bilderkennung und alternative Formulierungen sind in diesem Modus nicht verfügbar.
-- **Automatische Website-Übersetzung**: Nach dem Aktivieren werden beim Scrollen Texte nahe dem sichtbaren Bereich übersetzt, auch bei späteren Besuchen. Ein eigener Übersetzungsanbieter lässt sich auswählen; kostenpflichtige Anbieter erfordern beim ersten Einsatz eine Bestätigung.
-- **Natürlichere Übersetzungen**: Überarbeitete Stilvorgaben für Chinesisch und andere Zielsprachen verbessern Formulierungen, Terminologie und Ton.
-- **Verbesserte automatische Bildübersetzung**: Textformen, Schriftgrößen, Ausrichtung und Hintergründe wurden verbessert. Einzelne Übersetzungen lassen sich verschieben, bearbeiten, vergrößern oder erneut übersetzen; Exporte behalten die Änderungen. Lautmalerei kann optional übersetzt werden.
+- **Lokaler Übersetzungscache**: Übersetzungen mit Ihrem eigenen API-Schlüssel (ChatGPT, DeepSeek und andere Modelle) und DeepL werden verschlüsselt auf Ihrem Gerät gespeichert. Bereits übersetzte Texte erscheinen ohne neue Anfrage aus dem Cache und sparen Tokens und Zeichenkontingent. Der Cache gilt für markierten Text, Seitenbereiche, Websites, das zweisprachige Lesen, ganze PDFs, Bilder und alternative Formulierungen; Bereichs- und Website-Übersetzung zeigen zwischengespeicherte Absätze zuerst. Nach einem Wechsel von Sprache, Modell, Stil oder Wortpräferenzen wird neu übersetzt, und **Neu übersetzen** umgeht den Cache. In den Einstellungen lässt er sich abschalten, die Anzahl der Einträge anzeigen und leeren. Übersetzung mit Guthaben und lokale Übersetzung nutzen diesen Cache nicht.
+- **Übersetzungsstil**: Die Stilvorgaben enthalten nun Beispiele für einheitlichere Formulierungen, Terminologie und Tonalität.
+- **Jetzt für Firefox**: Installation über [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) (Desktop-Firefox ab Version 142). Konto, Guthaben und Abonnement gelten auch für die Chrome- und Edge-Version. Firefox bietet keine lokale Übersetzung und keine Videountertitel; ganze PDFs werden über das Symbolleisten-Pop-up geöffnet.
 
 ## Vorschau
 
@@ -49,7 +48,7 @@ Ein Repository, drei Anwendungen: eine HTML-Website auf Vercel, ein Backend auf 
 | --- | --- | --- | --- |
 | Website | [apps/web](../../apps/web/README.md) | Vercel | Produktseiten, Datenschutz, Nutzungsbedingungen und Änderungsprotokoll in 11 Sprachen; der Kopfbereich fragt den Anmeldestatus bei app.huaci.app ab |
 | Backend | [apps/backend](../../apps/backend/README.md) | VPS | Authentifizierung, Benutzer- und Verwaltungsoberflächen, Erweiterungs-API, Gasttest, genaue Guthabenabrechnung, gehostete Text- und Bildübersetzung sowie Creem-Abonnements; erste Version bereitgestellt |
-| Erweiterung | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | 2.3.0 am 2026-11-15 bei Chrome und Edge eingereicht; Prüfung läuft. [Veröffentlichungsstatus](../extension/releases/2.3.0.md) |
+| Erweiterung | [apps/extension](../../apps/extension/README.md) | Chrome / Edge / Firefox | 2.4.0 in den Stores von Chrome, Edge und Firefox verfügbar. [Veröffentlichungsnotizen](../extension/releases/2.4.0.md) |
 
 ## Verzeichnisstruktur
 

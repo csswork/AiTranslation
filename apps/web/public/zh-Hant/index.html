@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>劃詞 – AI 翻譯與雙語閱讀 · 網頁裡的外文，選中右鍵就讀懂</title>
-<meta name="description" content="開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
+<meta name="description" content="開源 Chrome / Edge / Firefox 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。" />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="劃詞：選中，右鍵，然後接著讀。" />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"劃詞","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"劃詞","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"劃詞","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/zh-Hant/#app","name":"劃詞","url":"https://huaci.app/zh-Hant/","description":"開源 Chrome / Edge / Firefox 翻譯擴充功能，支援雙語閱讀、劃詞、圖片、整份 PDF、網頁區域與獨立翻譯面板，提供 24 種介面與目標語言。可自帶 API Key，也可登入後免 Key 試用或訂閱。","image":"https://huaci.app/assets/og.png","inLanguage":"zh-Hant","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+, Microsoft Edge 116+ or Mozilla Firefox 142+ (desktop)","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://addons.mozilla.org/firefox/addon/huaci-ai-translator/","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -87,15 +87,16 @@
         <h1>選取，按右鍵，<br /><span class="dim">然後繼續閱讀。</span></h1>
         <p class="hero-sub">網頁上的一句話、一張圖片、一份 PDF，或是一整篇文章，按右鍵就能翻譯成你的語言。安裝後即可使用，不必先填 API Key；支援的瀏覽器還可下載語言套件，免費在本機翻譯文字。也可以使用自己的 OpenAI、DeepSeek 或 DeepL Key。</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
-             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
-             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">安裝到 Chrome</span> <span data-for-browser="edge" hidden>安裝到 Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
-        <p class="install-note">新版已提交 Chrome 與 Edge 商店審核，通過後可在商店更新。主要更新：免費本機文字翻譯、更自然的譯文，以及更好的圖片自動辨識與排版。</p>
-        <p class="install-note" data-install-note hidden>這個瀏覽器無法安裝 Chrome 擴充功能：請在電腦上使用 Chrome、Edge 等 Chromium 核心瀏覽器開啟本頁。</p>
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」，
+             认出是桌面 Firefox 时改为 Firefox 附加组件商店（data-firefox-href）并换上「安装到 Firefox」。
+             main.js 发现是 Safari 等其他浏览器或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">安裝到 Chrome</span> <span data-for-browser="edge" hidden>安裝到 Edge</span> <span data-for-browser="firefox" hidden>安裝到 Firefox</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">檢視原始碼</a></div>
+        <p class="install-note">現已上架 Chrome 線上應用程式商店、Edge 擴充功能商店和 Firefox 附加元件商店。</p>
+        <p class="install-note" data-install-note hidden>這個瀏覽器無法安裝擴充功能：請在電腦上用 Chrome、Edge、Firefox 或其他 Chromium 核心瀏覽器開啟本頁。</p>
         <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">複製本頁連結</span> <span data-copy-state="done" hidden>已複製</span></button>
         <ul class="hero-meta">
           <li><b>開源</b> GPL-3.0 · 24 種語言</li>
-          <li>Chrome / Edge 116+</li>
+          <li>Chrome / Edge 116+ · Firefox 142+</li>
           <li>不儲存譯文 · 無第三方統計</li>
           <li>不填 Key 也能試用</li>
         </ul>
@@ -294,7 +295,7 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>整份 PDF 翻譯</h3>
-            <p>在 Chrome 裡開啟 PDF，按右鍵就能翻譯整份文件。譯文蓋在原來的位置，版面、圖表和表格不變。</p>
+            <p>在 Chrome 或 Edge 裡開啟 PDF，按右鍵就能翻譯整份文件；Firefox 在工具列彈窗裡選擇本機 PDF 檔案。譯文覆蓋在原來的位置，版面、圖表和表格不變。</p>
             <ul>
               <li>原文和譯文可以並排對照</li>
               <li>用瀏覽器的列印功能另存為 PDF，譯文仍是可以選取和搜尋的文字</li>
@@ -368,7 +369,7 @@
             <h3>影片即時字幕</h3>
           </div>
           <div>
-            <p>實驗功能，預設關閉。它會將目前分頁的聲音辨識為字幕，再翻譯成你的語言。</p>
+            <p>實驗功能，預設關閉。它把目前分頁的聲音辨識成字幕，再翻譯成你的語言。Firefox 暫不支援。</p>
             <p>辨識預設在本機進行。若改用瀏覽器的雲端辨識，聲音會傳送給瀏覽器的語音服務（Chrome 為 Google，Edge 為 Microsoft Azure）。辨識準確度仍有限，重要內容請勿依賴此功能。</p>
           </div>
         </aside>
@@ -495,19 +496,19 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>從 Chrome 或 Edge 商店安裝</h2>
-        <p>Chrome 線上應用程式商店和 Microsoft Edge 擴充功能商店都能安裝，瀏覽器需要 116 或更高版本。Brave 等 Chromium 核心瀏覽器請從 Chrome 線上應用程式商店安裝。</p>
+        <h2>從 Chrome、Edge 或 Firefox 商店安裝</h2>
+        <p>Chrome 線上應用程式商店、Microsoft Edge 擴充功能商店和 Firefox 附加元件商店都能安裝。Chrome 與 Edge 需要 116 或更高版本，Firefox 需要 142 或更高的桌面版。Brave 等 Chromium 核心瀏覽器從 Chrome 線上應用程式商店安裝。</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>開啟商店頁面</b> <span>在電腦上開啟<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 應用商店頁面</a>，Edge 使用者開啟<a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 載入項商店頁面</a>。</span></div>
+          <div><b>開啟商店頁面</b> <span>在電腦上開啟<a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 線上應用程式商店頁面</a>，Edge 使用者開啟<a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 擴充功能商店頁面</a>，Firefox 使用者開啟<a class="link" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">Firefox 附加元件頁面</a>。</span></div>
         </div>
         <div class="step">
-          <div><b>新增擴充功能</b> <span>點「新增至 Chrome」或 Edge 的「取得」，並確認。</span></div>
+          <div><b>新增擴充功能</b> <span>點「新增至 Chrome」、Edge 的「取得」或 Firefox 的「新增至 Firefox」，並確認。</span></div>
         </div>
         <div class="step">
-          <div><b>固定到工具列</b> <span>點拼圖圖示，把擴充功能固定到工具列。</span></div>
+          <div><b>固定到工具列</b> <span>點工具列上的擴充功能（拼圖）圖示，把擴充功能固定到工具列。</span></div>
         </div>
         <div class="step">
           <div><b>開始翻譯</b> <span>選取一段文字，按右鍵翻譯。不填 Key 也能先使用試用點數。</span></div>
@@ -517,10 +518,11 @@
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">開啟 Chrome 線上應用程式商店</a>
         <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">開啟 Edge 載入項商店</a>
+        <a class="btn btn-ghost" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">開啟 Firefox 附加元件商店</a>
         <p>也可以從 <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 原始碼</a>以開發者模式載入 <span class="mono">apps/extension</span>。</p>
       </div>
 
-      <p class="after-facts reveal">圖片翻譯需選擇支援圖片辨識的模型；擴充功能無法在 Chrome 內部頁面、應用程式商店等受保護頁面中使用。</p>
+      <p class="after-facts reveal">圖片翻譯需選擇支援圖片辨識的模型；擴充功能無法在瀏覽器內部頁面、擴充功能商店等受保護頁面中使用。</p>
     </div>
   </section>
 
@@ -529,7 +531,7 @@
     <div class="cta reveal">
       <h2>現在裝上試試</h2>
       <p>不用註冊，也不用填 Key，裝好就能翻譯。</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">新增至 Chrome</span><span data-for-browser="edge" hidden>新增至 Edge</span></a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"><span data-for-browser="chrome">新增至 Chrome</span><span data-for-browser="edge" hidden>新增至 Edge</span><span data-for-browser="firefox" hidden>新增至 Firefox</span></a> <a class="btn btn-ghost" href="/zh-Hant/changelog.html">更新日誌</a></div>
     </div>
   </section>
 

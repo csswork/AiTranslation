@@ -6,16 +6,15 @@
 
 在浏览器里读外语文章、翻译图片和 PDF：原文与译文逐段对齐，点译文里的词就能换说法，文章连同译文可以保存在本机。也支持划词翻译、网页区域翻译和独立翻译面板；可自带 API Key，或使用免 Key 的点数翻译。
 
-[官网](https://huaci.app/) · [Chrome 商店](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge 商店](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [扩展使用说明](../../apps/extension/README.md)
+[官网](https://huaci.app/) · [Chrome 商店](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge 商店](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Firefox 商店](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) · [扩展使用说明](../../apps/extension/README.md)
 
-## 2.3.0 更新
+## 2.4.0 更新
 
-已于 **2026-11-15** 提交 Chrome 和 Microsoft Edge 商店审核，通过后即可在对应商店更新。查看[完整更新日志](https://huaci.app/changelog.html#v2-3-0)与[发布状态](../extension/releases/2.3.0.md)。
+已于 **2026-11-23** 发布，可从 Chrome、Microsoft Edge 和 Firefox 商店安装或更新。查看[完整更新日志](https://huaci.app/changelog.html#v2-4-0)与[发布记录](../extension/releases/2.4.0.md)。
 
-- **免费本机文字翻译**：在设置里下载语言包后，可离线翻译，不需要 Key、不消耗点数、文字不上传。需浏览器支持；此模式不支持图片识别和点词换说法。
-- **整站翻译**：右键勾选「翻译这个网站」，滚动时翻译视口附近的文字，以后访问继续生效。可单独选择平台，首次启用收费平台会先确认。
-- **更自然的译文**：优化中文和其他目标语言的翻译风格指南，改进措辞、术语与语气的一致性。
-- **图片自动翻译优化**：改进文字形状、字号、对齐与背景处理。可逐段拖动、改字、调字号或重翻，导出保留修改；音效字可选择翻译。
+- **本机译文缓存**：自带 Key（ChatGPT、DeepSeek 等大模型）与 DeepL 的翻译结果加密保存在本机，同样的内容再次翻译时直接使用，不再请求平台，节省 Token 和字符额度。覆盖划词、区域、整站、双语阅读、整份 PDF、图片识别和点词换说法；区域与整站翻译先填上已缓存的段落。换了语言、模型、风格或用词偏好会重新翻译，「重新翻译」可跳过缓存；可在设置页关闭、查看条数和清除。点数翻译与本机翻译不使用这项缓存。
+- **译文风格**：风格指南补充了示例，措辞、术语和语气更稳定。
+- **Firefox 版上架**：可从 [Firefox 附加组件商店](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/)安装（桌面版 Firefox 142 及以上），账户、点数与订阅和 Chrome、Edge 版通用。Firefox 暂不支持本机翻译和视频字幕；整份 PDF 从工具栏弹窗选择文件翻译。
 
 ## 功能预览
 
@@ -49,7 +48,7 @@
 | --- | --- | --- | --- |
 | 网站 | [apps/web](../../apps/web/README.md) | Vercel | 宣传、隐私、条款、更新日志与 11 种语言页面；页头账户入口读取 app.huaci.app 的登录状态 |
 | 后端 | [apps/backend](../../apps/backend/README.md) | VPS | 认证、用户与管理员界面、扩展 API、访客试用、精确点数账本、托管文字与图片、Creem 订阅首版，已部署上线 |
-| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge | 2.3.0 已于 2026-11-15 提交 Chrome 与 Edge 审核，等待通过；[发布状态](../extension/releases/2.3.0.md) |
+| 扩展 | [apps/extension](../../apps/extension/README.md) | 用户的 Chrome / Edge / Firefox | 2.4.0 已在 Chrome、Edge 与 Firefox 商店上线；[发布记录](../extension/releases/2.4.0.md) |
 
 ## 目录
 

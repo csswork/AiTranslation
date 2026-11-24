@@ -6,16 +6,15 @@
 
 Lee artículos en otros idiomas y traduce imágenes y PDF directamente en el navegador. Mantén alineados los párrafos originales y traducidos, pulsa una palabra traducida para elegir otra expresión y guarda los artículos con sus traducciones en tu dispositivo. Huaci también permite traducir texto seleccionado, zonas de una página y usar un panel de traducción independiente. Puedes usar tu propia clave API o la traducción alojada con créditos, sin clave propia.
 
-[Sitio web](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Complementos de Edge](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Guía de la extensión](../../apps/extension/README.md)
+[Sitio web](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Complementos de Edge](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Complementos de Firefox](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) · [Guía de la extensión](../../apps/extension/README.md)
 
-## Novedades de la versión 2.3.0
+## Novedades de la versión 2.4.0
 
-Enviada a Chrome Web Store y Microsoft Edge Add-ons el **2026-11-15**; ambas solicitudes están en revisión. La actualización estará disponible en cada tienda tras su aprobación. Consulta el [registro de cambios](https://huaci.app/es/changelog.html#v2-3-0) y el [estado de publicación](../extension/releases/2.3.0.md).
+Publicada el **2026-11-23** y disponible en Chrome Web Store, Microsoft Edge Add-ons y Firefox Add-ons. Consulta el [registro de cambios](https://huaci.app/es/changelog.html#v2-4-0) y las [notas de la versión](../extension/releases/2.4.0.md).
 
-- **Traducción local gratuita de texto**: descarga los pares de idiomas en Ajustes y traduce sin conexión, sin clave API, sin créditos y sin enviar el texto. Requiere un navegador compatible; este modo no ofrece reconocimiento de imágenes ni expresiones alternativas.
-- **Traducción automática de sitios**: actívala para traducir el texto cercano al área visible mientras te desplazas, también en visitas posteriores. Puedes elegir otro proveedor; los proveedores de pago piden confirmación la primera vez.
-- **Traducciones más naturales**: las guías de estilo revisadas para chino y otros idiomas de destino mejoran la expresión, la terminología y el tono.
-- **Mejor traducción automática de imágenes**: mejoras en las formas del texto, el tamaño, la alineación y los fondos. Mueve, edita, cambia el tamaño o vuelve a traducir cada fragmento; la imagen exportada conserva los cambios. La traducción de onomatopeyas es opcional.
+- **Caché local de traducciones**: las traducciones hechas con tu propia clave API (ChatGPT, DeepSeek y otros modelos) y con DeepL se cifran y se guardan en tu dispositivo. El texto repetido se muestra desde la caché sin una nueva solicitud, ahorrando tokens y cuota de caracteres. Funciona con texto seleccionado, zonas de página, sitios, lectura bilingüe, PDF completos, imágenes y expresiones alternativas; la traducción de zonas y sitios muestra primero los párrafos en caché. Al cambiar de idioma, modelo, estilo o preferencias de vocabulario se vuelve a traducir, y **Volver a traducir** omite la caché. Desde Ajustes puedes desactivarla, ver cuántas entradas hay y vaciarla. La traducción con créditos y la traducción local no usan esta caché.
+- **Estilo de traducción**: las guías de estilo incorporan ejemplos para una expresión, terminología y tono más uniformes.
+- **Ya disponible en Firefox**: instálala desde [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) (Firefox de escritorio 142 o posterior). La cuenta, los créditos y la suscripción se comparten con las versiones de Chrome y Edge. Firefox no ofrece traducción local ni subtítulos de vídeo; los PDF completos se abren desde la ventana emergente de la barra de herramientas.
 
 ## Vista previa
 
@@ -49,7 +48,7 @@ Un repositorio, tres aplicaciones: un sitio HTML en Vercel, un backend en un VPS
 | --- | --- | --- | --- |
 | Sitio web | [apps/web](../../apps/web/README.md) | Vercel | Presentación, privacidad, condiciones e historial de cambios en 11 idiomas; la cabecera consulta el estado de sesión en app.huaci.app |
 | Backend | [apps/backend](../../apps/backend/README.md) | VPS | Autenticación, interfaces de usuario y administración, API de la extensión, prueba para visitantes, contabilidad precisa de créditos, traducción alojada de texto e imágenes y suscripciones con Creem; primera versión desplegada |
-| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | 2.3.0 enviada a Chrome y Edge el 2026-11-15; en revisión. [Estado de publicación](../extension/releases/2.3.0.md) |
+| Extensión | [apps/extension](../../apps/extension/README.md) | Chrome / Edge / Firefox | 2.4.0 disponible en las tiendas de Chrome, Edge y Firefox. [Notas de la versión](../extension/releases/2.4.0.md) |
 
 ## Estructura
 

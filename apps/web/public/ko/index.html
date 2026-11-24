@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Huaci – AI 번역 및 이중 언어 읽기 · 웹페이지 속 외국어, 선택 후 우클릭으로 바로 이해</title>
-<meta name="description" content="오픈 소스 Chrome / Edge 번역 확장 프로그램으로, 이중 언어 읽기, 선택 번역, 이미지, 전체 PDF, 웹페이지 영역 및 독립 번역 패널을 지원하며 24가지 인터페이스 및 대상 언어를 제공합니다. 자체 API Key를 사용하거나 로그인 후 Key 없이 체험 또는 구독할 수 있습니다." />
+<meta name="description" content="오픈 소스 Chrome / Edge / Firefox 번역 확장 프로그램으로, 이중 언어 읽기, 텍스트 선택, 이미지, 전체 PDF, 웹페이지 영역, 독립 번역 패널을 지원하며 24가지 인터페이스 및 대상 언어를 제공합니다. 자체 API Key를 사용하거나 로그인 후 Key 없이 체험 또는 구독할 수 있습니다." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="Huaci: 선택하고, 우클릭한 뒤, 계속 읽으세요." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ko/#app","name":"Huaci","url":"https://huaci.app/ko/","description":"오픈 소스 Chrome / Edge 번역 확장 프로그램으로, 이중 언어 읽기, 선택 번역, 이미지, 전체 PDF, 웹페이지 영역 및 독립 번역 패널을 지원하며 24가지 인터페이스 및 대상 언어를 제공합니다. 자체 API Key를 사용하거나 로그인 후 Key 없이 체험 또는 구독할 수 있습니다.","image":"https://huaci.app/assets/og.png","inLanguage":"ko","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/ko/#app","name":"Huaci","url":"https://huaci.app/ko/","description":"오픈 소스 Chrome / Edge / Firefox 번역 확장 프로그램으로, 이중 언어 읽기, 텍스트 선택, 이미지, 전체 PDF, 웹페이지 영역, 독립 번역 패널을 지원하며 24가지 인터페이스 및 대상 언어를 제공합니다. 자체 API Key를 사용하거나 로그인 후 Key 없이 체험 또는 구독할 수 있습니다.","image":"https://huaci.app/assets/og.png","inLanguage":"ko","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+, Microsoft Edge 116+ or Mozilla Firefox 142+ (desktop)","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://addons.mozilla.org/firefox/addon/huaci-ai-translator/","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -87,15 +87,16 @@
         <h1>선택하고, 오른쪽 버튼,<br /><span class="dim">그리고 계속 읽습니다.</span></h1>
         <p class="hero-sub">웹페이지의 한 문장, 한 장의 이미지, 하나의 PDF 또는 문서 전체를 마우스 오른쪽 버튼으로 번역하여 원하는 언어로 볼 수 있습니다. 설치 후 바로 사용할 수 있으며 API Key를 먼저 입력할 필요가 없습니다. 지원되는 브라우저에서는 언어 팩을 다운로드하여 무료로 기기 내에서 텍스트를 번역할 수 있습니다. 자신의 OpenAI, DeepSeek 또는 DeepL Key를 사용할 수도 있습니다.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
-             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
-             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Chrome에 설치</span> <span data-for-browser="edge" hidden>Edge에 설치</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 코드 보기</a></div>
-        <p class="install-note">새 버전이 Chrome 및 Edge 스토어 심사에 제출되었으며, 통과 후 스토어에서 업데이트할 수 있습니다. 주요 업데이트: 무료 로컬 텍스트 번역, 더 자연스러운 번역문, 그리고 개선된 이미지 자동 인식 및 레이아웃.</p>
-        <p class="install-note" data-install-note hidden>이 브라우저에는 Chrome 확장 프로그램을 설치할 수 없습니다. 컴퓨터에서 Chrome, Edge 등 Chromium 기반 브라우저로 이 페이지를 열어 주세요.</p>
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」，
+             认出是桌面 Firefox 时改为 Firefox 附加组件商店（data-firefox-href）并换上「安装到 Firefox」。
+             main.js 发现是 Safari 等其他浏览器或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Chrome에 설치</span> <span data-for-browser="edge" hidden>Edge에 설치</span> <span data-for-browser="firefox" hidden>Firefox에 설치</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">소스 보기</a></div>
+        <p class="install-note">현재 Chrome 웹 스토어, Edge 추가 기능 스토어, Firefox 부가 기능 스토어에 출시되어 있습니다.</p>
+        <p class="install-note" data-install-note hidden>이 브라우저에는 확장 프로그램을 설치할 수 없습니다. 컴퓨터에서 Chrome, Edge, Firefox 또는 기타 Chromium 기반 브라우저로 이 페이지를 여세요.</p>
         <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">이 페이지 링크 복사</span> <span data-copy-state="done" hidden>복사됨</span></button>
         <ul class="hero-meta">
           <li><b>오픈 소스</b> GPL-3.0 · 24개 언어</li>
-          <li>Chrome / Edge 116+</li>
+          <li>Chrome / Edge 116+ · Firefox 142+</li>
           <li>번역문 미저장 · 제3자 통계 없음</li>
           <li>Key를 입력하지 않아도 체험 가능</li>
         </ul>
@@ -294,7 +295,7 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>전체 PDF 번역</h3>
-            <p>Chrome에서 PDF를 열고 마우스 오른쪽 버튼을 클릭하면 문서 전체를 번역할 수 있습니다. 번역문이 원래 위치에 덮어 표시되며 레이아웃, 차트, 표는 그대로 유지됩니다.</p>
+            <p>Chrome 또는 Edge에서 PDF를 열고 마우스 오른쪽 버튼을 클릭하면 전체 문서를 번역할 수 있습니다. Firefox에서는 도구 모음 팝업에서 로컬 PDF 파일을 선택하세요. 번역문이 원래 위치에 겹쳐 표시되어 레이아웃, 차트, 표가 그대로 유지됩니다.</p>
             <ul>
               <li>원문과 번역문을 나란히 대조 가능</li>
               <li>브라우저의 인쇄 기능으로 PDF로 저장해도 번역문은 선택 및 검색 가능한 텍스트로 유지됩니다</li>
@@ -368,7 +369,7 @@
             <h3>동영상 실시간 자막</h3>
           </div>
           <div>
-            <p>실험 기능이며 기본적으로 꺼져 있습니다. 현재 탭의 소리를 인식해 자막으로 만들고, 다시 사용자의 언어로 번역합니다.</p>
+            <p>실험 기능이며 기본적으로 꺼져 있습니다. 현재 탭의 소리를 인식해 자막으로 만들고 사용자의 언어로 번역합니다. Firefox는 현재 지원하지 않습니다.</p>
             <p>인식은 기본적으로 기기에서 수행됩니다. 브라우저의 클라우드 인식을 사용하는 경우 소리는 브라우저의 음성 서비스(Chrome은 Google, Edge는 Microsoft Azure)로 전송됩니다. 인식 정확도에는 아직 한계가 있으므로 중요한 내용은 이 기능에 의존하지 마십시오.</p>
           </div>
         </aside>
@@ -495,19 +496,19 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Chrome 또는 Edge 스토어에서 설치</h2>
-        <p>Chrome 웹 스토어와 Microsoft Edge 추가 기능 스토어에서 모두 설치할 수 있으며, 브라우저는 116 이상이어야 합니다. Brave 등 Chromium 기반 브라우저는 Chrome 웹 스토어에서 설치합니다.</p>
+        <h2>Chrome, Edge 또는 Firefox 스토어에서 설치</h2>
+        <p>Chrome 웹 스토어, Microsoft Edge 추가 기능 스토어, Firefox 부가 기능 스토어에서 모두 설치할 수 있습니다. Chrome과 Edge는 116 이상, Firefox는 142 이상 데스크톱 버전이 필요합니다. Brave 등 Chromium 기반 브라우저는 Chrome 웹 스토어에서 설치하세요.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>스토어 페이지 열기</b> <span>컴퓨터에서 <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 웹 스토어 페이지</a>를 열고, Edge 사용자는 <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 추가 기능 스토어 페이지</a>를 엽니다.</span></div>
+          <div><b>스토어 페이지 열기</b> <span>컴퓨터에서 <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 웹 스토어 페이지</a>를 여세요. Edge 사용자는 <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 추가 기능 스토어 페이지</a>를, Firefox 사용자는 <a class="link" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">Firefox 부가 기능 페이지</a>를 여세요.</span></div>
         </div>
         <div class="step">
-          <div><b>확장 프로그램 추가</b> <span>「Chrome에 추가」 또는 Edge의 「받기」를 클릭하고 확인합니다.</span></div>
+          <div><b>확장 프로그램 추가</b> <span>「Chrome에 추가」, Edge의 「받기」 또는 Firefox의 「Firefox에 추가」를 클릭하고 확인하세요.</span></div>
         </div>
         <div class="step">
-          <div><b>툴바에 고정</b> <span>퍼즐 아이콘을 클릭하여 확장 프로그램을 툴바에 고정합니다.</span></div>
+          <div><b>도구 모음에 고정</b> <span>도구 모음의 확장 프로그램(퍼즐) 아이콘을 클릭하고 확장 프로그램을 도구 모음에 고정하세요.</span></div>
         </div>
         <div class="step">
           <div><b>번역 시작</b> <span>텍스트를 선택하고 마우스 오른쪽 버튼으로 번역하세요. Key를 입력하지 않아도 체험 포인트로 먼저 사용할 수 있습니다.</span></div>
@@ -517,10 +518,11 @@
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome 웹 스토어 열기</a>
         <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge 추가 기능 스토어 열기</a>
+        <a class="btn btn-ghost" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">Firefox 부가 기능 스토어 열기</a>
         <p><a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub 소스</a>에서 개발자 모드로 <span class="mono">apps/extension</span>을 로드할 수도 있습니다.</p>
       </div>
 
-      <p class="after-facts reveal">이미지 번역은 이미지 인식을 지원하는 모델을 선택해야 하며, 확장 프로그램은 Chrome 내부 페이지, 앱 스토어 등 보호된 페이지에서는 사용할 수 없습니다.</p>
+      <p class="after-facts reveal">이미지 번역은 이미지 인식을 지원하는 모델을 선택해야 합니다. 확장 프로그램은 브라우저 내부 페이지, 확장 프로그램 스토어 등 보호된 페이지에서는 사용할 수 없습니다.</p>
     </div>
   </section>
 
@@ -529,7 +531,7 @@
     <div class="cta reveal">
       <h2>지금 설치해서 사용해 보세요</h2>
       <p>회원가입도, Key 입력도 필요 없이 설치하면 바로 번역할 수 있습니다.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Chrome에 추가</span><span data-for-browser="edge" hidden>Edge에 추가</span></a> <a class="btn btn-ghost" href="/ko/changelog.html">변경 로그</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"><span data-for-browser="chrome">Chrome에 추가</span><span data-for-browser="edge" hidden>Edge에 추가</span><span data-for-browser="firefox" hidden>Firefox에 추가</span></a> <a class="btn btn-ghost" href="/ko/changelog.html">변경 로그</a></div>
     </div>
   </section>
 

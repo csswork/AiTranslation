@@ -6,16 +6,15 @@
 
 ブラウザーで外国語の記事を読み、画像や PDF を翻訳できます。原文と訳文を段落ごとに並べ、訳文中の単語をクリックして別の表現を選び、記事と訳文を端末に保存できます。選択したテキストの翻訳、ページ内の領域翻訳、独立した翻訳パネルにも対応しています。自分の API キーを使うか、キー不要のクレジット制ホスト型翻訳を利用できます。
 
-[公式サイト](https://huaci.app/) · [Chrome ウェブストア](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge アドオン](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [拡張機能ガイド](../../apps/extension/README.md)
+[公式サイト](https://huaci.app/) · [Chrome ウェブストア](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge アドオン](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Firefox アドオン](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) · [拡張機能ガイド](../../apps/extension/README.md)
 
-## 2.3.0 の更新
+## 2.4.0 の更新
 
-**2026-11-15** に Chrome ウェブストアと Microsoft Edge アドオンへ提出し、現在審査待ちです。承認後、各ストアで更新できます。[更新履歴](https://huaci.app/ja/changelog.html#v2-3-0)と[公開状況](../extension/releases/2.3.0.md)をご覧ください。
+**2026-11-23** に公開し、Chrome ウェブストア、Microsoft Edge アドオン、Firefox アドオンから入手できます。[更新履歴](https://huaci.app/ja/changelog.html#v2-4-0)と[リリース記録](../extension/releases/2.4.0.md)をご覧ください。
 
-- **無料の端末内テキスト翻訳**：設定で言語ペアをダウンロードすれば、API キーやクレジットを使わず、テキストを送信せずにオフラインで翻訳できます。ブラウザーの対応が必要です。このモードでは画像認識と言い換えは使えません。
-- **サイトの自動翻訳**：右クリックでサイトの翻訳を有効にすると、スクロールに合わせて表示領域付近のテキストを翻訳し、次回のアクセスでも継続します。専用の翻訳サービスを選択でき、有料サービスの初回利用時には確認します。
-- **自然な訳文**：中国語やその他の翻訳先言語のスタイルガイドを改善し、表現、用語、語調を整えました。
-- **画像の自動翻訳を改善**：文字の形、サイズ、配置、背景の処理を改善。訳文ごとの移動、編集、サイズ変更、再翻訳ができ、書き出した画像にも反映されます。効果音の翻訳は任意です。
+- **端末内の訳文キャッシュ**：自分の API キー（ChatGPT、DeepSeek などの大規模言語モデル）と DeepL の翻訳結果を暗号化して端末に保存します。同じ内容は再リクエストせずキャッシュから表示し、トークンや文字数の枠を節約します。選択テキスト、領域、サイト、対訳リーダー、PDF 全体、画像、言い換えに対応し、領域とサイトの翻訳ではキャッシュ済みの段落を先に表示します。言語、モデル、スタイル、用語の設定を変えると翻訳し直し、「再翻訳」でキャッシュを使わずに翻訳できます。設定でオフにしたり、件数の確認や削除ができます。クレジット翻訳と端末内翻訳はこのキャッシュを使いません。
+- **訳文のスタイル**：スタイルガイドに例を追加し、表現、用語、語調をより安定させました。
+- **Firefox 版を公開**：[Firefox アドオン](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/)からインストールできます（デスクトップ版 Firefox 142 以降）。アカウント、クレジット、サブスクリプションは Chrome 版・Edge 版と共通です。Firefox では端末内翻訳と動画字幕に対応していません。PDF 全体の翻訳はツールバーのポップアップからファイルを選びます。
 
 ## プレビュー
 
@@ -49,7 +48,7 @@
 | --- | --- | --- | --- |
 | サイト | [apps/web](../../apps/web/README.md) | Vercel | 製品紹介、プライバシー、利用規約、更新履歴を 11 言語で提供。ヘッダーは app.huaci.app のログイン状態を取得 |
 | バックエンド | [apps/backend](../../apps/backend/README.md) | VPS | 認証、アカウント画面、管理者画面、拡張機能 API、ゲスト試用、正確なクレジット管理、テキスト・画像のホスト型翻訳、Creem サブスクリプションの初版をデプロイ済み |
-| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge | 2.3.0 は 2026-11-15 に Chrome と Edge へ提出済み、審査待ち。[公開状況](../extension/releases/2.3.0.md) |
+| 拡張機能 | [apps/extension](../../apps/extension/README.md) | Chrome / Edge / Firefox | 2.4.0 を Chrome、Edge、Firefox の各ストアで公開中。[リリース記録](../extension/releases/2.4.0.md) |
 
 ## ディレクトリ構成
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Huaci – AI Translator & Bilingual Reader · Select foreign text on any page, right-click, and read</title>
-<meta name="description" content="Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key." />
+<meta name="description" content="Open-source Chrome / Edge / Firefox translation extension with bilingual reading, text selection, images, full-document PDF, page regions, and a standalone translation panel, offering 24 interface and target languages. Bring your own API Key, or sign in to try without a Key or subscribe." />
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/assets/icon128.png" />
@@ -37,7 +37,7 @@
 <meta property="og:image:alt" content="Huaci: select, right-click, and keep reading." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- i18n:jsonld -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"Huaci","url":"https://huaci.app/en/","description":"Open-source Chrome / Edge translation extension supporting bilingual reading, text selection, images, full PDFs, webpage regions, and a standalone translation panel, with 24 interface and target languages. Bring your own API Key, or sign in to use free trial credits or a subscription without a Key.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+ or Microsoft Edge 116+","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://github.com/csswork/AiTranslation"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://huaci.app/#website","url":"https://huaci.app/","name":"Huaci","inLanguage":["zh-Hans","en","zh-Hant","ja","ko","es","pt","fr","de","ru","ar"]},{"@type":"SoftwareApplication","@id":"https://huaci.app/en/#app","name":"Huaci","url":"https://huaci.app/en/","description":"Open-source Chrome / Edge / Firefox translation extension with bilingual reading, text selection, images, full-document PDF, page regions, and a standalone translation panel, offering 24 interface and target languages. Bring your own API Key, or sign in to try without a Key or subscribe.","image":"https://huaci.app/assets/og.png","inLanguage":"en","applicationCategory":"BrowserApplication","applicationSubCategory":"Translation","operatingSystem":"Windows, macOS, Linux, ChromeOS","softwareVersion":"2.4.0","browserRequirements":"Google Chrome 116+, Microsoft Edge 116+ or Mozilla Firefox 142+ (desktop)","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","downloadUrl":"https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","sameAs":["https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj","https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe","https://addons.mozilla.org/firefox/addon/huaci-ai-translator/","https://github.com/csswork/AiTranslation"]}]}</script>
 <!-- /i18n:jsonld -->
 <link rel="stylesheet" href="/styles.css" />
 <!-- 语言：按存储的选择或浏览器语言尽早跳转。外链脚本，不受 CSP 的 sha256 限制 -->
@@ -87,15 +87,16 @@
         <h1>Select, right-click,<br /><span class="dim">then keep reading.</span></h1>
         <p class="hero-sub">A sentence, an image, a PDF, or an entire article on a web page can be translated into your language with a right-click. Works right after installation with no API Key required; supported browsers can also download language packs to translate text on-device for free. You can also use your own OpenAI, DeepSeek, or DeepL key.</p>
         <!-- 安装按钮默认直达 Chrome 应用商店详情页（网页无法替用户安装扩展，只能送到商店由用户点「添加至 Chrome」）；
-             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」。
-             main.js 发现是 Firefox、Safari 或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
-        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Install for Chrome</span> <span data-for-browser="edge" hidden>Install for Edge</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">View source</a></div>
-        <p class="install-note">The new version has been submitted for review to the Chrome and Edge stores and will be available for update once approved. Key updates: free on-device text translation, more natural translations, and improved automatic image recognition and layout.</p>
-        <p class="install-note" data-install-note hidden>This browser cannot install Chrome extensions: open this page on a computer using a Chromium-based browser such as Chrome or Edge.</p>
+             main.js 认出是 Edge 时改为 Edge 加载项商店（data-edge-href）并换上「安装到 Edge」，
+             认出是桌面 Firefox 时改为 Firefox 附加组件商店（data-firefox-href）并换上「安装到 Firefox」。
+             main.js 发现是 Safari 等其他浏览器或手机浏览器时，改为跳到下面的安装说明并显示提示 -->
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> <span data-for-browser="chrome">Install for Chrome</span> <span data-for-browser="edge" hidden>Install for Edge</span> <span data-for-browser="firefox" hidden>Install for Firefox</span> </a> <a class="btn btn-ghost btn-lg" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">View source</a></div>
+        <p class="install-note">Now available in the Chrome Web Store, the Microsoft Edge Add-ons store, and the Firefox Add-ons store.</p>
+        <p class="install-note" data-install-note hidden>This browser cannot install extensions: open this page on a computer using Chrome, Edge, Firefox, or another Chromium-based browser.</p>
         <button class="copy-link" type="button" data-copy-link hidden><span data-copy-state="idle">Copy page link</span> <span data-copy-state="done" hidden>Copied</span></button>
         <ul class="hero-meta">
           <li><b>Open source</b> GPL-3.0 · 24 languages</li>
-          <li>Chrome / Edge 116+</li>
+          <li>Chrome / Edge 116+ · Firefox 142+</li>
           <li>No translation storage · No third-party analytics</li>
           <li>Try it without entering a Key</li>
         </ul>
@@ -294,7 +295,7 @@
           <div class="feature-copy reveal">
             <p class="no">04</p>
             <h3>Full PDF translation</h3>
-            <p>Open a PDF in Chrome and right-click to translate the entire document. The translation is overlaid in place, with layout, figures, and tables unchanged.</p>
+            <p>Open a PDF in Chrome or Edge and right-click to translate the entire document; in Firefox, select a local PDF file from the toolbar popup. The translation overlays the original positions, leaving the layout, figures, and tables unchanged.</p>
             <ul>
               <li>Original and translation can be viewed side by side</li>
               <li>Save as PDF using the browser's print function; the translation remains selectable and searchable text</li>
@@ -368,7 +369,7 @@
             <h3>Real-time video subtitles</h3>
           </div>
           <div>
-            <p>Experimental feature, off by default. It recognizes the audio of the current tab as subtitles, then translates them into your language.</p>
+            <p>Experimental feature, off by default. It recognizes the audio of the current tab as subtitles and translates them into your language. Not yet supported in Firefox.</p>
             <p>Recognition runs locally by default. If you switch to the browser's cloud recognition, the audio is sent to the browser's speech service (Google for Chrome, Microsoft Azure for Edge). Recognition accuracy is still limited; do not rely on it for important content.</p>
           </div>
         </aside>
@@ -495,19 +496,19 @@
     <div class="wrap">
       <div class="section-head wide reveal">
         <p class="kicker">Install</p>
-        <h2>Install from the Chrome or Edge store</h2>
-        <p>Available in the Chrome Web Store and the Microsoft Edge Add-ons store; browser version 116 or later is required. Chromium-based browsers such as Brave install from the Chrome Web Store.</p>
+        <h2>Install from the Chrome, Edge, or Firefox store</h2>
+        <p>Available in the Chrome Web Store, the Microsoft Edge Add-ons store, and the Firefox Add-ons store. Chrome and Edge require version 116 or later; Firefox requires desktop version 142 or later. Chromium-based browsers such as Brave install from the Chrome Web Store.</p>
       </div>
 
       <div class="steps reveal">
         <div class="step">
-          <div><b>Open the store page</b> <span>On your computer, open the <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store page</a>; Edge users should open the <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge Add-ons store page</a>.</span></div>
+          <div><b>Open the store page</b> <span>On a computer, open the <a class="link" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Chrome Web Store page</a>; Edge users open the <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Edge Add-ons store page</a>; Firefox users open the <a class="link" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">Firefox Add-ons page</a>.</span></div>
         </div>
         <div class="step">
-          <div><b>Add the extension</b> <span>Click "Add to Chrome" or "Get" in Edge, then confirm.</span></div>
+          <div><b>Add the extension</b> <span>Click "Add to Chrome", "Get" in Edge, or "Add to Firefox" in Firefox, and confirm.</span></div>
         </div>
         <div class="step">
-          <div><b>Pin to the toolbar</b> <span>Click the puzzle icon and pin the extension to the toolbar.</span></div>
+          <div><b>Pin to the toolbar</b> <span>Click the extensions (puzzle piece) icon on the toolbar and pin the extension to the toolbar.</span></div>
         </div>
         <div class="step">
           <div><b>Start translating</b> <span>Select some text and translate it from the context menu. You can use trial credits first without entering a key.</span></div>
@@ -517,10 +518,11 @@
       <div class="install-cta reveal">
         <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener">Open the Chrome Web Store</a>
         <a class="btn btn-ghost" href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" target="_blank" rel="noopener">Open the Edge Add-ons store</a>
+        <a class="btn btn-ghost" href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/" target="_blank" rel="noopener">Open the Firefox Add-ons store</a>
         <p>You can also load <span class="mono">apps/extension</span> in developer mode from the <a class="link" href="https://github.com/csswork/AiTranslation" target="_blank" rel="noopener">GitHub source code</a>.</p>
       </div>
 
-      <p class="after-facts reveal">Image translation requires selecting a model that supports image recognition; the extension cannot be used on protected pages such as Chrome internal pages and the Web Store.</p>
+      <p class="after-facts reveal">Image translation requires a model that supports image recognition; the extension cannot be used on protected pages such as browser internal pages and extension stores.</p>
     </div>
   </section>
 
@@ -529,7 +531,7 @@
     <div class="cta reveal">
       <h2>Try it now</h2>
       <p>No sign-up and no API Key required. Translate right after installation.</p>
-      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe"><span data-for-browser="chrome">Add to Chrome</span><span data-for-browser="edge" hidden>Add to Edge</span></a> <a class="btn btn-ghost" href="/en/changelog.html">Changelog</a></div>
+      <div class="hero-cta"><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj" target="_blank" rel="noopener" data-install data-edge-href="https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe" data-firefox-href="https://addons.mozilla.org/firefox/addon/huaci-ai-translator/"><span data-for-browser="chrome">Add to Chrome</span><span data-for-browser="edge" hidden>Add to Edge</span><span data-for-browser="firefox" hidden>Add to Firefox</span></a> <a class="btn btn-ghost" href="/en/changelog.html">Changelog</a></div>
     </div>
   </section>
 

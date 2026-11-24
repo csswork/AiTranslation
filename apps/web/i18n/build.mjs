@@ -277,7 +277,7 @@ function withJsonLd(html, loc, page) {
         applicationSubCategory: 'Translation',
         operatingSystem: 'Windows, macOS, Linux, ChromeOS',
         softwareVersion: EXTENSION_VERSION,
-        browserRequirements: 'Google Chrome 116+ or Microsoft Edge 116+',
+        browserRequirements: 'Google Chrome 116+, Microsoft Edge 116+ or Mozilla Firefox 142+ (desktop)',
         license: 'https://www.gnu.org/licenses/gpl-3.0.html',
         isAccessibleForFree: true,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -286,6 +286,7 @@ function withJsonLd(html, loc, page) {
         sameAs: [
           'https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj',
           'https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe',
+          'https://addons.mozilla.org/firefox/addon/huaci-ai-translator/',
           'https://github.com/csswork/AiTranslation',
         ],
       },

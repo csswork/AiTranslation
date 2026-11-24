@@ -6,16 +6,15 @@
 
 Read articles in other languages and translate images and PDFs right in your browser. Keep original and translated paragraphs aligned, click a translated word for alternative wording, and save articles with their translations on your device. Huaci also offers selection translation, translation of individual page regions, and a standalone translation panel. Use free on-device text translation with downloaded language packs where supported, bring your own API key, or use hosted credits.
 
-[Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Extension guide](apps/extension/README.md)
+[Website](https://huaci.app/) · [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) · [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) · [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) · [Extension guide](apps/extension/README.md)
 
-## What’s new in 2.3.0
+## What’s new in 2.4.0
 
-Submitted to the Chrome Web Store and Microsoft Edge Add-ons on **2026-11-15**; both submissions are awaiting review. The update will be available in each store after approval. See the [full changelog](https://huaci.app/en/changelog.html#v2-3-0) and [release status](docs/extension/releases/2.3.0.md).
+Released **2026-11-23** and available from the Chrome Web Store, Microsoft Edge Add-ons and Firefox Add-ons. See the [full changelog](https://huaci.app/en/changelog.html#v2-4-0) and [release record](docs/extension/releases/2.4.0.md).
 
-- **Free on-device text translation:** download language pairs in Settings, then translate offline without an API key, credits or uploading text. Requires browser support; image recognition and alternative wording are unavailable in this mode.
-- **Automatic website translation:** enable “Translate this website” to translate text near the viewport as you scroll, including future visits. Choose a separate provider; paid providers ask for confirmation on first use.
-- **More natural translations:** revised style guides improve phrasing, terminology and tone for Chinese and other target languages.
-- **Better automatic image translation:** improved text shapes, font sizing, alignment and backgrounds. Move or edit individual translations, change their size, retranslate one passage, and retain edits when exporting. Sound-effect translation is optional.
+- **On-device translation cache:** translations from your own API key (ChatGPT, DeepSeek and other OpenAI-compatible models) and DeepL are encrypted and stored on your device. Repeated text is shown from the cache without another request, saving tokens and character quota. It covers selection, region, website, bilingual reading, whole-PDF, image and alternative-wording translation; region and website translation fill in cached paragraphs first. Changing the language, model, style or wording preferences translates again, and **Retranslate** bypasses the cache. Turn it off, view the entry count or clear it in Settings. Hosted credits and on-device translation do not use this cache.
+- **Translation style:** the style guides gain examples for more consistent wording, terminology and tone.
+- **Now on Firefox:** install from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) (desktop Firefox 142 or later). Accounts, credits and subscriptions are shared with the Chrome and Edge versions. Firefox does not offer on-device translation or video captions; whole PDFs are opened from the toolbar popup.
 
 ## Preview
 
@@ -49,7 +48,7 @@ One repository, three applications: an HTML website on Vercel, a backend on a VP
 | --- | --- | --- | --- |
 | Website | [apps/web](apps/web/README.md) | Vercel | Product pages, privacy, terms, and changelog in 11 languages; the header reads the sign-in state from app.huaci.app |
 | Backend | [apps/backend](apps/backend/README.md) | VPS | Authentication, account and admin interfaces, extension API, guest trials, precise credit accounting, hosted text and images, and Creem subscriptions; the first release is deployed |
-| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge | 2.3.0 submitted to Chrome and Edge on 2026-11-15; awaiting review. [Release status](docs/extension/releases/2.3.0.md) |
+| Extension | [apps/extension](apps/extension/README.md) | Chrome / Edge / Firefox | 2.4.0 available in the Chrome, Edge and Firefox stores. [Release record](docs/extension/releases/2.4.0.md) |
 
 ## Layout
 

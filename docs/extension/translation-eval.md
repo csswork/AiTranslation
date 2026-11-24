@@ -74,6 +74,32 @@ npm run eval:translation -- --variants no-style,baseline --target en
 - 中文专门版（`styleGuide`）：重跑 `--variants no-style,baseline`、`--variants hosted-no-style,hosted`，并用 `--target zh-Hant --no-judge` 看一遍繁体输出。繁体目标用繁体写的指南；用简体写时模型会跟着输出简体译文。
 - 通用版（`generalStyleGuide`）：加 `--target en`、`--target ja` 等重跑同样的对比。第一版没有写「不许漏译」「片段不许返回空项」时，出现过丢掉结尾客套话、把只有句号的片段译成空字符串的情况，改动时留意这两点。
 
+## 2026-11-24 简中候选：给易误译的表达补充上下文提示
+
+此轮只改评测请求。模型为 `deepseek-flash`，翻译温度 1.3、关闭思考，同模型开启思考做 A/B 盲评。每个样本都有现版对照。
+
+- 改三条通用行文建议（`zh-focus`），在固定 60 条上为 20 胜 / 16 平 / 24 负。现版重新采样为 22 / 17 / 21，没有观察到通用改写的优势。
+- 另一种做法是在原文出现特定表达时，给模型一句词义提示，由上下文决定最终译法。五条提示的试验（`zh-sense`）中，客套语仍容易翻得生硬，例如「恕我们擅自安排」。缩小后的 `zh-precision` 保留三个可核对的区别：需求水平与增长趋势（high demand）、防泼水与防水（撥水）、年度与自然年（来年度）。
+- 固定 60 条只有 3 条触发这三条提示。另写的 `sense-samples.json` 有 12 条定向样本，7 条触发。新增样本用来检查具体错误和反例，不能用来估计实际网页的命中率。自带 Key 路径合计 72 条中，其余 62 条请求与现版相同，复用同一译文。
+
+下表只统计触发提示的 10 条，按候选胜 / 平 / 负计。托管列用评测器复现后台提示词，模型与自带 Key 列相同。
+
+| 方向 | 自带 Key | 托管提示词 |
+| --- | --- | --- |
+| 英译简中（4 条） | 2 / 1 / 1 | 0 / 1 / 3 |
+| 日译简中（6 条） | 5 / 0 / 1 | 4 / 1 / 1 |
+
+「撥水」在两个单段样本、两条路径上都从“防水”纠正为“防泼水”。自带 Key 的批量样本 `ja-sense-02` 却把“连同袋子一起浸入水中”改成只说袋子。英语 `en-shop-04` 的自带 Key 现版把 high demand 译成“订单量激增”，候选为“需求量大”，评审更喜欢现版的整体措辞。这两例需要逐句核对词义与整句质量。建议优先扩大日译中商品说明整段的复测，英译中与批量片段继续保留对照。
+
+分别用默认样本和专项样本复现自带 Key 的对比：
+
+```sh
+npm run eval:translation -- --variants baseline,zh-precision
+npm run eval:translation -- --variants baseline,zh-precision --samples apps/extension/eval/sense-samples.json
+```
+
+托管对照将两个方案名换为 `hosted,hosted-zh-precision`。固定样本命中 `ja-news-01,ja-shop-02,en-shop-04`，专项样本命中 `en-sense-03,en-sense-04,en-sense-05,ja-sense-01,ja-sense-02,ja-sense-05,ja-sense-06`，可传给 `--ids` 单独复测。
+
 ## 添加样本
 
 样本都是为评测自行撰写的，不摘抄真实网页。遇到实际使用中翻得生硬的句子，改写后加进 `samples.json`：

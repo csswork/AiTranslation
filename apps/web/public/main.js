@@ -41,9 +41,9 @@
   /*
    * 网页无法替用户安装扩展（Chrome 2018 年起取消了站外内联安装），只能把人送到 Chrome 应用商店详情页，
    * 由用户自己点「添加至 Chrome」。首屏按钮在 HTML 里默认就指向商店（没有脚本也能用），这里只处理例外：
-   * Firefox、Safari 等装不了 Chrome 扩展，手机上的 Chrome 也不支持扩展——这些情况改为跳到页面下方的
-   * 安装说明，并在按钮下方提示换用电脑上的 Chromium 内核浏览器（Chrome、Edge、Brave、Opera…）。
-   * Edge 有自己的加载项商店，按钮改指向那里（data-edge-href）。
+   * Safari 等装不了扩展，手机上的浏览器也不支持（Firefox 版只上架桌面）——这些情况改为跳到页面下方的
+   * 安装说明，并在按钮下方提示换用电脑上的 Chrome、Edge、Firefox 或其他 Chromium 内核浏览器。
+   * Edge 与 Firefox 有各自的商店，按钮改指向那里（data-edge-href、data-firefox-href）。
    */
   const isChromium = (() => {
     const brands = navigator.userAgentData && navigator.userAgentData.brands;
@@ -51,6 +51,7 @@
     return /\b(Chrome|Chromium|CriOS|Edg)\//.test(navigator.userAgent) && !/\bFirefox\//.test(navigator.userAgent);
   })();
   const isMobile = (navigator.userAgentData && navigator.userAgentData.mobile) || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isFirefox = /\bFirefox\//.test(navigator.userAgent);
   const isEdge = (() => {
     const brands = navigator.userAgentData && navigator.userAgentData.brands;
     if (brands && brands.length) return brands.some((b) => /Microsoft Edge/.test(b.brand));
@@ -65,7 +66,15 @@
     });
   }
 
-  if (!isChromium || isMobile) {
+  // Firefox 桌面版：按钮改指向 Firefox 附加组件商店，文字换成「安装到 Firefox」
+  if (isFirefox && !isMobile) {
+    document.querySelectorAll('[data-install][data-firefox-href]').forEach((button) => {
+      button.href = button.dataset.firefoxHref;
+      button.querySelectorAll('[data-for-browser]').forEach((label) => { label.hidden = label.dataset.forBrowser !== 'firefox'; });
+    });
+  }
+
+  if (!(isChromium || isFirefox) || isMobile) {
     document.querySelectorAll('[data-install]').forEach((button) => {
       button.href = '#install';
       button.removeAttribute('target');
@@ -74,7 +83,7 @@
     const installNote = document.querySelector('[data-install-note]');
     if (installNote) installNote.hidden = false;
 
-    // 手机或其他浏览器装不了：给一个「复制本页链接」，方便回到电脑上的 Chrome / Edge 打开
+    // 手机或其他浏览器装不了：给一个「复制本页链接」，方便回到电脑上的 Chrome / Edge / Firefox 打开
     const copyLink = document.querySelector('[data-copy-link]');
     if (copyLink && navigator.clipboard) {
       const show = (state) => {

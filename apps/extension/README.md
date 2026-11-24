@@ -2,8 +2,9 @@
 
 划词 – AI 翻译与双语阅读（formerly “AI 划词翻译 / AI Translator”; renamed in 2.2.0, same extension IDs and store listings).
 
-A Chrome and Edge extension for bilingual reading and translating selected text, websites, images, whole PDF documents and experimental video captions. Use free on-device text translation where supported, hosted credits, or your own OpenAI, DeepSeek or DeepL API key.
+A Chrome, Edge and Firefox extension for bilingual reading and translating selected text, websites, images, whole PDF documents and experimental video captions. Use free on-device text translation where supported, hosted credits, or your own OpenAI, DeepSeek or DeepL API key.
 
+- **Translation cache (2.4.0):** results from your own API key and DeepL are encrypted and kept on this device, so repeated text is shown without another request. Covers selection, region, website, bilingual reading, whole-PDF, image and alternative-wording translation; changing language, model, style or wording preferences translates again, and **Retranslate** bypasses it. Manage or clear it in Settings; hosted credits and local translation do not use it. See [local cache](../../docs/extension/local-cache.md).
 - **Local translation (2.3.0):** download browser-managed language packs in Settings, then translate text offline without a key, credits or uploading text. Available only when the browser provides the Translator API. Image recognition and alternative wordings are unavailable in this mode. See [local translation](../../docs/extension/local-translation.md).
 - **Automatic website translation (2.3.0):** enable “Translate this website” in the context menu to translate text near the viewport, including future visits. Disable it to restore the original. A separate provider can be chosen; paid providers require confirmation on first use. See [website translation](../../docs/extension/site-translation.md).
 - **Translation quality (2.3.0):** revised style guides for Chinese and other targets; improved automatic image shapes, font sizing, alignment and background colors. Edit, move or retranslate individual image passages, optionally translate sound effects, and retain edits in exported images.
@@ -28,7 +29,7 @@ A Chrome and Edge extension for bilingual reading and translating selected text,
 
 The options page opens automatically on first install.
 
-Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj) or [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe). `npm run package:edge` builds a separate production ZIP. See [Edge release](../../docs/extension/edge-release.md) for publishing and browser validation. Loading this source directory directly continues to use local development services.
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ai-translator/hogimafgjmlpdlnepojgigjkhaccbcbj), [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mojcgjimlkkbohomcijkmoefpeekmohe) or [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/huaci-ai-translator/) (desktop Firefox 142 or later). `npm run package:edge` and `npm run package:firefox` build separate production ZIPs. See [Edge release](../../docs/extension/edge-release.md) and [Firefox release](../../docs/extension/firefox-release.md) for publishing, browser validation and Firefox feature differences. Loading this source directory directly continues to use local development services.
 
 ## Configure
 
@@ -46,7 +47,7 @@ Choose your interface language and default translation target independently, the
 
 ### Account and credits (hosted mode)
 
-Version **2.3.0** was submitted to Chrome and Edge on **2026-11-15** and is awaiting review. It adds local text translation and automatic website translation, and improves translation style guides and automatic image translation. Store updates become available after approval; the currently installable version may still be the previous release. See [the 2.3.0 release record](../../docs/extension/releases/2.3.0.md) for submission and deployment details. Accounts, hosted trials and subscriptions are available at `app.huaci.app`; bring-your-own-key providers remain available.
+Version **2.4.0** was released on **2026-11-23** and is available from the Chrome, Edge and Firefox stores. It adds an on-device translation cache for your own API key and DeepL, and refines the translation style guides. See [the 2.4.0 release record](../../docs/extension/releases/2.4.0.md). Accounts, hosted trials and subscriptions are available at `app.huaci.app`; bring-your-own-key providers remain available.
 
 Besides bring-your-own-key, the first provider is **点数翻译** (credit translation), which needs no API key. New installs use it by default.
 

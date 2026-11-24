@@ -1,0 +1,14 @@
+[
+  { "id": "en-sense-01", "from": "en", "genre": "forum", "text": "For what it’s worth, the smaller one fits under my desk. I haven't tried the larger one.", "watch": "个人经验供参考；较大款没有试过" },
+  { "id": "en-sense-02", "from": "en", "genre": "forum", "text": "I read the ending differently, for what it's worth. I think she already knew.", "watch": "委婉插入自己的不同看法" },
+  { "id": "en-sense-03", "from": "en", "genre": "news", "text": "Demand is still high. The museum says high demand alone doesn't explain the longer queues.", "watch": "需求水平与变化趋势有别；alone 的范围" },
+  { "id": "en-sense-04", "from": "en", "genre": "shop", "text": "Orders doubled in June. Even before that surge, high demand meant we rarely had any stock left on Fridays.", "watch": "翻倍在六月；此前的高需求没有说也在增长" },
+  { "id": "en-sense-05", "from": "en", "genre": "news", "text": "The council increased capacity for the two routes with high demand and cut it on the other three.", "watch": "增加的是运力；需求高只修饰两条线路" },
+  { "id": "en-sense-06", "from": "en", "genre": "essay", "text": "You can sell the watch for what it's worth today, or keep it and take your chances.", "watch": "字面义按现值卖；提示不能把它当作客套语" },
+  { "id": "ja-sense-01", "from": "ja", "genre": "shop", "text": "表地には撥水加工を施していますが、縫い目から水が入ることがあります。", "watch": "表层防泼水，接缝仍可能进水" },
+  { "id": "ja-sense-02", "from": "ja", "genre": "shop", "mode": "batch", "texts": ["本体は防水仕様です。", "付属の袋は撥水仕様です。", "袋ごと水に沈めないでください。"], "watch": "逐项区分本体防水、袋子防泼水，保留禁令" },
+  { "id": "ja-sense-03", "from": "ja", "genre": "shop", "text": "誠に勝手ながら、土曜日は窓口を午後三時で閉めさせていただきます。電話でのお問い合わせは通常通り承ります。", "watch": "周六窗口提早关闭的致歉；电话照常" },
+  { "id": "ja-sense-04", "from": "ja", "genre": "shop", "text": "誠に勝手ながら、掲載内容は予告なく変更する場合があります。変更後の価格は店頭でご確認ください。", "watch": "歉意和不预告在原文里同时存在" },
+  { "id": "ja-sense-05", "from": "ja", "genre": "news", "text": "大学は来年度の授業日程を公表した。春学期の初回授業は四月八日を予定している。", "watch": "大学教学语境；首次上课仍是预计" },
+  { "id": "ja-sense-06", "from": "ja", "genre": "news", "text": "来年度の予算案はまだ審議中だ。来年一月の支払いには今年度の予算を使う。", "watch": "下一预算年度与明年一月不可混同" }
+]

@@ -32,8 +32,46 @@ const withoutStyle = (prompt, ctx) => {
 /** 换成后台托管翻译的提示词（请求参数两边相同：不开思考、温度 1.3）。 */
 const hosted = (prompt, ctx) => hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1);
 
+// 简中实验：在现有指南原位替换三条写作建议。让模型按原文判断，无需调用方知道源语言。
+function chineseFocus(prompt, ctx) {
+  if (ctx.target !== 'Simplified Chinese') return prompt;
+  return prompt
+    .replace('- 语序和断句按中文习惯：长定语、长从句拆成短句；时间、条件、原因先说，结论后说。',
+      '- 按原文的重点组织中文。先给消息再解释缘由的，保留这个顺序；长修饰语可以另起一句，动作写清谁做了什么。')
+    .replace('- 客套话、敬语和缓冲语（如日语的「〜と思います」「〜させていただきます」，英语的 "please note that"）换成中文里同样场合的说法，不逐字译。',
+      '- 分清事实、判断和转述。英语的限定词要修饰原来那件事；日语句尾的推测、保留意见和消息来源要让读者听得出来。道歉、请求、提醒用中文在同样场合会说的话。')
+    .replace('- 惯用语、俚语译意思，不译字面。',
+      '- 惯用语按语境选词，保留说话的分寸。日常对话能直接说就直接说；原文平实的地方少加夸张语气、网络梗或文采。');
+}
+
+// 只在待译文字里命中时提示词义边界，具体译法仍由上下文决定。
+// 提示放在原有用词偏好前面，未命中时保留原请求，便于复用对照组译文。
+const senseHints = [
+  [/\bhigh demand\b/i, 'high demand 描述需求水平高。只有原文另有变化依据时才写成需求增长。'],
+  [/撥水/, '商品说明要区分撥水（防泼水）和防水，保留原文所说的防护程度。'],
+  [/来年度/, '来年度 指下一个年度。按上下文区分学年、财年和自然年，类型不明时保留“下一年度”。'],
+];
+
+const courtesyHints = [
+  [/\bfor what it['’]s worth\b/i, 'for what it’s worth 用作插入语时是在谦逊地提供意见或经历，按语境处理这种分寸。'],
+  [/誠に勝手ながら/, '誠に勝手ながら 表达因己方安排给人添麻烦的歉意；是否另行通知须看原文有无明说。'],
+];
+
+function withSenseHints(body, ctx, rules = senseHints) {
+  if (ctx.target !== 'Simplified Chinese') return body;
+  const source = body.messages.find((message) => message.role === 'user')?.content || '';
+  const hints = rules.filter(([pattern]) => pattern.test(source)).map(([, hint]) => hint);
+  if (!hints.length) return body;
+  return withSystem((prompt) => prompt.replace('译文风格：', () =>
+    `根据上下文理解以下表达，仅在对应原文处参考：\n${hints.join('\n')}\n译文风格：`))(body, ctx);
+}
+
 export const variants = {
   baseline: { note: '线上现状', patch: (body) => body },
+  'zh-focus': { note: '简中按原文保留重点、限定和语气', patch: withSystem(chineseFocus) },
+  'zh-sense': { note: '简中词义提示，含两条客套语试验', patch: (body, ctx) => withSenseHints(body, ctx, [...senseHints, ...courtesyHints]) },
+  'zh-precision': { note: '简中仅在涉及需求水平、防泼水或年度时提示词义', patch: withSenseHints },
+  'hosted-zh-precision': { note: '在托管提示词上试同样三条提示', patch: (body, ctx) => withSenseHints(withSystem(hosted)(body, ctx), ctx) },
 
   'temp-0.7': { note: '温度 0.7', patch: (body) => ({ ...body, temperature: 0.7 }) },
   'temp-1.0': { note: '温度 1.0', patch: (body) => ({ ...body, temperature: 1.0 }) },
