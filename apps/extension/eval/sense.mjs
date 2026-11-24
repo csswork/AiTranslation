@@ -33,6 +33,7 @@ if (flag('--help') || flag('-h')) {
     '用法：npm run eval:sense -- [选项]',
     '  --candidates 文件   候选清单（默认 apps/extension/eval/sense-candidates.json）',
     '  --ids a,b           只跑指定候选',
+    '  --from ja|en        只跑某个源语言的候选',
     '  --limit N           最多跑 N 个候选',
     '  --positives N       每个候选的整段正例条数（默认 4，另有 1 组网页片段）',
     '  --min-errors N      现版在正例里至少错几条才试提示（默认 2）',
@@ -128,6 +129,7 @@ const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 let candidates = JSON.parse(fs.readFileSync(path.resolve(arg('--candidates') || path.join(here, 'sense-candidates.json')), 'utf8'));
 const onlyIds = list(arg('--ids'));
 if (onlyIds.length) candidates = candidates.filter((candidate) => onlyIds.includes(candidate.id));
+if (arg('--from')) candidates = candidates.filter((candidate) => candidate.from === arg('--from'));
 if (arg('--limit')) candidates = candidates.slice(0, Number(arg('--limit')));
 if (!candidates.length) {
   console.error('没有符合条件的候选。');
@@ -137,11 +139,16 @@ for (const candidate of candidates) {
   for (const field of ['id', 'from', 'word', 'sense', 'trap']) {
     if (!candidate[field]) throw new Error(`候选 ${candidate.id || candidate.word} 缺少 ${field}`);
   }
-  candidate.regex = new RegExp(candidate.pattern || escape(candidate.word), 'u');
+  // 日文按字面匹配；英语等用空格分词的语言默认整词、不分大小写（变形写进 pattern，如 sanction(?:s|ed)?）
+  const cjk = candidate.from === 'ja';
+  const body = candidate.pattern || escape(candidate.word);
+  candidate.regex = cjk ? new RegExp(body, 'u') : new RegExp(`(?<![\\p{L}\\p{N}])(?:${body})(?![\\p{L}\\p{N}])`, candidate.flags || 'iu');
   // 提示词默认按模板写；候选里写了 hint 就用候选的
-  candidate.hint ||= candidate.negative
-    ? `${candidate.word} 在日语里多指「${candidate.sense}」，不是中文的「${candidate.trap}」；表示「${candidate.negative}」时照常译。按上下文判断。`
-    : `${candidate.word} 在日语里是「${candidate.sense}」的意思，不是中文的「${candidate.trap}」。按上下文判断。`;
+  candidate.hint ||= cjk
+    ? (candidate.negative
+      ? `${candidate.word} 在日语里多指「${candidate.sense}」，不是中文的「${candidate.trap}」；表示「${candidate.negative}」时照常译。按上下文判断。`
+      : `${candidate.word} 在日语里是「${candidate.sense}」的意思，不是中文的「${candidate.trap}」。按上下文判断。`)
+    : `${candidate.word} 在这类语境里是「${candidate.sense}」的意思，不要按「${candidate.trap}」理解${candidate.negative ? `；表示「${candidate.negative}」时照常译` : ''}。按上下文判断。`;
 }
 
 /* ------------------------------------------------------------ 1. 写样本 */
@@ -180,7 +187,8 @@ async function writeSamples(candidate) {
   };
   (data.positives || []).slice(0, positives).forEach((item, index) => add('pos', item, index));
   const fragments = Array.isArray(data.fragments) ? data.fragments.filter((item) => typeof item === 'string' && item) : [];
-  if (fragments.length >= 2 && has(fragments.join(''))) {
+  // 英语等语言的片段可能不带首尾空格，按空格连起来再判断是否含这个词
+  if (fragments.length >= 2 && has(fragments.join(candidate.from === 'ja' ? '' : ' ').replace(/\s+/g, ' '))) {
     out.push({ id: `${candidate.id}-f1`, from: candidate.from, genre: 'web', mode: 'batch', texts: fragments,
       candidate: candidate.id, polarity: 'pos', sense: candidate.sense, watch: `${candidate.word}：${candidate.sense}（网页片段）` });
   }
@@ -207,10 +215,21 @@ function runEval(samplesFile, variants, ids, extraEnv = {}) {
 
 /* ------------------------------------------------------------ 3. 判词义 */
 
-const CHECK_PROMPT = [
-  '你是日译中审校。下面给出一段原文、其中一个词在这里的意思，以及中文译文。',
-  '只判断这个词的意思在译文里有没有译对，不管译文其他地方好不好。',
-  '把它译成中文里字形相同或相近、但意思不同的词（例如把「手紙」译成“手纸”、把「検討」译成“检讨”），算错。',
+// 日语那份的文字不要改：改了会让已有的判断结果都不命中缓存
+const CHECK_PROMPTS = {
+  ja: [
+    '你是日译中审校。下面给出一段原文、其中一个词在这里的意思，以及中文译文。',
+    '只判断这个词的意思在译文里有没有译对，不管译文其他地方好不好。',
+    '把它译成中文里字形相同或相近、但意思不同的词（例如把「手紙」译成“手纸”、把「検討」译成“检讨”），算错。',
+  ],
+  other: (lang) => [
+    `你是${lang}译中审校。下面给出一段原文、其中一个词在这里的意思，以及中文译文。`,
+    '只判断这个词的意思在译文里有没有译对，不管译文其他地方好不好。',
+    '把它按另一个常见义项或词典第一义去译、在这里意思不对，算错（例如把 run a business 的 run 译成“跑”、把 a cold reception 的 cold 译成“寒冷”）。',
+  ],
+};
+const checkPrompt = (from) => [
+  ...(from === 'ja' ? CHECK_PROMPTS.ja : CHECK_PROMPTS.other(LANG[from] || from)),
   '意思译对了，即使换了说法、意译，或者融进句子里没有单独对应的词，也算对。',
   '只输出一个 JSON 对象：{"ok":true|false,"rendering":"译文里对应的说法","reason":"一句话"}',
 ].join('\n');
@@ -225,7 +244,7 @@ async function check(sample, candidate, output) {
   if (output === undefined || output === null) return { ok: false, rendering: '', reason: '翻译失败', failed: true };
   const user = [`【原文】\n${showSource(sample)}`, `【词】${candidate.word}`, `【在这里的意思】${sample.sense}`, `【译文】\n${showOutput(sample, output)}`].join('\n\n');
   try {
-    const data = json(await ask(CHECK_PROMPT, user, { thinking: true }));
+    const data = json(await ask(checkPrompt(sample.from), user, { thinking: true }));
     return { ok: data.ok === true, rendering: String(data.rendering || ''), reason: String(data.reason || '') };
   } catch (err) {
     return { ok: false, rendering: '', reason: `判断失败：${err.message}`, failed: true };
@@ -276,7 +295,7 @@ if (trying.length) {
   console.log(`现版正例错 ${minErrors} 条及以上的候选 ${trying.length} 个，加提示对比…`);
   const rulesFile = path.join(outDir, 'hints.json');
   fs.writeFileSync(rulesFile, JSON.stringify(Object.fromEntries(trying.map(({ candidate }) =>
-    [candidate.id, { pattern: candidate.regex.source, hint: candidate.hint }])), null, 2));
+    [candidate.id, { pattern: candidate.regex.source, flags: candidate.regex.flags, hint: candidate.hint }])), null, 2));
   hinted = runEval(samplesFile, 'baseline,sense-candidate', trying.flatMap((result) => result.own.map((sample) => sample.id)), { SENSE_HINTS_FILE: rulesFile });
   const rows = Object.fromEntries(hinted.rows.map((row) => [row.sample.id, row]));
   console.log('判断加提示后的词义…');
@@ -308,7 +327,7 @@ for (const result of results) {
 
 /* ------------------------------------------------------------ 报告 */
 
-const regexLiteral = (regex) => `/${regex.source.replace(/\//g, '\\/')}/`;
+const regexLiteral = (regex) => `/${regex.source.replace(/\//g, '\\/')}/${regex.flags}`;
 const quote = (text) => `'${text.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
 const md = [`# 义项提示筛选 ${stamp}`, ''];
 md.push(`- 候选 ${candidates.length} 个，样本 ${samples.length} 条（每个候选 ${positives} 条整段正例、1 组网页片段，有反例义项的另加 2 条反例）`);

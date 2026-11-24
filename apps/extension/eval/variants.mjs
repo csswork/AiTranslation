@@ -83,7 +83,7 @@ let candidateHints;
 function withCandidateHint(body, ctx) {
   candidateHints ??= JSON.parse(fs.readFileSync(process.env.SENSE_HINTS_FILE, 'utf8'));
   const rule = candidateHints[ctx.sample.candidate];
-  return rule ? withSenseHints(body, ctx, [[new RegExp(rule.pattern, 'u'), rule.hint]]) : body;
+  return rule ? withSenseHints(body, ctx, [[new RegExp(rule.pattern, rule.flags || 'u'), rule.hint]]) : body;
 }
 
 export const variants = {
