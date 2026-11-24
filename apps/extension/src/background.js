@@ -16,6 +16,7 @@ import './lib/account.js';
 import './lib/sites.js';
 import './lib/review.js';
 import './lib/usage.js';
+import './lib/image-fetch.js';
 
 const t = (...args) => AITrI18n.t(...args);
 
@@ -1005,6 +1006,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       ? AITrTerms.remember({ source: message.source, from: message.from, to: message.to, target: message.target })
       : AITrTerms.forget(String(message.id || '')).then(() => null);
     task.then((entry) => sendResponse({ ok: true, entry }))
+      .catch((err) => sendResponse({ ok: false, error: String(err?.message || err) }));
+    return true;
+  }
+
+  // 图片翻译：图没有 CORS 头、页面里读不到像素时由这里取回字节（不带 Cookie，只交出位图，见 lib/image-fetch.js）
+  if (type === 'fetch-image') {
+    if (sender.id !== chrome.runtime.id || !sender.tab) return false;
+    AITrImageFetch.fetchImage(message.url)
+      .then((image) => sendResponse({ ok: true, ...image }))
       .catch((err) => sendResponse({ ok: false, error: String(err?.message || err) }));
     return true;
   }

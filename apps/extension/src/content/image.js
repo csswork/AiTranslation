@@ -72,8 +72,44 @@
     });
 
   /**
-   * 拿到可以送检的图。三级回退：
-   * 直接读像素 → 带 CORS 重新加载后读 → 都不行就把网址交给接口自己取。
+   * 图没有 CORS 头时请 service worker 取回字节，在本机解码成位图（不经网络、不受页面 CSP 影响，
+   * 画进画布也不会被污染）。取不到返回 null。
+   */
+  async function fetchViaExtension(src) {
+    if (!/^https?:/i.test(src)) return null;
+    try {
+      const reply = await chrome.runtime.sendMessage({ type: 'fetch-image', url: src });
+      if (!reply?.ok) return null;
+      const binary = atob(reply.data);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      return await createImageBitmap(new Blob([bytes], { type: reply.type }));
+    } catch {
+      return null;
+    }
+  }
+
+  /** 把图画进一块送检尺寸的画布；画布被跨域污染、读不出像素时返回 null。 */
+  function drawReadable(source, sw, sh) {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = sw;
+      canvas.height = sh;
+      // 这块画布之后要逐框取相近色（多次 getImageData），第一次取上下文时就要声明，
+      // 否则 Chrome 会提示 GPU 画布反复读回很慢
+      canvas.getContext('2d', { willReadFrequently: true }).drawImage(source, 0, 0, sw, sh);
+      // 探测画布有没有被跨域图片污染。读一个像素就够，
+      // 用 toDataURL 试探会把整张大图白编码一遍。
+      canvas.getContext('2d').getImageData(0, 0, 1, 1);
+      return canvas;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * 拿到可以送检的图。四级回退：
+   * 直接读像素 → 带 CORS 重新加载后读 → 由扩展取回图片字节在本机解码 → 都不行就把网址交给接口自己取。
    */
   async function grabImage(img) {
     const w = img.naturalWidth || img.width;
@@ -88,36 +124,17 @@
     const natural = { w, h };
 
     // 先把图画进画布：既是缩放，也是后面切块和扫描墨水的基础
-    let canvas = null;
-    // 能画进画布、又没被跨域污染的那份原图：框选裁图和导出新图都要用原始分辨率
+    // source：能画进画布、又没被跨域污染的那份原图：框选裁图和导出新图都要用原始分辨率
     let source = img;
-    try {
-      canvas = document.createElement('canvas');
-      canvas.width = sw;
-      canvas.height = sh;
-      // 这块画布之后要逐框取相近色（多次 getImageData），第一次取上下文时就要声明，
-      // 否则 Chrome 会提示 GPU 画布反复读回很慢
-      canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, sw, sh);
-      // 探测画布有没有被跨域图片污染。读一个像素就够，
-      // 用 toDataURL 试探会把整张大图白编码一遍。
-      canvas.getContext('2d').getImageData(0, 0, 1, 1);
-    } catch {
-      canvas = null;
+    let canvas = drawReadable(img, sw, sh);
+    if (!canvas) {
+      source = await reloadWithCors(url);
+      canvas = source && drawReadable(source, sw, sh);
     }
     if (!canvas) {
-      const fresh = await reloadWithCors(url);
-      source = fresh;
-      if (fresh) {
-        try {
-          canvas = document.createElement('canvas');
-          canvas.width = sw;
-          canvas.height = sh;
-          canvas.getContext('2d', { willReadFrequently: true }).drawImage(fresh, 0, 0, sw, sh);
-          canvas.getContext('2d').getImageData(0, 0, 1, 1);
-        } catch {
-          canvas = null;
-        }
-      }
+      // 9GAG 等图床不给 CORS 头，模型服务器按网址也常取不到：由扩展取回字节
+      source = await fetchViaExtension(url);
+      canvas = source && drawReadable(source, sw, sh);
     }
 
     // 读不到像素，只能整张交给接口按网址取图（长图也就没法分块了）
