@@ -29,7 +29,7 @@ if (flag('--help') || flag('-h')) {
     '用法：node apps/extension/eval/run.mjs [选项]',
     '  --variants a,b     要跑的方案，第一个是对照组（默认 baseline）',
     '  --list             列出可用方案',
-    '  --from ja|en|zh    只跑某个源语言',
+    '  --from 语言代码    只跑某个源语言',
     '  --genre a,b        只跑某些体裁',
     '  --ids a,b          只跑指定样本',
     '  --limit N          最多跑 N 条',
@@ -149,7 +149,7 @@ globalThis.AITrI18n = {
   t: (source, values = []) => source.replace(/\$(\d+)/g, (_, n) => String(values[Number(n) - 1] ?? '')),
   ready: Promise.resolve(), locale: () => 'zh-Hans', onChange() {},
 };
-for (const file of ['languages.js', 'lang.js', 'settings.js', 'providers.js']) {
+for (const file of ['languages.js', 'lang.js', 'settings.js', 'preset-terms.js', 'terms.js', 'providers.js']) {
   new Function(fs.readFileSync(path.join(root, 'src/lib', file), 'utf8'))();
 }
 const { AITrSettings: S, AITrProviders: P } = globalThis;
@@ -183,12 +183,13 @@ async function pool(items, worker) {
 const isBatch = (sample) => sample.mode === 'batch';
 
 async function translateOne(sample, variantId) {
-  const run = { variant: VARIANTS[variantId], ctx: { mode: isBatch(sample) ? 'batch' : 'single', sample, target: targetName } };
+  const run = { variant: VARIANTS[variantId], ctx: { mode: isBatch(sample) ? 'batch' : 'single', sample, target: targetName, targetId } };
   try {
+    const requestSettings = run.variant.presetTerms ? { ...settings, presetTerms: true } : settings;
     const output = await current.run(run, async () => {
-      if (isBatch(sample)) return P.translateBatch({ texts: sample.texts, settings, targetId });
+      if (isBatch(sample)) return P.translateBatch({ texts: sample.texts, settings: requestSettings, targetId });
       let text = '';
-      for await (const piece of P.translate({ text: sample.text, settings, targetId })) text += piece;
+      for await (const piece of P.translate({ text: sample.text, settings: requestSettings, targetId })) text += piece;
       return text.trim();
     });
     // 方案可以在初译之后再做一步（如审校改写），用同一个带缓存的接口
@@ -352,7 +353,7 @@ for (const mode of ['single', 'batch']) {
 }
 
 const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-const outDir = path.join(outRoot, `${stamp}-${variantIds.join('+')}`.slice(0, 120));
+const outDir = path.join(outRoot, `${stamp}-${targetId}-${variantIds.join('+')}`.slice(0, 120));
 fs.mkdirSync(outDir, { recursive: true });
 
 const md = [];
@@ -368,6 +369,24 @@ for (const id of variantIds) {
 }
 
 const summary = {};
+// 首选译名复现率单独统计；样本标注不进入翻译或盲评请求。
+const termRows = targetId === 'zh-Hans' ? rows.filter((row) => row.sample.termsZh?.length) : [];
+if (termRows.length) {
+  md.push('', '## 简中首选译名复现', '', '每条样本的每个标注词计一次，忽略空白。其他可接受译法由整句盲评判断。', '',
+    '| 方案 | 含标注译名 / 应出现次数 | 翻译失败的样本 |', '| --- | --- | --- |');
+  for (const id of variantIds) {
+    let expected = 0, matched = 0, failed = 0;
+    for (const { sample, outputs } of termRows) {
+      const result = outputs[id];
+      if (result.error) { failed += 1; continue; }
+      const parts = [result.output].flat().map((part) => part.replace(/\s+/gu, ''));
+      result.missingTermsZh = sample.termsZh.filter((term) => !parts.some((part) => part.includes(term.replace(/\s+/gu, ''))));
+      expected += sample.termsZh.length;
+      matched += sample.termsZh.length - result.missingTermsZh.length;
+    }
+    md.push(`| \`${id}\` | ${matched} / ${expected} | ${failed} |`);
+  }
+}
 for (const id of candidates) {
   if (!shouldJudge) break;
   summary[id] = {};

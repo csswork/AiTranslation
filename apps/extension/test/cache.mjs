@@ -11,7 +11,7 @@ globalThis.chrome = { storage: { local: {
 } } };
 const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
 installExtensionFixture(chrome);
-for (const file of ['languages', 'lang', 'settings', 'terms', 'cache', 'providers']) load(`src/lib/${file}.js`);
+for (const file of ['languages', 'lang', 'settings', 'preset-terms', 'terms', 'cache', 'providers']) load(`src/lib/${file}.js`);
 const { AITrSettings: S, AITrProviders: P, AITrTerms: T } = globalThis;
 const { create, memoryBackend } = globalThis.AITrCache;
 
@@ -180,6 +180,27 @@ const base = S.normalize({ provider: 'openai', target: 'zh-Hans', openai: { apiK
   await P.translateBatch({ texts: ['a'], settings, surface: 'reader', fresh: true });
   assert.equal(calls.length, 2, 'fresh 时逐段也不查缓存');
   console.log('✓ 批量：逐段命中只请求缺的段落；网页片段整批命中，标为完整段的逐段命中');
+}
+
+/* 预设词条只影响实际使用它的缓存项。 */
+{
+  const texts = ['The jacket has a water-repellent finish.', 'The zipper is red.'];
+  const settings = { ...base, target: 'zh-Hans' };
+  const enabled = { ...settings, presetTerms: true };
+  mock((url, body) => {
+    const prefix = body.messages[0].content.includes('"water-repellent finish":"防泼水处理"') ? '术语' : '原译';
+    return llmReply(JSON.stringify(JSON.parse(body.messages[1].content).map((s) => prefix + s)));
+  });
+  await P.translateBatch({ texts, settings, surface: 'reader' });
+  await C.flush();
+  assert.deepEqual(await P.lookupBatch({ texts, settings: enabled, surface: 'pdf' }), [null, '原译' + texts[1]]);
+  const out = await P.translateBatch({ texts, settings: enabled, surface: 'reader' });
+  assert.deepEqual(out, ['术语' + texts[0], '原译' + texts[1]]);
+  assert.deepEqual(JSON.parse(calls.at(-1).body.messages[1].content), [texts[0]]);
+  await C.flush();
+  assert.deepEqual(await P.lookupBatch({ texts, settings: enabled, surface: 'pdf' }), out);
+  assert.deepEqual(await P.lookupBatch({ texts, settings, surface: 'pdf' }), texts.map((s) => '原译' + s));
+  console.log('✓ 开关预设术语只改变命中词条的段落缓存，可复用其余段落');
 }
 
 /* 4. DeepL：缓存替换用词偏好之前的译文 */

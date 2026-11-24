@@ -706,5 +706,7 @@
   "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Bạn đã dịch bằng API Key của riêng mình hơn một tháng rồi. Nếu thấy hữu ích, bạn có thể dành một phút để đánh giá trên cửa hàng không? Điều này giúp nhiều người tìm thấy nó hơn.",
   "去商店评价": "Đánh giá trên cửa hàng",
   "以后再说": "Để sau",
-  "不再提示": "Không hiển thị lại"
+  "不再提示": "Không hiển thị lại",
+  "使用预设商品和云计算术语": "Sử dụng thuật ngữ sản phẩm và điện toán đám mây có sẵn",
+  "适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。": "Dịch bằng mô hình lớn giữa tiếng Trung, tiếng Anh, tiếng Nhật, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha và tiếng Ả Rập. Bản dịch bạn đặt sẽ được ưu tiên."
 }

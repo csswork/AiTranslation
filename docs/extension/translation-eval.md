@@ -26,7 +26,7 @@ npm run eval:translation -- --variants no-style,baseline --target en
 
 `--variants` 的第一个是对照组，其余每个都和它两两比较。其他选项见 `--help`。
 
-报告写到 `dist/eval/<时间>-<方案>/report.md`（另有 `results.json`）：先是各方案实际发出的参数，然后是按源语言、体裁、整段或片段分组的胜 / 平 / 负与两项平均分，最后是逐条译文和评审理由。
+报告写到 `dist/eval/<时间>-<目标语言>-<方案>/report.md`（另有 `results.json`）：先是各方案实际发出的参数，然后是按源语言、体裁、整段或片段分组的胜 / 平 / 负与两项平均分，最后是逐条译文和评审理由。
 
 相同的请求会复用 `dist/eval/cache.json` 里的结果，重跑不花钱，对照组的译文也保持不变；要重新请求加 `--fresh`（只是不读缓存，新结果照常写回）。DeepSeek 默认温度 1.3，同一请求每次结果不同，比较两个方案时不要中途清缓存。
 
@@ -99,6 +99,55 @@ npm run eval:translation -- --variants baseline,zh-precision --samples apps/exte
 ```
 
 托管对照将两个方案名换为 `hosted,hosted-zh-precision`。固定样本命中 `ja-news-01,ja-shop-02,en-shop-04`，专项样本命中 `en-sense-03,en-sense-04,en-sense-05,ja-sense-01,ja-sense-02,ja-sense-05,ja-sense-06`，可传给 `--ids` 单独复测。
+
+## 七语预设术语专项评测（2026-11-24）
+
+`preset-samples.json` 有 19 条，含肯定、否定、同形地名和批量片段。`baseline` 是默认关闭预设的扩展请求，`presets` 通过同一入口打开设置开关。托管对照使用 `hosted,hosted-presets`。
+
+```sh
+npm run eval:translation -- --samples apps/extension/eval/preset-samples.json --variants baseline,presets --target zh-Hans
+npm run eval:translation -- --samples apps/extension/eval/preset-samples.json --variants hosted,hosted-presets --target zh-Hans
+```
+
+简中目标比较全部 18 条异语原文。其他目标取 `--ids preset-zh,preset-en-mesh,preset-ja-finish,preset-fr,preset-de,preset-es,preset-ar`，跳过源语言与目标语言相同的一条。使用 `deepseek-flash` 翻译和盲评，表中为启用预设相对关闭的胜 / 平 / 负。
+
+| 目标 | 自带 Key | 托管提示词 |
+| --- | --- | --- |
+| 简体中文 | 6 / 9 / 3 | 5 / 8 / 5 |
+| 英语 | 2 / 4 / 0 | — |
+| 日语 | 1 / 5 / 0 | — |
+| 法语 | 1 / 3 / 2 | — |
+| 德语 | 0 / 3 / 3 | — |
+| 西班牙语 | 0 / 4 / 2 | — |
+| 阿拉伯语 | 1 / 2 / 3 | — |
+| 繁体中文 | 1 / 2 / 3 | — |
+
+这些样本用于检查术语和整句表达。防泼水在商品说明中的误译得到修正，多种语言的整句盲评则有退步，因此保留默认关闭。
+
+### 扩容至 64 个概念后的复测
+
+新增的[扩容样本](../../apps/extension/eval/preset-expanded.json)包含 52 条自行撰写的原文。50 条用于译入简中，另有两条中文供反向抽测。旧库的 6 个概念均不会触发这 50 条原文。新库在其中的 42 条触发了全部 58 个新增概念，共 72 处标注。另 8 条覆盖食品配送、图片缩放、铸铁的比喻用法、融雪等易混场景。原有 19 条样本继续用于回归，包括同批不同词义。
+
+两个方案均用 `deepseek-flash` 翻译，由同一模型在隐藏方案名称、打乱 A/B 顺序后比较整句。首选译名复现按样本逐个标注词检查，忽略空白，样本标注不进入模型请求。
+
+| 目标为简中 | 样本数 | 关闭时首选译名复现 | 开启时首选译名复现 | 整句盲评（开启胜 / 平 / 负） |
+| --- | ---: | ---: | ---: | ---: |
+| 英文原文 | 22 | 31 / 34 | 34 / 34 | 6 / 10 / 6 |
+| 日文原文 | 22 | 23 / 30 | 30 / 30 | 7 / 12 / 3 |
+| 全部（含法、德、西、阿原文） | 50 | 58 / 72 | 72 / 72 | 15 / 24 / 11 |
+
+8 条反例的提示词和译文均与关闭时相同。商品样本整句为 8 胜、9 平、3 负，云计算样本为 7 胜、7 平、8 负。相同译名下整句也会变化。例如 `expanded-en-shop-03` 两版都写「碳钢」，但开启后将 blade 从「刀刃」泛化成「刀」。日文的 `expanded-ja-shop-09` 则把基线的「Liyocel」纠正为「莱赛尔纤维」。
+
+另将两条中文分别译向英、日、法、德、西、阿，12 组对照均完成。每个方向只有一条商品和一条技术样本，适合检查接入。原有 19 条样本在全部 8 个目标语言代码下，扩容前后选出的术语提示完全相同。
+
+复核初测译文时，按厂商用法把 screwgate carabiner 的简中首选名修订为「丝扣主锁」。表格采用复测后的版本，这一条参与过调词。模型单轮盲评的差距有限，保留默认关闭。[厂商用例](https://www.petzl.cn/sport/%E9%94%81%E6%89%A3%E5%92%8C%E5%BF%AB%E6%8C%82/ROCHA)
+
+复现时先生成对照译文，第二条命令复用相同请求的缓存，避免给词表未命中的反例引入随机差异。
+
+```sh
+npm run eval:translation -- --samples apps/extension/eval/preset-expanded.json --target zh-Hans --variants baseline
+npm run eval:translation -- --samples apps/extension/eval/preset-expanded.json --target zh-Hans --variants baseline,presets
+```
 
 ## 添加样本
 

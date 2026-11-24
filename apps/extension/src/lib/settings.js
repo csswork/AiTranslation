@@ -130,6 +130,7 @@
     showOriginal: true,
     // 自带 Key 的大模型与 DeepL 的译文加密缓存在本机，同样的内容再翻时直接用（见 cache.js）
     cache: true,
+    presetTerms: false,
     floating: true, // 划词后在选区旁显示浮动按钮
     shortcut: true, // 快捷键翻译选中文字
     // 视频字幕是实验功能，默认关闭：关着的时候入口、菜单项与设置都不出现
@@ -175,6 +176,7 @@
       stream: input.stream !== false,
       showOriginal: input.showOriginal !== false,
       cache: input.cache !== false,
+      presetTerms: input.presetTerms === true,
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
       videoEnabled: input.videoEnabled === true && !globalThis.AITrEnv?.firefox,

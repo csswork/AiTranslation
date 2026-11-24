@@ -24,7 +24,7 @@ globalThis.chrome = {
 };
 const load = (p) => new Function(fs.readFileSync(`${ROOT}/${p}`, 'utf8'))();
 installExtensionFixture(chrome);
-for (const file of ['languages', 'lang', 'settings', 'terms', 'cache', 'usage', 'providers']) load(`src/lib/${file}.js`);
+for (const file of ['languages', 'lang', 'settings', 'preset-terms', 'terms', 'cache', 'usage', 'providers']) load(`src/lib/${file}.js`);
 const { AITrSettings: S, AITrProviders: P, AITrUsage: U } = globalThis;
 const { create, memoryBackend } = globalThis.AITrCache;
 globalThis.AITrCache = create({ backend: memoryBackend() });

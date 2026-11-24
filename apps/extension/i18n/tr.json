@@ -706,5 +706,7 @@
   "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Bir aydan fazla süredir kendi API Key'inizle çeviri yapıyorsunuz. İşinize yarıyorsa, mağazada yorum bırakmak için bir dakikanızı ayırır mısınız? Bu, daha fazla kişinin onu bulmasına yardımcı olur.",
   "去商店评价": "Yorum bırak",
   "以后再说": "Daha sonra",
-  "不再提示": "Bir daha gösterme"
+  "不再提示": "Bir daha gösterme",
+  "使用预设商品和云计算术语": "Önceden tanımlanmış ürün ve bulut bilişim terimlerini kullan",
+  "适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。": "Çince, İngilizce, Japonca, Fransızca, Almanca, İspanyolca ve Arapça arasında büyük model çevirisi. Belirlediğiniz çeviriler önceliklidir."
 }

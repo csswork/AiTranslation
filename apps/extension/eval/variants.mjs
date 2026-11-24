@@ -68,6 +68,12 @@ function withSenseHints(body, ctx, rules = senseHints) {
 
 export const variants = {
   baseline: { note: '线上现状', patch: (body) => body },
+  presets: { note: '在扩展翻译入口开启预设术语', presetTerms: true, patch: (body) => body },
+  'hosted-presets': { note: '托管翻译开启相同术语', presetTerms: true, patch: withSystem((prompt, ctx) => {
+    const terms = globalThis.AITrTerms;
+    const entries = terms.withPresets([], ctx.sample.texts || [ctx.sample.text], ctx.targetId);
+    return hostedSystemPrompt(ctx.target, undefined, isFragments(ctx) && ctx.sample.texts.length > 1, terms.glossary(entries));
+  }) },
   'zh-focus': { note: '简中按原文保留重点、限定和语气', patch: withSystem(chineseFocus) },
   'zh-sense': { note: '简中词义提示，含两条客套语试验', patch: (body, ctx) => withSenseHints(body, ctx, [...senseHints, ...courtesyHints]) },
   'zh-precision': { note: '简中仅在涉及需求水平、防泼水或年度时提示词义', patch: withSenseHints },

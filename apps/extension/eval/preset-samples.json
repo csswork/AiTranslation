@@ -1,0 +1,21 @@
+[
+  { "id": "preset-en-finish", "from": "en", "genre": "shop", "text": "The jacket has a water-repellent finish, but its seams are not sealed.", "watch": "防泼水与接缝未密封" },
+  { "id": "preset-ja-finish", "from": "ja", "genre": "shop", "text": "このバッグには撥水加工を施していません。雨の日はカバーをご使用ください。", "watch": "防泼水处理；保留否定" },
+  { "id": "preset-ja-water", "from": "ja", "genre": "shop", "text": "テントの表地は撥水仕様ですが、防水ではありません。", "watch": "区分防泼水和防水" },
+  { "id": "preset-en-fibre", "from": "en", "genre": "shop", "text": "Only the lining of the coat contains cashmere. The shell is wool.", "watch": "只有里料含羊绒" },
+  { "id": "preset-ja-fibre", "from": "ja", "genre": "shop", "text": "カシミヤ混のセーターです。カシミヤだけで編んだものではありません。", "watch": "混纺，保留并非纯羊绒" },
+  { "id": "preset-en-nylon", "from": "en", "genre": "shop", "text": "The ripstop nylon helps keep a small tear from spreading. It can still tear.", "watch": "防撕裂尼龙仍可能被撕破" },
+  { "id": "preset-ja-nylon", "from": "ja", "genre": "shop", "text": "リップストップナイロンを使っているのは底の部分だけです。", "watch": "防撕裂尼龙，仅用于底部" },
+  { "id": "preset-en-mesh", "from": "en", "genre": "tech", "text": "Removing this service from the service mesh does not stop its containers.", "watch": "服务网格，服务和容器仍需区分" },
+  { "id": "preset-ja-mesh", "from": "ja", "genre": "tech", "text": "サービスメッシュの外からでも、既存のエンドポイントには接続できる。", "watch": "服务网格以外仍可连接" },
+  { "id": "preset-en-discovery", "from": "en", "genre": "tech", "text": "Service discovery returns an endpoint even when the client has not opened a connection yet.", "watch": "服务发现，保留条件" },
+  { "id": "preset-ja-discovery", "from": "ja", "genre": "tech", "text": "DNSを停止すると、サービスディスカバリーが新しいインスタンスを見つけられなくなる。", "watch": "服务发现；新的实例" },
+  { "id": "preset-ja-batch", "from": "ja", "genre": "shop", "mode": "batch", "texts": ["バッグの表地には撥水加工を施しています。", "縫い目から水が入ることがあります。", "袋ごと水に沈めないでください。"], "watch": "保持条目对应，包括袋子与内容物一同浸入的警告" },
+  { "id": "preset-en-miss", "from": "en", "genre": "news", "text": "We spent the afternoon in Cashmere before driving home.", "watch": "地名，保留基线请求" },
+  { "id": "preset-en-mixed", "from": "en", "genre": "shop", "mode": "batch", "texts": ["The sweater is made of cashmere.", "Our next stop is Cashmere."], "watch": "同批含地名与面料，跳过词条" },
+  { "id": "preset-zh", "from": "zh", "genre": "shop", "text": "这件外套的面料经过防泼水处理，接缝处仍可能渗水。", "watch": "原文区分防泼水与防水" },
+  { "id": "preset-fr", "from": "fr", "genre": "shop", "text": "Seule la doublure de ce manteau contient du cachemire.", "watch": "羊绒仅用于里料" },
+  { "id": "preset-de", "from": "de", "genre": "shop", "text": "Die Jacke ist wasserabweisend, aber nicht wasserdicht.", "watch": "防泼水，不防水" },
+  { "id": "preset-es", "from": "es", "genre": "tech", "text": "La malla de servicios no sustituye al sistema DNS del clúster.", "watch": "服务网格与 DNS 各司其职" },
+  { "id": "preset-ar", "from": "ar", "genre": "shop", "text": "هذا المعطف مصنوع من الصوف والكشمير، أما البطانة فمن القطن.", "watch": "大衣材质为羊毛与羊绒；里料为棉" }
+]

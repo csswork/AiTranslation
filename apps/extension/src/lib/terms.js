@@ -29,6 +29,50 @@
     return new RegExp(`(?<![\\p{L}\\p{N}])${body}(?![\\p{L}\\p{N}])`, flags);
   }
 
+  // 带词界的阿拉伯语可以附着冠词、介词与连词，如 الكشمير、وبالكشمير。
+  // 词表只提示词干，冠词和句法仍由模型结合整句处理。
+  function sourcePattern(source) {
+    if (!/^\p{Script=Arabic}/u.test(source)) return pattern(source, 'iu');
+    return new RegExp(`(?<![\\p{L}\\p{M}\\p{N}])[وف]?(?:[بك]?ال|لل|[بكل])?${escape(source)}(?![\\p{L}\\p{M}\\p{N}])`, 'iu');
+  }
+
+  // 首次启用时才建立索引。先查字面片段，只为可能命中的词建立 Unicode 词界正则。
+  let presetSources;
+  function presetIndex() {
+    if (presetSources) return presetSources;
+    presetSources = [];
+    for (const { names, context, exclude } of globalThis.AITrPresetTerms) {
+      for (const [lang, forms] of Object.entries(names)) {
+        for (const source of (Array.isArray(forms) ? forms : [forms])) {
+          presetSources.push({ lang, names, context: context?.[lang], exclude, source, literal: source.toLowerCase() });
+        }
+      }
+    }
+    return presetSources.sort((a, b) => b.source.length - a.source.length);
+  }
+
+  function withPresets(personal, texts, target, sourceId) {
+    if (personal.length >= MAX_RELEVANT || !globalThis.AITrPresetTerms) return personal;
+    const automatic = !sourceId || sourceId === 'auto';
+    const out = [...personal];
+    const haystack = texts.join('\n').toLowerCase();
+    for (const entry of presetIndex()) {
+      const { lang, names, context, exclude, source, literal } = entry;
+      if (!Object.hasOwn(names, target) || lang === target || (!automatic && lang !== sourceId)) continue;
+      if (!haystack.includes(literal)) continue;
+      const to = Array.isArray(names[target]) ? names[target][0] : names[target];
+      if (automatic && to.toLowerCase() === literal) continue;
+      const matcher = entry.matcher ??= sourcePattern(source);
+      const matches = texts.filter((text) => matcher.test(text));
+      if (!matches.length || matches.some((text) => (context && !context.test(text)) || exclude?.test(text))) continue;
+      // 批量提示词对每项都生效；有歧义时整批跳过。相交的个人偏好或更长词条优先。
+      if (out.some((entry) => matcher.test(entry.source) || sourcePattern(entry.source).test(source))) continue;
+      out.push({ source, to, target });
+      if (out.length >= MAX_RELEVANT) break;
+    }
+    return out;
+  }
+
   function valid(entry) {
     return entry && typeof entry === 'object' && entry.source && entry.to && entry.target
       && typeof entry.source === 'string' && typeof entry.to === 'string' && typeof entry.target === 'string';
@@ -71,21 +115,22 @@
   }
 
   /** 原文里出现了哪些偏好的原文词语（同一目标语言），最新的优先，最多 MAX_RELEVANT 条。 */
-  function match(entries, texts, target) {
+  function match(entries, texts, target, matchAffixes = false) {
     const joined = (Array.isArray(texts) ? texts : [texts]).join('\n');
     if (!joined || !target) return [];
     const out = [];
     for (const entry of entries) {
       if (entry.target !== target) continue;
-      if (!pattern(entry.source, 'iu').test(joined)) continue;
+      const word = matchAffixes ? sourcePattern(entry.source) : pattern(entry.source, 'iu');
+      if (!word.test(joined)) continue;
       out.push(entry);
       if (out.length >= MAX_RELEVANT) break;
     }
     return out;
   }
 
-  async function relevant(texts, target) {
-    return match(await list(), texts, target);
+  async function relevant(texts, target, matchAffixes = false) {
+    return match(await list(), texts, target, matchAffixes);
   }
 
   /** 发给模型的术语表：[{ source, target }]。 */
@@ -110,5 +155,5 @@
     return out;
   }
 
-  globalThis.AITrTerms = { KEY, list, remember, forget, clear, match, relevant, glossary, promptLine, applyTo, pattern, MAX_RELEVANT };
+  globalThis.AITrTerms = { KEY, list, remember, forget, clear, match, relevant, withPresets, glossary, promptLine, applyTo, pattern, MAX_RELEVANT };
 })();

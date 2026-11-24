@@ -706,5 +706,7 @@
   "你用自己的 API Key 翻译已经一个多月了。如果觉得好用，能花一分钟在商店留个评价吗？这能帮更多人找到它。": "Llevas más de un mes traduciendo con tu propia API Key. Si te resulta útil, ¿podrías tomarte un minuto para dejar una reseña en la tienda? Ayuda a que más gente lo encuentre.",
   "去商店评价": "Dejar una reseña",
   "以后再说": "Quizás más tarde",
-  "不再提示": "No volver a mostrar"
+  "不再提示": "No volver a mostrar",
+  "使用预设商品和云计算术语": "Usar terminología predefinida de productos y computación en la nube",
+  "适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。": "Traducción con modelos de lenguaje entre chino, inglés, japonés, francés, alemán, español y árabe. Tus traducciones preferidas tienen prioridad."
 }

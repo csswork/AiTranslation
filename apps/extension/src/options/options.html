@@ -230,6 +230,13 @@
           在译文里点一个词换了说法后，会记住这个词的译法；之后翻译含有同一原文词语的文字时优先使用。
           只保存在这个浏览器里，翻译时随请求发给所选平台。
         </p>
+        <label class="switch">
+          <input id="presetTerms" type="checkbox" />
+          <span>
+            <b>使用预设商品和云计算术语</b>
+            <i>适用于中文、英语、日语、法语、德语、西班牙语和阿拉伯语之间的大模型翻译。你设定的译名优先。</i>
+          </span>
+        </label>
         <ul class="terms" id="termList"></ul>
         <div class="actions">
           <span class="test-result" id="termCount"></span>
@@ -374,6 +381,7 @@
     <script src="../lib/credits.js"></script>
     <script src="../lib/rules.js"></script>
     <script src="../lib/settings.js"></script>
+    <script src="../lib/preset-terms.js"></script>
     <script src="../lib/terms.js"></script>
     <script src="../lib/cache.js"></script>
     <script src="../lib/sites.js"></script>
