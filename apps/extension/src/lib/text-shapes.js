@@ -324,6 +324,20 @@
   }
 
   /**
+   * 笔画范围和原文对得上：按量出的字号，原文的字数大致铺满这片范围
+   * （中日韩文每字约一个字号见方，拉丁文字平均字宽约半个字号）。
+   * 笔画分析失败时（只抓到美术字的一角、几根线条）面积和字数差得远。
+   * 量出的字号也不能比按模型框估的小太多：框再松也很少超过文字面积的十几倍，
+   * 一条细细的笔画量出的「字号」只有估计值的零头。
+   */
+  function consistent(found, em, text, prior) {
+    const chars = String(text || '').replace(/\s/g, '').length;
+    if (!chars || !(em > 0) || (prior > 0 && em < prior * 0.25)) return false;
+    const ratio = (found.w * found.h) / (chars * em * em * (isCjk(text) ? 1 : 0.55));
+    return ratio >= 0.4 && ratio <= 2.5;
+  }
+
+  /**
    * 从笔画格子里量出行（竖排是列）：字号、行数和对齐方式。
    * 沿行的方向投影，有笔画的连续区间就是一行；比别的行细得多的（注音、噪点）不算。
    * 行高比「单个笔画块的大小」稳得多：字的笔画断开、粘连成词都不影响。
@@ -445,13 +459,19 @@
           }
         }
       }
-      // 找到的笔画只占模型框的一小角（描边加填色的音效字、花体标题，笔画分析会失败）：
-      // 不如直接用模型的框
-      if (found && found.w * found.h < px.w * px.h * WEAK) found = null;
+      let metrics = found ? lineMetrics(found, block.text, block.vertical === true) : null;
+      // 找到的笔画只占模型框的一小角：可能是笔画分析失败（描边加填色的音效字、花体标题），
+      // 也可能只是模型的框太松（框住了整个气泡）。笔画范围和字数、量出的字号对得上就是后者，
+      // 照常按笔画勾形状；对不上才直接用模型的框
+      if (found && found.w * found.h < px.w * px.h * WEAK && !(metrics && consistent(found, metrics.em, block.text, prior.em))) {
+        found = null;
+        metrics = null;
+      }
       // 字号按行（竖排按列）的粗细量，偏离估计值太远时拉回来；找不到笔画时就用估计值。
+      // 估计值按模型框和笔画范围各算一次取小的：框太松时按框估的字号会大出一倍
       // 排版字号、向外扩的距离都按它
-      const metrics = found ? lineMetrics(found, block.text, block.vertical === true) : null;
-      const guess = prior.em || Math.min(px.w, px.h);
+      const tight = found ? priorEm(block.text, { w: found.w, h: found.h }).em : 0;
+      const guess = (tight > 0 ? Math.min(prior.em || tight, tight) : prior.em) || Math.min(px.w, px.h);
       const glyph = metrics ? Math.min(guess * 1.8, Math.max(guess * 0.5, metrics.em)) : guess;
       // 只丢真正的小字：模型框本身很小（单行小字），而且量出来的字也小。
       // 字号可能量偏（画面纹理、笔画粘连），所以不单凭它判断

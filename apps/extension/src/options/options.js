@@ -839,7 +839,7 @@
       remove.type = 'button';
       remove.className = 'btn ghost small';
       remove.textContent = t("移除");
-      remove.addEventListener('click', () => AITrSites.set(host, false));
+      remove.addEventListener('click', () => AITrSites.remove(host));
       item.append(name, meta, remove);
       return item;
     }));

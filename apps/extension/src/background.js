@@ -965,6 +965,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
+  // 整站翻译：跨源子框架（如 nozomi.2ch.sc 嵌在 2ch.sc 里）读不到顶层网址，按浏览器给的标签页网址回答顶层域名
+  if (type === 'site-top-host') {
+    sendResponse({ host: sender.id === chrome.runtime.id ? AITrSites.hostOf(sender.tab?.url) : '' });
+    return false;
+  }
+
   if (type === 'ping') {
     sendResponse({ ok: true });
     return false;

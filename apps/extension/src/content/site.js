@@ -15,12 +15,6 @@
   if (window.__aiTranslationSiteLoaded) return;
   window.__aiTranslationSiteLoaded = true;
 
-  try {
-    if (window.top !== window) return;
-  } catch {
-    return;
-  }
-
   const Sites = globalThis.AITrSites;
   const S = globalThis.AITrSettings;
   const Requests = globalThis.AITrRequests;
@@ -29,6 +23,50 @@
   const { signal: lifeSignal, onRetire } = globalThis.AITrLifecycle;
 
   const HOST = Sites.hostOf(location.href);
+
+  /**
+   * 顶层框架照常工作。子框架只在与顶层同属名单上的同一个网站（含子域名）时工作：frameset 老网站（2ch.sc 等）
+   * 和同站 iframe 的正文都在子框架里，2ch.sc 的版块还在 nozomi.2ch.sc 这类子域名上；别的网站嵌进来的框架
+   * （广告、视频播放器）不翻，免得名单上的网站被嵌到别处时也花用量。子框架不弹确认框，状态小条只在出错时显示。
+   */
+  let TOP = true;
+  try {
+    TOP = window.top === window;
+  } catch {
+    TOP = false;
+  }
+  if (!TOP && !HOST) return;
+
+  /** 所在标签页顶层的域名：同源直接读；跨源（子域名框架）问 service worker，它按浏览器给的 sender.tab.url 回答。 */
+  let topHost = null;
+  function getTopHost() {
+    if (TOP) return Promise.resolve(HOST);
+    topHost ||= (async () => {
+      try {
+        return Sites.hostOf(window.top.location.href);
+      } catch {
+        /* 跨源 */
+      }
+      try {
+        const reply = await chrome.runtime.sendMessage({ type: 'site-top-host' });
+        return typeof reply?.host === 'string' ? reply.host : '';
+      } catch {
+        return '';
+      }
+    })();
+    return topHost;
+  }
+
+  /** 名单是否覆盖这个框架；子框架还要求顶层被同一项覆盖。 */
+  async function enabledFor(sites) {
+    if (!HOST || !Sites.match(sites, HOST)) return false;
+    if (TOP) return true;
+    const top = await getTopHost();
+    return sites.some((entry) => Sites.covers(entry, HOST) && Sites.covers(entry, top));
+  }
+
+  /** 顶层是 <frameset>：自己没有文字，内容都在子框架里，由子框架各自翻译。 */
+  const isFrameset = () => document.body?.localName === 'frameset';
 
   /** 文字在这些元素里面时不翻译：代码、输入框、明确标了不翻译的区域。 */
   const SKIP = [
@@ -311,7 +349,7 @@
     const settings = await S.loadSettings();
     const pageLang = await pageLanguage();
     // 两次 await 之间可能已经被关闭或重复启动
-    if (session || !(await Sites.has(HOST))) return;
+    if (session || !(await enabledFor(await Sites.list()))) return;
     if (pageLang && pageLang === settings.target) {
       // 已经是目标语言，不花用量
       if (announce) status.note(t("这个页面已经是$1，不用翻译；这个网站上其他语言的页面会自动翻译。", [AITrLanguages.label(settings.target)]));
@@ -324,7 +362,7 @@
     current.mo.observe(document.body, { childList: true, subtree: true, characterData: true });
     if (announce) status.busy();
     const found = scan(document.body);
-    if (announce && !found) status.note(t("这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。"));
+    if (announce && !found && !isFrameset()) status.note(t("这个页面上没有找到需要翻译的文字；之后加载的内容和这个网站的其他页面会自动翻译。"));
   }
 
   /** 停止翻译并恢复原文；页面后来改过的文字保持页面的值。 */
@@ -355,7 +393,7 @@
   }
 
   async function sync(sites, announce = false) {
-    const enabled = Boolean(HOST) && (sites || (await Sites.list())).includes(HOST);
+    const enabled = await enabledFor(sites || (await Sites.list()));
     if (enabled) await start(announce);
     else stop();
   }
@@ -475,6 +513,7 @@
       return pill;
     }
     function render(kind, text, actions = []) {
+      if (!TOP && kind !== 'error') return; // 子框架里只报错，进度与说明由顶层负责
       const el = ensure();
       clearTimeout(hideTimer);
       el.hidden = false;
@@ -599,7 +638,7 @@
   /* -------------------------------------------------------------- 接线 */
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (sender.id !== chrome.runtime.id || message?.type !== 'site-confirm') return false;
+    if (!TOP || sender.id !== chrome.runtime.id || message?.type !== 'site-confirm') return false;
     confirmCost({ providerLabel: String(message.providerLabel || ''), localAvailable: Boolean(message.localAvailable) })
       .then((choice) => sendResponse({ choice }));
     return true;

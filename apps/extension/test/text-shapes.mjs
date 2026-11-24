@@ -148,6 +148,27 @@ console.log('✓ 字不到图片短边 1.5% 的小字丢掉');
   console.log('✓ 气泡跨在两种底色上时形状不漏到气泡外，底色取气泡里的');
 }
 
+/* ---- 模型的框太松（框住整个气泡）：仍按笔画勾形状，字号按字量，不按框估 ---- */
+{
+  // 竖排一列 4 个字（40 像素见方），模型的框却有 220×300，字只占框的一成多
+  const column = Array.from({ length: 4 }, (_, i) => [200, 100 + i * 46, 40, 40]);
+  const page = canvas(W, H, column);
+  const loose = { text: 'あ\nは〜い', box: rel(100, 50, 220, 300), vertical: true };
+  const [shape] = S.findShapes(page, W, H, [loose]).shapes;
+  assert.equal(shape.fallback, false, '框太松不等于笔画分析失败');
+  const em = shape.glyph * H;
+  assert.ok(em > 38 && em < 50, `字号按字量（约 40/0.92），不按大框估：${em}`);
+  const b = shape.bounds;
+  assert.ok(b.x * W > 180 && (b.x + b.w) * W < 260, `形状贴着这一列字，不是模型的大框：${[b.x * W, b.w * W].map(Math.round)}`);
+  for (const [x, y, w, h] of column) assert.ok(inShape(shape, (x + w / 2) / W, (y + h / 2) / H));
+
+  // 同样大的框里只抓到一条细笔画（美术字的一角）：对不上字数，退回模型的框
+  const sliver = canvas(W, H, [[120, 60, 6, 60]]);
+  const [weak] = S.findShapes(sliver, W, H, [{ text: 'ドドド', box: rel(100, 50, 220, 300), vertical: true }]).shapes;
+  assert.equal(weak.fallback, true);
+  console.log('✓ 模型的框太松时仍按笔画勾形状、按字量定字号；只抓到细笔画时退回模型的框');
+}
+
 /* ---- 读不到像素：退回模型的矩形，重叠部分仍然分清归属 ---- */
 const blind = S.findShapes(null, W, H, blocks);
 assert.equal(blind.shapes.length, 2);

@@ -24,7 +24,7 @@
 | `src/lib/sites.js` | `AITrSites`：网站名单（`chrome.storage.local` 的 `siteTranslate`，域名数组，最多 500 个），`hostOf` 只认 http(s) |
 | `src/lib/settings.js` | `siteProvider`、`siteCostConfirmed` 两个设置；`AITrSettings.siteProvider(settings)` 给出实际使用的平台 |
 | `src/background.js` | 勾选菜单 `ai-translate-site`（`type: 'checkbox'`，`page` 上下文，紧跟双语阅读）；`syncPageMenus` 按当前标签页的网站更新勾选，`tabs.onUpdated` 换网址与名单变化时也同步；`toggleSite` 处理勾选、确认框（向顶层框架发 `site-confirm`）、写名单 |
-| `src/content/site.js` | 常驻内容脚本（只在顶层框架工作），监听名单与设置，翻译、恢复原文、状态小条、确认框 |
+| `src/content/site.js` | 常驻内容脚本（顶层框架，以及与顶层同一网站的子框架），监听名单与设置，翻译、恢复原文、状态小条、确认框 |
 | `src/options/` | 「整站翻译」卡片 |
 | `test/menu.mjs` | 菜单项、勾选同步、确认流程（取消 / 改用本机翻译 / 只问一次 / 本机翻译不问 / 非 http(s) 网页） |
 
@@ -32,6 +32,7 @@
 
 - 与区域翻译一样按**文字节点原地替换**，不改页面结构，链接、按钮照常可用。代价是一句话被行内元素切开时（`Click <a>here</a> to continue`）分段翻译，语序可能不自然。RTL 目标语言不改页面的 `dir`，免得打乱布局。
 - 恢复时只换回仍是我们写入的译文的节点；页面后来自己改过的文字保持页面的值。页面改了已翻译的节点时按新值重新翻译。
+- **框架**：与顶层同一网站（域名相同、能读到顶层网址）的子框架各自翻译自己的文字，包括 `<frameset>` 老网站（如 2ch.sc 的 `2ch.html`，菜单和正文都在 `<frame>` 里，顶层没有文字）和同站 `iframe`；在框架里点链接换页面也照常翻译。别的网站嵌进来的框架（广告、视频播放器）即使该网站也在名单上也不翻。确认框只在顶层弹；子框架不显示进度和说明，只在出错时显示自己的小条；顶层是 `<frameset>` 时不提示「没有找到要翻的文字」。开启前就已打开、还没有内容脚本的旧标签页，补注入只到顶层，子框架要刷新后才翻。
 - 网页组件的**开放 shadow root** 里的文字也翻译，并监听其中的变化；封闭的进不去（扩展自己的界面都在封闭 shadow root 里）。shadow root 在我们扫描之后才挂上的（组件延迟定义）会漏掉。
 - 不翻译：`script`/`style`/`code`/`pre`/`kbd`/`samp`/`var`/`svg`/`math`/输入框等里面的文字、`translate="no"` 与 `.notranslate`、可编辑区域、没有字母的文字、超过 1500 字的单个文字节点。- 请求走现有的 `translate-batch`（`AITrRequests` 长连接，可取消），`providerId` 用整站翻译的平台；用词偏好照常生效。
 
@@ -56,5 +57,6 @@
 
 - `test/menu.mjs` 覆盖菜单与确认流程。
 - 端到端脚本（本机，不入库）：无头 Chrome for Testing 150 加载未打包扩展，在 service worker 里把 `AITrProviders.translateBatch` 换成桩，打开本地测试页，确认：首屏翻译、开放 shadow root 里的文字、中文页面不发请求并显示说明、开启后立即出现「正在翻译」、链接保留、代码 / `.notranslate` / 中文不动、远处内容滚动后才翻、重复文字不再请求、动态插入的内容会翻、页面改过的文字重新翻、关闭后恢复原文且保留页面改动、再次开启不用刷新、改平台后用新平台重翻、出错小条、确认框（截图、Esc 取消、点「改用本机翻译」）、设置页列出与移除网站。
+- 框架端到端脚本（本机，不入库，`tools/capture/site-frames-e2e.mjs`）：frameset 页面的菜单框架与内容框架、同站嵌套 iframe 翻译，跨站 iframe 不翻也不发请求（即使其域名在名单上），框架内换页面后自动翻译，关闭后全部恢复原文。
 - 菜单点击的真实处理函数：用 DevTools 的 `Runtime.queryObjects` 找到 service worker 里的 `toggleSite`，按菜单点击的参数调用，确认弹出确认框、点「继续使用点数翻译」后开始请求（测试环境未登录，小条显示「请先登录账户」）。
 - 还没在真实环境确认：原生右键菜单的勾选显示；本机翻译在 service worker 里能否创建翻译器（见 `local-translation.md` 第四节，整站翻译和划词一样走这里）；真实平台的用量；复杂网站（单页应用、大量动态内容）上的表现。
