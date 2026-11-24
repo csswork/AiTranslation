@@ -32,6 +32,14 @@ assert.equal(S.normalize(null).videoEnabled, false);
 assert.equal(S.normalize({ schemaVersion: 2, uiLanguage: 'ar', target: 'de' }).target, 'de');
 for (const text of ['你好', '繁體中文', '日本語', '한글', 'مرحبا', 'שלום', 'नमस्ते', 'বাংলা', 'สวัสดี', 'Hello 世界', 'a']) assert.equal(lang.shouldOffer(text), true, text);
 for (const text of ['', '12345', '。!?', '🎉']) assert.equal(lang.shouldOffer(text), false, text);
+
+// 整站翻译判断页面是不是日文：假名占汉字与假名合计的比例。2ch 版块目录这种几乎只有短版块名的页面也要认得出
+const twoCh = '2ch総合案内 ２ちゃんねる検索 スマホ入り口 運営事務所 広場 新着ヘッドライン ニュース速報α 芸スポα 地震速報 臨時地震 緊急自然災害 ビジネスnews+ 不倫・浮気 家電製品';
+assert.equal(lang.looksJapanese(twoCh), true, '日文版块目录');
+assert.equal(lang.looksJapanese('この商品は軽くて丈夫です。毎日の通勤にもぴったりです。'), true);
+assert.equal(lang.looksJapanese('我们最近在看《鬼滅の刃》和《ハイキュー!!》，这两部动画的作画都非常出色，推荐给大家。'), false, '中文网页夹几个日文作品名');
+assert.equal(lang.looksJapanese('今日は'), false, '太短不判断');
+assert.equal(lang.analyze('不倫・浮気').isChinese, true, '单看一段只有汉字的文字分不出中日文，要看整页');
 let calls = [];
 context.fetch = async (url, init) => {
   const body = init.body && JSON.parse(init.body);
@@ -54,4 +62,4 @@ const before = calls.length;
 await assert.rejects(async () => { for await (const _ of P.translate({ text: 'hi', settings, targetId: 'ur' })) {} }, /DeepL/);
 assert.equal(calls.length, before, 'Unsupported targets must not trigger translation with a substituted language');
 await assert.rejects(async () => { for await (const _ of P.translate({ text: 'hi', settings, sourceId: 'ur' })) {} }, /DeepL/);
-console.log('24 languages: migration, script handling, explicit directions and provider capability checks passed');
+console.log('24 languages: migration, script handling, Japanese page detection, explicit directions and provider capability checks passed');

@@ -71,6 +71,10 @@ const translated = (list) => JSON.stringify(list.map((text) => `译:${text}`));
     assert.match(source, /const CHUNK_CHARS = 2200;/, file);
   }
   console.log('✓ 区域翻译与整站翻译每批最多 50 段、2200 字');
+  // 整站翻译：日文页面（声明或正文假名多）里只有汉字的短段不当成中文跳过
+  const site = fs.readFileSync(`${ROOT}/src/content/site.js`, 'utf8');
+  assert.match(site, /if \(Lang\.looksJapanese\(sample\)\) return 'ja';/);
+  assert.match(site, /CHINESE\.has\(session\.targetId\) && session\.pageLang !== 'ja' && Lang\.analyze\(core\)\.isChinese/);
 }
 
 console.log('\n全部通过');

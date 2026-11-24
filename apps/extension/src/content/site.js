@@ -95,12 +95,17 @@
 
   const CHINESE = new Set(['zh-Hans', 'zh-Hant']);
 
-  /** 声明的页面语言；没有声明时取一段正文让浏览器识别。返回项目语言 id，判断不出返回空字符串。 */
+  /**
+   * 声明的页面语言；没有声明时取一段正文判断。返回项目语言 id，判断不出返回空字符串。
+   * 正文里假名多就是日文：浏览器的识别遇到汉字多的日文（如只有版块名的目录页）可能不可靠或认成中文，
+   * 而认错会让只有汉字的日文短段被当成中文跳过。
+   */
   async function pageLanguage() {
     const declared = AITrLanguages.match(document.documentElement.lang || '');
     if (declared) return declared;
     const sample = String(document.body?.innerText || '').slice(0, 2000);
     if (!sample.trim()) return '';
+    if (Lang.looksJapanese(sample)) return 'ja';
     try {
       const result = await chrome.i18n.detectLanguage(sample);
       const top = result?.languages?.[0];
@@ -158,8 +163,9 @@
     if (!core || core.length > MAX_TEXT || !LETTER.test(core)) return false;
     const record = session.info.get(node);
     if (record && record.translated === value) return false; // 已经是译文
-    // 目标是中文时，本来就是中文的文字不翻译；页面是另一种中文（简繁转换）时照常翻译
-    if (CHINESE.has(session.targetId) && Lang.analyze(core).isChinese
+    // 目标是中文时，本来就是中文的文字不翻译；页面是另一种中文（简繁转换）时照常翻译。
+    // 日文页面里只有汉字的短段（「不倫・浮気」「経済」）是日文，照常翻译
+    if (CHINESE.has(session.targetId) && session.pageLang !== 'ja' && Lang.analyze(core).isChinese
       && !(CHINESE.has(session.pageLang) && session.pageLang !== session.targetId)) return false;
     return true;
   }
