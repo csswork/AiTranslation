@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Este dispositivo no admite el reconocimiento sin conexión para este idioma. Si la plataforma de traducción se establece en ChatGPT (con tu propia Key), OpenAI se encarga del reconocimiento."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Todos los subtítulos ($arg1$ líneas)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Los subtítulos están listos: se muestran mientras se reproduce el video, o haz clic en «Todos los subtítulos» para verlos directamente"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Subtítulos bilingües"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Reproducir"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Todos los subtítulos"
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "This device doesn't support offline recognition for this language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "All subtitles ($arg1$ lines)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Subtitles are ready: they display as the video plays, or click \"All subtitles\" to view them directly"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Bilingual subtitles"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Play"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "All subtitles"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

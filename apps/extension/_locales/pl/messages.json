@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "To urządzenie nie obsługuje rozpoznawania offline w tym języku. Jeśli platformą tłumaczenia jest ChatGPT (z własnym kluczem), rozpoznawanie przejmuje OpenAI."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Wszystkie napisy ($arg1$ linii)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Napisy są gotowe: wyświetlają się podczas odtwarzania lub kliknij „Wszystkie napisy”, aby zobaczyć je bezpośrednio"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Napisy dwujęzyczne"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Odtwórz"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Wszystkie napisy"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

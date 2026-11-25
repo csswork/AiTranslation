@@ -16,7 +16,7 @@
   const MIN_WIDTH = 120;
   const MIN_HEIGHT = 40;
   /** 「字幕已准备好」「没有识别到人声」这类提示显示多久。 */
-  const NOTICE_MS = 4000;
+  const NOTICE_MS = 6000;
 
   // 字幕惯例是黑底白字，不跟随深浅色模式
   const STYLE = `
@@ -63,7 +63,54 @@
   }
   .close svg { width: 10px; height: 10px; }
   .box:hover .close, .box.has-status .close, .close:focus-visible { opacity: 1; }
-  .act:focus-visible, .close:focus-visible { outline: 2px solid #a5b4fc; outline-offset: 1px; }`;
+  .act:focus-visible, .close:focus-visible { outline: 2px solid #a5b4fc; outline-offset: 1px; }
+  /* 字幕准备好以后常驻在视频左上角：说明字幕开着，可以看全部、播放或关掉 */
+  .chip, .list {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: #fff; pointer-events: auto; text-align: left; letter-spacing: normal; text-transform: none;
+  }
+  .chip {
+    position: absolute; top: 8px; left: 8px; max-width: calc(100% - 16px); box-sizing: border-box;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+    padding: 4px 5px 4px 10px; border-radius: 999px;
+    background: rgba(10, 10, 12, 0.8);
+    font-size: 12px; font-weight: 500; line-height: 1.3;
+  }
+  .chip .dot { background: #4ade80; }
+  .pill {
+    font: inherit; color: #fff; cursor: pointer; white-space: nowrap;
+    background: rgba(255, 255, 255, 0.16); border: 0; border-radius: 999px; padding: 3px 10px;
+  }
+  .pill:hover { background: rgba(255, 255, 255, 0.28); }
+  .pill.primary { background: #6d4aff; }
+  .pill.primary:hover { background: #7d5dff; }
+  .x {
+    width: 20px; height: 20px; padding: 0; display: grid; place-items: center; flex: none;
+    border: 0; border-radius: 50%; background: none; color: #fff; cursor: pointer; opacity: 0.8;
+  }
+  .x:hover { opacity: 1; background: rgba(255, 255, 255, 0.16); }
+  .x svg { width: 10px; height: 10px; }
+  .list {
+    position: absolute; inset: 8px; box-sizing: border-box;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 10px; background: rgba(10, 10, 12, 0.9);
+  }
+  .list header {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 9px 10px 9px 14px; font-size: 13px; font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .list ol { margin: 0; padding: 6px; list-style: none; overflow: auto; flex: 1; }
+  .list li button {
+    display: block; width: 100%; box-sizing: border-box; padding: 7px 9px; border: 0; border-radius: 6px;
+    background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  }
+  .list li button:hover, .list li.on button { background: rgba(255, 255, 255, 0.1); }
+  .list .time { font-size: 11px; opacity: 0.55; }
+  .list .ltr { font-size: 15px; font-weight: 500; line-height: 1.45; }
+  .list .lorig { font-size: 12px; opacity: 0.72; line-height: 1.4; }
+  .pill:focus-visible, .x:focus-visible, .list li button:focus-visible { outline: 2px solid #a5b4fc; outline-offset: 1px; }`;
 
   const CLOSE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -133,13 +180,29 @@
       <div class="status"><span class="dot"></span><span class="label"></span><button class="act" type="button" hidden>去设置</button></div>
       <div class="bar" hidden><i></i></div>
       <button class="close" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
-    root.append(style, box);
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.hidden = true;
+    chip.innerHTML = `
+      <span class="dot"></span><span>双语字幕</span>
+      <button class="pill primary play" type="button" hidden>播放</button>
+      <button class="pill all" type="button">全部字幕</button>
+      <button class="x" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
+    const list = document.createElement('div');
+    list.className = 'list';
+    list.hidden = true;
+    list.innerHTML = `
+      <header><span class="list-title"></span><button class="pill fold" type="button">收起</button></header>
+      <ol></ol>`;
+    root.append(style, box, chip, list);
     AITrI18n.localize(root);
     (document.body || document.documentElement).appendChild(host);
 
     ui = {
       host,
       box,
+      chip,
+      list,
       tr: box.querySelector('.tr'),
       orig: box.querySelector('.orig'),
       status: box.querySelector('.status'),
@@ -147,12 +210,73 @@
       act: box.querySelector('.act'),
       bar: box.querySelector('.bar'),
       fill: box.querySelector('.bar i'),
+      play: chip.querySelector('.play'),
+      listTitle: list.querySelector('.list-title'),
+      items: list.querySelector('ol'),
       key: '',
       sig: '',
     };
     box.querySelector('.close').addEventListener('click', close);
+    chip.querySelector('.x').addEventListener('click', close);
     ui.act.addEventListener('click', () => send({ type: 'open-options', section: 'video' }));
+    ui.play.addEventListener('click', () => play(video?.ended ? 0 : null));
+    chip.querySelector('.all').addEventListener('click', () => toggleList(true));
+    list.querySelector('.fold').addEventListener('click', () => toggleList(false));
     raf = requestAnimationFrame(follow);
+  }
+
+  /** 播放视频；from 给了就先跳到那里（秒）。站点不让播（比如要先点一下页面）时停在原处，「播放」按钮还在。 */
+  function play(from = null) {
+    if (!video) return;
+    try {
+      if (from != null) video.currentTime = from;
+      const task = video.play();
+      if (task && typeof task.catch === 'function') task.catch(() => render());
+    } catch {
+      /* 播放器不让操作：留给用户自己点 */
+    }
+    render();
+  }
+
+  const clock = (ms) => {
+    const s = Math.max(0, Math.floor(ms / 1000));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  };
+
+  /** 「全部字幕」：整篇双语对照，点一句就跳到那里播放。 */
+  function toggleList(open) {
+    if (!state?.cues) return;
+    state.listOpen = open;
+    if (open) {
+      ui.listTitle.textContent = t("全部字幕（$1 句）", [state.cues.length]);
+      ui.items.replaceChildren(...state.cues.map((cue) => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
+        const time = document.createElement('div');
+        time.className = 'time';
+        time.textContent = clock(cue.start);
+        const tr = document.createElement('div');
+        tr.className = 'ltr';
+        tr.dir = 'auto';
+        tr.textContent = cue.tr;
+        button.append(time, tr);
+        if (cue.text && cue.text !== cue.tr) {
+          const orig = document.createElement('div');
+          orig.className = 'lorig';
+          orig.dir = 'auto';
+          orig.textContent = cue.text;
+          button.append(orig);
+        }
+        button.addEventListener('click', () => {
+          state.listOpen = false;
+          play(cue.start / 1000);
+        });
+        li.append(button);
+        return li;
+      }));
+    }
+    render();
   }
 
   const seconds = (ms) => Math.round((Number(ms) || 0) / 1000);
@@ -184,7 +308,7 @@
 
   const noticeOn = () => Boolean(state?.notice) && Date.now() - state.noticeAt < NOTICE_MS;
   /** 画面该不该变的指纹：换句、提示到点消失都要重画。 */
-  const signature = () => `${state.cues ? state.cues.indexOf(currentCue()) : -2}|${noticeOn()}|${state.status}|${state.error}`;
+  const signature = () => `${state.cues ? state.cues.indexOf(currentCue()) : -2}|${noticeOn()}|${state.status}|${state.error}|${state.listOpen}|${Boolean(video?.paused || video?.ended)}`;
 
   function fill(el, text) {
     el.dir = 'auto';
@@ -209,7 +333,17 @@
     const ratio = state.status && state.progress != null ? state.progress : null;
     ui.bar.hidden = ratio == null;
     if (ratio != null) ui.fill.style.width = `${Math.round(Math.min(1, Math.max(0, ratio)) * 100)}%`;
-    ui.box.hidden = !cue && !label;
+    ui.box.hidden = state.listOpen || (!cue && !label);
+
+    // 字幕准备好以后：左上角常驻一条，说明字幕开着；停着时给「播放」，随时能看全部或关掉
+    const ready = Boolean(state.cues?.length);
+    ui.chip.hidden = !ready || state.listOpen;
+    ui.play.hidden = !(video && (video.paused || video.ended));
+    ui.list.hidden = !(ready && state.listOpen);
+    if (state.listOpen) {
+      const index = state.cues.indexOf(cue);
+      [...ui.items.children].forEach((li, i) => li.classList.toggle('on', i === index));
+    }
   }
 
   /** 每帧跟着视频走：位置、大小、全屏切换、按播放时间换句。 */
@@ -281,7 +415,9 @@
     }
     state.cues = cues;
     results.set(state.cacheKey, cues);
-    notice(t("字幕已准备好，共 $1 句", [cues.length]));
+    notice(t("字幕已准备好：边播边显示，也可以点「全部字幕」直接看"));
+    // 视频停着（帖子页常见）或已经播完：从头播放，马上就能看到字幕；正在播的不打断
+    if (video && (video.paused || video.ended)) play(0);
     render();
   }
 
@@ -313,6 +449,7 @@
       cues: null,
       status: t("正在读取视频…"),
       progress: null,
+      listOpen: false,
       error: '',
       action: null,
       notice: '',

@@ -738,5 +738,10 @@
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "La piattaforma di traduzione è ChatGPT: l'audio del video viene inviato a OpenAI per il riconoscimento (whisper-1, con fatturazione secondo le tariffe di OpenAI). La lingua viene rilevata automaticamente e il riconoscimento richiede solo pochi secondi.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "L'audio del video viene riconosciuto su questo dispositivo e non lascia mai il browser; il riconoscimento richiede lo stesso tempo del video e occorre prima scaricare il pacchetto linguistico offline per quella lingua. Se la piattaforma di traduzione è impostata su ChatGPT (con la tua Key), il riconoscimento viene gestito da OpenAI.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "Questo browser non supporta il riconoscimento vocale sul dispositivo. Puoi passare la piattaforma di traduzione a ChatGPT (con la tua Key) per far gestire il riconoscimento a OpenAI.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Questo dispositivo non supporta il riconoscimento offline per questa lingua. Se la piattaforma di traduzione è impostata su ChatGPT (con la tua Key), il riconoscimento viene gestito da OpenAI."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Questo dispositivo non supporta il riconoscimento offline per questa lingua. Se la piattaforma di traduzione è impostata su ChatGPT (con la tua Key), il riconoscimento viene gestito da OpenAI.",
+  "全部字幕（$1 句）": "Tutti i sottotitoli ($1 righe)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "I sottotitoli sono pronti: vengono mostrati durante la riproduzione, oppure fai clic su \"Tutti i sottotitoli\" per visualizzarli direttamente",
+  "双语字幕": "Sottotitoli bilingui",
+  "播放": "Riproduci",
+  "全部字幕": "Tutti i sottotitoli"
 }

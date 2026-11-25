@@ -15,7 +15,7 @@ const featureLabel = (key) => key === UNCLASSIFIED_FEATURE ? UNCLASSIFIED_LABEL 
 import { SETTING_GROUPS, SETTINGS } from '../../src/settings/index.js';
 import { assetUrl } from '../account/assets.js';
 import { EXPENSE_CATEGORIES, RECURRING } from '../../src/admin/finance.js';
-import { USER_FILTERS, USERS_PER_PAGE } from '../../src/admin/user-list.js';
+import { releaseVersion, USER_FILTERS, USERS_PER_PAGE } from '../../src/admin/user-list.js';
 import { barList, donut, funnel, heatmap, histogram, sparkline, timeChart as renderTimeChart } from './charts.js';
 import { MAP_MODES, mapMode as normalizeMapMode, worldMap } from './world-map.js';
 import { activityCharts } from '../credit-activity.js';
@@ -823,7 +823,7 @@ export function usersPage({ admin, filters, users, total, versions = [], latest 
   const select = (name, label, options, value, empty) => html`<select name="${name}" aria-label="${label}">${empty ? html`<option value="">${empty}</option>` : ''}${Object.entries(options).map(([key, text]) => html`<option value="${key}"${value === key ? html` selected` : ''}>${text}</option>`)}</select>`;
   const versionOptions = {
     ...(latest ? { outdated: `非最新版（低于 ${latest}）` } : {}),
-    ...Object.fromEntries(versions.map((v) => [v.version, `${v.version}${v.version === latest ? '（最新）' : ''} · ${num(v.users)} 人`])),
+    ...Object.fromEntries(versions.map((v) => [v.version, `${v.version}${releaseVersion(v.version) === latest ? '（最新）' : ''} · ${num(v.users)} 人`])),
     none: '未记录版本',
   };
   const pages = Math.max(1, Math.ceil(total / USERS_PER_PAGE));
@@ -873,21 +873,26 @@ const expenseDetails = (activity, showUser = false) => html`<details class="card
   <summary>支出明细<span>${activity.expenses.length}</span></summary>
   ${activity.expenses.length ? ledgerTable(activity.expenses, 'expense', showUser) : html`<p class="muted">暂无点数记录。</p>`}
 </details>`;
+/** 请求所属功能：识图请求归图片翻译并标出「识图」；旧版扩展不上报功能类别的文字请求记为未区分。只在管理端显示。 */
+const eventFeature = (e) => e.kind === 'image'
+  ? html`${FEATURE_LABELS.image} <span class="muted">识图</span>`
+  : e.surface ? (FEATURE_LABELS[e.surface] || e.surface) : html`<span class="muted">${UNCLASSIFIED_LABEL}</span>`;
 const requestDetails = (events, showUser = false) => html`<details class="card activity-details">
   <summary>请求明细<span>${events.length}</span></summary>
   ${events.length ? html`<div class="table-wrap"><table>
-    <thead><tr><th>时间</th>${showUser ? html`<th>用户</th>` : ''}<th>类型</th><th class="num">字数</th><th class="num">点数</th><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">成本</th><th class="num">耗时</th><th>语言</th><th>结果</th></tr></thead>
+    <thead><tr><th>时间</th>${showUser ? html`<th>用户</th>` : ''}<th>功能</th><th>版本</th><th>类型</th><th class="num">字数</th><th class="num">点数</th><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">成本</th><th class="num">耗时</th><th>语言</th><th>结果</th></tr></thead>
     <tbody>${events.map((e) => html`<tr data-status="${e.status}"><td>${dt(e.created_at)}</td>${showUser ? html`<td><a href="/users/${e.user_id}">${e.username}</a></td>` : ''}
-      <td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${e.audience === 'subscriber' ? '订阅' : displayCredits(e.status === 'failed' ? 0n : e.cost_units)}</td><td>${e.model || '—'}</td>
+      <td data-feature>${eventFeature(e)}</td><td dir="ltr">${e.ext_version || '—'}</td><td>${KIND[e.audience] || '—'}</td><td class="num">${num(e.chars)}</td><td class="num">${e.audience === 'subscriber' ? '订阅' : displayCredits(e.status === 'failed' ? 0n : e.cost_units)}</td><td>${e.model || '—'}</td>
       <td class="num">${e.input_tokens != null ? num(e.input_tokens) : '—'}</td><td class="num">${e.output_tokens != null ? num(e.output_tokens) : '—'}</td>
       <td class="num">${e.cost_micros != null ? usd(e.cost_micros) : '—'}</td><td class="num">${e.latency_ms ?? '—'}</td><td>${e.target_lang ? language(e.target_lang) : '—'}</td>
       <td>${e.status === 'ok' ? '成功' : e.status === 'failed' ? '失败（已返还）' : e.status}${e.error ? html` <span class="muted">${ERRORS[e.error] || e.error}</span>` : ''}</td></tr>`)}</tbody>
   </table></div>` : html`<p class="muted">暂无托管请求。</p>`}
 </details>`;
 
-/** 版本与当前最新版本比较：最新、旧版；不知道最新版本时不标。 */
+/** 版本与当前最新发布版本比较（都只看前三位）：最新、旧版；不知道最新版本时不标。 */
 const versionTag = (version, latest) => {
   if (!version || !latest) return '';
+  version = releaseVersion(version);
   const cmp = (a, b) => {
     const x = a.split('.').map(Number), y = b.split('.').map(Number);
     for (let i = 0; i < Math.max(x.length, y.length); i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0);

@@ -738,5 +738,10 @@
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "Platform terjemahannya adalah ChatGPT: audio video dikirim ke OpenAI untuk dikenali (whisper-1, ditagih sesuai tarif OpenAI). Bahasanya dideteksi otomatis, dan pengenalan hanya butuh beberapa detik.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Audio video dikenali di perangkat ini dan tidak pernah meninggalkan browser; pengenalan memakan waktu selama videonya dan mengharuskan Anda mengunduh paket bahasa offline untuk bahasa tersebut terlebih dahulu. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "Browser ini tidak mendukung pengenalan suara di perangkat. Anda dapat mengganti platform terjemahan ke ChatGPT (dengan Key Anda sendiri) agar OpenAI menangani pengenalan.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Perangkat ini tidak mendukung pengenalan offline untuk bahasa tersebut. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Perangkat ini tidak mendukung pengenalan offline untuk bahasa tersebut. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan.",
+  "全部字幕（$1 句）": "Semua subtitel ($1 baris)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "Subtitel sudah siap: ditampilkan saat video diputar, atau klik \"Semua subtitel\" untuk melihatnya langsung",
+  "双语字幕": "Subtitel bilingual",
+  "播放": "Putar",
+  "全部字幕": "Semua subtitel"
 }

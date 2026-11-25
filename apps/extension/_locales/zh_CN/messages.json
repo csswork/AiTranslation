@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。"
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "全部字幕（$arg1$ 句）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "字幕已准备好：边播边显示，也可以点「全部字幕」直接看"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "双语字幕"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "播放"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "全部字幕"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

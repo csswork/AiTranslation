@@ -739,7 +739,12 @@ globalThis.AITrMessageIds = {
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "m_d6bb719bbc77512f",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "m_a6a8e5a4163794e5",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "m_6ccef8dc8d3efcfb",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "m_eecd908a4e83b839"
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "m_eecd908a4e83b839",
+  "全部字幕（$1 句）": "m_1bf1d0e2fe39c651",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "m_d48c4fcb1610b01d",
+  "双语字幕": "m_1e4acec155dc8cd5",
+  "播放": "m_c3396195e91ccdd8",
+  "全部字幕": "m_63c64211b5b5697e"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1481,5 +1486,10 @@ globalThis.AITrEnglish = {
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "The translation platform is ChatGPT: the video's audio is sent to OpenAI for recognition (whisper-1, billed at OpenAI's rates). The language is detected automatically, and recognition takes just a few seconds.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "The video's audio is recognized on this device and never leaves the browser. Recognition takes as long as the video and requires first downloading the offline language pack for that language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "This browser doesn't support on-device speech recognition. You can switch the translation platform to ChatGPT (with your own Key) to have OpenAI handle recognition.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "This device doesn't support offline recognition for this language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "This device doesn't support offline recognition for this language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead.",
+  "全部字幕（$1 句）": "All subtitles ($1 lines)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "Subtitles are ready: they display as the video plays, or click \"All subtitles\" to view them directly",
+  "双语字幕": "Bilingual subtitles",
+  "播放": "Play",
+  "全部字幕": "All subtitles"
 };

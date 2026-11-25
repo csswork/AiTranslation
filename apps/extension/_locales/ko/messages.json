@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "이 기기는 해당 언어의 오프라인 인식을 지원하지 않습니다. 번역 플랫폼을 ChatGPT(자체 Key 사용)로 설정하면 대신 OpenAI가 인식합니다."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "모든 자막($arg1$줄)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "자막이 준비되었습니다: 재생하면서 표시되며, \"모든 자막\"을 클릭해 바로 볼 수도 있습니다"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "이중 언어 자막"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "재생"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "모든 자막"
+  },
   "extensionName": {
     "message": "Huaci – AI 번역 및 이중 언어 읽기"
   },

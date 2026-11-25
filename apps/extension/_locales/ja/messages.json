@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "このデバイスはこの言語のオフライン認識に対応していません。翻訳プラットフォームをChatGPT（自分のKeyを使用）に設定した場合は、代わりにOpenAIが認識を行います。"
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "すべての字幕（$arg1$ 行）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "字幕の準備ができました。再生しながら表示されます。「すべての字幕」をクリックすると直接確認できます"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "バイリンガル字幕"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "再生"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "すべての字幕"
+  },
   "extensionName": {
     "message": "Huaci – AI翻訳＆バイリンガルリーダー"
   },

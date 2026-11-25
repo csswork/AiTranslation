@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Perangkat ini tidak mendukung pengenalan offline untuk bahasa tersebut. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Semua subtitel ($arg1$ baris)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Subtitel sudah siap: ditampilkan saat video diputar, atau klik \"Semua subtitel\" untuk melihatnya langsung"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Subtitel bilingual"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Putar"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Semua subtitel"
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

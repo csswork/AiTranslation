@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Bu cihaz, bu dil için çevrimdışı tanımayı desteklemiyor. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Tüm altyazılar ($arg1$ satır)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Altyazılar hazır: video oynarken görüntülenir veya doğrudan görmek için \"Tüm altyazılar\"a tıklayın"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "İki dilli altyazılar"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Oynat"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Tüm altyazılar"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

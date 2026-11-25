@@ -29,7 +29,8 @@ export async function creditActivity(db, userId, { period = 'month', now = new D
        ORDER BY l.created_at DESC, l.id DESC LIMIT $5`, [...scope, limit]),
     db.query(
       `SELECT e.user_id, u.username, e.kind, e.audience, e.chars, e.cost_units, e.model,
-              e.input_tokens, e.output_tokens, e.cost_micros, e.latency_ms, e.target_lang, e.status, e.error, e.created_at
+              e.input_tokens, e.output_tokens, e.cost_micros, e.latency_ms, e.target_lang, e.status, e.error, e.created_at,
+              e.surface, e.ext_version
        FROM usage_events e JOIN users u ON u.id = e.user_id
        WHERE ($1::uuid IS NULL OR e.user_id = $1) AND e.created_at >= ${since} AND e.created_at <= $3
        ORDER BY e.created_at DESC, e.id DESC LIMIT $5`, [...scope, limit]),

@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Dieses Gerät unterstützt keine Offline-Erkennung für diese Sprache. Wenn als Übersetzungsplattform ChatGPT (mit eigenem Key) gewählt ist, übernimmt OpenAI die Erkennung."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Alle Untertitel ($arg1$ Zeilen)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Untertitel sind bereit: Sie werden während der Wiedergabe angezeigt, oder klicke auf „Alle Untertitel“, um sie direkt zu sehen"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Zweisprachige Untertitel"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Wiedergabe"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Alle Untertitel"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

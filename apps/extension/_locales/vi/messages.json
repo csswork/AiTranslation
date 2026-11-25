@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho ngôn ngữ này. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Tất cả phụ đề ($arg1$ dòng)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Phụ đề đã sẵn sàng: hiển thị khi video phát, hoặc nhấp vào \"Tất cả phụ đề\" để xem trực tiếp"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Phụ đề song ngữ"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Phát"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Tất cả phụ đề"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

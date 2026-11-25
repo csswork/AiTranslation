@@ -738,5 +738,10 @@
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "A plataforma de tradução é o ChatGPT: o áudio do vídeo é enviado à OpenAI para reconhecimento (whisper-1, cobrado pelas tarifas da OpenAI). O idioma é detectado automaticamente e o reconhecimento leva apenas alguns segundos.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "O áudio do vídeo é reconhecido neste dispositivo e nunca sai do navegador. O reconhecimento leva o mesmo tempo que o vídeo e exige primeiro o download do pacote de idioma offline correspondente. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "Este navegador não oferece suporte ao reconhecimento de fala no dispositivo. Você pode mudar a plataforma de tradução para ChatGPT (com sua própria Key) para que a OpenAI faça o reconhecimento.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Este dispositivo não oferece suporte ao reconhecimento offline para este idioma. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Este dispositivo não oferece suporte ao reconhecimento offline para este idioma. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento.",
+  "全部字幕（$1 句）": "Todas as legendas ($1 linhas)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "As legendas estão prontas: elas aparecem durante a reprodução do vídeo, ou clique em \"Todas as legendas\" para vê-las diretamente",
+  "双语字幕": "Legendas bilíngues",
+  "播放": "Reproduzir",
+  "全部字幕": "Todas as legendas"
 }

@@ -41,7 +41,17 @@ export function readUserFilters(query, versions = []) {
   };
 }
 
-/** 账户在用的扩展版本分布（每个版本有多少账户），按版本号从新到旧；第一项即最新版本。 */
+/*
+ * 发布版本只看前三位：Firefox 商店包在 manifest 版本后加一位商店修订号（2.4.0.1），
+ * 与 Chrome/Edge 的 2.4.0 是同一版，不能因此把 2.4.0 判成旧版。
+ */
+export const releaseVersion = (version) => (version ? String(version).split('.').slice(0, 3).join('.') : null);
+const RELEASE = (column) => `(string_to_array(${column}, '.')::int[])[1:3]`;
+
+/** 当前最新的发布版本（三位）；versions 来自 extensionVersions，第一项版本号最大。 */
+export const latestRelease = (versions) => releaseVersion(versions[0]?.version);
+
+/** 账户在用的扩展版本分布（每个版本有多少账户），按版本号从新到旧。 */
 export async function extensionVersions(db) {
   const { rows } = await db.query(
     `SELECT version, COUNT(DISTINCT user_id)::int AS users FROM user_extensions
@@ -50,7 +60,7 @@ export async function extensionVersions(db) {
   return rows;
 }
 
-/** 按筛选条件列出用户。返回 { users, total }；latest 是当前最新版本（判断「旧版」用）。 */
+/** 按筛选条件列出用户。返回 { users, total }；latest 是当前最新的发布版本（三位，判断「旧版」用）。 */
 export async function listUsers(db, filters, latest = null) {
   const params = [];
   const p = (value) => {
@@ -72,7 +82,7 @@ export async function listUsers(db, filters, latest = null) {
     where.push(`NOT EXISTS (SELECT 1 FROM user_extensions e WHERE e.user_id = u.id AND ${ext} AND e.version IS NOT NULL)`);
   } else if (filters.version === 'outdated') {
     where.push(latest
-      ? `(SELECT MAX(string_to_array(e.version, '.')::int[]) FROM user_extensions e WHERE e.user_id = u.id AND ${ext}) < string_to_array(${p(latest)}, '.')::int[]`
+      ? `(SELECT MAX(${RELEASE('e.version')}) FROM user_extensions e WHERE e.user_id = u.id AND ${ext}) < string_to_array(${p(latest)}, '.')::int[]`
       : 'FALSE');
   } else if (filters.version) {
     where.push(`EXISTS (SELECT 1 FROM user_extensions e WHERE e.user_id = u.id AND ${ext} AND e.version = ${p(filters.version)})`);
@@ -123,7 +133,7 @@ export async function listUsers(db, filters, latest = null) {
        (SELECT array_agg(e.extension_id ORDER BY e.first_seen_at) FROM user_extensions e WHERE e.user_id = b.id) AS extension_ids,
        (SELECT json_agg(json_build_object('extensionId', e.extension_id, 'version', e.version) ORDER BY e.first_seen_at)
           FROM user_extensions e WHERE e.user_id = b.id AND e.version IS NOT NULL) AS versions,
-       ${latestParam}::text IS NOT NULL AND (SELECT MAX(string_to_array(e.version, '.')::int[]) FROM user_extensions e WHERE e.user_id = b.id)
+       ${latestParam}::text IS NOT NULL AND (SELECT MAX(${RELEASE('e.version')}) FROM user_extensions e WHERE e.user_id = b.id)
          < string_to_array(${latestParam}, '.')::int[] AS outdated
      FROM base b
      WHERE ${activeWhere}

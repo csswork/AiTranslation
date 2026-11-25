@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Este dispositivo não oferece suporte ao reconhecimento offline para este idioma. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Todas as legendas ($arg1$ linhas)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "As legendas estão prontas: elas aparecem durante a reprodução do vídeo, ou clique em \"Todas as legendas\" para vê-las diretamente"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Legendas bilíngues"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Reproduzir"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Todas as legendas"
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

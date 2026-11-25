@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Cet appareil ne prend pas en charge la reconnaissance hors ligne pour cette langue. Si la plateforme de traduction est réglée sur ChatGPT (avec votre propre Key), c'est OpenAI qui effectue la reconnaissance."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Tous les sous-titres ($arg1$ lignes)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Les sous-titres sont prêts : ils s'affichent pendant la lecture, ou cliquez sur « Tous les sous-titres » pour les voir directement"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Sous-titres bilingues"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Lecture"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Tous les sous-titres"
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

@@ -14,7 +14,7 @@ import { dayLabels, listExpenses, parseExpense } from '../../src/admin/finance.j
 import { installHistory } from '../../src/admin/installs.js';
 import { apiUsageByUser, apiUsageForUser, overview } from '../../src/admin/reports.js';
 import { newTotpSecret, openSecret, otpauthUrl, sealSecret, verifyTotp } from '../../src/admin/totp.js';
-import { extensionVersions, listUsers, readUserFilters } from '../../src/admin/user-list.js';
+import { extensionVersions, latestRelease, listUsers, readUserFilters } from '../../src/admin/user-list.js';
 import { deleteUser, deletionSummary } from '../../src/admin/users.js';
 import { isValidEmail, normalizeEmail } from '../../src/auth/users.js';
 import { issueCode, verifyCode } from '../../src/auth/email-codes.js';
@@ -269,7 +269,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
   app.get('/users', requireAdmin, async (c) => {
     // 筛选：类型、浏览器、扩展版本、订阅、最近使用、冻结；可排序、分页（见 src/admin/user-list.js）。
     const versions = await extensionVersions(pool);
-    const latest = versions[0]?.version || null;
+    const latest = latestRelease(versions);
     const filters = readUserFilters(c.req.query(), versions);
     const { users, total } = await listUsers(pool, filters, latest);
     return page(c, () => views.usersPage({ admin: admin(c), filters, users, total, versions, latest }));
@@ -299,7 +299,7 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     const featureUsage = { ...recent, rows: featureRows };
     const sharedUsage = { ...recent, rows: sharedRows };
     return page(c, () => views.userPage({
-      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),
+      admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: latestRelease(versions), note: takeNote(c),
       featureUsage, sharedUsage, client: clientRows.rows[0] || null,
     }), 200, `/users/${u.id}`);
   };

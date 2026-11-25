@@ -738,5 +738,10 @@
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "Nền tảng dịch là ChatGPT: âm thanh của video được gửi đến OpenAI để nhận dạng (whisper-1, tính phí theo giá của OpenAI), tự động nhận diện ngôn ngữ, chỉ mất vài giây để nhận dạng xong.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Âm thanh của video được nhận dạng ngay trên máy này, không rời khỏi trình duyệt; việc nhận dạng mất thời gian bằng chính video và cần tải trước gói ngôn ngữ ngoại tuyến tương ứng. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Bạn có thể đổi nền tảng dịch sang ChatGPT (dùng Key riêng) để OpenAI đảm nhận việc nhận dạng.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho ngôn ngữ này. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho ngôn ngữ này. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng.",
+  "全部字幕（$1 句）": "Tất cả phụ đề ($1 dòng)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "Phụ đề đã sẵn sàng: hiển thị khi video phát, hoặc nhấp vào \"Tất cả phụ đề\" để xem trực tiếp",
+  "双语字幕": "Phụ đề song ngữ",
+  "播放": "Phát",
+  "全部字幕": "Tất cả phụ đề"
 }

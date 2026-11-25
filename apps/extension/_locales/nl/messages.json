@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Dit apparaat ondersteunt geen offline herkenning voor deze taal. Als het vertaalplatform op ChatGPT staat (met je eigen Key), neemt OpenAI de herkenning over."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Alle ondertitels ($arg1$ regels)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "Ondertitels zijn klaar: ze verschijnen tijdens het afspelen, of klik op \"Alle ondertitels\" om ze direct te bekijken"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Tweetalige ondertitels"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Afspelen"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Alle ondertitels"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

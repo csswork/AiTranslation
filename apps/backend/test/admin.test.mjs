@@ -424,6 +424,7 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   const personal = await customer.text('/usage');
   assert.match(personal, /用量与点数/);
   assert.doesNotMatch(personal, /\/usage\/features|托管功能使用/);
+  assert.doesNotMatch(personal, /data-feature|整份 PDF 翻译|翻译面板|识图|未区分/, '用户端请求明细不显示功能类别');
   assert.equal((await customer.get('/usage/features')).status, 404);
 
   const adminDetail = await a.text(detail);
@@ -440,7 +441,11 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   const { rows: [{ id: guest }] } = await pool.query("INSERT INTO users (kind, username) VALUES ('guest', 'feature-guest') RETURNING id");
   await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, ext_version)
     VALUES ($1, 'image', NULL, 'ok', 0, 0, now(), '2.4.0'), ($1, 'text', 'image', 'ok', 0, 0, now(), '2.4.0')`, [guest]);
-  const guestTable = (await a.text(`/users/${guest}`)).match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
+  const guestPage = await a.text(`/users/${guest}`);
+  const guestTable = guestPage.match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
+  // 请求明细逐条列出功能与扩展版本
+  const features = [...guestPage.matchAll(/<td data-feature>([\s\S]*?)<\/td><td dir="ltr">([^<]*)<\/td>/g)].map(([, f, v]) => [f.replace(/<[^>]+>/g, '').trim(), v]);
+  assert.deepEqual(features.sort(), [['图片翻译 识图', '2.4.0'], ['图片翻译', '2.4.0']]);
   assert.ok(guestTable, '访客详情页显示托管功能使用');
   assert.match(guestTable, /图片翻译<\/td><td class="num">1<\/td><td class="num">2<\/td>/);
   assert.equal((await customer.post('/usage/features/share', {})).status, 404, '分享入口已移除');
@@ -675,3 +680,30 @@ test('用户列表：显示扩展版本与最近使用；按类型、浏览器�
   assert.match(await a.text('/users?page=9'), /共 126 位/, '越过最后一页仍显示总数');
 });
 
+
+test('扩展版本：Firefox 商店修订号（2.x.y.1）与 Chrome/Edge 的 2.x.y 同为最新，不把后者标成旧版', async () => {
+  const config = testConfig({ ADMIN_REQUIRE_2FA: '1' });
+  const { app, mailbox } = buildApp({ pool, config });
+  const { a } = await adminLogin(app, config, mailbox);
+  const user = async (username) => (await pool.query(
+    `INSERT INTO users (kind, email, username) VALUES ('member', $1, $2) RETURNING id`, [`${username}@example.com`, username])).rows[0].id;
+  const ext = (id, extensionId, version) => pool.query(
+    `INSERT INTO user_extensions (user_id, extension_id, version, version_seen_at, last_seen_at) VALUES ($1, $2, $3, now(), now())`,
+    [id, extensionId, version]);
+  const chrome = await user('release-chrome');
+  await ext(chrome, 'hogimafgjmlpdlnepojgigjkhaccbcbj', '9.4.0');
+  const firefox = await user('release-firefox');
+  await ext(firefox, 'huaci@huaci.app', '9.4.0.1');
+  const behind = await user('release-behind');
+  await ext(behind, 'mojcgjimlkkbohomcijkmoefpeekmohe', '9.3.0');
+
+  assert.match(await a.text(`/users/${chrome}`), /<dd data-ext-versions>Chrome <strong dir="ltr">9\.4\.0<\/strong> <span class="tag ok">最新<\/span>/);
+  assert.match(await a.text(`/users/${firefox}`), /<dd data-ext-versions>Firefox <strong dir="ltr">9\.4\.0\.1<\/strong> <span class="tag ok">最新<\/span>/);
+  assert.match(await a.text(`/users/${behind}`), /<span class="tag warn">旧版 · 最新 9\.4\.0<\/span>/);
+  const list = await a.text('/users?q=release-');
+  assert.match(list, /<option value="outdated">非最新版（低于 9\.4\.0）<\/option>/);
+  assert.match(list, /<td data-versions>Chrome 9\.4\.0<\/td>/);
+  assert.match(list, /<td data-versions>Edge 9\.3\.0 <span class="tag warn">旧版<\/span><\/td>/);
+  const outdated = [...(await a.text('/users?q=release-&version=outdated')).matchAll(/<td><a href="\/users\/[^"]+">(release-[^<]+)<\/a><\/td>/g)].map((m) => m[1]);
+  assert.deepEqual(outdated, ['release-behind']);
+});

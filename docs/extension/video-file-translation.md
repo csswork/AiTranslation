@@ -31,6 +31,13 @@ service worker：mode 'audio' 时 AITrProviders.transcribe（OpenAI whisper-1）
 浮层：按 video.currentTime 显示「译文大字 + 原文小字」；跟随视频位置、大小与全屏
 ```
 
+## 浮层
+
+- 处理中：视频下方显示进度（读取视频的百分比、本机识别的秒数进度条、翻译中）。
+- 字幕准备好时：视频停着（9GAG 帖子页默认停着）或已播完就从头播放，正在播的不打断；提示「边播边显示，也可以点「全部字幕」直接看」。只在有人说话的时间段出字幕，第一句之前、两句之间画面上没有字幕，所以要有下面这条常驻的说明。
+- 视频左上角常驻一条：「双语字幕 · 全部字幕 · ×」，视频停着时多一个「播放」。「全部字幕」打开整篇双语对照（时间、译文、原文），点一句就跳到那里播放，当前句高亮。× 关掉字幕并取消这一路。
+- 没有可显示的字幕（没有声音、没识别到人声）：提示几秒后自动收起。
+
 - 视频地址只用右键菜单给的 `info.srcUrl`。浮层只能凭 jobId 认领任务，不能提交网址；offscreen 只接受 service worker 的消息（`sender.tab` 为空）。不要改成让内容脚本传网址。
 - 浮层断开（点关闭、刷新、跳走、视频被页面回收）就取消这一路，连同 offscreen 里的下载与识别。
 - offscreen 读不到设置和界面语言，只报错误代码（`fetch-failed`、`too-large`、`too-long`、`not-media`、`no-audio`、`sr-unsupported`、`pack-*`、`sr-error`），文案由 `AITrVideoFile.offscreenError` 生成。
@@ -73,4 +80,4 @@ service worker：mode 'audio' 时 AITrProviders.transcribe（OpenAI whisper-1）
 ## 验证
 
 - 单元测试：`test/transcript.mjs`（词时间、切句、回复校验、Whisper 过滤、WAV、容器识别）、`test/video-file.mjs`（大模型 / DeepL 翻译、OpenAI 转写请求、错误文案）、`test/menu.mjs`（菜单项常驻与分流）。
-- 真实 Chrome：`tools/video-file-probe/e2e-extension.mjs`（不进 git）用 CDP `Extensions.loadUnpacked` 加载扩展，页面与视频分属两个源、视频不带 CORS 头，调用与右键菜单相同的 `AITrVideoFile.open`，再用 CDP 穿透 closed shadow root 读出浮层文字、逐 0.25 秒核对字幕时间。CDP 点不到原生右键菜单，菜单本身由 `test/menu.mjs` 覆盖。
+- 真实 Chrome：`tools/video-file-probe/e2e-extension.mjs`（不进 git；`GAG=1` 时用 9GAG 帖子页的结构与真实 CDN 视频：链接包着视频、三个 `<source>`、视频停着，验证准备好后自动播放、常驻条、全部字幕与点句跳转。真实 9GAG 页面对自动化浏览器有 Cloudflare 人机验证，没法直接跑）用 CDP `Extensions.loadUnpacked` 加载扩展，页面与视频分属两个源、视频不带 CORS 头，调用与右键菜单相同的 `AITrVideoFile.open`，再用 CDP 穿透 closed shadow root 读出浮层文字、逐 0.25 秒核对字幕时间。CDP 点不到原生右键菜单，菜单本身由 `test/menu.mjs` 覆盖。

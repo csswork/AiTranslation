@@ -3087,6 +3087,26 @@
   "m_eecd908a4e83b839": {
     "message": "Questo dispositivo non supporta il riconoscimento offline per questa lingua. Se la piattaforma di traduzione è impostata su ChatGPT (con la tua Key), il riconoscimento viene gestito da OpenAI."
   },
+  "m_1bf1d0e2fe39c651": {
+    "message": "Tutti i sottotitoli ($arg1$ righe)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d48c4fcb1610b01d": {
+    "message": "I sottotitoli sono pronti: vengono mostrati durante la riproduzione, oppure fai clic su \"Tutti i sottotitoli\" per visualizzarli direttamente"
+  },
+  "m_1e4acec155dc8cd5": {
+    "message": "Sottotitoli bilingui"
+  },
+  "m_c3396195e91ccdd8": {
+    "message": "Riproduci"
+  },
+  "m_63c64211b5b5697e": {
+    "message": "Tutti i sottotitoli"
+  },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"
   },

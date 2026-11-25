@@ -738,5 +738,10 @@
   "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。": "Çeviri platformu ChatGPT: videonun sesi tanınmak üzere OpenAI'ye gönderilir (whisper-1, OpenAI'nin fiyatlandırmasıyla ücretlendirilir). Dil otomatik algılanır ve tanıma yalnızca birkaç saniye sürer.",
   "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Videonun sesi bu cihazda tanınır ve tarayıcıdan hiç ayrılmaz. Tanıma, video süresi kadar zaman alır ve önce o dil için çevrimdışı dil paketinin indirilmesini gerektirir. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar.",
   "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。": "Bu tarayıcı cihaz üzerinde konuşma tanımayı desteklemiyor. Tanımayı OpenAI'nin yapması için çeviri platformunu ChatGPT (kendi Key'inizle) olarak değiştirebilirsiniz.",
-  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Bu cihaz, bu dil için çevrimdışı tanımayı desteklemiyor. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar."
+  "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。": "Bu cihaz, bu dil için çevrimdışı tanımayı desteklemiyor. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar.",
+  "全部字幕（$1 句）": "Tüm altyazılar ($1 satır)",
+  "字幕已准备好：边播边显示，也可以点「全部字幕」直接看": "Altyazılar hazır: video oynarken görüntülenir veya doğrudan görmek için \"Tüm altyazılar\"a tıklayın",
+  "双语字幕": "İki dilli altyazılar",
+  "播放": "Oynat",
+  "全部字幕": "Tüm altyazılar"
 }
