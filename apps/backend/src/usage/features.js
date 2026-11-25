@@ -11,6 +11,11 @@ export const FEATURE_LABELS = {
 export const UNCLASSIFIED_FEATURE = 'unknown';
 export const UNCLASSIFIED_LABEL = '未区分（旧版扩展）';
 
+/** 从这一版起扩展随托管请求上报功能类别；报表据此把新版与旧版的使用分开显示。 */
+export const CLASSIFIED_SINCE = '2.4.0';
+// ext_version 入库前已按「数字.数字…」校验；整数数组按位比较，2.4.0.1 ≥ 2.4.0 > 2.3.9。
+const FROM_CLASSIFIED = `COALESCE(string_to_array(ext_version, '.')::int[] >= '{${CLASSIFIED_SINCE.split('.').join(',')}}'::int[], false)`;
+
 /*
  * 计数口径：同一账户、同一功能、同一自然日（报表时区）只算 1 次「使用」。
  * - 使用：服务端接受并开始处理的托管请求，无论成功、失败或仍在处理；一次 PDF、整站翻译或图片翻译
@@ -26,18 +31,23 @@ const REJECTED_FEATURE = `COALESCE(surface, '${UNCLASSIFIED_FEATURE}')`;
 /**
  * 各功能的使用天次（账户 × 自然日）、使用人数、请求数与仅被拒天次。列出全部功能（没用过的为 0），
  * 按使用天次、人数排序；未区分的旧版请求放在最后。activeAccounts 是有「使用」的账户数。
+ * currentDays / currentAccounts 是其中来自 CLASSIFIED_SINCE 及以上版本的部分：当天这个功能至少有一条
+ * 新版请求就算新版天次，便于区分「新版能分类的数据」和旧版并入的数据。
  */
 export async function featureUsageRanking(db, { from, to, timeZone }) {
   const { rows } = await db.query(
     `WITH used AS (
-       SELECT ${FEATURE} AS key, user_id, (created_at AT TIME ZONE $3)::date AS day, COUNT(*)::int AS requests
+       SELECT ${FEATURE} AS key, user_id, (created_at AT TIME ZONE $3)::date AS day, COUNT(*)::int AS requests,
+              bool_or(${FROM_CLASSIFIED}) AS current
        FROM usage_events WHERE created_at >= $1 AND created_at < $2
        GROUP BY 1, 2, 3
      ), rejected AS (
        SELECT DISTINCT ${REJECTED_FEATURE} AS key, user_id, (created_at AT TIME ZONE $3)::date AS day
        FROM usage_rejections WHERE created_at >= $1 AND created_at < $2
      ), totals AS (
-       SELECT key, COUNT(*)::int AS user_days, COUNT(DISTINCT user_id)::int AS accounts, SUM(requests)::int AS requests
+       SELECT key, COUNT(*)::int AS user_days, COUNT(DISTINCT user_id)::int AS accounts, SUM(requests)::int AS requests,
+              COUNT(*) FILTER (WHERE current)::int AS current_days,
+              COUNT(DISTINCT user_id) FILTER (WHERE current)::int AS current_accounts
        FROM used GROUP BY key
      ), blocked AS (
        SELECT r.key, COUNT(*)::int AS rejected_days FROM rejected r
@@ -46,14 +56,19 @@ export async function featureUsageRanking(db, { from, to, timeZone }) {
      )
      SELECT COALESCE(t.key, b.key) AS key, COALESCE(t.user_days, 0) AS user_days, COALESCE(t.accounts, 0) AS accounts,
             COALESCE(t.requests, 0) AS requests, COALESCE(b.rejected_days, 0) AS rejected_days,
-            (SELECT COUNT(DISTINCT user_id)::int FROM used) AS active_accounts
+            COALESCE(t.current_days, 0) AS current_days, COALESCE(t.current_accounts, 0) AS current_accounts,
+            (SELECT COUNT(DISTINCT user_id)::int FROM used) AS active_accounts,
+            (SELECT COUNT(DISTINCT user_id)::int FROM used WHERE current) AS current_active_accounts
      FROM totals t FULL JOIN blocked b ON b.key = t.key`,
     [from, to, timeZone],
   );
   const found = new Map(rows.map((row) => [row.key, row]));
   const pick = (key) => {
     const row = found.get(key);
-    return { key, userDays: row?.user_days || 0, accounts: row?.accounts || 0, requests: row?.requests || 0, rejectedDays: row?.rejected_days || 0 };
+    return {
+      key, userDays: row?.user_days || 0, accounts: row?.accounts || 0, requests: row?.requests || 0, rejectedDays: row?.rejected_days || 0,
+      currentDays: row?.current_days || 0, currentAccounts: row?.current_accounts || 0,
+    };
   };
   const order = Object.keys(FEATURE_LABELS);
   const features = order.map(pick)
@@ -62,6 +77,7 @@ export async function featureUsageRanking(db, { from, to, timeZone }) {
   return {
     rows: found.has(UNCLASSIFIED_FEATURE) ? [...features, pick(UNCLASSIFIED_FEATURE)] : features,
     activeAccounts: rows[0]?.active_accounts || 0,
+    currentActiveAccounts: rows[0]?.current_active_accounts || 0,
   };
 }
 

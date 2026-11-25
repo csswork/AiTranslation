@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Jangan tampilkan lagi"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Permintaan jaringan gagal: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Video ini dialirkan secara bersegmen (misalnya YouTube), jadi tidak bisa diterjemahkan secara utuh"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Tidak dapat mengambil file video ini ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "File video melebihi $arg1$ MB; terjemahan video utuh hanya mendukung video pendek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "Video lebih dari $arg1$ menit; terjemahan video utuh hanya mendukung video pendek",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Ini bukan file video yang dapat diunduh langsung, jadi tidak bisa diterjemahkan secara utuh"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Video ini tidak memiliki audio"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "Browser saat ini tidak mendukung pengenalan suara di perangkat. Saat ChatGPT (dengan API Key Anda sendiri) dipilih sebagai platform terjemahan, OpenAI yang menangani pengenalan"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Kesalahan terjemahan video: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Terjemahan video telah kedaluwarsa, silakan klik kanan video lagi"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Terjemahkan video ini"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Baca audio video, lakukan pengenalan suara, dan buat subtitle video"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Membaca video… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Membaca video…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Mengekstrak audio…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Mengenali ucapan dengan OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Mengenali ucapan di perangkat ini ($arg1$ / $arg2$ dtk)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Menerjemahkan subtitel…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Tidak ada suara yang terdeteksi"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Subtitel siap, total $arg1$ baris",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Terjemahan video terhenti. Silakan klik kanan video dan coba lagi"
+  },
+  "m_92375601fefd1563": {
+    "message": "Terjemahan video"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Klik kanan pada video di halaman web, lalu pilih \"Terjemahkan video ini\": ekstensi mengunduh seluruh berkas video, mengenali ucapan, lalu menerjemahkan keseluruhannya menjadi subtitel dua bahasa yang ditampilkan selaras dengan pemutaran. Hanya mendukung berkas video pendek yang dapat diunduh langsung (di bawah 10 menit dan 100 MB, seperti 9GAG); video yang diputar sebagai streaming tersegmentasi seperti YouTube tidak dapat diunduh secara utuh."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Pengenalan di perangkat tidak mendeteksi bahasa secara otomatis; Anda perlu memilihnya untuk setiap video."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Menangkap audio tab dan mengenali ucapan saat diputar, untuk video yang tidak dapat diunduh secara utuh. Fitur eksperimental, sangat belum lengkap: pengenalan ucapan, pemenggalan kalimat, dan terjemahan mungkin salah, dan subtitel bisa lama tidak muncul, halaman tersendat, atau audio video menjadi tidak normal. Nonaktif secara bawaan; saat diaktifkan, klik kanan pada video semacam ini dan pilih \"Terjemahkan video ini\" akan beralih ke subtitel langsung, dan entri juga akan muncul di ikon ekstensi. Aktifkan dengan hati-hati."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Jika pemutar memblokir klik kanan, klik \"Subtitel langsung video\" di ikon ekstensi."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Gunakan pengenalan cloud untuk subtitel langsung"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Tidak perlu mengunduh paket bahasa, tetapi audio video akan dikirim ke layanan pengenalan ucapan browser: Google untuk Chrome, Microsoft Azure untuk Microsoft Edge. Hanya memengaruhi subtitel langsung."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Platform terjemahannya adalah ChatGPT: audio video dikirim ke OpenAI untuk dikenali (whisper-1, ditagih sesuai tarif OpenAI). Bahasanya dideteksi otomatis, dan pengenalan hanya butuh beberapa detik."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "Audio video dikenali di perangkat ini dan tidak pernah meninggalkan browser; pengenalan memakan waktu selama videonya dan mengharuskan Anda mengunduh paket bahasa offline untuk bahasa tersebut terlebih dahulu. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Browser ini tidak mendukung pengenalan suara di perangkat. Anda dapat mengganti platform terjemahan ke ChatGPT (dengan Key Anda sendiri) agar OpenAI menangani pengenalan."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Perangkat ini tidak mendukung pengenalan offline untuk bahasa tersebut. Jika platform terjemahan diatur ke ChatGPT (dengan Key Anda sendiri), OpenAI yang menangani pengenalan."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

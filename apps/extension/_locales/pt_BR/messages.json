@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Não mostrar novamente"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Falha na solicitação de rede: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Este vídeo é transmitido em segmentos (ex.: YouTube) e não pode ser traduzido por inteiro"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Não foi possível obter este arquivo de vídeo ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "O arquivo de vídeo excede $arg1$ MB; a tradução do vídeo inteiro só suporta vídeos curtos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "O vídeo tem mais de $arg1$ minutos; a tradução do vídeo inteiro só suporta vídeos curtos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Este não é um arquivo de vídeo baixável diretamente, então não pode ser traduzido por inteiro"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Este vídeo não tem áudio"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "O navegador atual não suporta reconhecimento de fala no dispositivo. Quando ChatGPT (com sua própria API Key) é selecionado como plataforma de tradução, a OpenAI faz o reconhecimento"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Erro na tradução do vídeo: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "A tradução do vídeo expirou; clique com o botão direito no vídeo novamente"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Traduzir este vídeo"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Ler o áudio do vídeo, realizar reconhecimento de fala e gerar legendas para o vídeo"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Lendo vídeo… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Lendo vídeo…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Extraindo áudio…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Reconhecendo fala com OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Reconhecendo fala neste dispositivo ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Traduzindo legendas…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Nenhuma fala detectada"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Legendas prontas, $arg1$ linhas no total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "A tradução do vídeo foi interrompida. Clique com o botão direito no vídeo e tente novamente"
+  },
+  "m_92375601fefd1563": {
+    "message": "Tradução de vídeo"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Clique com o botão direito em um vídeo na página e selecione \"Traduzir este vídeo\": a extensão baixa o arquivo de vídeo inteiro, reconhece a fala e traduz tudo em legendas bilíngues que aparecem sincronizadas com a reprodução. Só há suporte para arquivos de vídeo curtos que possam ser baixados diretamente (menos de 10 minutos e 100 MB, como o 9GAG); vídeos reproduzidos como transmissões segmentadas, como no YouTube, não podem ser baixados por completo."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "O reconhecimento no dispositivo não detecta o idioma automaticamente; você precisa selecioná-lo para cada vídeo."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Captura o áudio da aba e reconhece a fala durante a reprodução, para vídeos que não podem ser baixados por completo. Recurso experimental, muito incompleto: o reconhecimento de fala, a segmentação de frases e as traduções podem estar errados, e as legendas podem demorar muito para aparecer, a página pode travar ou o áudio do vídeo pode ficar anormal. Desativado por padrão; quando ativado, clicar com o botão direito em um vídeo desse tipo e selecionar \"Traduzir este vídeo\" passará a usar legendas em tempo real, e uma entrada também aparecerá no ícone da extensão. Ative com cautela."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Se o player bloquear o clique com o botão direito, clique em \"Legendas de vídeo em tempo real\" no ícone da extensão."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Usar reconhecimento na nuvem para legendas em tempo real"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Não é necessário baixar pacotes de idioma, mas o áudio do vídeo será enviado ao serviço de reconhecimento de fala do navegador: Google no Chrome, Microsoft Azure no Microsoft Edge. Afeta apenas as legendas em tempo real."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "A plataforma de tradução é o ChatGPT: o áudio do vídeo é enviado à OpenAI para reconhecimento (whisper-1, cobrado pelas tarifas da OpenAI). O idioma é detectado automaticamente e o reconhecimento leva apenas alguns segundos."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "O áudio do vídeo é reconhecido neste dispositivo e nunca sai do navegador. O reconhecimento leva o mesmo tempo que o vídeo e exige primeiro o download do pacote de idioma offline correspondente. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Este navegador não oferece suporte ao reconhecimento de fala no dispositivo. Você pode mudar a plataforma de tradução para ChatGPT (com sua própria Key) para que a OpenAI faça o reconhecimento."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Este dispositivo não oferece suporte ao reconhecimento offline para este idioma. Se a plataforma de tradução estiver definida como ChatGPT (com sua própria Key), a OpenAI faz o reconhecimento."
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

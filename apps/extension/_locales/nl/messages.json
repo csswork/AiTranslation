@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Niet meer tonen"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Netwerkverzoek mislukt: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Deze video wordt in segmenten gestreamd (zoals YouTube) en kan niet in zijn geheel worden vertaald"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Kan dit videobestand niet ophalen ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "Het videobestand is groter dan $arg1$ MB; vertaling van de hele video ondersteunt alleen korte video's",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "De video is langer dan $arg1$ minuten; vertaling van de hele video ondersteunt alleen korte video's",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Dit is geen direct downloadbaar videobestand, dus het kan niet in zijn geheel worden vertaald"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Deze video heeft geen audio"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "De huidige browser ondersteunt geen spraakherkenning op het apparaat. Wanneer ChatGPT (met je eigen API Key) als vertaalplatform is geselecteerd, neemt OpenAI de herkenning over"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Fout bij videovertaling: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Videovertaling is verlopen; klik opnieuw met de rechtermuisknop op de video"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Deze video vertalen"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "De audio van de video lezen, spraakherkenning uitvoeren en ondertitels voor de video genereren"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Video wordt gelezen… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Video wordt gelezen…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Audio wordt geëxtraheerd…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Spraak wordt herkend met OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Spraak wordt op dit apparaat herkend ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Ondertitels worden vertaald…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Geen spraak gedetecteerd"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Ondertitels zijn klaar, $arg1$ regels in totaal",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Videovertaling is onderbroken. Klik met de rechtermuisknop op de video en probeer het opnieuw"
+  },
+  "m_92375601fefd1563": {
+    "message": "Videotranslatie"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Klik met de rechtermuisknop op een video op een webpagina en kies \"Deze video vertalen\": de extensie downloadt het volledige videobestand, herkent de spraak en vertaalt alles naar tweetalige ondertitels die synchroon met de weergave verschijnen. Alleen korte videobestanden die rechtstreeks kunnen worden gedownload worden ondersteund (minder dan 10 minuten en 100 MB, zoals 9GAG); video's die als gesegmenteerde streams worden afgespeeld, zoals YouTube, kunnen niet volledig worden gedownload."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Herkennning op het apparaat zelf bepaalt de taal niet automatisch; je moet deze per video selecteren."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Legt de audio van het tabblad vast en herkent spraak tijdens het afspelen, voor video's die niet volledig kunnen worden gedownload. Experimentele functie, zeer onvolledig: spraakherkenning, zinsplitsing en vertalingen kunnen allemaal fout gaan, en ondertitels kunnen lange tijd niet verschijnen, de pagina kan haperen of de videogeluiden kunnen afwijkend worden. Standaard uitgeschakeld; indien ingeschakeld, schakelt met de rechtermuisknop op zo'n video en \"Deze video vertalen\" te kiezen over naar live ondertitels, en verschijnt er ook een ingang in het extensiepictogram. Voorzichtig inschakelen."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Als de speler rechtsklikken blokkeert, klik je op \"Live ondertitels voor video\" in het extensiepictogram."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Gebruik cloudherkenning voor live ondertitels"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Geen download van taalpakketten nodig, maar de audio van de video wordt naar de spraakherkenningsdienst van de browser verzonden: Google voor Chrome, Microsoft Azure voor Microsoft Edge. Geldt alleen voor live ondertitels."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Het vertaalplatform is ChatGPT: de audio van de video wordt naar OpenAI gestuurd voor herkenning (whisper-1, gefactureerd tegen OpenAI-tarieven). De taal wordt automatisch bepaald en de herkenning duurt slechts enkele seconden."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "De audio van de video wordt op dit apparaat herkend en verlaat de browser nooit. De herkenning duurt even lang als de video en vereist eerst het downloaden van het offline taalpakket voor die taal. Als het vertaalplatform op ChatGPT staat (met je eigen Key), neemt OpenAI de herkenning over."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Deze browser ondersteunt geen spraakherkenning op het apparaat. Je kunt het vertaalplatform omzetten naar ChatGPT (met je eigen Key), zodat OpenAI de herkenning uitvoert."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Dit apparaat ondersteunt geen offline herkenning voor deze taal. Als het vertaalplatform op ChatGPT staat (met je eigen Key), neemt OpenAI de herkenning over."
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

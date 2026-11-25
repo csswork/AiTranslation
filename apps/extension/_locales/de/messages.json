@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Nicht mehr anzeigen"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Netzwerkanfrage fehlgeschlagen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Dieses Video wird in Segmenten gestreamt (z. B. YouTube) und kann nicht als Ganzes übersetzt werden"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Diese Videodatei konnte nicht abgerufen werden ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "Die Videodatei überschreitet $arg1$ MB; die Übersetzung des gesamten Videos unterstützt nur kurze Videos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "Das Video ist länger als $arg1$ Minuten; die Übersetzung des gesamten Videos unterstützt nur kurze Videos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Dies ist keine direkt herunterladbare Videodatei und kann daher nicht als Ganzes übersetzt werden"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Dieses Video hat keinen Ton"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "Der aktuelle Browser unterstützt keine geräteseitige Spracherkennung. Wenn ChatGPT (mit eigenem API Key) als Übersetzungsplattform ausgewählt ist, übernimmt OpenAI die Erkennung"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Fehler bei der Videoübersetzung: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Die Videoübersetzung ist abgelaufen; bitte klicken Sie erneut mit der rechten Maustaste auf das Video"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Dieses Video übersetzen"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Den Ton des Videos auslesen, Spracherkennung durchführen und Untertitel für das Video erstellen"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Video wird gelesen… $arg1$ %",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Video wird gelesen…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Audio wird extrahiert…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Spracherkennung mit OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Spracherkennung auf diesem Gerät ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Untertitel werden übersetzt…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Keine Sprache erkannt"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Untertitel bereit, insgesamt $arg1$ Zeilen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Die Videotranslation wurde unterbrochen. Bitte klicke erneut mit der rechten Maustaste auf das Video und versuche es noch einmal"
+  },
+  "m_92375601fefd1563": {
+    "message": "Videotranskription"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Klicke auf einer Webseite mit der rechten Maustaste auf ein Video und wähle „Dieses Video übersetzen“: Die Erweiterung lädt die gesamte Videodatei herunter, erkennt die Sprache und übersetzt anschließend alles in zweisprachige Untertitel, die synchron zur Wiedergabe angezeigt werden. Unterstützt werden nur kurze Videodateien, die sich direkt herunterladen lassen (unter 10 Minuten und 100 MB, z. B. 9GAG); Videos, die als segmentierte Streams abgespielt werden, wie bei YouTube, lassen sich nicht vollständig herunterladen."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Die lokale Erkennung erkennt die Sprache nicht automatisch; du musst sie für jedes Video auswählen."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Erfasst den Ton des Tabs und erkennt die Sprache während der Wiedergabe, für Videos, die sich nicht vollständig herunterladen lassen. Experimentelle Funktion, sehr unausgereift: Spracherkennung, Satztrennung und Übersetzungen können fehlerhaft sein, und es kann vorkommen, dass Untertitel lange Zeit nicht erscheinen, die Seite ruckelt oder der Videoton gestört wird. Standardmäßig deaktiviert; wenn aktiviert, wechselt ein Rechtsklick auf ein solches Video mit „Dieses Video übersetzen“ zu Live-Untertiteln, und auch im Erweiterungssymbol erscheint ein Eintrag. Mit Vorsicht aktivieren."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Wenn der Player den Rechtsklick blockiert, klicke im Erweiterungssymbol auf „Video-Live-Untertitel“."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Cloud-Erkennung für Live-Untertitel verwenden"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Kein Download eines Sprachpakets nötig, aber der Ton des Videos wird an den Spracherkennungsdienst des Browsers gesendet: Google bei Chrome, Microsoft Azure bei Microsoft Edge. Betrifft nur Live-Untertitel."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Die Übersetzungsplattform ist ChatGPT: Die Tonspur des Videos wird zur Erkennung an OpenAI gesendet (whisper-1, abgerechnet zu OpenAIs Preisen). Die Sprache wird automatisch erkannt, und die Erkennung dauert nur wenige Sekunden."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "Die Tonspur des Videos wird auf diesem Gerät erkannt und verlässt den Browser nie. Die Erkennung dauert so lange wie das Video und erfordert zunächst den Download des Offline-Sprachpakets für die jeweilige Sprache. Wenn als Übersetzungsplattform ChatGPT (mit eigenem Key) gewählt ist, übernimmt OpenAI die Erkennung."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Dieser Browser unterstützt keine geräteinterne Spracherkennung. Du kannst die Übersetzungsplattform auf ChatGPT (mit eigenem Key) umstellen, damit OpenAI die Erkennung übernimmt."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Dieses Gerät unterstützt keine Offline-Erkennung für diese Sprache. Wenn als Übersetzungsplattform ChatGPT (mit eigenem Key) gewählt ist, übernimmt OpenAI die Erkennung."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

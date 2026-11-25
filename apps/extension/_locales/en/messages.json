@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Don't show again"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Network request failed: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "This video is streamed in segments (e.g. YouTube) and can't be translated as a whole"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Couldn't retrieve this video file ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "The video file exceeds $arg1$ MB; whole-video translation only supports short videos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "The video is longer than $arg1$ minutes; whole-video translation only supports short videos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "This isn't a directly downloadable video file, so it can't be translated as a whole"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "This video has no audio"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "The current browser doesn't support on-device speech recognition. When ChatGPT (with your own API Key) is selected as the translation platform, OpenAI handles recognition instead"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Video translation error: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Video translation has expired; please right-click the video again"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Translate this video"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Read the video's audio, perform speech recognition, and generate video subtitles"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Reading video… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Reading video…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Extracting audio…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Recognizing speech with OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Recognizing speech on this device ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Translating subtitles…"
+  },
+  "m_ab0512633a125037": {
+    "message": "No speech detected"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Subtitles ready, $arg1$ lines in total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Video translation was interrupted. Please right-click the video and try again"
+  },
+  "m_92375601fefd1563": {
+    "message": "Video translation"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Right-click on a video on a web page and select \"Translate this video\": the extension downloads the entire video file, recognizes the speech, then translates the whole thing into bilingual subtitles that display in sync with playback. Only short video files that can be downloaded directly are supported (under 10 minutes and 100 MB, such as 9GAG); videos played as segmented streams like YouTube cannot be downloaded in full."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "On-device recognition does not detect the language automatically; you need to select it for each video."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Captures the tab's audio and recognizes speech as it plays, for videos that cannot be downloaded in full. Experimental feature, very incomplete: speech recognition, sentence segmentation, and translations may all be wrong, and subtitles may fail to appear for long periods, the page may lag, or the video audio may become abnormal. Off by default; when enabled, right-clicking such a video and selecting \"Translate this video\" will switch to live subtitles, and an entry will also appear in the extension icon. Enable with caution."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "If the player blocks right-clicking, click \"Video live subtitles\" in the extension icon."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Use cloud recognition for live subtitles"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "No language pack download needed, but the video's audio will be sent to the browser's speech recognition service: Google for Chrome, Microsoft Azure for Microsoft Edge. Only affects live subtitles."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "The translation platform is ChatGPT: the video's audio is sent to OpenAI for recognition (whisper-1, billed at OpenAI's rates). The language is detected automatically, and recognition takes just a few seconds."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "The video's audio is recognized on this device and never leaves the browser. Recognition takes as long as the video and requires first downloading the offline language pack for that language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "This browser doesn't support on-device speech recognition. You can switch the translation platform to ChatGPT (with your own Key) to have OpenAI handle recognition."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "This device doesn't support offline recognition for this language. If the translation platform is set to ChatGPT (with your own Key), OpenAI handles recognition instead."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

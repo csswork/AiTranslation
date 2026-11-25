@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "不再提示"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "网络请求失败：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "这个视频是分段串流播放的（如 YouTube），没法整份翻译"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "取不到这个视频文件（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "视频文件超过 $arg1$ MB，整份翻译只支持短视频",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "视频超过 $arg1$ 分钟，整份翻译只支持短视频",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "这不是能直接下载的视频文件，没法整份翻译"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "这个视频没有声音"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "当前浏览器不支持设备端语音识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "视频翻译出错：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "视频翻译已失效，请重新右键视频"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "翻译这个视频"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "读取视频的声音，做语音识别，生成视频字幕"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "正在读取视频… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "正在读取视频…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "正在提取声音…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "正在由 OpenAI 识别语音…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "正在本机识别语音（$arg1$ / $arg2$ 秒）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "正在翻译字幕…"
+  },
+  "m_ab0512633a125037": {
+    "message": "没有识别到人声"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "字幕已准备好，共 $arg1$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "视频翻译中断了，请重新右键视频再试"
+  },
+  "m_92375601fefd1563": {
+    "message": "视频翻译"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "在网页视频上右键，选「翻译这个视频」：扩展把整个视频文件取下来识别语音，再整篇翻成双语字幕，跟着播放显示。 只支持能直接下载的短视频文件（10 分钟、100 MB 以内，如 9GAG）；YouTube 这类分段串流播放的视频没法整份取下。"
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "本机识别不会自动判断语种，需要按视频选好。"
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "截取标签页的声音边播边识别，用于没法整份取下的视频。实验功能，完成度很低：语音识别、断句和译文都可能出错，也可能出现字幕长时间不出、页面卡顿或视频声音异常。默认关闭；开启后，右键这类视频选「翻译这个视频」会改用实时字幕，扩展图标里也会出现入口。谨慎开启。"
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "播放器拦掉了右键的话，点扩展图标里的「视频实时字幕」。"
+  },
+  "m_47321ea10d1db088": {
+    "message": "实时字幕改用云端识别"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "不用下载语言包，但视频的声音会发给浏览器的语音识别服务：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。只影响实时字幕。"
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。"
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。"
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。"
+  },
+  "m_eecd908a4e83b839": {
+    "message": "这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

@@ -280,8 +280,8 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
     : null);
 
   const renderUser = async (c, u) => {
+    // 访客与正式用户都显示：访客合并进正式账户时，请求记录随之迁移。
     const recent = recentFeatureUsagePeriod(config.reportTimeZone);
-    const period = u.kind === 'member' ? recent : null;
     const [state, subs, activity, sessions, api, installs, extensions, versions, featureRows, clientRows, sharedRows] = await Promise.all([
       accountState(pool, u),
       pool.query('SELECT plan, status, current_period_end, provider_subscription_id, updated_at FROM subscriptions WHERE user_id = $1 ORDER BY updated_at DESC', [u.id]),
@@ -291,12 +291,12 @@ export function adminRoutes({ config, pool, mailer, settings, creem = null, log 
       installHistory(pool, u.id),
       pool.query('SELECT extension_id, first_seen_at, last_seen_at, version, version_seen_at FROM user_extensions WHERE user_id = $1 ORDER BY first_seen_at', [u.id]),
       extensionVersions(pool),
-      period ? featureUsageForAccount(pool, u.id, period) : [],
+      featureUsageForAccount(pool, u.id, recent),
       pool.query(`SELECT browser, browser_major, os FROM usage_events
         WHERE user_id = $1 AND browser IS NOT NULL ORDER BY created_at DESC LIMIT 1`, [u.id]),
       sharedUsageForAccount(pool, u.id, recent),
     ]);
-    const featureUsage = period ? { ...period, rows: featureRows } : null;
+    const featureUsage = { ...recent, rows: featureRows };
     const sharedUsage = { ...recent, rows: sharedRows };
     return page(c, () => views.userPage({
       admin: admin(c), u, state, subs: subs.rows, activity, sessions: sessions.rows[0].n, api, installs, extensions: extensions.rows, latest: versions[0]?.version || null, note: takeNote(c),

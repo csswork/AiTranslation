@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Bir daha gösterme"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Ağ isteği başarısız oldu: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Bu video parçalı akış olarak oynatılıyor (ör. YouTube), bu yüzden bir bütün olarak çevrilemez"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Bu video dosyası alınamadı ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "Video dosyası $arg1$ MB'ı aşıyor; tüm video çevirisi yalnızca kısa videoları destekler",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "Video $arg1$ dakikadan uzun; tüm video çevirisi yalnızca kısa videoları destekler",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Bu, doğrudan indirilebilen bir video dosyası değil, bu yüzden bir bütün olarak çevrilemez"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Bu videoda ses yok"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "Mevcut tarayıcı cihaz üzerinde konuşma tanımayı desteklemiyor. Çeviri platformu olarak ChatGPT (kendi API Key'inizle) seçildiğinde tanımayı OpenAI üstlenir"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Video çeviri hatası: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Video çevirisi geçersiz oldu, lütfen videoya tekrar sağ tıklayın"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Bu videoyu çevir"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Videonun sesini okuyup konuşma tanıma yaparak video altyazıları oluşturun"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Video okunuyor… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Video okunuyor…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Ses çıkarılıyor…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "OpenAI ile konuşma tanınıyor…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Bu cihazda konuşma tanınıyor ($arg1$ / $arg2$ sn)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Altyazılar çevriliyor…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Konuşma algılanmadı"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Altyazılar hazır, toplam $arg1$ satır",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Video çevirisi kesintiye uğradı, lütfen videoya tekrar sağ tıklayıp deneyin"
+  },
+  "m_92375601fefd1563": {
+    "message": "Video çevirisi"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Bir web sayfasındaki videoya sağ tıklayıp \"Bu videoyu çevir\"i seçin: uzantı video dosyasının tamamını indirir, konuşmayı tanır ve ardından tümünü oynatmayla senkronize görüntülenen iki dilli altyazılara çevirir. Yalnızca doğrudan indirilebilen kısa video dosyaları desteklenir (10 dakika ve 100 MB'ın altında, örneğin 9GAG); YouTube gibi parçalı akış olarak oynatılan videolar tam olarak indirilemez."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Cihaz üzerinde tanıma dili otomatik algılamaz; her video için seçmeniz gerekir."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Sekmenin sesini yakalayıp oynatılırken tanıma yapar; tam olarak indirilemeyen videolar için kullanılır. Deneysel özellik, çok eksik: konuşma tanıma, cümle bölme ve çeviriler hatalı olabilir; altyazılar uzun süre görünmeyebilir, sayfa takılabilir veya video sesi anormalleşebilir. Varsayılan olarak kapalıdır; etkinleştirildiğinde bu tür bir videoya sağ tıklayıp \"Bu videoyu çevir\"i seçmek canlı altyazıya geçer ve uzantı simgesinde de bir giriş görünür. Dikkatle etkinleştirin."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Oynatıcı sağ tıklamayı engelliyorsa uzantı simgesindeki \"Video canlı altyazı\"ya tıklayın."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Canlı altyazılar için bulut tanıma kullan"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Dil paketi indirmeye gerek yok, ancak videonun sesi tarayıcının konuşma tanıma hizmetine gönderilir: Chrome için Google, Microsoft Edge için Microsoft Azure. Yalnızca canlı altyazıları etkiler."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Çeviri platformu ChatGPT: videonun sesi tanınmak üzere OpenAI'ye gönderilir (whisper-1, OpenAI'nin fiyatlandırmasıyla ücretlendirilir). Dil otomatik algılanır ve tanıma yalnızca birkaç saniye sürer."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "Videonun sesi bu cihazda tanınır ve tarayıcıdan hiç ayrılmaz. Tanıma, video süresi kadar zaman alır ve önce o dil için çevrimdışı dil paketinin indirilmesini gerektirir. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Bu tarayıcı cihaz üzerinde konuşma tanımayı desteklemiyor. Tanımayı OpenAI'nin yapması için çeviri platformunu ChatGPT (kendi Key'inizle) olarak değiştirebilirsiniz."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Bu cihaz, bu dil için çevrimdışı tanımayı desteklemiyor. Çeviri platformu ChatGPT (kendi Key'inizle) olarak ayarlanırsa tanımayı bunun yerine OpenAI yapar."
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

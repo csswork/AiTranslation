@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "No volver a mostrar"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Error de solicitud de red: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Este video se transmite por segmentos (p. ej., YouTube) y no se puede traducir completo"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "No se pudo obtener este archivo de video ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "El archivo de video supera los $arg1$ MB; la traducción completa solo admite videos cortos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "El video dura más de $arg1$ minutos; la traducción completa solo admite videos cortos",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Este no es un archivo de video descargable directamente, así que no se puede traducir completo"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Este video no tiene audio"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "El navegador actual no admite el reconocimiento de voz en el dispositivo. Si se selecciona ChatGPT (con tu propia API Key) como plataforma de traducción, OpenAI se encarga del reconocimiento"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Error en la traducción del video: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "La traducción del video ha caducado; vuelve a hacer clic derecho en el video"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Traducir este video"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Leer el audio del video, realizar reconocimiento de voz y generar subtítulos para el video"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Leyendo video… $arg1$ %",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Leyendo video…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Extrayendo audio…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Reconociendo voz con OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Reconociendo voz en este dispositivo ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Traduciendo subtítulos…"
+  },
+  "m_ab0512633a125037": {
+    "message": "No se detectó voz"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Subtítulos listos, $arg1$ líneas en total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "La traducción del video se interrumpió. Haz clic derecho en el video e inténtalo de nuevo"
+  },
+  "m_92375601fefd1563": {
+    "message": "Traducción de vídeos"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Haz clic derecho en un vídeo de una página web y selecciona «Traducir este vídeo»: la extensión descarga el archivo de vídeo completo, reconoce el habla y traduce todo el contenido a subtítulos bilingües que se muestran sincronizados con la reproducción. Solo se admiten archivos de vídeo cortos que se puedan descargar directamente (menos de 10 minutos y 100 MB, como 9GAG); los vídeos que se reproducen como transmisiones segmentadas, como YouTube, no se pueden descargar completos."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "El reconocimiento local no detecta el idioma automáticamente; debes seleccionarlo para cada vídeo."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Captura el audio de la pestaña y reconoce el habla mientras se reproduce, para vídeos que no se pueden descargar completos. Función experimental, muy incompleta: el reconocimiento de voz, la segmentación de frases y las traducciones pueden ser incorrectos, y los subtítulos pueden tardar mucho en aparecer, la página puede ralentizarse o el audio del vídeo puede volverse anómalo. Desactivada por defecto; al activarla, si haces clic derecho en este tipo de vídeo y seleccionas «Traducir este vídeo», se usarán subtítulos en tiempo real, y también aparecerá una entrada en el icono de la extensión. Actívala con precaución."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Si el reproductor bloquea el clic derecho, haz clic en «Subtítulos en tiempo real del vídeo» en el icono de la extensión."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Usar reconocimiento en la nube para los subtítulos en tiempo real"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "No hace falta descargar paquetes de idioma, pero el audio del vídeo se enviará al servicio de reconocimiento de voz del navegador: Google para Chrome, Microsoft Azure para Microsoft Edge. Solo afecta a los subtítulos en tiempo real."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "La plataforma de traducción es ChatGPT: el audio del video se envía a OpenAI para su reconocimiento (whisper-1, facturado según las tarifas de OpenAI). El idioma se detecta automáticamente y el reconocimiento tarda solo unos segundos."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "El audio del video se reconoce en este dispositivo y nunca sale del navegador. El reconocimiento tarda lo mismo que el video y requiere descargar primero el paquete de idioma sin conexión correspondiente. Si la plataforma de traducción se establece en ChatGPT (con tu propia Key), OpenAI se encarga del reconocimiento."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Este navegador no admite el reconocimiento de voz en el dispositivo. Puedes cambiar la plataforma de traducción a ChatGPT (con tu propia Key) para que OpenAI se encargue del reconocimiento."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Este dispositivo no admite el reconocimiento sin conexión para este idioma. Si la plataforma de traducción se establece en ChatGPT (con tu propia Key), OpenAI se encarga del reconocimiento."
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },

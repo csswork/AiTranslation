@@ -127,7 +127,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   globalThis.chrome = chrome;
   globalThis.AITrAccount = { checkVersion: async () => {}, warm: async () => {} };
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
-  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js');
+  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js'); load('src/lib/transcript.js'); load('src/lib/video-file.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');
   new Function('chrome', 'console', bg)(chrome, console2);
   return { state, chrome };
@@ -150,15 +150,15 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 {
   const { state } = boot();
   await settle();
-  assert.equal(state.items.size, 6, '不靠任何事件，启动时就应建好六个常驻菜单项');
+  assert.equal(state.items.size, 7, '不靠任何事件，启动时就应建好七个常驻菜单项');
   assert.equal(state.items.get('ai-reader').visible, true, '普通网页里显示「双语阅读这篇文章」');
   assert.equal(state.items.get('ai-translate-site').visible, true, '普通网页里显示「翻译这个网站」');
   assert.ok(state.items.has('ai-translate-selection'));
   assert.ok(state.items.has('ai-translate-element'), '元素项必须存在');
   assert.ok(state.items.has('ai-translate-image'), '图片项必须存在');
   assert.equal(state.items.get('ai-translate-pdf').visible, false, '「翻译整个 PDF」默认隐藏');
-  assert.equal(state.items.has('ai-translate-video'), false,
-    '视频字幕默认关闭，不应建出菜单项');
+  assert.equal(state.items.get('ai-translate-video')?.visible, true,
+    '「翻译这个视频」常驻（整份翻译不依赖实时字幕的实验开关）');
   assert.equal(state.items.get('ai-translate-element').visible, true);
   assert.equal(state.duplicateErrors, 0);
   console.log('✓ service worker 启动即建菜单（不依赖 onInstalled / onStartup）');
@@ -174,7 +174,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.equal(state.duplicateErrors, 0, '并发重建不应再出现重复 id');
   assert.equal(state.uncheckedErrors, 0, '不应留下未读的 lastError');
-  assert.equal(state.items.size, 6, '划词项 + 双语阅读 + 整站翻译 + 元素项 + PDF 项 + 图片项，共六个（视频字幕默认关闭）');
+  assert.equal(state.items.size, 7, '划词项 + 双语阅读 + 整站翻译 + 元素项 + PDF 项 + 图片项 + 视频项，共七个');
   assert.equal(state.warns.length, 0, '不应打出创建失败的警告');
   console.log(`✓ 四个入口并发重建：create 调用 ${state.createCalls} 次，无重复 id、无未读错误`);
 }
@@ -184,7 +184,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const { state } = boot();
   state.listeners.message({ type: 'selection', text: '这是一段完整的中文句子。' }, {}, () => {});
   await settle();
-  assert.equal(state.items.size, 6);
+  assert.equal(state.items.size, 7);
   assert.equal(state.items.get('ai-translate-selection').visible, true,
     '选中中文时，保留翻译入口');
   console.log('✓ 重建后会补上正确的显隐状态（中文 → 显示）');
@@ -192,8 +192,7 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
 
 /* --- 2b. 元素项常显；互斥由 contexts 保证，不靠页面上报 --- */
 {
-  // 这个用例里视频字幕是打开的，否则拿不到视频菜单项
-  const { state } = boot({ target: 'zh-Hans', provider: 'deepseek', videoEnabled: true });
+  const { state } = boot({ target: 'zh-Hans', provider: 'deepseek' });
   state.listeners.installed({ reason: 'update' });
   await settle();
   const sel = state.items.get('ai-translate-selection');
@@ -437,26 +436,23 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   console.log('✓ 空选区不隐藏划词菜单（PDF 阅读器可用），纯数字仍隐藏');
 }
 
-/* --- 4. 视频字幕总开关：默认关闭不建项，打开后出现，关掉后整块消失 --- */
+/* --- 4. 视频菜单项常驻；实时字幕开关只决定串流视频走不走实时字幕，关掉时停掉在播字幕 --- */
 {
   const { state, chrome } = boot();
   await settle();
-  assert.equal(state.items.has('ai-translate-video'), false, '默认关闭：没有视频菜单项');
+  const video = state.items.get('ai-translate-video');
+  assert.ok(video, '默认就有视频菜单项');
+  assert.deepEqual(video.contexts, ['video']);
+  assert.equal(video.visible, true);
 
   const before = state.settings;
   const on = { ...before, videoEnabled: true };
   await chrome.storage.local.set({ settings: on });
   state.listeners.storage({ settings: { oldValue: before, newValue: on } }, 'local');
   await settle();
-  const video = state.items.get('ai-translate-video');
-  assert.ok(video, '打开总开关后应出现视频菜单项');
-  assert.equal(state.items.size, 7, '打开后共七个菜单项');
-  assert.deepEqual(video.contexts, ['video']);
-  assert.equal(video.visible, true);
+  assert.equal(state.items.size, 7, '打开实时字幕不增删菜单项');
   assert.equal(state.duplicateErrors, 0);
-
-  assert.equal(state.sent.some((m) => m.type === 'video-stop-all'), false,
-    '打开总开关不该去停字幕');
+  assert.equal(state.sent.some((m) => m.type === 'video-stop-all'), false, '打开开关不该去停字幕');
 
   // 关掉时要顺手把正在播的字幕停掉（offscreen 文档在的时候）
   state.offscreen = true;
@@ -464,14 +460,38 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await chrome.storage.local.set({ settings: off });
   state.listeners.storage({ settings: { oldValue: on, newValue: off } }, 'local');
   await settle();
-  assert.equal(state.items.has('ai-translate-video'), false, '关闭总开关后视频菜单项应消失');
-  assert.equal(state.items.size, 6);
-  assert.equal(state.warns.length, 0, '增删菜单项不应打出创建失败的警告');
+  assert.equal(state.items.get('ai-translate-video')?.visible, true, '关掉实时字幕后视频菜单项仍在');
+  assert.equal(state.warns.length, 0);
   assert.ok(
     state.sent.some((m) => m.target === 'offscreen' && m.type === 'video-stop-all'),
-    '关闭总开关时要通知 offscreen 停掉所有字幕'
+    '关闭实时字幕开关时要通知 offscreen 停掉所有字幕'
   );
-  console.log('✓ 视频字幕总开关控制右键菜单项的增删（默认关闭），关掉时停掉在播字幕');
+  console.log('✓ 视频菜单项常驻；关掉实时字幕开关时停掉在播字幕');
+}
+
+/* --- 4b. 点「翻译这个视频」：直链做整份翻译，串流视频按实时字幕开关分流 --- */
+{
+  const click = async (settings, srcUrl) => {
+    const { state } = boot(settings);
+    await settle();
+    await state.listeners.clicked({ menuItemId: 'ai-translate-video', srcUrl, frameId: 3 }, { id: 5, title: 'Teslas in GTA 6 - 9GAG' });
+    await settle();
+    return state;
+  };
+  const file = await click({}, 'https://img-9gag-fun.9cache.com/photo/a_460sv.mp4');
+  const opened = file.tabMessages.find((m) => m.message.type === 'video-file-open');
+  assert.ok(opened, '直链视频：注入浮层并交给它一个任务');
+  assert.equal(opened.options.frameId, 3, '发到视频所在的框架');
+  assert.equal(opened.message.error, '');
+  assert.ok(opened.message.jobId && opened.message.resultKey);
+
+  const stream = await click({}, 'blob:https://www.youtube.com/123');
+  const refused = stream.tabMessages.find((m) => m.message.type === 'video-file-open');
+  assert.ok(refused?.message.error, '串流视频、实时字幕关着：浮层说明翻不了');
+
+  const live = await click({ videoEnabled: true }, 'blob:https://www.youtube.com/123');
+  assert.equal(live.tabMessages.some((m) => m.message.type === 'video-file-open'), false, '实时字幕开着：串流视频改走实时字幕');
+  console.log('✓ 「翻译这个视频」按视频地址与实时字幕开关分流');
 }
 
 /* --- 图片菜单：只把图片地址交给页面，识别方式由页面按设置决定 --- */

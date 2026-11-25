@@ -68,6 +68,8 @@
     siteClear: $('siteClear'),
     videoEnabled: $('videoEnabled'),
     videoOptions: $('videoOptions'),
+    videoCard: $('video'),
+    videoEngine: $('videoEngine'),
     videoLang: $('videoLang'),
     installLang: $('installLang'),
     langState: $('langState'),
@@ -124,6 +126,7 @@
     flash(t("已保存"));
     renderCards();
     renderSiteProvider();
+    renderVideoEngine();
   }
 
   /** 只改当前平台那一份配置。 */
@@ -518,7 +521,15 @@
   const Speech = globalThis.AITrSpeech;
   let langPollTimer = 0;
 
-  /** 总开关关着时，下面的细节整块收起；开关本身留着，不然没法再打开。 */
+  /** 整份视频翻译由谁识别：翻译平台是 ChatGPT（有 Key）时交给 OpenAI，其余在本机（见 lib/video-file.js）。 */
+  function renderVideoEngine() {
+    const provider = S.resolveProvider(settings);
+    el.videoEngine.textContent = provider.id === 'openai' && provider.apiKey
+      ? t("翻译平台是 ChatGPT：视频的声音发给 OpenAI 识别（whisper-1，按 OpenAI 的价格计费），会自动判断语种，几秒就能识别完。")
+      : t("视频的声音在本机识别，不离开浏览器；识别要花和视频一样长的时间，并要先下载对应语言的离线语言包。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。");
+  }
+
+  /** 实时字幕开关关着时，它自己的设置整块收起；开关本身留着，不然没法再打开。 */
   function applyVideoVisibility() {
     el.videoOptions.hidden = !settings.videoEnabled;
   }
@@ -553,17 +564,9 @@
   async function renderLangState() {
     clearTimeout(langPollTimer);
     el.installLang.hidden = true;
-    // 总开关关着时不去探测语言包，界面上也没有地方显示状态
-    if (!settings.videoEnabled) {
-      showLangState('');
-      return;
-    }
-    if (settings.videoCloud) {
-      showLangState(t("云端识别不需要语言包"));
-      return;
-    }
+    // 整份视频翻译在本机识别时总要用到语言包，不管实时字幕开没开、用不用云端
     if (!Speech.supported()) {
-      showLangState(t("当前浏览器不支持设备端语音识别，请使用受支持的浏览器版本，或改用云端识别。"), 'err');
+      showLangState(t("当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。"), 'err');
       return;
     }
     const lang = settings.videoLang;
@@ -574,7 +577,7 @@
       showLangState(t("读取语言包状态失败：$1", [err?.message || err]), 'err');
       return;
     }
-    if (lang !== settings.videoLang || settings.videoCloud) return; // 等结果期间设置又变了
+    if (lang !== settings.videoLang) return; // 等结果期间设置又变了
     switch (status) {
       case 'available':
         showLangState(t("离线语言包已就绪"), 'ok');
@@ -592,7 +595,7 @@
         langPollTimer = setTimeout(renderLangState, 2000);
         break;
       default:
-        showLangState(t("这台设备不支持该语言的离线识别，可以改用云端识别"), 'err');
+        showLangState(t("这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。"), 'err');
     }
   }
 
@@ -715,7 +718,7 @@
     await AITrI18n.reload();
   });
   AITrI18n.onChange(() => {
-    renderAccount(); renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang();
+    renderAccount(); renderCards(); renderProviderConfig(); renderBehavior(); renderVideoLang(); renderVideoEngine();
     renderShortcutKey(); renderRuleCount(); renderLangState(); renderSiteProvider(); renderSites();
   });
 
@@ -1052,7 +1055,10 @@
     renderSiteProvider();
     renderSites();
     renderVideoLang();
+    renderVideoEngine();
     renderLangState();
+    // 视频翻译的报错（语言包没装等）点「去设置」过来：定位到视频卡片
+    if (location.hash === '#video' && !el.videoCard.hidden) el.videoCard.scrollIntoView({ block: 'start' });
     // 从语言下拉的「下载更多语言…」过来：直接定位到本机翻译卡片
     if (location.hash === '#local' && S.isLocal(settings.provider)) {
       el.localConfig.scrollIntoView({ block: 'start' });

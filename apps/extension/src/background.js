@@ -17,6 +17,8 @@ import './lib/sites.js';
 import './lib/review.js';
 import './lib/usage.js';
 import './lib/image-fetch.js';
+import './lib/transcript.js';
+import './lib/video-file.js';
 
 const t = (...args) => AITrI18n.t(...args);
 
@@ -168,12 +170,12 @@ function createMenu() {
       visible: AITrSettings.supportsVision(settings.provider),
     });
     // 'video' 与上面三项都不重叠：'page' 本来就不含视频。
-    // 视频实时字幕是默认关闭的实验功能：没打开就根本不建这一项，
-    // 免得在视频上右键时看到一个用不了的入口。
-    if (settings.videoEnabled) {
+    // 视频只有这一项：能整份下载的视频文件做整份翻译；分段串流的视频在打开「视频实时字幕（实验）」时
+    // 改走实时字幕，否则说明为什么翻不了。Firefox 没有 offscreen 文档，不建这一项。
+    if (!globalThis.AITrEnv?.firefox) {
       await create({
         id: VIDEO_MENU_ID,
-        title: t("视频实时字幕（实验）"),
+        title: t("翻译这个视频"),
         contexts: ['video'],
         visible: true,
       });
@@ -513,13 +515,8 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area !== 'local' || !changes.settings) return;
   const settings = await AITrSettings.loadSettings();
   const wasEnabled = AITrSettings.normalize(changes.settings.oldValue).videoEnabled;
-  // 视频字幕总开关变了：菜单项要整块新增或删除，只能重建
-  if (wasEnabled !== settings.videoEnabled) {
-    await createMenu(); // 重建时已按当前设置决定所有菜单项的显隐
-    // 关掉开关时，正在播的字幕也要停掉
-    if (!settings.videoEnabled) await stopAllVideoCaptions();
-    return;
-  }
+  // 关掉视频实时字幕的开关时，正在播的字幕也要停掉（右键视频的菜单项一直都在，不用重建）
+  if (wasEnabled && !settings.videoEnabled) await stopAllVideoCaptions();
   try {
     await chrome.contextMenus.update(MENU_ID, { title: await menuTitle() });
   } catch {
@@ -710,7 +707,7 @@ async function ensureOffscreen() {
     .createDocument({
       url: OFFSCREEN_URL,
       reasons: ['USER_MEDIA'],
-      justification: t("截取标签页声音，在本机做语音识别，生成视频字幕"),
+      justification: t("读取视频的声音，做语音识别，生成视频字幕"),
     })
     .finally(() => {
       offscreenTask = null;
@@ -805,9 +802,32 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
   });
 }
 
+AITrVideoFile.init({ ensureOffscreen });
+// 整份视频翻译：字幕浮层连回来认领任务（见 lib/video-file.js）
+chrome.runtime.onConnect.addListener((port) => AITrVideoFile.onConnect(port));
+
+/**
+ * 右键视频「翻译这个视频」：这个标签页正开着实时字幕就关掉；能整份下载的视频文件做整份翻译；
+ * 分段串流的视频在打开了实时字幕（实验）时改走实时字幕，否则由浮层说明翻不了。
+ */
+async function translateVideo(info, tab) {
+  const frameId = info.frameId ?? 0;
+  const srcUrl = info.srcUrl || '';
+  if (await videoRunning(tab.id)) {
+    await chrome.runtime.sendMessage({ target: 'offscreen', type: 'video-stop', tabId: tab.id }).catch(() => {});
+    return;
+  }
+  const settings = await AITrSettings.loadSettings();
+  if (settings.videoEnabled && !AITrVideoFile.isFileUrl(srcUrl)) {
+    await toggleVideoCaptions({ tabId: tab.id, frameId, srcUrl });
+    return;
+  }
+  await AITrVideoFile.open({ tabId: tab.id, frameId, srcUrl, title: tab.title || '', incognito: tab.incognito === true });
+}
+
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === VIDEO_MENU_ID && tab?.id) {
-    await toggleVideoCaptions({ tabId: tab.id, frameId: info.frameId ?? 0, srcUrl: info.srcUrl || '' });
+    await translateVideo(info, tab);
     return;
   }
   // 自动识别还是先框选，由页面按设置里的默认入口决定
@@ -1019,6 +1039,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
+  // 整份视频翻译：offscreen 文档报来的下载、识别进度与结果
+  if (type === 'video-file-event') {
+    AITrVideoFile.onOffscreenEvent(message, sender);
+    return false;
+  }
+
   // 双语阅读：只接受本扩展注入到顶层框架的识别脚本
   if (type === 'reader-open') {
     const tab = sender.tab;
@@ -1136,7 +1162,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (type === 'open-options') {
-    chrome.runtime.openOptionsPage();
+    // 视频翻译的报错（语言包没装等）直接打开设置页的视频卡片
+    if (message.section === 'video' && sender.id === chrome.runtime.id) chrome.tabs.create({ url: chrome.runtime.getURL('src/options/options.html#video') });
+    else chrome.runtime.openOptionsPage();
     return false;
   }
 

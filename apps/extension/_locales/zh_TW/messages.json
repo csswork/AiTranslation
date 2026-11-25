@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "不再提示"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "網路請求失敗：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "此影片是分段串流播放的（如 YouTube），無法整份翻譯"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "無法取得此影片檔案（$arg1$）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "影片檔案超過 $arg1$ MB，整份翻譯僅支援短片",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "影片超過 $arg1$ 分鐘，整份翻譯僅支援短片",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "這不是可直接下載的影片檔案，無法整份翻譯"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "此影片沒有聲音"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "目前瀏覽器不支援裝置端語音辨識。翻譯平台選 ChatGPT（自備 API Key）時改由 OpenAI 辨識"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "影片翻譯發生錯誤：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "影片翻譯已失效，請重新右鍵點選影片"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "翻譯這段影片"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "讀取影片的聲音，進行語音辨識，產生影片字幕"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "正在讀取影片… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "正在讀取影片…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "正在擷取音訊…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "正在由 OpenAI 辨識語音…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "正在本機辨識語音（$arg1$ / $arg2$ 秒）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "正在翻譯字幕…"
+  },
+  "m_ab0512633a125037": {
+    "message": "沒有偵測到人聲"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "字幕已準備好，共 $arg1$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "影片翻譯中斷了，請重新在影片上按右鍵再試"
+  },
+  "m_92375601fefd1563": {
+    "message": "影片翻譯"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "在網頁影片上按右鍵，選「翻譯這部影片」：擴充功能會下載整個影片檔案、辨識語音，再將整篇翻譯成雙語字幕，跟著播放同步顯示。 僅支援可直接下載的短片檔案（10 分鐘、100 MB 以內，例如 9GAG）；像 YouTube 這類分段串流播放的影片無法整份下載。"
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "本機辨識不會自動判斷語言，需要依影片選好。"
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "擷取分頁的聲音邊播邊辨識，用於無法整份下載的影片。實驗功能，完成度很低：語音辨識、斷句和譯文都可能出錯，也可能出現字幕長時間不出現、頁面卡頓或影片聲音異常。預設關閉；開啟後，對這類影片按右鍵選「翻譯這部影片」會改用即時字幕，擴充功能圖示裡也會出現入口。請謹慎開啟。"
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "如果播放器攔截了右鍵，請點擴充功能圖示裡的「影片即時字幕」。"
+  },
+  "m_47321ea10d1db088": {
+    "message": "即時字幕改用雲端辨識"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "不必下載語言套件，但影片的聲音會傳送給瀏覽器的語音辨識服務：Chrome 使用 Google，Microsoft Edge 使用 Microsoft Azure。僅影響即時字幕。"
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "翻譯平台是 ChatGPT：影片的聲音會傳送給 OpenAI 辨識（whisper-1，依 OpenAI 的價格計費），會自動判斷語言，幾秒鐘就能辨識完成。"
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "影片的聲音在本機辨識，不會離開瀏覽器；辨識需要花費和影片一樣長的時間，並且要先下載對應語言的離線語言包。翻譯平台選擇 ChatGPT（自備 Key）時，改由 OpenAI 辨識。"
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "目前的瀏覽器不支援裝置端語音辨識。可以將翻譯平台改為 ChatGPT（自備 Key），由 OpenAI 辨識。"
+  },
+  "m_eecd908a4e83b839": {
+    "message": "這台裝置不支援該語言的離線辨識。翻譯平台選擇 ChatGPT（自備 Key）時，改由 OpenAI 辨識。"
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

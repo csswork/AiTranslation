@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Không hiển thị lại"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Yêu cầu mạng thất bại: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Video này được phát trực tuyến theo phân đoạn (ví dụ: YouTube), không thể dịch toàn bộ"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Không thể lấy tệp video này ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "Tệp video vượt quá $arg1$ MB; dịch toàn bộ video chỉ hỗ trợ video ngắn",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "Video dài hơn $arg1$ phút; dịch toàn bộ video chỉ hỗ trợ video ngắn",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "Đây không phải là tệp video có thể tải xuống trực tiếp, nên không thể dịch toàn bộ"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Video này không có âm thanh"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Khi chọn ChatGPT (dùng API Key của bạn) làm nền tảng dịch, OpenAI sẽ đảm nhận việc nhận dạng thay thế"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Lỗi dịch video: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Bản dịch video đã hết hiệu lực, vui lòng nhấp chuột phải vào video lần nữa"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Dịch video này"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Đọc âm thanh của video, thực hiện nhận dạng giọng nói và tạo phụ đề cho video"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Đang đọc video… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Đang đọc video…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Đang trích xuất âm thanh…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Đang nhận dạng giọng nói bằng OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Đang nhận dạng giọng nói trên thiết bị này ($arg1$ / $arg2$ giây)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Đang dịch phụ đề…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Không phát hiện giọng nói"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Phụ đề đã sẵn sàng, tổng cộng $arg1$ câu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Quá trình dịch video đã bị gián đoạn, vui lòng nhấp chuột phải vào video và thử lại"
+  },
+  "m_92375601fefd1563": {
+    "message": "Dịch video"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Nhấp chuột phải vào video trên trang web và chọn \"Dịch video này\": tiện ích sẽ tải toàn bộ tệp video xuống, nhận dạng giọng nói, rồi dịch toàn bộ thành phụ đề song ngữ hiển thị đồng bộ với quá trình phát. Chỉ hỗ trợ các tệp video ngắn có thể tải trực tiếp (dưới 10 phút và 100 MB, như 9GAG); những video phát dạng luồng phân đoạn như YouTube không thể tải toàn bộ xuống được."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Nhận dạng trên máy không tự động phát hiện ngôn ngữ, bạn cần chọn ngôn ngữ cho từng video."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Ghi lại âm thanh của thẻ và nhận dạng giọng nói trong khi phát, dùng cho những video không thể tải toàn bộ xuống. Tính năng thử nghiệm, độ hoàn thiện rất thấp: nhận dạng giọng nói, tách câu và bản dịch đều có thể sai, cũng có thể gặp tình trạng phụ đề lâu không hiện, trang bị giật lag hoặc âm thanh video bất thường. Mặc định tắt; khi bật, nhấp chuột phải vào loại video này và chọn \"Dịch video này\" sẽ chuyển sang phụ đề thời gian thực, và một mục cũng sẽ xuất hiện trong biểu tượng tiện ích. Hãy cân nhắc khi bật."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Nếu trình phát chặn nhấp chuột phải, hãy nhấp vào \"Phụ đề thời gian thực cho video\" trong biểu tượng tiện ích."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Dùng nhận dạng đám mây cho phụ đề thời gian thực"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Không cần tải gói ngôn ngữ, nhưng âm thanh của video sẽ được gửi đến dịch vụ nhận dạng giọng nói của trình duyệt: Chrome dùng Google, Microsoft Edge dùng Microsoft Azure. Chỉ ảnh hưởng đến phụ đề thời gian thực."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Nền tảng dịch là ChatGPT: âm thanh của video được gửi đến OpenAI để nhận dạng (whisper-1, tính phí theo giá của OpenAI), tự động nhận diện ngôn ngữ, chỉ mất vài giây để nhận dạng xong."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "Âm thanh của video được nhận dạng ngay trên máy này, không rời khỏi trình duyệt; việc nhận dạng mất thời gian bằng chính video và cần tải trước gói ngôn ngữ ngoại tuyến tương ứng. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Trình duyệt hiện tại không hỗ trợ nhận dạng giọng nói trên thiết bị. Bạn có thể đổi nền tảng dịch sang ChatGPT (dùng Key riêng) để OpenAI đảm nhận việc nhận dạng."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "Thiết bị này không hỗ trợ nhận dạng ngoại tuyến cho ngôn ngữ này. Khi chọn nền tảng dịch là ChatGPT (dùng Key riêng), OpenAI sẽ đảm nhận việc nhận dạng."
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

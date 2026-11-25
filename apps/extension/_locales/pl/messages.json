@@ -2948,6 +2948,145 @@
   "m_a54a0add54472cb1": {
     "message": "Nie pokazuj ponownie"
   },
+  "m_5828fcc55b1b7ad6": {
+    "message": "Żądanie sieciowe nie powiodło się: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_22cf22e0d3d13440": {
+    "message": "Ten film jest przesyłany strumieniowo w segmentach (np. YouTube) i nie można go przetłumaczyć w całości"
+  },
+  "m_4887b1c06027cdb9": {
+    "message": "Nie udało się pobrać tego pliku wideo ($arg1$)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_d9e2b511e79804b7": {
+    "message": "Plik wideo przekracza $arg1$ MB; tłumaczenie całego wideo obsługuje tylko krótkie filmy",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_085bd0c05c2a3586": {
+    "message": "Film jest dłuższy niż $arg1$ minut; tłumaczenie całego wideo obsługuje tylko krótkie filmy",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c544b217e94a28fe": {
+    "message": "To nie jest plik wideo możliwy do bezpośredniego pobrania, więc nie można go przetłumaczyć w całości"
+  },
+  "m_ce92748b9e6575f7": {
+    "message": "Ten film nie ma dźwięku"
+  },
+  "m_94ce8c223b4b3d14": {
+    "message": "Obecna przeglądarka nie obsługuje rozpoznawania mowy na urządzeniu. Gdy jako platforma tłumaczeniowa wybrano ChatGPT (z własnym kluczem API Key), rozpoznawanie przejmuje OpenAI"
+  },
+  "m_81ee18099ec079b6": {
+    "message": "Błąd tłumaczenia wideo: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_0d49cf243bf92c88": {
+    "message": "Tłumaczenie wideo wygasło; kliknij ponownie prawym przyciskiem myszy na filmie"
+  },
+  "m_b2e8d9f2ec59ef85": {
+    "message": "Przetłumacz ten film"
+  },
+  "m_3ccca08479f583d7": {
+    "message": "Odczytaj dźwięk z filmu, wykonaj rozpoznawanie mowy i wygeneruj napisy do filmu"
+  },
+  "m_2699ebe94e8fb9c2": {
+    "message": "Odczytywanie wideo… $arg1$%",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_5fc85f78e9148d9b": {
+    "message": "Odczytywanie wideo…"
+  },
+  "m_04778f322b9b88a3": {
+    "message": "Wyodrębnianie dźwięku…"
+  },
+  "m_fbfaa153fe48ed71": {
+    "message": "Rozpoznawanie mowy przez OpenAI…"
+  },
+  "m_02c9ea897deff4f1": {
+    "message": "Rozpoznawanie mowy na tym urządzeniu ($arg1$ / $arg2$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_6a3f49c775e7f806": {
+    "message": "Tłumaczenie napisów…"
+  },
+  "m_ab0512633a125037": {
+    "message": "Nie wykryto mowy"
+  },
+  "m_d7f5fc69ecef2c29": {
+    "message": "Napisy gotowe, łącznie $arg1$ wierszy",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_da4e65e8f96222c7": {
+    "message": "Tłumaczenie wideo zostało przerwane. Kliknij wideo prawym przyciskiem myszy i spróbuj ponownie"
+  },
+  "m_92375601fefd1563": {
+    "message": "Tłumaczenie wideo"
+  },
+  "m_2a8fa2466e1d5c0c": {
+    "message": "Kliknij prawym przyciskiem myszy wideo na stronie i wybierz „Przetłumacz to wideo”: rozszerzenie pobiera cały plik wideo, rozpoznaje mowę, a następnie tłumaczy całość na dwujęzyczne napisy wyświetlane w synchronizacji z odtwarzaniem. Obsługiwane są tylko krótkie pliki wideo, które można pobrać bezpośrednio (do 10 minut i 100 MB, np. 9GAG); wideo odtwarzanych jako strumienie segmentowe, takich jak YouTube, nie można pobrać w całości."
+  },
+  "m_7009c9c5e4f02b22": {
+    "message": "Rozpoznawanie na urządzeniu nie wykrywa języka automatycznie; musisz wybrać go dla każdego wideo."
+  },
+  "m_65bb3f2a3a8c3094": {
+    "message": "Przechwytuje dźwięk karty i rozpoznaje mowę podczas odtwarzania, dla wideo, których nie można pobrać w całości. Funkcja eksperymentalna, bardzo niekompletna: rozpoznawanie mowy, dzielenie zdań i tłumaczenia mogą być błędne, a napisy mogą długo się nie pojawiać, strona może się zacinać lub dźwięk wideo może być nieprawidłowy. Domyślnie wyłączona; po włączeniu kliknięcie prawym przyciskiem myszy na takim wideo i wybranie „Przetłumacz to wideo” przełączy na napisy na żywo, a w ikonie rozszerzenia pojawi się również odpowiedni wpis. Włączaj ostrożnie."
+  },
+  "m_68e8c2b8d3db3d95": {
+    "message": "Jeśli odtwarzacz blokuje kliknięcie prawym przyciskiem myszy, kliknij „Napisy na żywo do wideo” w ikonie rozszerzenia."
+  },
+  "m_47321ea10d1db088": {
+    "message": "Używaj rozpoznawania w chmurze dla napisów na żywo"
+  },
+  "m_5ad2008d64c8c50e": {
+    "message": "Nie trzeba pobierać pakietu językowego, ale dźwięk wideo zostanie wysłany do usługi rozpoznawania mowy przeglądarki: Google w Chrome, Microsoft Azure w Microsoft Edge. Dotyczy tylko napisów na żywo."
+  },
+  "m_d6bb719bbc77512f": {
+    "message": "Platformą tłumaczenia jest ChatGPT: dźwięk z wideo jest wysyłany do OpenAI w celu rozpoznania (whisper-1, rozliczane według stawek OpenAI). Język jest wykrywany automatycznie, a rozpoznawanie trwa zaledwie kilka sekund."
+  },
+  "m_a6a8e5a4163794e5": {
+    "message": "Dźwięk z wideo jest rozpoznawany na tym urządzeniu i nie opuszcza przeglądarki. Rozpoznawanie trwa tyle samo co wideo i wymaga wcześniejszego pobrania pakietu językowego offline dla danego języka. Jeśli platformą tłumaczenia jest ChatGPT (z własnym kluczem), rozpoznawanie przejmuje OpenAI."
+  },
+  "m_6ccef8dc8d3efcfb": {
+    "message": "Ta przeglądarka nie obsługuje rozpoznawania mowy na urządzeniu. Możesz zmienić platformę tłumaczenia na ChatGPT (z własnym kluczem), aby rozpoznawanie przejął OpenAI."
+  },
+  "m_eecd908a4e83b839": {
+    "message": "To urządzenie nie obsługuje rozpoznawania offline w tym języku. Jeśli platformą tłumaczenia jest ChatGPT (z własnym kluczem), rozpoznawanie przejmuje OpenAI."
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

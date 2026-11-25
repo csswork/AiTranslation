@@ -8,7 +8,7 @@ import { EXTENSION_STORES, extensionStore } from '../../src/auth/extension.js';
 import { displayCredits } from '../../src/credits/units.js';
 import { createI18n } from '../../src/i18n/index.js';
 import { INCOME_TYPES } from '../../src/usage/activity.js';
-import { FEATURE_LABELS, UNCLASSIFIED_FEATURE, UNCLASSIFIED_LABEL } from '../../src/usage/features.js';
+import { CLASSIFIED_SINCE, FEATURE_LABELS, UNCLASSIFIED_FEATURE, UNCLASSIFIED_LABEL } from '../../src/usage/features.js';
 import { SHARED_PROVIDER_LABELS, SHARED_PROVIDERS, SHARED_RETENTION_DAYS } from '../../src/usage/shared.js';
 
 const featureLabel = (key) => key === UNCLASSIFIED_FEATURE ? UNCLASSIFIED_LABEL : FEATURE_LABELS[key];
@@ -514,7 +514,7 @@ function sharedUsageSection(shared, labels) {
 
 /** 功能使用统计：单独子页面。同一账户、同一功能、同一自然日只算 1 次，按使用天次排序。 */
 export function featureUsagePage({ admin, days, labels, timeZone, ranking, shared }) {
-  const { rows, activeAccounts } = ranking;
+  const { rows, activeAccounts, currentActiveAccounts } = ranking;
   const sum = (field) => rows.reduce((n, row) => n + row[field], 0);
   const used = rows.filter((row) => row.key !== UNCLASSIFIED_FEATURE && row.userDays).length;
   return layout({
@@ -528,23 +528,25 @@ export function featureUsagePage({ admin, days, labels, timeZone, ranking, share
     <span>${labels[0]} — ${labels.at(-1)} · ${timeZone}</span></div>
 </div>
 <section class="kpis">
-  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: '有托管请求被受理' })}
+  ${kpiCard({ label: '活跃账户', value: num(activeAccounts), sub: `有托管请求被受理 · 其中 ${CLASSIFIED_SINCE}+ ${num(currentActiveAccounts)}` })}
   ${kpiCard({ label: '使用天次', value: num(sum('userDays')), sub: `已使用功能 ${num(used)} / ${num(Object.keys(FEATURE_LABELS).length)}` })}
   ${kpiCard({ label: '仅被拒天次', value: num(sum('rejectedDays')), sub: '点数不足、限频等，当天没用成' })}
 </section>
 <section class="card"><h2>点数翻译（全部用户）</h2><div class="table-wrap"><table data-feature-usage>
-  <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用天次</th><th class="num">使用人数</th><th class="num">人均天数</th><th class="num">覆盖率</th><th class="num">仅被拒天次</th><th class="num">请求数</th></tr></thead>
-  <tbody>${rows.map(({ key, userDays, accounts, requests, rejectedDays }) => html`<tr${userDays || rejectedDays ? '' : html` class="muted"`}>
+  <thead><tr><th>功能</th><th class="num" aria-sort="descending">使用天次</th><th class="num">使用人数</th><th class="num">${CLASSIFIED_SINCE}+ 天次</th><th class="num">${CLASSIFIED_SINCE}+ 人数</th><th class="num">人均天数</th><th class="num">覆盖率</th><th class="num">仅被拒天次</th><th class="num">请求数</th></tr></thead>
+  <tbody>${rows.map(({ key, userDays, accounts, requests, rejectedDays, currentDays, currentAccounts }) => html`<tr${userDays || rejectedDays ? '' : html` class="muted"`}>
     <td>${featureLabel(key)}</td>
     <td class="num">${num(userDays)}</td>
     <td class="num">${num(accounts)}</td>
+    <td class="num">${num(currentDays)}</td>
+    <td class="num">${num(currentAccounts)}</td>
     <td class="num">${accounts ? (userDays / accounts).toFixed(1) : '—'}</td>
     <td class="num">${pct(accounts, activeAccounts)}</td>
     <td class="num">${num(rejectedDays)}</td>
     <td class="num">${num(requests)}</td>
   </tr>`)}</tbody>
 </table></div>
-<p class="fine">使用天次：账户 × 自然日（${timeZone}），当天这个功能至少有一条被受理的托管请求（成功、失败或处理中）就算 1 次。仅被拒天次：当天只有被拒绝的请求。覆盖率以活跃账户为分母。请求数只作参考，一次操作可能发出多条请求。2.3.0 及更早的扩展不上报功能类别，记为「${UNCLASSIFIED_LABEL}」；它们的识图请求仍计入图片翻译，但识图后的文字翻译计入未区分。这里只统计点数翻译；自带 Key 和本机翻译不经过服务器，只有用户自愿分享的部分列在下面。</p></section>
+<p class="fine">使用天次：账户 × 自然日（${timeZone}），当天这个功能至少有一条被受理的托管请求（成功、失败或处理中）就算 1 次。仅被拒天次：当天只有被拒绝的请求。覆盖率以活跃账户为分母。请求数只作参考，一次操作可能发出多条请求。${CLASSIFIED_SINCE}+ 天次与人数是其中来自 ${CLASSIFIED_SINCE} 及以上扩展的部分（当天这个功能至少有一条新版请求）。更早的扩展不上报功能类别，记为「${UNCLASSIFIED_LABEL}」；它们的识图请求仍计入图片翻译，但识图后的文字翻译计入未区分。新版的「未区分」天次不为 0 时，说明新版有入口漏报了功能类别。这里只统计点数翻译；自带 Key 和本机翻译不经过服务器，只有用户自愿分享的部分列在下面。</p></section>
 ${sharedUsageSection(shared, labels)}`,
   });
 }

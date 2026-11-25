@@ -340,7 +340,7 @@ test('运营概览：有数据的指标与图表才显示；按国家、语言�
   assert.match(await a.text('/'), /<html lang="zh-CN" data-theme="dark">/);
 });
 
-test('功能统计：同一账户同一功能同一天只算 1 次；失败也算使用，仅被拒单列，旧版未分类请求单列', async () => {
+test('功能统计：同一账户同一功能同一天只算 1 次；失败也算使用，仅被拒单列，旧版未分类请求单列，2.4.0+ 单独计数', async () => {
   const { app, config, mailbox } = buildApp({ pool, config: testConfig({ ADMIN_REQUIRE_2FA: '1' }) });
   const { a } = await adminLogin(app, config, mailbox);
   const { rows } = await pool.query(`INSERT INTO users (email, username, kind)
@@ -349,20 +349,21 @@ test('功能统计：同一账户同一功能同一天只算 1 次；失败也�
     FROM generate_series(1, 6) n RETURNING id`);
   const accounts = rows.map(({ id }) => id);
   const reference = new Date();
-  for (const [kind, surface, status, users, requests, age] of [
-    ['text', 'reader', 'ok', 6, 1, '1 day'],
-    ['text', 'image', 'ok', 5, 1, '1 day'],
-    ['image', null, 'ok', 3, 1, '1 day'],
-    ['text', 'image', 'ok', 5, 2, '1 day'],
-    ['text', 'pdf', 'ok', 4, 3, '1 day'],
-    ['text', 'pdf', 'failed', 6, 1, '1 day'],
-    ['text', 'pdf', 'ok', 6, 1, '8 days'],
-    ['text', null, 'ok', 6, 1, '0 seconds'],
+  // 版本：2.4.0 起上报功能类别；按数字比较，2.10.0 与 2.4.0.1（Firefox）都算新版，2.3.9 不算。
+  for (const [kind, surface, status, users, requests, age, version] of [
+    ['text', 'reader', 'ok', 6, 1, '1 day', '2.3.0'],
+    ['text', 'image', 'ok', 5, 1, '1 day', null],
+    ['image', null, 'ok', 3, 1, '1 day', '2.4.0.1'],
+    ['text', 'image', 'ok', 5, 2, '1 day', '2.3.0'],
+    ['text', 'pdf', 'ok', 4, 3, '1 day', '2.10.0'],
+    ['text', 'pdf', 'failed', 6, 1, '1 day', '2.3.9'],
+    ['text', 'pdf', 'ok', 6, 1, '8 days', '2.4.0'],
+    ['text', null, 'ok', 6, 1, '0 seconds', null],
   ]) {
-    await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at)
-      SELECT account, $2, $3, $4, 0, 0, $7::timestamptz - $6::interval
+    await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, ext_version)
+      SELECT account, $2, $3, $4, 0, 0, $7::timestamptz - $6::interval, $8
       FROM unnest($1::uuid[]) AS u(account) CROSS JOIN generate_series(1, $5::int)`,
-    [accounts.slice(0, users), kind, surface, status, requests, age, reference]);
+    [accounts.slice(0, users), kind, surface, status, requests, age, reference, version]);
   }
 
   // 被拒：用户 1 在三天前被拒双语阅读（那天没用成，两条去重成 1 天）；被拒整站翻译（从没用过）；
@@ -378,18 +379,20 @@ test('功能统计：同一账户同一功能同一天只算 1 次；失败也�
   assert.ok(ranking);
   const entries = [...ranking.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)]
     .map(([, row]) => [...row.matchAll(/<td[^>]*>([^<]*)<\/td>/g)].map((cell) => cell[1]))
-    .filter((cells) => cells.length === 7);
-  // 列：功能、使用天次、使用人数、人均天数、覆盖率、仅被拒天次、请求数。范围外（8 天前）的请求不计。
+    .filter((cells) => cells.length === 9);
+  // 列：功能、使用天次、使用人数、2.4.0+ 天次、2.4.0+ 人数、人均天数、覆盖率、仅被拒天次、请求数。范围外（8 天前）的请求不计。
+  // 图片翻译：用户 1–3 当天有新版识图，同一天的旧版图片文字翻译不影响这天算作新版。
   assert.deepEqual(entries, [
-    ['双语阅读', '6', '6', '1.0', '100.0%', '1', '6'],
-    ['整份 PDF 翻译', '6', '6', '1.0', '100.0%', '0', '18'],
-    ['图片翻译', '5', '5', '1.0', '83.3%', '0', '18'],
-    ['整站翻译', '0', '0', '—', '0.0%', '1', '0'],
-    ['划词翻译', '0', '0', '—', '0.0%', '0', '0'], ['翻译面板', '0', '0', '—', '0.0%', '0', '0'],
-    ['网页区域', '0', '0', '—', '0.0%', '0', '0'], ['视频字幕', '0', '0', '—', '0.0%', '0', '0'],
-    ['其他译法', '0', '0', '—', '0.0%', '0', '0'],
-    ['未区分（旧版扩展）', '6', '6', '1.0', '100.0%', '0', '6'],
+    ['双语阅读', '6', '6', '0', '0', '1.0', '100.0%', '1', '6'],
+    ['整份 PDF 翻译', '6', '6', '4', '4', '1.0', '100.0%', '0', '18'],
+    ['图片翻译', '5', '5', '3', '3', '1.0', '83.3%', '0', '18'],
+    ['整站翻译', '0', '0', '0', '0', '—', '0.0%', '1', '0'],
+    ['划词翻译', '0', '0', '0', '0', '—', '0.0%', '0', '0'], ['翻译面板', '0', '0', '0', '0', '—', '0.0%', '0', '0'],
+    ['网页区域', '0', '0', '0', '0', '—', '0.0%', '0', '0'], ['视频字幕', '0', '0', '0', '0', '—', '0.0%', '0', '0'],
+    ['其他译法', '0', '0', '0', '0', '—', '0.0%', '0', '0'],
+    ['未区分（旧版扩展）', '6', '6', '0', '0', '1.0', '100.0%', '0', '6'],
   ]);
+  assert.match(page, /有托管请求被受理 · 其中 2\.4\.0\+ 4/);
   assert.match(ranking, /<tr class="muted">\s*<td>划词翻译<\/td>/, '没用过也没被拒的功能淡化显示');
   assert.doesNotMatch(ranking, /report-/);
   assert.match(page, /使用天次[\s\S]*?23[\s\S]*?已使用功能 3 \/ 9/);
@@ -432,6 +435,14 @@ test('托管功能统计在管理端展示，用户端只保留常规用量页�
   assert.doesNotMatch(adminDetail, /查看用户已授权的功能统计|授权范围内|向技术支持分享统计/);
   assert.match(adminDetail, /<dt>最近客户端<\/dt><dd>Chrome 142 · Windows<\/dd>/);
   assert.equal((await a.post(detail + '/feature-usage', {})).status, 404, '旧的授权查看入口已移除');
+
+  // 访客也显示托管功能使用（访客合并进正式账户前就可能用过点数翻译）
+  const { rows: [{ id: guest }] } = await pool.query("INSERT INTO users (kind, username) VALUES ('guest', 'feature-guest') RETURNING id");
+  await pool.query(`INSERT INTO usage_events (user_id, kind, surface, status, chars, cost_units, created_at, ext_version)
+    VALUES ($1, 'image', NULL, 'ok', 0, 0, now(), '2.4.0'), ($1, 'text', 'image', 'ok', 0, 0, now(), '2.4.0')`, [guest]);
+  const guestTable = (await a.text(`/users/${guest}`)).match(/<table data-user-feature-usage>[\s\S]*?<\/table>/)?.[0];
+  assert.ok(guestTable, '访客详情页显示托管功能使用');
+  assert.match(guestTable, /图片翻译<\/td><td class="num">1<\/td><td class="num">2<\/td>/);
   assert.equal((await customer.post('/usage/features/share', {})).status, 404, '分享入口已移除');
   assert.equal((await customer.post('/usage/features/revoke', {})).status, 404, '撤回入口已移除');
 });
