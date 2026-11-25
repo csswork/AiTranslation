@@ -114,20 +114,29 @@
     return merged;
   }
 
-  /** 字幕句的显示时间：从第一个词开始，到下一句开始或最后一个词结束后 0.8 秒；至少显示 1.2 秒，不越过下一句。 */
+  /**
+   * 字幕句的显示时间：从第一个词开始，到下一句开始或最后一个词结束后 0.8 秒；至少显示 1.2 秒，不越过下一句。
+   * 识别器在音频放完后才吐出的词时间会落在片尾之后，这类句子挪回片尾前 1.2 秒内，否则永远播不到。
+   */
   function cueTimes(tokens, ranges, duration) {
     const total = Number.isFinite(duration) ? duration : Infinity;
+    const latest = Math.max(0, total - 1200);
+    const starts = [];
+    for (const range of ranges) {
+      const prev = starts.length ? starts[starts.length - 1] + 1 : 0;
+      starts.push(Math.max(prev, Math.min(tokens[range.from].start, latest)));
+    }
     return ranges.map((range, i) => {
-      const start = tokens[range.from].start;
-      const next = ranges[i + 1] ? tokens[ranges[i + 1].from].start : total;
+      const start = starts[i];
+      const next = i + 1 < starts.length ? starts[i + 1] : total;
       const last = endOf(tokens, range.to, total);
       const end = Math.min(next, total, Math.max(last + 800, start + 1200));
       return { ...range, start, end: Math.max(end, start + 1) };
     });
   }
 
-  /** 交给模型的文稿：[[序号, 词], …]，模型按序号范围切句，不用抄原文，对齐不会错位。 */
-  const promptTokens = (tokens) => tokens.map((t, i) => [i, t.text]);
+  /** 交给模型的文稿：[[序号, 词, 秒], …]，模型按序号范围切句，不用抄原文，对齐不会错位；秒数让它看得出停顿。 */
+  const promptTokens = (tokens) => tokens.map((t, i) => [i, t.text, Math.round(t.start / 100) / 10]);
 
   const shapeError = (message) => Object.assign(new Error(message), { shape: true });
 

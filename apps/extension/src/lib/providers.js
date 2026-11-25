@@ -344,7 +344,7 @@
 
   /** @param {boolean} minimal 只发必需字段，用于调参被拒后的重试 */
   /** json：要求模型只回一个 JSON 对象（OpenAI 兼容的 response_format）；参数被拒时随最小请求体一起去掉。 */
-  function buildBody({ provider, text, image, targetLanguage, system, stream, minimal, json }) {
+  function buildBody({ provider, text, image, targetLanguage, system, stream, minimal, json, temperature }) {
     // 带图时 user 内容改成数组（OpenAI 兼容格式）。图片只能出现在 user 消息里。
     const userContent = image
       ? [
@@ -364,6 +364,8 @@
     const tune = TUNING[provider.id];
     const tuned = tune ? { ...body, ...tune(provider.model) } : { ...body };
     if (json) tuned.response_format = { type: 'json_object' };
+    // 调用方指定的温度只替换平台本来就发的温度（推理模型不收温度，不加）
+    if (temperature != null && 'temperature' in tuned) tuned.temperature = temperature;
     // 识图要的是稳定的坐标，不要翻译场景那种随机性
     if (image && 'temperature' in tuned) tuned.temperature = 0;
     return tuned;
@@ -439,9 +441,9 @@
     }
   }
 
-  async function request({ provider, text, image, targetLanguage, system, stream, signal, json }) {
+  async function request({ provider, text, image, targetLanguage, system, stream, signal, json, temperature }) {
     const url = endpointOf(provider.baseUrl);
-    const args = { provider, text, image, targetLanguage, system, stream, json };
+    const args = { provider, text, image, targetLanguage, system, stream, json, temperature };
 
     let response = await fetchOnce({ url, provider, body: buildBody(args), signal });
     if (response.ok) return response;
@@ -946,6 +948,8 @@
   /* ------------------------------------------------ 整份视频翻译（见 docs/extension/video-file-translation.md） */
 
   const TRANSCRIBE_MODEL = 'whisper-1';
+  /** 切字幕条主要是结构任务：DeepSeek 翻译用的 1.3 会让条数和长短忽多忽少（同一段 127 个词切出 12 到 34 条）。 */
+  const CUE_TEMPERATURE = 0.7;
 
   /** OpenAI 转写接口地址：与对话接口同一个 Base URL。 */
   function transcriptionUrl(baseUrl) {
@@ -1003,9 +1007,9 @@
   function cuePrompt(targetLanguage, terms = []) {
     return [
       `你在为一段短视频做字幕，目标语言是${targetLanguage}。`,
-      '用户消息是一个 JSON 对象：title 是视频所在网页的标题（可能为空，只用来理解内容）；tokens 是语音识别出的逐词结果，每项是 [序号, 词]。识别结果没有可靠的标点，可能有个别识别错的词，也可能混着几个人的话。',
+      '用户消息是一个 JSON 对象：title 是视频所在网页的标题（可能为空，只用来理解内容）；tokens 是语音识别出的逐词结果，每项是 [序号, 词, 这个词出现的秒数]。识别结果没有可靠的标点，可能有个别识别错的词，也可能混着几个人的话。',
       '任务：',
-      '1. 按说话的自然停顿和句子，把 tokens 依次分成字幕句，每句不超过约 14 个英文单词或 25 个汉字的长度。用 from、to 标出这句第一个和最后一个词的序号（含两端）；各句按顺序排列、互不重叠，纯语气词可以跳过。',
+      '1. 把 tokens 依次分成字幕条。每条是一句完整的话，或一句长话里意思完整的一段，最多 12 个英文单词（或 20 个汉字），宁短勿长：超过就在从句、短语之间断成几条。两条之间通常有停顿（秒数跳得大的地方）；不要把下一句的开头接到上一条末尾。用 from、to 标出这条第一个和最后一个词的序号（含两端）；各条按顺序排列、互不重叠，纯语气词可以跳过。',
       '2. text 是这句的原文：用原来的词，只加标点和大小写，不增删、不改词。',
       `3. tr 是这句的${targetLanguage}译文：参照整段内容和标题来译，自然口语、简短，适合做字幕；明显的识别错误按上下文理解后再译。原文已经是${targetLanguage}时照抄原文。`,
       '4. 只输出一个 JSON 对象：{"cues":[{"from":0,"to":8,"text":"…","tr":"…"}]}，不要输出解释或 Markdown 代码块。',
@@ -1049,7 +1053,7 @@
         let local = Array.isArray(hit) ? hit : null;
         if (!local) {
           try {
-            const response = await request({ provider, text, targetLanguage: target, system, stream: false, signal, json: true });
+            const response = await request({ provider, text, targetLanguage: target, system, stream: false, signal, json: true, temperature: CUE_TEMPERATURE });
             const data = await response.json();
             local = T.parseCueReply(data?.choices?.[0]?.message?.content, to - from);
           } catch (err) {

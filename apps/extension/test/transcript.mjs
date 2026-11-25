@@ -42,6 +42,11 @@ const T = globalThis.AITrTranscript;
     assert.ok(timed[i].end > timed[i].start);
     if (timed[i + 1]) assert.ok(timed[i].end <= timed[i + 1].start, '不越过下一句');
   }
+  // 片尾之后才吐出的词：挪回片尾前，仍按顺序、不重叠
+  const late = [{ text: 'a', start: 1000 }, { text: 'b', start: 24000 }, { text: 'c', start: 29600 }, { text: 'd', start: 30000 }];
+  const lateCues = T.cueTimes(late, [{ from: 0, to: 0 }, { from: 1, to: 1 }, { from: 2, to: 2 }, { from: 3, to: 3 }], 26600);
+  assert.ok(lateCues.every((c) => c.start < 26600 && c.end <= 26600), '每句都要在片子里播得到');
+  for (let i = 1; i < lateCues.length; i += 1) assert.ok(lateCues[i].start > lateCues[i - 1].start && lateCues[i - 1].end <= lateCues[i].start);
   // 句末标点也切（Whisper 的词带标点）
   const punct = T.splitCues([{ text: 'Hi.', start: 0 }, { text: 'Who', start: 200 }, { text: 'are', start: 400 }, { text: 'you?', start: 600 }, { text: 'Me', start: 800 }, { text: 'again', start: 1000 }, { text: 'now', start: 1200 }], { lang: 'en' });
   assert.deepEqual(punct.map((c) => [c.from, c.to]), [[0, 0], [1, 3], [4, 6]], '句末标点处切开');

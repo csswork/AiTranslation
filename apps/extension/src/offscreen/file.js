@@ -137,7 +137,9 @@
       let fatal = null;
       let playing = true;
       let finished = false;
-      let started = 0;
+      // 时间按音频时钟算（AudioContext.currentTime）：上下文刚建好时可能还没跑起来，按墙上时间会整体偏晚
+      let startAt = -1;
+      const elapsed = () => (startAt < 0 ? 0 : Math.max(0, (audio.currentTime - startAt) * 1000));
       let timer = 0;
       let tail = 0;
 
@@ -168,7 +170,7 @@
         const round = rounds;
         rounds += 1;
         current.onresult = (event) => {
-          const at = started ? performance.now() - started : 0;
+          const at = elapsed();
           for (let i = event.resultIndex; i < event.results.length; i += 1) {
             log.push([round, i, at, event.results[i][0]?.transcript || '']);
           }
@@ -188,17 +190,15 @@
       };
 
       listen();
-      audio.resume().catch(() => {});
       // 识别器起来需要一点时间，晚一点再开始放，免得开头几个词漏掉
-      setTimeout(() => {
+      audio.resume().catch(() => {}).then(() => {
         if (finished) return;
-        started = performance.now();
-        source.start();
+        startAt = audio.currentTime + 0.3;
+        source.start(startAt);
         timer = setInterval(() => {
-          const done = Math.min(duration, performance.now() - started);
-          emit(jobId, { type: 'progress', phase: 'recognize', done, total: duration });
+          emit(jobId, { type: 'progress', phase: 'recognize', done: Math.min(duration, elapsed()), total: duration });
         }, 1000);
-      }, 300);
+      });
       source.onended = () => {
         tail = setTimeout(() => {
           playing = false;
