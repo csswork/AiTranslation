@@ -1,0 +1,10 @@
+# /etc/systemd/system/huaci-restore-drill.service（由 deploy/setup-server.sh 安装，由定时器触发）
+[Unit]
+Description=Huaci weekly restore drill from R2 / B2
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/huaci-restore-drill
+Nice=10

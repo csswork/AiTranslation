@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Alle Untertitel"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatisch (basierend auf der Sprache der Webseite)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Spracherkennung läuft bei $arg1$ ($arg2$ / $arg3$ Sekunden)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Du kannst höchstens $arg1$ Videos gleichzeitig übersetzen. Warte, bis die vorherigen fertig sind, und versuche es dann erneut.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Untertitel des Videos sind bereit"
+  },
+  "m_cda579be9890174e": {
+    "message": "Zum Ansehen klicken (insgesamt $arg1$ Zeilen)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Das Video konnte nicht übersetzt werden"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Du kannst in der Zwischenzeit andere Seiten durchsuchen; wenn es fertig ist, erscheint unten rechts eine Benachrichtigung."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Auf neuer Seite ansehen"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Videoliste"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Videotranslation · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Klicke mit der rechten Maustaste auf ein Video auf einer Webseite und wähle „Dieses Video übersetzen“. Übersetzte Videos und Untertitel werden nur in diesem Browser gespeichert, nie hochgeladen, und nur die letzten 30 werden behalten."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Wird übersetzt"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Übersetzte Videos"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Noch keine übersetzten Videos."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Die Videodatei wurde nicht gespeichert, daher wird sie von der ursprünglichen URL abgespielt; sie lässt sich nicht abspielen, wenn die ursprüngliche URL nicht mehr funktioniert."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Wähle links ein Video zum Ansehen."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ Sätze",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Wird vorbereitet…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · insgesamt $arg2$ Sätze",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Löschen bestätigen"
+  },
+  "m_8376b3532a377326": {
+    "message": "Übersetzte Videos ansehen"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Übersetzte Videos und Videos, die gerade übersetzt werden"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Kann nicht erkennen, welche Sprache das Video hat"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Hier klicken, um eine auszuwählen"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Es wurden noch keine Offline-Sprachpakete heruntergeladen, daher ist keine Erkennung auf dem Gerät möglich. Gehe zu den Einstellungen, um Sprachpakete für die in Videos häufig verwendeten Sprachen herunterzuladen"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Es wurde eine Zeit lang keine Videosprache ausgewählt, daher wurde es beendet"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Die Untertitel sind möglicherweise falsch: Im Video scheint $arg1$ gesagt zu werden, erkannt wurde jedoch $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Die Untertitel sind möglicherweise falsch: Das Erkennungsergebnis ergibt keinen Sinn, und im Video wird möglicherweise nicht $arg1$ gesagt",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Sprache im Video wird erkannt (Hörprobe: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Nicht heruntergeladene Sprachen erfordern zuerst einen Download des Sprachpakets in den Einstellungen; du kannst auch später auf der Seite „Videotranslation“ eine auswählen"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Die im Video gesprochene Sprache konnte nicht erkannt werden. Bitte wähle eine aus:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (Sprachpaket noch nicht heruntergeladen)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Im Video gesprochene Sprache"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Erkennung starten"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Weitere Sprachpakete herunterladen"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Offline-Sprachpakete"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Erkennungssprache für Live-Untertitel"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "Die im Video gesprochene Sprache, nicht die Sprache, in die die Untertitel übersetzt werden. „Automatisch“ folgt der Sprache der Webseite."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Heruntergeladen: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Noch keine Sprachpakete heruntergeladen: Für die Erkennung auf dem Gerät muss mindestens eines heruntergeladen werden."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Vor der lokalen Erkennung prüft die Erweiterung zunächst mit den bereits heruntergeladenen Sprachpaketen, welche Sprache im Video gesprochen wird (beginnend mit der Sprache der Webseite); kann sie es nicht erkennen, wirst du gebeten, eine auszuwählen. Wenn Videos häufig in einer bestimmten Sprache sind, wähle sie hier aus und lade ihr Sprachpaket herunter."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

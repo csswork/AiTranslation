@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Todas as legendas"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automático (com base no idioma da página)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Reconhecendo fala em $arg1$ ($arg2$ / $arg3$ segundos)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Você pode traduzir até $arg1$ vídeos por vez. Aguarde os anteriores terminarem e tente novamente.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Vídeo"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "As legendas do vídeo estão prontas"
+  },
+  "m_cda579be9890174e": {
+    "message": "Clique para assistir ($arg1$ linhas no total)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Não foi possível traduzir o vídeo"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Você pode navegar em outras páginas enquanto isso; quando terminar, uma notificação aparecerá no canto inferior direito."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Ver em nova página"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Lista de vídeos"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Tradução de vídeo · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Clique com o botão direito em um vídeo na página e selecione \"Traduzir este vídeo\". Os vídeos e legendas traduzidos ficam armazenados apenas neste navegador, nunca são enviados e somente os 30 mais recentes são mantidos."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Traduzindo"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Vídeos traduzidos"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Ainda não há vídeos traduzidos."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "O arquivo de vídeo não foi salvo, então está sendo reproduzido a partir do URL original; não será possível reproduzi-lo se o URL original parar de funcionar."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Selecione um vídeo à esquerda para assistir."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ frases",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Preparando…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · $arg2$ frases no total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Confirmar exclusão"
+  },
+  "m_8376b3532a377326": {
+    "message": "Ver vídeos traduzidos"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Vídeos traduzidos e vídeos sendo traduzidos"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Não é possível identificar em que idioma o vídeo está"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Clique aqui para escolher um"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Nenhum pacote de idioma offline foi baixado ainda, então não é possível reconhecer no dispositivo. Vá para as configurações para baixar pacotes de idioma para os idiomas comumente usados em vídeos"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Nenhum idioma de vídeo foi selecionado por um tempo, então foi interrompido"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "As legendas podem estar erradas: o vídeo parece dizer $arg1$, mas foi reconhecido como $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "As legendas podem estar erradas: o resultado do reconhecimento não faz sentido, e o vídeo pode não estar dizendo $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Detectando o idioma falado no vídeo (amostra: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Os idiomas que ainda não foram baixados precisam ter o pacote de idioma baixado nas configurações primeiro; você também pode selecionar um depois na página \"Tradução de vídeo\""
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Não foi possível detectar o idioma falado no vídeo. Escolha um:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (pacote de idioma ainda não baixado)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Idioma falado no vídeo"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Iniciar reconhecimento"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Baixar mais pacotes de idiomas"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Pacotes de idioma offline"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Idioma de reconhecimento das legendas em tempo real"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "O idioma falado no vídeo, não o idioma para o qual as legendas serão traduzidas. \"Automático\" segue o idioma da página web."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Baixado: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Nenhum pacote de idioma baixado ainda: o reconhecimento no dispositivo requer pelo menos um pacote baixado primeiro."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Antes do reconhecimento no dispositivo, a extensão primeiro escuta em cada idioma cujo pacote já foi baixado para determinar em qual idioma o vídeo está (começando pelo idioma da página); se não conseguir identificar, você será solicitado a escolher. Se os vídeos costumam estar em um determinado idioma, selecione-o aqui e baixe o pacote de idioma."
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

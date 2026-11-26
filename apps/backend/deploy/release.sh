@@ -18,6 +18,16 @@ npm ci --omit=dev --no-audit --no-fund
 # Node 只在启动时读取 NODE_EXTRA_CA_CERTS，--env-file 设置得太晚，需提前导出（RDS 证书校验要用）
 NODE_EXTRA_CA_CERTS=$(sed -n 's/^NODE_EXTRA_CA_CERTS=//p' "$ENV_FILE")
 export NODE_EXTRA_CA_CERTS
+
+# 迁移前先在本机留一份数据库备份（保留最近 5 份）：迁移不自动回滚，出错时用它恢复。
+# 备份失败就停止发布，此时还没迁移、没切换版本，线上不受影响。pg_dump 版本不能低于数据库。
+mkdir -p -m 700 "$ROOT/backups"
+backup="$ROOT/backups/pre-$(basename "$RELEASE")-$(date -u +%Y%m%dT%H%M%SZ).dump"
+env ${NODE_EXTRA_CA_CERTS:+PGSSLROOTCERT="$NODE_EXTRA_CA_CERTS"} pg_dump --format=custom --file="$backup" \
+  --dbname="$(sed -n 's/^DATABASE_URL=//p' "$ENV_FILE")"
+ls -1t "$ROOT"/backups/pre-*.dump | tail -n +6 | xargs -r rm -f
+echo "迁移前备份：$backup"
+
 NODE_ENV=production node --env-file="$ENV_FILE" src/db/migrate.js
 
 ln -sfn "$RELEASE" "$ROOT/current.next"

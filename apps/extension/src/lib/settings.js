@@ -121,6 +121,12 @@
     return [id, { id, languageId: language.id }];
   }));
 
+  /** 语言代码（en、zh-CN、ja-JP…）→ 识别语言；认不出返回 undefined。 */
+  const langFor = (code) => {
+    const languageId = code ? AITrLanguages.match(String(code)) : '';
+    return languageId ? Object.values(VIDEO_LANGS).find((v) => v.languageId === languageId) : undefined;
+  };
+
   const DEFAULTS = {
     schemaVersion: 2,
     uiLanguage: 'auto',
@@ -134,7 +140,8 @@
     shortcut: true, // 快捷键翻译选中文字
     // 视频字幕是实验功能，默认关闭：关着的时候入口、菜单项与设置都不出现
     videoEnabled: false,
-    videoLang: 'en-US',
+    // 识别语言：auto 按网页的语言选（9GAG 这类英文网站就是英语）；也可以固定一种。设备端识别不会自己判断语种
+    videoLang: 'auto',
     // 视频字幕默认在本机识别；主动打开后声音发给浏览器云端服务（Chrome: Google；Edge: Azure）
     videoCloud: false,
     videoTranslate: true, // 把识别出的每一句翻译成目标语言，显示双语字幕
@@ -178,7 +185,7 @@
       floating: input.floating !== false,
       shortcut: input.shortcut !== false,
       videoEnabled: input.videoEnabled === true && !globalThis.AITrEnv?.firefox,
-      videoLang: VIDEO_LANGS[input.videoLang] ? input.videoLang : Object.values(VIDEO_LANGS).find((v) => v.languageId === AITrLanguages.match(input.videoLang))?.id || DEFAULTS.videoLang,
+      videoLang: input.videoLang === 'auto' || VIDEO_LANGS[input.videoLang] ? input.videoLang : langFor(input.videoLang)?.id || DEFAULTS.videoLang,
       videoCloud: input.videoCloud === true,
       videoTranslate: input.videoTranslate !== false,
       imageFill: IMAGE_FILLS.includes(input.imageFill) ? input.imageFill : DEFAULTS.imageFill,
@@ -296,11 +303,21 @@
       hint: t(PROVIDERS[id].hint),
     }));
   const targetList = () => AITrLanguages.list();
-  const videoLang = (settings) => {
-    const value = VIDEO_LANGS[settings.videoLang] || VIDEO_LANGS[DEFAULTS.videoLang];
-    return { ...value, label: AITrLanguages.label(value.languageId) };
+  /**
+   * 这次识别用的语言（总是一种具体的语言）。设置是 auto 时按 hint（网页的语言，如 tabs.detectLanguage 给的 en、zh-CN）选，
+   * 选不出来用英语。auto 为真表示是自动选的。
+   */
+  const videoLang = (settings, hint = '') => {
+    const auto = settings.videoLang === 'auto' || !VIDEO_LANGS[settings.videoLang];
+    const value = (auto ? langFor(hint) : VIDEO_LANGS[settings.videoLang]) || VIDEO_LANGS['en-US'];
+    return { ...value, auto, label: AITrLanguages.label(value.languageId) };
   };
-  const videoLangList = () => Object.values(VIDEO_LANGS).map((v) => ({ ...v, label: AITrLanguages.label(v.languageId) }));
+  /** 识别语言 id（en-US、ja…）→ 带名字的识别语言；认不出返回 null。 */
+  const videoLangById = (id) => (VIDEO_LANGS[id] ? { ...VIDEO_LANGS[id], label: AITrLanguages.label(VIDEO_LANGS[id].languageId) } : null);
+  const videoLangList = () => [
+    { id: 'auto', label: t("自动（按网页的语言）") },
+    ...Object.values(VIDEO_LANGS).map((v) => ({ ...v, label: AITrLanguages.label(v.languageId) })),
+  ];
 
   globalThis.AITrSettings = {
     PROVIDERS,
@@ -333,6 +350,8 @@
     targetList,
     VIDEO_LANGS,
     videoLang,
+    videoLangById,
+    videoLangFor: (code) => langFor(code)?.id || '',
     videoLangList,
   };
 })();

@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Wszystkie napisy"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatycznie (na podstawie języka strony)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Rozpoznawanie mowy w języku $arg1$ ($arg2$ / $arg3$ s)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Możesz tłumaczyć jednocześnie maksymalnie $arg1$ filmów. Poczekaj, aż poprzednie zostaną ukończone, i spróbuj ponownie.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Film"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Napisy do filmu są gotowe"
+  },
+  "m_cda579be9890174e": {
+    "message": "Kliknij, aby obejrzeć (łącznie $arg1$ zdań)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Nie udało się przetłumaczyć filmu"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Możesz w międzyczasie przeglądać inne strony; po zakończeniu tłumaczenia w prawym dolnym rogu pojawi się powiadomienie."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Otwórz na nowej stronie"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Lista filmów"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Tłumaczenie filmów · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Kliknij film na stronie prawym przyciskiem myszy i wybierz „Przetłumacz ten film”. Przetłumaczone filmy i napisy są przechowywane tylko w tej przeglądarce, nigdy nie są przesyłane, a zachowywanych jest tylko 30 najnowszych."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Tłumaczenie"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Przetłumaczone filmy"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Brak przetłumaczonych filmów."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Plik filmu nie został zapisany, więc odtwarzanie odbywa się z oryginalnego adresu URL; przestanie działać, jeśli oryginalny adres URL przestanie być dostępny."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Wybierz film po lewej stronie, aby go obejrzeć."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ zdań",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Przygotowywanie…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · łącznie $arg2$ zdań",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Potwierdź usunięcie"
+  },
+  "m_8376b3532a377326": {
+    "message": "Zobacz przetłumaczone filmy"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Przetłumaczone filmy i filmy w trakcie tłumaczenia"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Nie można rozpoznać, w jakim języku jest film"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Kliknij tutaj, aby wybrać"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Nie pobrano jeszcze żadnych pakietów językowych offline, więc rozpoznawanie na urządzeniu nie jest możliwe. Przejdź do ustawień, aby pobrać pakiety językowe dla języków często używanych w filmach"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Przez dłuższy czas nie wybrano języka filmu, więc proces został zatrzymany"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Napisy mogą być błędne: film zdaje się mówić $arg1$, ale rozpoznano $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Napisy mogą być błędne: wynik rozpoznawania nie ma sensu, a film może nie mówić $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Wykrywanie języka mowy w filmie (próbka: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Języki, które nie zostały jeszcze pobrane, wymagają najpierw pobrania pakietu językowego w ustawieniach; możesz też wybrać język później na stronie „Tłumaczenie filmów”"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Nie udało się wykryć języka mowy w filmie. Wybierz jeden:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (pakiet językowy nie został jeszcze pobrany)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Język mowy w filmie"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Rozpocznij rozpoznawanie"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Pobierz więcej pakietów językowych"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Pakiety językowe offline"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Język rozpoznawania dla napisów na żywo"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "Język mówiony w filmie, a nie język, na który tłumaczone są napisy. „Automatycznie” oznacza język strony."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Pobrano: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Nie pobrano jeszcze żadnych pakietów językowych: rozpoznawanie na urządzeniu wymaga pobrania co najmniej jednego."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Przed rozpoznawaniem na urządzeniu rozszerzenie najpierw nasłuchuje w każdym języku, którego pakiet został już pobrany, aby ustalić, w jakim języku jest film (zaczynając od języka strony); jeśli nie potrafi tego rozpoznać, poprosi Cię o wybór. Jeśli filmy często są w danym języku, wybierz go tutaj i pobierz jego pakiet językowy."
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

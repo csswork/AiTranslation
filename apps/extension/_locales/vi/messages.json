@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Tất cả phụ đề"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Tự động (theo ngôn ngữ của trang web)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Đang nhận dạng giọng nói tại $arg1$ ($arg2$ / $arg3$ giây)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Bạn chỉ có thể dịch tối đa $arg1$ video cùng lúc. Hãy đợi các video trước dịch xong rồi thử lại.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Phụ đề video đã sẵn sàng"
+  },
+  "m_cda579be9890174e": {
+    "message": "Nhấp để xem (tổng cộng $arg1$ câu)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Không thể dịch video"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Bạn có thể xem các trang khác trước, khi dịch xong sẽ có thông báo ở góc dưới bên phải"
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Xem trong trang mới"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Danh sách video"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Dịch video · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Nhấp chuột phải vào video trên trang web và chọn \"Dịch video này\". Video và phụ đề đã dịch chỉ được lưu trong trình duyệt này, không tải lên, chỉ giữ tối đa 30 video gần nhất."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Đang dịch"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Video đã dịch"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Chưa có video nào được dịch."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Không lưu được tệp video, đang phát từ URL gốc; sẽ không phát được nếu URL gốc hết hiệu lực."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Chọn một video ở bên trái để xem."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ câu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Đang chuẩn bị…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · tổng cộng $arg2$ câu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Xác nhận xóa"
+  },
+  "m_8376b3532a377326": {
+    "message": "Xem video đã dịch"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Video đã dịch và video đang dịch"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Không thể nhận biết video đang nói ngôn ngữ gì"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Nhấp vào đây để chọn"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Chưa tải xuống gói ngôn ngữ ngoại tuyến nào nên không thể nhận dạng trên máy. Vào cài đặt để tải xuống gói ngôn ngữ cho các ngôn ngữ thường dùng trong video"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Đã một lúc không chọn ngôn ngữ video nên đã dừng lại"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Phụ đề có thể không đúng: video có vẻ nói $arg1$, nhưng lại được nhận dạng là $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Phụ đề có thể không đúng: kết quả nhận dạng không hợp lý, có thể video không nói $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Đang xác định ngôn ngữ nói trong video (nghe thử: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Ngôn ngữ chưa tải xuống cần tải gói ngôn ngữ trong phần cài đặt trước; bạn cũng có thể chọn sau ở trang \"Dịch video\""
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Không nhận ra ngôn ngữ nói trong video, vui lòng chọn một:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (chưa tải gói ngôn ngữ)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Ngôn ngữ nói trong video"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Bắt đầu nhận dạng"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Tải thêm gói ngôn ngữ"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Gói ngôn ngữ ngoại tuyến"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Ngôn ngữ nhận dạng cho phụ đề trực tiếp"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "Ngôn ngữ được nói trong video, không phải ngôn ngữ mà phụ đề sẽ được dịch sang. \"Tự động\" sẽ chọn theo ngôn ngữ của trang web."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Đã tải xuống: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Chưa tải xuống gói ngôn ngữ nào: nhận dạng trên máy cần tải xuống ít nhất một gói trước."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Trước khi nhận dạng trên thiết bị, tiện ích sẽ thử nghe bằng các ngôn ngữ đã tải gói để xác định video đang nói ngôn ngữ nào (thử ngôn ngữ của trang web trước); nếu không phân biệt được, bạn sẽ được yêu cầu chọn. Nếu video thường nói một ngôn ngữ nhất định, hãy chọn ngôn ngữ đó ở đây và tải gói ngôn ngữ."
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

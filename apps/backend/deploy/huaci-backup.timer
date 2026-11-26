@@ -1,0 +1,11 @@
+# /etc/systemd/system/huaci-backup.timer：每 15 分钟备份一次；关机错过的会在开机后补跑
+[Unit]
+Description=Huaci backup every 15 minutes
+
+[Timer]
+OnCalendar=*:0/15
+RandomizedDelaySec=60
+Persistent=true
+
+[Install]
+WantedBy=timers.target

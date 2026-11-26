@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Tutti i sottotitoli"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatico (in base alla lingua della pagina web)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Riconoscimento vocale in corso a $arg1$ ($arg2$ / $arg3$ secondi)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Puoi tradurre al massimo $arg1$ video alla volta. Attendi che i precedenti siano terminati, poi riprova.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "I sottotitoli del video sono pronti"
+  },
+  "m_cda579be9890174e": {
+    "message": "Clicca per guardare ($arg1$ righe in totale)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Non è stato possibile tradurre il video"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Nel frattempo puoi visitare altre pagine; al termine, riceverai una notifica nell'angolo in basso a destra."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Visualizza in una nuova pagina"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Elenco video"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Traduzione video · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Fai clic con il pulsante destro su un video in una pagina web e seleziona «Traduci questo video». I video e i sottotitoli tradotti vengono salvati solo in questo browser, mai caricati, e vengono conservati solo i 30 più recenti."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Traduzione in corso"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Video tradotti"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Nessun video tradotto."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Il file video non è stato salvato, quindi viene riprodotto dall'URL originale; non sarà riproducibile se l'URL originale smette di funzionare."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Seleziona un video a sinistra per guardarlo."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ frasi",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Preparazione…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · $arg2$ frasi in totale",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Conferma eliminazione"
+  },
+  "m_8376b3532a377326": {
+    "message": "Visualizza i video tradotti"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Video tradotti e video in fase di traduzione"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Impossibile determinare la lingua del video"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Fai clic qui per sceglierne una"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Non è stato ancora scaricato alcun pacchetto linguistico offline, quindi non è possibile il riconoscimento sul dispositivo. Vai alle impostazioni per scaricare i pacchetti linguistici delle lingue usate più spesso nei video"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Non è stata selezionata alcuna lingua del video per un po', quindi è stato interrotto"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "I sottotitoli potrebbero essere errati: il video sembra dire $arg1$, ma è stato riconosciuto come $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "I sottotitoli potrebbero essere errati: il risultato del riconoscimento non ha senso e il video potrebbe non dire $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Rilevamento della lingua parlata nel video (campione: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Le lingue non ancora scaricate richiedono prima il download del pacchetto lingua nelle impostazioni; puoi anche selezionarne una in seguito nella pagina \"Traduzione video\""
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Impossibile rilevare la lingua parlata nel video. Scegline una:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (pacchetto lingua non ancora scaricato)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Lingua parlata nel video"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Avvia riconoscimento"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Scarica altri pacchetti lingua"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Pacchetti linguistici offline"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Lingua di riconoscimento per i sottotitoli in tempo reale"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "La lingua parlata nel video, non la lingua in cui vengono tradotti i sottotitoli. \"Automatico\" segue la lingua della pagina web."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Scaricati: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Nessun pacchetto linguistico scaricato: il riconoscimento sul dispositivo richiede che ne venga scaricato almeno uno."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Prima del riconoscimento sul dispositivo, l'estensione ascolta in ciascuna lingua il cui pacchetto è già scaricato per determinare in quale lingua è il video (partendo dalla lingua della pagina web); se non riesce a capirlo, ti verrà chiesto di scegliere. Se i video sono spesso in una determinata lingua, selezionala qui e scarica il relativo pacchetto linguistico."
+  },
   "extensionName": {
     "message": "Huaci – Traduttore AI e lettore bilingue"
   },

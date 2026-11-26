@@ -135,8 +135,12 @@
     });
   }
 
-  /** 交给模型的文稿：[[序号, 词, 秒], …]，模型按序号范围切句，不用抄原文，对齐不会错位；秒数让它看得出停顿。 */
-  const promptTokens = (tokens) => tokens.map((t, i) => [i, t.text, Math.round(t.start / 100) / 10]);
+  /**
+   * 交给模型的文稿：[[序号, 词], …]，模型按序号范围切句，不用抄原文，对齐不会错位。
+   * 不带时间：设备端识别的词时间按结果到达的批次推算，词间的「停顿」大多是识别器的节奏而不是说话的停顿
+   * （探针里 0.6–0.9 秒的间隔一半落在句子中间），给模型只会误导。
+   */
+  const promptTokens = (tokens) => tokens.map((t, i) => [i, t.text]);
 
   const shapeError = (message) => Object.assign(new Error(message), { shape: true });
 
@@ -150,8 +154,9 @@
   }
 
   /**
-   * 解析模型切句 + 翻译的回复：{ cues: [{ from, to, text, tr }] }。
+   * 解析模型切句 + 翻译的回复：{ lang, garbled, cues: [{ from, to, text, tr }] }。
    * 序号必须是整数、在范围内、按顺序且互不重叠（中间可以跳过语气词）；不合格就抛 shape 错误，由调用方退回不靠模型的切句。
+   * lang、garbled 是模型对说话语言与识别结果是否读不通的判断，缺了不算错。
    */
   function parseCueReply(content, count) {
     let data;
@@ -159,7 +164,7 @@
     const list = Array.isArray(data) ? data : data?.cues;
     if (!Array.isArray(list) || !list.length) throw shapeError('Reply has no cues');
     let prev = -1;
-    return list.map((item) => {
+    const cues = list.map((item) => {
       const from = Number(item?.from);
       const to = Number(item?.to);
       if (!Number.isInteger(from) || !Number.isInteger(to) || from > to || from <= prev || to >= count) {
@@ -170,6 +175,8 @@
       if (!tr) throw shapeError('Cue has no translation');
       return { from, to, text: typeof item.text === 'string' ? item.text.trim() : '', tr };
     });
+    const lang = typeof data?.lang === 'string' && /^[a-z]{2,3}$/i.test(data.lang.trim()) ? data.lang.trim().toLowerCase() : '';
+    return { cues, lang, garbled: typeof data?.garbled === 'boolean' ? data.garbled : undefined };
   }
 
   /** 按词数把长文稿切成几段分别请求：切在停顿最长的地方，每段不超过 max 个词。 */
@@ -250,8 +257,22 @@
     return Math.sqrt(sum / samples.length) < threshold;
   }
 
+  /**
+   * 不靠模型判断视频说的是哪种语言（DeepL、本机翻译、点数翻译用）：按哪种语言听，识别出的词最密就是哪种。
+   * 听错语言时识别器多半只吐出零星几个词（探针：英语视频按中文听，116 秒只出 15 个词，按英语听 371 个）。
+   * 最密的也不到每秒 minRate 个词（听不出人说话）、或和第二名差不多，都算判断不了。heard: [{ lang, words }]，ms 是听了多久。
+   */
+  function judgeByDensity(heard, ms, { minRate = 0.6, margin = 1.5 } = {}) {
+    const seconds = Math.max(1, ms / 1000);
+    const ranked = heard.map((item) => ({ lang: item.lang, rate: (item.words || 0) / seconds })).sort((a, b) => b.rate - a.rate);
+    const [best, second] = ranked;
+    if (!best || best.rate < minRate) return '';
+    if (second && best.rate < second.rate * margin) return '';
+    return best.lang;
+  }
+
   globalThis.AITrTranscript = {
     LATENCY_MS, unspaced, tokenize, joinTokens, timedTokens, splitCues, cueTimes, promptTokens,
-    parseCueReply, chunkTokens, fromWhisper, encodeWav, sniffMedia, isSilent,
+    parseCueReply, parseJson: stripJson, chunkTokens, fromWhisper, encodeWav, sniffMedia, isSilent, judgeByDensity,
   };
 })();

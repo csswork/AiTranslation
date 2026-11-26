@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Tüm altyazılar"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Otomatik (web sayfası diline göre)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "$arg1$ ile konuşma tanınıyor ($arg2$ / $arg3$ saniye)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Aynı anda en fazla $arg1$ video çevirebilirsiniz. Öncekilerin bitmesini bekleyip tekrar deneyin",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Video altyazıları hazır"
+  },
+  "m_cda579be9890174e": {
+    "message": "İzlemek için tıklayın (toplam $arg1$ satır)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Video çevrilemedi"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Bu arada başka sayfalara göz atabilirsiniz; çeviri tamamlandığında sağ alt köşede bir bildirim görünecek."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Yeni sayfada görüntüle"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Video listesi"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Video çevirisi · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Bir web sayfasındaki videoya sağ tıklayın ve \"Bu videoyu çevir\"i seçin. Çevrilen videolar ve altyazılar yalnızca bu tarayıcıda saklanır, hiçbir zaman yüklenmez ve yalnızca en son 30 tanesi tutulur."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Çevriliyor"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Çevrilen videolar"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Henüz çevrilmiş video yok."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Video dosyası kaydedilmediği için orijinal URL'den oynatılıyor; orijinal URL çalışmayı bırakırsa oynatılamaz."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "İzlemek için soldan bir video seçin."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ cümle",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Hazırlanıyor…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · toplam $arg2$ cümle",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Silmeyi onayla"
+  },
+  "m_8376b3532a377326": {
+    "message": "Çevrilmiş videoları görüntüle"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Çevrilmiş videolar ve çevrilmekte olan videolar"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Videonun hangi dilde olduğu anlaşılamıyor"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Seçmek için buraya tıklayın"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Henüz hiçbir çevrimdışı dil paketi indirilmedi, bu yüzden cihaz üzerinde tanıma yapılamıyor. Videolarda sık kullanılan dillerin dil paketlerini indirmek için ayarlara gidin"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Bir süredir video dili seçilmedi, bu yüzden durduruldu"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Altyazılar yanlış olabilir: video $arg1$ diyor gibi görünüyor, ancak $arg2$ olarak tanındı",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Altyazılar yanlış olabilir: tanıma sonucu anlamlı değil, video $arg1$ demiyor olabilir",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Videoda konuşulan dil algılanıyor (örnek: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "İndirilmemiş diller için önce ayarlardan dil paketini indirmeniz gerekir; daha sonra \"Video çevirisi\" sayfasından da seçebilirsiniz"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Videoda konuşulan dil algılanamadı. Lütfen birini seçin:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (dil paketi henüz indirilmedi)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Videoda konuşulan dil"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Tanımayı başlat"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Daha fazla dil paketi indir"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Çevrimdışı dil paketleri"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Canlı altyazılar için tanıma dili"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "Videoda konuşulan dil; altyazıların çevrileceği dil değil. \"Otomatik\" web sayfası dilini izler."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "İndirildi: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Henüz hiçbir dil paketi indirilmedi: cihaz üzerinde tanıma için önce en az birinin indirilmesi gerekir."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Cihaz üzerinde tanımadan önce, uzantı videonun hangi dilde olduğunu belirlemek için indirilmiş dil paketleriyle birkaç dili dinler (önce web sayfasının dilini dener); anlayamazsa seçmeniz istenir. Videolar sık sık belirli bir dildeyse burada o dili seçin ve dil paketini indirin."
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

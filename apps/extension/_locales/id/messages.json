@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Semua subtitel"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Otomatis (berdasarkan bahasa halaman web)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Mengenali ucapan pada $arg1$ ($arg2$ / $arg3$ detik)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Maksimal $arg1$ video dapat diterjemahkan sekaligus. Tunggu hingga video sebelumnya selesai, lalu coba lagi.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Subtitle video sudah siap"
+  },
+  "m_cda579be9890174e": {
+    "message": "Klik untuk menonton (total $arg1$ baris)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "Video gagal diterjemahkan"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Anda bisa membuka halaman lain dulu; setelah selesai, pemberitahuan akan muncul di pojok kanan bawah."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Lihat di halaman baru"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Daftar video"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Terjemahan video · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Klik kanan pada video di halaman web, lalu pilih \"Terjemahkan video ini\". Video dan subtitle hasil terjemahan hanya disimpan di browser ini, tidak diunggah, dan hanya 30 yang terbaru yang disimpan."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Menerjemahkan"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Video hasil terjemahan"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Belum ada video hasil terjemahan."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "File video tidak disimpan, jadi diputar dari URL asli; video tidak dapat diputar jika URL asli tidak lagi berfungsi."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Pilih video di sebelah kiri untuk menonton."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ kalimat",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Menyiapkan…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · total $arg2$ kalimat",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Konfirmasi penghapusan"
+  },
+  "m_8376b3532a377326": {
+    "message": "Lihat video terjemahan"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Video terjemahan dan video yang sedang diterjemahkan"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Tidak dapat mengenali bahasa dalam video"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Klik di sini untuk memilih"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Belum ada paket bahasa offline yang diunduh, jadi pengenalan di perangkat tidak dapat dilakukan. Buka pengaturan untuk mengunduh paket bahasa yang umum digunakan dalam video"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Bahasa video tidak dipilih untuk sementara waktu, jadi telah dihentikan"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Subtitel mungkin salah: video tampaknya mengatakan $arg1$, tetapi dikenali sebagai $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Subtitel mungkin salah: hasil pengenalan tidak masuk akal, video mungkin tidak mengatakan $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Mendeteksi bahasa yang diucapkan dalam video (sampel: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Bahasa yang belum diunduh harus mengunduh paket bahasanya terlebih dahulu di pengaturan; Anda juga dapat memilihnya nanti di halaman \"Terjemahan video\""
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Tidak dapat mendeteksi bahasa yang diucapkan dalam video. Silakan pilih salah satu:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (paket bahasa belum diunduh)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Bahasa yang diucapkan dalam video"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Mulai pengenalan"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Unduh paket bahasa lainnya"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Paket bahasa offline"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Bahasa pengenalan untuk takarir langsung"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "Bahasa yang diucapkan dalam video, bukan bahasa tujuan terjemahan takarir. \"Otomatis\" mengikuti bahasa halaman web."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Telah diunduh: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Belum ada paket bahasa yang diunduh: pengenalan di perangkat memerlukan setidaknya satu paket bahasa yang diunduh terlebih dahulu."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Sebelum pengenalan di perangkat, ekstensi terlebih dahulu mendengarkan dalam setiap bahasa yang paketnya sudah diunduh untuk menentukan bahasa video (dimulai dari bahasa halaman web); jika tidak dapat menentukannya, Anda akan diminta memilih. Jika video sering dalam bahasa tertentu, pilih di sini dan unduh paket bahasanya."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

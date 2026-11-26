@@ -482,8 +482,14 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   const opened = file.tabMessages.find((m) => m.message.type === 'video-file-open');
   assert.ok(opened, '直链视频：注入浮层并交给它一个任务');
   assert.equal(opened.options.frameId, 3, '发到视频所在的框架');
-  assert.equal(opened.message.error, '');
+  assert.ok(!opened.message.error);
   assert.ok(opened.message.jobId && opened.message.resultKey);
+  // 同一个视频还没翻完时再点：接上同一路，不重新开始
+  await file.listeners.clicked({ menuItemId: 'ai-translate-video', srcUrl: 'https://img-9gag-fun.9cache.com/photo/a_460sv.mp4', frameId: 3 }, { id: 5 });
+  await settle();
+  const again = file.tabMessages.filter((m) => m.message.type === 'video-file-open');
+  assert.equal(again.length, 2);
+  assert.equal(again[1].message.jobId, opened.message.jobId, '再点同一个视频接上原来那一路');
 
   const stream = await click({}, 'blob:https://www.youtube.com/123');
   const refused = stream.tabMessages.find((m) => m.message.type === 'video-file-open');

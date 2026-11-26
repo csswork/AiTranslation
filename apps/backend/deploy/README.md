@@ -1,12 +1,14 @@
 # VPS 部署说明（草案）
 
-状态：服务器（AWS EC2 新加坡，Debian 13）已初始化，尚未发布上线。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
+状态：生产环境运行在 AWS EC2 新加坡（Debian 13）+ Amazon RDS；正在迁往东京 VPS，数据库改为同机 PostgreSQL 18，并启用加密异地备份（见 [容灾手册](../../../docs/backend/disaster-recovery.md)）。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
 
 ## 运行方式
 
 - 用户端 `app.huaci.app` 与管理端 `admin.huaci.app` 是同一个服务，按主机名区分界面。
 - Node.js 22+ 进程监听 `127.0.0.1:8787`，由 Caddy（[`Caddyfile`](Caddyfile)）自动申请 HTTPS 证书后转发；设置 `TRUST_PROXY=1`。经 Cloudflare 代理时 Caddy 只对 Cloudflare 地址段采信 `CF-Connecting-IP`，并把它写成 `X-Forwarded-For`，限流按此区分来源。
-- PostgreSQL 单独部署（如 Amazon RDS），数据库账号只授予本应用库的权限；RDS 连接串用 `sslmode=verify-full`，CA 由 `NODE_EXTRA_CA_CERTS` 指向服务器上的 RDS 证书包。
+- PostgreSQL 18 默认与后端同机（[`postgresql.conf`](postgresql.conf)）：只开 Unix socket，库与角色都叫 `huaci`，系统用户 `huaci` 经 peer 认证连接，没有密码。也可以放在别处（`DB=external`，如 Amazon RDS）：数据库账号只授予本应用库的权限，连接串用 `sslmode=verify-full`，CA 由 `NODE_EXTRA_CA_CERTS` 指向 RDS 证书包。
+- 备份：`huaci-backup.timer` 每 15 分钟把数据库导出、用 age 加密后传到 Cloudflare R2，每天复制一份到 Backblaze B2；`huaci-restore-drill.timer` 每周恢复演练一次。配置在 `/etc/huaci/backup.env`（root 600，模板 [`backup.env.example`](backup.env.example)）。恢复、整机重建与切换步骤见 [容灾手册](../../../docs/backend/disaster-recovery.md)。
+- 防火墙：`huaci-firewall`（[`firewall.sh`](firewall.sh)）在独立的 nftables 表里只放行 SSH、Cloudflare 访问 80/443 与 `/etc/huaci/firewall.env` 列出的端口；Caddy 只开 HTTP/1.1 与 HTTP/2，不占 UDP 443。
 - 配置全部来自 `/etc/huaci/backend.env`（root:huaci 640，模板 [`backend.env.example`](backend.env.example)，不放进仓库）：systemd 用 `EnvironmentFile` 读取，迁移用 `node --env-file` 读取，不使用 `.env.local`。
 
 ## 环境变量
@@ -19,7 +21,8 @@
 | `TRUST_PROXY` | `1` | 反向代理之后使用 |
 | `WEB_ORIGINS` | 默认 `https://huaci.app,https://www.huaci.app` | 可读取登录状态、可作为登录后返回地址的官网来源，逗号分隔，必须是 HTTPS |
 | `SHARED_COOKIE_DOMAIN` | `huaci.app` | 与官网共用语言、配色偏好 Cookie 的父域；必须覆盖 `APP_ORIGIN` 与 `WEB_ORIGINS` 的主机名 |
-| `DATABASE_URL` | 必填 | PostgreSQL 连接串 |
+| `DATABASE_URL` | 必填 | PostgreSQL 连接串；同机库为 `postgres://huaci@/huaci?host=/var/run/postgresql`（setup-server.sh 自动填写） |
+| `NODE_EXTRA_CA_CERTS` | 仅 RDS | RDS 证书包路径；同机库留空 |
 | `AUTH_SECRET` | 必填，≥32 字符 | 验证码 HMAC 密钥；更换后未完成的验证码失效 |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | 可选，成对 | 回调地址 `<APP_ORIGIN>/auth/google/callback`；One Tap 还需把 `<APP_ORIGIN>` 加入“已获授权的 JavaScript 来源” |
 | `MAIL_TRANSPORT` | `resend` | 开发用 `console`（验证码打印在日志里），生产环境不允许 |
@@ -56,13 +59,15 @@ sudo bash apps/backend/deploy/setup-server.sh "ssh-ed25519 AAAA... github-action
 sudoedit /etc/huaci/backend.env
 ```
 
-[`setup-server.sh`](setup-server.sh) 安装 Node.js 22（NodeSource）与 Caddy（官方源），创建用户 `huaci`（运行服务，也是部署登录用户，只能 `sudo systemctl restart huaci-backend`）、目录 `/srv/huaci/releases`、配置模板、[systemd 服务](huaci-backend.service) 与 Caddy 配置，并自动生成 `AUTH_SECRET`。安全组需放行 TCP 80（证书验证与跳转）与 443。
+[`setup-server.sh`](setup-server.sh) 安装 Node.js 22（NodeSource）、Caddy（官方源）、PostgreSQL 18（PGDG）、age、rclone 与 nftables，没有 swap 时建 2G swap；创建用户 `huaci`（运行服务，也是部署登录用户，只能 `sudo systemctl restart huaci-backend`）、本机库 `huaci`、目录 `/srv/huaci/releases`、配置模板、[systemd 服务](huaci-backend.service)、备份与演练定时器、Caddy 配置，并自动生成 `AUTH_SECRET` 与恢复演练钥匙。数据库在别处时用 `DB=external` 运行。云厂商的安全组需放行 TCP 80、443 与 SSH 端口；本机防火墙之后用 `huaci-firewall apply` / `confirm` 启用。
 
 ### 日常发布：GitHub Actions
 
 推到 `main` 且改动了 `apps/backend/**` 时，[`deploy-backend.yml`](../../../.github/workflows/deploy-backend.yml) 先用 PostgreSQL 服务容器跑 `check:i18n` 与后端测试，通过后把已提交的 `apps/backend` 打包传到 `/srv/huaci/releases/<sha>`，再执行 [`release.sh`](release.sh)：`npm ci --omit=dev` → 迁移 → 切换 `/srv/huaci/current` → 重启 → 检查 `/healthz`，保留最近 5 个版本。PR 只跑测试；也可在 Actions 页面手动触发。
 
-仓库 Secret：`DEPLOY_HOST`（服务器 IP）、`DEPLOY_SSH_KEY`（部署私钥）、`DEPLOY_KNOWN_HOSTS`（服务器主机公钥，`ssh-keyscan -t ed25519 <IP>` 的输出）。
+仓库 Secret：`DEPLOY_HOST`（服务器 IP）、`DEPLOY_SSH_KEY`（部署私钥）、`DEPLOY_KNOWN_HOSTS`（服务器主机公钥，`ssh-keyscan -t ed25519 -p <端口> <IP>` 的输出）、`DEPLOY_PORT`（可选，SSH 端口，默认 22）。
+
+`release.sh` 在迁移前用 `pg_dump` 把数据库导出到 `/srv/huaci/backups/`（保留 5 份），导出失败就停止发布。服务器上的 `pg_dump` 版本不能低于数据库（RDS 为 18，需装 `postgresql-client-18`）。
 
 Firefox 登录另需在 `EXTENSION_IDS` 保留 Chrome/Edge ID 并追加固定 add-on ID `huaci@huaci.app`，同时部署迁移 `014_firefox_extension_source.sql`。只允许 `APP_ORIGIN` 下的 `/extension/firefox/callback`，不配置或放开随机 `moz-extension` 来源。详见 [Firefox 发布说明](../../../docs/extension/firefox-release.md)。
 
@@ -84,7 +89,7 @@ Firefox 登录另需在 `EXTENSION_IDS` 保留 Chrome/Edge ID 并追加固定 ad
 
 1. 开通 `support@huaci.app` 收信（例如 Cloudflare Email Routing 转发到个人邮箱），在 Resend 验证 huaci.app 并设置 `MAIL_TRANSPORT=resend`、`RESEND_API_KEY`、`MAIL_FROM`。
 2. 配置 `app.huaci.app` 与 `admin.huaci.app` 的 DNS 与 HTTPS 证书，反向代理把两个主机名都转发到本服务。
-3. 数据库备份与恢复演练。
+3. 数据库备份与恢复演练（[容灾手册](../../../docs/backend/disaster-recovery.md)）。
 4. 隐私政策与服务条款已按托管翻译、账户、付款与统计数据更新（官网 `privacy.html`、`terms.html`）；同步更新根目录 `PRIVACY.md` 与 Chrome 商店的数据披露。
 5. 设置 `EXTENSION_IDS` 为商店扩展 ID，并把带账户功能的扩展发布到 Chrome 商店（官网安装说明随之改为商店链接）。
 6. 指定管理员：`npm run admin -- grant <email>`，首次登录管理端时绑定二步验证。

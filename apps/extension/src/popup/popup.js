@@ -26,6 +26,7 @@
     image: $('image'),
     pdf: $('pdf'),
     video: $('video'),
+    videos: $('videos'),
     open: $('open'),
   };
 
@@ -204,6 +205,8 @@
     renderAccount();
     // 视频字幕默认关闭：没打开时连入口都不显示
     el.video.hidden = !settings.videoEnabled;
+    // 视频翻译记录（整份视频翻译）：Firefox 没有 offscreen 文档，不做这项功能
+    el.videos.hidden = Boolean(globalThis.AITrEnv?.firefox);
     // Firefox protects its built-in PDF viewer from content scripts. Select the file locally.
     el.pdf.hidden = !globalThis.AITrEnv?.firefox;
     // 与右键菜单一致：本机翻译、DeepL 不能识图，图片翻译入口不出现
@@ -234,6 +237,11 @@
     chrome.tabs.create({ url: chrome.runtime.getURL('src/pdf/pdf.html') });
     close();
   });
+  el.videos.addEventListener('click', async () => {
+    await chrome.tabs.create({ url: chrome.runtime.getURL('src/videos/videos.html') });
+    close();
+  });
+
   // 打开这个弹窗时，Chrome 已经给了当前标签页 activeTab 授权，后台截取声音靠的就是它
   el.video.addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });

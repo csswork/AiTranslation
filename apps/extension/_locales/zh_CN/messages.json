@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "全部字幕"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "自动（按网页的语言）"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "正在按$arg1$识别语音（$arg2$ / $arg3$ 秒）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "同时最多翻译 $arg1$ 个视频，等前面的翻好再试",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "视频"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "视频字幕已准备好"
+  },
+  "m_cda579be9890174e": {
+    "message": "点击观看（共 $arg1$ 句）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "视频没翻译成"
+  },
+  "m_e0df5456c3047566": {
+    "message": "可以先去看别的网页，翻好后会在右下角提示"
+  },
+  "m_2931f0d5623db32a": {
+    "message": "新页面看"
+  },
+  "m_c36952175ae8a217": {
+    "message": "视频列表"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "视频翻译 · 划词"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "在网页视频上右键，选「翻译这个视频」。翻好的视频和字幕只存在这个浏览器里，不上传，最多留最近 30 个。"
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "正在翻译"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "翻好的视频"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "还没有翻好的视频。"
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "没有存下视频文件，正在从原网址播放；原网址失效时就播不了了。"
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "在左边选一个视频观看。"
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "准备中…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · 共 $arg2$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "确定删除"
+  },
+  "m_8376b3532a377326": {
+    "message": "查看翻好的视频"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "翻好的视频和正在翻译的视频"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "听不出视频说的是什么语言"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "点这里选一个"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "还没有下载任何离线语言包，没法在本机识别。到设置里下载视频常用语言的语言包"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "一直没有选视频的语言，已停止"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "字幕可能不对：视频说的像是$arg1$，却是按$arg2$识别的",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "字幕可能不对：识别结果读不通，视频说的可能不是$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "正在判断视频说的是什么语言（试听：$arg1$）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "没下载的语言要先在设置里下载语言包；也可以稍后在「视频翻译」页里选"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "听不出视频说的是什么语言，请选一个："
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$（还没下载语言包）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "视频说的语言"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "开始识别"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "下载更多语言包"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "离线语言包"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "实时字幕的识别语言"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "视频里说的语言，不是字幕要翻成的语言。「自动」按网页的语言选。"
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "已下载：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "还没有下载任何语言包：本机识别要先下载至少一种。"
+  },
+  "m_73a2f997fa13648f": {
+    "message": "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

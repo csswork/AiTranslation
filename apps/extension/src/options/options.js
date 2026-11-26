@@ -71,6 +71,8 @@
     videoCard: $('video'),
     videoEngine: $('videoEngine'),
     videoLang: $('videoLang'),
+    packLang: $('packLang'),
+    packList: $('packList'),
     installLang: $('installLang'),
     langState: $('langState'),
     videoCloud: $('videoCloud'),
@@ -546,6 +548,17 @@
         return option;
       })
     );
+    // 离线语言包的下拉只用来选要下载哪种：默认英语（识别引擎随英语包附带，外文视频也最常是英语）
+    if (!el.packLang.options.length) {
+      const preferred = 'en-US';
+      el.packLang.replaceChildren(...S.videoLangList().filter((item) => item.id !== 'auto').map((item) => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label;
+        option.selected = item.id === preferred;
+        return option;
+      }));
+    }
     el.videoCloud.checked = settings.videoCloud;
     el.videoTranslate.checked = settings.videoTranslate;
     el.videoTarget.textContent = t('字幕翻译成 $1，每行调用一次翻译接口。关闭后只显示原文。', [S.targetMenu(settings)]);
@@ -569,7 +582,8 @@
       showLangState(t("当前浏览器不支持设备端语音识别。可以把翻译平台换成 ChatGPT（自带 Key），由 OpenAI 识别。"), 'err');
       return;
     }
-    const lang = settings.videoLang;
+    renderPackList();
+    const lang = el.packLang.value || 'en-US';
     let status;
     try {
       status = await Speech.packStatus(lang);
@@ -577,7 +591,7 @@
       showLangState(t("读取语言包状态失败：$1", [err?.message || err]), 'err');
       return;
     }
-    if (lang !== settings.videoLang) return; // 等结果期间设置又变了
+    if (lang !== (el.packLang.value || 'en-US')) return; // 等结果期间又换了语言
     switch (status) {
       case 'available':
         showLangState(t("离线语言包已就绪"), 'ok');
@@ -597,6 +611,19 @@
       default:
         showLangState(t("这台设备不支持该语言的离线识别。翻译平台选 ChatGPT（自带 Key）时改由 OpenAI 识别。"), 'err');
     }
+  }
+
+  /** 已经下载好的离线语言包：整份视频翻译判断语言时只在这些里面试听。 */
+  let packListTask = 0;
+  async function renderPackList() {
+    const task = ++packListTask;
+    const langs = S.videoLangList().filter((item) => item.id !== 'auto');
+    const ready = await Promise.all(langs.map((item) => Speech.packStatus(item.id).then((status) => status === 'available', () => false)));
+    if (task !== packListTask) return;
+    const names = langs.filter((_, i) => ready[i]).map((item) => item.label);
+    el.packList.textContent = names.length
+      ? t("已下载：$1", [names.join('、')])
+      : t("还没有下载任何语言包：本机识别要先下载至少一种。");
   }
 
   /** 把 Base URL 换成 chrome.permissions 认的 origin 形式；不合法则返回 null。 */
@@ -762,10 +789,8 @@
     renderLangState();
   });
 
-  el.videoLang.addEventListener('change', async () => {
-    await save({ videoLang: el.videoLang.value });
-    renderLangState();
-  });
+  el.videoLang.addEventListener('change', () => save({ videoLang: el.videoLang.value }));
+  el.packLang.addEventListener('change', () => renderLangState());
 
   el.videoTranslate.addEventListener('change', () => save({ videoTranslate: el.videoTranslate.checked }));
 
@@ -776,7 +801,7 @@
 
   el.installLang.addEventListener('click', async () => {
     // install() 要求用户手势：必须紧贴点击调用，前面不能有任何 await
-    const task = Speech.installPacks(settings.videoLang);
+    const task = Speech.installPacks(el.packLang.value || 'en-US');
     el.installLang.disabled = true;
     showLangState(t("正在下载离线语言包，视网速可能要等一会儿…"));
     let ok = false;

@@ -1,0 +1,11 @@
+# /etc/systemd/system/huaci-restore-drill.timer：每周一 UTC 19:30（北京时间周二凌晨 3:30）
+[Unit]
+Description=Huaci weekly restore drill
+
+[Timer]
+OnCalendar=Mon *-*-* 19:30:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target

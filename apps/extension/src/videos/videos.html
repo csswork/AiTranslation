@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>视频翻译 · 划词</title>
+    <link rel="stylesheet" href="videos.css" />
+  </head>
+  <body>
+    <header class="top">
+      <h1>视频翻译</h1>
+      <p class="sub">在网页视频上右键，选「翻译这个视频」。翻好的视频和字幕只存在这个浏览器里，不上传，最多留最近 30 个。</p>
+    </header>
+
+    <main class="layout">
+      <aside class="side" aria-label="视频列表">
+        <section id="runningWrap" hidden>
+          <h2>正在翻译</h2>
+          <ul class="items" id="running"></ul>
+        </section>
+        <section>
+          <h2>翻好的视频</h2>
+          <ul class="items" id="list"></ul>
+          <p class="empty" id="empty" hidden>还没有翻好的视频。</p>
+        </section>
+      </aside>
+
+      <section class="detail" id="detail" hidden>
+        <div class="player">
+          <video id="video" controls playsinline></video>
+          <div class="caption" id="caption" hidden><div class="ctr" id="captionTr"></div><div class="corig" id="captionOrig"></div></div>
+        </div>
+        <div class="meta">
+          <h2 id="title"></h2>
+          <p class="info"><span id="info"></span> <a id="source" target="_blank" rel="noopener noreferrer" hidden>打开原网页</a></p>
+          <p class="warn" id="warning" hidden></p>
+          <p class="note" id="fileNote" hidden>没有存下视频文件，正在从原网址播放；原网址失效时就播不了了。</p>
+          <div class="actions">
+            <button class="btn ghost" id="remove" type="button">删除</button>
+          </div>
+        </div>
+        <h3>全部字幕</h3>
+        <ol class="cues" id="cues"></ol>
+      </section>
+
+      <section class="detail placeholder" id="placeholder">
+        <p>在左边选一个视频观看。</p>
+      </section>
+    </main>
+
+    <script src="../lib/languages.js"></script>
+    <script src="../lib/messages.js"></script>
+    <script src="../lib/i18n.js"></script>
+    <script src="../lib/video-library.js"></script>
+    <script src="videos.js"></script>
+  </body>
+</html>

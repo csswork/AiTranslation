@@ -308,15 +308,19 @@
         </p>
         <div class="fields">
           <p class="desc" id="videoEngine"></p>
+          <div class="actions">
+            <a class="btn ghost" id="openVideos" href="../videos/videos.html" target="_blank">查看翻好的视频</a>
+          </div>
           <label class="field">
-            <span class="label">视频语言</span>
-            <select id="videoLang"></select>
-            <span class="help">本机识别不会自动判断语种，需要按视频选好。</span>
+            <span class="label">离线语言包</span>
+            <select id="packLang"></select>
+            <span class="help">本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。</span>
           </label>
           <div class="actions">
             <button id="installLang" class="btn" type="button" hidden>下载离线语言包</button>
             <span class="test-result" id="langState"></span>
           </div>
+          <p class="desc" id="packList"></p>
           <label class="switch">
             <input id="videoEnabled" type="checkbox" />
             <span>
@@ -329,6 +333,11 @@
             <p class="desc">
               播放器拦掉了右键的话，点扩展图标里的「视频实时字幕」。
             </p>
+            <label class="field">
+              <span class="label">实时字幕的识别语言</span>
+              <select id="videoLang"></select>
+              <span class="help">视频里说的语言，不是字幕要翻成的语言。「自动」按网页的语言选。</span>
+            </label>
             <label class="switch">
               <input id="videoTranslate" type="checkbox" />
               <span>

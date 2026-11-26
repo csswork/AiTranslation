@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Alle ondertitels"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatisch (op basis van de taal van de webpagina)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Spraak herkennen op $arg1$ ($arg2$ / $arg3$ seconden)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Je kunt maximaal $arg1$ video's tegelijk vertalen. Wacht tot de vorige klaar zijn en probeer het dan opnieuw.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Videotitels zijn klaar"
+  },
+  "m_cda579be9890174e": {
+    "message": "Klik om te bekijken ($arg1$ regels in totaal)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "De video kon niet worden vertaald"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Je kunt ondertussen andere pagina's bekijken; zodra het klaar is, verschijnt er een melding rechtsonder."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Bekijken op nieuwe pagina"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Videolijst"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Videotranslatie · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Klik met de rechtermuisknop op een video op een webpagina en kies 'Deze video vertalen'. Vertaalde video's en ondertitels worden alleen in deze browser opgeslagen, nooit geüpload, en alleen de 30 meest recente worden bewaard."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Bezig met vertalen"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Vertaalde video's"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Nog geen vertaalde video's."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Het videobestand is niet opgeslagen, dus de video wordt afgespeeld vanaf de oorspronkelijke URL; als de oorspronkelijke URL niet meer werkt, kan de video niet worden afgespeeld."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Selecteer links een video om te bekijken."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ zinnen",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Voorbereiden…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · $arg2$ zinnen in totaal",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Verwijderen bevestigen"
+  },
+  "m_8376b3532a377326": {
+    "message": "Vertaalde video's bekijken"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Vertaalde video's en video's die worden vertaald"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Kan niet horen welke taal de video gebruikt"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Klik hier om er een te kiezen"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Er zijn nog geen offline taalpakketten gedownload, dus herkenning op het apparaat is niet mogelijk. Ga naar de instellingen om taalpakketten te downloaden voor de talen die vaak in video's voorkomen"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Er is een tijdje geen videotaal geselecteerd, dus het is gestopt"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Ondertitels zijn mogelijk onjuist: de video lijkt $arg1$ te zeggen, maar het is herkend als $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Ondertitels zijn mogelijk onjuist: het herkenningsresultaat is onsamenhangend en de video zegt mogelijk niet $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "De taal die in de video wordt gesproken wordt bepaald (fragment: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Voor talen die nog niet zijn gedownload, moet je eerst het taalpakket downloaden in de instellingen; je kunt er ook later een kiezen op de pagina \"Videovertaling\""
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "De taal die in de video wordt gesproken kon niet worden herkend. Kies er een:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (taalpakket nog niet gedownload)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Taal die in de video wordt gesproken"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Herkenning starten"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Meer taalpakketten downloaden"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Offline-taalpakketten"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Herkennningstaal voor live ondertiteling"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "De taal die in de video wordt gesproken, niet de taal waarin de ondertiteling wordt vertaald. \"Automatisch\" volgt de taal van de webpagina."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Gedownload: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Nog geen taalpakketten gedownload: voor herkenning op het apparaat moet er eerst minstens één worden gedownload."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Voordat Huaci op het apparaat herkent, luistert de extensie eerst in elke taal waarvan het taalpakket al is gedownload om te bepalen in welke taal de video is (te beginnen met de taal van de webpagina); als dat niet lukt, wordt je gevraagd te kiezen. Als video's vaak in een bepaalde taal zijn, selecteer die dan hier en download het taalpakket."
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

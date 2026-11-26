@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "All subtitles"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatic (based on webpage language)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Recognizing speech at $arg1$ ($arg2$ / $arg3$ seconds)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "You can translate up to $arg1$ videos at a time. Wait for the previous ones to finish, then try again.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Video"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Video subtitles are ready"
+  },
+  "m_cda579be9890174e": {
+    "message": "Click to watch ($arg1$ lines total)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "The video could not be translated"
+  },
+  "m_e0df5456c3047566": {
+    "message": "You can browse other pages in the meantime; when it's done, a notification will appear in the bottom-right corner."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "View in new page"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Video list"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Video translation · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Right-click a video on a webpage and select \"Translate this video\". Translated videos and subtitles are stored only in this browser, never uploaded, and only the 30 most recent are kept."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Translating"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Translated videos"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "No translated videos yet."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "The video file wasn't saved, so it's playing from the original URL; it won't play if the original URL stops working."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Select a video on the left to watch."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ sentences",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Preparing…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · $arg2$ sentences total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Confirm deletion"
+  },
+  "m_8376b3532a377326": {
+    "message": "View translated videos"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Translated videos and videos being translated"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Can't tell what language the video is in"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Click here to choose one"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "No offline language packs have been downloaded yet, so on-device recognition isn't possible. Go to settings to download language packs for the languages commonly used in videos"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "No video language was selected for a while, so it has stopped"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "The subtitles may be wrong: the video seems to say $arg1$, but it was recognized as $arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "The subtitles may be wrong: the recognition result doesn't make sense, and the video may not be saying $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Detecting the language spoken in the video (sample: $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Languages that aren't downloaded yet need their language pack downloaded in settings first; you can also select one later on the \"Video translation\" page"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Couldn't detect the language spoken in the video. Please choose one:"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (language pack not downloaded yet)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Language spoken in the video"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Start recognition"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Download more language packs"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Offline language packs"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Recognition language for live captions"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "The language spoken in the video, not the language the captions are translated into. \"Auto\" follows the webpage language."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Downloaded: $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack."
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

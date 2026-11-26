@@ -3,8 +3,9 @@
  *
  * 不随页面常驻：用户右键视频点「翻译这个视频」时，后台才把它注入到视频所在的框架。
  * 取文件、识别、翻译都在扩展里做，这里只凭后台给的 jobId 连回去，显示进度，
- * 拿到带时间的字幕后按视频的播放时间显示「译文大字 + 原文小字」。关掉浮层就取消这一路。
- * 本页已经翻好的视频记在内存里，再点一次直接显示，不重新识别。
+ * 拿到带时间的字幕后按视频的播放时间显示「译文大字 + 原文小字」。
+ * 关掉浮层只是不再显示：翻译在后台继续，翻好后右下角提示；点「取消」才停。
+ * 翻过的视频（视频翻译记录里有，或本页内存里有）再点一次直接显示，不重新识别。
  */
 (() => {
   const t = (...args) => AITrI18n.t(...args);
@@ -12,9 +13,6 @@
   window.__aiTranslationVideoFileLoaded = true;
 
   const PORT_NAME = 'ai-video-file';
-  /** 视频比这还小（或露在窗口里的部分比这还小）就不贴着它，改贴窗口底部。 */
-  const MIN_WIDTH = 120;
-  const MIN_HEIGHT = 40;
   /** 「字幕已准备好」「没有识别到人声」这类提示显示多久。 */
   const NOTICE_MS = 6000;
 
@@ -47,6 +45,23 @@
   .status.error .dot { background: #f87171; }
   .status.notice .dot { background: #fbbf24; }
   @keyframes pulse { 50% { opacity: 0.3 } }
+  .pick { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .pick select {
+    font: inherit; font-size: 13px; color: #fff; background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 6px; padding: 2px 6px; max-width: 100%;
+  }
+  .pick select option { color: #111; background: #fff; }
+  .pick .go {
+    font: inherit; font-size: 12px; color: #fff; cursor: pointer; border: 0; border-radius: 999px;
+    padding: 2px 12px; background: #6d4aff;
+  }
+  .pick .go:hover { background: #7d5dff; }
+  .hint { font-size: 11.5px; font-weight: 400; color: rgba(255, 255, 255, 0.68); margin-top: 3px; }
+  .cancel {
+    font: inherit; font-size: 12px; color: #fff; cursor: pointer; white-space: nowrap;
+    background: rgba(255, 255, 255, 0.16); border: 0; border-radius: 999px; padding: 1px 9px;
+  }
+  .cancel:hover { background: rgba(255, 255, 255, 0.28); }
   .bar { width: 100%; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, 0.18); overflow: hidden; margin-top: 5px; }
   .bar i { display: block; height: 100%; width: 0; background: #a5b4fc; transition: width 0.4s linear; }
   .act {
@@ -149,17 +164,14 @@
     return videos.filter((v) => area(v) > 0).sort((a, b) => score(b) - score(a))[0] || null;
   }
 
-  /** 字幕贴着视频露在窗口里的部分；视频滚出了窗口就贴窗口底部。 */
+  /**
+   * 浮层（进度、字幕、左上角那条）只贴在视频上：用视频的完整位置，视频滚出窗口它也跟着滚出去，
+   * 不停在窗口里。视频被隐藏（宽高为 0）时整块不显示；找不到视频才贴窗口。
+   */
   function anchorRect() {
     if (video?.isConnected) {
       const r = video.getBoundingClientRect();
-      const left = Math.max(r.left, 0);
-      const top = Math.max(r.top, 0);
-      const right = Math.min(r.right, innerWidth);
-      const bottom = Math.min(r.bottom, innerHeight);
-      if (right - left >= MIN_WIDTH && bottom - top >= MIN_HEIGHT) {
-        return { left, top, width: right - left, height: bottom - top };
-      }
+      return { left: Math.round(r.left), top: Math.round(r.top), width: Math.round(r.width), height: Math.round(r.height) };
     }
     return { left: 0, top: 0, width: innerWidth, height: innerHeight };
   }
@@ -177,7 +189,9 @@
     box.innerHTML = `
       <div class="tr" hidden></div>
       <div class="orig" hidden></div>
-      <div class="status"><span class="dot"></span><span class="label"></span><button class="act" type="button" hidden>去设置</button></div>
+      <div class="status"><span class="dot"></span><span class="label"></span><button class="act" type="button" hidden>去设置</button><button class="cancel" type="button" hidden>取消</button></div>
+      <div class="pick" hidden><select aria-label="视频说的语言"></select><button class="go" type="button">开始识别</button></div>
+      <div class="hint" hidden></div>
       <div class="bar" hidden><i></i></div>
       <button class="close" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
     const chip = document.createElement('div');
@@ -187,6 +201,7 @@
       <span class="dot"></span><span>双语字幕</span>
       <button class="pill primary play" type="button" hidden>播放</button>
       <button class="pill all" type="button">全部字幕</button>
+      <button class="pill viewer" type="button" hidden>新页面看</button>
       <button class="x" type="button" title="关闭字幕" aria-label="关闭字幕">${CLOSE_ICON}</button>`;
     const list = document.createElement('div');
     list.className = 'list';
@@ -211,6 +226,11 @@
       bar: box.querySelector('.bar'),
       fill: box.querySelector('.bar i'),
       play: chip.querySelector('.play'),
+      viewer: chip.querySelector('.viewer'),
+      cancel: box.querySelector('.cancel'),
+      hint: box.querySelector('.hint'),
+      pick: box.querySelector('.pick'),
+      pickSelect: box.querySelector('.pick select'),
       listTitle: list.querySelector('.list-title'),
       items: list.querySelector('ol'),
       key: '',
@@ -220,6 +240,21 @@
     chip.querySelector('.x').addEventListener('click', close);
     ui.act.addEventListener('click', () => send({ type: 'open-options', section: 'video' }));
     ui.play.addEventListener('click', () => play(video?.ended ? 0 : null));
+    ui.viewer.addEventListener('click', () => send({ type: 'open-video-viewer', id: state?.libraryId || '' }));
+    // 判断不出语言时用户选一个：交给后台从头按它识别
+    box.querySelector('.pick .go').addEventListener('click', () => {
+      const lang = ui.pickSelect.value;
+      if (!state?.needLang || !lang) return;
+      try { port?.postMessage({ type: 'choose-lang', lang }); } catch { /* 已断开 */ }
+      state.needLang = null;
+      state.status = t("正在读取视频…");
+      render();
+    });
+    // 关掉浮层翻译照常继续（翻好后右下角提示）；要停就点「取消」
+    ui.cancel.addEventListener('click', () => {
+      try { port?.postMessage({ type: 'cancel' }); } catch { /* 已断开 */ }
+      close();
+    });
     chip.querySelector('.all').addEventListener('click', () => toggleList(true));
     list.querySelector('.fold').addEventListener('click', () => toggleList(false));
     raf = requestAnimationFrame(follow);
@@ -291,7 +326,9 @@
       case 'recognize':
         return p.mode === 'audio'
           ? t("正在由 OpenAI 识别语音…")
-          : t("正在本机识别语音（$1 / $2 秒）…", [seconds(p.done), seconds(p.total)]);
+          : t("正在按$1识别语音（$2 / $3 秒）…", [p.lang || '', seconds(p.done), seconds(p.total)]);
+      case 'detect':
+        return t("正在判断视频说的是什么语言（试听：$1）…", [(p.langs || []).join('、')]);
       case 'translate':
         return t("正在翻译字幕…");
       default:
@@ -324,12 +361,20 @@
     fill(ui.orig, cue && cue.text !== cue.tr ? cue.text : '');
 
     const notice = noticeOn() ? state.notice : '';
-    const label = state.error || state.status || notice;
+    // 识别语言像是选错了的提醒一直留着（字幕照常显示），直到用户关掉
+    const label = state.error || state.status || state.warning || notice;
     ui.status.hidden = !label;
     ui.box.classList.toggle('has-status', Boolean(label));
     ui.status.className = `status ${state.error ? 'error' : state.status ? 'busy' : 'notice'}`;
     ui.label.textContent = label;
-    ui.act.hidden = !(state.error && state.action);
+    ui.act.hidden = !((state.error && state.action) || (!state.error && !state.status && state.warning && state.warningAction) || state.needLang);
+    const working = Boolean(state.status) && !state.error;
+    ui.cancel.hidden = !working;
+    ui.hint.hidden = !working;
+    ui.hint.textContent = state.needLang
+      ? t("没下载的语言要先在设置里下载语言包；也可以稍后在「视频翻译」页里选")
+      : t("可以先去看别的网页，翻好后会在右下角提示");
+    ui.pick.hidden = !state.needLang;
     const ratio = state.status && state.progress != null ? state.progress : null;
     ui.bar.hidden = ratio == null;
     if (ratio != null) ui.fill.style.width = `${Math.round(Math.min(1, Math.max(0, ratio)) * 100)}%`;
@@ -339,6 +384,7 @@
     const ready = Boolean(state.cues?.length);
     ui.chip.hidden = !ready || state.listOpen;
     ui.play.hidden = !(video && (video.paused || video.ended));
+    ui.viewer.hidden = !state.libraryId;
     ui.list.hidden = !(ready && state.listOpen);
     if (state.listOpen) {
       const index = state.cues.indexOf(cue);
@@ -360,6 +406,7 @@
     if (key !== ui.key) {
       ui.key = key;
       const css = ui.host.style;
+      css.setProperty('display', r.width > 0 && r.height > 0 ? 'block' : 'none', 'important');
       css.setProperty('left', `${r.left}px`, 'important');
       css.setProperty('top', `${r.top}px`, 'important');
       css.setProperty('width', `${r.width}px`, 'important');
@@ -414,19 +461,42 @@
       return;
     }
     state.cues = cues;
-    results.set(state.cacheKey, cues);
+    state.libraryId = message.libraryId || '';
+    state.warning = message.warning || '';
+    state.warningAction = message.warning ? message.action : null;
+    results.set(state.cacheKey, { cues, libraryId: state.libraryId, warning: state.warning });
     notice(t("字幕已准备好：边播边显示，也可以点「全部字幕」直接看"));
     // 视频停着（帖子页常见）或已经播完：从头播放，马上就能看到字幕；正在播的不打断
     if (video && (video.paused || video.ended)) play(0);
     render();
   }
 
+  /** 判断不出语言：列出语言，装了语言包的在前、可选；没装的灰掉。默认选后台猜的那种（装了的话）。 */
+  function showPicker({ options = [], guess = '' }) {
+    state.needLang = { options, guess };
+    state.status = t("听不出视频说的是什么语言，请选一个：");
+    state.progress = null;
+    const usable = options.filter((item) => item.installed);
+    ui.pickSelect.replaceChildren(...options.map((item) => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = item.installed ? item.label : t("$1（还没下载语言包）", [item.label]);
+      option.disabled = !item.installed;
+      return option;
+    }));
+    ui.pickSelect.value = usable.some((item) => item.id === guess) ? guess : usable[0]?.id || '';
+  }
+
   function onPortMessage(message) {
     if (!state) return;
     switch (message?.type) {
+      case 'need-lang':
+        showPicker(message);
+        break;
       case 'progress':
+        state.needLang = null;
         state.status = progressText(message);
-        state.progress = message.phase === 'recognize' && message.mode !== 'audio' && message.total
+        state.progress = (message.phase === 'recognize' || message.phase === 'detect') && message.mode !== 'audio' && message.total
           ? message.done / message.total
           : message.phase === 'download' && message.total ? message.loaded / message.total : null;
         break;
@@ -440,7 +510,7 @@
     render();
   }
 
-  async function open({ jobId, srcUrl, error, resultKey }) {
+  async function open({ jobId, srcUrl, error, resultKey, cues, libraryId, warning }) {
     close(); // 同一个框架只保留一路
     await AITrI18n.ready;
     video = findVideo(srcUrl);
@@ -450,6 +520,10 @@
       status: t("正在读取视频…"),
       progress: null,
       listOpen: false,
+      libraryId: '',
+      needLang: null,
+      warning: '',
+      warningAction: null,
       error: '',
       action: null,
       notice: '',
@@ -459,8 +533,9 @@
     render();
     if (error) { fail(error); return; }
 
-    const known = results.get(state.cacheKey);
-    if (known) { finish({ cues: known }); return; }
+    // 翻过的视频（视频翻译记录或本页内存里有）：直接显示
+    const known = cues ? { cues, libraryId, warning } : results.get(state.cacheKey);
+    if (known) { finish({ ...known, action: known.warning ? 'open-video-options' : null }); return; }
 
     let current;
     try {

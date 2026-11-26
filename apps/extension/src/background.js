@@ -18,6 +18,7 @@ import './lib/review.js';
 import './lib/usage.js';
 import './lib/image-fetch.js';
 import './lib/transcript.js';
+import './lib/video-library.js';
 import './lib/video-file.js';
 
 const t = (...args) => AITrI18n.t(...args);
@@ -766,7 +767,7 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
     return;
   }
 
-  const lang = AITrSettings.videoLang(settings);
+  const lang = AITrSettings.videoLang(settings, await Promise.resolve().then(() => chrome.tabs.detectLanguage(tabId)).catch(() => ''));
   const cloud = settings.videoCloud;
   const langLabel = cloud ? t("$1（云端识别）", [lang.label]) : lang.label;
   const show = (message) =>
@@ -822,7 +823,7 @@ async function translateVideo(info, tab) {
     await toggleVideoCaptions({ tabId: tab.id, frameId, srcUrl });
     return;
   }
-  await AITrVideoFile.open({ tabId: tab.id, frameId, srcUrl, title: tab.title || '', incognito: tab.incognito === true });
+  await AITrVideoFile.open({ tabId: tab.id, frameId, srcUrl, title: tab.title || '', pageUrl: info.pageUrl || tab.url || '', incognito: tab.incognito === true });
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -1042,6 +1043,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // 整份视频翻译：offscreen 文档报来的下载、识别进度与结果
   if (type === 'video-file-event') {
     AITrVideoFile.onOffscreenEvent(message, sender);
+    return false;
+  }
+  // 浮层、右下角卡片、设置页与弹窗打开「视频翻译」页（id 只用来定位那一条）
+  if (type === 'open-video-viewer' && sender.id === chrome.runtime.id) {
+    AITrVideoFile.openViewer(String(message.id || '')).catch(() => {});
+    return false;
+  }
+  // 「视频翻译」页：正在翻的视频与进度、取消。只接受扩展自己的页面
+  const fromOwnPage = sender.id === chrome.runtime.id && String(sender.url || '').startsWith(chrome.runtime.getURL(''));
+  if (type === 'video-file-jobs' && fromOwnPage) {
+    sendResponse({ ok: true, jobs: AITrVideoFile.running() });
+    return false;
+  }
+  if (type === 'video-file-choose' && fromOwnPage) {
+    sendResponse({ ok: AITrVideoFile.chooseLanguage(String(message.id || ''), message.lang) });
+    return false;
+  }
+  if (type === 'video-file-cancel' && fromOwnPage) {
+    AITrVideoFile.cancel(String(message.id || ''));
+    sendResponse({ ok: true });
     return false;
   }
 

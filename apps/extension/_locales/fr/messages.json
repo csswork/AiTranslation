@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "Tous les sous-titres"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "Automatique (selon la langue de la page web)"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "Reconnaissance vocale en $arg1$ ($arg2$ / $arg3$ secondes)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "Vous pouvez traduire jusqu'à $arg1$ vidéos à la fois. Attendez que les précédentes soient terminées, puis réessayez.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "Vidéo"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "Les sous-titres de la vidéo sont prêts"
+  },
+  "m_cda579be9890174e": {
+    "message": "Cliquez pour regarder ($arg1$ lignes au total)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "La vidéo n'a pas pu être traduite"
+  },
+  "m_e0df5456c3047566": {
+    "message": "Vous pouvez consulter d'autres pages en attendant ; une fois la traduction terminée, une notification apparaîtra dans le coin inférieur droit."
+  },
+  "m_2931f0d5623db32a": {
+    "message": "Voir dans une nouvelle page"
+  },
+  "m_c36952175ae8a217": {
+    "message": "Liste des vidéos"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "Traduction de vidéos · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "Faites un clic droit sur une vidéo d'une page web et sélectionnez « Traduire cette vidéo ». Les vidéos et sous-titres traduits sont stockés uniquement dans ce navigateur, jamais envoyés, et seuls les 30 plus récents sont conservés."
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "Traduction en cours"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "Vidéos traduites"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "Aucune vidéo traduite pour le moment."
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "Le fichier vidéo n'a pas été enregistré, la lecture se fait depuis l'URL d'origine ; elle échouera si l'URL d'origine cesse de fonctionner."
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "Sélectionnez une vidéo à gauche pour la regarder."
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ phrases",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "Préparation…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · $arg2$ phrases au total",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "Confirmer la suppression"
+  },
+  "m_8376b3532a377326": {
+    "message": "Voir les vidéos traduites"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "Vidéos traduites et vidéos en cours de traduction"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "Impossible de déterminer la langue de la vidéo"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "Cliquez ici pour en choisir une"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "Aucun pack de langues hors ligne n'a encore été téléchargé, la reconnaissance sur l'appareil est donc impossible. Allez dans les paramètres pour télécharger les packs de langues couramment utilisées dans les vidéos"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "Aucune langue de vidéo n'a été sélectionnée pendant un moment, l'opération s'est arrêtée"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "Les sous-titres sont peut-être incorrects : la vidéo semble dire $arg1$, mais $arg2$ a été reconnu",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "Les sous-titres sont peut-être incorrects : le résultat de la reconnaissance n'a pas de sens, la vidéo ne dit peut-être pas $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "Détection de la langue parlée dans la vidéo (extrait : $arg1$)…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "Les langues non téléchargées nécessitent d'abord le téléchargement de leur pack de langue dans les paramètres ; vous pouvez aussi en choisir une plus tard sur la page « Traduction vidéo »"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "Impossible de détecter la langue parlée dans la vidéo. Veuillez en choisir une :"
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$ (pack de langue non téléchargé)",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "Langue parlée dans la vidéo"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "Démarrer la reconnaissance"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "Télécharger plus de packs de langues"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "Packs de langues hors ligne"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "Langue de reconnaissance des sous-titres en direct"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "La langue parlée dans la vidéo, pas la langue dans laquelle les sous-titres sont traduits. « Auto » suit la langue de la page web."
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "Téléchargé : $arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "Aucun pack de langues téléchargé pour l'instant : la reconnaissance sur l'appareil nécessite d'en télécharger au moins un au préalable."
+  },
+  "m_73a2f997fa13648f": {
+    "message": "Avant la reconnaissance sur l'appareil, l'extension écoute d'abord dans chaque langue dont le pack est déjà téléchargé pour déterminer celle de la vidéo (en commençant par la langue de la page web) ; si elle ne peut pas le déterminer, il vous sera demandé de choisir. Si les vidéos sont souvent dans une langue particulière, sélectionnez-la ici et téléchargez son pack de langue."
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

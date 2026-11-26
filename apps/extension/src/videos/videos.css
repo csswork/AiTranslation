@@ -1,0 +1,134 @@
+/* 「视频翻译」页：取官网与阅读页的「纸与墨」——纸色底、墨色字、靛蓝点缀，层次靠字号、留白和发丝线。 */
+
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans", sans-serif;
+  --bg: #f6f5f1;
+  --surface: #fdfcf9;
+  --surface-2: #efede7;
+  --line: #e4e1d8;
+  --text: #1d1c19;
+  --text-2: #57544c;
+  --text-3: #736f65;
+  --accent: #4a4fc0;
+  --accent-soft: rgba(74, 79, 192, 0.08);
+  --warn: #9a5b00;
+  --warn-soft: rgba(196, 124, 0, 0.1);
+  --err: #b42318;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1916;
+    --surface: #22211d;
+    --surface-2: #2b2a25;
+    --line: #36342e;
+    --text: #ece9e1;
+    --text-2: #bdb8ac;
+    --text-3: #938e82;
+    --accent: #a5a9ff;
+    --accent-soft: rgba(165, 169, 255, 0.12);
+    --warn: #f0b45a;
+    --warn-soft: rgba(240, 180, 90, 0.12);
+    --err: #ff8a7a;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.6 var(--font);
+}
+button { font: inherit; }
+[hidden] { display: none !important; }
+
+.top { max-width: 1200px; margin: 0 auto; padding: 28px 24px 8px; }
+.top h1 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: 0.01em; }
+.sub { margin: 4px 0 0; color: var(--text-3); font-size: 13px; }
+
+.layout {
+  max-width: 1200px; margin: 0 auto; padding: 16px 24px 48px;
+  display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start;
+}
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; padding: 12px 16px 40px; }
+  .top { padding: 20px 16px 4px; }
+}
+
+.side h2, .detail h3 {
+  margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--text-3);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.side section + section { margin-top: 20px; }
+.items { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.item {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface); color: inherit;
+}
+.item:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.item[aria-current="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.item:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.item .name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight: 550; overflow-wrap: anywhere; }
+.item .when { display: block; margin-top: 2px; font-size: 12px; color: var(--text-3); }
+.item.job { cursor: default; display: grid; gap: 6px; }
+.job .row { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.job .state { font-size: 12px; color: var(--text-2); }
+.job .track { height: 3px; border-radius: 2px; background: var(--surface-2); overflow: hidden; }
+.job .track i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.4s linear; }
+.pick { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.pick select {
+  font: inherit; font-size: 13px; padding: 3px 6px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--text); max-width: 100%;
+}
+.pick .more { font-size: 12px; color: var(--accent); text-decoration: none; }
+.pick .more:hover { text-decoration: underline; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { color: #fff; filter: brightness(1.08); }
+.empty { margin: 4px 0 0; color: var(--text-3); font-size: 13px; }
+
+.detail {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+}
+.placeholder { display: grid; place-items: center; min-height: 280px; color: var(--text-3); }
+.player { position: relative; background: #000; border-radius: 10px; overflow: hidden; display: flex; justify-content: center; }
+.player video { display: block; width: 100%; max-height: 62vh; background: #000; }
+.caption {
+  position: absolute; left: 50%; bottom: 52px; transform: translateX(-50%);
+  width: max-content; max-width: 88%; padding: 4px 12px 5px; border-radius: 6px;
+  background: rgba(10, 10, 12, 0.76); color: #fff; text-align: center; pointer-events: none;
+}
+.ctr { font-size: clamp(15px, 2.2vw, 22px); font-weight: 550; line-height: 1.4; }
+.corig { font-size: clamp(11px, 1.4vw, 14px); opacity: 0.78; line-height: 1.35; margin-top: 2px; }
+
+.meta { padding: 14px 2px 4px; }
+.meta h2 { margin: 0; font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.info { margin: 4px 0 0; color: var(--text-3); font-size: 13px; }
+.info a { color: var(--accent); text-decoration: none; margin-left: 8px; }
+.info a:hover { text-decoration: underline; }
+.warn { margin: 10px 0 0; padding: 8px 10px; border-radius: 8px; background: var(--warn-soft); color: var(--warn); font-size: 13px; }
+.note { margin: 10px 0 0; color: var(--text-3); font-size: 12.5px; }
+.actions { margin-top: 10px; display: flex; gap: 8px; }
+.btn {
+  cursor: pointer; border-radius: 8px; padding: 5px 12px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--text-2);
+}
+.btn:hover { border-color: var(--text-3); color: var(--text); }
+.btn.danger { border-color: var(--err); color: var(--err); }
+.btn.small { padding: 2px 9px; font-size: 12px; }
+
+.detail h3 { margin-top: 18px; }
+.cues { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.cue {
+  display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 10px; width: 100%;
+  text-align: left; cursor: pointer; padding: 8px 10px; border: 0; border-radius: 8px;
+  background: none; color: inherit;
+}
+.cue:hover { background: var(--surface-2); }
+.cue.on { background: var(--accent-soft); }
+.cue:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cue .t { color: var(--text-3); font-size: 12px; font-variant-numeric: tabular-nums; padding-top: 2px; }
+.cue .tr { font-size: 15px; line-height: 1.5; }
+.cue .orig { color: var(--text-2); font-size: 13px; line-height: 1.45; margin-top: 1px; }

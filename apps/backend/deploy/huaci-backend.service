@@ -1,7 +1,8 @@
 # /etc/systemd/system/huaci-backend.service（由 deploy/setup-server.sh 安装）
 [Unit]
 Description=Huaci backend (app.huaci.app / admin.huaci.app)
-After=network-online.target
+# 本机数据库时先等 PostgreSQL 起来；数据库在别处时这两个单元不存在，不影响启动
+After=network-online.target postgresql.service
 Wants=network-online.target
 
 [Service]
@@ -17,6 +18,8 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=true
+# 与其他服务共用机器时，内存紧张也先保住本服务
+MemoryLow=384M
 
 [Install]
 WantedBy=multi-user.target

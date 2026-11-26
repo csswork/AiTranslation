@@ -58,8 +58,14 @@ const T = globalThis.AITrTranscript;
 
 /* ---- 3. 模型回复：只认合法的序号范围 ---- */
 {
-  const ok = T.parseCueReply('```json\n{"cues":[{"from":0,"to":3,"text":"Theft detected.","tr":"检测到盗窃。"},{"from":5,"to":6,"text":"Remain seated.","tr":"请坐好。"}]}\n```', 7);
-  assert.deepEqual(ok.map((c) => [c.from, c.to, c.tr]), [[0, 3, '检测到盗窃。'], [5, 6, '请坐好。']], '可以跳过语气词');
+  const ok = T.parseCueReply('```json\n{"lang":"EN","garbled":false,"cues":[{"from":0,"to":3,"text":"Theft detected.","tr":"检测到盗窃。"},{"from":5,"to":6,"text":"Remain seated.","tr":"请坐好。"}]}\n```', 7);
+  assert.deepEqual(ok.cues.map((c) => [c.from, c.to, c.tr]), [[0, 3, '检测到盗窃。'], [5, 6, '请坐好。']], '可以跳过语气词');
+  assert.equal(ok.lang, 'en');
+  assert.equal(ok.garbled, false);
+  const bare = T.parseCueReply('{"cues":[{"from":0,"to":1,"tr":"好"}]}', 2);
+  assert.equal(bare.lang, '', '没给语言不算错');
+  assert.equal(bare.garbled, undefined);
+  assert.deepEqual(T.promptTokens([{ text: 'hi', start: 0 }, { text: 'there', start: 900 }]), [[0, 'hi'], [1, 'there']], '交给模型的只有序号和词');
   for (const [reply, why] of [
     ['not json', '不是 JSON'],
     ['{"cues":[]}', '空'],
@@ -105,6 +111,17 @@ const T = globalThis.AITrTranscript;
   assert.deepEqual([tokens[0].start, tokens[0].end], [500, 700]);
   assert.equal(T.fromWhisper({ language: 'japanese', words: [] }).lang, 'ja');
   console.log('✓ Whisper 词级时间；无人声段落的整句丢掉');
+}
+
+/* ---- 5b. 不靠模型判断语言：词最密的那一路 ---- */
+{
+  // abeXRK9（116 秒英语对话）：按英语听 371 个词、按中文听 15 个
+  assert.equal(T.judgeByDensity([{ lang: 'en-US', words: 371 }, { lang: 'zh-CN', words: 15 }], 116000), 'en-US');
+  assert.equal(T.judgeByDensity([{ lang: 'en-US', words: 60 }], 25000), 'en-US', '只有一路时读得到足够的词就是它');
+  assert.equal(T.judgeByDensity([{ lang: 'en-US', words: 5 }], 25000), '', '词太少：判断不了');
+  assert.equal(T.judgeByDensity([{ lang: 'en-US', words: 50 }, { lang: 'es', words: 45 }], 25000), '', '两路差不多：判断不了');
+  assert.equal(T.judgeByDensity([], 25000), '');
+  console.log('✓ 按词密度判断语言，太少或差不多时判断不了');
 }
 
 /* ---- 6. WAV、容器识别、静音 ---- */

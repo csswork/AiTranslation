@@ -3107,6 +3107,200 @@
   "m_63c64211b5b5697e": {
     "message": "全部字幕"
   },
+  "m_fe5a708003a0a86d": {
+    "message": "自動（依網頁語言）"
+  },
+  "m_9994683139bc9fbd": {
+    "message": "正在以 $arg1$ 辨識語音（$arg2$ / $arg3$ 秒）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_804a020cae3ac884": {
+    "message": "同時最多只能翻譯 $arg1$ 部影片，請等前面的翻譯完成後再試",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_c20f7618d330a854": {
+    "message": "影片"
+  },
+  "m_b410e2a9809014b5": {
+    "message": "影片字幕已準備好"
+  },
+  "m_cda579be9890174e": {
+    "message": "點擊觀看（共 $arg1$ 句）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_8c99117f2fa3f162": {
+    "message": "影片翻譯失敗"
+  },
+  "m_e0df5456c3047566": {
+    "message": "你可以先去看別的網頁，翻好後會在右下角提示"
+  },
+  "m_2931f0d5623db32a": {
+    "message": "在新頁面檢視"
+  },
+  "m_c36952175ae8a217": {
+    "message": "影片清單"
+  },
+  "m_6a7ded1cbcc5dbdc": {
+    "message": "影片翻譯 · Huaci"
+  },
+  "m_962e2806ba3522bb": {
+    "message": "在網頁影片上按右鍵，選「翻譯這部影片」。翻譯好的影片和字幕只存在這個瀏覽器裡，不會上傳，最多保留最近 30 個。"
+  },
+  "m_c16a4d2802ec448b": {
+    "message": "正在翻譯"
+  },
+  "m_8b518e2f5f65c95a": {
+    "message": "翻譯好的影片"
+  },
+  "m_cc92d599cc85c9a4": {
+    "message": "還沒有翻譯好的影片。"
+  },
+  "m_5c79c35e163fdf5e": {
+    "message": "沒有儲存影片檔案，正在從原始網址播放；原始網址失效時就無法播放了。"
+  },
+  "m_a3bff4bdb4c95b68": {
+    "message": "在左側選擇一部影片觀看。"
+  },
+  "m_f3437008b3da059c": {
+    "message": "$arg1$ · $arg2$ · $arg3$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      },
+      "arg3": {
+        "content": "$3"
+      }
+    }
+  },
+  "m_871be2654869720f": {
+    "message": "準備中…"
+  },
+  "m_126bbd23cf0c226b": {
+    "message": "$arg1$ · 共 $arg2$ 句",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_357af24bee323aa2": {
+    "message": "確定刪除"
+  },
+  "m_8376b3532a377326": {
+    "message": "查看翻譯好的影片"
+  },
+  "m_240c36a2ad0849b0": {
+    "message": "已翻譯的影片和正在翻譯的影片"
+  },
+  "m_12f73551c8ba7607": {
+    "message": "聽不出影片說的是什麼語言"
+  },
+  "m_c7a5cb5e3148085c": {
+    "message": "點這裡選一個"
+  },
+  "m_1b065f5496e5ec9b": {
+    "message": "還沒有下載任何離線語言包，無法在本機辨識。請到設定中下載影片常用語言的語言包"
+  },
+  "m_4c14c2d1c16b20fc": {
+    "message": "一直沒有選擇影片語言，已停止"
+  },
+  "m_6aba23a2c5f9d70d": {
+    "message": "字幕可能有誤：影片說的像是$arg1$，卻被辨識成$arg2$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      },
+      "arg2": {
+        "content": "$2"
+      }
+    }
+  },
+  "m_c559024cd03659d3": {
+    "message": "字幕可能有誤：辨識結果讀不通，影片說的可能不是$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_b0a82c457408b250": {
+    "message": "正在判斷影片說的是什麼語言（試聽：$arg1$）…",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_f610030d3f634d24": {
+    "message": "尚未下載的語言需先在設定中下載語言包；也可以稍後在「影片翻譯」頁面中選擇"
+  },
+  "m_54e33bc36f2f6a16": {
+    "message": "無法辨識影片說的是什麼語言，請選擇一個："
+  },
+  "m_78390d8870199cbc": {
+    "message": "$arg1$（尚未下載語言包）",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_86c01a0298b30cce": {
+    "message": "影片說的語言"
+  },
+  "m_efdc52715c7811d0": {
+    "message": "開始辨識"
+  },
+  "m_bf1ef7cad6cf6774": {
+    "message": "下載更多語言套件"
+  },
+  "m_c88d297368f3e49f": {
+    "message": "離線語言包"
+  },
+  "m_59ba3613dca5f1ab": {
+    "message": "即時字幕的辨識語言"
+  },
+  "m_ef3ae7ab91f264c5": {
+    "message": "影片裡說的語言，不是字幕要翻成的語言。「自動」依網頁的語言選。"
+  },
+  "m_f7d6f84fe6ff3cc0": {
+    "message": "已下載：$arg1$",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_85142e7dbd0214d5": {
+    "message": "還沒有下載任何語言包：本機辨識要先下載至少一種。"
+  },
+  "m_73a2f997fa13648f": {
+    "message": "在本機辨識之前，擴充功能會先用已下載語言包的幾種語言試聽，判斷影片說的是哪一種（先試網頁的語言）；聽不出來時會請你選擇。影片常說哪種語言，就在這裡選它並下載語言包。"
+  },
   "extensionName": {
     "message": "劃詞 – AI 翻譯與雙語閱讀"
   },

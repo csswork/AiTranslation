@@ -1,0 +1,14 @@
+# /etc/systemd/system/huaci-firewall.service（由 deploy/setup-server.sh 安装，huaci-firewall confirm 启用）
+[Unit]
+Description=Huaci inbound firewall (nftables table inet huaci)
+Wants=network-pre.target
+Before=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/nft -f /etc/huaci/firewall.active.nft
+ExecStop=/usr/sbin/nft delete table inet huaci
+
+[Install]
+WantedBy=multi-user.target
