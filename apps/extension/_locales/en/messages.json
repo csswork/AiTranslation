@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "The translation platform refused to process $arg1$ of the segments (content moderation); these segments were left in the original.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "View"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

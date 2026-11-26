@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Voordat Huaci op het apparaat herkent, luistert de extensie eerst in elke taal waarvan het taalpakket al is gedownload om te bepalen in welke taal de video is (te beginnen met de taal van de webpagina); als dat niet lukt, wordt je gevraagd te kiezen. Als video's vaak in een bepaalde taal zijn, selecteer die dan hier en download het taalpakket."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Het vertaalplatform weigerde $arg1$ van de segmenten te verwerken (inhoudsmoderatie); deze segmenten zijn in de oorspronkelijke taal gelaten.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Bekijken"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

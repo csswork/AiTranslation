@@ -95,9 +95,36 @@ const expected = (texts) => texts.map((text) => `译:${text}`);
 {
   const texts = ['a', 'b', 'bad', 'd'];
   mock((list) => (list.includes('bad') ? reply('', 'content_filter') : reply(translated(list))));
-  assert.deepEqual(await P.translateBatch({ texts, settings, targetId: 'zh-Hans' }), ['译:a', '译:b', 'bad', '译:d']);
+  let refused = null;
+  assert.deepEqual(await P.translateBatch({ texts, settings, targetId: 'zh-Hans', onRefused: (list) => { refused = list; } }), ['译:a', '译:b', 'bad', '译:d']);
+  assert.deepEqual(refused, [2], '被拦的段落序号交给 onRefused，页面据此提示');
   assert.deepEqual(calls.map((list) => list.join('')).sort(), ['abbadd', 'ab', 'badd', 'bad', 'd'].sort());
   console.log('✓ 被平台拦下的段落保留原文，其余照常翻译');
+}
+
+/* 6b. 内容脚本那一侧：先查本机缓存，剩下的发给后台；后台回的 refused 序号换回整批里的位置 */
+{
+  globalThis.AITrI18n = { t: (source) => source };
+  globalThis.AITrSettings = { providerKind: () => 'llm' };
+  globalThis.chrome.runtime.connect = () => {
+    const listeners = [];
+    return {
+      onMessage: { addListener: (fn) => listeners.push(fn) },
+      onDisconnect: { addListener() {} },
+      disconnect() {},
+      postMessage(message) {
+        const reply = message.type === 'cache-lookup'
+          ? { ok: true, texts: message.texts.map((text) => (text === 'a' ? '译:a' : null)) }
+          : { ok: true, texts: message.texts.map((text) => (text === 'bad' ? text : `译:${text}`)), refused: message.texts.flatMap((text, i) => (text === 'bad' ? [i] : [])) };
+        queueMicrotask(() => listeners.forEach((fn) => fn(reply)));
+      },
+    };
+  };
+  delete globalThis.AITrRequests;
+  load('src/lib/requests.js');
+  const reply = await globalThis.AITrRequests.translateBatch({ texts: ['a', 'b', 'bad'] }, { settings: { provider: 'deepseek' } });
+  assert.deepEqual(reply, { ok: true, texts: ['译:a', '译:b', 'bad'], refused: [2] });
+  console.log('✓ 被拦段落的序号经后台、内容脚本换回整批里的位置');
 }
 
 /* 7. 区域翻译与整站翻译每批最多 50 段、2200 字 */

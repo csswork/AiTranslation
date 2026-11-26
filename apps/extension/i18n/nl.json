@@ -785,5 +785,7 @@
   "视频里说的语言，不是字幕要翻成的语言。「自动」按网页的语言选。": "De taal die in de video wordt gesproken, niet de taal waarin de ondertiteling wordt vertaald. \"Automatisch\" volgt de taal van de webpagina.",
   "已下载：$1": "Gedownload: $1",
   "还没有下载任何语言包：本机识别要先下载至少一种。": "Nog geen taalpakketten gedownload: voor herkenning op het apparaat moet er eerst minstens één worden gedownload.",
-  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Voordat Huaci op het apparaat herkent, luistert de extensie eerst in elke taal waarvan het taalpakket al is gedownload om te bepalen in welke taal de video is (te beginnen met de taal van de webpagina); als dat niet lukt, wordt je gevraagd te kiezen. Als video's vaak in een bepaalde taal zijn, selecteer die dan hier en download het taalpakket."
+  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Voordat Huaci op het apparaat herkent, luistert de extensie eerst in elke taal waarvan het taalpakket al is gedownload om te bepalen in welke taal de video is (te beginnen met de taal van de webpagina); als dat niet lukt, wordt je gevraagd te kiezen. Als video's vaak in een bepaalde taal zijn, selecteer die dan hier en download het taalpakket.",
+  "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "Het vertaalplatform weigerde $1 van de segmenten te verwerken (inhoudsmoderatie); deze segmenten zijn in de oorspronkelijke taal gelaten.",
+  "查看": "Bekijken"
 }

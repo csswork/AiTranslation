@@ -729,9 +729,10 @@
 
   /**
    * 一次翻译多段文字，返回等长、同序的译文数组。
+   * 平台拒绝处理的段落（content_filter）返回原文，并把这些段落的序号交给 onRefused，由页面提示用户。
    * @returns {Promise<string[]>}
    */
-  async function translateBatch({ texts, whole, settings, providerId, targetLanguage, targetId, surface, signal, fresh = false }) {
+  async function translateBatch({ texts, whole, settings, providerId, targetLanguage, targetId, surface, signal, fresh = false, onRefused }) {
     const S = globalThis.AITrSettings;
     const provider = S.resolveProvider(settings, providerId);
     const targetKey = targetId || settings.target;
@@ -815,6 +816,8 @@
       cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
       run: translateList,
     });
+    const refused = out.flatMap((item, i) => (item === null ? [i] : []));
+    if (refused.length && !signal?.aborted) onRefused?.(refused);
     return out.map((item, i) => item ?? texts[i]);
   }
 

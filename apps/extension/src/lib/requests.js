@@ -42,7 +42,7 @@
    * 批量翻译，先查本机缓存：命中的段落经 onHits(found) 立刻交回（found 与 texts 等长，没命中的是 null），
    * 剩下的再发 translate-batch。不然一批里只要有一段没命中，整批都得等网络请求。
    * 已经用 lookupBatch 查过的可以把结果作为 found 传进来，不再查一次。
-   * 返回与 translate-batch 相同形状的回复：{ ok, texts } 或 { ok: false, error, action }。
+   * 返回与 translate-batch 相同形状的回复：{ ok, texts, refused } 或 { ok: false, error, action }。
    */
   async function translateBatch(message, { signal, settings, onHits, found } = {}) {
     const { texts } = message;
@@ -55,7 +55,9 @@
     if (!reply?.ok) return reply;
     const out = [...known];
     missing.forEach((index, j) => { out[index] = reply.texts?.[j]; });
-    return { ok: true, texts: out };
+    // refused 是平台拒绝处理、保留原文的段落，序号换回 texts 里的位置
+    const refused = Array.isArray(reply.refused) ? reply.refused.map((j) => missing[j]).filter((i) => i !== undefined) : [];
+    return { ok: true, texts: out, refused };
   }
 
   globalThis.AITrRequests = { request, lookupBatch, translateBatch };

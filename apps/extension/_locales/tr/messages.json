@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Cihaz üzerinde tanımadan önce, uzantı videonun hangi dilde olduğunu belirlemek için indirilmiş dil paketleriyle birkaç dili dinler (önce web sayfasının dilini dener); anlayamazsa seçmeniz istenir. Videolar sık sık belirli bir dildeyse burada o dili seçin ve dil paketini indirin."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Çeviri platformu $arg1$ segmenti işlemeyi reddetti (içerik denetimi); bu segmentler orijinal halinde bırakıldı.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Görüntüle"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

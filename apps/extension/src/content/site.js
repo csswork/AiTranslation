@@ -145,6 +145,10 @@
       mutationTimer: 0,
       /** 已经在监听的开放 shadow root */
       shadows: new WeakSet(),
+      /** 平台拒绝处理（内容审查）、保留了原文的文字节点；refusedNoted 是已经提示过的个数，refusedAt 是「查看」看到第几个 */
+      refused: [],
+      refusedNoted: 0,
+      refusedAt: 0,
     };
   }
 
@@ -306,6 +310,10 @@
       if (session !== current) return;
       if (!reply?.ok) throw Object.assign(new Error(reply?.error || t("翻译失败")), { action: reply?.action || null });
       write(reply.texts);
+      // 被平台拒绝处理的段落保留原文：记下这些节点，空闲时在页面上提示
+      for (const index of reply.refused || []) {
+        for (const item of batch) if (item.core === texts[index] && !current.refused.includes(item.node)) current.refused.push(item.node);
+      }
     } catch (error) {
       if (session !== current || error?.name === 'AbortError') return;
       current.failed = error;
@@ -387,6 +395,7 @@
     }
     current.changed.clear();
     status.hide();
+    hideMark();
   }
 
   function retry() {
@@ -444,7 +453,13 @@
     }
     .pill.error .dot { background: #dc2626; animation: none }
     .pill.note .dot { animation: none }
+    .pill.refused .dot { background: #f59e0b }
     .pill .text { flex: 1 1 160px; min-width: 0; overflow-wrap: anywhere }
+    .mark {
+      position: fixed; border-radius: 6px; pointer-events: none;
+      outline: 2px solid #f59e0b; background: rgba(245, 158, 11, 0.12);
+    }
+    .mark[hidden] { display: none }
     @keyframes pulse { from { opacity: 0.35 } to { opacity: 1 } }
     @media (prefers-reduced-motion: reduce) { .pill .dot { animation: none } }
     button {
@@ -525,6 +540,7 @@
       el.hidden = false;
       el.classList.toggle('error', kind === 'error');
       el.classList.toggle('note', kind === 'note');
+      el.classList.remove('refused');
       const dot = document.createElement('span');
       dot.className = 'dot';
       const label = document.createElement('span');
@@ -559,8 +575,18 @@
       } else {
         session.quiet = true;
         clearTimeout(hideTimer);
-        hideTimer = setTimeout(hide, 1200);
+        if (session.refused.length > session.refusedNoted) refused();
+        else if (!pill?.classList.contains('refused')) hideTimer = setTimeout(hide, 1200);
       }
+    }
+    /** 有段落被平台拒绝翻译（DeepSeek 的内容审查等）：一直留着，可以逐段查看，自己关掉；后来又有新的再提示。 */
+    function refused() {
+      session.refusedNoted = session.refused.length;
+      render('note', t("翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。", [session.refused.length]), [
+        button(t("查看"), showRefused, true),
+        button(t("关闭"), hide),
+      ]);
+      pill.classList.add('refused');
     }
     function error(err) {
       const actions = [button(t("重试"), retry, true)];
@@ -575,6 +601,38 @@
     }
     return { update, error, hide, busy, note };
   })();
+
+  /** 「查看」：依次滚到被拒绝翻译的段落，在它上面画一个框（画在扩展自己的 shadow root 里，不改网页元素）。 */
+  let mark = null;
+  let markTimer = 0;
+  const hideMark = () => { if (mark) mark.hidden = true; };
+  function showRefused() {
+    if (!session) return;
+    const list = session.refused = session.refused.filter((node) => node.isConnected);
+    if (!list.length) return;
+    const node = list[session.refusedAt++ % list.length];
+    node.parentElement?.scrollIntoView({ block: 'center', inline: 'nearest' });
+    // 等这次滚动生效再取位置、再开始监听滚动（滚动事件在下一帧才派发），之后页面再滚就收起框
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const rect = range.getBoundingClientRect();
+      const { wrap } = mount();
+      if (!mark || !mark.isConnected) {
+        mark = document.createElement('div');
+        mark.className = 'mark';
+        wrap.appendChild(mark);
+      }
+      Object.assign(mark.style, {
+        left: `${rect.left - 4}px`, top: `${rect.top - 4}px`, width: `${rect.width + 8}px`, height: `${rect.height + 8}px`,
+      });
+      mark.hidden = false;
+      clearTimeout(markTimer);
+      markTimer = setTimeout(hideMark, 2500);
+      removeEventListener('scroll', hideMark, true);
+      addEventListener('scroll', hideMark, { once: true, passive: true, capture: true });
+    }));
+  }
 
   function turnOff() {
     stop();

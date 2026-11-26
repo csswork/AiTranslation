@@ -785,5 +785,7 @@
   "视频里说的语言，不是字幕要翻成的语言。「自动」按网页的语言选。": "The language spoken in the video, not the language the captions are translated into. \"Auto\" follows the webpage language.",
   "已下载：$1": "Downloaded: $1",
   "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
-  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack."
+  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
+  "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
+  "查看": "View"
 }

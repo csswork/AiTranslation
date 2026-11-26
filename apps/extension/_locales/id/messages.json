@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Sebelum pengenalan di perangkat, ekstensi terlebih dahulu mendengarkan dalam setiap bahasa yang paketnya sudah diunduh untuk menentukan bahasa video (dimulai dari bahasa halaman web); jika tidak dapat menentukannya, Anda akan diminta memilih. Jika video sering dalam bahasa tertentu, pilih di sini dan unduh paket bahasanya."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Platform terjemahan menolak memproses $arg1$ segmen (moderasi konten); segmen tersebut dibiarkan dalam bahasa aslinya.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Lihat"
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

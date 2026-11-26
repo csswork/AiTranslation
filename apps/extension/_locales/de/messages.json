@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Vor der lokalen Erkennung prüft die Erweiterung zunächst mit den bereits heruntergeladenen Sprachpaketen, welche Sprache im Video gesprochen wird (beginnend mit der Sprache der Webseite); kann sie es nicht erkennen, wirst du gebeten, eine auszuwählen. Wenn Videos häufig in einer bestimmten Sprache sind, wähle sie hier aus und lade ihr Sprachpaket herunter."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Die Übersetzungsplattform hat die Verarbeitung von $arg1$ der Segmente abgelehnt (Inhaltsmoderation); diese Segmente wurden im Original belassen.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Ansehen"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

@@ -927,7 +927,10 @@ chrome.runtime.onConnect.addListener((port) => {
         const result = await AITrProviders.readImageText({ ...options, image: message.image, imageSize: message.imageSize, purpose: message.purpose, model: AITrSettings.visionModel(settings.provider) });
         reply = { ok: true, blocks: result.blocks };
       } else if (message.type === 'translate-batch') {
-        reply = { ok: true, texts: await AITrProviders.translateBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface }) };
+        // refused：平台拒绝处理（内容审查）、保留了原文的段落序号，整站翻译据此在页面上提示
+        let refused = [];
+        const texts = await AITrProviders.translateBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface, onRefused: (list) => { refused = list; } });
+        reply = { ok: true, texts, refused };
       } else if (message.type === 'cache-lookup') {
         // 只查本机缓存（几毫秒）：区域 / 整站翻译先把命中的段落写上去，剩下的再发 translate-batch
         reply = { ok: true, texts: await AITrProviders.lookupBatch({ ...options, texts: message.texts, whole: message.whole, surface: message.surface }) };

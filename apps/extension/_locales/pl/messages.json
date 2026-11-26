@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Przed rozpoznawaniem na urządzeniu rozszerzenie najpierw nasłuchuje w każdym języku, którego pakiet został już pobrany, aby ustalić, w jakim języku jest film (zaczynając od języka strony); jeśli nie potrafi tego rozpoznać, poprosi Cię o wybór. Jeśli filmy często są w danym języku, wybierz go tutaj i pobierz jego pakiet językowy."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Platforma tłumaczeniowa odmówiła przetworzenia $arg1$ segmentów (moderacja treści); te segmenty pozostały w oryginale.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Zobacz"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

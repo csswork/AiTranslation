@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Trước khi nhận dạng trên thiết bị, tiện ích sẽ thử nghe bằng các ngôn ngữ đã tải gói để xác định video đang nói ngôn ngữ nào (thử ngôn ngữ của trang web trước); nếu không phân biệt được, bạn sẽ được yêu cầu chọn. Nếu video thường nói một ngôn ngữ nhất định, hãy chọn ngôn ngữ đó ở đây và tải gói ngôn ngữ."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "Nền tảng dịch đã từ chối xử lý $arg1$ đoạn nội dung (kiểm duyệt nội dung); các đoạn này được giữ nguyên bản gốc.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Xem"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

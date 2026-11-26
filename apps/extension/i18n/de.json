@@ -785,5 +785,7 @@
   "视频里说的语言，不是字幕要翻成的语言。「自动」按网页的语言选。": "Die im Video gesprochene Sprache, nicht die Sprache, in die die Untertitel übersetzt werden. „Automatisch“ folgt der Sprache der Webseite.",
   "已下载：$1": "Heruntergeladen: $1",
   "还没有下载任何语言包：本机识别要先下载至少一种。": "Noch keine Sprachpakete heruntergeladen: Für die Erkennung auf dem Gerät muss mindestens eines heruntergeladen werden.",
-  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Vor der lokalen Erkennung prüft die Erweiterung zunächst mit den bereits heruntergeladenen Sprachpaketen, welche Sprache im Video gesprochen wird (beginnend mit der Sprache der Webseite); kann sie es nicht erkennen, wirst du gebeten, eine auszuwählen. Wenn Videos häufig in einer bestimmten Sprache sind, wähle sie hier aus und lade ihr Sprachpaket herunter."
+  "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Vor der lokalen Erkennung prüft die Erweiterung zunächst mit den bereits heruntergeladenen Sprachpaketen, welche Sprache im Video gesprochen wird (beginnend mit der Sprache der Webseite); kann sie es nicht erkennen, wirst du gebeten, eine auszuwählen. Wenn Videos häufig in einer bestimmten Sprache sind, wähle sie hier aus und lade ihr Sprachpaket herunter.",
+  "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "Die Übersetzungsplattform hat die Verarbeitung von $1 der Segmente abgelehnt (Inhaltsmoderation); diese Segmente wurden im Original belassen.",
+  "查看": "Ansehen"
 }

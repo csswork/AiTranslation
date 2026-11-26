@@ -3301,6 +3301,17 @@
   "m_73a2f997fa13648f": {
     "message": "Antes del reconocimiento en el dispositivo, la extensión escucha primero en cada idioma cuyo paquete ya está descargado para determinar en cuál está el video (empezando por el idioma de la página web); si no puede determinarlo, se te pedirá que elijas. Si los videos suelen estar en un idioma en particular, selecciónalo aquí y descarga su paquete de idioma."
   },
+  "m_fcb9604ebd07c837": {
+    "message": "La plataforma de traducción se negó a procesar $arg1$ de los segmentos (moderación de contenido); estos segmentos se dejaron en el original.",
+    "placeholders": {
+      "arg1": {
+        "content": "$1"
+      }
+    }
+  },
+  "m_db8db0530432bd15": {
+    "message": "Ver"
+  },
   "extensionName": {
     "message": "Huaci – Traductor de IA y lector bilingüe"
   },
