@@ -632,7 +632,6 @@
     ].filter(Boolean).join('\n');
   }
 
-  /** 解析模型返回的 JSON 数组，容忍代码块包裹和前后多余的话。 */
   /** 从可能夹带代码块或多余说明的回复里取出 JSON 片段。 */
   function stripToJson(content, open) {
     let text = String(content || '').trim();
@@ -645,24 +644,45 @@
     return text;
   }
 
-  /** 批量回复的格式问题（不是合法数组、条数对不上）：translateBatch 拆半重试，其他错误照常抛出。 */
-  const shapeError = (message) => Object.assign(new TranslateError(message), { shape: true });
+  /** 取出回复里第一个完整的 JSON 数组（按括号配对，跳过字符串里的括号）：模型偶尔在合法数组后面多吐 `}`、`</br>` 之类的尾巴。 */
+  function firstArray(text) {
+    const start = text.indexOf('[');
+    if (start < 0) return '';
+    let depth = 0;
+    let quoted = false;
+    for (let i = start; i < text.length; i += 1) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch === '\\') i += 1;
+        else if (ch === '"') quoted = false;
+      } else if (ch === '"') quoted = true;
+      else if (ch === '[' || ch === '{') depth += 1;
+      else if ((ch === ']' || ch === '}') && --depth === 0) return text.slice(start, i + 1);
+    }
+    return text.slice(start);
+  }
 
+  /** 平台拒绝处理这段内容时的 finish_reason（OpenAI 兼容接口通用，DeepSeek 对政治敏感内容会这样回）。 */
+  const FILTERED = 'content_filter';
+
+  /**
+   * 解析批量回复（JSON 字符串数组），返回与 expected 等长的数组，取不到的项是 undefined（由调用方重发）。不抛错。
+   * 条数对不上就整批不用：会把译文安到错误的段落上。
+   */
   function parseBatch(content, expected) {
-    const text = stripToJson(content, '[');
-
-    let parsed;
+    const out = new Array(expected).fill(undefined);
+    let data;
     try {
-      parsed = JSON.parse(text);
+      data = JSON.parse(firstArray(String(content || '')));
     } catch {
-      throw shapeError(t("模型没有返回合法的 JSON 数组"));
+      return out;
     }
-    if (!Array.isArray(parsed)) throw shapeError(t("模型返回的不是数组"));
-    // 条数对不上就不能用：会把译文安到错误的段落上
-    if (parsed.length !== expected) {
-      throw shapeError(t("模型返回 $1 条，与原文 $2 条对不上", [parsed.length, expected]));
+    if (Array.isArray(data) && data.length === expected) {
+      data.forEach((value, i) => {
+        if (value != null && typeof value !== 'object') out[i] = String(value);
+      });
     }
-    return parsed.map((item) => (typeof item === 'string' ? item : String(item ?? '')));
+    return out;
   }
 
   /**
@@ -745,31 +765,57 @@
 
     const target = targetLanguage || S.TARGETS[targetId]?.prompt || S.targetPrompt(settings);
     const termsIn = (list) => (terms.length ? globalThis.AITrTerms.match(terms, list, targetKey) : []);
-    // 模型偶尔少回、多回一条，或回复不是合法的 JSON 数组（如输出被截断）：把这一批拆成两半各自重发，
-    // 直到单段；只在这类格式问题上拆，网络、额度、Key 等错误照常抛出。正常回复不多花请求。
+    // 模型偶尔少回、多回一条，或回复不是合法的 JSON 数组（如输出被截断）：把这一批拆成两半各自重发，直到单段；
+    // 单段仍不对就改用普通的文字翻译（不要求 JSON）。网络、额度、Key 等错误照常抛出。正常回复不多花请求。
+    // 平台拒绝处理的内容（DeepSeek 对政治敏感的段落返回 finish_reason: content_filter、内容为空，换纯文字请求也一样）：
+    // 同样拆半，把被拦的段落隔离出来，这些段落给 null（不进缓存，最后保留原文），其余照常翻译，整批不报错。
     const translateList = async (list) => {
-      try {
-        const response = await request({
-          provider,
-          text: JSON.stringify(list),
-          targetLanguage: target,
-          system: batchSystemPrompt(target, list === texts ? terms : termsIn(list), list),
-          stream: false,
-          signal,
-        });
-        const data = await response.json();
-        return parseBatch(data?.choices?.[0]?.message?.content, list.length);
-      } catch (err) {
-        if (!err?.shape || list.length < 2 || signal?.aborted) throw err;
+      const response = await request({
+        provider,
+        text: JSON.stringify(list),
+        targetLanguage: target,
+        system: batchSystemPrompt(target, list === texts ? terms : termsIn(list), list),
+        stream: false,
+        signal,
+      });
+      const data = await response.json();
+      const choice = data?.choices?.[0];
+      const out = parseBatch(choice?.message?.content, list.length);
+      const missing = out.flatMap((item, i) => (item === undefined ? [i] : []));
+      if (!missing.length || signal?.aborted) return out;
+      if (list.length === 1) return [choice?.finish_reason === FILTERED ? null : await translatePlain(list[0])];
+      let again;
+      if (missing.length < list.length) {
+        again = await translateList(missing.map((i) => list[i]));
+      } else {
         const half = Math.ceil(list.length / 2);
-        const [head, tail] = await Promise.all([translateList(list.slice(0, half)), translateList(list.slice(half))]);
-        return [...head, ...tail];
+        again = (await Promise.all([translateList(list.slice(0, half)), translateList(list.slice(half))])).flat();
       }
+      missing.forEach((index, k) => { out[index] = again[k]; });
+      return out;
     };
-    return cachedBatch({
+    // 单段的兜底：普通文字翻译，回什么用什么
+    const translatePlain = async (text) => {
+      const response = await request({
+        provider,
+        text,
+        targetLanguage: target,
+        system: systemPrompt(target, undefined, termsIn([text]), text),
+        stream: false,
+        signal,
+      });
+      const data = await response.json();
+      const choice = data?.choices?.[0];
+      if (choice?.finish_reason === FILTERED) return null;
+      const content = String(choice?.message?.content || '');
+      if (!content.trim()) throw new TranslateError(t("模型没有返回任何内容，重试或换个模型试试"));
+      return text === text.trim() ? content.trim() : content;
+    };
+    const out = await cachedBatch({
       cache: plan?.cache, texts, whole, surface, fresh, signal, parts: plan?.parts, termsOf: plan?.termsOf,
       run: translateList,
     });
+    return out.map((item, i) => item ?? texts[i]);
   }
 
   /* ------------------------------------------------ 其他译法（双语阅读里点译文的词） */
