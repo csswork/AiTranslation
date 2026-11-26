@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# 整机重建：在一台全新的 Debian 13 上，从 R2（或 B2）的备份恢复配置、代码与数据库。以 root 运行：
+# 整机重建：在一台全新的 Debian 13 上，从 R2 的备份恢复配置、代码与数据库。以 root 运行：
 #
-#   sudo bash restore-server.sh --identity <age 私钥> --backup-env <backup.env> [--from r2|b2]
+#   sudo bash restore-server.sh --identity <age 私钥> --backup-env <backup.env>
 #
 # 准备：把仓库的 apps/backend/deploy/ 整个目录拷到新机；运维者离线保管的 age 私钥与 backup.env
 # （对象存储密钥，从密码管理器取出）各写成一个 600 文件，用完删除。
@@ -14,12 +14,11 @@
 set -euo pipefail
 
 HERE=$(cd "$(dirname "$0")" && pwd)
-identity= backup_env= from=r2
+identity= backup_env=
 while [ $# -gt 0 ]; do
   case "$1" in
     --identity) identity=${2:?}; shift 2 ;;
     --backup-env) backup_env=${2:?}; shift 2 ;;
-    --from) from=${2:?}; shift 2 ;;
     -h|--help) sed -n '2,15p' "$0"; exit 0 ;;
     *) echo "未知参数：$1" >&2; exit 1 ;;
   esac
@@ -27,13 +26,11 @@ done
 [ "$(id -u)" = 0 ] || { echo '需要 root 运行' >&2; exit 1; }
 [ -f "$identity" ] || { echo '缺少 --identity <age 私钥文件>' >&2; exit 1; }
 [ -f "$backup_env" ] || { echo '缺少 --backup-env <backup.env 文件>' >&2; exit 1; }
-case "$from" in r2|b2) ;; *) echo '--from 只能是 r2 或 b2' >&2; exit 1 ;; esac
 
 while IFS= read -r line || [ -n "$line" ]; do
   case "$line" in ''|'#'*) ;; *=*) export "${line%%=*}=${line#*=}" ;; esac
 done < "$backup_env"
-bucket=$([ "$from" = r2 ] && echo "${R2_BUCKET:?}" || echo "${B2_BUCKET:?}")
-remote="$from:$bucket"
+remote="r2:${R2_BUCKET:?backup.env 未填写 R2_BUCKET}"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
@@ -76,7 +73,7 @@ else
   echo '配置包里没有代码，恢复数据库后由 GitHub Actions 发布一次再启动' >&2
 fi
 
-/usr/local/sbin/huaci-restore --target huaci --force --identity "$identity" "$from:latest"
+/usr/local/sbin/huaci-restore --target huaci --force --identity "$identity" r2:latest
 if [ -n "$release_dir" ]; then
   systemctl start huaci-backend
   for _ in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:8787/healthz && break; sleep 1; done

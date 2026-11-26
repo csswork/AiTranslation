@@ -1,13 +1,13 @@
 # VPS 部署说明（草案）
 
-状态：生产环境运行在 AWS EC2 新加坡（Debian 13）+ Amazon RDS；正在迁往东京 VPS，数据库改为同机 PostgreSQL 18，并启用加密异地备份（见 [容灾手册](../../../docs/backend/disaster-recovery.md)）。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
+状态：生产环境自 2026-11-26 起运行在东京 VPS（Debian 13，SSH 端口 59594），数据库为同机 PostgreSQL 18，每 15 分钟加密备份到 Cloudflare R2（见 [容灾手册](../../../docs/backend/disaster-recovery.md)）。原 AWS EC2 + RDS 停用待删除。生产环境必须使用 Resend 发信（`MAIL_TRANSPORT=resend`），否则配置校验会拒绝启动。
 
 ## 运行方式
 
 - 用户端 `app.huaci.app` 与管理端 `admin.huaci.app` 是同一个服务，按主机名区分界面。
 - Node.js 22+ 进程监听 `127.0.0.1:8787`，由 Caddy（[`Caddyfile`](Caddyfile)）自动申请 HTTPS 证书后转发；设置 `TRUST_PROXY=1`。经 Cloudflare 代理时 Caddy 只对 Cloudflare 地址段采信 `CF-Connecting-IP`，并把它写成 `X-Forwarded-For`，限流按此区分来源。
 - PostgreSQL 18 默认与后端同机（[`postgresql.conf`](postgresql.conf)）：只开 Unix socket，库与角色都叫 `huaci`，系统用户 `huaci` 经 peer 认证连接，没有密码。也可以放在别处（`DB=external`，如 Amazon RDS）：数据库账号只授予本应用库的权限，连接串用 `sslmode=verify-full`，CA 由 `NODE_EXTRA_CA_CERTS` 指向 RDS 证书包。
-- 备份：`huaci-backup.timer` 每 15 分钟把数据库导出、用 age 加密后传到 Cloudflare R2，每天复制一份到 Backblaze B2；`huaci-restore-drill.timer` 每周恢复演练一次。配置在 `/etc/huaci/backup.env`（root 600，模板 [`backup.env.example`](backup.env.example)）。恢复、整机重建与切换步骤见 [容灾手册](../../../docs/backend/disaster-recovery.md)。
+- 备份：`huaci-backup.timer` 每 15 分钟把数据库导出、用 age 加密后传到 Cloudflare R2（每天、每月各另存一份）；`huaci-restore-drill.timer` 每周恢复演练一次。配置在 `/etc/huaci/backup.env`（root 600，模板 [`backup.env.example`](backup.env.example)）。恢复、整机重建与切换步骤见 [容灾手册](../../../docs/backend/disaster-recovery.md)。
 - 防火墙：`huaci-firewall`（[`firewall.sh`](firewall.sh)）在独立的 nftables 表里只放行 SSH、Cloudflare 访问 80/443 与 `/etc/huaci/firewall.env` 列出的端口；Caddy 只开 HTTP/1.1 与 HTTP/2，不占 UDP 443。
 - 配置全部来自 `/etc/huaci/backend.env`（root:huaci 640，模板 [`backend.env.example`](backend.env.example)，不放进仓库）：systemd 用 `EnvironmentFile` 读取，迁移用 `node --env-file` 读取，不使用 `.env.local`。
 

@@ -2,10 +2,11 @@
 # 恢复数据库（本机 PostgreSQL），以 root 运行；setup-server.sh 安装为 /usr/local/sbin/huaci-restore。
 #
 #   huaci-restore [--identity <age 私钥>] [--target <库名>] [--force] <来源>
+#   huaci-restore --list [前缀]          列出 R2 上的备份，如 --list db/15m/2026-11-26/
 #
 # 来源：
-#   r2:latest | b2:latest        R2 最新的 15 分钟备份 / B2 最新的每日备份
-#   r2:<对象路径> | b2:<对象路径>  如 r2:db/daily/huaci-2026-11-26.dump.age
+#   r2:latest | r2:latest-daily  R2 最新的 15 分钟备份 / 最新的每日备份
+#   r2:<对象路径>                 如 r2:db/daily/huaci-2026-11-26.dump.age
 #   <本地文件>                    .dump（pg_dump custom 格式）或 .dump.age
 #
 # --target   默认 huaci_restore（临时库，不影响线上）。恢复到线上库 huaci 必须加 --force：
@@ -23,19 +24,21 @@ identity=/etc/huaci/backup-drill.key
 target=huaci_restore
 force=0
 source=
+list=
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --identity) identity=${2:?}; shift 2 ;;
     --target) target=${2:?}; shift 2 ;;
     --force) force=1; shift ;;
-    -h|--help) sed -n '2,19p' "$0"; exit 0 ;;
+    --list) list=1; prefix=${2:-db/}; break ;;
+    -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
     -*) echo "未知参数：$1" >&2; exit 1 ;;
     *) source=$1; shift ;;
   esac
 done
-[ -n "$source" ] || { echo '缺少来源，见 --help' >&2; exit 1; }
 [ "$(id -u)" = 0 ] || { echo '需要 root 运行' >&2; exit 1; }
+[ -n "$source" ] || [ -n "$list" ] || { echo '缺少来源，见 --help' >&2; exit 1; }
 [[ "$target" =~ ^[a-z_][a-z0-9_]*$ ]] || { echo "库名无效：$target" >&2; exit 1; }
 if [ "$target" = huaci ] && [ "$force" != 1 ]; then
   echo '恢复到线上库 huaci 会覆盖现有数据，确认后加 --force' >&2; exit 1
@@ -47,27 +50,28 @@ if [ -f "$BACKUP_ENV" ]; then
   done < "$BACKUP_ENV"
 fi
 
+remote() { echo "r2:${R2_BUCKET:?backup.env 未填写 R2_BUCKET}"; }
+
+if [ -n "$list" ]; then
+  # 打印完整对象路径，可直接作为 r2:<路径> 来源
+  rclone lsf -R --files-only "$(remote)/$prefix" | sort | sed "s#^#${prefix%/}/#"
+  exit 0
+fi
+
 work=$(mktemp -d /var/tmp/huaci-restore.XXXXXX)
 trap 'rm -rf "$work"' EXIT
 
-remote_of() { # r2 | b2 → rclone 远端
-  case "$1" in
-    r2) echo "r2:${R2_BUCKET:?backup.env 未填写 R2_BUCKET}" ;;
-    b2) echo "b2:${B2_BUCKET:?backup.env 未填写 B2_BUCKET}" ;;
-  esac
-}
-
 case "$source" in
-  r2:latest|b2:latest)
-    kind=${source%%:*}; remote=$(remote_of "$kind")
-    dir=$([ "$kind" = r2 ] && echo db/15m || echo db/daily)
+  r2:latest|r2:latest-daily)
+    remote=$(remote)
+    dir=$([ "$source" = r2:latest ] && echo db/15m || echo db/daily)
     latest=$(rclone lsf -R --files-only "$remote/$dir/" | grep '\.dump\.age$' | sort | tail -n 1)
     [ -n "$latest" ] || { echo "$remote/$dir/ 里没有备份" >&2; exit 1; }
     echo "来源：$remote/$dir/$latest"
     rclone copyto "$remote/$dir/$latest" "$work/backup.dump.age"
     file="$work/backup.dump.age" ;;
-  r2:*|b2:*)
-    remote=$(remote_of "${source%%:*}")
+  r2:*)
+    remote=$(remote)
     rclone copyto "$remote/${source#*:}" "$work/backup.dump.age"
     file="$work/backup.dump.age" ;;
   *)
@@ -93,7 +97,8 @@ runuser -u postgres -- dropdb --if-exists --force "$target"
 runuser -u postgres -- createdb -O huaci "$target"
 # 由 root 打开文件再交给 huaci 的 pg_restore，huaci 不需要能读备份所在目录
 runuser -u huaci -- pg_restore --no-owner --no-privileges --exit-on-error --dbname="$target" < "$file"
-runuser -u huaci -- psql -Xq -d "$target" -c 'ANALYZE'
+# 由 postgres 执行：huaci 对系统表没有 ANALYZE 权限，会刷一屏警告
+runuser -u postgres -- psql -Xq -d "$target" -c 'ANALYZE'
 
 echo "已恢复到库 $target，摘要："
 runuser -u huaci -- psql -XAt -F= -d "$target" < "$SUMMARY_SQL"

@@ -1,6 +1,6 @@
 # /etc/systemd/system/huaci-backup.service（由 deploy/setup-server.sh 安装，由 huaci-backup.timer 触发）
 [Unit]
-Description=Huaci database and config backup to R2 / B2
+Description=Huaci database and config backup to Cloudflare R2
 After=network-online.target postgresql.service
 Wants=network-online.target
 

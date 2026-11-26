@@ -3,7 +3,7 @@
 # 也可以手动运行：sudo huaci-backup
 #
 # 每次：pg_dump（custom 格式）→ 校验能被 pg_restore 读取 → age 加密 → 上传 R2 db/15m/。
-# 每个 UTC 日的第一次：同一份再存为 R2 与 B2 的 db/daily/；同时（以及发布新版本后）把配置与当前代码打包存到 config/。
+# 每个 UTC 日的第一次：同一份再存为 db/daily/；同时（以及发布新版本后）把配置与当前代码打包存到 config/。
 # 每个 UTC 月的第一次：再存为 db/monthly/。
 # 脚本只上传、不删除；保留期限由 bucket 的锁定与生命周期规则决定（见 docs/backend/disaster-recovery.md）。
 set -euo pipefail
@@ -51,7 +51,6 @@ age "${recipients[@]}" -o "$dump.age" "$dump"
 rm -f "$dump"
 
 r2="r2:$R2_BUCKET"
-b2=${B2_BUCKET:+"b2:$B2_BUCKET"}
 exists() { # $1 = 远端目录, $2 = 文件名
   rclone lsf --files-only --include "$2" "$1" 2>/dev/null | grep -qxF "$2"
 }
@@ -61,7 +60,6 @@ uploaded="15m"
 
 if ! exists "$r2/db/daily/" "huaci-$day.dump.age"; then
   rclone copyto "$dump.age" "$r2/db/daily/huaci-$day.dump.age"
-  [ -z "$b2" ] || rclone copyto "$dump.age" "$b2/db/daily/huaci-$day.dump.age"
   uploaded="$uploaded daily"
   config_due=1
 fi
@@ -79,14 +77,12 @@ if [ "${config_due:-0}" = 1 ]; then
   tar -C / --exclude=node_modules -czf "$work/config.tar.gz" "${paths[@]}"
   age "${recipients[@]}" -o "$work/config.tar.gz.age" "$work/config.tar.gz"
   rclone copyto "$work/config.tar.gz.age" "$r2/config/huaci-config-$now.tar.gz.age"
-  [ -z "$b2" ] || rclone copyto "$work/config.tar.gz.age" "$b2/config/huaci-config-$now.tar.gz.age"
   echo "$release" > "$state"
   uploaded="$uploaded config"
 fi
 
 if ! exists "$r2/db/monthly/" "huaci-$month.dump.age"; then
   rclone copyto "$dump.age" "$r2/db/monthly/huaci-$month.dump.age"
-  [ -z "$b2" ] || rclone copyto "$dump.age" "$b2/db/monthly/huaci-$month.dump.age"
   uploaded="$uploaded monthly"
 fi
 
