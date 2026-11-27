@@ -787,5 +787,8 @@
   "还没有下载任何语言包：本机识别要先下载至少一种。": "Aún no se ha descargado ningún paquete de idioma: el reconocimiento local requiere descargar al menos uno primero.",
   "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Antes del reconocimiento en el dispositivo, la extensión escucha primero en cada idioma cuyo paquete ya está descargado para determinar en cuál está el video (empezando por el idioma de la página web); si no puede determinarlo, se te pedirá que elijas. Si los videos suelen estar en un idioma en particular, selecciónalo aquí y descarga su paquete de idioma.",
   "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "La plataforma de traducción se negó a procesar $1 de los segmentos (moderación de contenido); estos segmentos se dejaron en el original.",
-  "查看": "Ver"
+  "查看": "Ver",
+  "关掉这个网页也会接着翻，进度和结果显示在右下角": "La traducción continúa aunque cierres esta página; el progreso y los resultados aparecen en la esquina inferior derecha",
+  "打开「视频翻译」页": "Abrir la página «Traducción de video»",
+  "正在翻译视频": "Traduciendo video"
 }

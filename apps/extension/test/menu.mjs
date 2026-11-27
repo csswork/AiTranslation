@@ -127,7 +127,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   globalThis.chrome = chrome;
   globalThis.AITrAccount = { checkVersion: async () => {}, warm: async () => {} };
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
-  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js'); load('src/lib/transcript.js'); load('src/lib/video-file.js');
+  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js'); load('src/lib/transcript.js'); load('src/lib/video-notice.js'); load('src/lib/video-file.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');
   new Function('chrome', 'console', bg)(chrome, console2);
   return { state, chrome };

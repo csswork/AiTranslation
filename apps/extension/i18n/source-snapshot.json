@@ -788,7 +788,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "es": {
     "跟随浏览器": "Follow browser",
@@ -1579,7 +1582,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "pt": {
     "跟随浏览器": "Follow browser",
@@ -2370,7 +2376,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "fr": {
     "跟随浏览器": "Follow browser",
@@ -3161,7 +3170,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "de": {
     "跟随浏览器": "Follow browser",
@@ -3952,7 +3964,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "it": {
     "跟随浏览器": "Follow browser",
@@ -4743,7 +4758,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "nl": {
     "跟随浏览器": "Follow browser",
@@ -5534,7 +5552,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "ru": {
     "跟随浏览器": "Follow browser",
@@ -6325,7 +6346,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "uk": {
     "跟随浏览器": "Follow browser",
@@ -7116,7 +7140,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "pl": {
     "跟随浏览器": "Follow browser",
@@ -7907,7 +7934,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "tr": {
     "跟随浏览器": "Follow browser",
@@ -8698,7 +8728,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "ar": {
     "跟随浏览器": "Follow browser",
@@ -9489,7 +9522,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "he": {
     "跟随浏览器": "Follow browser",
@@ -10280,7 +10316,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "fa": {
     "跟随浏览器": "Follow browser",
@@ -11071,7 +11110,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "hi": {
     "跟随浏览器": "Follow browser",
@@ -11862,7 +11904,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "bn": {
     "跟随浏览器": "Follow browser",
@@ -12653,7 +12698,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "ur": {
     "跟随浏览器": "Follow browser",
@@ -13444,7 +13492,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "id": {
     "跟随浏览器": "Follow browser",
@@ -14235,7 +14286,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "vi": {
     "跟随浏览器": "Follow browser",
@@ -15026,7 +15080,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "th": {
     "跟随浏览器": "Follow browser",
@@ -15817,7 +15874,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "ja": {
     "跟随浏览器": "Follow browser",
@@ -16608,7 +16668,10 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   },
   "ko": {
     "跟随浏览器": "Follow browser",
@@ -17399,6 +17462,9 @@
     "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
     "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
     "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-    "查看": "View"
+    "查看": "View",
+    "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+    "打开「视频翻译」页": "Open the \"Video Translation\" page",
+    "正在翻译视频": "Translating video"
   }
 }

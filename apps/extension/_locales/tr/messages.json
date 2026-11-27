@@ -3312,6 +3312,15 @@
   "m_db8db0530432bd15": {
     "message": "Görüntüle"
   },
+  "m_eed5b87c5e003813": {
+    "message": "Bu sayfayı kapatsanız bile çeviri devam eder; ilerleme ve sonuçlar sağ alt köşede görünür"
+  },
+  "m_5e62cbff7c1aa751": {
+    "message": "\"Video Çevirisi\" sayfasını aç"
+  },
+  "m_d18d01677b082062": {
+    "message": "Video çevriliyor"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

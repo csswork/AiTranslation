@@ -787,5 +787,8 @@
   "还没有下载任何语言包：本机识别要先下载至少一种。": "Chưa tải xuống gói ngôn ngữ nào: nhận dạng trên máy cần tải xuống ít nhất một gói trước.",
   "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Trước khi nhận dạng trên thiết bị, tiện ích sẽ thử nghe bằng các ngôn ngữ đã tải gói để xác định video đang nói ngôn ngữ nào (thử ngôn ngữ của trang web trước); nếu không phân biệt được, bạn sẽ được yêu cầu chọn. Nếu video thường nói một ngôn ngữ nhất định, hãy chọn ngôn ngữ đó ở đây và tải gói ngôn ngữ.",
   "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "Nền tảng dịch đã từ chối xử lý $1 đoạn nội dung (kiểm duyệt nội dung); các đoạn này được giữ nguyên bản gốc.",
-  "查看": "Xem"
+  "查看": "Xem",
+  "关掉这个网页也会接着翻，进度和结果显示在右下角": "Đóng trang này vẫn tiếp tục dịch, tiến độ và kết quả hiển thị ở góc dưới bên phải",
+  "打开「视频翻译」页": "Mở trang \"Dịch video\"",
+  "正在翻译视频": "Đang dịch video"
 }

@@ -3312,6 +3312,15 @@
   "m_db8db0530432bd15": {
     "message": "Bekijken"
   },
+  "m_eed5b87c5e003813": {
+    "message": "Vertaling gaat door, zelfs als je deze pagina sluit; voortgang en resultaten verschijnen rechtsonder"
+  },
+  "m_5e62cbff7c1aa751": {
+    "message": "Open de pagina \"Videotranslatie\""
+  },
+  "m_d18d01677b082062": {
+    "message": "Video wordt vertaald"
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

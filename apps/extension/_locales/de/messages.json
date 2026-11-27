@@ -3312,6 +3312,15 @@
   "m_db8db0530432bd15": {
     "message": "Ansehen"
   },
+  "m_eed5b87c5e003813": {
+    "message": "Die Übersetzung läuft auch nach dem Schließen dieser Seite weiter; Fortschritt und Ergebnisse werden unten rechts angezeigt"
+  },
+  "m_5e62cbff7c1aa751": {
+    "message": "Seite „Videotranslation“ öffnen"
+  },
+  "m_d18d01677b082062": {
+    "message": "Video wird übersetzt"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

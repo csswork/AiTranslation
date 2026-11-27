@@ -22,6 +22,7 @@ const T = globalThis.AITrTranscript;
   assert.deepEqual(revised.map((t) => t.start), [300, 300, 300, 1300], '改口少掉的词再出现时沿用原来的时间，新词取新时间');
   // 中文按词切，不按空格
   const zh = T.timedTokens([[0, 0, 1000, '今天天气很好'], [0, 0, 2000, '今天天气很好我们出去玩']], { lang: 'zh-CN' });
+  assert.deepEqual(tokens.map((t) => Boolean(t.lead)), [false, false, false, false, true, true, false], '识别器另起一条结果的第一个词标上 lead');
   assert.ok(zh.length >= 4, '中文要切成多个词');
   assert.equal(T.joinTokens(zh, 'zh-CN'), '今天天气很好我们出去玩', '中文拼回时不加空格');
   console.log('✓ 中间结果还原词时间（含改口、重启轮次、中文分词）');
@@ -65,7 +66,39 @@ const T = globalThis.AITrTranscript;
   const bare = T.parseCueReply('{"cues":[{"from":0,"to":1,"tr":"好"}]}', 2);
   assert.equal(bare.lang, '', '没给语言不算错');
   assert.equal(bare.garbled, undefined);
-  assert.deepEqual(T.promptTokens([{ text: 'hi', start: 0 }, { text: 'there', start: 900 }]), [[0, 'hi'], [1, 'there']], '交给模型的只有序号和词');
+  assert.deepEqual(T.promptTokens([{ text: 'hi', start: 0 }, { text: 'there', start: 300 }]), [[[0, 'hi'], [1, 'there']]], '交给模型的只有序号和词');
+  console.log('✓ 模型切句回复：合法的序号范围');
+}
+
+/* ---- 3b. 停顿：明确的停顿分行，短停顿标 '|'；跨过明确停顿或太长的条要重切 ---- */
+{
+  // 设备端识别（没有词结束时间）：识别器另起一条结果、或隔 1.2 秒以上才出词是明确停顿，0.6 秒以上是短停顿
+  const tokens = [
+    { text: 'Harry', start: 0 }, { text: "you're", start: 300 }, { text: 'not', start: 500 }, { text: 'coming', start: 700 },
+    { text: 'Shut', start: 1300, lead: true }, { text: 'up', start: 1500 }, { text: 'punk', start: 2200 },
+    { text: 'Yo', start: 4000 }, { text: 'Jack', start: 4200 },
+  ];
+  assert.deepEqual(tokens.map((_, i) => T.pauseBefore(tokens, i)), ['', '', '', '', 'hard', '', 'soft', 'hard', '']);
+  assert.deepEqual(T.promptTokens(tokens), [
+    [[0, 'Harry'], [1, "you're"], [2, 'not'], [3, 'coming']],
+    [[4, 'Shut'], [5, 'up'], '|', [6, 'punk']],
+    [[7, 'Yo'], [8, 'Jack']],
+  ], '按明确停顿分行，行内短停顿插 |');
+  assert.equal(T.badCue(tokens, 0, 3), false);
+  assert.equal(T.badCue(tokens, 4, 6), false, '短停顿可以留在一条里');
+  assert.equal(T.badCue(tokens, 2, 5), true, '跨过明确停顿要重切');
+  const long = Array.from({ length: 20 }, (_, i) => ({ text: `w${i}`, start: i * 250 }));
+  assert.equal(T.badCue(long, 0, 13), false);
+  assert.equal(T.badCue(long, 0, 14), true, '超过 14 个词要重切');
+  // 有词结束时间（OpenAI 转写）：按上一个词结束到这个词开始的空白算
+  const timed = [{ text: 'a', start: 0, end: 300 }, { text: 'b', start: 500, end: 800 }, { text: 'c', start: 1600, end: 1900 }];
+  assert.deepEqual(timed.map((_, i) => T.pauseBefore(timed, i)), ['', '', 'hard'], '0.2 秒空白不算停顿，0.8 秒算明确停顿');
+  // 不靠模型的切句也在明确停顿处断开
+  assert.deepEqual(T.splitCues(tokens, { lang: 'en' }).map((c) => [c.from, c.to]), [[0, 3], [4, 6], [7, 8]]);
+  console.log('✓ 停顿分行，跨过明确停顿或太长的条要重切');
+}
+
+{
   for (const [reply, why] of [
     ['not json', '不是 JSON'],
     ['{"cues":[]}', '空'],
@@ -109,6 +142,12 @@ const T = globalThis.AITrTranscript;
   assert.equal(lang, 'en');
   assert.deepEqual(tokens.map((t) => t.text), ['Is', 'this', 'a', 'Tesla?']);
   assert.deepEqual([tokens[0].start, tokens[0].end], [500, 700]);
+  const two = T.fromWhisper({
+    language: 'english',
+    segments: [{ start: 0, end: 1, avg_logprob: -0.2 }, { start: 1, end: 2, avg_logprob: -0.2 }],
+    words: [{ word: 'Hi.', start: 0.1, end: 0.4 }, { word: 'Who', start: 1.1, end: 1.3 }, { word: 'is', start: 1.3, end: 1.4 }],
+  }).tokens;
+  assert.deepEqual(two.map((t) => Boolean(t.lead)), [false, true, false], 'Whisper 段落的第一个词标上 lead');
   assert.equal(T.fromWhisper({ language: 'japanese', words: [] }).lang, 'ja');
   console.log('✓ Whisper 词级时间；无人声段落的整句丢掉');
 }

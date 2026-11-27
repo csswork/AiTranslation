@@ -788,7 +788,10 @@ globalThis.AITrMessageIds = {
   "还没有下载任何语言包：本机识别要先下载至少一种。": "m_85142e7dbd0214d5",
   "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "m_73a2f997fa13648f",
   "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "m_fcb9604ebd07c837",
-  "查看": "m_db8db0530432bd15"
+  "查看": "m_db8db0530432bd15",
+  "关掉这个网页也会接着翻，进度和结果显示在右下角": "m_eed5b87c5e003813",
+  "打开「视频翻译」页": "m_5e62cbff7c1aa751",
+  "正在翻译视频": "m_d18d01677b082062"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1579,5 +1582,8 @@ globalThis.AITrEnglish = {
   "还没有下载任何语言包：本机识别要先下载至少一种。": "No language packs downloaded yet: on-device recognition requires at least one to be downloaded first.",
   "本机识别前，扩展先用已下载语言包的几种语言试听，看视频说的是哪一种（先试网页的语言）；听不出来时请你选。视频常说哪种语言，就在这里选它，下载语言包。": "Before on-device recognition, the extension first listens in each language whose pack is already downloaded to determine which one the video is in (starting with the webpage's language); if it can't tell, you'll be asked to choose. If videos are often in a particular language, select it here and download its language pack.",
   "翻译平台拒绝处理其中 $1 段内容（内容审查），这些段落保留了原文。": "The translation platform refused to process $1 of the segments (content moderation); these segments were left in the original.",
-  "查看": "View"
+  "查看": "View",
+  "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
+  "打开「视频翻译」页": "Open the \"Video Translation\" page",
+  "正在翻译视频": "Translating video"
 };

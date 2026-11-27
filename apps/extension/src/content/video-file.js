@@ -373,7 +373,7 @@
     ui.hint.hidden = !working;
     ui.hint.textContent = state.needLang
       ? t("没下载的语言要先在设置里下载语言包；也可以稍后在「视频翻译」页里选")
-      : t("可以先去看别的网页，翻好后会在右下角提示");
+      : t("关掉这个网页也会接着翻，进度和结果显示在右下角");
     ui.pick.hidden = !state.needLang;
     const ratio = state.status && state.progress != null ? state.progress : null;
     ui.bar.hidden = ratio == null;

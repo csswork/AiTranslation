@@ -3312,6 +3312,15 @@
   "m_db8db0530432bd15": {
     "message": "Afficher"
   },
+  "m_eed5b87c5e003813": {
+    "message": "La traduction continue même si vous fermez cette page ; la progression et les résultats s'affichent dans le coin inférieur droit"
+  },
+  "m_5e62cbff7c1aa751": {
+    "message": "Ouvrir la page « Traduction de vidéos »"
+  },
+  "m_d18d01677b082062": {
+    "message": "Traduction de la vidéo en cours"
+  },
   "extensionName": {
     "message": "Huaci – Traducteur IA et lecture bilingue"
   },

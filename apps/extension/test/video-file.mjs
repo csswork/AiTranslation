@@ -40,7 +40,7 @@ const chat = (content) => ({ ok: true, status: 200, json: async () => ({ choices
   assert.deepEqual(body.thinking, { type: 'disabled' }, '沿用 DeepSeek 的翻译调参');
   const user = JSON.parse(body.messages[1].content);
   assert.equal(user.title, 'Teslas in GTA 6');
-  assert.deepEqual(user.tokens[0], [0, 'theft']);
+  assert.deepEqual(user.lines[0][0], [0, 'theft'], '逐词结果按明确停顿分行');
   assert.equal(user.heard, 'en-US', '告诉模型识别器按什么语言听的');
   assert.match(body.messages[0].content, /from、to/);
   assert.deepEqual(cues.map((c) => [c.start, c.tr]), [[1000, '检测到盗窃。自动安全系统已启动。'], [3400, '请坐好。']]);
@@ -63,6 +63,40 @@ const chat = (content) => ({ ok: true, status: 200, json: async () => ({ choices
   assert.ok(fallback.length >= 1 && fallback.every((c) => c.tr.startsWith('译:')));
   assert.equal(T.joinTokens(tokens, 'en'), fallback.map((c) => c.text).join(' '), '按停顿切出的句子覆盖全部词');
   console.log('✓ 模型回复不合格时退回按停顿切句');
+
+  // 太长、跨过明确停顿的条：带前后文单独再请模型切一次
+  const talk = [...'yo jack your ex wife called she wants a new boyfriend in your dreams axel'.split(' '), 'shut', 'up'].map((text, i) => ({
+    text, start: i * 300 + (i >= 15 ? 2000 : 0),
+  }));
+  mock((_url, init, n) => {
+    const user = JSON.parse(JSON.parse(init.body).messages[1].content);
+    if (n === 1) {
+      assert.equal(user.lines.length, 2, '明确停顿处分行');
+      return chat(JSON.stringify({ lang: 'en', garbled: false, cues: [{ from: 0, to: 16, text: 'Too long.', tr: '太长了。' }] }));
+    }
+    assert.ok(user.context, '重切时带上前后文');
+    return chat(JSON.stringify({ cues: [
+      { from: 0, to: 5, text: 'Yo Jack, your ex-wife called.', tr: '杰克，你前妻来电话了。' },
+      { from: 6, to: 10, text: 'She wants a new boyfriend.', tr: '她想找个新男友。' },
+      { from: 11, to: 14, text: 'In your dreams, Axel.', tr: '做梦吧，阿克塞尔。' },
+      { from: 15, to: 16, text: 'Shut up.', tr: '闭嘴。' },
+    ] }));
+  });
+  const { cues: split } = await P.translateTranscript({ tokens: talk, lang: 'en-US', duration: 9000, settings });
+  assert.equal(calls.length, 2);
+  assert.deepEqual(split.map((c) => c.tr), ['杰克，你前妻来电话了。', '她想找个新男友。', '做梦吧，阿克塞尔。', '闭嘴。']);
+  assert.deepEqual(split.map((c) => c.start), [0, 1800, 3300, 6500], '按各自第一个词的时间显示');
+
+  // 重切还是不合格：这一条按停顿和长度切开、整批翻译，其余照用模型的
+  mock((_url, init, n) => {
+    if (n === 1) return chat(JSON.stringify({ cues: [{ from: 0, to: 14, text: 'Long.', tr: '长。' }, { from: 15, to: 16, text: 'Shut up.', tr: '闭嘴。' }] }));
+    if (n === 2) return chat(JSON.stringify({ cues: [{ from: 0, to: 14, text: 'Still long.', tr: '还是长。' }] }));
+    return chat(JSON.stringify(JSON.parse(JSON.parse(init.body).messages[1].content).map((s) => `译:${s}`)));
+  });
+  const { cues: ruled } = await P.translateTranscript({ tokens: talk, lang: 'en-US', duration: 9000, settings });
+  assert.ok(ruled.length >= 3 && ruled.slice(0, -1).every((c) => c.tr.startsWith('译:')), '过长的一条按规则切开');
+  assert.equal(ruled.at(-1).tr, '闭嘴。', '合格的条照用模型的');
+  console.log('✓ 太长、跨过停顿的条单独重切，还不行按规则切');
 }
 
 /* ---- 2. DeepL：按停顿切句，再整批翻译 ---- */

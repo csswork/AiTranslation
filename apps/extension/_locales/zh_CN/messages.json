@@ -3312,6 +3312,15 @@
   "m_db8db0530432bd15": {
     "message": "查看"
   },
+  "m_eed5b87c5e003813": {
+    "message": "关掉这个网页也会接着翻，进度和结果显示在右下角"
+  },
+  "m_5e62cbff7c1aa751": {
+    "message": "打开「视频翻译」页"
+  },
+  "m_d18d01677b082062": {
+    "message": "正在翻译视频"
+  },
   "extensionName": {
     "message": "划词 – AI 翻译与双语阅读"
   },

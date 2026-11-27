@@ -62,14 +62,32 @@
       const [r2, i2] = b.split(':').map(Number);
       return r1 - r2 || i1 - i2;
     });
-    const words = order.flatMap((key) => tokenize(hyp.get(key), lang));
+    // 识别器在说话停下来（静音）时结束一条结果、开下一条：每条结果的第一个词标上 lead，切字幕句时当作明确的停顿
+    const words = order.flatMap((key, k) => tokenize(hyp.get(key), lang).map((text, i) => ({ text, lead: k > 0 && i === 0 })));
     let last = 0;
-    return words.map((text, i) => {
+    return words.map(({ text, lead }, i) => {
       // 识别器改口时词数会忽多忽少，取不到时间的沿用前一个词的
       const start = Math.max(last, times[i] ?? last);
       last = start;
-      return { text, start };
+      return lead ? { text, start, lead } : { text, start };
     });
+  }
+
+  /**
+   * 第 i 个词前面停顿得多明显：'hard' 是明确停下来了（识别器在这里另起一条结果，或隔了很久才出下一个词），
+   * 'soft' 是短停顿，'' 是连着说。有词结束时间（OpenAI 转写）时按上一个词结束到这个词开始的空白算，
+   * 没有（设备端识别）时按两个词开始的间隔算（含上一个词本身约 0.3 秒）。
+   */
+  function pauseBefore(tokens, i) {
+    if (i <= 0 || i >= tokens.length) return '';
+    const prev = tokens[i - 1];
+    const token = tokens[i];
+    if (token.lead) return 'hard';
+    const timed = Number.isFinite(prev.end);
+    const gap = token.start - (timed ? prev.end : prev.start);
+    if (gap >= (timed ? 700 : 1200)) return 'hard';
+    if (gap >= (timed ? 300 : 600)) return 'soft';
+    return '';
   }
 
   /** 每个词的结束时间：有就用，没有就到下一个词开始（最多 0.8 秒）。 */
@@ -94,6 +112,7 @@
     for (let i = 1; i <= tokens.length; i += 1) {
       const size = i - from;
       const end = i === tokens.length
+        || pauseBefore(tokens, i) === 'hard'
         || tokens[i].start - tokens[i - 1].start > gapMs
         || SENTENCE_END.test(tokens[i - 1].text)
         || size >= limit;
@@ -107,7 +126,7 @@
     for (const cue of cues) {
       const prev = merged[merged.length - 1];
       const size = cue.to - cue.from + 1;
-      if (prev && size <= 2 && prev.to - prev.from + 1 + size <= limit + 3
+      if (prev && size <= 2 && prev.to - prev.from + 1 + size <= limit + 3 && pauseBefore(tokens, cue.from) !== 'hard'
         && tokens[cue.from].start - tokens[prev.to].start <= gapMs * 2) prev.to = cue.to;
       else merged.push({ ...cue });
     }
@@ -136,11 +155,30 @@
   }
 
   /**
-   * 交给模型的文稿：[[序号, 词], …]，模型按序号范围切句，不用抄原文，对齐不会错位。
-   * 不带时间：设备端识别的词时间按结果到达的批次推算，词间的「停顿」大多是识别器的节奏而不是说话的停顿
-   * （探针里 0.6–0.9 秒的间隔一半落在句子中间），给模型只会误导。
+   * 交给模型的文稿：按明确的停顿分成几行，每行是 [[序号, 词], …]，行内短停顿处插一个 '|'。
+   * 模型按序号范围切句，不用抄原文，对齐不会错位；一条字幕不能跨行，这样字幕跟着说话的节奏断开。不给具体时间。
    */
-  const promptTokens = (tokens) => tokens.map((t, i) => [i, t.text]);
+  function promptTokens(tokens) {
+    const lines = [];
+    tokens.forEach((token, i) => {
+      const pause = pauseBefore(tokens, i);
+      if (!lines.length || pause === 'hard') lines.push([]);
+      const line = lines[lines.length - 1];
+      if (pause === 'soft') line.push('|');
+      line.push([i, token.text]);
+    });
+    return lines;
+  }
+
+  /** 一条字幕最多这么多个词：提示词要求 10 个，超出一些还能接受，再长就读不过来了。 */
+  const CUE_MAX_WORDS = 14;
+
+  /** 模型切出的 [from, to] 这一条要不要重切：太长，或跨过了明显的停顿。 */
+  function badCue(tokens, from, to, maxWords = CUE_MAX_WORDS) {
+    if (to - from + 1 > maxWords) return true;
+    for (let i = from + 1; i <= to; i += 1) if (pauseBefore(tokens, i) === 'hard') return true;
+    return false;
+  }
 
   const shapeError = (message) => Object.assign(new Error(message), { shape: true });
 
@@ -217,6 +255,14 @@
       .filter((w) => typeof w?.word === 'string' && w.word.trim() && !inBad(Number(w.start)))
       .map((w) => ({ text: w.word.trim(), start: Math.round(Number(w.start) * 1000), end: Math.round(Number(w.end) * 1000) }))
       .filter((t) => Number.isFinite(t.start));
+    // 段落的第一个词标上 lead（Whisper 大多按句子、停顿分段），切字幕句时当作明确的停顿
+    const starts = segments.map((s) => Math.round(Number(s.start) * 1000)).filter(Number.isFinite);
+    let seg = 0;
+    tokens.forEach((token, i) => {
+      let lead = false;
+      while (seg < starts.length && starts[seg] <= token.start) { lead = true; seg += 1; }
+      if (lead && i > 0) token.lead = true;
+    });
     return { tokens, lang };
   }
 
@@ -272,7 +318,7 @@
   }
 
   globalThis.AITrTranscript = {
-    LATENCY_MS, unspaced, tokenize, joinTokens, timedTokens, splitCues, cueTimes, promptTokens,
+    LATENCY_MS, unspaced, tokenize, joinTokens, timedTokens, pauseBefore, badCue, splitCues, cueTimes, promptTokens,
     parseCueReply, parseJson: stripJson, chunkTokens, fromWhisper, encodeWav, sniffMedia, isSilent, judgeByDensity,
   };
 })();

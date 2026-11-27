@@ -56,6 +56,7 @@ function boot(production = false, firefox = false) {
   vm.runInContext(source('src/lib/account.js'), context);
   vm.runInContext(source('src/lib/sites.js'), context);
   vm.runInContext(source('src/lib/transcript.js'), context);
+  vm.runInContext(source('src/lib/video-notice.js'), context);
   vm.runInContext(source('src/lib/video-file.js'), context);
   vm.runInContext(source('src/background.js').replace(/^import .*$/gm, ''), context);
   const accountOrigin = production ? 'https://app.huaci.app' : 'http://localhost:8787';

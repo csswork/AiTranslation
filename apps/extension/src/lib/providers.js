@@ -1056,10 +1056,14 @@
   function cuePrompt(targetLanguage, terms = []) {
     return [
       `你在为一段短视频做字幕，目标语言是${targetLanguage}。`,
-      '用户消息是一个 JSON 对象：title 是视频所在网页的标题（可能为空，只用来理解内容）；heard 是语音识别按哪种语言听的；tokens 是识别出的逐词结果，每项是 [序号, 词]。识别结果没有可靠的标点，可能有个别识别错的词。',
+      '用户消息是一个 JSON 对象：title 是视频所在网页的标题（可能为空，只用来理解内容）；heard 是语音识别按哪种语言听的；lines 是识别出的逐词结果，按说话人明显停下来的地方分成几行，每行是 [序号, 词] 的列表，行内的 "|" 表示短暂停顿。识别结果没有可靠的标点，可能有个别识别错的词。',
       '任务：',
-      '1. 把 tokens 依次分成字幕条，每条最多 12 个英文单词（或 20 个汉字），宁短勿长。用 from、to 标出这条第一个和最后一个词的序号（含两端）；各条按顺序排列、互不重叠，纯语气词可以跳过。',
-      '2. 短视频里常是几个人轮流说话，识别结果把所有人的话连成了一串。先按意思判断每句话是谁说的、从哪里开始，换人的地方一定断开，不要把上一个人的话尾和下一个人的话头放进同一条（比如「…do you want some coffee」和接着的「no thanks, I am good」是两个人说的）。一句话超过上限时在从句、短语之间断开。',
+      '1. 把词依次分成字幕条，跟着说话的节奏走：观众要一边听一边读，一条字幕对应一口气说出的一句话。用 from、to 标出这条第一个和最后一个词的序号（含两端）；各条按顺序排列、互不重叠，纯语气词可以跳过。',
+      '2. 断开的规则：',
+      '   - 一条字幕不能跨行：每行的第一个词一定是一条字幕的开头。一行可以分成好几条。',
+      '   - 一条只放一句话：说完一句（陈述、问句、感叹、称呼加一句话）就断开，不要把两句话放进同一条，哪怕都很短；不要用逗号把两句话连成一条（「You\'re right, that\'s stupid」和「Murphy, you\'re out」是两条）。',
+      '   - 短视频里常是几个人轮流说话，识别结果把所有人的话连成了一串。按意思判断每句话是谁说的，换人的地方一定断开，不要把上一个人的话尾和下一个人的话头放进同一条（比如「…do you want some coffee」和接着的「no thanks, I am good」是两个人说的）。',
+      '   - 每条宁短勿长：to − from 不超过 9（最多 10 个词，跳过的语气词也算），输出前逐条核对。一句话超过上限时在从句、短语之间断开，"|" 处是好的断点。',
       '3. text 是这条的原文：用原来的词，只加标点和大小写，不增删、不改词。',
       `4. tr 是这条的${targetLanguage}译文：参照整段内容和标题来译，自然口语、简短，适合做字幕；明显的识别错误按上下文理解后再译。原文已经是${targetLanguage}时照抄原文。`,
       '5. lang 填说话人实际说的语言（ISO 639-1 代码，如 en、ja、es）。garbled：识别结果整体读不通、像是用错了语言去听（比如把英语当成中文去听，出来一串不成句的词）时填 true，正常的对话即使口语化、有个别错词也填 false。',
@@ -1128,13 +1132,16 @@
       const terms = await termsFor([joined(0, tokens.length - 1)], settings.target);
       const system = cuePrompt(target, terms);
       const cache = cacheFor(settings, provider);
-      const byModel = async (from, to) => {
-        const text = JSON.stringify({ title: String(title || '').slice(0, 200), heard: heard || lang, tokens: T.promptTokens(tokens.slice(from, to)) });
-        const material = cache && cache.material('llm-cues-2', provider.id, provider.baseUrl, provider.model, system, text);
+      /** 请模型切 [from, to) 这一段并翻译；context 是这一段前后的原文（只在重切过长的一条时给）。回复不合格返回 null。 */
+      const ask = async (from, to, context = null) => {
+        const text = JSON.stringify({
+          title: String(title || '').slice(0, 200), heard: heard || lang, ...(context ? { context } : {}), lines: T.promptTokens(tokens.slice(from, to)),
+        });
+        const material = cache && cache.material('llm-cues-3', provider.id, provider.baseUrl, provider.model, system, text);
         const hit = material && !fresh ? (await cache.getMany([material]))[0] : undefined;
         let reply = hit && Array.isArray(hit.cues) ? hit : null;
         const cached = Boolean(reply);
-        // 偶尔序号重叠、越界或缺译文：再请求一次，还不对才退回按停顿切句、整批翻译
+        // 偶尔序号重叠、越界或缺译文：再请求一次
         for (let attempt = 0; !reply && attempt < 2; attempt += 1) {
           try {
             const response = await request({ provider, text, targetLanguage: target, system, stream: false, signal, json: true, temperature: CUE_TEMPERATURE });
@@ -1144,12 +1151,29 @@
             if (!err?.shape || signal?.aborted) throw err;
           }
         }
-        if (!reply) return { cues: await byRules(from, to) };
+        if (!reply) return null;
         if (!cached && material && !signal?.aborted) cache.setMany([[material, reply]]);
         return {
           lang: reply.lang, garbled: reply.garbled,
           cues: reply.cues.map((c) => ({ from: c.from + from, to: c.to + from, text: c.text || joined(c.from + from, c.to + from), tr: c.tr })),
         };
+      };
+      /**
+       * 模型常不守长度、偶尔跨过明显的停顿（实测一成多的条超过 12 个词）：这样的条单独再请模型切一次（带前后文），
+       * 还不行就按停顿和长度切开、整批翻译。字幕跟着说话的节奏走，比一条译文完整更要紧。
+       */
+      const refine = async (cue) => {
+        if (!T.badCue(tokens, cue.from, cue.to)) return [cue];
+        const context = { before: joined(Math.max(0, cue.from - 30), cue.from - 1), after: joined(cue.to + 1, cue.to + 30) };
+        const again = await ask(cue.from, cue.to + 1, context).catch((err) => { if (signal?.aborted) throw err; return null; });
+        if (again && again.cues.every((c) => !T.badCue(tokens, c.from, c.to))) return again.cues;
+        return byRules(cue.from, cue.to + 1);
+      };
+      // 回复不合格（两次都是）就整段退回按停顿切句、整批翻译
+      const byModel = async (from, to) => {
+        const reply = await ask(from, to);
+        if (!reply) return { cues: await byRules(from, to) };
+        return { ...reply, cues: (await Promise.all(reply.cues.map(refine))).flat() };
       };
       const parts = await Promise.all(T.chunkTokens(tokens).map(([from, to]) => byModel(from, to)));
       cues = parts.flatMap((part) => part.cues);

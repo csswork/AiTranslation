@@ -19,6 +19,7 @@ import './lib/usage.js';
 import './lib/image-fetch.js';
 import './lib/transcript.js';
 import './lib/video-library.js';
+import './lib/video-notice.js';
 import './lib/video-file.js';
 
 const t = (...args) => AITrI18n.t(...args);
@@ -362,10 +363,14 @@ async function syncActiveTab() {
   }
 }
 
-chrome.tabs.onActivated?.addListener(({ tabId }) => syncPageMenus(tabId));
+chrome.tabs.onActivated?.addListener(({ tabId }) => {
+  syncPageMenus(tabId);
+  globalThis.AITrVideoNotice?.onTabActivated(tabId); // 后台翻译视频的提示跟着换到这一页
+});
 // 同一个标签页打开了别的网站：「翻译这个网站」的勾选要跟着变
 chrome.tabs.onUpdated?.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url && tab?.active) syncPageMenus(tabId);
+  globalThis.AITrVideoNotice?.onTabUpdated(tabId, changeInfo, tab);
   if (globalThis.AITrEnv?.firefox && changeInfo.url) {
     const url = new URL(changeInfo.url);
     if (url.origin === AITrEnv.accountOrigin && url.pathname === '/extension/firefox/callback'
@@ -380,6 +385,7 @@ chrome.tabs.onUpdated?.addListener((tabId, changeInfo, tab) => {
 AITrSites.onChange(() => syncActiveTab());
 chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
   if (windowId === chrome.windows.WINDOW_ID_NONE) return;
+  globalThis.AITrVideoNotice?.onWindowFocused();
   try {
     const [tab] = await chrome.tabs.query({ active: true, windowId });
     if (tab?.id != null) await syncPageMenus(tab.id);
@@ -806,6 +812,9 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
 AITrVideoFile.init({ ensureOffscreen });
 // 整份视频翻译：字幕浮层连回来认领任务（见 lib/video-file.js）
 chrome.runtime.onConnect.addListener((port) => AITrVideoFile.onConnect(port));
+// 后台翻译的右下角提示（见 lib/video-notice.js）：跟着用户换标签页、换窗口、刷新页面
+// 后台翻译的右下角提示（见 lib/video-notice.js）；换标签页、换窗口、刷新页面时跟过去，见各自的事件监听
+chrome.runtime.onConnect.addListener((port) => AITrVideoNotice.onConnect(port));
 
 /**
  * 右键视频「翻译这个视频」：这个标签页正开着实时字幕就关掉；能整份下载的视频文件做整份翻译；
