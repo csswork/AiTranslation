@@ -54,7 +54,7 @@ const settle = () => new Promise((r) => setTimeout(r, 20));
 
 // 平台用 DeepSeek（本机识别）；翻译请求打桩
 S.loadSettings = async () => S.normalize({ provider: 'deepseek', target: 'zh-Hans', cache: false, deepseek: { apiKey: 'sk-test' } });
-globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ choices: [{ message: { content: JSON.stringify({ lang: 'en', garbled: false, cues: [{ from: 0, to: 2, text: 'Hi there you.', tr: '你好。' }] }) } }] }) });
+globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ choices: [{ message: { content: JSON.stringify({ lang: 'en', garbled: false, title_tr: '搞笑片段', cues: [{ from: 0, to: 2, text: 'Hi there you.', tr: '你好。' }] }) } }] }) });
 V.init({ ensureOffscreen: async () => {} });
 
 /** 提示脚本连回来（注入到哪个标签页就以哪个标签页的身份连）。 */
@@ -109,6 +109,7 @@ await settle();
 const done = shown(there)[0];
 assert.equal(done?.tone, 'done', '翻好后显示完成卡片（之前收起的是进度）');
 assert.match(done.detail, /共 1 句/);
+assert.equal(done.title, '搞笑片段', '翻好后标题换成译文');
 assert.equal(state.badge.at(-1), '✓');
 // 换到第三个标签页：卡片跟过去
 state.tabs.get(2).active = false;

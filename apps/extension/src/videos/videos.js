@@ -11,9 +11,14 @@
     runningWrap: $('runningWrap'), running: $('running'), list: $('list'), empty: $('empty'),
     detail: $('detail'), placeholder: $('placeholder'), video: $('video'),
     caption: $('caption'), captionTr: $('captionTr'), captionOrig: $('captionOrig'),
-    title: $('title'), info: $('info'), source: $('source'), warning: $('warning'), fileNote: $('fileNote'),
+    title: $('title'), titleOrig: $('titleOrig'), info: $('info'), source: $('source'), warning: $('warning'), fileNote: $('fileNote'),
     remove: $('remove'), cues: $('cues'),
   };
+
+  // 粘在顶部的播放器有多高：字幕列表滚到当前句时留出这段（见 videos.css 的 scroll-margin-top）
+  new ResizeObserver(([entry]) => {
+    document.documentElement.style.setProperty('--stage-h', `${Math.round(entry.target.getBoundingClientRect().height)}px`);
+  }).observe($('stage'));
 
   let entries = [];
   let current = null;
@@ -26,6 +31,12 @@
     return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
   };
   const safeUrl = (url) => (/^https?:\/\//i.test(String(url || '')) ? url : '');
+  /** 标题有译文且与原文不同时：译文为主，原文在下面小字。 */
+  const titles = (entry) => {
+    const orig = entry.title || '';
+    const tr = entry.titleTr && entry.titleTr !== orig ? entry.titleTr : '';
+    return { main: tr || orig || t("视频"), orig: tr ? orig : '' };
+  };
   const node = (tag, className, text) => {
     const item = document.createElement(tag);
     if (className) item.className = className;
@@ -41,7 +52,9 @@
       button.type = 'button';
       button.setAttribute('aria-current', String(entry.id === current?.id));
       const when = new Date(entry.createdAt).toLocaleString(undefined, { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-      button.append(node('span', 'name', entry.title || t("视频")),
+      const name = titles(entry);
+      button.title = name.orig;
+      button.append(node('span', 'name', name.main),
         node('span', 'when', t("$1 · $2 · $3 句", [when, clock(entry.duration), entry.cues?.length || 0])));
       button.addEventListener('click', () => { location.hash = entry.id; });
       li.append(button);
@@ -165,8 +178,11 @@
     el.placeholder.hidden = Boolean(entry);
     if (!entry) { el.video.removeAttribute('src'); el.video.load(); return; }
 
-    document.title = `${entry.title || t("视频")} · ${t("视频翻译")}`;
-    el.title.textContent = entry.title || t("视频");
+    const name = titles(entry);
+    document.title = `${name.main} · ${t("视频翻译")}`;
+    el.title.textContent = name.main;
+    el.titleOrig.textContent = name.orig;
+    el.titleOrig.hidden = !name.orig;
     el.info.textContent = t("$1 · 共 $2 句", [clock(entry.duration), entry.cues.length]);
     const page = safeUrl(entry.pageUrl) || safeUrl(entry.srcUrl);
     el.source.hidden = !page;

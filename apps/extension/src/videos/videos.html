@@ -26,12 +26,15 @@
       </aside>
 
       <section class="detail" id="detail" hidden>
-        <div class="player">
-          <video id="video" controls playsinline></video>
-          <div class="caption" id="caption" hidden><div class="ctr" id="captionTr"></div><div class="corig" id="captionOrig"></div></div>
+        <div class="stage" id="stage">
+          <div class="player">
+            <video id="video" controls playsinline></video>
+            <div class="caption" id="caption" hidden><div class="ctr" id="captionTr"></div><div class="corig" id="captionOrig"></div></div>
+          </div>
         </div>
         <div class="meta">
-          <h2 id="title"></h2>
+          <h2 id="title" dir="auto"></h2>
+          <p class="title-orig" id="titleOrig" dir="auto" hidden></p>
           <p class="info"><span id="info"></span> <a id="source" target="_blank" rel="noopener noreferrer" hidden>打开原网页</a></p>
           <p class="warn" id="warning" hidden></p>
           <p class="note" id="fileNote" hidden>没有存下视频文件，正在从原网址播放；原网址失效时就播不了了。</p>

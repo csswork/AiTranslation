@@ -173,7 +173,7 @@
    * 翻好、失败或要用户选语言：换成卡片，出现在用户正在看的网页上。
    * 用户正看着视频所在那一页（浮层开着）时浮层自己会说，翻好、失败就不另弹。
    */
-  async function finish(id, { tone, heading, detail = '' }) {
+  async function finish(id, { tone, heading, detail = '', title = '' }) {
     const item = items.get(id);
     if (!item) return;
     if (tone !== 'ask') {
@@ -182,7 +182,8 @@
       const focused = tab?.active ? await chrome.windows?.get?.(tab.windowId).then((w) => w.focused, () => true) : false;
       if (tab?.active && focused !== false) { remove(id); return; }
     }
-    Object.assign(item, { tone, heading, detail, progress: null, at: Date.now() });
+    // 翻好时标题换成译文（与「视频翻译」页一致）
+    Object.assign(item, { tone, heading, detail, progress: null, at: Date.now() }, title ? { title } : {});
     broadcast();
     scheduleExpiry();
     showInActiveTab();

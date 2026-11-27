@@ -2,7 +2,7 @@
  * 整份视频翻译的记录（见 docs/extension/video-file-translation.md）：存在扩展自己的 IndexedDB，
  * 只在这个浏览器里，不上传、不同步。service worker 写记录、offscreen 写视频文件、「视频翻译」页读，三者同属扩展来源。
  *
- *   entries { id, srcUrl, pageUrl, title, createdAt, duration, cues, lang, target, provider, resultKey, warning, size }
+ *   entries { id, srcUrl, pageUrl, title, titleTr（标题译文，旧记录没有）, createdAt, duration, cues, lang, target, provider, resultKey, warning, size }
  *   files   { id, blob }   下载下来的视频文件：原网址失效或防盗链时也能在「视频翻译」页播放
  *
  * 只留最近 MAX_ENTRIES 条、文件合计不超过 MAX_BYTES，超出时删最旧的。无痕窗口里的翻译不记。

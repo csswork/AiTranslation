@@ -192,7 +192,7 @@
   }
 
   /**
-   * 解析模型切句 + 翻译的回复：{ lang, garbled, cues: [{ from, to, text, tr }] }。
+   * 解析模型切句 + 翻译的回复：{ lang, garbled, title_tr, cues: [{ from, to, text, tr }] }。
    * 序号必须是整数、在范围内、按顺序且互不重叠（中间可以跳过语气词）；不合格就抛 shape 错误，由调用方退回不靠模型的切句。
    * lang、garbled 是模型对说话语言与识别结果是否读不通的判断，缺了不算错。
    */
@@ -214,7 +214,8 @@
       return { from, to, text: typeof item.text === 'string' ? item.text.trim() : '', tr };
     });
     const lang = typeof data?.lang === 'string' && /^[a-z]{2,3}$/i.test(data.lang.trim()) ? data.lang.trim().toLowerCase() : '';
-    return { cues, lang, garbled: typeof data?.garbled === 'boolean' ? data.garbled : undefined };
+    const titleTr = typeof data?.title_tr === 'string' ? data.title_tr.trim().slice(0, 300) : '';
+    return { cues, lang, garbled: typeof data?.garbled === 'boolean' ? data.garbled : undefined, titleTr };
   }
 
   /** 按词数把长文稿切成几段分别请求：切在停顿最长的地方，每段不超过 max 个词。 */

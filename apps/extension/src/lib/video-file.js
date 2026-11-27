@@ -287,20 +287,20 @@
       if (tokens.length < 3) { nothing('no-speech', t("没有识别到人声")); return; } // 零星几个词多半是噪声、歌声
 
       post({ type: 'progress', phase: 'translate', mode });
-      const { cues, check } = await AITrProviders.translateTranscript({
+      const { cues, check, titleTr = '' } = await AITrProviders.translateTranscript({
         tokens, lang: tokensLang, heard: mode === 'local' ? lang.id : '', duration: result.duration, title: job.title, settings, signal, incognito: job.incognito,
       });
       // 本机识别要事先选对语言：选错了出来的是一串读不通的词。大模型判断出来时提醒去改（OpenAI 自己判断语种，不用提醒）
       const warning = mode === 'local' ? languageWarning(check, lang) : '';
       if (!job.incognito) {
         saved = await library()?.put({
-          id: job.jobId, srcUrl: job.srcUrl, pageUrl: job.pageUrl, title: job.title, createdAt: Date.now(),
+          id: job.jobId, srcUrl: job.srcUrl, pageUrl: job.pageUrl, title: job.title, titleTr, createdAt: Date.now(),
           duration: result.duration, cues, lang: tokensLang, target: settings.target, provider: settings.provider,
           resultKey: job.resultKey, warning, size: result.size || 0,
         }).then(() => true, () => false);
       }
       post({ type: 'done', cues, warning, libraryId: saved ? job.jobId : '' });
-      finish({ tone: 'done', heading: t("视频字幕已准备好"), detail: saved ? t("点击观看（共 $1 句）", [cues.length]) : '' });
+      finish({ tone: 'done', heading: t("视频字幕已准备好"), title: titleTr, detail: saved ? t("点击观看（共 $1 句）", [cues.length]) : '' });
     } catch (err) {
       if (signal.aborted || err?.name === 'AbortError') return;
       const message = String(err?.message || err) || t("视频翻译出错：$1", ['?']);

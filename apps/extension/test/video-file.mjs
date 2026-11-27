@@ -28,11 +28,13 @@ const chat = (content) => ({ ok: true, status: 200, json: async () => ({ choices
 /* ---- 1. 大模型：一次请求按词序号切句并翻译 ---- */
 {
   const settings = S.normalize({ provider: 'deepseek', target: 'zh-Hans', cache: false, deepseek: { apiKey: 'sk-test' } });
-  mock(() => chat(JSON.stringify({ lang: 'en', garbled: false, cues: [
+  mock(() => chat(JSON.stringify({ lang: 'en', garbled: false, title_tr: 'GTA 6 里的特斯拉', cues: [
     { from: 0, to: 5, text: 'Theft detected. Autonomous security system activated.', tr: '检测到盗窃。自动安全系统已启动。' },
     { from: 6, to: 8, text: 'Please remain seated.', tr: '请坐好。' },
   ] })));
-  const { cues, check } = await P.translateTranscript({ tokens, lang: 'en-US', heard: 'en-US', duration: 9000, title: 'Teslas in GTA 6', settings });
+  const { cues, check, titleTr } = await P.translateTranscript({ tokens, lang: 'en-US', heard: 'en-US', duration: 9000, title: 'Teslas in GTA 6', settings });
+  assert.equal(titleTr, 'GTA 6 里的特斯拉', '标题在同一次请求里翻好');
+  assert.match(JSON.parse(calls[0].init.body).messages[0].content, /title_tr/);
   assert.deepEqual(check, { lang: 'en', garbled: false }, '模型顺带判断说话语言、识别结果是否读不通');
   assert.equal(calls.length, 1, '整篇一次请求');
   const body = JSON.parse(calls[0].init.body);
@@ -108,8 +110,9 @@ const chat = (content) => ({ ok: true, status: 200, json: async () => ({ choices
     return { ok: true, status: 200, json: async () => ({ translations: texts.map((text) => ({ text: `德:${text}` })) }) };
   });
   const gap = tokens.map((tk, i) => ({ ...tk, start: tk.start + (i >= 6 ? 3000 : 0) }));
-  const { cues, check } = await P.translateTranscript({ tokens: gap, lang: 'en-US', duration: 15000, settings });
+  const { cues, check, titleTr } = await P.translateTranscript({ tokens: gap, lang: 'en-US', duration: 15000, title: 'Teslas in GTA 6', settings });
   assert.deepEqual(check, { lang: '', garbled: false }, 'DeepL 判断不了语言，不提醒');
+  assert.equal(titleTr, '德:Teslas in GTA 6', '标题放在同一批里翻');
   assert.deepEqual(cues.map((c) => c.text), ['theft detected autonomous security system activated', 'please remain seated']);
   assert.ok(cues.every((c) => c.tr.startsWith('德:')));
   console.log('✓ DeepL：按停顿切句后整批翻译');
