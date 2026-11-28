@@ -72,6 +72,11 @@
       "match_about_blank": true
     },
     {
+      "matches": ["https://www.tiktok.com/*"],
+      "js": ["src/lib/lifecycle.js", "src/lib/languages.js", "src/lib/messages.js", "src/lib/i18n.js", "src/content/tiktok.js"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": ["http://localhost/*", "https://app.huaci.app/*", "https://huaci.app/*", "https://www.huaci.app/*"],
       "js": ["src/lib/env.js", "src/content/account.js"],
       "run_at": "document_idle"

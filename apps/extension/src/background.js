@@ -1072,9 +1072,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ ok: AITrVideoFile.chooseLanguage(String(message.id || ''), message.lang) });
     return false;
   }
-  // 扩展图标弹窗：TikTok 视频详情页的整份翻译（TikTok 拦掉了视频上的右键，见 lib/tiktok.js）
+  // TikTok 的整份翻译（TikTok 拦掉了视频上的右键，见 lib/tiktok.js）：扩展图标弹窗，或页面右下角的浮动按钮
   if (type === 'video-file-tiktok' && fromOwnPage && Number.isInteger(message.tabId)) {
     AITrVideoFile.openTikTok(message.tabId).catch((err) => console.warn('[Huaci] TikTok video:', err?.message));
+    return false;
+  }
+  // 浮动按钮（content/tiktok.js）只能翻它所在的那个标签页：标签页与地址都取浏览器给的 sender，只认顶层框架
+  const tiktokButton = sender.id === chrome.runtime.id && sender.tab?.id != null && (sender.frameId ?? 0) === 0 && globalThis.AITrTikTok?.isPage(sender.url);
+  if (type === 'video-file-tiktok-ready' && tiktokButton) {
+    sendResponse({ ok: Boolean(chrome.offscreen) });
+    return false;
+  }
+  if (type === 'video-file-tiktok-page' && tiktokButton) {
+    AITrVideoFile.openTikTok(sender.tab.id).catch((err) => console.warn('[Huaci] TikTok video:', err?.message));
+    sendResponse({ ok: true });
     return false;
   }
   if (type === 'video-file-cancel' && fromOwnPage) {

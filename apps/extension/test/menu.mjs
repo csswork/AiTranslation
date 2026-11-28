@@ -127,7 +127,7 @@ function boot(initialSettings = { target: 'zh-Hans', provider: 'deepseek' }) {
   globalThis.chrome = chrome;
   globalThis.AITrAccount = { checkVersion: async () => {}, warm: async () => {} };
   const load = (p) => new Function('chrome', 'console', fs.readFileSync(`${ROOT}/${p}`, 'utf8'))(chrome, console2);
-  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js'); load('src/lib/transcript.js'); load('src/lib/video-notice.js'); load('src/lib/video-file.js');
+  installExtensionFixture(chrome); load('src/lib/languages.js'); load('src/lib/lang.js'); load('src/lib/settings.js'); load('src/lib/providers.js'); load('src/lib/sites.js'); load('src/lib/transcript.js'); load('src/lib/video-notice.js'); load('src/lib/tiktok.js'); load('src/lib/video-file.js');
   const bg = fs.readFileSync(`${ROOT}/src/background.js`, 'utf8').replace(/^import .*$/gm, '');
   new Function('chrome', 'console', bg)(chrome, console2);
   return { state, chrome };
@@ -293,6 +293,30 @@ const settle = () => new Promise((r) => setTimeout(r, 60));
   await settle();
   assert.deepEqual(items(), [false, true], '重建后仍按当前 PDF 标签页显示');
   console.log('✓ PDF 标签页里右键空白处出现「翻译整个 PDF」，与区域按钮互斥');
+}
+
+/* --- 3c2. TikTok 浮动按钮：只能翻它所在标签页的视频，只认 TikTok 顶层框架 --- */
+{
+  const { state, chrome } = boot();
+  await settle();
+  const opened = [];
+  AITrVideoFile.openTikTok = async (tabId) => { opened.push(tabId); return true; };
+  const reply = (message, sender) => new Promise((resolve) => {
+    const async = state.listeners.message(message, sender, resolve);
+    if (!async) setTimeout(() => resolve(undefined), 0);
+  });
+  const tiktok = { id: 'test-extension', tab: { id: 21 }, frameId: 0, url: 'https://www.tiktok.com/foryou' };
+  chrome.offscreen = {};
+  assert.deepEqual(await reply({ type: 'video-file-tiktok-ready' }, tiktok), { ok: true });
+  assert.deepEqual(await reply({ type: 'video-file-tiktok-page', tabId: 99, url: 'https://evil.example/' }, tiktok), { ok: true });
+  assert.deepEqual(opened, [21], '只翻按钮所在的标签页，消息里的标签页、网址都不认');
+  assert.equal(await reply({ type: 'video-file-tiktok-page' }, { ...tiktok, frameId: 3 }), undefined, '子框架发来的不处理');
+  assert.equal(await reply({ type: 'video-file-tiktok-page' }, { ...tiktok, url: 'https://example.com/' }), undefined, '别的网站发来的不处理');
+  assert.equal(await reply({ type: 'video-file-tiktok-page' }, { ...tiktok, id: 'other-extension' }), undefined);
+  assert.deepEqual(opened, [21]);
+  delete chrome.offscreen;
+  assert.deepEqual(await reply({ type: 'video-file-tiktok-ready' }, tiktok), { ok: false }, '没有 offscreen（Firefox）时按钮不出现');
+  console.log('✓ TikTok 浮动按钮只能翻它所在的标签页，只认 TikTok 顶层框架');
 }
 
 /* --- 3d. 双语阅读：点菜单注入识别脚本；识别结果存进会话存储，在右边打开阅读页 --- */

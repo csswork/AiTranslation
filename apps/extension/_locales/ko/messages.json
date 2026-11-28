@@ -3339,6 +3339,15 @@
   "m_c31325b1b6d94a26": {
     "message": "재생 중인 TikTok 동영상 전체 번역"
   },
+  "m_d5bf3304c2d239ca": {
+    "message": "비디오 번역"
+  },
+  "m_07bb9d8647294059": {
+    "message": "재생 중인 비디오 전체를 번역하고 자막을 비디오 위에 표시합니다"
+  },
+  "m_efd72d9ffeee0aca": {
+    "message": "이 탭에서 숨기기"
+  },
   "extensionName": {
     "message": "Huaci – AI 번역 및 이중 언어 읽기"
   },

@@ -3339,6 +3339,15 @@
   "m_c31325b1b6d94a26": {
     "message": "Translate the entire playing TikTok video"
   },
+  "m_d5bf3304c2d239ca": {
+    "message": "Translate video"
+  },
+  "m_07bb9d8647294059": {
+    "message": "Translate the entire video being played, with subtitles displayed on the video"
+  },
+  "m_efd72d9ffeee0aca": {
+    "message": "Hide on this tab"
+  },
   "extensionName": {
     "message": "Huaci – AI Translator & Bilingual Reader"
   },

@@ -36,6 +36,8 @@ export function prepareStorePackage(root, staging, target = 'chrome') {
     delete manifest.minimum_chrome_version;
     manifest.background = { scripts: ['src/background.js'], type: 'module' };
     manifest.permissions = manifest.permissions.filter((permission) => !['offscreen', 'tabCapture'].includes(permission));
+    // 没有 offscreen 就做不了整份视频翻译：TikTok 的浮动按钮也不装
+    manifest.content_scripts = manifest.content_scripts.filter((script) => !script.js.includes('src/content/tiktok.js'));
     manifest.browser_specific_settings = { gecko: {
       id: 'huaci@huaci.app',
       strict_min_version: '142.0',

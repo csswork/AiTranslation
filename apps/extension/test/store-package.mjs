@@ -29,11 +29,15 @@ try {
       assert.equal(manifest.web_accessible_resources, undefined, 'Firefox callback page stays private');
       assert.deepEqual(manifest.background, { scripts: ['src/background.js'], type: 'module' });
       assert.ok(!manifest.permissions.some((p) => ['offscreen', 'tabCapture'].includes(p)));
+      assert.ok(!manifest.content_scripts.some((script) => script.js.includes('src/content/tiktok.js')), 'Firefox has no whole-video translation, so no TikTok button');
       assert.equal(manifest.minimum_chrome_version, undefined);
       assert.equal(manifest.browser_specific_settings.gecko.id, 'huaci@huaci.app');
       assert.deepEqual(manifest.browser_specific_settings.gecko.data_collection_permissions.required, ['authenticationInfo', 'websiteContent']);
       assert.deepEqual(manifest.browser_specific_settings.gecko.data_collection_permissions.optional, ['technicalAndInteraction']);
     } else {
+      const tiktok = manifest.content_scripts.find((script) => script.js.includes('src/content/tiktok.js'));
+      assert.deepEqual(tiktok?.matches, ['https://www.tiktok.com/*'], 'TikTok button only on TikTok, top frame');
+      assert.ok(!tiktok.all_frames);
       assert.equal(manifest.web_accessible_resources.length, 1);
       assert.deepEqual(manifest.web_accessible_resources[0].matches, ['https://app.huaci.app/*']);
       assert.equal(manifest.browser_specific_settings, undefined);

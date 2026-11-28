@@ -797,7 +797,10 @@ globalThis.AITrMessageIds = {
   "整份翻译这一页的 TikTok 视频": "m_7ec8bd63dcf3717a",
   "视频还没下载完，网页就关掉了，请重新打开再试": "m_8437525ccc482998",
   "没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页": "m_e3eac0905415b556",
-  "整份翻译正在播放的 TikTok 视频": "m_c31325b1b6d94a26"
+  "整份翻译正在播放的 TikTok 视频": "m_c31325b1b6d94a26",
+  "翻译视频": "m_d5bf3304c2d239ca",
+  "整份翻译正在播放的视频，字幕显示在视频上": "m_07bb9d8647294059",
+  "在这个标签页里隐藏": "m_efd72d9ffeee0aca"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1597,5 +1600,8 @@ globalThis.AITrEnglish = {
   "整份翻译这一页的 TikTok 视频": "Translate the TikTok video on this page in full",
   "视频还没下载完，网页就关掉了，请重新打开再试": "The video hadn't finished downloading before the page was closed. Please reopen it and try again.",
   "没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页": "No playing TikTok video found: start playing the video you want to translate, or open its details page",
-  "整份翻译正在播放的 TikTok 视频": "Translate the entire playing TikTok video"
+  "整份翻译正在播放的 TikTok 视频": "Translate the entire playing TikTok video",
+  "翻译视频": "Translate video",
+  "整份翻译正在播放的视频，字幕显示在视频上": "Translate the entire video being played, with subtitles displayed on the video",
+  "在这个标签页里隐藏": "Hide on this tab"
 };
