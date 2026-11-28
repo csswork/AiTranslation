@@ -38,11 +38,15 @@ S.loadSettings = async () => S.normalize({ provider: 'deepseek', deepseek: { api
 {
   assert.equal(T.videoId(PAGE), '7707162841757027604');
   assert.equal(T.videoId(`${PAGE}?is_from_webapp=1`), '7707162841757027604', '带参数也认');
-  assert.equal(T.videoId('https://www.tiktok.com/foryou'), '', '推荐流不支持');
+  assert.equal(T.videoId('https://www.tiktok.com/foryou'), '', '推荐流地址里没有 ID');
+  assert.equal(T.isPage('https://www.tiktok.com/foryou'), true, '推荐流也是 TikTok 的网页');
+  assert.equal(T.isPage('https://tiktok.com.evil.example/foryou'), false);
   assert.equal(T.videoId('https://www.tiktok.com/@leijun'), '');
   assert.equal(T.videoId('http://www.tiktok.com/@a/video/7707162841757027604'), '', '只认 https');
   assert.equal(T.videoId('https://tiktok.com.evil.example/@a/video/7707162841757027604'), '', '不认冒名的域名');
-  assert.equal(T.canonicalUrl(`${PAGE}/?is_from_webapp=1#x`), PAGE, '固定地址去掉参数');
+  assert.equal(T.canonicalUrl('7707162841757027604', 'leijun'), PAGE, '固定地址由 ID 和作者拼成');
+  assert.equal(T.canonicalUrl('7707162841757027604', 'a/b?x'), 'https://www.tiktok.com/@/video/7707162841757027604', '作者名不像用户名就不拼');
+  assert.equal(T.canonicalUrl('12ab'), '', 'ID 只认数字');
   assert.equal(T.isMediaUrl(CDN), true);
   assert.equal(T.isMediaUrl('https://v19.tiktokcdn-us.com/video/x.mp4'), true);
   for (const bad of [PAGE, 'http://v16-webapp-prime.tiktok.com/video/x', 'https://example.com/v.mp4', 'https://evil-tiktok.com/v.mp4',
@@ -55,29 +59,46 @@ S.loadSettings = async () => S.normalize({ provider: 'deepseek', deepseek: { api
 /* ---- 2. 在页面数据里按视频 ID 找直链 ---- */
 {
   const data = { __DEFAULT_SCOPE__: { 'webapp.video-detail': { itemInfo: { itemStruct: {
-    id: '7707162841757027604', desc: 'Made a fall drink', video: { playAddr: CDN, downloadAddr: 'https://v16.tiktok.com/dl' },
+    id: '7707162841757027604', desc: 'Made a fall drink', author: { uniqueId: 'leijun' }, video: { playAddr: CDN, downloadAddr: 'https://v16.tiktok.com/dl' },
   } } } } };
   const other = { id: '1', video: { playAddr: 'https://v16.tiktok.com/other' } };
   globalThis.document = { getElementById: () => ({ textContent: JSON.stringify({ list: [other], ...data }) }) };
-  assert.deepEqual(await T.readPage('7707162841757027604'), { url: CDN, title: 'Made a fall drink' }, '按 ID 找，不拿别的视频');
-  // 站内跳转过来：页面数据是别的视频，重新取当前网址的网页再找
+  assert.deepEqual(await T.readPage('7707162841757027604'), { id: '7707162841757027604', url: CDN, title: 'Made a fall drink', author: 'leijun' }, '按 ID 找，不拿别的视频');
+  // 站内跳转过来、推荐流：页面数据里没有，在页面里取 /@/video/ID 的网页再找
   globalThis.document = { getElementById: () => ({ textContent: JSON.stringify({ list: [other] }) }) };
-  globalThis.location = { href: PAGE };
   globalThis.fetch = async (url, init) => {
-    assert.equal(url, PAGE);
+    assert.equal(url, 'https://www.tiktok.com/@/video/7707162841757027604');
     assert.equal(init.credentials, 'include');
     return { text: async () => 'html' };
   };
   globalThis.DOMParser = class { parseFromString() { return { getElementById: () => ({ textContent: JSON.stringify(data) }) }; } };
   assert.equal((await T.readPage('7707162841757027604')).url, CDN, '站内跳转时重新取网页');
   globalThis.DOMParser = class { parseFromString() { return { getElementById: () => null }; } };
-  assert.equal(await T.readPage('7707162841757027604'), null, '找不到就是 null');
-  console.log('✓ 页面数据里按视频 ID 找直链，站内跳转时重新取网页');
+  assert.equal((await T.readPage('7707162841757027604')).missing, true, '找不到这个视频的数据');
+
+  // 推荐流：取窗口里正在播放、露出最多的视频，从播放器容器读 ID
+  const player = (id, rect, paused) => {
+    const wrapper = { id: `xgwrapper-0-${id}`, parentElement: null };
+    const box = { id: '', parentElement: wrapper };
+    return { paused, parentElement: box, getBoundingClientRect: () => rect };
+  };
+  Object.assign(globalThis, { innerWidth: 1200, innerHeight: 800 });
+  const videos = [
+    player('1111111111', { top: -700, bottom: 100, left: 300, right: 700 }, true),
+    player('7707162841757027604', { top: 100, bottom: 780, left: 300, right: 700 }, false),
+    player('2222222222', { top: 790, bottom: 1500, left: 300, right: 700 }, true),
+  ];
+  globalThis.document = { body: {}, querySelectorAll: () => videos, getElementById: () => ({ textContent: JSON.stringify({ list: [other] }) }) };
+  globalThis.DOMParser = class { parseFromString() { return { getElementById: () => ({ textContent: JSON.stringify(data) }) }; } };
+  assert.equal((await T.readPage('')).id, '7707162841757027604', '取正在播放、露出最多的那个');
+  globalThis.document = { body: {}, querySelectorAll: () => [], getElementById: () => null };
+  assert.equal(await T.readPage(''), null, '没有视频就是 null');
+  console.log('✓ 页面数据里按视频 ID 找直链；推荐流取正在播放的视频');
 }
 
 /* ---- 3. openTikTok：ID 取自标签页地址，直链核对后整份翻译 ---- */
 {
-  state.found = { url: CDN, title: '  Made a fall drink\n#tea ' };
+  state.found = { id: '7707162841757027604', author: 'leijun', url: CDN, title: '  Made a fall drink\n#tea ' };
   await V.openTikTok(7);
   const opened = state.sent.at(-1);
   assert.equal(opened.type, 'video-file-open');
@@ -86,26 +107,39 @@ S.loadSettings = async () => S.normalize({ provider: 'deepseek', deepseek: { api
   assert.equal(V.running().length, 0, '浮层认领前还没开始');
 
   // 页面数据被改成别的网站：不翻
-  state.found = { url: 'https://evil.example/steal', title: 'x' };
+  state.found = { id: '7707162841757027604', url: 'https://evil.example/steal', title: 'x' };
   await V.openTikTok(7);
   assert.equal(state.sent.at(-1).jobId, '');
   assert.match(state.sent.at(-1).error, /没在这一页找到/);
   // 图片帖：没有视频地址
-  state.found = { url: '', title: 'photos' };
+  state.found = { id: '7707162841757027604', url: '', title: 'photos' };
   await V.openTikTok(7);
   assert.match(state.sent.at(-1).error, /图片帖/);
-  // 不是视频详情页：什么都不做
+  // 详情页上页面给的 ID 与地址里的不一致：不翻
+  state.found = { id: '1234567890', url: CDN };
+  await V.openTikTok(7);
+  assert.match(state.sent.at(-1).error, /没找到正在播放/);
+  // 推荐流：页面给出正在播放的视频 ID
+  state.tab = { ...state.tab, url: 'https://www.tiktok.com/foryou', title: 'For You | TikTok' };
+  state.found = { id: '7695367993454251271', author: 'zizik', url: CDN, title: 'ひとり時間' };
+  await V.openTikTok(7);
+  assert.equal(state.sent.at(-1).srcUrl, 'https://www.tiktok.com/@zizik/video/7695367993454251271', '推荐流也按视频 ID 认');
+  assert.ok(state.sent.at(-1).jobId);
+  state.found = null;
+  await V.openTikTok(7);
+  assert.match(state.sent.at(-1).error, /没找到正在播放/, '推荐流里没有正在播放的视频');
+  // 不是 TikTok：什么都不做
   const before = state.sent.length;
-  state.tab = { ...state.tab, url: 'https://www.tiktok.com/foryou' };
+  state.tab = { ...state.tab, url: 'https://example.com/@a/video/7707162841757027604' };
   assert.equal(await V.openTikTok(7), false);
   assert.equal(state.sent.length, before);
-  console.log('✓ openTikTok：只按标签页地址的视频 ID，直链不对或是图片帖时说明原因');
+  console.log('✓ openTikTok：详情页按地址里的 ID，推荐流取正在播放的；直链不对或是图片帖时说明原因');
 }
 
 /* ---- 4. 认领后去取的是直链 ---- */
 {
   state.tab = { ...state.tab, url: PAGE };
-  state.found = { url: CDN, title: 'Made a fall drink' };
+  state.found = { id: '7707162841757027604', author: 'leijun', url: CDN, title: 'Made a fall drink' };
   state.sent = [];
   await V.openTikTok(7);
   const { jobId } = state.sent.at(-1);

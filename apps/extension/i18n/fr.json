@@ -794,5 +794,7 @@
   "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Cette publication TikTok ne contient aucune vidéo téléchargeable dans son intégralité (il peut s'agir d'une publication d'images)",
   "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "Impossible de trouver le fichier de cette vidéo TikTok sur cette page. Actualisez la page et réessayez",
   "整份翻译这一页的 TikTok 视频": "Traduire intégralement la vidéo TikTok de cette page",
-  "视频还没下载完，网页就关掉了，请重新打开再试": "La vidéo n'avait pas fini de se télécharger avant la fermeture de la page. Veuillez la rouvrir et réessayer."
+  "视频还没下载完，网页就关掉了，请重新打开再试": "La vidéo n'avait pas fini de se télécharger avant la fermeture de la page. Veuillez la rouvrir et réessayer.",
+  "没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页": "Aucune vidéo TikTok en cours de lecture trouvée : lancez la lecture de la vidéo à traduire ou ouvrez sa page de détails",
+  "整份翻译正在播放的 TikTok 视频": "Traduire toute la vidéo TikTok en cours de lecture"
 }

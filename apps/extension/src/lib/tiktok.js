@@ -4,10 +4,12 @@
  * TikTok 拦掉了视频上的右键（弹它自己的菜单），播放器的地址又是 blob:（分段串流），右键菜单这条路走不通。
  * 视频详情页（/@用户/video/数字）的页面数据里有这个视频的 MP4 直链（playAddr），但它要同时带 TikTok 自己的
  * Cookie 和来自 tiktok.com 的 Referer 才给（2026-11 实测：少一样就 403，扩展后台怎么取都 403）。所以从扩展图标弹窗进入：
- *   视频 ID 只取浏览器给的标签页地址；直链从该页的页面数据里按这个 ID 找，只认 TikTok 自己的视频服务器；
+ *   详情页的视频 ID 取浏览器给的标签页地址；直链从页面数据里按这个 ID 找，只认 TikTok 自己的视频服务器；
  *   文件由注入那一页的脚本用页面自己的身份取（和 TikTok 播放器的请求一样，Cookie 只发给 TikTok），
  *   分块送给 offscreen 文档（src/offscreen/file.js 的 receive）。这是「取文件不带 Cookie 与 Referer」的唯一例外。
- * 推荐流（For You）里的视频是滚动时另外加载的，页面数据里没有，暂不支持。
+ * 推荐流（For You、探索等不是详情页的页面）：视频是滚动时另外加载的，标签页地址里也没有 ID。这时取窗口里正在播放、
+ * 露出最多的那个视频，从它的播放器容器（id 为 xgwrapper-序号-视频ID）读出 ID，再在页面里取 /@/video/ID 的网页找直链。
+ * ID 只当作一串数字用，直链照样只认 TikTok 的视频服务器：页面就算给错 ID，也只会翻到另一个 TikTok 视频。
  * 与 lang.js 等一样不能使用 import / export；service worker 与弹窗共用。
  */
 (() => {
@@ -21,12 +23,24 @@
     return parsed.pathname.match(/^\/@[^/]+\/video\/(\d{6,25})\/?$/)?.[1] || '';
   }
 
-  /** 同一个视频的固定地址（直链带签名、会过期，不能拿来认「翻过没有」）。 */
-  function canonicalUrl(url) {
-    const id = videoId(url);
-    if (!id) return '';
-    const parsed = new URL(url);
-    return `https://www.tiktok.com${parsed.pathname.replace(/\/$/, '')}`;
+  /** TikTok 的网页（从扩展图标进入时：详情页按地址里的 ID，其余页面取正在播放的视频）。 */
+  function isPage(url) {
+    try {
+      const parsed = new URL(String(url || ''));
+      return parsed.protocol === 'https:' && /^(www\.|m\.)?tiktok\.com$/i.test(parsed.hostname);
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * 同一个视频的固定地址（直链带签名、会过期，不能拿来认「翻过没有」），也是「打开原网页」的链接。
+   * 只由视频 ID 和作者用户名拼成，推荐流和详情页里翻的同一个视频对得上。
+   */
+  function canonicalUrl(id, author = '') {
+    if (!/^\d{6,25}$/.test(String(id || ''))) return '';
+    const user = /^[\w.]{1,40}$/.test(String(author || '')) ? author : '';
+    return `https://www.tiktok.com/@${user}/video/${id}`;
   }
 
   /** 只认 TikTok 自己的视频服务器（如 v16-webapp-prime.tiktok.com），不认网页本身和别的网站。 */
@@ -40,11 +54,33 @@
   }
 
   /**
-   * 注入到 TikTok 标签页顶层框架（隔离环境）运行：在页面数据里找 ID 为 id 的视频，返回 { url, title }。
-   * 页面是站内跳转过来的时候，页面数据还是最初那个视频的，这时重新取一次当前网址的网页再找。
-   * 必须自成一体（会被序列化后注入），结果由后台再核对。
+   * 注入到 TikTok 标签页顶层框架（隔离环境）运行，返回 { id, url, title, author }，找不到视频返回 null。
+   * id 给了（详情页，取自标签页地址）就找这个视频；没给（推荐流）就取窗口里正在播放、露出最多的那个，
+   * 从它的播放器容器（xgwrapper-序号-视频ID）读出 ID。先在本页的页面数据里找，找不到（推荐流、站内跳转过来）
+   * 就在页面里取 /@/video/ID 的网页再找。必须自成一体（会被序列化后注入），结果由后台再核对。
    */
-  async function readPage(id) {
+  async function readPage(id = '') {
+    if (!id) {
+      const shown = (video) => {
+        const r = video.getBoundingClientRect();
+        const h = Math.max(0, Math.min(innerHeight, r.bottom) - Math.max(0, r.top));
+        const w = Math.max(0, Math.min(innerWidth, r.right) - Math.max(0, r.left));
+        return h * w;
+      };
+      const idOf = (video) => {
+        for (let node = video; node && node !== document.body; node = node.parentElement) {
+          const match = String(node.id || '').match(/^xgwrapper-\d+-(\d{6,25})$/);
+          if (match) return match[1];
+        }
+        return '';
+      };
+      const best = [...document.querySelectorAll('video')]
+        .map((video) => ({ id: idOf(video), score: shown(video) + (video.paused ? 0 : 1e9) }))
+        .filter((item) => item.id && item.score > 0)
+        .sort((a, b) => b.score - a.score)[0];
+      if (!best) return null;
+      id = best.id;
+    }
     const pick = (text) => {
       let data;
       try { data = JSON.parse(text || ''); } catch { return null; }
@@ -53,7 +89,10 @@
         const [node, depth] = stack.pop();
         if (!node || typeof node !== 'object' || depth > 12) continue;
         if (String(node.id) === id && node.video && typeof node.video === 'object') {
-          return { url: String(node.video.playAddr || node.video.downloadAddr || ''), title: String(node.desc || '') };
+          return {
+            id, url: String(node.video.playAddr || node.video.downloadAddr || ''), title: String(node.desc || ''),
+            author: String(node.author?.uniqueId || ''),
+          };
         }
         for (const value of Object.values(node)) if (value && typeof value === 'object') stack.push([value, depth + 1]);
       }
@@ -63,13 +102,13 @@
     let hit = pick(document.getElementById(SCRIPT)?.textContent);
     if (!hit) {
       try {
-        const html = await (await fetch(location.href, { credentials: 'include' })).text();
+        const html = await (await fetch(`https://www.tiktok.com/@/video/${id}`, { credentials: 'include' })).text();
         hit = pick(new DOMParser().parseFromString(html, 'text/html').getElementById(SCRIPT)?.textContent);
       } catch {
         /* 取不到就当作没找到 */
       }
     }
-    return hit;
+    return hit || { id, url: '', title: '', author: '', missing: true };
   }
 
   /**
@@ -128,5 +167,5 @@
     }
   }
 
-  globalThis.AITrTikTok = { videoId, canonicalUrl, isMediaUrl, readPage, sendFile };
+  globalThis.AITrTikTok = { videoId, isPage, canonicalUrl, isMediaUrl, readPage, sendFile };
 })();

@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "Video belum selesai diunduh, tetapi halaman sudah ditutup. Silakan buka kembali dan coba lagi."
   },
+  "m_e3eac0905415b556": {
+    "message": "Tidak ditemukan video TikTok yang sedang diputar: mulai putar video yang ingin diterjemahkan, atau buka halaman detailnya"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Terjemahkan seluruh video TikTok yang sedang diputar"
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "Video indirilmeden sayfa kapatıldı. Lütfen sayfayı yeniden açıp tekrar deneyin."
   },
+  "m_e3eac0905415b556": {
+    "message": "Oynatılan TikTok videosu bulunamadı: çevirmek istediğiniz videoyu oynatın veya ayrıntılar sayfasını açın"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Oynatılan TikTok videosunun tamamını çevir"
+  },
   "extensionName": {
     "message": "Huaci – Yapay zeka çevirmeni ve iki dilli okuyucu"
   },

@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "Das Video war noch nicht vollständig heruntergeladen, als die Seite geschlossen wurde. Bitte öffne sie erneut und versuche es noch einmal."
   },
+  "m_e3eac0905415b556": {
+    "message": "Kein abspielendes TikTok-Video gefunden: Starte das Video, das du übersetzen möchtest, oder öffne seine Detailseite"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Das gesamte abspielende TikTok-Video übersetzen"
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

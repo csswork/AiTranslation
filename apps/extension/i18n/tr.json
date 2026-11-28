@@ -794,5 +794,7 @@
   "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Bu TikTok gönderisinde tam olarak indirilebilecek bir video yok (gönderi görsel olabilir)",
   "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "Bu TikTok videosunun dosyası bu sayfada bulunamadı. Sayfayı yenileyip tekrar deneyin",
   "整份翻译这一页的 TikTok 视频": "Bu sayfadaki TikTok videosunu tamamen çevir",
-  "视频还没下载完，网页就关掉了，请重新打开再试": "Video indirilmeden sayfa kapatıldı. Lütfen sayfayı yeniden açıp tekrar deneyin."
+  "视频还没下载完，网页就关掉了，请重新打开再试": "Video indirilmeden sayfa kapatıldı. Lütfen sayfayı yeniden açıp tekrar deneyin.",
+  "没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页": "Oynatılan TikTok videosu bulunamadı: çevirmek istediğiniz videoyu oynatın veya ayrıntılar sayfasını açın",
+  "整份翻译正在播放的 TikTok 视频": "Oynatılan TikTok videosunun tamamını çevir"
 }

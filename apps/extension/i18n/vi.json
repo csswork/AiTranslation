@@ -794,5 +794,7 @@
   "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Bài đăng TikTok này không có video nào có thể tải xuống toàn bộ (có thể đây là bài đăng ảnh)",
   "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "Không tìm thấy tệp của video TikTok này trên trang này. Hãy làm mới trang và thử lại",
   "整份翻译这一页的 TikTok 视频": "Dịch toàn bộ video TikTok trên trang này",
-  "视频还没下载完，网页就关掉了，请重新打开再试": "Video chưa tải xong thì trang đã bị đóng, vui lòng mở lại và thử lại"
+  "视频还没下载完，网页就关掉了，请重新打开再试": "Video chưa tải xong thì trang đã bị đóng, vui lòng mở lại và thử lại",
+  "没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页": "Không tìm thấy video TikTok đang phát: hãy phát video bạn muốn dịch trước, hoặc mở trang chi tiết của video đó",
+  "整份翻译正在播放的 TikTok 视频": "Dịch toàn bộ video TikTok đang phát"
 }

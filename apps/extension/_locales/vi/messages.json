@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "Video chưa tải xong thì trang đã bị đóng, vui lòng mở lại và thử lại"
   },
+  "m_e3eac0905415b556": {
+    "message": "Không tìm thấy video TikTok đang phát: hãy phát video bạn muốn dịch trước, hoặc mở trang chi tiết của video đó"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Dịch toàn bộ video TikTok đang phát"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

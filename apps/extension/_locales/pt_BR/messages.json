@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "O vídeo ainda não tinha terminado de baixar quando a página foi fechada. Reabra a página e tente novamente."
   },
+  "m_e3eac0905415b556": {
+    "message": "Nenhum vídeo do TikTok em reprodução encontrado: comece a reproduzir o vídeo que deseja traduzir ou abra a página de detalhes dele"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Traduzir o vídeo inteiro do TikTok em reprodução"
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

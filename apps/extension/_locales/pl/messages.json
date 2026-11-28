@@ -3333,6 +3333,12 @@
   "m_8437525ccc482998": {
     "message": "Wideo nie zostało jeszcze pobrane, a strona została zamknięta. Otwórz ją ponownie i spróbuj jeszcze raz."
   },
+  "m_e3eac0905415b556": {
+    "message": "Nie znaleziono odtwarzanego filmu TikTok: najpierw uruchom odtwarzanie filmu, który chcesz przetłumaczyć, lub otwórz jego stronę szczegółów"
+  },
+  "m_c31325b1b6d94a26": {
+    "message": "Przetłumacz cały odtwarzany film TikTok"
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

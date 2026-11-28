@@ -171,30 +171,33 @@
   }
 
   /**
-   * TikTok 视频详情页（从扩展图标弹窗进入，见 lib/tiktok.js）：视频 ID 只取浏览器给的标签页地址，
-   * 直链从这一页的页面数据里按 ID 找，只认 TikTok 自己的视频服务器；之后和右键菜单一样整份翻译。
+   * TikTok（从扩展图标弹窗进入，见 lib/tiktok.js）：详情页按标签页地址里的视频 ID，其余页面（推荐流等）取正在播放的那个；
+   * 直链从页面数据里按 ID 找，只认 TikTok 自己的视频服务器；文件由那一页的脚本用页面身份取，之后和右键菜单一样整份翻译。
    */
   async function openTikTok(tabId) {
     const T = globalThis.AITrTikTok;
     const tab = await chrome.tabs.get(tabId).catch(() => null);
-    const id = T?.videoId(tab?.url);
-    if (!tab || !id) return false;
-    const base = { tabId, frameId: 0, srcUrl: T.canonicalUrl(tab.url), pageUrl: T.canonicalUrl(tab.url), incognito: tab.incognito === true };
+    if (!tab || !T?.isPage(tab.url)) return false;
+    const fromUrl = T.videoId(tab.url);
     let found = null;
     try {
-      [{ result: found } = {}] = await chrome.scripting.executeScript({ target: { tabId, frameIds: [0] }, func: T.readPage, args: [id] });
+      [{ result: found } = {}] = await chrome.scripting.executeScript({ target: { tabId, frameIds: [0] }, func: T.readPage, args: [fromUrl] });
     } catch {
       found = null;
     }
-    const url = typeof found?.url === 'string' ? found.url : '';
-    const title = typeof found?.title === 'string' ? found.title.replace(/\s+/g, ' ').trim().slice(0, 300) : '';
+    const id = typeof found?.id === 'string' && /^\d{6,25}$/.test(found.id) && (!fromUrl || found.id === fromUrl) ? found.id : '';
+    const canonical = id ? T.canonicalUrl(id, typeof found.author === 'string' ? found.author : '') : '';
+    const base = { tabId, frameId: 0, srcUrl: canonical, pageUrl: canonical, incognito: tab.incognito === true };
+    if (!id) return open({ ...base, error: t("没找到正在播放的 TikTok 视频：先让要翻译的视频播放起来，或打开它的详情页") });
+    const url = typeof found.url === 'string' ? found.url : '';
+    const title = typeof found.title === 'string' ? found.title.replace(/\s+/g, ' ').trim().slice(0, 300) : '';
     if (!T.isMediaUrl(url)) {
       // 找到了这个视频却没有地址：多半是图片帖；地址不是 TikTok 的视频服务器就当作没找到
-      return open({ ...base, error: found && !url
+      return open({ ...base, error: !found.missing && !url
         ? t("这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）")
         : t("没在这一页找到这个 TikTok 视频的文件，刷新页面后再试") });
     }
-    return open({ ...base, fileUrl: url, fromPage: true, title: title || tab.title || '' });
+    return open({ ...base, fileUrl: url, fromPage: true, title: title || (fromUrl ? tab.title : '') || '' });
   }
 
   /** offscreen 报的错误代码 → 界面文案。 */
