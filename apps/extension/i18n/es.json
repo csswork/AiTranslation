@@ -790,5 +790,9 @@
   "查看": "Ver",
   "关掉这个网页也会接着翻，进度和结果显示在右下角": "La traducción continúa aunque cierres esta página; el progreso y los resultados aparecen en la esquina inferior derecha",
   "打开「视频翻译」页": "Abrir la página «Traducción de video»",
-  "正在翻译视频": "Traduciendo video"
+  "正在翻译视频": "Traduciendo video",
+  "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Esta publicación de TikTok no tiene ningún video que se pueda descargar completo (puede ser una publicación de imágenes)",
+  "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "No se encontró el archivo de este video de TikTok en esta página. Actualiza la página e inténtalo de nuevo",
+  "整份翻译这一页的 TikTok 视频": "Traducir completo el video de TikTok de esta página",
+  "视频还没下载完，网页就关掉了，请重新打开再试": "El video aún no había terminado de descargarse cuando se cerró la página. Vuelve a abrirla e inténtalo de nuevo."
 }

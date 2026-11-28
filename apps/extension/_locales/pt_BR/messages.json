@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Traduzindo vídeo"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Esta publicação do TikTok não tem nenhum vídeo que possa ser baixado por completo (pode ser uma publicação de imagem)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "Não foi possível encontrar o arquivo deste vídeo do TikTok nesta página. Atualize a página e tente novamente"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Traduzir por completo o vídeo do TikTok nesta página"
+  },
+  "m_8437525ccc482998": {
+    "message": "O vídeo ainda não tinha terminado de baixar quando a página foi fechada. Reabra a página e tente novamente."
+  },
   "extensionName": {
     "message": "Huaci – Tradutor de IA e leitor bilíngue"
   },

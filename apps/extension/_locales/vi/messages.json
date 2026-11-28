@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Đang dịch video"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Bài đăng TikTok này không có video nào có thể tải xuống toàn bộ (có thể đây là bài đăng ảnh)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "Không tìm thấy tệp của video TikTok này trên trang này. Hãy làm mới trang và thử lại"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Dịch toàn bộ video TikTok trên trang này"
+  },
+  "m_8437525ccc482998": {
+    "message": "Video chưa tải xong thì trang đã bị đóng, vui lòng mở lại và thử lại"
+  },
   "extensionName": {
     "message": "Huaci – Trình dịch AI & Đọc song ngữ"
   },

@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Video wird übersetzt"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Dieser TikTok-Beitrag enthält kein Video, das vollständig heruntergeladen werden kann (möglicherweise ein Bildbeitrag)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "Die Datei für dieses TikTok-Video wurde auf dieser Seite nicht gefunden. Lade die Seite neu und versuche es erneut"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Das TikTok-Video auf dieser Seite vollständig übersetzen"
+  },
+  "m_8437525ccc482998": {
+    "message": "Das Video war noch nicht vollständig heruntergeladen, als die Seite geschlossen wurde. Bitte öffne sie erneut und versuche es noch einmal."
+  },
   "extensionName": {
     "message": "Huaci – KI-Übersetzer & zweisprachiger Reader"
   },

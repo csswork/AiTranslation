@@ -790,5 +790,9 @@
   "查看": "Lihat",
   "关掉这个网页也会接着翻，进度和结果显示在右下角": "Terjemahan tetap berlanjut meskipun Anda menutup halaman ini; kemajuan dan hasil ditampilkan di sudut kanan bawah",
   "打开「视频翻译」页": "Buka halaman \"Terjemahan Video\"",
-  "正在翻译视频": "Menerjemahkan video"
+  "正在翻译视频": "Menerjemahkan video",
+  "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Postingan TikTok ini tidak memiliki video yang dapat diunduh secara penuh (mungkin ini postingan gambar)",
+  "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "File video TikTok ini tidak ditemukan di halaman ini. Segarkan halaman lalu coba lagi",
+  "整份翻译这一页的 TikTok 视频": "Terjemahkan video TikTok di halaman ini secara penuh",
+  "视频还没下载完，网页就关掉了，请重新打开再试": "Video belum selesai diunduh, tetapi halaman sudah ditutup. Silakan buka kembali dan coba lagi."
 }

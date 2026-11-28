@@ -12,6 +12,8 @@
 2. 视频地址是 http(s) 直链：整份翻译（`AITrVideoFile.open`）。翻过的（视频翻译记录里有同一地址、同样的平台 / 目标语言 / 识别语言）直接给字幕；同一个视频正在翻就让新浮层接上进度；同时最多翻 3 个。
 3. 地址是 `blob:` 等（YouTube、X 这类分段串流）：打开了实时字幕（实验）就改走实时字幕，否则浮层说明没法整份翻译。
 
+TikTok 不走右键菜单，见下文「TikTok」。
+
 菜单项各自的 `contexts` 两两不重叠，所以不另加第二个视频项（重叠会被 Chrome 折叠进子菜单，见 `test/menu.mjs`）。
 
 「视频翻译」页（`src/videos/`）的其他入口：扩展图标弹窗的「视频翻译」、设置页视频卡片的「查看翻好的视频」、浮层的「新页面看」、右下角的进度提示与完成卡片。
@@ -39,6 +41,17 @@ service worker：mode 'audio' 时 AITrProviders.transcribe（OpenAI whisper-1）
 - 视频地址只用右键菜单给的 `info.srcUrl`。浮层只能凭 jobId 认领任务，不能提交网址；offscreen 只接受 service worker 的消息（`sender.tab` 为空）。不要改成让内容脚本传网址。
 - **任务不跟着浮层走**：本机识别要花和视频一样长的时间，关掉浮层、关掉视频所在的标签页、刷新、跳走、视频被页面回收都只是不再显示，翻译在后台做完；只有浮层、「视频翻译」页里点「取消」才停（同时删掉已存的视频文件）。翻译期间 service worker 每 20 秒调用一次扩展接口（`KEEPALIVE_MS`），等大模型回复时不会被当作闲置停掉（识别阶段 offscreen 每秒报进度，本来就不会）。
 - offscreen 读不到设置和界面语言，只报错误代码（`fetch-failed`、`too-large`、`too-long`、`not-media`、`no-audio`、`sr-unsupported`、`pack-*`、`sr-error`），文案由 `AITrVideoFile.offscreenError` 生成。
+
+## TikTok
+
+TikTok 拦掉了视频上的右键（弹它自己的菜单：倍速、画质、下载、分享…），浏览器菜单出不来；播放器地址又是 `blob:`。所以单独做了一个入口（`lib/tiktok.js`）：
+
+- **入口**：TikTok 视频详情页（`https://www.tiktok.com/@用户/video/数字`）上打开扩展图标弹窗，出现「翻译这个视频」。推荐流（For You）里的视频是滚动时另外加载的，页面数据里没有，暂不支持。
+- **找直链**：视频 ID 只取浏览器给的标签页地址；后台向那一页注入 `AITrTikTok.readPage`，在页面数据（`__UNIVERSAL_DATA_FOR_REHYDRATION__`）里按这个 ID 找 `playAddr`。站内跳转过来时页面数据还是最初那个视频的，就重新取一次当前网址的网页再找。地址只认 TikTok 自己的视频服务器（`*.tiktok.com` 去掉网页本身、`*.tiktokcdn.com`、`*.tiktokcdn-us.com`，只认 https），否则当作没找到；找到这个视频却没有地址时多半是图片帖，浮层说明原因。
+- **取文件**：直链要同时带 TikTok 自己的 Cookie 和来自 tiktok.com 的 Referer 才给（2026-11 实测，跳过缓存：少一样就 403；扩展后台带不带 Cookie 都 403）。所以由注入那一页的 `AITrTikTok.sendFile` 用页面自己的身份取（和 TikTok 播放器的请求一样，Cookie 只发给 TikTok），512 KB 一块转成 base64，经长连接 `ai-video-bytes` 送给 offscreen（`file.js` 的 `receive`）。offscreen 先按 `video-file-start` 里的 `fromPage: { tabId, frameId }` 登记，再由后台注入页面脚本；只收那个标签页顶层框架、`hello` 里带着这个 jobId 连来的，同样限 100 MB、第一块按文件头确认。这是「取文件不带 Cookie 与 Referer」的唯一例外。
+- **下载期间要开着页面**：文件没送完页面就关了（或 30 秒内页面脚本没连来）报「视频还没下载完，网页就关掉了」。送完以后和其他视频一样，关掉页面也照常翻完。
+- **认视频**：直链带签名、会过期，所以记录与「是不是同一个视频」用详情页的固定地址（`srcUrl`），实际去取的是 `fileUrl`。浮层按地址找不到视频时贴在正在播放、画面最大的那个上。
+- 实测（`e2e-tiktok.mjs`，97 秒中文视频）：页面里取到 9.5 MB 文件，三路试听判断出中文，30 句字幕，标题译文正常。
 
 ## 浮层、右下角提示与角标
 
@@ -94,17 +107,18 @@ service worker：mode 'audio' 时 AITrProviders.transcribe（OpenAI whisper-1）
 ## 限制
 
 - 只支持能整份下载的 http(s) 视频文件：≤ 100 MB、≤ 10 分钟、能解出音轨。分段串流（`blob:`）、HLS 播放列表、DRM 都不行。
-- 取文件不带 Cookie：要登录才能看的视频取不到。不带 Referer：要求特定 Referer 的防盗链取不到。
+- 取文件不带 Cookie：要登录才能看的视频取不到。不带 Referer：要求特定 Referer 的防盗链取不到。TikTok 例外（见上文）。
 - 设备端识别只能从装了语言包的语言里判断；视频说的语言没装语言包时只能请用户先去下载。混着几种语言说的视频会认错（探针里英日混说的视频成了乱码）。
 - 画面里烧录的字幕、梗图标题不翻（那是图片翻译的范围）。
 
 ## 发布前
 
 - 更新隐私说明（`PRIVACY.md` 与官网 `privacy.html`，中英文）：整份视频翻译时扩展会下载视频文件、在本机解码，并把视频文件与字幕存在本机（视频翻译记录，最多 30 个、不上传）；翻译平台是 ChatGPT 时视频的声音发给 OpenAI 转写，其余平台声音不离开浏览器；识别出的文字按翻译模式发给翻译平台或我们的服务器。核对商店数据声明。
+- 隐私说明还要写上 TikTok：从扩展图标翻译 TikTok 视频时，扩展在 TikTok 页面里用页面自己的身份（含 TikTok 的 Cookie，只发给 TikTok）下载视频文件，交给扩展在本机处理。
 - `tabCapture` / `offscreen` 权限说明里补上整份翻译（offscreen 现在也用于解码与识别视频文件，不只是实时字幕）。
 - 官网首页与更新日志的文案等扩展发布后再加。
 
 ## 验证
 
-- 单元测试：`test/transcript.mjs`（词时间、停顿分行、切句、回复校验、Whisper 过滤、WAV、容器识别）、`test/video-file.mjs`（大模型 / DeepL 翻译、重试与退回、过长的条重切、OpenAI 转写请求、错误文案、选错语言的提醒、自动识别语言）、`test/video-notice.mjs`（关掉视频所在的标签页不停、进度提示与完成卡片跟着换标签页、看过一起收起、无痕隔离、角标）、`test/menu.mjs`（菜单项常驻、分流、同一视频接上原来那一路）。
-- 真实 Chrome（`tools/video-file-probe/`，不进 git）：用 CDP `Extensions.loadUnpacked` 加载扩展，调用与右键菜单相同的 `AITrVideoFile.open`，用 CDP 穿透 closed shadow root 读浮层和卡片的文字、按坐标点按钮。`e2e-extension.mjs` 核对字幕时间（`GAG=1` 用 9GAG 帖子页结构与真实 CDN 视频）；`e2e-flow.mjs` 走一遍「关掉浮层 → 换到别的网页 → 右下角卡片 → 点开视频翻译页播放存下的文件」；`e2e-close.mjs` 走一遍「开始翻 → 换到别的网页、关掉视频所在的标签页 → 右下角进度跟着换标签页、角标 → 翻完两个标签页同时出卡片 → 点开后一起收起」（视频用本机样本文件）；`e2e-detect.mjs en|multi|pick` 验证判断语言（只装英语包、三种语言包同时试听、日语声音只装英语包时请用户选）以及浮层跟着视频滚出窗口。`cue-eval.mjs` 用存下的识别日志单独评估切句与翻译，`cue-stats.mjs` 统计各视频的条数、长度和跨过明确停顿的条数。真实 9GAG 页面对自动化浏览器有 Cloudflare 人机验证，没法直接跑；CDP 点不到原生右键菜单，菜单本身由 `test/menu.mjs` 覆盖。
+- 单元测试：`test/transcript.mjs`（词时间、停顿分行、切句、回复校验、Whisper 过滤、WAV、容器识别）、`test/video-file.mjs`（大模型 / DeepL 翻译、重试与退回、过长的条重切、OpenAI 转写请求、错误文案、选错语言的提醒、自动识别语言）、`test/video-notice.mjs`（关掉视频所在的标签页不停、进度提示与完成卡片跟着换标签页、看过一起收起、无痕隔离、角标）、`test/tiktok.mjs`（详情页与视频服务器的认定、页面数据里找直链、openTikTok、页面脚本分块送文件）、`test/offscreen-file.mjs`（offscreen 只收登记的标签页与 jobId、限大小、页面关了、取消）、`test/menu.mjs`（菜单项常驻、分流、同一视频接上原来那一路）。
+- 真实 Chrome（`tools/video-file-probe/`，不进 git）：用 CDP `Extensions.loadUnpacked` 加载扩展，调用与右键菜单相同的 `AITrVideoFile.open`，用 CDP 穿透 closed shadow root 读浮层和卡片的文字、按坐标点按钮。`e2e-extension.mjs` 核对字幕时间（`GAG=1` 用 9GAG 帖子页结构与真实 CDN 视频）；`e2e-flow.mjs` 走一遍「关掉浮层 → 换到别的网页 → 右下角卡片 → 点开视频翻译页播放存下的文件」；`e2e-tiktok.mjs <详情页网址>` 在真实 TikTok 页面上走一遍 openTikTok（`PROBE=1` 只对比各种取直链方式的状态码）；`e2e-close.mjs` 走一遍「开始翻 → 换到别的网页、关掉视频所在的标签页 → 右下角进度跟着换标签页、角标 → 翻完两个标签页同时出卡片 → 点开后一起收起」（视频用本机样本文件）；`e2e-detect.mjs en|multi|pick` 验证判断语言（只装英语包、三种语言包同时试听、日语声音只装英语包时请用户选）以及浮层跟着视频滚出窗口。`cue-eval.mjs` 用存下的识别日志单独评估切句与翻译，`cue-stats.mjs` 统计各视频的条数、长度和跨过明确停顿的条数。真实 9GAG 页面对自动化浏览器有 Cloudflare 人机验证，没法直接跑；CDP 点不到原生右键菜单，菜单本身由 `test/menu.mjs` 覆盖。

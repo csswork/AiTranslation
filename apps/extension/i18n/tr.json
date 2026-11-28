@@ -790,5 +790,9 @@
   "查看": "Görüntüle",
   "关掉这个网页也会接着翻，进度和结果显示在右下角": "Bu sayfayı kapatsanız bile çeviri devam eder; ilerleme ve sonuçlar sağ alt köşede görünür",
   "打开「视频翻译」页": "\"Video Çevirisi\" sayfasını aç",
-  "正在翻译视频": "Video çevriliyor"
+  "正在翻译视频": "Video çevriliyor",
+  "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "Bu TikTok gönderisinde tam olarak indirilebilecek bir video yok (gönderi görsel olabilir)",
+  "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "Bu TikTok videosunun dosyası bu sayfada bulunamadı. Sayfayı yenileyip tekrar deneyin",
+  "整份翻译这一页的 TikTok 视频": "Bu sayfadaki TikTok videosunu tamamen çevir",
+  "视频还没下载完，网页就关掉了，请重新打开再试": "Video indirilmeden sayfa kapatıldı. Lütfen sayfayı yeniden açıp tekrar deneyin."
 }

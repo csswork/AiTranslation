@@ -20,6 +20,7 @@ import './lib/image-fetch.js';
 import './lib/transcript.js';
 import './lib/video-library.js';
 import './lib/video-notice.js';
+import './lib/tiktok.js';
 import './lib/video-file.js';
 
 const t = (...args) => AITrI18n.t(...args);
@@ -812,7 +813,6 @@ async function toggleVideoCaptions({ tabId, frameId = 0, srcUrl = '' }) {
 AITrVideoFile.init({ ensureOffscreen });
 // 整份视频翻译：字幕浮层连回来认领任务（见 lib/video-file.js）
 chrome.runtime.onConnect.addListener((port) => AITrVideoFile.onConnect(port));
-// 后台翻译的右下角提示（见 lib/video-notice.js）：跟着用户换标签页、换窗口、刷新页面
 // 后台翻译的右下角提示（见 lib/video-notice.js）；换标签页、换窗口、刷新页面时跟过去，见各自的事件监听
 chrome.runtime.onConnect.addListener((port) => AITrVideoNotice.onConnect(port));
 
@@ -1070,6 +1070,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (type === 'video-file-choose' && fromOwnPage) {
     sendResponse({ ok: AITrVideoFile.chooseLanguage(String(message.id || ''), message.lang) });
+    return false;
+  }
+  // 扩展图标弹窗：TikTok 视频详情页的整份翻译（TikTok 拦掉了视频上的右键，见 lib/tiktok.js）
+  if (type === 'video-file-tiktok' && fromOwnPage && Number.isInteger(message.tabId)) {
+    AITrVideoFile.openTikTok(message.tabId).catch((err) => console.warn('[Huaci] TikTok video:', err?.message));
     return false;
   }
   if (type === 'video-file-cancel' && fromOwnPage) {

@@ -791,7 +791,11 @@ globalThis.AITrMessageIds = {
   "查看": "m_db8db0530432bd15",
   "关掉这个网页也会接着翻，进度和结果显示在右下角": "m_eed5b87c5e003813",
   "打开「视频翻译」页": "m_5e62cbff7c1aa751",
-  "正在翻译视频": "m_d18d01677b082062"
+  "正在翻译视频": "m_d18d01677b082062",
+  "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "m_3028f28cc58b7e65",
+  "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "m_c4e13332e5d04e98",
+  "整份翻译这一页的 TikTok 视频": "m_7ec8bd63dcf3717a",
+  "视频还没下载完，网页就关掉了，请重新打开再试": "m_8437525ccc482998"
 };
 globalThis.AITrEnglish = {
   "跟随浏览器": "Follow browser",
@@ -1585,5 +1589,9 @@ globalThis.AITrEnglish = {
   "查看": "View",
   "关掉这个网页也会接着翻，进度和结果显示在右下角": "Translation continues even if you close this page; progress and results appear in the bottom-right corner",
   "打开「视频翻译」页": "Open the \"Video Translation\" page",
-  "正在翻译视频": "Translating video"
+  "正在翻译视频": "Translating video",
+  "这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）": "This TikTok post has no video that can be downloaded in full (it may be an image post)",
+  "没在这一页找到这个 TikTok 视频的文件，刷新页面后再试": "Couldn't find the file for this TikTok video on this page. Refresh the page and try again",
+  "整份翻译这一页的 TikTok 视频": "Translate the TikTok video on this page in full",
+  "视频还没下载完，网页就关掉了，请重新打开再试": "The video hadn't finished downloading before the page was closed. Please reopen it and try again."
 };

@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Menerjemahkan video"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Postingan TikTok ini tidak memiliki video yang dapat diunduh secara penuh (mungkin ini postingan gambar)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "File video TikTok ini tidak ditemukan di halaman ini. Segarkan halaman lalu coba lagi"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Terjemahkan video TikTok di halaman ini secara penuh"
+  },
+  "m_8437525ccc482998": {
+    "message": "Video belum selesai diunduh, tetapi halaman sudah ditutup. Silakan buka kembali dan coba lagi."
+  },
   "extensionName": {
     "message": "Huaci – Penerjemah AI & Pembaca Bilingual"
   },

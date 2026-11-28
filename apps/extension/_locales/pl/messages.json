@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Tłumaczenie wideo"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Ten post na TikToku nie zawiera filmu, który można pobrać w całości (może to być post z obrazkami)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "Nie znaleziono pliku tego filmu z TikToka na tej stronie. Odśwież stronę i spróbuj ponownie"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Przetłumacz w całości film z TikToka na tej stronie"
+  },
+  "m_8437525ccc482998": {
+    "message": "Wideo nie zostało jeszcze pobrane, a strona została zamknięta. Otwórz ją ponownie i spróbuj jeszcze raz."
+  },
   "extensionName": {
     "message": "Huaci – tłumacz AI i czytnik dwujęzyczny"
   },

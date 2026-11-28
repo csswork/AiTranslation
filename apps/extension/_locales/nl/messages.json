@@ -3321,6 +3321,18 @@
   "m_d18d01677b082062": {
     "message": "Video wordt vertaald"
   },
+  "m_3028f28cc58b7e65": {
+    "message": "Deze TikTok-post heeft geen video die volledig kan worden gedownload (het is mogelijk een afbeeldingspost)"
+  },
+  "m_c4e13332e5d04e98": {
+    "message": "Het bestand voor deze TikTok-video is niet op deze pagina gevonden. Vernieuw de pagina en probeer het opnieuw"
+  },
+  "m_7ec8bd63dcf3717a": {
+    "message": "Vertaal de TikTok-video op deze pagina volledig"
+  },
+  "m_8437525ccc482998": {
+    "message": "De video was nog niet gedownload voordat de pagina werd gesloten. Open de pagina opnieuw en probeer het nog eens."
+  },
   "extensionName": {
     "message": "Huaci – AI-vertaler & tweetalige lezer"
   },

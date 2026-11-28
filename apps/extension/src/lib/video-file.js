@@ -22,10 +22,12 @@
   const CONTENT_FILES = ['src/lib/languages.js', 'src/lib/messages.js', 'src/lib/i18n.js', 'src/content/video-file.js'];
   /** 浮层注入后要在这么久内连回来认领，否则作废。 */
   const CLAIM_MS = 60_000;
+  /** 由网页里的脚本取文件时（TikTok）的大小上限，与 offscreen 的一致。 */
+  const MAX_PAGE_BYTES = 100 * 1024 * 1024;
   /** 同时在翻的视频数：设备端识别按 1 倍速跑，太多会拖慢电脑。 */
   const MAX_RUNNING = 3;
 
-  /** jobId → { jobId, tabId, frameId, srcUrl, pageUrl, title, incognito, pageLang, resultKey, port, started, last, controller, onEvent } */
+  /** jobId → { jobId, tabId, frameId, srcUrl, fileUrl, pageUrl, title, incognito, pageLang, resultKey, port, started, last, controller, onEvent } */
   const jobs = new Map();
   /** jobId → 视频旁浮层的长连接（翻完后浮层还显示字幕，所以单独记，不随任务删掉）。 */
   const overlays = new Map();
@@ -124,8 +126,11 @@
   /**
    * 右键菜单「翻译这个视频」：注入浮层，告诉它这次怎么办——已经翻过就直接给字幕；同一个视频正在翻就接上进度；
    * 否则登记新的一路，等浮层认领后开始。返回 false 表示注入不了（受保护的页面等）。
+   * srcUrl 用来认「是不是同一个视频」，fileUrl 是实际去取的文件（默认就是 srcUrl；TikTok 的直链带签名会过期，
+   * 所以 srcUrl 用视频详情页的固定地址，见 openTikTok）。error 给了就只在浮层里说明为什么翻不了。
+   * fromPage：文件由那一页的脚本用页面自己的身份取（只有 TikTok，它的直链要带自己的 Cookie 和 Referer）。
    */
-  async function open({ tabId, frameId = 0, srcUrl = '', title = '', pageUrl = '', incognito = false }) {
+  async function open({ tabId, frameId = 0, srcUrl = '', fileUrl = '', title = '', pageUrl = '', incognito = false, error = '', fromPage = false }) {
     try {
       await chrome.scripting.executeScript({ target: { tabId, frameIds: [frameId] }, files: CONTENT_FILES });
     } catch (err) {
@@ -135,7 +140,9 @@
     const send = (payload) => chrome.tabs.sendMessage(tabId, { type: 'video-file-open', srcUrl, ...payload }, { frameId })
       .then(() => true, (err) => { console.warn("[Huaci] Could not reach the video overlay:", err?.message); return false; });
 
+    if (error) return send({ jobId: '', error });
     if (!isFileUrl(srcUrl)) return send({ jobId: '', error: t("这个视频是分段串流播放的（如 YouTube），没法整份翻译") });
+    if (fileUrl && !isFileUrl(fileUrl)) return send({ jobId: '', error: t("这个视频是分段串流播放的（如 YouTube），没法整份翻译") });
     const settings = await AITrSettings.loadSettings();
     const resultKey = resultKeyOf(settings);
 
@@ -155,12 +162,39 @@
     // 识别语言选「自动」时按网页的语言（Chrome 按网页正文判断，9GAG 是 en）；判断不了就用英语
     const pageLang = await Promise.resolve().then(() => chrome.tabs.detectLanguage(tabId)).catch(() => '');
     jobs.set(jobId, {
-      jobId, tabId, frameId, srcUrl, title: String(title || ''), pageUrl: isFileUrl(pageUrl) ? pageUrl : '', incognito,
+      jobId, tabId, frameId, srcUrl, fileUrl: fileUrl || srcUrl, fromPage: Boolean(fromPage), title: String(title || ''), pageUrl: isFileUrl(pageUrl) ? pageUrl : '', incognito,
       pageLang: pageLang === 'und' ? '' : pageLang, resultKey, port: null, started: false, last: null,
       controller: new AbortController(), onEvent: null,
     });
     setTimeout(() => { if (jobs.get(jobId) && !jobs.get(jobId).started) jobs.delete(jobId); }, CLAIM_MS);
     return send({ jobId, resultKey });
+  }
+
+  /**
+   * TikTok 视频详情页（从扩展图标弹窗进入，见 lib/tiktok.js）：视频 ID 只取浏览器给的标签页地址，
+   * 直链从这一页的页面数据里按 ID 找，只认 TikTok 自己的视频服务器；之后和右键菜单一样整份翻译。
+   */
+  async function openTikTok(tabId) {
+    const T = globalThis.AITrTikTok;
+    const tab = await chrome.tabs.get(tabId).catch(() => null);
+    const id = T?.videoId(tab?.url);
+    if (!tab || !id) return false;
+    const base = { tabId, frameId: 0, srcUrl: T.canonicalUrl(tab.url), pageUrl: T.canonicalUrl(tab.url), incognito: tab.incognito === true };
+    let found = null;
+    try {
+      [{ result: found } = {}] = await chrome.scripting.executeScript({ target: { tabId, frameIds: [0] }, func: T.readPage, args: [id] });
+    } catch {
+      found = null;
+    }
+    const url = typeof found?.url === 'string' ? found.url : '';
+    const title = typeof found?.title === 'string' ? found.title.replace(/\s+/g, ' ').trim().slice(0, 300) : '';
+    if (!T.isMediaUrl(url)) {
+      // 找到了这个视频却没有地址：多半是图片帖；地址不是 TikTok 的视频服务器就当作没找到
+      return open({ ...base, error: found && !url
+        ? t("这个 TikTok 帖子没有可以整份下载的视频（可能是图片帖）")
+        : t("没在这一页找到这个 TikTok 视频的文件，刷新页面后再试") });
+    }
+    return open({ ...base, fileUrl: url, fromPage: true, title: title || tab.title || '' });
   }
 
   /** offscreen 报的错误代码 → 界面文案。 */
@@ -174,6 +208,8 @@
         return new VideoFileError(t("视频超过 $1 分钟，整份翻译只支持短视频", [Math.round(Number(detail) / 60) || 10]));
       case 'not-media':
         return new VideoFileError(t("这不是能直接下载的视频文件，没法整份翻译"));
+      case 'page-closed':
+        return new VideoFileError(t("视频还没下载完，网页就关掉了，请重新打开再试"));
       case 'no-audio':
         return new VideoFileError(t("这个视频没有声音"));
       case 'sr-unsupported':
@@ -241,9 +277,16 @@
             break;
         }
       };
+      // TikTok：offscreen 先登记等着，再注入那一页的脚本用页面自己的身份取文件、分块送过去
+      const fromPage = job.fromPage ? { tabId: job.tabId, frameId: 0 } : null;
       chrome.runtime.sendMessage({
-        target: 'offscreen', type: 'video-file-start', jobId: job.jobId, url: job.srcUrl, mode, store: !job.incognito,
+        target: 'offscreen', type: 'video-file-start', jobId: job.jobId, url: job.fileUrl || job.srcUrl, fromPage, mode, store: !job.incognito,
         candidates: candidatesFor(job, settings),
+      }).then(() => {
+        if (!fromPage || signal.aborted) return;
+        chrome.scripting.executeScript({
+          target: { tabId: fromPage.tabId, frameIds: [0] }, func: AITrTikTok.sendFile, args: [job.fileUrl, job.jobId, MAX_PAGE_BYTES],
+        }).catch(() => {}); // 注入不了（页面关了）时 offscreen 等不到连接，会按取不到报错
       }).catch((err) => reject(new VideoFileError(t("视频翻译出错：$1", [err?.message || err]))));
     });
   }
@@ -366,6 +409,6 @@
   }
 
   globalThis.AITrVideoFile = {
-    init, open, cancel, running, openViewer, chooseLanguage, candidatesFor, onConnect, onOffscreenEvent, isFileUrl, offscreenError, languageWarning, PORT_NAME, MAX_RUNNING,
+    init, open, openTikTok, cancel, running, openViewer, chooseLanguage, candidatesFor, onConnect, onOffscreenEvent, isFileUrl, offscreenError, languageWarning, PORT_NAME, MAX_RUNNING,
   };
 })();

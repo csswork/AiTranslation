@@ -27,6 +27,7 @@
     pdf: $('pdf'),
     video: $('video'),
     videos: $('videos'),
+    tiktok: $('tiktok'),
     open: $('open'),
   };
 
@@ -241,6 +242,18 @@
     await chrome.tabs.create({ url: chrome.runtime.getURL('src/videos/videos.html') });
     close();
   });
+
+  // TikTok 视频详情页：整份翻译这一页的视频（视频 ID 由后台从标签页地址取，弹窗只传标签页）
+  (async () => {
+    if (globalThis.AITrEnv?.firefox) return;
+    const [tab] = await Promise.resolve().then(() => chrome.tabs.query({ active: true, currentWindow: true })).catch(() => []);
+    if (tab?.id == null || !globalThis.AITrTikTok?.videoId(tab.url)) return;
+    el.tiktok.hidden = false;
+    el.tiktok.addEventListener('click', async () => {
+      await chrome.runtime.sendMessage({ type: 'video-file-tiktok', tabId: tab.id }).catch(() => {});
+      close();
+    });
+  })();
 
   // 打开这个弹窗时，Chrome 已经给了当前标签页 activeTab 授权，后台截取声音靠的就是它
   el.video.addEventListener('click', async () => {

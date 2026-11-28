@@ -12,6 +12,10 @@
  *
  * 这里读不到设置与界面语言（offscreen 只有 chrome.runtime），出错时只报错误代码，文案由 service worker 生成。
  * 网址只接受 service worker 传来的（来自用户右键点的那个视频），网页内容脚本连不到这里。
+ *
+ * 例外：TikTok 的直链要带它自己的 Cookie 和 Referer 才给（见 lib/tiktok.js），这里取不到。这时 start 消息带
+ * fromPage: { tabId, frameId }，由 service worker 注入那一页的脚本用页面自己的身份取，分块经长连接（PAGE_PORT）送来；
+ * 只收那个标签页、那个框架、带着这个 jobId 连来的，同样限大小、按文件头确认是音视频。
  */
 (() => {
   const T = globalThis.AITrTranscript;
@@ -36,6 +40,12 @@
 
   /** jobId → { controller, stop } */
   const jobs = new Map();
+  /** 由网页里的脚本送来视频文件的长连接名（TikTok）。 */
+  const PAGE_PORT = 'ai-video-bytes';
+  /** 页面脚本要在这么久内连过来，否则当作取不到。 */
+  const PAGE_WAIT_MS = 30000;
+  /** jobId → { tabId, frameId, attach(port) }：等页面脚本连过来的任务。 */
+  const waiting = new Map();
 
   class FileError extends Error {
     constructor(code, detail = '') {
@@ -92,6 +102,76 @@
     let at = 0;
     for (const chunk of chunks) { bytes.set(chunk, at); at += chunk.length; }
     return bytes;
+  }
+
+  function fromBase64(text) {
+    const binary = atob(String(text || ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return bytes;
+  }
+
+  /**
+   * 收页面脚本送来的视频文件（TikTok，见文件开头）：{ type: 'meta', total }、{ type: 'chunk', data }（base64）、
+   * { type: 'end' } 或 { type: 'error', status }。页面在送完前关掉就算失败（page-closed）。
+   */
+  function receive(jobId, { tabId, frameId = 0 }, signal) {
+    return new Promise((resolve, reject) => {
+      const chunks = [];
+      let loaded = 0;
+      let total = 0;
+      let reported = 0;
+      let port = null;
+      let done = false;
+      const timer = setTimeout(() => fail(new FileError('page-closed')), PAGE_WAIT_MS); // 页面脚本没连来：多半页面已关或跳走
+      const cleanup = () => {
+        done = true;
+        clearTimeout(timer);
+        if (waiting.get(jobId)?.tabId === tabId) waiting.delete(jobId);
+        try { port?.disconnect(); } catch { /* 已断开 */ }
+      };
+      function fail(err) {
+        if (done) return;
+        cleanup();
+        reject(err);
+      }
+      signal.addEventListener('abort', () => fail(new DOMException('Stopped', 'AbortError')), { once: true });
+      waiting.set(jobId, {
+        tabId, frameId,
+        attach(next) {
+          port = next;
+          clearTimeout(timer);
+          port.onDisconnect.addListener(() => fail(new FileError('page-closed')));
+          port.onMessage.addListener((message) => {
+            if (done) return;
+            if (message?.type === 'meta') {
+              total = Number(message.total) || 0;
+              if (total > MAX_BYTES) fail(new FileError('too-large', MAX_BYTES));
+            } else if (message?.type === 'chunk') {
+              let value;
+              try { value = fromBase64(message.data); } catch { fail(new FileError('not-media')); return; }
+              loaded += value.length;
+              if (loaded > MAX_BYTES) { fail(new FileError('too-large', MAX_BYTES)); return; }
+              if (!chunks.length && !T.sniffMedia(value)) { fail(new FileError('not-media')); return; }
+              chunks.push(value);
+              if (Date.now() - reported > 300) {
+                reported = Date.now();
+                emit(jobId, { type: 'progress', phase: 'download', loaded, total });
+              }
+            } else if (message?.type === 'end') {
+              if (!loaded) { fail(new FileError('not-media')); return; }
+              const bytes = new Uint8Array(loaded);
+              let at = 0;
+              for (const chunk of chunks) { bytes.set(chunk, at); at += chunk.length; }
+              cleanup();
+              resolve(bytes);
+            } else if (message?.type === 'error') {
+              fail(message.status === 'too-large' ? new FileError('too-large', MAX_BYTES) : new FileError('fetch-failed', message.status || '?'));
+            }
+          });
+        },
+      });
+    });
   }
 
   /** 解码音轨，直接重采样到 16 kHz，再把各声道平均成单声道。 */
@@ -302,9 +382,10 @@
     });
   }
 
-  async function run(jobId, job, { url, lang, candidates = [], mode, store }) {
+  async function run(jobId, job, { url, fromPage = null, lang, candidates = [], mode, store }) {
     const { signal } = job.controller;
-    const bytes = await download(jobId, url, signal);
+    // 必须同步走到 receive 里登记等待：service worker 收到回复后马上注入页面脚本
+    const bytes = fromPage ? await receive(jobId, fromPage, signal) : await download(jobId, url, signal);
     if (signal.aborted) return;
     // 留一份视频文件给「视频翻译」页播放（原网址失效、防盗链时也能看）；存不下就算了，页面退回原网址
     if (store) {
@@ -375,6 +456,21 @@
     job.controller.abort();
     job.stop?.();
   }
+
+  /** 页面脚本连过来送视频文件：只认登记过的标签页、框架和 jobId（第一条消息 hello 带 jobId）。 */
+  chrome.runtime.onConnect.addListener((port) => {
+    if (port.name !== PAGE_PORT) return;
+    const tab = port.sender?.tab;
+    if (port.sender?.id !== chrome.runtime.id || tab?.id == null) { port.disconnect(); return; }
+    const hello = (message) => {
+      port.onMessage.removeListener(hello);
+      const entry = message?.type === 'hello' ? waiting.get(String(message.jobId || '')) : null;
+      if (!entry || entry.tabId !== tab.id || entry.frameId !== (port.sender.frameId ?? 0)) { port.disconnect(); return; }
+      waiting.delete(String(message.jobId));
+      entry.attach(port);
+    };
+    port.onMessage.addListener(hello);
+  });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message?.target !== 'offscreen' || sender.id !== chrome.runtime.id || sender.tab) return false;
